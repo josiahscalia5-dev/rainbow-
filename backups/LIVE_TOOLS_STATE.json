@@ -1,5 +1,5 @@
 {
- "time_utc": "2026-11-22T12:40:35+00:00",
+ "time_utc": "2026-11-22T12:41:18+00:00",
  "lead_branch": "ccr-80cdb162-4sqz1a",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
@@ -49,8 +49,12 @@
    }
   }
  },
- "plugins_installed_locally": [],
- "plugins_enabled_user_settings": [],
+ "plugins_installed_locally": [
+  "worldlabs@worldlabs"
+ ],
+ "plugins_enabled_user_settings": [
+  "worldlabs@worldlabs"
+ ],
  "plugins_synced_from_claude_account": [
   "Accelerate design workflows \u2014 critique, design system management, UX writing, accessibilit",
   "Semantic code analysis MCP server providing intelligent code understanding, refactoring su",
@@ -69,7 +73,9 @@
   "skill-creator",
   "typescript-native-lsp"
  ],
- "mcp_servers_configured": [],
+ "mcp_servers_configured": [
+  "worldlabs"
+ ],
  "hooks_project": [
   "PreCompact",
   "SessionEnd",
