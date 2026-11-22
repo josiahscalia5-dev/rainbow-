@@ -8,13 +8,19 @@ html,body{margin:0;background:#1a0630;overflow:hidden;font-family:system-ui,-app
 .title{background:#5a1aa0e0;border:2px solid #f2c14e;border-radius:20px;padding:4px 16px;color:#fff;font-weight:800;font-style:italic;font-size:16px;letter-spacing:.4px}
 #badge{position:fixed;left:16px;top:118px;background:#4a1386e8;border:2px solid #f2c14e;border-radius:26px;padding:6px 16px;color:#fff;font-weight:800;font-style:italic;font-size:15px;line-height:1.05;text-align:center}
 #mission{display:none;background:#4a1386e8;border:2px solid #f2c14e;border-radius:18px;padding:5px 14px;color:#fff;font-weight:800;font-size:16px}
-#mission b{color:#ffd43b}#load{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:20px;background:#2a0b4a}
+#mission b{color:#ffd43b}
+.pill{display:inline-flex;align-items:center;gap:6px}.plus{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#7c3aed;border:2px solid #e9d5ff;font-size:16px;line-height:1}
+#pause{position:fixed;top:8px;right:10px;width:46px;height:46px;border-radius:50%;border:3px solid #f2c14e;background:linear-gradient(#8b3fd9,#4a1386);color:#fff;font-weight:900;font-size:18px;pointer-events:auto}
+.ab{position:fixed;bottom:18px;width:84px;height:84px;border-radius:50%;border:3px solid #f2c14e;background:radial-gradient(circle at 40% 35%,#b06cff,#5a1aa0 70%);color:#fff;font-weight:900;font-size:12px;line-height:1.05;text-align:center;pointer-events:auto;box-shadow:0 3px 10px #0007;padding:0}
+.ab .ic{font-size:30px;display:block;margin-bottom:2px}.ab .cd{position:absolute;inset:0;border-radius:50%;background:conic-gradient(#0008 var(--p,0%),#0000 0)}
+#blast{left:14px}#turbo{right:14px}#pausedLay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#1a063088;color:#fff;font-size:30px;font-weight:900}#load{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:20px;background:#2a0b4a}
 </style>
 <script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
 </head><body>
-<div id="hud"><div class="bar"><span>&#10084;&#65039; 5/5</span><span id="coins">&#129689; 1,420</span></div>
+<div id="hud"><div class="bar"><span class="pill">&#10084;&#65039; 5/5 <span class="plus">+</span></span><span class="pill"><span id="coins">&#129689; 1,420</span> <span class="plus">+</span></span><span class="pill">&#128142; <span id="gems">36</span> <span class="plus">+</span></span></div>
 <div class="title" id="title">05 &middot; FLOW INTO THE CURRENT</div><div id="mission">&#129510; Rescue <b>5</b> lost socks &nbsp;<span id="slots"></span></div></div>
-<div id="badge">Bubble Dash<br>Chamber</div><div id="load">Building the washer&hellip;</div>
+<div id="badge">Bubble Dash<br>Chamber</div><button id="pause" data-noswipe aria-label="pause">&#10074;&#10074;</button>
+<button id="blast" class="ab" data-noswipe><span class="ic">&#129767;</span>Bubble<br>Blast<span class="cd"></span></button><button id="turbo" class="ab" data-noswipe><span class="ic">&#127744;</span>Turbo<br>Spin<span class="cd"></span></button><div id="pausedLay">Paused</div><div id="load">Building the washer&hellip;</div>
 <script type="module">
 // ======================================================================================================================================
 // Rainbow round 40 - REFERENCE-LOCKED PHYSICAL SECTION: Bubble Dash Chamber -> golden arch -> Sock Rescue tunnel -> exit.
@@ -49,7 +55,7 @@ const PB = V3(SEC.benny.bubble), PBS = V3(SEC.benny.sock), ZB0 = PB.z, S_SOCK = 
 const zOf = (s) => ZB0 - s;
 const at = (s, out) => { const z = zOf(s); return out.set(RX(z), 0, z); };
 const frameAt = (s) => { const z = zOf(s), k = (RX(z - 0.05) - RX(z + 0.05)) / 0.1; const t = new THREE.Vector3(k, 0, -1).normalize(); return { t, r: new THREE.Vector3(-t.z, 0, t.x), n: new THREE.Vector3(0, 1, 0) }; };
-const Z_EXIT = T.z_exit, LEVEL = ZB0 - (Z_EXIT - 4.5);
+const Z_EXIT = T.z_exit, LEVEL = ZB0 - (T.z_level_end ?? (Z_EXIT - 4.5));   // r41: the level ends INSIDE the continuing tube (the game takes over there)
 const radius = (z) => z >= T.funnel[0] ? T.r_arch_in : z >= T.funnel[1] ? lerp(T.r_arch_in, T.r_sock, sstep(T.funnel[0], T.funnel[1], z)) : T.r_sock;
 const axy = (z) => z >= T.funnel[0] ? T.axis_y_arch : z >= T.funnel[1] ? lerp(T.axis_y_arch, T.axis_y_sock, sstep(T.funnel[0], T.funnel[1], z)) : T.axis_y_sock;
 
@@ -78,7 +84,9 @@ const BASE = {
   silver: cvs(64, 256, (g, w, h) => { g.fillStyle = grad(g, 0, 0, w, 0, [[0, '#9a86c8'], [0.4, '#f1e8ff'], [0.6, '#d7c8f5'], [1, '#8d77bd']]); g.fillRect(0, 0, w, h); }),
   towelP: cvs(256, 256, (g, w, h) => { g.fillStyle = '#8b5ad8'; g.fillRect(0, 0, w, h); g.fillStyle = '#efe6ff'; g.fillRect(0, h * 0.78, w, 10); g.fillRect(0, h * 0.86, w, 6); g.fillRect(0, h * 0.14, w, 10); }),
   towelK: cvs(256, 256, (g, w, h) => { g.fillStyle = '#f07ab9'; g.fillRect(0, 0, w, h); g.fillStyle = '#ffe9f4'; g.fillRect(0, h * 0.78, w, 10); g.fillRect(0, h * 0.86, w, 6); g.fillRect(0, h * 0.14, w, 10); }),
-  sock: cvs(64, 256, (g, w, h) => { g.fillStyle = '#fbf8ff'; g.fillRect(0, 0, w, h); g.fillStyle = '#ee4f9c'; g.fillRect(0, 14, w, 12); g.fillRect(0, 34, w, 8); g.fillRect(0, h * 0.62, w, 30); g.fillRect(0, h - 34, w, 34); }),
+  sock: cvs(128, 256, (g, w, h) => { g.fillStyle = '#fbf8ff'; g.fillRect(0, 0, w, h); g.fillStyle = '#f0f0fa'; for (let y = 0; y < h; y += 4) g.fillRect(0, y, w, 1);
+    g.fillStyle = '#ee4f9c'; g.fillRect(0, 12, w, 11); g.fillRect(0, 30, w, 7); g.fillRect(0, h * 0.56, w, h * 0.14); g.fillRect(0, h - 40, w, 40);
+    g.beginPath(); const hx = w * 0.25, hy = h * 0.33, r = 9; g.moveTo(hx, hy + r); g.bezierCurveTo(hx - 2 * r, hy - r * 0.2, hx - r, hy - 1.6 * r, hx, hy - 0.6 * r); g.bezierCurveTo(hx + r, hy - 1.6 * r, hx + 2 * r, hy - 0.2 * r, hx, hy + r); g.fill(); }),
 };
 const PIC = {}; const tl = new THREE.TextureLoader();
 const loadRaw = async (f) => { const t = await tl.loadAsync(f); t.colorSpace = THREE.NoColorSpace; t.anisotropy = 8; return t; };
@@ -151,9 +159,11 @@ const waterMat = () => new THREE.ShaderMaterial({ side: THREE.DoubleSide, unifor
       float pin = 0.5 + 0.08 * sin(tp * 0.71 + sign(u) * 1.7) + 0.05 * (nse(vec2(tp * 0.9, sign(u) * 5.0)) - 0.5), pkE = max(0.03, 1.5 * fwidth(u));
       float pk = smoothstep(pin - pkE, pin + pkE, au) * (1.0 - smoothstep(0.92 - pkE, 0.92 + pkE, au));
       vec3 col = mix(blue, pink, pk);
-      for (int L = 0; L < 2; L++) { float cw = L == 0 ? 0.06 : 0.12, rl = L == 0 ? 0.32 : 0.6; vec2 g = vec2(uw / cw, (tp + float(L) * 0.37) / rl); vec2 cell = floor(g); float r = hsh(cell + float(L) * 13.0);
-        if (r < 0.7) { float x0 = (cell.x + 0.25 + 0.5 * hsh(cell + 3.3)) * cw, y0 = (cell.y + 0.5) * rl, len = rl * (0.3 + 0.5 * hsh(cell + 6.6)); float wid = L == 0 ? 0.006 : 0.01, ww = max(wid, 0.9 * fwidth(uw));
-          float I = exp(-pow((uw - x0) / ww, 2.0)) * (1.0 - smoothstep(0.35, 1.0, abs(tp - y0) / (0.5 * len))) * (wid / ww); col = mix(col, vec3(0.93, 1.0, 1.0), clamp(I, 0.0, 1.0)); } }
+      // highlight ripples: short, gently curved dashes riding the current (round 41: shorter / softer, no long white streaks)
+      for (int L = 0; L < 2; L++) { float cw = L == 0 ? 0.06 : 0.12, rl = L == 0 ? 0.22 : 0.4; vec2 g = vec2(uw / cw, (tp + float(L) * 0.37) / rl); vec2 cell = floor(g); float r = hsh(cell + float(L) * 13.0);
+        if (r < 0.55) { float y0 = (cell.y + 0.5) * rl, len = rl * (0.25 + 0.3 * hsh(cell + 6.6)), ph = (tp - y0) / (0.5 * len);
+          float x0 = (cell.x + 0.25 + 0.5 * hsh(cell + 3.3)) * cw + 0.25 * cw * ph * ph * (hsh(cell + 9.1) - 0.5) * 2.0; float wid = L == 0 ? 0.006 : 0.01, ww = max(wid, 0.9 * fwidth(uw));
+          float I = 0.8 * exp(-pow((uw - x0) / ww, 2.0)) * (1.0 - smoothstep(0.3, 1.0, abs(ph))) * (wid / ww); col = mix(col, vec3(0.93, 1.0, 1.0), clamp(I, 0.0, 1.0)); } }
       { vec2 g = vec2(u * 5.0, tp * 2.2); vec2 cell = floor(g); float hh = hsh(cell + 0.37);
         if (hh < 0.6) { vec2 pc = cell + vec2(0.2 + 0.6 * hsh(cell + 1.7), 0.2 + 0.6 * hsh(cell + 4.1)); float dx = (g.x - pc.x) / 5.0 * RW, dy = (g.y - pc.y) / 2.2;
           float tw = 0.5 + 0.5 * sin(uT * 3.0 + hh * 40.0); tw *= tw; float st = exp(-(dx * dx + dy * dy) / 0.0001) + exp(-abs(dx) / 0.035) * exp(-dy * dy / 0.00002) + 0.6 * exp(-abs(dy) / 0.045) * exp(-dx * dx / 0.00001);
@@ -308,7 +318,12 @@ const FOAM = [];
   const fGeo = new THREE.IcosahedronGeometry(0.5, 2), Lw = new THREE.Vector3(-0.25, 0.8, 0.55).normalize();
   fGeo.setAttribute('aCol', new THREE.InstancedBufferAttribute(new Float32Array(FOAM.flatMap((f) => (f.length >= 6 ? [f[3], f[4], f[5], 1] : [0, 0, 0, 0]))), 4));
   const fMat = new THREE.ShaderMaterial({ uniforms: { uL: { value: Lw }, ...GLOW },
-    vertexShader: 'attribute vec4 aCol; varying vec4 vCol; varying vec3 vN; varying vec3 vW; void main(){ vCol = aCol; vec4 w = modelMatrix * instanceMatrix * vec4(position, 1.0); vW = w.xyz; vN = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
+    vertexShader: `attribute vec4 aCol; varying vec4 vCol; varying vec3 vN; varying vec3 vW;
+      float fh(vec3 p){ return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }
+      float fn(vec3 p){ vec3 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(mix(fh(i), fh(i + vec3(1, 0, 0)), f.x), mix(fh(i + vec3(0, 1, 0)), fh(i + vec3(1, 1, 0)), f.x), f.y), mix(mix(fh(i + vec3(0, 0, 1)), fh(i + vec3(1, 0, 1)), f.x), mix(fh(i + vec3(0, 1, 1)), fh(i + vec3(1, 1, 1)), f.x), f.y), f.z); }
+      void main(){ vCol = aCol; vec3 o = instanceMatrix[3].xyz * 7.0; float b = fn(position * 5.0 + o) * 0.55 + fn(position * 11.0 + o.zxy) * 0.3;
+        vec3 p = position * (0.82 + 0.42 * b); vec4 w = modelMatrix * instanceMatrix * vec4(p, 1.0); vW = w.xyz;
+        vN = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normalize(normal + 0.9 * (b - 0.45) * normal + 0.5 * vec3(fn(position * 9.0 + o) - 0.5, 0.0, fn(position * 9.0 + o.yzx) - 0.5))); gl_Position = projectionMatrix * viewMatrix * w; }`,
     fragmentShader: `varying vec4 vCol; varying vec3 vN; varying vec3 vW; uniform vec3 uL; uniform vec3 uGlow; vec3 c3(float r, float g, float b){ return vec3(r, g, b) / 255.0; }
       void main(){ float lit = clamp(0.6 + 0.45 * dot(normalize(vN), uL), 0.0, 1.0);
         vec3 col = lit < 0.5 ? mix(c3(150.0, 135.0, 222.0), c3(205.0, 200.0, 245.0), lit / 0.5) : mix(c3(205.0, 200.0, 245.0), c3(255.0, 254.0, 255.0), (lit - 0.5) / 0.5);
@@ -323,7 +338,7 @@ const FOAM = [];
     fragmentShader: `varying vec3 vN; varying vec3 vW; uniform vec3 uL; void main(){ vec3 N = normalize(vN), V = normalize(cameraPosition - vW); float c = abs(dot(N, V)), f = pow(1.0 - c, 1.6);
       vec3 film = 0.6 + 0.4 * cos(6.2832 * (f * 1.8 + N.y * 0.35 + vec3(0.0, 0.33, 0.67)));
       float sp = pow(max(dot(reflect(-V, N), uL), 0.0), 60.0) + 0.6 * pow(max(dot(reflect(-V, N), normalize(vec3(0.4, 0.2, 0.9))), 0.0), 90.0);
-      vec3 col = mix(vec3(1.0), film, 0.85) + sp; gl_FragColor = vec4(min(col, vec3(1.0)), clamp(0.05 + 0.9 * f * f + 0.25 * f + sp, 0.0, 0.97)); }` });
+      vec3 col = mix(vec3(1.0), film, 0.9) + sp; gl_FragColor = vec4(min(col, vec3(1.0)), clamp(0.16 + 0.75 * f * f + 0.35 * f + 1.3 * sp, 0.0, 0.97)); }` });
   const bubbles = new THREE.InstancedMesh(bGeo, bm, B.length); B.forEach(([x, y, z, r], i) => { pI.set(x, y, z); sI.setScalar(r); bubbles.setMatrixAt(i, mI.compose(pI, qI, sI)); });
   bubbles.name = 'bubbles'; bubbles.renderOrder = 7; bubbles.userData.fam = 'bubble3d'; world.add(bubbles);
 }
@@ -358,7 +373,8 @@ bmesh.scale.set(0.8, 0.84, 0.8); holder.scale.multiplyScalar(+(q.get('bsize') ??
 const benny = new THREE.Group(); benny.add(holder); scene.add(benny);
 const pxW = bennyH / 400;
 const splashTex = await tl.loadAsync('splash.png'); splashTex.colorSpace = THREE.SRGBColorSpace;
-const splash = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneMapped: false, transparent: true, depthWrite: false, depthTest: false })); splash.renderOrder = 5; scene.add(splash);
+// round 41: the splash is depth-tested (Benny's body stays in front of it; the diagnostic renders showed the untested sprite covering his body)
+const splash = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneMapped: false, transparent: true, depthWrite: false, depthTest: true })); splash.renderOrder = 5; scene.add(splash);
 const bubTex = await tl.loadAsync('bubble.png'); bubTex.colorSpace = THREE.SRGBColorSpace;
 const ctex = await tl.loadAsync('coin.png'); ctex.colorSpace = THREE.SRGBColorSpace;
 const C0 = V3(SEC.coins.bubble[0]), coinD = 2 * 38 * C0.distanceTo(V3(REF.bubble.pos)) / SEC.focal_px;
@@ -406,26 +422,46 @@ const camAt = (s, dt) => {
 };
 const tB = new THREE.Vector3(), rB = new THREE.Vector3(), mB = new THREE.Matrix4(), UPV = new THREE.Vector3(0, 1, 0);
 const titleEl = document.getElementById('title'), badgeEl = document.getElementById('badge'), missionEl = document.getElementById('mission');
+// ---------------- abilities (round 41): Bubble Blast = magnet for the coins in Benny's lane + 3 u ahead (3.5 s, cooldown 9 s);
+// Turbo Spin = 1.6x speed with a spin (2.5 s, cooldown 11 s). Buttons are real buttons: controls.js never takes their touches as swipes.
+const AB = { blast: { until: -1, ready: 0, dur: 3.5, cd: 9 }, turbo: { until: -1, ready: 0, dur: 2.5, cd: 11 } }; let gems = 36; const gemEl = document.getElementById('gems');
+const useAbility = (k) => { const a = AB[k], t = st.t; if (t < a.ready) return false; a.until = t + a.dur; a.ready = t + a.dur + a.cd; (st.abLog ??= []).push({ k, t: +t.toFixed(2) }); return true; };
+window.ability = useAbility; window.paused = false;
+document.getElementById('blast').addEventListener('click', (e) => { e.stopPropagation(); useAbility('blast'); });
+document.getElementById('turbo').addEventListener('click', (e) => { e.stopPropagation(); useAbility('turbo'); });
+document.getElementById('pause').addEventListener('click', (e) => { e.stopPropagation(); window.paused = !window.paused; document.getElementById('pausedLay').style.display = window.paused ? 'flex' : 'none'; });
 window.step = (t, dt, steer, speed) => {
-  const v = CT.fwd(speed ?? +q.get('speed')); st.s += v * dt; st.t = t; GLOW.uTime.value = t; WATER_U.uT.value = t;
+  if (t >= AB.turbo.until - AB.turbo.dur && t < AB.turbo.until) speed = (speed ?? +q.get('speed')) * 1.6;
+  const v = CT.fwd(speed ?? +q.get('speed')); st.s += v * dt; st.t = t;
+  const turboK = t < AB.turbo.until ? (AB.turbo.until - t) / AB.turbo.dur : 0; GLOW.uTime.value = t; WATER_U.uT.value = t;
   st.lat = CT.update(t, dt).lat; const F = frameAt(st.s);
   at(st.s, tmp).addScaledVector(F.r, st.lat); benny.position.copy(tmp).addScaledVector(F.n, Math.sin(t * Math.PI * 1.6) * 0.006 + CT.c.h);
   tB.copy(F.t); rB.copy(F.r).negate(); benny.quaternion.setFromRotationMatrix(mB.makeBasis(rB, UPV, tB)); CT.orient(benny.quaternion);
+  if (turboK > 0.76) benny.quaternion.multiply(qTmp.setFromAxisAngle(UPV, (1 - (turboK - 0.76) / 0.24) * Math.PI * 4));   // Turbo Spin: two turns, then he swims on
   U.uT.value = t; U.uSwim.value = 1; U.uPom.value.set(Math.sin(t * 5.0) * 0.06, 0); CT.anim(0);
-  splash.position.copy(benny.position).addScaledVector(F.t, 0.05).addScaledVector(F.n, -0.01 - 23 * pxW * 0.5);
-  splash.scale.set(799 * pxW * 0.8 * (1 + 0.04 * Math.sin(t * 9)), 309 * pxW * 0.8 * (1 + 0.06 * Math.sin(t * 7 + 1)), 1);
+  // spray fanning out on both sides of him at the waterline, just behind his body (wider and stronger, like the pictures)
+  splash.scale.set(799 * pxW * 0.85 * (1 + 0.05 * Math.sin(t * 9)), 309 * pxW * 0.9 * (1 + 0.07 * Math.sin(t * 7 + 1)), 1);
+  splash.position.copy(benny.position).addScaledVector(F.t, 0.09).addScaledVector(F.n, -CT.c.h + splash.scale.y * 0.3);
   CT.water(F, v, dt);
   camAt(st.s, dt);
+  if (t < AB.blast.until) for (const c of coins) if (c.got < 0 && c.s < 1e8 && c.s > st.s - 0.2 && c.s < st.s + 3.0 && Math.abs(c.lat - st.lat) < 0.5) { c.got = t; coinCount += 10; coinEl.textContent = '\u{1FA99} ' + coinCount.toLocaleString('en-US'); }
+  for (const [k, id] of [['blast', 'blast'], ['turbo', 'turbo']]) { const a = AB[k], p = t < a.ready ? Math.min(1, (a.ready - t) / (a.dur + a.cd)) : 0; document.querySelector('#' + id + ' .cd').style.setProperty('--p', (p * 100).toFixed(1) + '%'); }
   for (const c of coins) { if (c.got < 0 && CT.hits(c)) { c.got = t; coinCount += 10; coinEl.textContent = '\u{1FA99} ' + coinCount.toLocaleString('en-US'); }
     if (c.got >= 0 && c.s < 1e8) { const k = (t - c.got) / 0.4; c.sp.visible = k < 1; if (k < 1) { c.sp.position.copy(benny.position).addScaledVector(F.n, bennyH * (1.05 + 0.6 * k)); c.sp.scale.setScalar(coinD * 0.7 * (1 - 0.5 * k)); } } }
   coins.forEach((c, i) => { const m = coin3[i]; m.visible = c.sp.visible && c.s < 1e8; if (!m.visible) return; m.position.copy(c.sp.position);
     m.scale.setScalar(c.got >= 0 ? c.sp.scale.x : coinD); m.quaternion.setFromAxisAngle(UPV, 0.5 * Math.sin(t * 1.9 + i * 1.3)); });
   for (const sk of SOCKS) { if (!sk.visible) continue; sk.geometry.computeBoundingSphere(); const c = sk.geometry.boundingSphere.center.clone().add(sk.position);
-    if (Math.abs(c.z - benny.position.z) < 0.25 && Math.abs(c.x - benny.position.x) < 0.3) { sk.visible = false; socksGot = Math.min(5, socksGot + 1); drawSlots(); } }
+    if (Math.abs(c.z - benny.position.z) < 0.25 && Math.abs(c.x - benny.position.x) < 0.3) { sk.visible = false; socksGot = Math.min(5, socksGot + 1); drawSlots(); gems += 5; gemEl.textContent = gems; } }
   if (q.get('return') === '1' && st.s >= LEVEL - 0.05 && !st.left) { st.left = true; setTimeout(() => { location.href = '../index.html?resume=05&bonus=1&coins=' + coinCount; }, 250); }
   const inT = camera.position.z < T.z_arch - 0.3; titleEl.style.display = inT ? 'none' : ''; badgeEl.style.display = inT ? 'none' : ''; missionEl.style.display = inT ? 'block' : 'none';
-  return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, socks: socksGot, z: +benny.position.z.toFixed(3), ...CT.state() };
+  for (const id of ['blast', 'turbo']) document.getElementById(id).style.display = inT ? '' : 'none';   // each part shows its own picture's HUD
+  return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, socks: socksGot, gems, turbo: +turboK.toFixed(2), blast: t < AB.blast.until, z: +benny.position.z.toFixed(3), ...CT.state() };
 };
+// QA diagnostics (round 41): ?dbg=nowater hides every water surface, ?dbg=nosplash hides the splash sprite and all swim effects around Benny
+{ const dbg = q.get('dbg') ?? '';
+  if (dbg.includes('nowater')) for (const m of WSEG) m.visible = false;
+  if (dbg.includes('nosplash')) { const keep = new Set(coins.map((c) => c.sp)); scene.traverse((o) => { if ((o.isSprite || (o.renderOrder >= 5 && o.renderOrder <= 7 && o !== benny && !o.name.startsWith('coin3d') && o.name !== 'bubbles')) && !keep.has(o)) o.userData.dbgHide = true; });
+    const hideFx = () => scene.traverse((o) => { if (o.userData.dbgHide) o.visible = false; }); hideFx(); const s0 = window.step; window.step = (...a) => { const r = s0(...a); hideFx(); return r; }; } }
 window.renderNow = async (n = 1) => { for (let i = 0; i < n; i++) renderer.render(scene, camera); return true; };
 window.camInfo = () => ({ p: camera.position.toArray().map((x) => +x.toFixed(4)), q: camera.quaternion.toArray().map((x) => +x.toFixed(5)), fov: camera.fov });
 window.bennyInfo = () => { const p = benny.position.clone().project(camera); return { x: +((p.x + 1) / 2 * W).toFixed(1), y: +((1 - p.y) / 2 * H).toFixed(1) }; };
@@ -443,6 +479,7 @@ if (q.get('play')) {   // real-time play (phone): tap to swim, swipes steer
   let t0 = null, last = 0; const tapEl = document.createElement('div'); tapEl.textContent = 'Tap to swim'; tapEl.style.cssText = 'position:fixed;left:0;right:0;bottom:22%;text-align:center;color:#fff;font-weight:800;font-size:26px;text-shadow:0 2px 6px #000a';
   document.body.appendChild(tapEl); let go = false; addEventListener('pointerdown', () => { go = true; tapEl.remove(); }, { once: true });
   const loop = (now) => { requestAnimationFrame(loop); if (!go) { renderer.render(scene, camera); return; } if (t0 === null) { t0 = now; last = now; } const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    if (window.paused) { t0 += now - last; last = now; renderer.render(scene, camera); return; }
     if (st.s < LEVEL) window.step((now - t0) / 1000, dt, 0, +q.get('speed')); renderer.render(scene, camera); };
   requestAnimationFrame(loop);
 }
