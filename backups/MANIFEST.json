@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27962,
-   "sha256": "5b6968fb7668f5fc985bd45c8128ff03fbe79a46ad0412db3360d7808bb80ae0"
+   "sha256": "af3ff3b8ad424b176291a36a170b558880b9a63c27a6189d4f87693b0b31c46b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3622,
-   "sha256": "30f92be2517aefe36f1c8c3819d7f13b0caf9f8be4072b1355f457c1dd088c90"
+   "sha256": "400a3d4fa69023b3a64c027b4ae85871c64e452f436b9dc25859eb425cbc12c6"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -11723,8 +11723,8 @@
   },
   {
    "path": "docs/briefs/2026-11-22-r44/RESUME_R44.md",
-   "bytes": 3853,
-   "sha256": "dff3c7a1e7c3e21e78cba11fb73122378bb8355f3c164b504eaa633727d883cd"
+   "bytes": 3974,
+   "sha256": "3d7b9f2306b95c7368151a1316fe9d3458d884384e6af908a83faa5400bef3fd"
   },
   {
    "path": "docs/briefs/2026-11-22-r44/USER_LEVEL_FLOW_PREVIEW_R44.png",
