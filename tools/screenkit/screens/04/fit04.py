@@ -22,6 +22,8 @@ import fitlib as fl   # noqa: E402
 
 ap = argparse.ArgumentParser(); ap.add_argument('out'); ap.add_argument('--da2')
 ap.add_argument('--set', action='append', default=[], help='controlled test: key=json layout override (arrow_tilt=50 tilts the arrows)')
+ap.add_argument('--tube-len', type=float, default=30.0, help='tunnel length behind the mouth; the r44 world ends it in the doorway into the Bubble Dash chamber')
+ap.add_argument('--open-end', action='store_true', help='world build: the tube stops exactly at the route end (the next area\'s doorway), no closed far end')
 a = ap.parse_args(); os.makedirs(a.out, exist_ok=True)
 REF = 'references/04_through_the_five_arrows.png'; W, H = 864, 1536
 M = dict(rings=[(437.1, 832.9, 418.4), (439.2, 789.6, 343.0), (434.6, 780.3, 329.3), (437.9, 794.5, 268.1), (438.7, 782.9, 209.9), (448.4, 776.3, 176.7),
@@ -67,7 +69,7 @@ COIN_D_PER_BENNY = 0.477; COIN_R = 0.5 * COIN_D_PER_BENNY * HB; kc = COIN_R * ca
 coins = [cam.C + cam.depth_dir(x, y) * (kc / r) for x, y, r in M['coins']]
 # ---- route: Benny -> the arrows' centre line -> straight down the tunnel to its far end (the next area takes over there)
 ax_line = np.mean([p['pos'][0] for p in arrows[:3]])          # the arrows lie on the channel centre
-far = z_mouth - 30.0
+far = z_mouth - a.tube_len
 ctrl = [Pb + np.array([0, 0, 1.2]), Pb, np.array([0.5 * (Pb[0] + ax_line), 0.0, 0.5 * (Pb[2] + arrows[0]['pos'][2])])]
 ctrl += [np.array([ax_line, 0.0, p['pos'][2]]) for p in arrows]
 ctrl += [np.array([ax_line, 0.0, z]) for z in np.arange(arrows[-1]['pos'][2] - 2.0, far, -2.0)]
@@ -87,7 +89,7 @@ lay = {'screen': '04', 'title': 'THROUGH THE FIVE ARROWS', 'ref': REF, 'fov': ca
        'benny': {'pos': Pb, 'height': HB, 'bsize': 1.19, 'lift': 0.03, 'ahead': 0.15},   # same physical rule as the r43b 06 Benny (12 % immersed)
        'coin_radius': COIN_R, 'coins': coins,
        'route': {'ds': 0.05, 'points': route, 'bank': bank, 'width': 2 * chord * 0.92},
-       'drum': {'axis_x': xa, 'axis_y': ya, 'r': R, 'z0': z_mouth, 'z_far': z_mouth - 10.0, 'z1': far - 2.0, 'seg': 1.5, 'seg_far': 6.0, 'chord': chord,
+       'drum': {'axis_x': xa, 'axis_y': ya, 'r': R, 'z0': z_mouth, 'z_far': z_mouth - 10.0, 'z1': far if a.open_end else far - 2.0, 'open_end': bool(a.open_end), 'seg': 1.5, 'seg_far': 6.0, 'chord': chord,
                 'cam_off_R': [float(ox), float(oy)], 'pool_y': -0.02},
        'rings': {'z': z_rings, 'spacing': 0.95, 'band': 0.22},
        'funnel': funnel, 'wall': wall, 'pool_front': pool_front, 'arrows': arrows, 'mouth_ring': {'z': z_mouth + 0.02, 'r': R * 1.07, 'band': 0.34},

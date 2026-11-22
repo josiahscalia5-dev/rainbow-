@@ -4434,3 +4434,243 @@ Please continue building and testing the connected game using this approach.
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && sed -i \"s/'splash_scale': 0.6, 'lod_bias': -0.8, 'bake_dens': \\[1, 4\\], 'number': '04', 'next': 'A'}/'splash_scale': 0.6, 'lod_bias': -0.8, 'bake_dens': [1, 4], 'number': '04', 'next': 'A', 'coins_start': 1330}/\" tools/screenkit/screens/04/fit04.py && grep -c \"coins_start': 1330\" tools/screenkit/screens/04/fit04.py && Q=qa/world/r44/04 && mkdir -p $Q/measure && cp $S/sheet04.jpg $Q/SCREEN04_kit_first_build_sheet.jpg && cp $S/m04_def/cmp/new_summary.json $Q/picture_camera_summary.json && cp …[+2459 chars]`
 
+### 🧑 User — 2026-11-22T16:04:59.984Z
+
+> ↩︎ result: 1
+>   "pushed_verified": true,
+>   "commit": "2302c0ee9c0899099b7ed62ab5173dd97b07dcfc",
+> 2302c0ee9c0899099b7ed62ab5173dd97b07dcfc
+> 2302c0ee9c0899099b7ed62ab5173dd97b07dcfc	refs/heads/ccr-0bbd5b9d-js1cpg
+> [This command modified 1 file you've previously read: tools/screenkit/screens/04/fit04.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-22T16:05:31.027Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/reflock/section.html", "offset": 36, "limit": 80}`
+
+### 🧑 User — 2026-11-22T16:05:31.051Z
+
+> ↩︎ result: 36	import { installControls } from './controls.js';
+> 37	const q = new URLSearchParams(location.search);
+> 38	for (const [k, v] of [['c_LANE', '0.3'], ['c_LAT_MAX', '0.36'], ['speed', '2.2']]) if (!q.has(k)) q.set(k, v);
+> 39	const W = +(q.get('w') ?? innerWidth), H = +(q.get('h') ?? innerHeight);
+> 40	const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+> 41	renderer.setPixelRatio(q.get('w') ? 1 : Math.min(2, devicePixelRatio)); renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
+> 42	const SEC = await (await fetch('section.json')).json(), T = SEC.tunnel, CH = SEC.chamber;
+> 43	const V3 = (a) => new THREE.Vector3(a[0], a[1], a[2]);
+> 44	const scene = new THREE.Scene(); scene.background = new THREE.Color(q.get('sentinel') ? 0x00ff00 : 0x1a0630);   // ?sentinel=1: holes show pure green
+> 45	const camera = new THREE.PerspectiveCamera(SEC.fov, W / H, 0.03, 300); camera.rotation.order = 'YXZ';
+> 46	const world = new THREE.Group(); world.name = 'world'; scene.add(world);
+> 47	const lerp = (a, b, x) => a + (b - a) * x, sstep = (a, b, x) => { const k = Math.min(1, Math.max(0, (x - a) / (b - a))); return k * k * (3 - 2 * k); };
+> 48	const DEG = Math.PI /  …[+9206 chars]
+
+### 🤖 Claude — 2026-11-22T16:05:53.190Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json, struct, collections\nb=open('public/section/section.glb','rb').read(); n=struct.unpack('<I',b[12:16])[0]; J=json.loads(b[20:20+n])\nfam=collections.Counter(); ex={}\nfor nd in J['nodes']:\n    if 'mesh' not in nd: continue\n    nm=nd.get('name'); m=J['meshes'][nd['mesh']]; mn=[1e9]*3; mx=[-1e9]*3\n    for p in m['primitives']:\n        a=J['accessors'][p['attributes']['POSITION']]; mn=[min(x,y) for x,y in zip(mn,a['min'])]; mx=[max(x,y) for x,y in zip(mx,a['max'])]\n    k=nm.split('_')[0]; fam[k]+=1; ex.setdefault(k,[]).append((nm,round(mn[2],1),rou …[+355 chars]`
+
+### 🧑 User — 2026-11-22T16:05:53.283Z
+
+> ↩︎ result: Counter({'tunnel': 31, 'pod': 20, 'ring': 20, 'towerfoam': 16, 'collar': 15, 'rail': 11, 'towel': 11, 'pipe': 5, 'outlet': 4, 'tower': 3, 'wall': 3, 'fall': 2, 'sock': 2, 'arch': 1, 'backwall': 1, 'bulkhead': 1, 'ceiling': 1, 'ledge': 1})
+> wall [('wall_L', -18.6, 2, -0.4, 5.2), ('wall_near_floor', -14.1, 2, -0.4, -0.4), ('wall_R', -18.6, 2, -0.4, 5.2)]
+> bulkhead [('bulkhead', -14.1, -14.1, -2.06, 3.83)]
+> tunnel [('tunnel_00', -14.2, -14.2, -1.43, 2.65), ('tunnel_01', -16.2, -14.2, -1.43, 2.65), ('tunnel_02', -19.6, -16.2, -1.09, 2.33), ('tunnel_03', -22.1, -19.6, -0.36, 1.62)]
+> 50:// ---------------- route = the painted river's centre line (fit_section.py), Benny's path ----------------
+> 135:// ---------------- water: wide chamber floor + tunnel water, segmented (own UVs for the bake), flowing river toward the camera ----------------
+> 169:      float fo = smoothstep(RW * 0.98, RW * 1.02, abs(uw));                // soap foam beyond the river (lavender-white)
+> 181:  g.computeVertexNormals(); const m = new THREE.Mesh(g, waterMat()); m.name = name; m.userData.fam = 'water'; m.userData.seg = { z0, z1, lo: xl, hi: xr, L }; world.add(m); WSEG.push(m); return m; };
+> 184:    [-6.5, -10.5, [[CH.xl, …[+809 chars]
+
+### 🤖 Claude — 2026-11-22T16:05:54.851Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/reflock/section.html", "offset": 135, "limit": 70}`
+
+### 🧑 User — 2026-11-22T16:05:54.879Z
+
+> ↩︎ result: 135	// ---------------- water: wide chamber floor + tunnel water, segmented (own UVs for the bake), flowing river toward the camera ----------------
+> 136	const ROUTE_TEX = (() => { const n = 1024, a = new Float32Array(n), z0 = 3, z1 = Z_EXIT - 12; for (let i = 0; i < n; i++) a[i] = RX(lerp(z0, z1, i / (n - 1)));
+> 137	  const t = new THREE.DataTexture(a, n, 1, THREE.RedFormat, THREE.FloatType); t.minFilter = t.magFilter = THREE.LinearFilter; t.needsUpdate = true; return { t, z0, z1 }; })();
+> 138	const WATER_U = { uRoute: { value: ROUTE_TEX.t }, uRZ: { value: new THREE.Vector2(ROUTE_TEX.z0, ROUTE_TEX.z1) }, uT: { value: 0 }, uRW: { value: new THREE.Vector4(2.1, 0.62, T.z_arch, T.funnel[1]) }, ...GLOW };
+> 139	const SHARP_W = { uSharp: { value: new THREE.Vector2(SHARP.uSharp.value.x, +(q.get('sharpw') ?? 2.2)) } };
+> 140	const waterMat = () => new THREE.ShaderMaterial({ side: THREE.DoubleSide, uniforms: { ...WATER_U, ...SHARP_W, uBake: { value: null }, uBakeOn: { value: 0 }, uDen: { value: null } },
+> 141	  vertexShader: 'varying vec2 vUv; varying vec3 vW; void main(){ vUv = uv; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
+> 142	  f …[+8501 chars]
+
+### 🤖 Claude — 2026-11-22T16:06:28.454Z
+
+> 🔧 **Bash** `{"command": "cat tools/screenkit/build_screen_app.sh | head -30; sed -n 1,15p tools/screenkit/screen_export.cjs | grep \"^//\"", "description": "Read how kit screens are pre-baked for the app"}`
+
+### 🧑 User — 2026-11-22T16:06:28.506Z
+
+> ↩︎ result: #!/usr/bin/env bash
+> # Rainbow screen kit: put a kit-built screen INTO the Rainbow app build (public/screenNN/ -> dist -> the Android APK).
+> #   bash tools/screenkit/build_screen_app.sh <NN> <workspace made by setup_screen.sh>
+> # Self-contained static scene (three.js 0.180 vendored, no CDN), textures pre-baked once (screen_export.cjs); the approved picture itself is
+> # NOT shipped (only the baked textures). The game hands over to it only in a test build (Screen 06: VITE_RAINBOW_KIT06=1 or ?kit06=1).
+> set -e
+> NN=${1:?screen}; SRC=$(cd "$(dirname "$0")/../.." && pwd); WS=$(cd "${2:?workspace}" && pwd); G="$WS/game"; P="$SRC/public/screen$NN"
+> rm -rf "$WS/app"; NODE_PATH=$(npm root -g) node "$SRC/tools/screenkit/screen_export.cjs" "$G" "$WS/app"
+> rm -rf "$P"; mkdir -p "$P/vendor/three/build" "$P/vendor/three/examples/jsm/loaders" "$P/vendor/three/examples/jsm/utils" "$P/baked"
+> T=/tmp/rainbow_r34/node_modules/three
+> cp "$T/build/three.module.js" "$T/build/three.core.js" "$P/vendor/three/build/"; cp "$T/examples/jsm/loaders/GLTFLoader.js" "$P/vendor/three/examples/jsm/loaders/"; cp "$T/examples/jsm/utils/BufferGeometryUtils.js" "$P/vendor/three/examples/jsm/utils/"
+> cp "$WS/app/baked/"* "$P/baked …[+1112 chars]
+
+### 🤖 Claude — 2026-11-22T16:06:45.496Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/reflock/section.html", "offset": 370, "limit": 100}`
+
+### 🧑 User — 2026-11-22T16:06:45.522Z
+
+> ↩︎ result: 370	bmesh.scale.set(0.8, 0.84, 0.8); holder.scale.multiplyScalar(+(q.get('bsize') ?? 1.24)); holder.position.y *= +(q.get('bsize') ?? 1.24);   // Benny at the painted size in both pictures (measured box)
+> 371	const benny = new THREE.Group(); benny.add(holder); scene.add(benny);
+> 372	const pxW = bennyH / 400;
+> 373	const splashTex = await tl.loadAsync('splash.png'); splashTex.colorSpace = THREE.SRGBColorSpace;
+> 374	// round 41: the splash is depth-tested (Benny's body stays in front of it; the diagnostic renders showed the untested sprite covering his body)
+> 375	const splash = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneMapped: false, transparent: true, depthWrite: false, depthTest: true })); splash.renderOrder = 5; scene.add(splash);
+> 376	const bubTex = await tl.loadAsync('bubble.png'); bubTex.colorSpace = THREE.SRGBColorSpace;
+> 377	const ctex = await tl.loadAsync('coin.png'); ctex.colorSpace = THREE.SRGBColorSpace;
+> 378	const C0 = V3(SEC.coins.bubble[0]), coinD = 2 * 38 * C0.distanceTo(V3(REF.bubble.pos)) / SEC.focal_px;
+> 379	const TRAIL = [], TRAIL_S = []; for (let s = 0; s <= LEVEL + 1e-9; s += 0.05) { TRAIL.push(at(s, new THREE.Vector3()).toArray()); TRAIL_S.push(+s.t …[+12558 chars]
+
+### 🤖 Claude — 2026-11-22T16:07:12.652Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/screens/04/fit04.py'; s=open(p).read()\nold=\"ap.add_argument('--set', action='append', default=[], help='controlled test: key=json layout override (arrow_tilt=50 tilts the arrows)')\"\nnew=\"\"\"ap.add_argument('--set', action='append', default=[], help='controlled test: key=json layout override (arrow_tilt=50 tilts the arrows)')\nap.add_argument('--tube-len', type=float, default=30.0, help='tunnel length behind the mouth; the r44 world ends it in the doorway into the Bubble Dash chamber')\"\"\"\nassert old in s; s=s.replace(old,new)\nold=\"f …[+302 chars]`
+
+### 🧑 User — 2026-11-22T16:07:12.714Z
+
+> ↩︎ result: ok
+> 91:       'drum': {'axis_x': xa, 'axis_y': ya, 'r': R, 'z0': z_mouth, 'z_far': z_mouth - 10.0, 'z1': far - 2.0, 'seg': 1.5, 'seg_far': 6.0, 'chord': chord,
+
+### 🤖 Claude — 2026-11-22T16:07:19.309Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/screens/04/fit04.py'; s=open(p).read()\ns=s.replace(\"\"\"ap.add_argument('--tube-len', type=float, default=30.0, help='tunnel length behind the mouth; the r44 world ends it in the doorway into the Bubble Dash chamber')\"\"\",\n\"\"\"ap.add_argument('--tube-len', type=float, default=30.0, help='tunnel length behind the mouth; the r44 world ends it in the doorway into the Bubble Dash chamber')\nap.add_argument('--open-end', action='store_true', help='world build: the tube stops exactly at the route end (the next area\\\\'s doorway), no closed f …[+354 chars]`
+
+### 🧑 User — 2026-11-22T16:07:19.358Z
+
+> ↩︎ result: ok
+> 92:       'drum': {'axis_x': xa, 'axis_y': ya, 'r': R, 'z0': z_mouth, 'z_far': z_mouth - 10.0, 'z1': far if a.open_end else far - 2.0, 'open_end': bool(a.open_end), 'seg': 1.5, 'seg_far': 6.0, 'chord': chord,
+
+### 🤖 Claude — 2026-11-22T16:07:49.943Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/world/world_layout.py", "content": "\"\"\"Rainbow ONE connected world (round 44) - layout step. Places the areas in ONE coordinate system so each area's exit physically meets the next\narea's entrance, assembles ONE route (Benny's path) through all of them, the camera keys (each area's fitted picture cameras, exact there),\nthe coins, and the Blender connector pieces (tools/world/blender_connectors.py).\n  python3 -I tools/world/world_layout.py <04 kit layout.json> <section.json> <out dir>\nArea order of play (user, 2026-11-22): 04 -> A Bubble Dash -> B …[+6043 chars]`
+
+### 🧑 User — 2026-11-22T16:07:50.015Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/world/world_layout.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T16:08:03.850Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/world/blender_connectors.py", "content": "\"\"\"Rainbow ONE connected world (round 44) - the connector pieces between areas, built in Blender 5.3 (headless) from\ntools/world/world_layout.py -> connectors_spec.json, exported as ONE GLB with clean per-mesh UVs (the world page gives each piece the material\nfamily of the area it belongs to, so it matches that area's look). Kinds:\n  wall_hole  a flat wall (x0..x1, y0..y1 at z) with a round doorway (hole cx, cy, r): a polar grid from the hole rim out to the rectangle\n  collar     a gold band ring around a …[+3317 chars]`
+
+### 🧑 User — 2026-11-22T16:08:03.907Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/world/blender_connectors.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T16:08:08.716Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && bash tools/screenkit/variant.sh 04 $S/ws04 $S/w04 --tube-len 22 --open-end 2>&1 | tail -1 && head -1 $S/w04/fit/fit.log && mkdir -p $S/world && python3 -I tools/world/world_layout.py $S/w04/game/layout.json public/section/section.json $S/world && blender -b --python tools/world/blender_connectors.py -- $S/world/connectors_spec.json $S/world/connectors.glb 2>&1 | grep -E \"exported|Error|Trace\"", "description": "Build 04 with an open-ended tunnel, lay out the world, build connectors", "timeout": …[+8 chars]`
+
+### 🧑 User — 2026-11-22T16:08:10.758Z
+
+> ↩︎ result: variant ready: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/w04/game (--tube-len 22 --open-end)
+> VP (465.9, 726.7); cam yaw 1.58 pitch -1.93 deg; tunnel R 1.182 axis (-0.101, 0.472) cam off/R (0.085, 0.222); mouth z -3.47; Benny water (-0.078, -1.339) height 0.473; chord 1.084
+> 04 tube end z -25.29; section offset [-0.695, 0.0, -27.289]; route 81.15 u (04 0-25.15, AB 25.15-81.15); picture keys s: 04 1.35, Bubble Dash 28.75, Sock Rescue 49.00
+> exported /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/world/connectors.glb ['cring_04A', 'cwall_04A', 'cwater_04A']
+
+### 🤖 Claude — 2026-11-22T16:08:21.920Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/screenkit/screen.html", "offset": 1, "limit": 43}`
+
+### 🧑 User — 2026-11-22T16:08:21.944Z
+
+> ↩︎ result: 1	<!doctype html>
+> 2	<html><head><meta charset="utf-8"><title>Rainbow screen</title>
+> 3	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+> 4	<style>
+> 5	html,body{margin:0;background:#1a0630;overflow:hidden;font-family:system-ui,-apple-system,sans-serif}canvas{display:block}
+> 6	#hud{position:fixed;left:0;right:0;top:8px;display:flex;flex-direction:column;align-items:center;gap:7px;pointer-events:none}
+> 7	.bar{display:flex;gap:26px;align-items:center;background:linear-gradient(#7b2bbf,#4a1386);border:2px solid #d9a7ff;border-radius:30px;padding:5px 20px;color:#fff;font-weight:800;font-size:21px;box-shadow:0 2px 8px #0006}
+> 8	.title{background:#5a1aa0e0;border:2px solid #f2c14e;border-radius:20px;padding:4px 16px;color:#fff;font-weight:800;font-style:italic;font-size:16px;letter-spacing:.4px}
+> 9	.pill{display:inline-flex;align-items:center;gap:6px}.plus{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#7c3aed;border:2px solid #e9d5ff;font-size:16px;line-height:1}
+> 10	#pause{position:fixed;top:8px;right:10px;width:46px;height:46px;border-radius:50%;border:3px solid #f2c14e;back …[+3523 chars]
+
+### 🤖 Claude — 2026-11-22T16:08:24.860Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/reflock/section.html", "offset": 204, "limit": 12}`
+
+### 🧑 User — 2026-11-22T16:08:24.877Z
+
+> ↩︎ result: 204	if (MANI) {   // the app build: the bake was done once offline (same code, ?savebake=1) and shipped as PNGs
+> 205	  const cache = {}; const ld = (f, den) => (cache[f] ??= tl.loadAsync('baked/' + f).then((t) => { t.colorSpace = THREE.NoColorSpace; if (den) { t.generateMipmaps = false; t.minFilter = t.magFilter = THREE.LinearFilter; } else { t.anisotropy = 8; } return t; }));
+> 206	  const all = []; world.traverse((o) => { if (o.isMesh && MANI.meshes[o.name]) all.push(o); });
+> 207	  await Promise.all(all.map(async (o) => { const e = MANI.meshes[o.name]; o.material.uniforms.uBake.value = await ld(e.bake); o.material.uniforms.uDen.value = await ld(e.den, true); o.material.uniforms.uBakeOn.value = 1; BAKE_STATS[o.name] = e.cov; }));
+> 208	  BAKE_STATS._prebaked = all.length;
+> 209	} else if (q.get('bake') !== '0') {
+> 210	  const [p0, p1, m0, m1] = await Promise.all([loadRaw('plate_bubble.png'), loadRaw('plate_sock.png'), loadRaw('mask_bubble.png'), loadRaw('mask_sock.png')]);   // clean plates: picture pixels outside the masks
+> 211	  const depthOf = (cam) => { const rt = new THREE.WebGLRenderTarget(SEC.img[0], SEC.img[1]); rt.depthTexture = new THREE.DepthTexture(SEC.img[0], SEC.img[1]);
+> 212	  …[+385 chars]
+
+### 🤖 Claude — 2026-11-22T16:08:25.467Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/reflock/section.html", "offset": 270, "limit": 100}`
+
+### 🧑 User — 2026-11-22T16:08:25.488Z
+
+> ↩︎ result: 270	  for (const o of all) { if (/^(rail_|sock_)/.test(o.name)) continue; const [bw, bh] = RES(o); const r = bakeOne(o, bw, bh); BAKE_STATS[o.name] = +r.cov.toFixed(3); if (r.tex) { o.material.uniforms.uBake.value = r.tex; o.material.uniforms.uDen.value = r.den; o.material.uniforms.uBakeOn.value = 1; o.userData.bakeCov = r.cov; } }
+> 271	  // repeated furniture: the best-seen instance of each family is the painted template for the instances no picture showed well
+> 272	  for (const fam of ['ring', 'towel', 'silver', 'tunnel']) {
+> 273	    const L = all.filter((o) => o.userData.fam === fam && (fam !== 'tunnel' || !/tunnel_0[0-2]/.test(o.name)));
+> 274	    const best = L.reduce((b, o) => ((o.userData.bakeCov ?? 0) > (b?.userData.bakeCov ?? 0) ? o : b), null); if (!best || !best.material.uniforms.uBake.value) continue;
+> 275	    for (const o of L) if ((o.userData.bakeCov ?? 0) < (fam === 'tunnel' || fam === 'ring' ? 0.05 : 0.35 * best.userData.bakeCov)) { for (const k of ['uBake', 'uDen']) o.material.uniforms[k].value = best.material.uniforms[k].value; o.material.uniforms.uBakeOn.value = 1; o.userData.template = best.name; BAKE_DATA[o.name] = { template: best.name }; }
+> 276	  }
+> 277	  BAKE_STATS. …[+12493 chars]
+
+### 🤖 Claude — 2026-11-22T16:08:32.052Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/reflock/section.html", "offset": 1, "limit": 35}`
+
+### 🧑 User — 2026-11-22T16:08:32.073Z
+
+> ↩︎ result: 1	<!doctype html>
+> 2	<html><head><meta charset="utf-8"><title>Rainbow Bubble Dash section</title>
+> 3	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+> 4	<style>
+> 5	html,body{margin:0;background:#1a0630;overflow:hidden;font-family:system-ui,-apple-system,sans-serif}canvas{display:block}
+> 6	#hud{position:fixed;left:0;right:0;top:8px;display:flex;flex-direction:column;align-items:center;gap:7px;pointer-events:none}
+> 7	.bar{display:flex;gap:26px;align-items:center;background:linear-gradient(#7b2bbf,#4a1386);border:2px solid #d9a7ff;border-radius:30px;padding:5px 20px;color:#fff;font-weight:800;font-size:21px;box-shadow:0 2px 8px #0006}
+> 8	.title{background:#5a1aa0e0;border:2px solid #f2c14e;border-radius:20px;padding:4px 16px;color:#fff;font-weight:800;font-style:italic;font-size:16px;letter-spacing:.4px}
+> 9	#badge{position:fixed;left:16px;top:118px;background:#4a1386e8;border:2px solid #f2c14e;border-radius:26px;padding:6px 16px;color:#fff;font-weight:800;font-style:italic;font-size:15px;line-height:1.05;text-align:center}
+> 10	#mission{display:none;background:#4a1386e8;border:2px solid #f2c14e;border-radius:18px;padding:5px 14px;color:#fff …[+3781 chars]
+
+### 🤖 Claude — 2026-11-22T16:09:06.494Z
+
+> 🔧 **Bash** `{"command": "grep -n \"coins\\.\\|NCOIN\\|coins.push\\|for (let i = 0; i < [0-9]\\+\\|export function installControls\\|return {\" tools/kit05/controls.js | head -20; grep -n \"hits\\|const water\\|water(F\" tools/kit05/controls.js | head -8", "description": "Check how the shared controls create and test coins"}`
+
+### 🧑 User — 2026-11-22T16:09:06.548Z
+
+> ↩︎ result: 67:export function installControls(ctx) {
+> 147:    for (const g of m.segs) { if (k < k0 + g.T) return { h: segH(g, k - k0), seg: g, kSeg: k - k0, over: false }; k0 += g.T; }
+> 148:    const g = m.segs[m.segs.length - 1]; return { h: g.ball ? 0 : g.p1, seg: g, kSeg: g.T, over: true };
+> 215:    coins.push({ s: L.s, lat: L.lat, h: L.h, sp, got: -1, p0: sp.position.clone(), n0: Fs.n.clone(), run: L.run, kind: L.h > 0 ? 'air' : Math.abs(L.lat) >= 0.1 ? 'lane' : 'water' });
+> 236:    p: coins.find((c) => c.s === L.s && c.lat === L.lat)?.p0.toArray().map((x) => +x.toFixed(4)), n: coins.find((c) => c.s === L.s && c.lat === L.lat)?.n0.toArray().map((x) => +x.toFixed(4)) }));
+> 241:  for (let i = 0; i < 3; i++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneMapped: false, transparent: true, depthWrite: false })); sp.renderOrder = 5; sp.visible = false; scene.add(sp); fxSplash.push({ sp, t0: -1, size: 1 }); }
+> 243:  for (let i = 0; i < 64; i++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: bubTex, toneMapped: false, transparent: true, depthWrite: false })); sp.renderOrder = 8; sp.visible = false; scene.add(sp); drops.push({ sp, life: 0, age: 0, p: new THRE …[+1475 chars]
+
+### 🤖 Claude — 2026-11-22T16:09:08.533Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/kit05/controls.js", "offset": 196, "limit": 32}`
+
+### 🧑 User — 2026-11-22T16:09:08.554Z
+
+> ↩︎ result: 196	    if (!TR.XB || !TR.offsets || !TR.trail) return TEND;
+> 197	    const o = TR.offsets[TR.N - 1], X = [TR.XB[0] + o[0], TR.XB[1] + o[1], TR.XB[2] + o[2]];
+> 198	    let best = 0, bd = Infinity; TR.trail.forEach((p, i) => { const d = (p[0] - X[0]) ** 2 + (p[1] - X[1]) ** 2 + (p[2] - X[2]) ** 2; if (d < bd) { bd = d; best = i; } });
+> 199	    return TS[best];
+> 200	  })();
+> 201	  // lead's rule (round 32b): done = s >= S_END - END_MARGIN (0.15), full speed until then (no slow-down, no speed-up); the golden
+> 202	  // bloom over the last 1.25 u is agentB's. After done he only glides to rest before the trail end (the test stops at done).
+> 203	  const S_DONE = S_END - P.END_MARGIN;
+> 204	  // a shorter track: keep the painting run, squeeze the gaps between the later runs (spacing inside a run unchanged)
+> 205	  const lastRun = RUNS[RUNS.length - 1].pts, designEnd = lastRun[lastRun.length - 1][0], avail = S_END - 1.5;
+> 206	  const squeeze = designEnd <= avail ? 1 : Math.max(0.2, (avail - (designEnd - lastRun[0][0]) - RUNS[1].pts[0][0]) / (lastRun[0][0] - RUNS[1].pts[0][0]));
+> 207	  const LAYOUT = [];
+> 208	  RUNS.forEach((r, ri) => { const s0 = r.pts[0][0], s0n = ri === 0 ? s0 : RUNS[1].pts[0][0] + (s0 …[+2291 chars]
+

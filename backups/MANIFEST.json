@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27962,
-   "sha256": "86eab92d3b17cdb3d72e015a8cd89f9a021319a52e637ef85840d1fe75ccc6f4"
+   "sha256": "a0dc1ea33ab921c1d41d406ef50a6c407595bb489fb1a91be4c7fc541e472405"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3622,
-   "sha256": "4e62b560e22aa3041e7f3a5a6fabf24f4e0e61b77e97f1f2bc4f6461da57e3d0"
+   "sha256": "e14cfb8864204d6502041c34f9b2f0873305205ec61127be0682263a91ed6ab3"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -45428,8 +45428,8 @@
   },
   {
    "path": "tools/screenkit/screens/04/fit04.py",
-   "bytes": 10893,
-   "sha256": "462104b8440d6213231675f3f5a53a5dad506d7ae391a60563f8c92e2eddcb5d"
+   "bytes": 11272,
+   "sha256": "fcce928d9096d10f0f12bb6e819e3a27c82ff9de125938e3dc86411757873bd8"
   },
   {
    "path": "tools/screenkit/screens/04/segment04.json",
@@ -45477,6 +45477,11 @@
    "sha256": "9eadc09abd1f3685bf74f6f5b3ae20c411acade82355b44ffddc8d6ad135c676"
   },
   {
+   "path": "tools/world/blender_connectors.py",
+   "bytes": 3771,
+   "sha256": "28b71eb68021a0b83261b1eab6c1ae398c1b52002096c4e734de47990652b9be"
+  },
+  {
    "path": "tools/world/join_audit.cjs",
    "bytes": 5365,
    "sha256": "86b9f14a86fc6f831c93b6d09d253c8ecfe1bf4a4af433c34cbf76a4a4316a7c"
@@ -45485,6 +45490,11 @@
    "path": "tools/world/join_sheet.py",
    "bytes": 4132,
    "sha256": "4bb3a295b1d7f7a9d29c30c73782df94c9df6c07bd7f6d7618eef9d963c02f3e"
+  },
+  {
+   "path": "tools/world/world_layout.py",
+   "bytes": 6484,
+   "sha256": "db561a9cda546916793ad136696e9bb611a4aa9340685de3e92212eb7e65da33"
   },
   {
    "path": "tools/worldlabs/analyze_splats.py",
