@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "1d9c53091592ff98cb4761947a420c7736d9a679a56e82719dae954aad0c5b0a"
+   "sha256": "c28ae4cb341e7bb50a5ff42fdeae855b7066e005258c37cda421d23c2e047e06"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -35478,18 +35478,18 @@
   },
   {
    "path": "qa/reflock/r40/GAMEPLAY_contact_sheet.jpg",
-   "bytes": 302257,
-   "sha256": "d8cb18e59f2c37dced65ce91876d6532859ae049cc537da323abec90178061b0"
+   "bytes": 304380,
+   "sha256": "8038dde3a3a2c2b627da2edafb84b38b2f3c63220d5984ae321a597a39443859"
   },
   {
    "path": "qa/reflock/r40/GAMEPLAY_full_section_24s_steering.mp4",
-   "bytes": 12450533,
-   "sha256": "8d250f4e6553a47f48416e7531bcf582510aa0582f8c8103a44e7f1b587f1ee4"
+   "bytes": 12515967,
+   "sha256": "aeb4e7695c224853af9aa0b3769287d07e46a67c350cf11c23843e819c620d14"
   },
   {
    "path": "qa/reflock/r40/GAMEPLAY_full_section_24s_steering_checks.json",
    "bytes": 467,
-   "sha256": "fb456d99b78c39882a8446153ce9e00a1c4e28fca9fb28de296ed9d1971c0f60"
+   "sha256": "14c23ae754a3126ba863bda3f09d7cb139cc3ce7289fbaa6745a41c90319f435"
   },
   {
    "path": "qa/reflock/r40/GAMEPLAY_swipe_plan.json",
@@ -35498,8 +35498,8 @@
   },
   {
    "path": "qa/reflock/r40/GAMEPLAY_tunnel_arch_and_gold_rings.mp4",
-   "bytes": 7629021,
-   "sha256": "b519eb6c3ab127721f8aff3c42c67a6e179a3afb183e77af35e7a05dafc1d821"
+   "bytes": 7566179,
+   "sha256": "9a21ec75990fcfda7f05bb8e2f2266c78552e90f7bcc5a5bcce5338f5ba96c87"
   },
   {
    "path": "qa/reflock/r40/RESULT_R40.md",

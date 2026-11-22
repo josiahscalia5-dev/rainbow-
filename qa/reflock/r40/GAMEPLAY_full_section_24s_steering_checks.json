@@ -6,7 +6,7 @@
  "camera_max_step_u": 0.0986,
  "camera_max_step_expected_u": 0.1173,
  "camera_max_turn_deg_per_frame": 0.566,
- "static_world_meshes": 123,
+ "static_world_meshes": 128,
  "scenery_meshes_moved": [],
  "hole_pixels_max": 0,
  "hole_frames": 0,
