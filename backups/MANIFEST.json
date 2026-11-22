@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27962,
-   "sha256": "d12f9b151f6faef9dd3bdfed10d3f3b917984124234ce44e94c82bb5f0c1506d"
+   "sha256": "35f9a3248043d7d7d5fc062a2ad874cf3947da15cfd148a2bc9aab0e8d5b49c4"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3622,
-   "sha256": "80bd550c05d19bff599da40b90d0384db66d3fde728d7857f2243c61ecba9541"
+   "sha256": "0e52d468cfbd104ba1c45deaf4d40db4924e204ae358679a071d132245af76b1"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -45583,8 +45583,13 @@
   },
   {
    "path": "tools/screenkit/measure_variant.sh",
-   "bytes": 902,
-   "sha256": "e4494129106675de7c29661a114bd0a350c2b8616e130094dfb7a1e7aa20c9e4"
+   "bytes": 944,
+   "sha256": "9a76aca78cf1c580017621eca419550629f91a4b7eda185705ed3d7c2ca20d15"
+  },
+  {
+   "path": "tools/screenkit/scale_layout.py",
+   "bytes": 2199,
+   "sha256": "9356d3700fa05979a74fb7daf6b3d03d422b6f7308d2b5d5028aebf3786fa96e"
   },
   {
    "path": "tools/screenkit/screen.html",
@@ -45673,8 +45678,8 @@
   },
   {
    "path": "tools/world/setup_world.sh",
-   "bytes": 2448,
-   "sha256": "31e3b2c363df99442dd13f0dcdd5fecf7761fb3ff8b3cf4aa2bddf052afd4306"
+   "bytes": 3639,
+   "sha256": "0dc096e30fa3b46d62b1e36cef4807e268a33209fd252748ee41758c1749c69a"
   },
   {
    "path": "tools/world/world.html",
@@ -45683,8 +45688,8 @@
   },
   {
    "path": "tools/world/world_layout.py",
-   "bytes": 10182,
-   "sha256": "a185c97ec9fe274e613036d68d360a3463921df03cac4d11e7a23562ecc62e6a"
+   "bytes": 13381,
+   "sha256": "36a89f5861bdbddc7d359a7308954b073ea10caf9ac80dff96b409ef1d7b1f25"
   },
   {
    "path": "tools/worldlabs/analyze_splats.py",

@@ -5690,3 +5690,112 @@ Starting with 06. First I'm checking every value in 06's layout, so the whole le
 > paddles list 2 [{'pos': [-3.021904201172664, 3.363868540506941, -8.922998620012471], 'width': 1
 > bubbles list 14 [[-2.278 …[+251 chars]
 
+### 🤖 Claude — 2026-11-22T16:54:48.256Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/screenkit/scale_layout.py", "content": "\"\"\"Rainbow screen kit (round 44): scale a fitted screen layout uniformly so its Benny has the world's ONE physical size (the kit fixes the camera\n0.734 above the water at each picture, so each fit's Benny height differs: 06 0.574 u vs ~0.47 u elsewhere). Every length is multiplied by k;\nangles, ratios and picture data are kept; the bake densities (picture px per world unit) are divided by k. The picture view is unchanged\n(the fitted camera scales with everything: similar triangles).\n  python3 -I tools/scree …[+1735 chars]`
+
+### 🧑 User — 2026-11-22T16:54:48.340Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/screenkit/scale_layout.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T16:54:52.613Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && rm -rf $S/w06 && cp -a $S/ws06 $S/w06 && python3 -I tools/screenkit/scale_layout.py $S/ws06/fit/layout.json $S/w06/fit/layout.json --benny-h 0.468 && blender -b --python tools/screenkit/blender_kit.py -- $S/w06/fit/layout.json $S/w06/game/scene.glb > $S/w06/fit/blender.log 2>&1 && python3 - $S/w06/fit/layout.json $S/w06/game/layout.json <<'EOF'\nimport json, sys\nL = json.load(open(sys.argv[1]))\nfor i, c in enumerate(L['cams']): c['plate'] = f'plate_{i}.png'; c['mask'] = f'mask_{i}.png'\njson.d …[+285 chars]`
+
+### 🧑 User — 2026-11-22T16:55:18.768Z
+
+> ↩︎ result: scaled by k = 0.8149: Benny 0.468 u, drum r 2.275, route 36.63 u
+> w06 scenery within 20: 36.0 %  SSIM 0.221  colour 0.986  sharpness 0.69
+
+### 🤖 Claude — 2026-11-22T16:55:27.986Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && sed -i 's|python3 -I \"$SRC/tools/screenkit/compare_screen.py\" \"$NN\" \"$OUT/s1.20_l0.png\"|F0=$(ls \"$OUT\"/s*_l0.png \\| sort -t s -k2 -g \\| head -1); python3 -I \"$SRC/tools/screenkit/compare_screen.py\" \"$NN\" \"$F0\"|' tools/screenkit/measure_variant.sh && grep -n \"F0=\" tools/screenkit/measure_variant.sh | cut -c1-150 && bash tools/screenkit/measure_variant.sh 06 $S/w06 $S/m06s2 0.1", "description": "Measure scaled Screen 06 at its true start position", "timeout": 1200000}`
+
+### 🧑 User — 2026-11-22T16:55:53.196Z
+
+> ↩︎ result: 7:F0=$(ls "$OUT"/s*_l0.png | sort -t s -k2 -g | head -1); python3 -I "$SRC/tools/screenkit/compare_screen.py" "$NN" "$F0" "$WS/seg/mask.png" "$OUT/cmp
+> w06 scenery within 20: 88.4 %  SSIM 0.856  colour 0.995  sharpness 0.74
+
+### 🤖 Claude — 2026-11-22T16:56:06.969Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/world/world_layout.py", "offset": 14, "limit": 80}`
+
+### 🧑 User — 2026-11-22T16:56:06.995Z
+
+> ↩︎ result: 14	
+> 15	L04 = json.load(open(sys.argv[1])); SEC = json.load(open(sys.argv[2])); OUT = sys.argv[3]; os.makedirs(OUT, exist_ok=True)
+> 16	L05 = json.load(open(sys.argv[4])) if len(sys.argv) > 4 else None      # v2: Screen 05 (kit) joined after Sock Rescue
+> 17	DS = 0.05
+> 18	
+> 19	
+> 20	def resample(P, step=DS):
+> 21	    P = np.asarray(P, float); L = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(P, axis=0), axis=1))])
+> 22	    s = np.arange(0, L[-1] + 1e-9, step); return np.stack([np.interp(s, L, P[:, i]) for i in range(3)], 1)
+> 23	
+> 24	
+> 25	# ---- area 04 (kit): its own coordinates are the world's (offset 0)
+> 26	D4 = L04['drum']; R4 = D4['r']; r4 = np.array(L04['route']['points']); z_end4 = float(r4[-1][2])
+> 27	assert D4.get('open_end'), '04 must be built with --open-end (its tube stops at the doorway)'
+> 28	# ---- area AB (section): its near wall plane (z = +2 in section coordinates) = 04's tube end; its route start continues 04's route
+> 29	RT = SEC['route']; z0s = -RT['z0']; xs = np.array(RT['x'])
+> 30	def RX(z): x = min(max((-z - RT['z0']) / RT['ds'], 0), len(xs) - 1.001); i = int(x); f = x - i; return xs[i] + (xs[i + 1] - xs[i]) * f
+> 31	Z_NEAR_SEC = SEC['chamber']['z_near']                        …[+6396 chars]
+
+### 🤖 Claude — 2026-11-22T16:56:30.260Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world_layout.py'; s=open(p).read()\nreps=[\n(\"\"\"L05 = json.load(open(sys.argv[4])) if len(sys.argv) > 4 else None      # v2: Screen 05 (kit) joined after Sock Rescue\"\"\",\n\"\"\"L05 = json.load(open(sys.argv[4])) if len(sys.argv) > 4 else None      # v2: Screen 05 (kit) joined after Sock Rescue\nL06 = json.load(open(sys.argv[5])) if len(sys.argv) > 5 else None      # v3: Screen 06 (kit, scaled to the world's Benny: tools/screenkit/scale_layout.py)\"\"\"),\n(\"\"\"    conn_tubes = [{'axis': ax.round(4).tolist(), 'r': rad.round(4).tolist()}]\nr …[+4271 chars]`
+
+### 🧑 User — 2026-11-22T16:56:30.326Z
+
+> ↩︎ result: ok
+> 53:    def herm(p0, p1, t, L):
+
+### 🤖 Claude — 2026-11-22T16:56:44.759Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/setup_world.sh'; s=open(p).read()\nold=\"\"\"bash \"$SRC/tools/screenkit/setup_screen.sh\" 05 \"$WS/s05\" > \"$WS/s05.log\" 2>&1\nNODE_PATH=$(npm root -g) node \"$SRC/tools/screenkit/screen_export.cjs\" \"$WS/s05/game\" \"$WS/s05/app\" > \"$WS/s05_export.log\" 2>&1\nmkdir -p \"$G/a05/baked\"; cp \"$WS/s05/game/layout.json\" \"$WS/s05/game/scene.glb\" \"$G/a05/\"; cp \"$WS/s05/app/baked/\"* \"$G/a05/baked/\"\npython3 -I \"$SRC/tools/world/world_layout.py\" \"$G/a04/layout.json\" \"$G/aAB/section.json\" \"$G\" \"$G/a05/layout.json\" | tee \"$WS/worl …[+2196 chars]`
+
+### 🧑 User — 2026-11-22T16:58:07.180Z
+
+> ↩︎ result: ok
+> scaled by k = 0.8149: Benny 0.468 u, drum r 2.275, route 36.63 u
+> 06 offset [1.172, 0.0, -147.521]; 05 route ends s 137.30; 06 picture key s 149.12; crest bank max 71.6 deg
+> 05 offset [1.109, 0.0, -96.399]; Sock Rescue ends s 84.30; 05 route from s 96.45; 05 picture key s 149.12
+> 04 tube end z -25.29; section offset [-0.695, 0.0, -27.289]; route 184.60 u (04 0-25.15, AB 25.15-184.60); picture keys s: 04 1.35, Bubble Dash 28.75, Sock Rescue 49.00
+> world ready: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/wv3/game/play3.html
+> 
+> real	1m22.349s
+> user	0m51.942s
+> sys	0m8.906s
+> exported /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/wv3/game/connectors.glb ['cring_04A', 'cring_056', 'cring_B05_0', 'cring_B05_1', 'ctube_056_0', 'ctube_056_1', 'ctube_B05_0', 'ctube_B05_1', 'ctube_B05_2', 'cwall_04A', 'cwater_04A', 'cwater_056', 'cwater_B05'
+
+### 🤖 Claude — 2026-11-22T16:58:12.476Z
+
+World v3 is built: the route now runs 184.6 units, from 04 through 06's banked crest (bank up to 71.6°). Rendering the 05 → 06 join and measuring your 06 picture view inside the world.
+
+### 🤖 Claude — 2026-11-22T16:58:21.038Z
+
+> 🔧 **Bash** `{"command": "sed -i 's|if L05: print(f\"05 offset {T5.round(3).tolist()}; Sock Rescue ends s {s_B_end:.2f}; 05 route from s {s05_0:.2f}; 05 picture key s {keys\\[-1\\]\\[.s.\\]:.2f}\")|if L05: print(f\"05 offset {T5.round(3).tolist()}; Sock Rescue ends s {s_B_end:.2f}; 05 route from s {s05_0:.2f}\")|' tools/world/world_layout.py; S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && NODE_PATH=$(npm root -g) timeout 1500 node tools/reflock/section_run.cjs $S/wv3/game $S/wst3 stills 128,133,137,140,143,146,152,156,160,166,172,179 0 'sentinel=1' 2>&1 | grep -E \"l …[+1292 chars]`
+
+### 🧑 User — 2026-11-22T16:58:46.157Z
+
+> ↩︎ result: loaded in 7.8 s {"LEVEL":184,"meshes":353}
+> 06 in world: 81.2 % SSIM 0.786 colour 0.993
+> holes per still [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+> [This command modified 1 file you've previously read: tools/world/world_layout.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-22T16:58:48.783Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/world_v3_0506.jpg"}`
+
+### 🧑 User — 2026-11-22T16:58:48.814Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T16:59:03.852Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && rm -rf $S/wv3/w06/game/baked && cp -r $S/wv3/w06/app/baked $S/wv3/w06/game/baked && NODE_PATH=$(npm root -g) timeout 900 node tools/reflock/section_run.cjs $S/wv3/w06/game $S/p06pre stills 0.1 0 'sentinel=1&prebaked=1' > /dev/null 2>&1; python3 -I tools/screenkit/compare_screen.py 06 $S/p06pre/s0.10_l0.png $S/wv3/s06/seg/mask.png $S/cmp06pre > /dev/null 2>&1; python3 -c \"\nimport json;d=json.load(open('$S/cmp06pre/new_summary.json'))['new'];print('06 own page PRE-BAKED (scaled): %.1f %% SSIM %. …[+228 chars]`
+
+### 🧑 User — 2026-11-22T16:59:09.428Z
+
+> ↩︎ result: 06 own page PRE-BAKED (scaled): 85.8 % SSIM 0.837
+
