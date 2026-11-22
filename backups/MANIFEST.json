@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3218,
-   "sha256": "b8cf2883a8fe26d5a48dd768bef412e60efd5f775f4f166359ca5c512be659a0"
+   "sha256": "76509389b7047f05306ebc13d9a5279a7103b8bef685090cff57a22b6350576d"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -37557,6 +37557,51 @@
    "sha256": "639cc1591e8abbd27705ecb24137b771b4d9d7426e1099164d006c7d66278e8e"
   },
   {
+   "path": "qa/reflock/r43b/GAMEPLAY_screen06_GRAY_contact_sheet.jpg",
+   "bytes": 290050,
+   "sha256": "aff4c0db758b31cec7f13b9694803ecc6d81df3e8c7c528b93bac3292dc44866"
+  },
+  {
+   "path": "qa/reflock/r43b/GAMEPLAY_screen06_GRAY_geometry_real_touch.mp4",
+   "bytes": 9930879,
+   "sha256": "ed2964d8c08b301db96ac3fbb3fcfdaab2a734d39ec896277e296e29316f8483"
+  },
+  {
+   "path": "qa/reflock/r43b/GAMEPLAY_screen06_GRAY_geometry_real_touch_checks.json",
+   "bytes": 1901,
+   "sha256": "4e390d3a771c4284a3d7a816220fafc4d724a56aef895ea15a1c5f8aee48f34e"
+  },
+  {
+   "path": "qa/reflock/r43b/SCREEN06_1_APPROVED.jpg",
+   "bytes": 233078,
+   "sha256": "58788b5995b1e25e21b76f18bb4ee3164080e4828244c0bb573ff29730ea01dd"
+  },
+  {
+   "path": "qa/reflock/r43b/SCREEN06_2_PREVIOUS_old_game.jpg",
+   "bytes": 172368,
+   "sha256": "4229fa2f0274c7dfa2c3402fee39cd1af6c4092e6c5fd7f45a681e0569c0a29f"
+  },
+  {
+   "path": "qa/reflock/r43b/SCREEN06_3_NEW_textured.jpg",
+   "bytes": 198846,
+   "sha256": "1dec78d79b67b7343b276c11cae0325a282169401c9a13f1a10bb7189ac5a61a"
+  },
+  {
+   "path": "qa/reflock/r43b/SCREEN06_4_GRAY_geometry_same_camera.jpg",
+   "bytes": 108630,
+   "sha256": "80d8b3a73ee525ed822ac1e780b3b5ca67be5a4df33ef0e2f032eb3e439335a4"
+  },
+  {
+   "path": "qa/reflock/r43b/SCREEN06_5_DIFF_new_vs_approved.jpg",
+   "bytes": 188066,
+   "sha256": "a0d719a190cac51853b991eeef880bc7b75bc53687fd99bf0fc8d49b783b300a"
+  },
+  {
+   "path": "qa/reflock/r43b/SCREEN06_compare_summary.json",
+   "bytes": 1078,
+   "sha256": "a4abb19e901616bc732e2a7ece9236a9d6d620879ad0a1c0ab3abb577b0b5afe"
+  },
+  {
    "path": "qa/report_metrics.json",
    "bytes": 1112,
    "sha256": "19e17f9a21cff527b57089a43122a4e1396d5222f2b16ccc18093685071c4134"
@@ -45053,8 +45098,8 @@
   },
   {
    "path": "tools/screenkit/screen.html",
-   "bytes": 58277,
-   "sha256": "50e0af33fedd7c530ff2815da48529c77414aad2bce1d44d332cbbb6b8834b9d"
+   "bytes": 58449,
+   "sha256": "d64738f57fd9cb848b89c69a1e743bfaf9fd0be9c77ec75b17fff9ce04b65918"
   },
   {
    "path": "tools/screenkit/screen_export.cjs",

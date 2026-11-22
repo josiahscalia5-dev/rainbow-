@@ -267,7 +267,7 @@ for (const o of MESH) if (o.userData.fam === 'foam') o.material = new THREE.Shad
 // in the painted colour. App builds read the list from the prebaked manifest (the picture itself is not shipped).
 const FOAM = [];
 if (MANI?.foam) for (const f of MANI.foam) FOAM.push(f);
-else if (q.get('foampic') !== '0' && LAY.cams[0].ref_file !== null) {
+else if ((q.get('foampic') ?? (LAY.foam_from_picture ? '1' : '0')) === '1') {   // r43b: off for 06 (cost 2.8 points at the picture view for a small gain in motion)
   const loadImg = (src) => new Promise((r) => { const i = new Image(); i.onload = () => r(i); i.onerror = () => r(null); i.src = src; });
   const [img, mimg] = await Promise.all([loadImg('ref_0.png'), loadImg(LAY.cams[0].mask)]);
   if (img && mimg) { const cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height; const g = cv.getContext('2d'); g.drawImage(img, 0, 0); const D = g.getImageData(0, 0, img.width, img.height).data;
@@ -354,7 +354,7 @@ const lastS = painted.length ? Math.max(...painted.map((c) => c[0])) : S_REF + 2
 const runs = []; for (let s = lastS + 2.2, k = 0; s < LEVEL - 0.8; s += 1.15, k++) runs.push([s, [0, 0.25, 0.25, 0, -0.25, -0.25][k % 6], 0]);
 const LAYC = [...painted, ...runs].sort((a, b) => a[0] - b[0]);
 coins.forEach((c, i) => { const L = LAYC[i]; if (!L) { c.sp.visible = false; c.s = 1e9; c.got = 0; return; } const F = frameAt(L[0]); c.s = L[0]; c.lat = L[1]; c.h = 0;
-  at(L[0], c.p0).addScaledVector(F.r, L[1]).addScaledVector(F.n, coinD * 0.5);   // on the channel (the route passes through the painted coins' water points)
+  if (L[3] && q.get('coinsexact') === '1') c.p0.copy(L[3]); else at(L[0], c.p0).addScaledVector(F.r, L[1]).addScaledVector(F.n, coinD * 0.5);   // on the channel (route through the painted coins' water points); ?coinsexact=1 = QA test
   c.n0.copy(F.n); c.sp.position.copy(c.p0); });
 const coin3 = (() => { const geo = new THREE.CylinderGeometry(0.5, 0.5, 0.12, 48, 1); geo.rotateX(Math.PI / 2);
   const face = new THREE.MeshBasicMaterial({ map: ctex, toneMapped: false, alphaTest: 0.4 }), rim = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.86, 0.5, 0.08), toneMapped: false });
