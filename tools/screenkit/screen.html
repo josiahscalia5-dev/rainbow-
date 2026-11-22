@@ -29,6 +29,7 @@ html,body{margin:0;background:#1a0630;overflow:hidden;font-family:system-ui,-app
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { installControls } from './controls.js';
+import { bake as bakeAll, famOf, tplOnly, exportBake, exportTemplates, loadTemplates, applyTemplates, foamFromPicture } from './bake.js';   // r45: bake + artwork-sampled materials
 const q = new URLSearchParams(location.search);
 const LAY = await (await fetch('layout.json')).json();
 for (const [k, v] of [['c_LANE', String(LAY.lane ?? 0.3)], ['c_LAT_MAX', String((LAY.lane ?? 0.3) * 1.2)], ['speed', String(LAY.speed ?? 2.2)]]) if (!q.has(k)) q.set(k, v);
@@ -91,11 +92,13 @@ const SHARP = { uSharp: { value: new THREE.Vector2(915 / (H * renderer.getPixelR
 const sceneryMat = (base, rep, opts = {}) => new THREE.ShaderMaterial({
   side: THREE.DoubleSide, transparent: !!opts.transparent, depthWrite: !opts.transparent,
   uniforms: { uBase: { value: base }, uRep: { value: new THREE.Vector2(...rep) }, uBake: { value: null }, uBakeOn: { value: 0 }, uScroll: { value: new THREE.Vector2(0, 0) },
-    uTint: { value: new THREE.Color(...(opts.tint ?? [1, 1, 1])) }, uAlpha: { value: opts.alpha ?? 1 }, uDen: { value: null }, ...GLOW, ...SHARP },
-  vertexShader: 'varying vec2 vUv; varying vec3 vW; void main(){ vUv = uv; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
+    uTint: { value: new THREE.Color(...(opts.tint ?? [1, 1, 1])) }, uAlpha: { value: opts.alpha ?? 1 }, uDen: { value: null }, ...GLOW, ...SHARP,
+    uTpl: { value: null }, uTplOn: { value: 0 }, uTplMap: { value: 0 }, uTube: { value: new THREE.Vector4(0, 1, 0, 0) } },   // r45: artwork-sampled template (bake.js)
+  vertexShader: 'varying vec2 vUv; varying vec3 vW; varying vec3 vL; void main(){ vUv = uv; vL = position; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
   fragmentShader: `uniform sampler2D uBase; uniform vec2 uRep; uniform sampler2D uBake; uniform float uBakeOn; uniform vec2 uScroll; uniform vec3 uTint; uniform float uAlpha; uniform vec3 uGlow; uniform float uTime;
-    uniform sampler2D uDen; uniform vec2 uSharp; uniform float uLodBias; varying vec2 vUv; varying vec3 vW;
+    uniform sampler2D uDen; uniform vec2 uSharp; uniform float uLodBias; uniform sampler2D uTpl; uniform float uTplOn; uniform float uTplMap; uniform vec4 uTube; varying vec2 vUv; varying vec3 vW; varying vec3 vL;
     void main(){ vec3 c = texture2D(uBase, vUv * uRep).rgb * uTint;
+      if (uTplOn > 0.5) c = texture(uTpl, uTplMap > 0.5 ? vec2(vUv.x, (uTube.x - vL.z) / uTube.y) : vUv).rgb;   // the painting's own wall / ring / tray, from any camera
       if (uBakeOn > 0.5) { vec4 b = texture(uBake, vUv, uLodBias); vec4 dd = texture2D(uDen, vUv); float pd = (dd.r + dd.g / 255.0) * 4000.0;
         float magE = uSharp.x / max(max(length(dFdx(vW)), length(dFdy(vW))), 1e-6) / max(pd, 1.0);
         c = mix(c, b.rgb, dd.b * (1.0 - smoothstep(uSharp.y, uSharp.y * 2.3, magE))); }
@@ -106,9 +109,11 @@ const sceneryMat = (base, rep, opts = {}) => new THREE.ShaderMaterial({
 const WATER_U = { uT: { value: 0 }, ...GLOW };
 const SHARP_W = { uSharp: { value: new THREE.Vector2(SHARP.uSharp.value.x, +(q.get('sharpw') ?? 2.2)) }, uLodBias: SHARP.uLodBias };
 const waterMat = (halfW, len, along0, isPool) => new THREE.ShaderMaterial({ side: THREE.DoubleSide, polygonOffset: !!isPool, polygonOffsetFactor: isPool ? 2 : 0, polygonOffsetUnits: isPool ? 4 : 0,
-  uniforms: { ...WATER_U, ...SHARP_W, uBake: { value: null }, uBakeOn: { value: 0 }, uDen: { value: null }, uGeo: { value: new THREE.Vector4(halfW, len, along0, isPool ? 1 : 0) } },
+  uniforms: { ...WATER_U, ...SHARP_W, uBake: { value: null }, uBakeOn: { value: 0 }, uDen: { value: null }, uGeo: { value: new THREE.Vector4(halfW, len, along0, isPool ? 1 : 0) },
+    uSw: { value: null }, uSwOn: { value: 0 }, uSwGeo: { value: new THREE.Vector4(0, 1, 0, 0) }, uFlow: { value: +(q.get('flow') ?? LAY.water_flow ?? 1.2) } },   // r45: painted flow swatch (bake.js)
   vertexShader: 'varying vec2 vUv; varying vec3 vW; void main(){ vUv = uv; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
   fragmentShader: `uniform float uT; uniform vec3 uGlow; uniform sampler2D uBake; uniform float uBakeOn; uniform sampler2D uDen; uniform vec2 uSharp; uniform float uLodBias; uniform vec4 uGeo; varying vec2 vUv; varying vec3 vW;
+    uniform sampler2D uSw; uniform float uSwOn; uniform vec4 uSwGeo; uniform float uFlow;
     float hsh(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
     float nse(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(hsh(i), hsh(i + vec2(1, 0)), f.x), mix(hsh(i + vec2(0, 1)), hsh(i + vec2(1, 1)), f.x), f.y); }
     vec3 c3(float r, float g, float b){ return vec3(r, g, b) / 255.0; }
@@ -123,11 +128,12 @@ const waterMat = (halfW, len, along0, isPool) => new THREE.ShaderMaterial({ side
       vec3 blue = sh < 0.55 ? mix(bD, bM, sh / 0.55) : mix(bM, bB, (sh - 0.55) / 0.45), pink = sh < 0.55 ? mix(pD, pM, sh / 0.55) : mix(pM, pB, (sh - 0.55) / 0.45);
       float pin = 0.62 + 0.08 * sin(tp * 0.71 + sign(u) * 1.7), pkE = max(0.03, 1.5 * fwidth(u));
       float pk = smoothstep(pin - pkE, pin + pkE, au) * (1.0 - smoothstep(0.96 - pkE, 0.96 + pkE, au)) * (1.0 - uGeo.w * 0.6);
-      vec3 col = mix(blue, pink, pk);
+      vec3 col = mix(blue, pink, pk); float spk = 1.0;
+      if (uSwOn > 0.5) { col = texture(uSw, vec2(vUv.x, (d + uT * uFlow - uSwGeo.x) / uSwGeo.y)).rgb; spk = 0.45; }   // the painted river itself, flowing toward the camera
       for (int L = 0; L < 2; L++) { float cw = L == 0 ? 0.06 : 0.12, rl = L == 0 ? 0.22 : 0.4; vec2 g = vec2(uw / cw, (tp + float(L) * 0.37) / rl); vec2 cell = floor(g); float r = hsh(cell + float(L) * 13.0);
         if (r < 0.55) { float y0 = (cell.y + 0.5) * rl, len = rl * (0.25 + 0.3 * hsh(cell + 6.6)), ph = (tp - y0) / (0.5 * len);
           float x0 = (cell.x + 0.25 + 0.5 * hsh(cell + 3.3)) * cw; float wid = L == 0 ? 0.006 : 0.01, ww = max(wid, 0.9 * fwidth(uw));
-          float I = 0.8 * exp(-pow((uw - x0) / ww, 2.0)) * (1.0 - smoothstep(0.3, 1.0, abs(ph))) * (wid / ww); col = mix(col, vec3(0.93, 1.0, 1.0), clamp(I, 0.0, 1.0)); } }
+          float I = spk * 0.8 * exp(-pow((uw - x0) / ww, 2.0)) * (1.0 - smoothstep(0.3, 1.0, abs(ph))) * (wid / ww); col = mix(col, vec3(0.93, 1.0, 1.0), clamp(I, 0.0, 1.0)); } }
       if (uBakeOn > 0.5) { float ph = fract(uT * 0.8); vec4 b1 = texture(uBake, vUv + vec2(0.0, ph * 0.006), uLodBias), b2 = texture(uBake, vUv + vec2(0.0, fract(ph + 0.5) * 0.006), uLodBias);
         vec4 b = mix(b2, b1, abs(1.0 - 2.0 * ph)); vec4 dd = texture2D(uDen, vUv); float pd = (dd.r + dd.g / 255.0) * 4000.0;
         float magE = uSharp.x / max(max(length(dFdx(vW)), length(dFdy(vW))), 1e-6) / max(pd, 1.0); col = mix(col, b.rgb, dd.b * (1.0 - smoothstep(uSharp.y, uSharp.y * 2.3, magE))); }
@@ -137,8 +143,7 @@ const waterMat = (halfW, len, along0, isPool) => new THREE.ShaderMaterial({ side
 // ---------------- the scenery: Blender GLB (screen kit) ----------------
 const gl = await new GLTFLoader().loadAsync('scene.glb');
 const MESH = []; gl.scene.traverse((o) => { if (o.isMesh) MESH.push(o); });
-const famOf = (n) => /^tunnel(far)?_/.test(n) ? 'tunnel' : /^ring_/.test(n) ? 'ring' : /^water_/.test(n) ? 'water' : /^pool_/.test(n) ? 'pool' : /^flume_/.test(n) ? 'flume'
-  : /^foam_/.test(n) ? 'foam' : /^paddle_/.test(n) ? 'copper' : /^funnel_/.test(n) ? 'funnel' : /^wall_/.test(n) ? 'wall' : /^arrow_/.test(n) ? 'arrow' : 'tunnel';   // r44: funnel / wall / arrow (04)
+// famOf: bake.js (shared with the bake + the world page)
 const bbox = (o) => { o.geometry.computeBoundingBox(); return o.geometry.boundingBox; };
 const NSEG = MESH.filter((o) => /^water_/.test(o.name)).length, SEG_LEN = RLEN / Math.max(1, NSEG);
 for (const o of MESH) {
@@ -167,88 +172,19 @@ if (DRUM) { const cap = new THREE.Mesh(new THREE.CircleGeometry(DRUM.r * 1.02, 6
 const CAMS = LAY.cams.map((c) => { const k = new THREE.PerspectiveCamera(c.fov ?? LAY.fov, c.img[0] / c.img[1], 0.05, 300); k.rotation.order = 'YXZ'; k.position.copy(V3(c.pos)); k.rotation.set(c.pitch, c.yaw, 0);
   k.updateMatrixWorld(); k.updateProjectionMatrix(); k.userData = c; return k; });
 window.REFCAM = CAMS; window.kitDebug = { THREE, scene, world, MESH, CAMS, renderer, camera, frameAt, at };
-const BAKE_STATS = {}, BAKE_DATA = {};
-const MANI = q.get('prebaked') !== '1' ? null : await fetch('baked/manifest.json').then((r) => (r.ok ? r.json() : null)).catch(() => null);
+let BAKE_STATS = {}, BAKE_DATA = {}, TPL = {};
+// r45: the game folder built by tools/screenkit/build.py opens PRE-BAKED (baked/manifest.json from the offline bake); ?live=1 bakes in the browser
+const MANI = q.get('live') === '1' || q.get('prebaked') === '0' ? null : await fetch('baked/manifest.json').then((r) => (r.ok ? r.json() : null)).catch(() => null);
 if (MANI) {
   const cache = {}; const ld = (f, den) => (cache[f] ??= tl.loadAsync('baked/' + f).then((t) => { t.colorSpace = THREE.NoColorSpace; if (den) { t.generateMipmaps = false; t.minFilter = t.magFilter = THREE.LinearFilter; } else { t.anisotropy = 8; } return t; }));
   const all = []; world.traverse((o) => { if (o.isMesh && MANI.meshes[o.name]) all.push(o); });
   await Promise.all(all.map(async (o) => { const e = MANI.meshes[o.name]; o.material.uniforms.uBake.value = await ld(e.bake); o.material.uniforms.uDen.value = await ld(e.den, true); o.material.uniforms.uBakeOn.value = 1; BAKE_STATS[o.name] = e.cov; }));
   BAKE_STATS._prebaked = all.length;
+  if (q.get('tpl') !== '0') TPL = await loadTemplates(THREE, tl, MANI);
 } else if (q.get('bake') !== '0' && q.get('gray') !== '1') {
-  const NC = CAMS.length;
-  const tex = await Promise.all(CAMS.flatMap((c) => [loadRaw(c.userData.plate), loadRaw(c.userData.mask)]));
-  const depthOf = (cam) => { const rt = new THREE.WebGLRenderTarget(cam.userData.img[0], cam.userData.img[1]); rt.depthTexture = new THREE.DepthTexture(cam.userData.img[0], cam.userData.img[1]);
-    renderer.setRenderTarget(rt); renderer.render(scene, cam); renderer.setRenderTarget(null); return rt; };
-  const DEP = CAMS.map(depthOf);
-  const vp = (c) => new THREE.Matrix4().multiplyMatrices(c.projectionMatrix, c.matrixWorldInverse);
-  const uni = { uNoDepth: { value: q.get('bakedbg') === 'nodepth' ? 1 : q.get('bakedbg') === 'raw' ? 2 : 0 }, uNF: { value: new THREE.Vector2(0.05, 300) }, uDens: { value: new THREE.Vector2(...(q.get('dens') ?? (LAY.bake_dens ?? [15, 60]).join(',')).split(',').map(Number)) }, uMode: { value: 0 } };
-  let decl = '', body = '';
-  CAMS.forEach((c, i) => { Object.assign(uni, { [`uP${i}`]: { value: tex[2 * i] }, [`uM${i}`]: { value: tex[2 * i + 1] }, [`uD${i}`]: { value: DEP[i].depthTexture }, [`uVP${i}`]: { value: vp(c) }, [`uImg${i}`]: { value: new THREE.Vector2(...c.userData.img) } });
-    decl += `uniform sampler2D uP${i}, uM${i}, uD${i}; uniform mat4 uVP${i}; uniform vec2 uImg${i};\n`;
-    body += `{ float qd; vec4 a = look(uVP${i}, uP${i}, uM${i}, uD${i}, uImg${i}, qd); if (qd > bq) { bq = qd; best = a; } }\n`; });
-  const bakeMat = new THREE.ShaderMaterial({ side: THREE.DoubleSide, depthTest: false, depthWrite: false, uniforms: uni,
-    vertexShader: 'varying vec3 vW; void main(){ vW = (modelMatrix * vec4(position, 1.0)).xyz; gl_Position = vec4(uv * 2.0 - 1.0, 0.0, 1.0); }',
-    fragmentShader: `${decl} uniform vec2 uNF, uDens; uniform float uMode; uniform float uNoDepth; varying vec3 vW;
-      float lin(float d){ float z = d * 2.0 - 1.0; return 2.0 * uNF.x * uNF.y / (uNF.y + uNF.x - z * (uNF.y - uNF.x)); }
-      vec4 look(mat4 VP, sampler2D P, sampler2D M, sampler2D D, vec2 img, out float qd){ qd = 0.0;
-        vec4 cl = VP * vec4(vW, 1.0); vec3 nd = cl.xyz / max(cl.w, 1e-5); vec2 su = nd.xy * 0.5 + 0.5, px = su * img;
-        if (cl.w <= 0.05 || abs(nd.x) > 0.997 || abs(nd.y) > 0.997) return vec4(0.0);
-        if (uNoDepth < 0.5 && cl.w > lin(texture2D(D, su).r) * 1.015 + 0.03) return vec4(0.0);
-        float pxu = min(length(dFdx(px)) / max(length(dFdx(vW)), 1e-7), length(dFdy(px)) / max(length(dFdy(vW)), 1e-7));
-        qd = pxu;
-        float w = mix(1.0, 0.6, step(0.5, texture2D(M, su).r)) * mix(0.8, 1.0, smoothstep(uDens.x, uDens.y, pxu));
-        if (uMode > 0.5) { float pw = pxu / 4000.0; return vec4(floor(pw * 255.0) / 255.0, fract(pw * 255.0), 0.0, w); }
-        return vec4(texture2D(P, su).rgb, w); }
-      void main(){ float bq = -1.0; vec4 best = vec4(0.0);
-        if (uNoDepth > 1.5) { vec4 cl = uVP0 * vec4(vW, 1.0); vec3 nd = cl.xyz / max(cl.w, 1e-5); gl_FragColor = vec4(clamp(cl.w / 40.0, 0.0, 1.0), nd.x * 0.25 + 0.5, nd.y * 0.25 + 0.5, 1.0); return; }
-${body}        gl_FragColor = best; }` });
-  const bakeScene = new THREE.Scene(), oc = new THREE.OrthographicCamera();
-  const bakeOne = (o, bw, bh) => {
-    const rt = new THREE.WebGLRenderTarget(bw, bh); const tmp = new THREE.Mesh(o.geometry, bakeMat); tmp.matrixAutoUpdate = false; o.updateWorldMatrix(true, false); tmp.matrix.copy(o.matrixWorld); tmp.frustumCulled = false;
-    bakeScene.add(tmp); renderer.setRenderTarget(rt); renderer.setClearColor(0x000000, 0); renderer.clear(); renderer.render(bakeScene, oc); renderer.setRenderTarget(null); bakeScene.remove(tmp);
-    const px = new Uint8Array(bw * bh * 4); renderer.readRenderTargetPixels(rt, 0, 0, bw, bh, px); rt.dispose();
-    let cov = 0; for (let i = 3; i < px.length; i += 4) cov += px[i]; cov /= 255 * bw * bh;
-    if (cov < 0.002) return { cov, tex: null };
-    const A = new Float32Array(bw * bh); for (let i = 0; i < bw * bh; i++) A[i] = px[i * 4 + 3] / 255;
-    const blur = (src, r) => { const o2 = new Float32Array(src.length), t2 = new Float32Array(src.length);
-      for (let y = 0; y < bh; y++) { let s = 0; for (let x = -r; x <= r; x++) s += src[y * bw + Math.min(bw - 1, Math.max(0, x))]; for (let x = 0; x < bw; x++) { t2[y * bw + x] = s / (2 * r + 1); s += src[y * bw + Math.min(bw - 1, x + r + 1)] - src[y * bw + Math.max(0, x - r)]; } }
-      for (let x = 0; x < bw; x++) { let s = 0; for (let y = -r; y <= r; y++) s += t2[Math.min(bh - 1, Math.max(0, y)) * bw + x]; for (let y = 0; y < bh; y++) { o2[y * bw + x] = s / (2 * r + 1); s += t2[Math.min(bh - 1, y + r + 1) * bw + x] - t2[Math.max(0, y - r) * bw + x]; } }
-      return o2; };
-    const rb = Math.max(3, Math.round(Math.max(bw, bh) / 160)); const Ab = blur(blur(A, rb), rb);
-    const lv = [{ w: bw, h: bh, c: new Float32Array(bw * bh * 4) }]; for (let i = 0; i < bw * bh; i++) { const a = A[i] > 0.05 ? 1 : 0; for (let c = 0; c < 3; c++) lv[0].c[i * 4 + c] = px[i * 4 + c] * a; lv[0].c[i * 4 + 3] = a; }
-    while (lv[lv.length - 1].w > 1 || lv[lv.length - 1].h > 1) { const L = lv[lv.length - 1], w2 = Math.max(1, L.w >> 1), h2 = Math.max(1, L.h >> 1), c2 = new Float32Array(w2 * h2 * 4);
-      for (let y = 0; y < h2; y++) for (let x = 0; x < w2; x++) for (let dy = 0; dy < 2; dy++) for (let dx = 0; dx < 2; dx++) { const sx = Math.min(L.w - 1, x * 2 + dx), sy = Math.min(L.h - 1, y * 2 + dy), si = (sy * L.w + sx) * 4, di = (y * w2 + x) * 4; for (let c = 0; c < 4; c++) c2[di + c] += L.c[si + c] * 0.25; }
-      lv.push({ w: w2, h: h2, c: c2 }); }
-    for (let l = lv.length - 2; l >= 0; l--) { const L = lv[l], U2 = lv[l + 1];
-      for (let y = 0; y < L.h; y++) for (let x = 0; x < L.w; x++) { const i = (y * L.w + x) * 4, a = L.c[i + 3]; if (a >= 0.999) continue;
-        const ui = (Math.min(U2.h - 1, y >> 1) * U2.w + Math.min(U2.w - 1, x >> 1)) * 4, ua = Math.max(U2.c[ui + 3], 1e-6);
-        for (let c = 0; c < 3; c++) L.c[i + c] += (1 - a) * U2.c[ui + c] / ua; L.c[i + 3] = 1; } }
-    const out = new Uint8Array(bw * bh * 4); for (let i = 0; i < bw * bh; i++) { for (let c = 0; c < 3; c++) out[i * 4 + c] = Math.round(Math.min(255, lv[0].c[i * 4 + c])); out[i * 4 + 3] = Math.round(255 * Math.min(1, Ab[i] * 1.15)); }
-    const t = new THREE.DataTexture(out, bw, bh); t.colorSpace = THREE.NoColorSpace; t.generateMipmaps = true; t.minFilter = THREE.LinearMipmapLinearFilter; t.magFilter = THREE.LinearFilter; t.anisotropy = 8; t.needsUpdate = true;
-    const dw = Math.max(4, bw >> 2), dh = Math.max(4, bh >> 2), rd = new THREE.WebGLRenderTarget(dw, dh); bakeMat.uniforms.uMode.value = 1; bakeScene.add(tmp);
-    renderer.setRenderTarget(rd); renderer.setClearColor(0x000000, 0); renderer.clear(); renderer.render(bakeScene, oc); renderer.setRenderTarget(null); bakeScene.remove(tmp); bakeMat.uniforms.uMode.value = 0;
-    const dp = new Uint8Array(dw * dh * 4); renderer.readRenderTargetPixels(rd, 0, 0, dw, dh, dp); rd.dispose();
-    for (let y = 0; y < dh; y++) for (let x = 0; x < dw; x++) { let a = 0, n = 0; for (let yy = Math.floor(y * bh / dh); yy < Math.floor((y + 1) * bh / dh); yy++) for (let xx = Math.floor(x * bw / dw); xx < Math.floor((x + 1) * bw / dw); xx++) { a += Ab[yy * bw + xx]; n++; }
-      const i = (y * dw + x) * 4; dp[i + 2] = Math.round(255 * Math.min(1, 1.15 * a / Math.max(1, n))); dp[i + 3] = 255; }
-    const den = new THREE.DataTexture(dp, dw, dh); den.minFilter = den.magFilter = THREE.LinearFilter; den.needsUpdate = true;
-    BAKE_DATA[o.name] = { w: bw, h: bh, px: out, dw, dh, dp, cov };
-    return { cov, tex: t, den }; };
-  // bake resolution per family: ~picture density where the picture can supply it, capped for memory
-  const RES = (o) => { const f = o.userData.fam, sz = bbox(o).getSize(new THREE.Vector3()); const ov = LAY.bake_res?.[o.name.replace(/_\d+$/, '')] ?? LAY.bake_res?.[f]; if (ov) return ov;   // r44: per-screen overrides
-    if (f === 'tunnel') return /far/.test(o.name) ? [1024, 512] : [+(q.get('tunres') ?? 4096), 1024]; if (f === 'water') return [512, 1024]; if (f === 'pool') return sz.z > 6 ? [512, 1024] : [1024, 1024]; if (f === 'ring') return [2048, 128]; if (f === 'flume') return [256, 512];
-    if (f === 'copper') return [256, 256]; if (f === 'funnel') return [2048, 512]; if (f === 'wall') return [2048, 512]; return [128, 128]; };
-  const all = []; world.traverse((o) => { if (o.isMesh && o.name !== 'drum_end' && o.userData.fam !== 'foam' && o.userData.fam !== 'arrow') all.push(o); });
-  const tStart = performance.now();
-  for (const o of all) { const [bw, bh] = RES(o); const r = bakeOne(o, bw, bh); BAKE_STATS[o.name] = +r.cov.toFixed(3);
-    if (r.tex) { o.material.uniforms.uBake.value = r.tex; o.material.uniforms.uDen.value = r.den; o.material.uniforms.uBakeOn.value = 1; o.userData.bakeCov = r.cov; } }
-  // repeated furniture: the best-seen instance of each family is the painted template for the instances no picture showed well
-  for (const fam of ['ring', 'tunnel']) {
-    const L = all.filter((o) => o.userData.fam === fam && !/far/.test(o.name)); const best = L.reduce((b, o) => ((o.userData.bakeCov ?? 0) > (b?.userData.bakeCov ?? 0) ? o : b), null);
-    if (!best || !best.material.uniforms.uBake.value) continue;
-    for (const o of L) if ((o.userData.bakeCov ?? 0) < 0.05) { for (const k of ['uBake', 'uDen']) o.material.uniforms[k].value = best.material.uniforms[k].value; o.material.uniforms.uBakeOn.value = 1; o.userData.template = best.name; BAKE_DATA[o.name] = { template: best.name }; }
-  }
-  BAKE_STATS._ms = Math.round(performance.now() - tStart); DEP.forEach((d) => d.dispose());
+  ({ BAKE_STATS, BAKE_DATA, TPL } = await bakeAll({ THREE, renderer, scene, world, MESH, CAMS, LAY, q, loadRaw, bbox }));
 }
+if (q.get('gray') !== '1') BAKE_STATS._tpl_applied = applyTemplates(THREE, MESH, TPL);
 // ?gray=1: GEOMETRY TEST - every scenery surface plain gray (lit by its own normal) with a 0.5 u world grid, back faces orange, holes green
 // (with &sentinel=1): proves the drum, channel, rings and pool are real connected 3D geometry; no picture pixel is used (bake skipped)
 const GRAY = q.get('gray') === '1';
@@ -262,10 +198,8 @@ if (GRAY) { const famCol = { tunnel: [0.62, 0.62, 0.66], ring: [0.78, 0.72, 0.55
         gl_FragColor = vec4(c, 1.0); }` });
   world.traverse((o) => { if (!o.isMesh || o.name === 'bubbles') return; const f = o.userData.fam ?? (o.name === 'drum_end' ? 'foam' : 'tunnel'); o.material = gm(famCol[f] ?? famCol.tunnel); }); }
 window.bakeStats = () => BAKE_STATS;
-window.bakeExport = (name) => { const d = BAKE_DATA[name]; if (!d) return null; if (d.template) return { template: d.template };
-  const png = (w, h, px, type = 'image/png', qual = 0.9) => { const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'), im = g.createImageData(w, h);
-    for (let y = 0; y < h; y++) im.data.set(px.subarray((h - 1 - y) * w * 4, (h - y) * w * 4), y * w * 4); g.putImageData(im, 0, 0); return c.toDataURL(type, qual); };
-  return { bake: png(d.w, d.h, d.px, 'image/jpeg', +(q.get('jpegq') ?? 0.96)), den: png(d.dw, d.dh, d.dp), cov: +d.cov.toFixed(3) }; };   // app bake quality (0.9 cost 2.4 points)
+window.bakeExport = (name) => exportBake(BAKE_DATA, name, q);
+window.tplExport = () => exportTemplates(TPL, q);
 window.bakeNames = () => Object.keys(BAKE_DATA);
 // foam domes: the GN foam banks keep a soft lavender-white shade (no picture bake needed: small, many)
 for (const o of MESH) if (o.userData.fam === 'foam') o.material = new THREE.ShaderMaterial({ uniforms: { uL: { value: new THREE.Vector3(-0.25, 0.8, 0.55).normalize() }, ...GLOW },
@@ -279,20 +213,7 @@ for (const o of MESH) if (o.userData.fam === 'foam') o.material = new THREE.Shad
 // in the painted colour. App builds read the list from the prebaked manifest (the picture itself is not shipped).
 const FOAM = [];
 if (MANI?.foam) for (const f of MANI.foam) FOAM.push(f);
-else if ((q.get('foampic') ?? (LAY.foam_from_picture ? '1' : '0')) === '1') {   // r43b: off for 06 (cost 2.8 points at the picture view for a small gain in motion)
-  const loadImg = (src) => new Promise((r) => { const i = new Image(); i.onload = () => r(i); i.onerror = () => r(null); i.src = src; });
-  const [img, mimg] = await Promise.all([loadImg('ref_0.png'), loadImg(LAY.cams[0].mask)]);
-  if (img && mimg) { const cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height; const g = cv.getContext('2d'); g.drawImage(img, 0, 0); const D = g.getImageData(0, 0, img.width, img.height).data;
-    const mc = document.createElement('canvas'); mc.width = img.width; mc.height = img.height; const mg = mc.getContext('2d'); mg.drawImage(mimg, 0, 0, img.width, img.height); const MD = mg.getImageData(0, 0, img.width, img.height).data;
-    const cam = CAMS[0], rc = new THREE.Raycaster(), surf = MESH.filter((o) => ['water', 'pool', 'flume'].includes(o.userData.fam)), all = MESH.filter((o) => o.userData.fam !== 'foam'), C = 10;
-    for (let y = (LAY.hud_rows ?? 210); y < img.height - C; y += C) for (let x = 0; x < img.width - C; x += C) { let n = 0, r = 0, gg = 0, b = 0;
-      for (let yy = y; yy < y + C; yy += 2) for (let xx = x; xx < x + C; xx += 2) { const i = (yy * img.width + xx) * 4, mx = Math.max(D[i], D[i + 1], D[i + 2]), mn = Math.min(D[i], D[i + 1], D[i + 2]);
-        if (MD[i] < 128 && mx > 224 && mx - mn < 52) { n++; r += D[i]; gg += D[i + 1]; b += D[i + 2]; } }
-      if (n < 18) continue;   // >= 72 % of the cell is painted foam
-      rc.setFromCamera(new THREE.Vector2(((x + C / 2) / img.width) * 2 - 1, -((y + C / 2) / img.height) * 2 + 1), cam); const h = rc.intersectObjects(all, false)[0];
-      if (!h || !surf.includes(h.object) || h.distance > 14) continue;
-      const wsz = C * h.distance / (cam.userData.focal_px ?? LAY.focal_px);   // world size of the cell
-      FOAM.push([h.point.x, h.point.y, h.point.z, Math.max(0.035, wsz * 0.9), +(r / n / 255).toFixed(3), +(gg / n / 255).toFixed(3), +(b / n / 255).toFixed(3)]); } } }
+else if ((q.get('foampic') ?? (LAY.foam_from_picture ? '1' : '0')) === '1') FOAM.push(...await foamFromPicture({ THREE, LAY, CAMS, MESH }));   // r43b: off for 06
 window.foamPainted = () => FOAM.slice();
 if (FOAM.length) { const fGeo = new THREE.IcosahedronGeometry(0.5, 2), Lw = new THREE.Vector3(-0.25, 0.8, 0.55).normalize(), mI = new THREE.Matrix4(), qI = new THREE.Quaternion(), pI = new THREE.Vector3(), sI = new THREE.Vector3();
   fGeo.setAttribute('aCol', new THREE.InstancedBufferAttribute(new Float32Array(FOAM.flatMap((f) => [f[4], f[5], f[6], 1])), 4));

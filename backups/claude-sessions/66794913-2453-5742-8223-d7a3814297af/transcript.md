@@ -1361,3 +1361,133 @@ Testing the new geometry build on 05, comparing the asset-built rings with the o
 >    NEW (408, [-0.738, -0.036, 0.0], [0.6, 2.537, 0.0])
 > objects old 58 new 58 faces old 100568 new 139408
 
+### 🤖 Claude — 2026-11-22T18:08:22.469Z
+
+Paddles now match the old ones exactly. The rings still need the band turned: in Blender 5.3 the profile's X follows the curve normal, so the normal must point along the drum axis.
+
+### 🤖 Claude — 2026-11-22T18:08:28.826Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/gn_assets.py'; s=open(p).read()\na=\"\"\"    # radial normal (Free mode, normal = the point's direction from the centre): the band's width then runs along the drum axis, exactly as the\n    # r43 rings (a 3D poly circle with Z-up twist); Blender 5.3: Mode is a menu socket\n    nrm.inputs['Mode'].default_value = 'Free'; pos = N.new('GeometryNodeInputPosition'); nv = N.new('ShaderNodeVectorMath'); nv.operation = 'NORMALIZE'\n    _link(ng, pos.outputs[0], nv.inputs[0]); _link(ng, nv.outputs[0], nrm.inputs['Normal'])\n\"\"\"\nb=\"\"\"    # measure …[+1037 chars]`
+
+### 🧑 User — 2026-11-22T18:08:32.111Z
+
+> ↩︎ result: 1
+> 1
+> 18:08:31 | INFO: Blender create Mesh node ring_00_curve
+> 18:08:31 | INFO: Blender create Mesh node ring_01_curve
+> 18:08:31 | INFO: Blender create Mesh node ring_02_curve
+> 18:08:31 | INFO: Blender create Mesh node ring_03_curve
+> 18:08:31 | INFO: Blender create Mesh node ring_04_curve
+> 18:08:31 | INFO: Blender create Mesh node ring_05_curve
+> 18:08:31 | INFO: Blender create Mesh node ring_06_curve
+> 18:08:31 | INFO: Blender create Mesh node ring_07_curve
+
+### 🤖 Claude — 2026-11-22T18:08:35.618Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; blender -b --factory-startup --python $S/geo/cmp.py -- $S/base/w05/game/scene.glb $S/geo/new05.glb 2>&1 | grep -E '^ring_0|^   NEW|^objects' | grep -A1 '^ring' ; blender -b --factory-startup --python $S/geo/cmp.py -- $S/base/w05/game/scene.glb $S/geo/new05.glb 2>&1 | grep '^objects'", "description": "Show ring comparison lines", "timeout": 120000}`
+
+### 🧑 User — 2026-11-22T18:08:38.452Z
+
+> ↩︎ result: ring_00 OLD (2560, [-1.586, 3.832, -0.927], [1.177, 4.152, 1.836]) 
+>    NEW (2544, [-1.583, 3.832, -0.924], [1.174, 4.152, 1.833])
+> ring_01 OLD (2560, [-1.586, 6.432, -0.927], [1.177, 6.752, 1.836]) 
+>    NEW (2544, [-1.583, 6.432, -0.924], [1.174, 6.752, 1.833])
+> objects old 58 new 58 faces old 100568 new 139408
+
+### 🤖 Claude — 2026-11-22T18:10:44.688Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/screenkit/bake.js", "content": "// ======================================================================================================================================\n// Rainbow screen kit - BAKE + ARTWORK-SAMPLED MATERIALS (round 45; the bake itself = round 43 screen.html, moved here unchanged so the build\n// cache can key the bake on THIS file only: a change to a page's materials / water shader no longer re-bakes).\n// 1. bake(): the approved picture(s) baked ONCE onto every mesh from the camera(s) fitted to them (depth-tested, masked where the g …[+24610 chars]`
+
+### 🧑 User — 2026-11-22T18:10:44.782Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/screenkit/bake.js (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T18:11:07.911Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/bake.js'; s=open(p).read()\na=\"\"\"    bodyQ += `{ float qd; vec4 a = look(uVP${i}, uP${i}, uM${i}, uD${i}, uImg${i}, qd); float qq = a.a > 0.0 ? qd * (a.a < 0.7 ? 0.25 : 1.0) * smoothstep(0.0, 0.08, 1.0 - max(abs(a.a), 0.0)) : 0.0; qq = a.a > 0.0 ? qd * (a.a < 0.7 ? 0.25 : 1.0) : 0.0; if (qq > bq) { bq = qq; best = a; } }\\\\n`; });\"\"\"\nb=\"\"\"    // fusion quality: picture px per world unit, x 0.25 inside the game-drawn mask (Benny / coins: the clean plate there is filled in)\n    bodyQ += `{ float qd; vec4 a = look(uVP${i}, uP${i}, uM$ …[+317 chars]`
+
+### 🧑 User — 2026-11-22T18:11:07.986Z
+
+> ↩︎ result: 48:    bodyQ += `{ float qd; vec4 a = look(uVP${i}, uP${i}, uM${i}, uD${i}, uImg
+
+### 🤖 Claude — 2026-11-22T18:11:09.190Z
+
+Now wiring `screen.html` to the new bake module and the artwork-sampled materials:
+
+### 🤖 Claude — 2026-11-22T18:11:37.696Z
+
+> 🔧 **Bash** `{"command": "cp tools/screenkit/screen.html /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/screen.html.r44 && python3 - <<'EOF'\np='tools/screenkit/screen.html'; s=open(p).read()\nR=[]\nR.append((\"\"\"import { installControls } from './controls.js';\nconst q = new URLSearchParams(location.search);\"\"\",\"\"\"import { installControls } from './controls.js';\nimport { bake as bakeAll, famOf, tplOnly, exportBake, exportTemplates, loadTemplates, applyTemplates, foamFromPicture } from './bake.js';   // r45: bake + artwork-sampled materials\nconst q = new URLSear …[+7332 chars]`
+
+### 🧑 User — 2026-11-22T18:11:37.899Z
+
+> ↩︎ result: 32:import { bake as bakeAll, famOf, tplOnly, exportBake, exportTemplates, loadTemplates, applyTemplates, foamFromPicture } from './bake.js';   // r45: bake + artwork-sampled materials
+> 177:const MANI = q.get('live') === '1' || q.get('prebaked') === '0' ? null : await fetch('baked/manifest.json').then((r) => (r.ok ? r.json() : null)).catch(() => null);
+> 178:if (MANI) {
+> 180:  const all = []; world.traverse((o) => { if (o.isMesh && MANI.meshes[o.name]) all.push(o); });
+> 181:  await Promise.all(all.map(async (o) => { const e = MANI.meshes[o.name]; o.material.uniforms.uBake.value = await ld(e.bake); o.material.uniforms.uDen.value = await ld(e.den, true); o.material.uniforms.uBakeOn.value = 1; BAKE_STATS[o.name] = e.cov; }));
+> 183:  if (q.get('tpl') !== '0') TPL = await loadTemplates(THREE, tl, MANI);
+> 215:if (MANI?.foam) for (const f of MANI.foam) FOAM.push(f);
+> syntax-ok
+
+### 🤖 Claude — 2026-11-22T18:11:46.415Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/screen_export.cjs'; s=open(p).read()\na=\"await page.goto(`http://127.0.0.1:${port}/play3.html?w=412&h=915`);\"\nb=\"await page.goto(`http://127.0.0.1:${port}/play3.html?w=412&h=915&live=1`);   // r45: the page opens pre-baked by default; the export bakes live\"\nassert s.count(a)==1; s=s.replace(a,b)\na=\"    fs.writeFileSync(path.join(B, 'manifest.json'), JSON.stringify(man)); console.log('exported', Object.keys(man.meshes).length, 'meshes');\"\nb=\"\"\"    // r45: the artwork-sampled materials (bake.js templates) -> tpl_<family>.jpg + manif …[+839 chars]`
+
+### 🧑 User — 2026-11-22T18:11:46.470Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-22T18:11:51.563Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/const t = await tl.loadAsync(base + m.file); t.colorSpace = THREE.NoColorSpace; t.flipY = false;/const t = await tl.loadAsync(base + m.file); t.colorSpace = THREE.NoColorSpace;   \\/\\/ default flipY: same orientation as the in-page DataTexture/' tools/screenkit/bake.js && grep -c \"default flipY\" tools/screenkit/bake.js", "description": "Fix template image orientation on load"}`
+
+### 🧑 User — 2026-11-22T18:11:51.605Z
+
+> ↩︎ result: 1
+> [This command modified 1 file you've previously read: tools/screenkit/bake.js. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-22T18:12:10.812Z
+
+Now the automated preview checker. First a quick look at the existing comparison tool so the checker reuses it:
+
+### 🤖 Claude — 2026-11-22T18:12:11.755Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,25p tools/screenkit/compare_screen.py | cut -c1-220; grep -n \"def \\|look\" tools/screenkit/compare_screen.py | head -20", "description": "Read compare_screen.py usage and metrics"}`
+
+### 🧑 User — 2026-11-22T18:12:11.802Z
+
+> ↩︎ result: """Rainbow screen kit - measure a game frame of a screen against its approved picture with the skill's compare_to_approved.py (the same
+> formulas as every earlier round, incl. the Bubble Dash 90.7 %): scenery = the picture minus what the game draws itself (= the bake mask
+> from segment.py: HUD, title, Benny + his splash ring, coins, loose bubbles), mapped into the 412x915 phone frame exactly like the picture.
+>   python3 -I tools/screenkit/compare_screen.py <NN> <NEW frame> <mask.png> <out dir> [--before <frame>] [--tag NAME]
+> Prints and writes <out>/<tag>_summary.json. Thresholds are the skill's own (20 levels); never changed to report higher numbers."""
+> import sys, os, json, subprocess, argparse
+> from PIL import Image, ImageOps
+> HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.abspath(os.path.join(HERE, '..', '..'))
+> ap = argparse.ArgumentParser(); ap.add_argument('nn'); ap.add_argument('frame'); ap.add_argument('mask'); ap.add_argument('out'); ap.add_argument('--before'); ap.add_argument('--tag', default='new')
+> a = ap.parse_args(); os.makedirs(a.out, exist_ok=True)
+> ref = json.load(open(os.path.join(REPO, '.claude/skills/rainbow-screen-builder/screens.json')))['screens'] …[+1419 chars]
+
+### 🤖 Claude — 2026-11-22T18:12:19.413Z
+
+> 🔧 **Bash** `{"command": "grep -n \"KEYS\\b\\|cam_keys\" tools/world/world.html | head -8 | cut -c1-240; grep -n \"sectionInfo = \" tools/world/world.html | cut -c1-400; python3 -c \"\nimport json; d=json.load(open('qa/world/r44/world_v4/world.json')); print(d.keys()); print([ (a['id'], round(a['s0'],2), round(a.get('s1',0),2)) for a in d['areas']]); print(d['cam_keys'][:3] if isinstance(d['cam_keys'],list) else d['cam_keys'])\" 2>&1 | cut -c1-600", "description": "Inspect world page keys and area ranges"}`
+
+### 🧑 User — 2026-11-22T18:12:19.499Z
+
+> ↩︎ result: 301:  const ZB0 = SEC.benny.bubble[2], kB = WD.cam_keys.find((k) => k.area === A.id).s;
+> 410:  const key = WD.cam_keys.find((k) => k.area === A.id), cd = A.kind === 'kit' ? 2 * (A.LAY.coin_radius ?? 0.11) : coinD;
+> 432:const KEYS = WD.cam_keys.map((k) => { const Mk = camFrame(k.s, new THREE.Matrix4()), Mi = Mk.clone().invert(), Pk = at(k.s, new THREE.Vector3());
+> 435:const rigAt = (s) => { let i = KEYS.findIndex((k) => k.s > s); if (i === 0) return KEYS[0]; if (i < 0) return KEYS[KEYS.length - 1]; const a = KEYS[i - 1], b = KEYS[i], w = sstep(a.s, b.s, s);
+> 513:window.sectionInfo = () => ({ LEVEL: +LEVEL.toFixed(3), S_REF: WD.start_s, meshes: MESH.length, coins: LAYC.length, areas: WD.areas.map((A) => ({ id: A.id, s0: +A.s0.toFixed(2), s1: +A.s1.toFixed(2) })), keys: WD.cam_keys.map((k) => ({ 
+> 515:window.worldDebug = { THREE, scene, world, AREA, RP, at, KEYS };
+> 513:window.sectionInfo = () => ({ LEVEL: +LEVEL.toFixed(3), S_REF: WD.start_s, meshes: MESH.length, coins: LAYC.length, areas: WD.areas.map((A) => ({ id: A.id, s0: +A.s0.toFixed(2), s1: +A.s1.toFixed(2) })), keys: WD.cam_keys.map((k) => ({ area: k.area, s: +k.s.toFixed(3), ref: k.ref })), screen: 'world' });
+> dict_keys(['version' …[+820 chars]
+
+### 🤖 Claude — 2026-11-22T18:13:01.250Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/screenkit/preview.cjs", "content": "// Rainbow screen kit - AUTOMATED PREVIEW CHECK (round 45). Before any full gameplay recording: short stills of a level (or of one area of the\n// connected world) at the approved picture view(s), the beginning, quarter, middle, three-quarter, the sharpest curves and the end, each in the\n// LEFT / CENTRE / RIGHT swim lanes (steered with the game's own swipe input), textured with the approved artwork, plus the same places in the\n// GEOMETRY TEST (?gray=1: plain gray 3D materials). The background is pure green (?senti …[+7361 chars]`
+
+### 🧑 User — 2026-11-22T18:13:01.334Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/screenkit/preview.cjs (file state is current in your context — no need to Read it back)
+
