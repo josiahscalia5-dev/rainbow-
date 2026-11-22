@@ -833,8 +833,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 27011,
-   "sha256": "28a1f5733fb67041fe911bd1bbf3a7f8a91be9d80c759684904c8231fe341825"
+   "bytes": 27486,
+   "sha256": "a3de1e57d1dd1ca271e94a6f8fc9c2333107d3af4e2ad00d96629b59d96c7bf9"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3218,
-   "sha256": "ea511b277df0c447d898abcd047f596c7b373bb56d27d66ab5cd33d08069b8e6"
+   "sha256": "7b1df16162055852ea24bb500f25aa80fc4c596f1b8481487be028f60d36e4a6"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -873,8 +873,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 10866,
-   "sha256": "f84d0a39db9a27efe0691ba85003fa7ec61f68919016ead9eec61eb5a205fb11"
+   "bytes": 11359,
+   "sha256": "e66e94c099c1eaf475deda7543d5c46dd4e2ad3ae0db9697fd391831aef3e4d6"
   },
   {
    "path": "backups/checkpoints/r30_s06_v2/INFO.json",
@@ -43698,8 +43698,8 @@
   },
   {
    "path": "scripts/rainbow-autosave.py",
-   "bytes": 27473,
-   "sha256": "c15125ea7f191832ba85c1ad5e2151a027d040915d5ca6ae07b29135189869bf"
+   "bytes": 27684,
+   "sha256": "fec280e98597fff51e523d2a1564f9b683dd90e4b17368182e479985c71b5e66"
   },
   {
    "path": "scripts/reference.sha256",

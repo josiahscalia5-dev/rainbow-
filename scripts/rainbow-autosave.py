@@ -390,7 +390,7 @@ def main() -> int:
 
         # ---- 2. refresh backups content ------------------------------------------------
         private = verify_private()
-        if private is True:
+        if private is True or CFG.get("transcripts_on_public_repo"):   # public repo: only on the user's explicit request (config reason)
             p = subprocess.run([sys.executable, "-I", str(REPO / "scripts" / "export_claude_sessions.py"),
                                 str(REPO), CFG["claude_projects_glob"]], capture_output=True, text=True, timeout=300)
             if p.returncode != 0:
@@ -470,7 +470,7 @@ def main() -> int:
             stamp = t0.strftime("%Y-%m-%d %H:%M UTC")
             subject = args.message or f"autosave: Rainbow {stamp}"
             body = (f"\n\nAutomated Rainbow backup ({args.reason}). {len(real)} file(s) changed."
-                    f"\nTranscripts: {'refreshed (repo verified private)' if private else row.get('transcript_note', '')}")
+                    f"\nTranscripts: {'refreshed (repo verified private)' if private else ('refreshed (public repo, user-requested, sanitized)' if CFG.get('transcripts_on_public_repo') else row.get('transcript_note', ''))}")
             c = git("commit", "-q", "-m", subject + body + TRAILER, check=False)
             if c.returncode != 0:
                 # signing helpers can be unavailable outside the interactive session: retry unsigned
