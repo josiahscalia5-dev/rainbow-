@@ -28,18 +28,24 @@ print('yaw %.2f deg  pitch %.2f deg  camera right of axis %.3f  above axis %.3f'
 print('ring axial positions', [round(t, 3) for t in p[4:]], ' rms residual (scaled)', round(float(np.sqrt(np.mean(np.square(sol.fun)))), 3))
 for (x, y, r), t in zip(RINGS, p[4:]):
     C = A0 + a * t; c = proj(C); print('  ring measured (%d,%d) r%d -> fitted (%.0f,%.0f) r%.0f' % (x, y, r, c[0], c[1], F * RW / -C[2]))
-HW = 0.714; PD = float(nup.dot(A0) - HW)
+HW = 0.64; PD = float(nup.dot(A0) - HW)   # water / foam meet the big gold ring ~0.61 below its centre in the picture
 # Benny's painted water point (bottom of his body) in the 05-painting pixel convention the kit uses (864 x 1536, centre 432, 768)
 bx, by = 452, 1352; s05 = 1536 / H; bpx = [432 + (bx - CX) * s05, 768 + (by - CY) * s05]
 ts = [float(t) for t in p[4:]]; sp = ts[-1] - ts[-2]
 out = sys.argv[1] if len(sys.argv) > 1 else '.'
 fit = {'A': a.tolist(), 'NUP': nup.tolist(), 'RR': rr.tolist(), 'A0': A0.tolist(), 'PN': nup.tolist(), 'PD': PD, 'HW': HW,
-       'cam_fwd': [0, 0, -1], 'cam_up': [0, 1, 0], 'fov': 64.0, 'rings_t': ts + [ts[-1] + sp * (k + 1) for k in range(40)], 'Z2': 1000.0,
-       'benny_start_px': bpx, 'img': [W, H], 'focal_px': F}
+       'cam_fwd': [0, 0, -1], 'cam_up': [0, 1, 0], 'fov': 64.0, 'rings_t_fit': ts,
+       # evenly spaced rings (natural motion) + the kit's depth curve (identity up to Z2, exponential beyond) reproduce the painted spacing
+       'ring1_t': ts[0], 'S': 2.4, 'Z2': 4.0,
+       'benny_start_px': bpx, 'img': [W, H], 'focal_px': F,
+       'coins_px': [[455, 845], [508, 768], [545, 728], [572, 700], [595, 682], [612, 672], [627, 664], [640, 658]],   # painted coin trail (centres)
+       'socks_px': [[432, 766], [645, 874]],                                                                          # painted socks (water line)
+       'towels': [[2.7, -1, 0.62, 0.02, 0.32], [3.0, 1, 0.52, 0.02, 0.36]],   # t, side, rail height, inward from / to (estimated from the picture)
+       'pods': [[4.2, 2.04], [3.7, 1.17]]}                                    # t, angle round the tunnel (estimated from the picture)
 json.dump(fit, open(out + '/sockfit.json', 'w'), indent=1)
 # overlay: fitted ring circles (red) + water line on the wall (cyan) over the picture
 im = Image.open(REF).convert('RGB'); d = ImageDraw.Draw(im)
-for t in fit['rings_t'][:8]:
+for t in ts:
     pts = []
     for k in range(0, 361, 4):
         th = math.radians(k); P = A0 + a * t + rr * RW * math.cos(th) + nup * RW * math.sin(th)
