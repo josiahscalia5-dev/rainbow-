@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3218,
-   "sha256": "a296fe3b08045b6c72394b394b35dbe0e90a874a0d4254c1ed36540865bd2af1"
+   "sha256": "22048d6e662d9325f9e78ad53eb63cc2bf2c8645c100d524fb38461e617faeb5"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -42398,8 +42398,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 69320,
-   "sha256": "f7b1c461a502c1bbe75d7913cc83eaf0a5ebf5d3d62a586f6600d5221d415f97"
+   "bytes": 70468,
+   "sha256": "78be5849d2d20e79c9cb91981beb3e08bfc5eec82be3400412f5f9c9c8ae7409"
   },
   {
    "path": "src/world/far05.ts",
@@ -42438,8 +42438,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 41409,
-   "sha256": "135aa55a3d85cb8c6abb15df353f6627ef92a3b2aeb85da12b1d50d445d6ce3b"
+   "bytes": 41781,
+   "sha256": "57c1452a8ac8c3d18f8409f05d8e9c3a864f6c343f8734e1267a583c232c78fa"
   },
   {
    "path": "tools/benny31/bake.py",
@@ -43500,6 +43500,11 @@
    "path": "tools/reflock/setup_section.sh",
    "bytes": 2601,
    "sha256": "0d2bdada7aebd3f572e517e64c177d5c503e19eef9411d0436ac9062b2e0a76f"
+  },
+  {
+   "path": "tools/reflock/stills_main.cjs",
+   "bytes": 2308,
+   "sha256": "0ae8444888cd5e1e41b560af2943b20d063e5ecd12936cab4735d312acb1cff6"
   },
   {
    "path": "tools/reflock/touch_main.cjs",

@@ -481,10 +481,21 @@ export function buildEnvironment(course: Course): Environment {
     const more = rings05.filter((s) => s > lastBlender).map((s) => s - band05.width / 2 - lid05.size * 1.05);
     zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05t', false), { positions: more, ...lid05, skip: lidClear }));
   }
-  // 06/07: legacy hoods, unchanged
+  // 06/07 wall paddles. r42 (`?lid0607=1`): the legacy striped D-hoods were seen edge-on from the river and read as orange logs
+  // floating in the tube (real-touch run 06→07, frames 165-290). The approved 06 / 07 pictures show the SAME broad copper half-disc
+  // trays as 05 (upper side walls, glossy smooth rim band, dark plum underside) -> the 05 tray shape + rim shading, mounted higher on
+  // the wall like the paintings, drooping toward the river so the rider sees the rim and underside. lid0607a / d / sz / st tune it.
   const lids0607: number[] = [];
   for (let s = s06 + RING06_PHASE + ringSpacing * 0.5 - 2 * ringSpacing; s <= s08 - 6 + 1e-6; s += ringSpacing) if (s >= (TUN05 ? sEndT05 : sGlow05) + 4) lids0607.push(s);
-  zones.tubes.add(buildWallLids(perfPath, 0, 0, ringSpacing, lidMat, { positions: lids0607, angleDeg: 18, droopDeg: 20, size: 1.7, thickness: 0.42, stretch: 1.3, sink: 0.12, skip: lidClear }));
+  const LID0607 = qaNum05('lid0607', 0);
+  if (LID0607 === 1) {
+    const m = withLidShading(withFarGlow(gold({ color: '#ffb866', roughness: 0.22, emissive: 0.08 }), tubeGlow, 'lid0607'), 'lid0607');
+    m.emissive.set('#c86a18'); m.envMap = goldEnv; m.envMapIntensity = 1.35;
+    zones.tubes.add(buildWallLids(perfPath, 0, 0, ringSpacing, m, { positions: lids0607, shape: 'slab', angleDeg: qaNum05('lid0607a', 34), droopDeg: qaNum05('lid0607d', -30),
+      size: qaNum05('lid0607sz', 1.75), thickness: 0.36, stretch: qaNum05('lid0607st', 1.15), sink: 0.1, skip: lidClear }));
+  } else if (LID0607 !== 2) {   // 2 = no 06/07 paddles (diagnostic)
+    zones.tubes.add(buildWallLids(perfPath, 0, 0, ringSpacing, lidMat, { positions: lids0607, angleDeg: 18, droopDeg: 20, size: 1.7, thickness: 0.42, stretch: 1.3, sink: 0.12, skip: lidClear }));
+  }
 
   // ---- 05 far tunnel (forced perspective, calibrated for the locked 05 checkpoint eye) ----
   {

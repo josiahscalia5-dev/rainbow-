@@ -386,6 +386,8 @@ export function buildWallLids(
     shape?: 'hood' | 'dome' | 'slab';
     /** wave 8: lateral stretch of the wall the lids sit on (see TubeGeoOptions.oval) */
     oval?: (s: number) => number;
+    /** r42: called for every PLACED lid with its wall point, radial direction (outward), path frame and size (e.g. mounting plates) */
+    onPlace?: (wallPoint: THREE.Vector3, dirOut: THREE.Vector3, f: Frame, size: number, stretch: number) => void;
   } = {},
 ): THREE.InstancedMesh {
   const geo = wallLidGeometry(opts.shape ?? 'hood', opts.thickness ?? 0.42);
@@ -418,6 +420,7 @@ export function buildWallLids(
       if (opts.skip?.(s, p.clone().addScaledVector(X, sz * 0.5), sz)) continue;
       m.compose(p, q, new THREE.Vector3(sz, sz, sz * (opts.stretch ?? 1.25)));
       mesh.setMatrixAt(k++, m);
+      opts.onPlace?.(p.clone().addScaledVector(dir, sz * (opts.sink ?? 0.12)), dir.clone(), f, sz, opts.stretch ?? 1.25);
     }
   }
   mesh.count = k;
