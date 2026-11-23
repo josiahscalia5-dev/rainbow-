@@ -207,8 +207,8 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float sp = max(sin(ph + 1.0), 1e-4);
     float crestN = (pow(sp, 36.0) + 0.5 * pow(sp, 7.0)) * segN;
     nb = lerp(nb, RBW_CAQUA, saturate(0.7 * pow(sp, 4.0) * (0.4 + 0.6 * segN)));
-    nb = lerp(nb, RBW_CAQUAW, saturate(pow(sp, 16.0) * segN) * 0.9);
-    nb += float3(0.35, 0.55, 0.6) * pow(sp, 40.0) * segN;                                // glossy arc line
+    nb = lerp(nb, RBW_CAQUAW, saturate(pow(sp, 16.0) * segN) * 0.75);
+    nb += float3(0.35, 0.55, 0.6) * pow(sp, 40.0) * segN * 0.4;                          // glossy arc line
     cy = lerp(cy, nb, near5);
 
     // water between a band and its bank: the approved shows a thin CYAN edge there (a touch bluer than the core,
@@ -267,18 +267,19 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     // lighter hue, wandering across the band edges (Xw), plus a sparse set of short glossy streaks. Replaces the long
     // crisp 2-px white lines at fixed band-relative positions, which drew white outlines along every band edge.
     float kS5 = mid5 * (1.0 - smoothstep(0.3, 0.8, fwsR));
-    float sat5 = max(RBW_Satin(Xw, v5, 7.0, 1.3, pxK), RBW_Satin(Xw, v5, 11.0, 6.1, pxK) * 0.75);
+    float sat5 = max(RBW_Satin(Xw, v5, 7.0, 1.3, pxK, 1.0), RBW_Satin(Xw, v5, 11.0, 6.1, pxK, 1.0) * 0.75);
     float3 satC = lerp(lerp(RBW_CBRIGHT, RBW_CAQUAW, 0.55), lerp(RBW_PPALE, RBW_PWHITE, 0.3), pk5);
     c5 = lerp(c5, satC, sat5 * kS5 * 0.55);
     // sparse short glossy dashes (approved: bright white-aqua / white-pink speed streaks scattered through the satin)
-    float2 sS5 = RBW_SilkStreak(Xw, v5 * 6.0, 3.1, 2.7, 0.3, pxK) * kS5 * (1.0 - smoothstep(0.12, 0.3, fwsR));
+    float2 sS5 = RBW_SilkStreak(Xw, v5 * 6.0, 3.1, 2.7, 0.3, pxK) * kS5 * (1.0 - smoothstep(0.12, 0.3, fwsR))
+               * smoothstep(0.014, 0.04, fwsR);           // no long crisp lines close to the camera (gameplay view)
     c5 = lerp(c5, lerp(RBW_CAQUA, RBW_PLIGHT, pk5), sS5.y * 0.3);
     c5 += lerp(float3(1.4, 1.9, 2.0), float3(2.0, 1.5, 2.0), pk5) * sS5.x * 0.4;
     // near field behind Benny: long soft streaks along the fanning flow lines (X fans out from his track), so the near
     // water streams out toward the bottom corners like the approved; stronger on the pink wake sweeps (satin plumes)
     float kN5 = near5 * bOn * smoothstep(0.3, 1.2, back);
-    float fan5 = RBW_Satin(X, v5 * 0.5, 9.0, 3.7, pxK) * kN5;
-    c5 = lerp(c5, lerp(RBW_CAQUAW, RBW_PWHITE, pk5), fan5 * (0.45 + 0.35 * sweep * pk5));
+    float fan5 = RBW_Satin(X, v5 * 0.5, 9.0, 3.7, pxK, 0.0) * kN5;
+    c5 = lerp(c5, lerp(RBW_CAQUAW, RBW_PWHITE, pk5), fan5 * (0.35 + 0.45 * sweep * pk5));
     c5 = lerp(c5, lerp(c5, RBW_PLIGHT, 0.35), sweep * pk5 * near5);
 
     // flares carried by the current (mid: along the flow) + near: crisp 4-point flares lying ALONG the ∩ swell arcs (one

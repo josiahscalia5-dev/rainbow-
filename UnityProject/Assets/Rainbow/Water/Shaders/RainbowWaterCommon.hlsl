@@ -175,19 +175,22 @@ float2 RBW_SilkStreak(float X, float v, float k, float seed, float dens, float p
 // and pink, never crisp outlines): one soft line per lane (>= ~2 reference px half width), random lane offset / strength,
 // broken into segments along v; fades out where the lanes come closer than ~4 reference px (no far-field shimmer).
 // X = across-flow coordinate (caller may warp it so the lanes are not locked to the band edges), k = lanes per X unit.
-float RBW_Satin(float X, float v, float k, float seed, float pxK)
+// nearK (0..1): how much the streaks fade where the lanes are far apart on screen (> ~12 px), so close to the camera
+// they never turn into dense crisp parallel hairlines.
+float RBW_Satin(float X, float v, float k, float seed, float pxK, float nearK)
 {
     float g = X * k + seed;
     float fw = max(fwidth(g) * pxK, 1e-4);           // lanes per reference px
     float i = floor(g);
     float h = RBW_Hash12(float2(i, seed + 3.3));
     float d = abs(frac(g) - (0.25 + 0.5 * h));       // lane units from this lane's line
-    float w = max(0.16, fw * 2.2);
+    float w = max(0.2, fw * 2.2);
     float prof = saturate(1.0 - d / w);
     prof *= prof;
     float seg = RBW_VNoise(float2(i * 2.1 + seed, v * (0.1 + 0.12 * h) + h * 7.0));
     float on = smoothstep(0.35, 0.75, seg);
-    return prof * on * (0.45 + 0.55 * frac(h * 13.0)) * (1.0 - smoothstep(0.18, 0.3, fw));
+    float bp = lerp(1.0, 0.2 + 0.8 * smoothstep(0.05, 0.12, fw), nearK);
+    return prof * on * (0.45 + 0.55 * frac(h * 13.0)) * (1.0 - smoothstep(0.18, 0.3, fw)) * bp;
 }
 
 // flow-aligned brushed satin (waterRibbon.ts brush05): x = coarse lane, y = brushed value, z = streak cores, w = glow lanes
