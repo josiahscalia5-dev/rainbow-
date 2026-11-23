@@ -20,6 +20,11 @@ frame -> river | tunnel -> benny -> integrate -> 2 reviewers. **If interrupted:*
 "result" line into `args.skip`, write `args.notes.<area>` for the interrupted one (its newest files + work stills), and relaunch
 `staging/shared/round3-composition.workflow.js` with the same `baseline` + `context` args, saved exactly in
 `staging/shared/round3-args.json`. After round 3: send the user the ROUND3_FINAL side-by-side + both scores + the recording.
+**User 18:35 local:** after EACH stage (Frame, Shape, Benny, Integrate) send the stage agent's existing final side-by-side +
+its scores (no extra tests just for previews); at the next safe checkpoint evaluate whether procedural geometry / live Editor
+tuning / stronger compatible Unity tools could speed things up (install nothing without approval); AVOID REDUNDANT AI REVIEWERS:
+the running run still has 2 critics after Integrate, so the coordinator stops it (TaskStop) right after the integration result
+and reviews the final evidence itself; relaunches use `round3-args.json` (`reviewers: 0`, supported by the script since 18:45).
 
 **UPDATE 2026-11-23 23:05 UTC (USER PRIORITY = COMPOSITION):** the user wants the approved Screen 05 COMPOSITION recreated in
 the playable scene, in this order: (1) tunnel geometry, perspective, depth, camera framing; (2) narrow winding S-shaped river

@@ -311,7 +311,11 @@ const LENSES = [
   { key: 'benny-gameplay', text: 'PRIORITIES 5-6 and PLAY: Benny size / position / waterline / splash, coins, HUD, bubbles, and the moving view and recording (s = 10 / 20 stills, recording first/last frames + json): consistency while swimming, steering and jumping' },
 ]
 const integText = integ ? JSON.stringify(integ) : 'integration agent returned nothing'
-const critics = await parallel(LENSES.map(l => () => agent(`
+// args.reviewers = how many AI critics to run (default: all lenses). The user (2026-11-23 18:35 local) asked to avoid redundant AI
+// reviewers: round3-args.json sets 0 - the integration agent's gameplay check stays, the coordinator reviews the final evidence.
+const REVIEWERS = (args && Number.isInteger(args.reviewers)) ? Math.max(0, Math.min(LENSES.length, args.reviewers)) : LENSES.length
+if (REVIEWERS < LENSES.length) log('AI reviewers: ' + REVIEWERS + ' of ' + LENSES.length + ' (args.reviewers)')
+const critics = await parallel(LENSES.slice(0, REVIEWERS).map(l => () => agent(`
 You are an independent, SKEPTICAL reviewer of the user's Unity port of their approved Rainbow Screen 05 image. Read-only: do NOT edit files,
 use git, or drive Unity. Read C:\\RainbowUnity\\CLAUDE.md for the rules (no projection / pasted images; honest captures: real Game view,
 864x1536, Benny at s = 14.00, normal gameplay camera, no shifting/cropping/retouching).
