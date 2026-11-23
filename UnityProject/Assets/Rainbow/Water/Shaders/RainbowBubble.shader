@@ -1,5 +1,7 @@
 // Rainbow Screen 05 - iridescent soap bubbles (Agent 3). Transparent camera-facing quads (one dynamic mesh from
-// BubbleField.cs: position = bubble centre (world), UV0 = (corner x, corner y, radius, seed), colour.a = fade).
+// BubbleField.cs: position = bubble centre (world), UV0 = (corner x, corner y, radius, seed + 1 for the small ring bubbles),
+// colour.a = fade). Port of src/vfx/bubbles.ts: BIG_VERT / BIG_FRAG (impostor spheres, on-screen size capped by uMaxPx) and
+// PT_VERT / PT_FRAG (small ring sprites, capped at MAX_PX_SMALL).
 // Depth-tested, soft-faded against the scene depth (needs "Depth Texture" on the URP asset; works without it too).
 Shader "Rainbow/Water/Bubble"
 {
@@ -8,6 +10,8 @@ Shader "Rainbow/Water/Bubble"
         _NearFade ("Near-camera fade start (units)", Float) = 1.2
         _SoftDepth ("Soft intersection depth (units)", Float) = 0.3
         _Intensity ("Intensity", Range(0.2, 2)) = 1.0
+        _MaxPx ("Max on-screen radius, big bubbles (px of the 864x1536 frame)", Float) = 33
+        _MaxPxSmall ("Max on-screen radius, small bubbles (px of the 864x1536 frame)", Float) = 11
     }
 
     SubShader
@@ -37,6 +41,8 @@ Shader "Rainbow/Water/Bubble"
                 float _NearFade;
                 float _SoftDepth;
                 float _Intensity;
+                float _MaxPx;
+                float _MaxPxSmall;
             CBUFFER_END
 
             #include "Assets/Rainbow/Water/Shaders/RainbowBubble.hlsl"
@@ -44,7 +50,7 @@ Shader "Rainbow/Water/Bubble"
             struct Attributes
             {
                 float4 positionOS : POSITION;
-                float4 uv0        : TEXCOORD0;   // corner xy, radius, seed
+                float4 uv0        : TEXCOORD0;   // corner xy, radius, seed (+1 = small ring bubble)
                 float4 color      : COLOR;       // a = fade
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
@@ -52,7 +58,7 @@ Shader "Rainbow/Water/Bubble"
             struct Varyings
             {
                 float4 positionCS : SV_POSITION;
-                float4 quad       : TEXCOORD0;   // corner xy, seed, on-screen radius px
+                float4 quad       : TEXCOORD0;   // corner xy, seed (+1 = small), on-screen radius px
                 float4 misc       : TEXCOORD1;   // x = fade, y = centre eye depth, z = radius, w = fog
                 UNITY_VERTEX_OUTPUT_STEREO
             };
@@ -65,10 +71,20 @@ Shader "Rainbow/Water/Bubble"
                 float3 cW = TransformObjectToWorld(v.positionOS.xyz);
                 float3 cV = TransformWorldToView(cW);
                 float r = v.uv0.z;
+                float small = step(1.0, v.uv0.w);
+                float depth = max(-cV.z, 1e-3);
+                // on-screen radius in device px. abs(): URP draws the camera into a FLIPPED intermediate target on D3D, where
+                // UNITY_MATRIX_P[1][1] is negative - a negative radius made the silhouette anti-aliasing erase the rim, the
+                // edge and the highlights, so every bubble was an invisible faint smudge (round-2 root cause).
+                float px = r * 0.5 * _ScreenParams.y * abs(UNITY_MATRIX_P[1][1]) / depth;
+                // bubbles.ts uMaxPx / MAX_PX_SMALL: cap the on-screen size so a bubble never becomes a giant sphere close
+                // to the camera (66 / 22 px diameters in the 864x1536 frame)
+                float capPx = lerp(_MaxPx, _MaxPxSmall, small) * RBW_PxScale();
+                float k = min(1.0, capPx / max(px, 1e-3));
+                r *= k;
+                px *= k;
                 float3 pV = cV + float3(v.uv0.xy * r, 0.0);
                 o.positionCS = TransformWViewToHClip(pV);
-                float depth = max(-cV.z, 1e-3);
-                float px = r * 0.5 * _ScreenParams.y * UNITY_MATRIX_P[1][1] / depth;
                 float nearFade = smoothstep(_NearFade, _NearFade * 1.8, depth);
                 o.quad = float4(v.uv0.xy, v.uv0.w, px);
                 o.misc = float4(v.color.a * nearFade * step(0.0005, r), depth, r, ComputeFogFactor(o.positionCS.z));
@@ -88,7 +104,11 @@ Shader "Rainbow/Water/Bubble"
                 float soft = saturate((sceneEye - fragEye) / max(_SoftDepth, 1e-3));
                 float3 col;
                 float a;
-                RainbowBubble_float(P, i.quad.z, i.quad.w, i.misc.x * soft, _Time.y, col, a);
+                float seed = frac(i.quad.z);
+                if (i.quad.z >= 1.0)
+                    RainbowBubbleSmall_float(P, seed, i.quad.w, i.misc.x * soft, col, a);
+                else
+                    RainbowBubble_float(P, seed, i.quad.w, i.misc.x * soft, _Time.y, col, a);
                 col *= _Intensity;
                 col = MixFog(col, i.misc.w);
                 return half4(col, a);
