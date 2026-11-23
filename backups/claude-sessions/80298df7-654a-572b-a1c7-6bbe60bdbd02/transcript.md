@@ -3808,3 +3808,46 @@ Once I'm connected, I'll do these in order, without touching your current game:
 
 [Request interrupted by user]
 
+### 🧑 User — 2026-11-23T10:48:55.488Z
+
+This prompt needs an AI coding tool like Claude Code, Codex, Grok Build or Antigravity to set up Unity on your computer. If you're in a chat-only tool, install one of those first, then paste this prompt into it.
+I want to make a game with Unity and I'm new to it. Install the Unity CLI (macOS/Linux: `curl -fsSL https://unity.com/install.sh | bash`, Windows: `irm https://unity.com/install.ps1 | iex`), follow what the installer tells you to do next, then use the new-unity-project skill to go from my idea to a running project.
+
+### 🤖 Claude — 2026-11-23T10:49:06.154Z
+
+You pasted Unity's setup prompt. That prompt is meant to run on your own computer, so first I'll check whether your laptop is reachable from this session now:
+
+### 🤖 Claude — 2026-11-23T10:49:06.256Z
+
+> 🔧 **mcp__claude-code-remote__list_computer_folders** `{}`
+
+### 🧑 User — 2026-11-23T10:49:06.426Z
+
+> ↩︎ result: {"folders":[],"cannot_be_used":[{"computer_name":"LAPTOP-7BA6G3BC","folder":"claude yes","reason":"not_available","explanation":"This folder is in the user's Remote Control list, but that computer does not offer it to cloud sessions and did not say why. The usual causes: it is inside a hidden directory directly under the home directory or ~/Library, or the Claude app on that computer needs updating (on Windows, to a version that serves folders there)."}]}
+
+### 🤖 Claude — 2026-11-23T10:49:25.586Z
+
+Your laptop still isn't reachable, so I can't run that prompt where it belongs. This chat runs in a cloud machine, not on your laptop, and its one folder ("claude yes") still isn't shared with cloud sessions.
+
+If I followed the prompt here, it would sign your Unity account into a cloud machine and try to install Unity there. That machine has no graphics card, Unity doesn't yet support its Editor in containers like this, and Unity says agents in containers need its paid Build Server license. So I haven't signed in or installed anything here.
+
+**To set up Unity on your laptop, run that prompt on the laptop:**
+1. On the laptop, create a new folder `C:\RainbowUnity`. Don't put it inside a hidden folder, and keep it outside your current game's folder.
+2. Open the Claude desktop app, start a Claude Code session, and choose `C:\RainbowUnity` as its folder.
+3. Paste Unity's prompt, followed by these lines, so it builds the right test:
+
+```
+My idea: a test of my existing Rainbow game in Unity 6.3 LTS (URP, Android portrait). Start with ONE short playable Screen 05 section only.
+Visual target: my approved picture references/05_flow_into_the_current.png from GitHub repo josiahscalia5-dev/rainbow-, branch ccr-6deca498-03lhkc
+(read docs/briefs/2026-11-23-r48/UNITY_EVAL_R48.md there first). Reuse my existing models (assets/models/benny31.glb, assets/models/lids05.glb)
+via glTFast where they import correctly. Keep my existing game unchanged: never edit that repo, only copy files out of it.
+Step order: Unity Hub + free Personal license + Unity 6000.3.29f1 with Android Build Support -> verify the Unity plugin/CLI controls the
+running Editor (unity status = ready, unity command lists Editor commands) -> then the Screen 05 test: camera and river layout, rounded gold
+fittings, purple drum, flowing cyan/pink water, soft Benny shading and water contact, forward movement, left/right steering, jump, coins,
+readable ending. Do not rebuild the rest of the game until this test plays.
+```
+
+That session runs directly on the laptop. It can install Unity, let you sign in with Unity's own page, and talk to the Editor.
+
+If you'd rather keep working with me from your phone: in the Claude desktop app on the laptop, go to **Settings → Claude Code → Remote Control**, add `C:\RainbowUnity`, update the app if an update is offered, then quit and reopen it. Tell me when that's done and I'll ask to use the folder; you approve on the laptop. Either way, nothing in your current game changes.
+
