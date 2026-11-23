@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Coin05
+  m_Shader: {fileID: 4800000, guid: 36e040e9271bc6944b92bb14b5edc89f, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _FaceMap:
+        m_Texture: {fileID: 2800000, guid: 1f9c6382122f46646b0640f6567f9e10, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _EdgeCount: 64
+    - _Emission: 1.15
+    - _EnvStrength: 0.9
+    - _SpecPower: 48
+    - _SpecStrength: 2.2
+    m_Colors:
+    - _EdgeBright: {r: 1, g: 0.878, b: 0.43899998, a: 1}
+    - _EdgeDark: {r: 0.753, g: 0.5019999, b: 0, a: 1}
+    - _MetalColor: {r: 0.47799987, g: 0.32199997, b: 0, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
