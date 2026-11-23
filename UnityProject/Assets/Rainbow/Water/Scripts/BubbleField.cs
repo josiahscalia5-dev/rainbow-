@@ -16,6 +16,10 @@ namespace Rainbow.Screen05
     /// frame, far and small, and grow naturally on screen as Benny swims toward them. Bubbles are recycled only where
     /// nobody sees them (out of the frame or closer to the camera than the shader's near fade); one that drifts into the
     /// corridor or reaches the end of its life shrinks away quickly. The shader caps the on-screen size (bubbles.ts uMaxPx).
+    /// Unity addition (round 2, approved 05 while moving): with the camera moving at 11 u/s the side bubbles leave the frame
+    /// at the sides long before they reach its bottom, so a small WAKE set (3 big + 9 small) is thrown up inside Benny's
+    /// splash fans beside his body, rides the current at 0.7-0.86x his speed and falls slowly behind him toward the bottom
+    /// corners, growing in perspective (the approved big bubbles at the bottom corners and the small ones beside the splash).
     /// Benny's position comes only from Screen05Events.BennyS (contract); the camera is Camera.main of THIS frame (the
     /// component runs after the Cinemachine brain). One dynamic mesh (4 vertices per bubble: position = centre, UV0 = (corner,
     /// radius, seed + 1 for small bubbles), colour.a = fade); Rainbow/Water/Bubble expands the camera-facing quads.
@@ -36,13 +40,19 @@ namespace Rainbow.Screen05
         public Vector2 bigPx = new Vector2(25f, 65f);
         [Tooltip("Wanted on-screen DIAMETER at spawn, small bubbles (bubbles.ts 6 + 14 * rand^1.4).")]
         public Vector2 smallPx = new Vector2(6f, 20f);
+        [Tooltip("Wake bubbles thrown up beside Benny's splash that ride the current and slowly fall behind him (approved 05: " +
+                 "two big ones at the bottom corners, small ones beside the splash fans). Big / small counts.")]
+        public int wakeBigCount = 3;
+        public int wakeSmallCount = 9;
+        [Tooltip("Wake bubbles keep this share of Benny's speed (the rest = how fast they fall behind him).")]
+        public Vector2 wakeCarry = new Vector2(0.7f, 0.86f);
         public uint seed = 0x0B0Bu;
 
         struct Bubble
         {
             public Vector3 pos, vel;
             public float r, seed, phase, age, life;
-            public bool big;
+            public bool big, wake, dead;
         }
 
         const float RefH = 1536f;                    // the approved frame height: bubbles.ts sizes / caps are authored for it
@@ -59,6 +69,8 @@ namespace Rainbow.Screen05
         float lastS = float.NaN;
         Vector3 lastCam = new Vector3(1e9f, 1e9f, 1e9f);
         float nearRecycle = 1.5f;
+        float bennySpeed = 11f;
+        static readonly int BennyId = Shader.PropertyToID("_RainbowBenny");   // SplashWake: (s, x, wake 0..1, waterline radius)
 
         // camera basis of the current frame
         Vector3 camPos, camFwd, camRight, camUp;
@@ -84,7 +96,9 @@ namespace Rainbow.Screen05
 
         void Init()
         {
-            int nb = Mathf.Max(0, bigCount), n = nb + Mathf.Max(0, smallCount);
+            // order: side big, side small, wake big, wake small
+            int nb = Mathf.Max(0, bigCount), ns = nb + Mathf.Max(0, smallCount);
+            int nwb = ns + Mathf.Max(0, wakeBigCount), n = nwb + Mathf.Max(0, wakeSmallCount);
             bubbles = new Bubble[n];
             verts = new Vector3[n * 4];
             uvs = new Vector4[n * 4];
@@ -92,7 +106,8 @@ namespace Rainbow.Screen05
             var tris = new int[n * 6];
             for (int i = 0; i < n; i++)
             {
-                bubbles[i].big = i < nb;
+                bubbles[i].big = i < nb || (i >= ns && i < nwb);
+                bubbles[i].wake = i >= ns;
                 int v = i * 4, t = i * 6;
                 uvs[v] = new Vector4(-1f, -1f, 0f, 0f);
                 uvs[v + 1] = new Vector4(1f, -1f, 0f, 0f);
@@ -256,8 +271,55 @@ namespace Rainbow.Screen05
             }
             b.pos = p;
             b.r = r;
+            b.dead = false;
             float sv = Mathf.Clamp(p.z, RiverPath.TunnelStart, RiverPath.TunnelLength);
             b.vel = RiverPath.Forward(sv) * (stageSpeed * (b.big ? 0.1f : 0.2f)) + Vector3.up * Range(0.04f, 0.16f);
+        }
+
+        /// <summary>
+        /// Wake bubble: born inside the white splash fan just behind Benny, beside his body (screen side bands next to the fans,
+        /// outside the corridor), carried by the current at wakeCarry x his speed, so it falls slowly behind him, rises out of
+        /// the spray and drifts toward the bottom corner of the frame while it grows in perspective. initial = fill the whole
+        /// trail at once (restart / teleport), anywhere between the fans and the camera.
+        /// </summary>
+        void SpawnWake(ref Bubble b, bool initial, float bennyDepth, float speed)
+        {
+            b.phase = Rand() * 6.2832f;
+            b.seed = Rand();
+            b.age = 0f;
+            b.life = Range(2.5f, 4.5f);
+            b.dead = true;
+            float side = Rand() < 0.5f ? -1f : 1f;
+            for (int attempt = 0; attempt < 5; attempt++)
+            {
+                float yPx = Range(1020f, 1180f);
+                float yn = 1f - 2f * yPx / RefH;
+                float xn = side * Range(0.52f, 0.78f);
+                Vector3 ray = camFwd + camRight * (xn * tanH) + camUp * (yn * tanV);
+                float d = Mathf.Max(nearRecycle + 1f, bennyDepth - Range(0.4f, 1.4f));
+                Vector3 p = camPos + ray * d;
+                float r = b.big ? Range(0.085f, 0.13f) : 0.018f + 0.03f * Mathf.Pow(Rand(), 1.3f);
+                float s = Mathf.Clamp(p.z, RiverPath.TunnelStart + 1f, RiverPath.TunnelLength - 1f);
+                p.y = Mathf.Max(p.y, RiverSurface.HeightAt(p.x, s) + 0.12f + 0.5f * r);
+                float wall = WallHalfWidth(p.y) - r - 0.25f;
+                p.x = Mathf.Clamp(p.x, -wall, wall);
+                if (Allowed(p, b.big ? r : r * 0.5f) <= 0) continue;
+                b.pos = p;
+                b.r = r;
+                b.dead = false;
+                break;
+            }
+            float sv = Mathf.Clamp(b.pos.z, RiverPath.TunnelStart, RiverPath.TunnelLength);
+            Vector3 fwd = RiverPath.Forward(sv);
+            b.vel = fwd * (speed * Range(wakeCarry.x, wakeCarry.y)) + Vector3.up * Range(0.12f, 0.35f) + camRight * (side * Range(0f, 0.25f));
+            if (initial && !b.dead)
+            {
+                // fill the trail at once: as if it had been thrown up tau seconds ago (camera and Benny moved on since)
+                float tau = Range(0f, 1.3f);
+                b.pos += (b.vel - fwd * speed) * tau;
+                b.age = tau;
+                if (Allowed(b.pos, b.big ? b.r : b.r * 0.5f) <= 0) b.dead = true;
+            }
         }
 
         void LateUpdate()
@@ -269,18 +331,29 @@ namespace Rainbow.Screen05
             SetView(cam);
             float s = Screen05Events.BennyS;
             ProjectCore(s);
+            float dt = Mathf.Min(Time.deltaTime, 0.05f);
             // respawn everything after a restart / teleport / camera jump (the screen-space placement needs the camera that
             // will actually show the bubbles); re-seeded from s so captures of the same moment are deterministic
             bool jump = float.IsNaN(lastS) || Mathf.Abs(s - lastS) > 6f || (lastCam - camPos).sqrMagnitude > 12.25f;
+            if (!jump && dt > 1e-4f) bennySpeed = Mathf.Lerp(bennySpeed, Mathf.Max(0f, (s - lastS) / Mathf.Max(Time.deltaTime, 1e-4f)), 1f - Mathf.Exp(-dt * 4f));
             lastS = s;
             lastCam = camPos;
+            // Benny's depth in front of the camera, and whether he is swimming in the water (SplashWake's _RainbowBenny.z = wake)
+            float bennyDepth = Vector3.Dot(new Vector3(camPos.x, RiverPath.WaterY + 0.3f, s) - camPos, camFwd);
+            Vector4 bg = Shader.GetGlobalVector(BennyId);
+            float wakeK = bg.w > 0f ? bg.z : 1f;
+            bool emitWake = bennySpeed > 3f && wakeK > 0.3f && s < RiverPath.FinishS;
             if (jump)
             {
                 rng = (seed ^ (uint)Mathf.RoundToInt(Mathf.Abs(s) * 16f)) | 1u;
-                for (int i = 0; i < bubbles.Length; i++) Spawn(ref bubbles[i], true);
+                bennySpeed = stageSpeed;
+                for (int i = 0; i < bubbles.Length; i++)
+                {
+                    if (bubbles[i].wake) SpawnWake(ref bubbles[i], true, bennyDepth, stageSpeed);
+                    else Spawn(ref bubbles[i], true);
+                }
             }
 
-            float dt = Mathf.Min(Time.deltaTime, 0.05f);
             float t = Time.time;
             Matrix4x4 toLocal = transform.worldToLocalMatrix;
             for (int i = 0; i < bubbles.Length; i++)
@@ -289,14 +362,21 @@ namespace Rainbow.Screen05
                 b.age += dt;
                 b.pos += b.vel * dt;
                 b.pos += new Vector3(Mathf.Sin(t * 1.3f + b.phase), Mathf.Cos(t * 1.1f + b.phase * 1.7f), Mathf.Sin(t * 0.9f + b.phase * 0.6f)) * (0.12f * dt);
-                int a = Allowed(b.pos, b.big ? b.r : 0f);
-                if (a < 0 || b.age > b.life || b.pos.z > RiverPath.TunnelLength - 1f) Spawn(ref b, false);
+                int a = b.dead ? -1 : Allowed(b.pos, b.big ? b.r : 0f);
+                if (a < 0 || b.age > b.life || b.pos.z > RiverPath.TunnelLength - 1f)
+                {
+                    if (!b.wake) Spawn(ref b, false);
+                    else if (emitWake) SpawnWake(ref b, false, bennyDepth, bennySpeed);
+                    else b.dead = true;                                          // Benny stopped / jumped: no new wake bubbles
+                }
                 else if (a == 0) b.life = Mathf.Min(b.life, b.age + 0.3f);      // drifted into the corridor: shrink away
                 bubbles[i] = b;
 
                 // grow from nothing when born, shrink away at the end (bubbles.ts pop), gentle breathing of the big ones
-                float pop = b.big ? Mathf.Min(1f, b.age * 1.5f, (b.life - b.age) * 2f) : Mathf.Min(1f, b.age * 3f, (b.life - b.age) * 3f);
-                pop = Mathf.Max(0f, pop);
+                // (wake bubbles inflate faster: they are only ~1-1.5 s on screen)
+                float pop = b.wake ? Mathf.Min(1f, b.age * 3.5f, (b.life - b.age) * 3f)
+                          : b.big ? Mathf.Min(1f, b.age * 1.5f, (b.life - b.age) * 2f) : Mathf.Min(1f, b.age * 3f, (b.life - b.age) * 3f);
+                pop = b.dead ? 0f : Mathf.Max(0f, pop);
                 float size = b.r * pop * (b.big ? 1f + 0.04f * Mathf.Sin(t * 4f + b.phase) : 1f);
                 byte alpha = (byte)Mathf.RoundToInt(Mathf.Clamp01(pop * 2f) * 255f);
                 Vector3 lp = toLocal.MultiplyPoint3x4(b.pos);

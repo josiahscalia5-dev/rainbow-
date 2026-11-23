@@ -19,7 +19,9 @@ void RainbowBubble_float(float2 P, float Seed, float Px, float Fade, float Time,
     float f = 1.0 - z;                                      // 0 centre -> 1 silhouette
     float sw = RBW_VNoise(P * 2.2 + float2(Time * 0.3 + Seed * 13.0, Seed * 7.0));
     float hue = f * 0.85 + sw * 0.75 + P.x * 0.25 - P.y * 0.2 + Seed;
-    float3 film = RBW_Iridescent(hue);
+    // approved 05 (round 2): the film swirls through pink / magenta / violet / blue / cyan only - the full cosine rainbow
+    // put orange, yellow and green bands on the rims, which the approved bubbles do not have
+    float3 film = RBW_Iridescent(0.02 + 0.5 * (0.5 + 0.5 * sin(6.28318 * hue)));
     film = float3(film.r, film.g * 0.55 + 0.1, min(1.0, film.b * 1.1 + 0.1));   // less green
     film *= 0.74;                                           // stay saturated under the grade
     float rim = smoothstep(0.5, 0.97, d);
@@ -28,11 +30,16 @@ void RainbowBubble_float(float2 P, float Seed, float Px, float Fade, float Time,
     float hl = exp(-dot(q1, q1) * 2.2) * 1.2;               // soft window pane up-left
     float2 q2 = P - float2(0.42, -0.45);
     hl += exp(-dot(q2, q2) * 55.0) * 0.7;                   // small one down-right
+    // approved 05: a ring of ~9 soft pink-white lamp reflections just inside the rim, a little brighter on top
+    // (replaces bubbles.ts' 4 hard sparkle dots on the rim)
     float ang = atan2(P.y, P.x + 1e-6);
-    hl += smoothstep(0.8, 0.93, d) * (1.0 - smoothstep(0.95, 1.0, d)) * pow(max(sin(ang * 4.0 + Seed * 31.0), 1e-4), 30.0) * 0.9;
+    float dr = (d - 0.8) / 0.075;
+    hl += pow(max(sin(ang * 9.0 + Seed * 31.0), 0.0), 3.0) * exp(-dr * dr) * (0.7 + 0.3 * P.y);
     float small = 1.0 - smoothstep(10.0, 22.0, pxR);
     hl *= 1.0 - 0.5 * small;
-    Color = film * (0.55 + 0.75 * rim) + float3(1.0, 1.0, 1.0) * edge * 0.45 + float3(1.05, 1.05, 1.05) * hl;
+    // cool lens tint of the interior (approved: the bubbles' insides read cyan-blue / violet against any background)
+    float3 lens = float3(0.42, 0.6, 1.0) * (1.0 - rim) * 0.3;
+    Color = film * (0.55 + 0.75 * rim) + lens + float3(1.0, 0.92, 1.0) * edge * 0.45 + float3(1.05, 0.98, 1.05) * hl;
     float a = clamp(0.14 + 0.1 * sw + rim * 0.6 + edge * 0.35 + hl, 0.0, 0.95);
     float aa = 1.0 - smoothstep(1.0 - 1.5 / max(Px, 1.5), 1.0, sqrt(d2));   // anti-aliased silhouette
     Alpha = a * aa * saturate(Fade);
