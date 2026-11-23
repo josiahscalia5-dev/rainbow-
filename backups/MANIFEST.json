@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28923,
-   "sha256": "6a5862da62d71bb097685131cb56ae00db1cd83754a922c15ac0e1ce0bd6b42b"
+   "sha256": "cdb1870c783198bde78d7cf05388cfdf46aa5ce98a9280dd8f178a99b2a42ce0"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2961,
-   "sha256": "b9ad693d6ddd9362db8b06542230511f0f137d15b088c670bd12ce8bd0fe92f5"
+   "sha256": "ace828711a4c0a3eb4d88cc8c3d5b4130a83a97112a995b309bec92025ce2eb5"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -23842,6 +23842,16 @@
    "sha256": "0b4dce5e8a9ec0dc8c4d46955a2e4231fab30cbcffa98a284456a68f4b20e21c"
   },
   {
+   "path": "qa/kit47/run/SECTION_05_GRAY_geometry_real_touch.mp4",
+   "bytes": 7598360,
+   "sha256": "202fb49c38c0a087fe01bc701153a6c4994c695aac59cb66f386eba1cf007467"
+  },
+  {
+   "path": "qa/kit47/run/SECTION_05_GRAY_geometry_real_touch_checks.json",
+   "bytes": 1360,
+   "sha256": "39b80fa57fe9a5c3134277153d9b87d21612b64184428fa15eae9c4e6469d262"
+  },
+  {
    "path": "qa/kit47/run/SECTION_05_TEXTURED_normal_speed_real_touch.mp4",
    "bytes": 5667989,
    "sha256": "401977e13509f664fe234a583c971d37d578ccc915ed5aa472f1ad76094e9b70"
@@ -23850,6 +23860,11 @@
    "path": "qa/kit47/run/SECTION_05_TEXTURED_normal_speed_real_touch_checks.json",
    "bytes": 1831,
    "sha256": "755c26ecff130c790b4ac329097d52216bc4730849b408228fbf1c1a42b40d0c"
+  },
+  {
+   "path": "qa/kit47/run/section_plan.json",
+   "bytes": 123,
+   "sha256": "1db1cfa8563d51cfc73e8207712bddbc0fd0d11aba177a3114591c4944855789"
   },
   {
    "path": "qa/kit47/stills/APPROVED_vs_BEFORE_AT_AFTER_approved_camera.jpg",

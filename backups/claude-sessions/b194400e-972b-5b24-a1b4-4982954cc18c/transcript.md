@@ -6551,3 +6551,161 @@ The textured section run passes every functional check. The gray-geometry run cr
 
 > 🔧 **Bash** `{"command": "until grep -q EXIT /home/user/ws47/rec/gray.log; do sleep 15; done; tail -n 1 /home/user/ws47/rec/gray.log | cut -c1-80; cd /home/user/rainbow- && python3 -c \"\nimport json; d=json.load(open('/home/user/ws47/rec/gray/checks.json')); print({k:d.get(k) for k in ('frames','errors','benny_offscreen_frames','camera_max_step_u','scenery_meshes_moved','swipes_sent','coins_end')})\"; nice -n 5 python3 -I tools/reflock/encode_run.py /home/user/ws47/rec/gray qa/kit47/run SECTION_05_GRAY_geometry_real_touch 2>&1 | tail -n 1; python3 -c \"\nimport json; d=json.load(open('/home/user/rainbow-/ …[+297 chars]`
 
+### 🧑 User — 2026-11-23T01:49:49.022Z
+
+> ↩︎ result: EXIT 0
+> {'frames': 285, 'errors': [], 'benny_offscreen_frames': 0, 'camera_max_step_u': 0.11, 'scenery_meshes_moved': [], 'swipes_sent': 9, 'coins_end': 1370}
+> wrote qa/kit47/run/SECTION_05_GRAY_geometry_real_touch.mp4 7.6 MB 285 frames
+> gray holes 0 0 285
+
+### 🤖 Claude — 2026-11-23T01:50:28.250Z
+
+Got your new direction: a simpler, clean candidate. First I'm checking the `gn_assets.py` you attached against the project's version, so I know what it changes before using any of it.
+
+### 🤖 Claude — 2026-11-23T01:50:30.297Z
+
+> 🔧 **Bash** `{"command": "U=\"/root/.claude/uploads/b194400e-972b-5b24-a1b4-4982954cc18c/fc1494be-gn_assets.py\"; wc -l \"$U\" tools/screenkit/gn_assets.py; diff <(cat tools/screenkit/gn_assets.py) \"$U\" | head -80; grep -n \"import\\|subprocess\\|os\\.system\\|open(\\|urllib\\|requests\\|socket\\|exec(\\|eval(\" \"$U\" | head -20", "description": "Diff the uploaded gn_assets.py against the repo and scan it"}`
+
+### 🧑 User — 2026-11-23T01:50:30.382Z
+
+> ↩︎ result: 220 /root/.claude/uploads/b194400e-972b-5b24-a1b4-4982954cc18c/fc1494be-gn_assets.py
+>   220 tools/screenkit/gn_assets.py
+>   440 total
+> 18:Blender 5.3 lessons (round 43): link Capture Attribute items BY NAME (a Selection socket sits at index 1); Curve to Mesh profile X -> the
+> 21:import bpy, math, sys
+> 38:    s = ng.interface.new_socket(name, in_out=in_out, socket_type=kind)
+> 97:    # axis) -> the band's width runs along the drum, its thickness radially, exactly as the r43 rings. Mode is a menu socket in 5.3.
+
+### 🤖 Claude — 2026-11-23T01:50:38.133Z
+
+> 🔧 **Bash** `{"command": "flock backups/.autosave.lock bash -c 'git add qa/kit47 && git commit -q -m \"r47 results: Screen 05 section recordings, stills, functional checks, honest visual report\n\nBoundary removed (one water surface, one flow-space material); functional\nchecks pass (9/9 touches, 0 off-screen, 0 holes textured + gray, no scenery\nmoved). NOT visually approved: picture-camera look regressed (rings as thin\ntubes, softer water); README lists what must be replaced.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VxvdiTguYuhxb4aBQ1Co …[+567 chars]`
+
+### 🧑 User — 2026-11-23T01:50:43.159Z
+
+> ↩︎ result: claude/rainbow-05-simple-candidate-r48
+> Uploading LFS objects: 100% (1/1), 7.6 MB | 0 B/s, done.
+> 05d49fbf8bf2
+> 05d49fbf8bf2
+> 05d49fbf8bf2
+
+### 🤖 Claude — 2026-11-23T01:50:44.820Z
+
+> 🔧 **TaskUpdate** `{"taskId": "9", "status": "completed"}`
+
+### 🧑 User — 2026-11-23T01:50:44.834Z
+
+> ↩︎ result: Updated task #9 status
+
+### 🤖 Claude — 2026-11-23T01:50:45.669Z
+
+> 🔧 **TaskUpdate** `{"taskId": "10", "status": "completed", "description": "r47: physical metal shading, ring spacing 2.1, wall gate. Rings still read as thin tubes (reported)."}`
+
+### 🧑 User — 2026-11-23T01:50:45.682Z
+
+> ↩︎ result: Updated task #10 description, status
+
+### 🤖 Claude — 2026-11-23T01:50:46.518Z
+
+> 🔧 **TaskUpdate** `{"taskId": "11", "status": "completed", "description": "r47: 3D foam heaps along measured painted foam edges; water gap 0.012; lean max 13 deg."}`
+
+### 🧑 User — 2026-11-23T01:50:46.528Z
+
+> ↩︎ result: Updated task #11 description, status
+
+### 🤖 Claude — 2026-11-23T01:50:47.615Z
+
+> 🔧 **TaskUpdate** `{"taskId": "12", "status": "completed", "description": "qa/kit47: section recordings (textured + gray), stills, README with functional checks and honest visual report. Commit 05d49fb."}`
+
+### 🧑 User — 2026-11-23T01:50:47.625Z
+
+> ↩︎ result: Updated task #12 description, status
+
+### 🤖 Claude — 2026-11-23T01:50:49.313Z
+
+> 🔧 **TaskCreate** `{"subject": "R48: Simple clean candidate of Screen 05 section (?look=simple)", "description": "Stylized consistent materials: lavender perforated tunnel, rounded gold rings, copper machinery, continuous cyan/pink flow water (broad shapes), soft foam banks + some bubbles; Benny splash at contact, material/water contact; same route/controls/coins. Recording + approved-vs-candidate still + explanation.", "activeForm": "Building the simple Screen 05 candidate"}`
+
+### 🧑 User — 2026-11-23T01:50:49.331Z
+
+> ↩︎ result: Task #13 created successfully: R48: Simple clean candidate of Screen 05 section (?look=simple)
+
+### 🤖 Claude — 2026-11-23T01:50:51.206Z
+
+Round 47 is saved, and the candidate branch `claude/rainbow-05-simple-candidate-r48` is on GitHub. Next, the splash and wake code, so I can correct Benny's splash position properly.
+
+### 🤖 Claude — 2026-11-23T01:50:52.456Z
+
+> 🔧 **Bash** `{"command": "grep -n \"KICK\\|kick\\|PAW\\|paw\\|WAKE\\|wake\" tools/kit05/swimfx.js | head -30 | cut -c1-200; grep -n \"fx_\" tools/kit05/swimfx.js | head -5 | cut -c1-200", "description": "Find wake and kick-foam parameters in swimfx"}`
+
+### 🧑 User — 2026-11-23T01:50:52.512Z
+
+> ↩︎ result: 2://  * V-wake: two broken-foam ribbons that start at his waist and spread behind him on the river surface. Every ribbon point is
+> 3://    WORLD-anchored where he was, drifts with the current (toward the camera) and fades with age, so the wake follows the river's
+> 5://  * Paddle ripples: a flat ring opens on the water where each paw dips in (alternating left / right with his strokes).
+> 6://  * Kicks: Benny has no separate feet; each flutter kick of his lower back throws a small foam puff + droplets behind him.
+> 24:  const MOVE = q.get('move') === '1';   // round 36c: the user's reference-video swimming (foam collar, bubble trails, big ripple rings, stronger wake)
+> 25:  const P = { WAKE_AGE: 1.1, WAKE_W0: 0.085, WAKE_SPREAD: 0.3, DRIFT: 0.55, WAKE_A: MOVE ? 0.85 : 0.55, RIPPLE_T: MOVE ? 1.0 : 0.75, PUFF_T: 0.6, SPL_FLOW: 0.035,
+> 93:  // ---------------- V-wake ribbons ----------------
+> 107:  const wake = new THREE.Mesh(wGeo, wMat); wake.frustumCulled = false; wake.renderOrder = 6; wake.visible = !OFF; scene.add(wake);
+> 111:    while (hist.length && hist[hist.length - 1].age > P.WAKE_AGE) hist.pop();
+> 112:    if (o.dt > 0) { if (hist.length >= HN) hist.pop(); hist.unshift({ p: o.waterPt.clone …[+1317 chars]
+
+### 🤖 Claude — 2026-11-23T01:50:54.854Z
+
+> 🔧 **Bash** `{"command": "sed -n 24,30p tools/kit05/swimfx.js | cut -c1-400; grep -n \"puff = \\|function puff\\|const puff\" -A 6 tools/kit05/swimfx.js | cut -c1-300 | head -20", "description": "Read swimfx parameters and the kick puff code"}`
+
+### 🧑 User — 2026-11-23T01:50:54.904Z
+
+> ↩︎ result: const MOVE = q.get('move') === '1';   // round 36c: the user's reference-video swimming (foam collar, bubble trails, big ripple rings, stronger wake)
+>   const P = { WAKE_AGE: 1.1, WAKE_W0: 0.085, WAKE_SPREAD: 0.3, DRIFT: 0.55, WAKE_A: MOVE ? 0.85 : 0.55, RIPPLE_T: MOVE ? 1.0 : 0.75, PUFF_T: 0.6, SPL_FLOW: 0.035,
+>     RIP_SIZE: MOVE ? 0.12 : 0.07, RING_EVERY: 0.55, TRAIL_RATE: 110, TRAIL_LIFE: 0.95, COLLAR_A: 0.95 };
+>   for (const k of Object.keys(P)) { const v = q.get('fx_' + k); if (v != null && v !== '' && !isNaN(+v)) P[k] = +v; }
+>   const canvasTex = (draw, n = 128) => { const c = document.createElement('canvas'); c.width = c.height = n; draw(c.getContext('2d'), n); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; };
+>   // a soft broken ring (ripple) and a clustered foam puff, drawn once (no image files)
+>   let seed = 4242; const rnd = () => ((seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff);
+> 87:  const puff = (p, F, size) => { if (OFF) return; const o = place(0, puffs, pi, p, F, size, P.PUFF_T, 0.9, 0.85); o.m.material.rotation = rnd() * 6.28; pi = (pi + 1) % puffs.length; };
+> 88-  const updDecals = (list, dt) => { for (const o of list …[+429 chars]
+
+### 🤖 Claude — 2026-11-23T01:51:03.887Z
+
+> 🔧 **Bash** `{"command": "grep -n \"collar\\|COLLAR\" tools/kit05/swimfx.js | head -10 | cut -c1-260; grep -n \"bubbles_banks\\|bubbles_from\" tools/world/world.html | head -5 | cut -c1-260", "description": "Inspect foam collar and bank bubble code"}`
+
+### 🧑 User — 2026-11-23T01:51:03.931Z
+
+> ↩︎ result: 24:  const MOVE = q.get('move') === '1';   // round 36c: the user's reference-video swimming (foam collar, bubble trails, big ripple rings, stronger wake)
+> 26:    RIP_SIZE: MOVE ? 0.12 : 0.07, RING_EVERY: 0.55, TRAIL_RATE: 110, TRAIL_LIFE: 0.95, COLLAR_A: 0.95 };
+> 42:  // ---- round 36c (?move=1): foam collar around his waist at the water line, bubble trails streaming back from his sides ----
+> 43:  // a dense band of white foam bubbles in an ellipse annulus (the white collar hugging his waist in the user's reference video)
+> 44:  const collarTex = canvasTex((g, n) => { const c = n / 2;
+> 47:  const collar = new THREE.Mesh(plane, new THREE.MeshBasicMaterial({ map: collarTex, transparent: true, depthWrite: false, toneMapped: false, opacity: 0, polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3 }));
+> 48:  collar.renderOrder = 6; collar.frustumCulled = false; collar.visible = MOVE && !OFF; scene.add(collar);
+> 49:  const collar2 = collar.clone(); collar2.material = collar.material.clone(); collar2.material.map = ringTex; scene.add(collar2); collar2.visible = collar.visible;
+> 66:    // foam collar: a broken white ring + a foamy puff ring around his waist on the water, breathing w …[+626 chars]
+
+### 🤖 Claude — 2026-11-23T01:51:04.842Z
+
+> 🔧 **Bash** `{"command": "grep -n \"ffoam\\|ffm\\|const ff\" tools/kit05/swimfx.js | head -8 | cut -c1-300", "description": "Locate the foam collar mesh code"}`
+
+### 🧑 User — 2026-11-23T01:51:04.889Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-23T01:51:07.118Z
+
+> 🔧 **Bash** `{"command": "sed -n 60,80p tools/kit05/swimfx.js | cut -c1-330; sed -n 165,190p tools/kit05/swimfx.js | cut -c1-260", "description": "Read collar update and per-frame fx update"}`
+
+### 🧑 User — 2026-11-23T01:51:07.168Z
+
+> ↩︎ result: const k = bNext; bNext = (bNext + 1) % NB; bAge[k] = 0; bLife[k] = P.TRAIL_LIFE * (0.7 + 0.6 * rnd()); bSz[k] = 0.016 + 0.03 * rnd() * rnd();
+>     bP[k].copy(p).addScaledVector(F.r, side * (0.11 + 0.05 * rnd())).addScaledVector(F.t, -0.02 - 0.05 * rnd()).addScaledVector(F.n, 0.004 + 0.01 * rnd());
+>     bVel[k].copy(F.t).multiplyScalar(-P.DRIFT * (0.8 + 0.5 * rnd())).addScaledVector(F.r, side * (0.06 + 0.12 * rnd())).addScaledVector(F.n, 0.02 * rnd());
+>   }
+>   function updMove(o) {
+>     const { F, waterPt, dt } = o;
+>     // foam collar: a broken white ring + a foamy puff ring around his waist on the water, breathing with his strokes
+>     const sw = 1 + 0.08 * Math.sin(o.armPh * 2) + 0.15 * (o.latK || 0);
+>     for (const [m, sx, sy, a, rot] of [[collar, 0.44, 0.27, P.COLLAR_A, o.clock * 0.25], [collar2, 0.58, 0.34, P.COLLAR_A * 0.6, -o.clock * 0.4]]) {
+>       m.position.copy(waterPt).addScaledVector(F.n, 0.004).addScaledVector(F.t, -0.015);
+>       m.quaternion.setFromRotationMatrix(Mb.makeBasis(F.r, F.t, F.n)); m.scale.set(sx * sw, sy * sw, 1); m.material.rotation = rot;
+>       m.material.opacity = a * (o.inWater ? 1 : 0) * Math.min(1, o.s / 0.25); }
+>     // bubble trails from both sides of his  …[+2962 chars]
+
