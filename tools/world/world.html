@@ -134,10 +134,17 @@ const sceneryMat = (base, rep, A, opts = {}) => new THREE.ShaderMaterial({
       if (uFam > 0.5 && uFam < 2.5 && dot(vN, vN) > 0.01) { vec3 N = normalize(vN); vec3 V = normalize(cameraPosition - vW); if (dot(N, V) < 0.0) N = -N;
         vec3 Lk = normalize(vec3(-0.25, 0.85, 0.45)), Lf = normalize(vec3(0.15, 0.25, 1.0));
         float near = smoothstep(0.006, 0.0018, max(length(dFdx(vW)), length(dFdy(vW))));
-        vec3 metal = uFam < 1.5 ? vec3(0.98, 0.68, 0.26) : vec3(0.93, 0.5, 0.26), alb = mix(c, metal * (0.7 + 0.45 * dot(c, vec3(0.333))), 0.65 * near);
-        float dif = 0.78 + 0.32 * max(dot(N, Lk), 0.0), sp = pow(max(dot(reflect(-Lk, N), V), 0.0), 40.0) + 0.6 * pow(max(dot(reflect(-Lf, N), V), 0.0), 22.0);
+        vec3 metal = uFam < 1.5 ? vec3(0.98, 0.68, 0.26) : vec3(0.93, 0.5, 0.26);
+        // rings: the 3D rings now stand where the painting's rings are spaced (2.1 u), not on the painted ring pixels -> always clean gold;
+        // paddles keep the painted copper from afar and become clean copper close up
+        vec3 alb = uFam < 1.5 ? metal * (0.86 + 0.22 * clamp(dot(c, vec3(0.333)) * 1.3, 0.0, 1.0)) : mix(c, metal * (0.7 + 0.45 * dot(c, vec3(0.333))), 0.65 * near);
+        float dif = 0.92 + 0.18 * abs(dot(N, Lk)), sp = pow(max(dot(reflect(-Lk, N), V), 0.0), 40.0) + 0.6 * pow(max(dot(reflect(-Lf, N), V), 0.0), 22.0);
         float fr = pow(1.0 - max(dot(N, V), 0.0), 3.0);
-        c = alb * dif + vec3(1.0, 0.92, 0.74) * sp * (0.35 + 0.4 * near) + alb * 0.3 * fr; }
+        // metal = reflection: across the rounded band each point mirrors a warm drum (dark copper below, bright gold above) -> the painted
+        // rings' orange-gold banding with nearly white highlights, which moves correctly as Benny passes
+        vec3 Rv = reflect(-V, N); float e = smoothstep(-0.55, 0.85, Rv.y + 0.25 * Rv.z);
+        vec3 env = mix(vec3(0.66, 0.34, 0.1), vec3(1.15, 0.95, 0.62), e);   /* the painted rings are bright, glowing gold */
+        c = alb * env * (uFam < 1.5 ? 1.12 : dif) + vec3(1.0, 0.93, 0.78) * sp * (0.45 + 0.4 * near) + alb * 0.35 * fr + (uFam < 1.5 ? vec3(0.1, 0.06, 0.02) : vec3(0.0)); }
       c = mix(c, vec3(1.0, 0.97, 0.92), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6));
       gl_FragColor = vec4(min(c, vec3(1.0)), uAlpha); }` });
 // the shared water palette (cyan core, pink edges, short highlight dashes, flowing toward the camera) - two parametrisations:
