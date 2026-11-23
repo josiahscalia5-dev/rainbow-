@@ -12,7 +12,7 @@
 // Inputs (all world space; the river mesh sits at the identity transform):
 //   Stream  x = stream centre x (RiverPath.Meander(s)), y = stream half width (6 - sqrt(d^2 + 0.09)),
 //           z = extra core shift (W10 exit-bend hold), w = unused         [mesh UV1, see RiverMeshGenerator.cs]
-//   Benny   x = Benny s (world z), y = Benny world x, z = wake strength 0..1 (0 = no Benny / airborne), w = waterline radius
+//   Benny   x = Benny s (world z), y = Benny world x, z = wake strength 0..1 (0 = airborne), w = waterline radius (0 = no Benny)
 //   Splash  x = world x, y = world z, z = age (s), w = strength           [global _RainbowSplash, set by SplashWake]
 //   Params  x = Three.js master-s offset, y = core swing, z = flow speed (u/s), w = time (s)
 #ifndef RAINBOW_RIVER_INCLUDED
@@ -92,8 +92,8 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float fwLat = fwidth(lat);
     float fl2 = fwLat * pxK + 1e-4;
 
-    // ---- Benny ----
-    float bOn = step(0.001, Benny.z);
+    // ---- Benny ---- (present = waterline radius > 0, so the band layout never jumps while he is airborne)
+    float bOn = step(0.001, Benny.w);
     float wk = saturate(Benny.z);
     float rbw = Benny.w > 0.01 ? Benny.w : 0.75;
     float db = s - Benny.x;                        // + = ahead of Benny

@@ -38,7 +38,7 @@ Shader "Rainbow/Water/River"
         CBUFFER_END
 
         // globals written every frame by Rainbow.Screen05.SplashWake (zero = no Benny)
-        float4 _RainbowBenny;     // x = s (world z), y = world x, z = wake strength 0..1, w = waterline radius
+        float4 _RainbowBenny;     // x = s (world z), y = world x, z = wake strength 0..1, w = waterline radius (0 = no Benny)
         float4 _RainbowSplash;    // x = world x, y = world z, z = age (s), w = strength
 
         #include "Assets/Rainbow/Water/Shaders/RainbowRiver.hlsl"
