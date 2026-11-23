@@ -5,6 +5,16 @@ Read this first in any new Claude account or session. **This is an existing proj
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
+**UPDATE 2026-11-23 20:30 UTC (round 2 started):** the tuned wall / gold / Benny-fur / bubble values are now IN the builders
+(EnvironmentBuilder.SetupWall/SetupGold, BennyRigBuilder.BennyMaterial, WaterBuilder.BuildBubbles, camera depth in
+GameplayBuilder) — verified: a full rebuild leaves all 141 material values identical (commit `c1a3217`, pushed).
+New test tool: `tools/screen05-cycle.ps1 -Tag <name> -Areas water|foam|bubbles|splash|light|all [-Series] [-NoRebuild]`
+(recompile → rebuild → Play → hold at s = 14 → 864×1536 still + side-by-side + area crops; one cycle at a time via a lock;
+work images in `UnityProject/Recordings/Screen05/work`, git-ignored). `AgentScripts/screen05_hold_approved.cs` is now
+deterministic (Benny exactly s = 14.00, camera (-0.06, 3.32, 7.07) every run). Baseline: `work/20261123_152447_BASELINE*`.
+Round-2 fix workflow running (water → splash | scenery → foam → bubbles, then final capture + recording + 2 critics).
+If it was interrupted: check `git log`, rerun the cycle with `-Areas all -Series`, compare with the baseline, continue.
+
 **UPDATE 2026-11-23 19:20 UTC:** all 4 specialists are DONE and integrated; the full scene builds and plays
 (`Assets/Rainbow/Scenes/Screen05.unity`, Rainbow → Build Screen 05 Scene). ProBuilder 6.1.4 + Animation Rigging 1.4.1 added.
 Round 1 evidence: `evidence/screen05/round1_*.jpg`. Five biggest differences found: (1) foam banks too thin/flat,
