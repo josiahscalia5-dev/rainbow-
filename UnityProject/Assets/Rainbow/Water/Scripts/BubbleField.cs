@@ -119,15 +119,16 @@ namespace Rainbow.Screen05
             b.seed = Rand();
             b.age = initial ? Range(0.5f, 3f) : 0f;
             b.life = Range(7f, 15f);
-            float s = bennyS + (initial ? Range(spawnAheadMin, spawnAheadMax) : Range(spawnAheadMax * 0.5f, spawnAheadMax));
+            // Approved image: bubbles beside and behind Benny too, down to ~2 u in front of the camera (6.4 u behind him).
+            float s = bennyS + (initial ? Range(-recycleBehind + 2.5f, spawnAheadMax) : Range(spawnAheadMax * 0.5f, spawnAheadMax));
             s = Mathf.Clamp(s, RiverPath.TunnelStart + 1f, RiverPath.TunnelLength - 2f);
-            b.r = b.big ? 0.12f + 0.3f * Mathf.Pow(Rand(), 1.25f) : 0.03f + 0.06f * Mathf.Pow(Rand(), 1.4f);
+            b.r = b.big ? 0.16f + 0.34f * Mathf.Pow(Rand(), 1.1f) : 0.04f + 0.07f * Mathf.Pow(Rand(), 1.4f);
             float side = Rand() < 0.5f ? -1f : 1f;
             float d = RiverPath.Meander(s);
             float x = side * Range(b.big ? 2.8f : 2.4f, 5.4f);
             float lane = 2.1f + b.r;                                   // keep the coin line / cyan core clear
             if (Mathf.Abs(x - d) < lane) x = d + side * lane;
-            float y = RiverPath.WaterY + (b.big ? Range(0.35f, 2.3f) : Range(0.15f, 1.3f));
+            float y = RiverPath.WaterY + (b.big ? Range(0.6f, 2.6f) : Range(0.3f, 1.6f));   // read against water and walls, not only the foam
             float floor = RiverPath.WaterY + RiverSurface.BaseHeight(x, s) + b.r
                         + (RiverSurface.OnStream(x, s, 0.3f) ? 0.15f : 0.55f);   // above the water / the bank foam
             y = Mathf.Max(y, floor);
