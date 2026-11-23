@@ -194,9 +194,9 @@ vec3 stripStyled(vec2 ld, float t){
   vec3 pink = mix(pkD, pkM, smoothstep(0.0, 0.5, pc)); pink = mix(pink, pkB, smoothstep(0.55, 1.0, pc));
   vec3 col = mix(cy, pink, pk);
   // silk: fine streaks along the flow inside every strand (anti-aliased, they fade to their average where smaller than a pixel)
-  float w = u * 70.0 + 1.2 * stripN(vec2(u * 8.0, d * 0.35)), fw = max(fwidth(w), 1e-4), f = abs(fract(w) - 0.5) * 2.0;
+  float w = u * 44.0 + 1.2 * stripN(vec2(u * 8.0, d * 0.35)), fw = max(fwidth(w), 1e-4), f = abs(fract(w) - 0.5) * 2.0;
   float silk = (1.0 - smoothstep(0.0, max(0.35, 1.6 * fw), f)) * (0.4 + 0.6 * stripN(vec2(floor(w) * 0.7, d * 1.3))) * (1.0 - smoothstep(0.3, 0.8, fw));
-  col = mix(col, mix(vec3(0.82, 1.0, 1.0), vec3(1.0, 0.75, 0.97), pk), 0.35 * silk);
+  col = mix(col, mix(vec3(0.82, 1.0, 1.0), vec3(1.0, 0.75, 0.97), pk), 0.35 * silk * smoothstep(0.02, 0.12, fw));   /* calm close to the camera */
   // glossy light bands drifting with the flow
   float gb = smoothstep(0.6, 0.9, stripN(vec2(u * 2.5, d * 0.5))); col = mix(col, col * 1.18 + 0.05, 0.6 * gb);
   // white glints with long horizontal flares (painting), screen-size aware so they never shimmer away

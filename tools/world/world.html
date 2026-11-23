@@ -176,6 +176,7 @@ const simpleMat = (kind, A, rep = [1, 1], axis = null) => new THREE.ShaderMateri
         c = wall * (0.85 + 0.25 * max(dot(N, Lk), 0.0)) + vec3(1.0, 0.75, 1.0) * (0.35 * sp + 0.18 * fr) * (1.0 - hole); }
       else if (uKind < 1.5) {   // rounded gold ring + warm lamp studs on its inner face
         c = simpleMetal(vec3(1.0, 0.72, 0.28), N, V);
+        { float fc = max(dot(N, V), 0.0); c = mix(vec3(0.66, 0.3, 0.06), vec3(1.0, 0.66, 0.2), smoothstep(0.15, 0.8, fc)) * (0.88 + 0.2 * max(N.y, 0.0)) + vec3(1.0, 0.93, 0.7) * 0.45 * pow(fc, 28.0); }   /* polished band: bright gold crest, deep orange flanks */
         vec2 r = vL.xy - uAxis; float ang = atan(r.y, r.x), la = fract(ang / 6.28318 * 40.0) - 0.5, inner = smoothstep(0.3, 0.7, dot(N, -normalize(vec3(r, 0.0))));
         float lamp = exp(-la * la / 0.006) * inner * (1.0 - smoothstep(0.35, 0.9, fwidth(ang / 6.28318 * 40.0)));
         c = mix(c, vec3(1.0, 0.97, 0.85), 0.9 * lamp); }
@@ -196,9 +197,9 @@ const kitWallMat = (A, rep) => new THREE.ShaderMaterial({ side: THREE.DoubleSide
       vec3 Np = normalize(N * tn.z + Tu * tn.x + Ta * tn.y);
       vec3 Lk = normalize(vec3(-0.25, 0.85, 0.45)); float dif = 0.8 + 0.3 * max(dot(Np, Lk), 0.0);
       float sp = pow(max(dot(reflect(-Lk, Np), V), 0.0), 24.0), fr = pow(1.0 - max(dot(Np, V), 0.0), 2.5);
-      float ang = vUv.x * 6.28318, lines = pow(0.5 + 0.5 * cos(ang * 7.0 + 0.6), 40.0) + 0.6 * pow(0.5 + 0.5 * cos(ang * 13.0 + 2.1), 60.0);   // light lines along the drum
+      float ang = vUv.x * 6.28318, lines = pow(0.5 + 0.5 * cos(ang * 5.0 + 0.6), 60.0) * (0.5 + 0.5 * N.y);   // a few soft light lines along the drum (upper wall)
       float onPlate = smoothstep(0.25, 0.45, dot(alb, vec3(0.333)));
-      vec3 c = alb * dif + vec3(1.0, 0.72, 1.0) * (0.35 * sp + 0.22 * fr) * onPlate + vec3(1.0, 0.82, 1.0) * 0.55 * lines * onPlate;
+      vec3 c = alb * dif * mix(vec3(0.95, 0.82, 1.0), vec3(1.08, 0.98, 1.04), 0.5 + 0.5 * N.y) + vec3(1.0, 0.72, 1.0) * (0.3 * sp + 0.2 * fr) * onPlate + vec3(1.0, 0.85, 1.0) * 0.35 * lines * onPlate;
       c = mix(c, uFarCol, uFar.w * uFar.z * pow(smoothstep(uFar.x, uFar.y, distance(cameraPosition, vW)), 1.4));
       c = mix(c, vec3(1.0, 0.97, 0.92), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(min(c, vec3(1.0)), 1.0); }` });
 // the shared water palette (cyan core, pink edges, short highlight dashes, flowing toward the camera) - two parametrisations:
@@ -359,7 +360,7 @@ const loadKit = async (A) => {
   const RLENa = (LAY.route.points.length - 1) * LAY.route.ds, NSEG = ms.filter((o) => /^water_/.test(o.name)).length, SEG_LEN = RLENa / Math.max(1, NSEG);
   const SIMPLE_A = SIMPLE && SIMPLE_AREAS.includes(A.id); A.simple = SIMPLE_A; A.kitLook = SIMPLE_A && KITLOOK; if (SIMPLE_A && A.stripU) A.stripU.uStripS.value = A.kitLook ? 2 : 1;   // r48 / r49
   for (const o of ms) { const n = o.name, fam = famOf(n); o.geometry.computeBoundingBox(); const sz = o.geometry.boundingBox.getSize(new THREE.Vector3()); let m;
-    if (A.kitLook && fam === 'tunnel') m = kitWallMat(A, [Math.round(2 * Math.PI * DR.r / 1.3), Math.max(1, sz.z / 1.35)]);   // r49: tile = 4 slots around x 3 along
+    if (A.kitLook && fam === 'tunnel') m = kitWallMat(A, [Math.round(2 * Math.PI * DR.r / 0.62), Math.max(1, sz.z / 0.62)]);   // r49: tile = 4 slots around x 3 along (slots ~0.15 x 0.2 u)
     else if (SIMPLE_A && fam === 'tunnel') m = simpleMat('wall', A, [Math.round(2 * Math.PI * DR.r / 0.75), Math.max(1, sz.z / 0.75)]);
     else if (SIMPLE_A && fam === 'ring') m = simpleMat('ring', A);
     else if (SIMPLE_A && fam === 'copper') m = simpleMat('copper', A);
@@ -384,6 +385,13 @@ const loadKit = async (A) => {
       fragmentShader: `varying vec2 vP; void main(){ float r = length(vP) / ${(DR.r * 1.02).toFixed(3)}; vec3 c = mix(vec3(1.0, 0.97, 0.88), vec3(0.98, 0.62, 0.4), smoothstep(0.08, 0.35, r)); c = mix(c, vec3(0.55, 0.25, 0.7), smoothstep(0.35, 0.95, r)); gl_FragColor = vec4(c, 1.0); }` }));
     cap.position.set(DR.axis_x, DR.axis_y, DR.z1 + 0.05); cap.name = 'drum_end'; cap.userData.area = A.id; g.add(cap); }
   if (LAY.splash_pic && q.get('splashpic') !== '0') { A.splashTex = await tl.loadAsync(A.dir + 'splash_pic.png').catch(() => null); if (A.splashTex) A.splashTex.colorSpace = THREE.SRGBColorSpace; }   // r45
+  if (A.kitLook && LAY.rings) {   // r49 KIT: ONE reusable broad rounded gold ring (a revolved half-round profile, 0.3 u deep, 0.26 u wide) at every ring z
+    const prof = []; for (let i = 0; i <= 24; i++) { const a = Math.PI * i / 24; prof.push(new THREE.Vector2(DR.r + 0.02 - 0.3 * Math.pow(Math.sin(a), 0.7), -0.13 * Math.cos(a))); }
+    const rg = new THREE.LatheGeometry(prof, 160); rg.rotateX(Math.PI / 2); rg.computeVertexNormals();
+    const rmat = simpleMat('ring', A, [1, 1], [0, 0]); let nR = 0;
+    for (const o of ms) if (famOf(o.name) === 'ring' && o.name !== 'ring_mouth') { o.geometry.computeBoundingBox(); const zc = (o.geometry.boundingBox.min.z + o.geometry.boundingBox.max.z) / 2;
+      const r = new THREE.Mesh(rg, rmat); r.position.set(DR.axis_x, DR.axis_y, zc); r.name = 'kitring_' + (nR++); r.userData.fam = 'ring'; r.userData.area = A.id; g.add(r); MESH.push(r); o.visible = false; }
+    A.kitRings = nR; }
   const MANI = await loadBake(A, ms);
   if (MANI && !GRAY && q.get('tpl') !== '0') { A.TPL = await loadTemplates(THREE, tl, MANI, A.dir + 'baked/'); A.tplApplied = applyTemplates(THREE, ms, A.TPL); }
   if (A.ribbonU && !GRAY && q.get('detail') !== '0') await loadDetail(THREE, tl, A.dir + 'baked/', MANI, A.ribbonU);   // r45: the painting's own detail inside the ribbons
@@ -426,7 +434,7 @@ const loadKit = async (A) => {
     const S_REFa = LAY.cams[0].s_ref ?? 0, LEVa = Math.min(LL - 1.0, LAY.level_end ?? LL - 1.0);
     const B = (LAY.bubbles ?? []).map((b) => b.slice());
     for (let s = S_REFa + (LAY.bubbles_from ?? 6); s < LEVa; s += 1.2 + rp() * 1.4) { const F = lfr(s), p = lat_(s, new THREE.Vector3()).addScaledVector(F.r, (rp() - 0.5) * 2.2).addScaledVector(F.n, 0.15 + rp() * 0.8); B.push([p.x, p.y, p.z, 0.03 + rp() * rp() * 0.06]); }
-    if (LAY.bubbles_banks) { const bb = LAY.bubbles_banks; for (let s = S_REFa + (SIMPLE && SIMPLE_AREAS.includes(A.id) ? 0.5 : (bb.from ?? 3)); s < LEVa; s += bb.every ?? 0.7) for (const side of [-1, 1]) {   // r45: bubbles along both banks
+    if (LAY.bubbles_banks) { const bb = LAY.bubbles_banks; for (let s = S_REFa + (SIMPLE && SIMPLE_AREAS.includes(A.id) ? 0.5 : (bb.from ?? 3)); s < LEVa; s += (KITLOOK && SIMPLE_AREAS.includes(A.id) ? 0.35 : (bb.every ?? 0.7))) for (const side of [-1, 1]) {   // r45: bubbles along both banks
       const F = lfr(s), p = lat_(s, new THREE.Vector3()).addScaledVector(F.r, side * (bb.lat[0] + (bb.lat[1] - bb.lat[0]) * rp())).addScaledVector(F.n, 0.05 + rp() * (bb.h ?? 0.45)); B.push([p.x, p.y, p.z, bb.r[0] + (bb.r[1] - bb.r[0]) * rp() * rp()]); } }
     for (const b of B) { const P = new THREE.Vector3(b[0], b[1], b[2]).applyMatrix4(M); BUBBLES.push([P.x, P.y, P.z, b[3], rp() * 6.28]); } }
   A.paintedCoins = (LAY.coins ?? []).map(V3).map((p) => p.applyMatrix4(M));
@@ -513,7 +521,7 @@ const AREA = Object.fromEntries(WD.areas.map((A) => [A.id, A]));
     if (c.kind === 'tube') { let L = 0; for (let i = 1; i < c.axis.length; i++) L += V3(c.axis[i]).distanceTo(V3(c.axis[i - 1])); const rA = c.r.reduce((a, b) => a + b, 0) / c.r.length;
       rep = c.fam === 'tunnelS' ? [Math.round(2 * Math.PI * rA / 0.75), Math.max(1, L / 0.75)] : [Math.round(2 * Math.PI * rA / 2.6), Math.max(1, L / 1.2)]; }
     o.material = c.fam === 'ring' ? sceneryMat(BASE.goldring, [4, 1], A) : c.fam === 'pool' ? waterMatKit(Math.max(sz.x, 1.2) / 2, Math.max(sz.z, 1), 0, true, A, false) : sceneryMat(BASE[c.fam] ?? BASE.pink, rep, A);
-    if (A?.kitLook && c.kind === 'tube') { let L = 0; for (let i = 1; i < c.axis.length; i++) L += V3(c.axis[i]).distanceTo(V3(c.axis[i - 1])); const rA = c.r.reduce((a, b) => a + b, 0) / c.r.length; o.material = kitWallMat(A, [Math.round(2 * Math.PI * rA / 1.3), Math.max(1, L / 1.35)]); }
+    if (A?.kitLook && c.kind === 'tube') { let L = 0; for (let i = 1; i < c.axis.length; i++) L += V3(c.axis[i]).distanceTo(V3(c.axis[i - 1])); const rA = c.r.reduce((a, b) => a + b, 0) / c.r.length; o.material = kitWallMat(A, [Math.round(2 * Math.PI * rA / 0.62), Math.max(1, L / 0.62)]); }
     else if (A?.simple && c.kind === 'tube') o.material = simpleMat('wall', A, rep);   // r48: the candidate's materials continue into its connectors
     else if (A?.simple && c.fam === 'ring') o.material = simpleMat('ring', A, [1, 1], c.axis_pt ? [c.axis_pt[0], c.axis_pt[1]] : null);
     if (c.fam === 'pool' && c.kind === 'strip_path' && q.get('connwater') !== '0') { const pr = { 'B05': ['AB', '05'], '056': ['05', '06'], '067': ['06', '07'], '04A': ['04', 'AB'] }[o.name.split('_')[1]];   // r46: ribbon water across the join

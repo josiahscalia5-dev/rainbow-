@@ -125,7 +125,7 @@ if VARIANT == 'kit':
     # r49 KIT: evenly repeated gold rings (2.6 u, broad rounded bands; also one ring behind Benny = the painting's big near frame), copper trays at
     # every ring, the 3D foam clusters along both river edges (world.html), no painted pixels on the water / walls (repeating textures instead)
     lay['rings'] = {'z': [z_ring0 + 2.6 * k for k in (1, 0)], 'spacing': 2.6, 'band': 0.5}
-    lay['machinery'] = {'every': 1, 'clear_y': [float(cam.C[1]), 0.5], 'scale': 0.8, 'z_from': float(z_ring0 - 0.5)}
+    lay['machinery'] = {'every': 1, 'clear_y': [float(cam.C[1]), 0.5], 'scale': 1.1, 'z_from': float(z_ring0 - 0.5)}
     lay['kit'] = {'foam_lat': 0.82, 'water_half': 0.82}
 for kv in a.set:
     k, v = kv.split('=', 1); v = json.loads(v)
