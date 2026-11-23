@@ -5410,3 +5410,61 @@ The Android APK is not inside: at 247 MB it's too big. It's on GitHub at `qa/kit
 
 Can you give me the zip file for the ChatGPT for all the files, code files, to all the, you know, images on my mobile app screen that you built, like a summary, just everything that you built and everything. So I could send it to ChatGPT, and ChatGPT could see it, how it looks and everything.
 
+### 🤖 Claude — 2026-11-23T00:44:35.038Z
+
+I sent this zip in my last reply, but here it is again. ChatGPT can have trouble with large uploads, so I'm also making a smaller version without the two full-length videos; the short clips stay in.
+
+### 🤖 Claude — 2026-11-23T00:44:37.813Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/kit46 && ls -la RAINBOW_r46_for_ChatGPT.zip && rm -f RAINBOW_r46_for_ChatGPT_LITE.zip && cp RAINBOW_r46_for_ChatGPT.zip RAINBOW_r46_for_ChatGPT_LITE.zip && zip -q -d RAINBOW_r46_for_ChatGPT_LITE.zip \"RAINBOW_r46_for_ChatGPT/video/GAMEPLAY_05_06_07_TEXTURED_real_touch.mp4\" \"RAINBOW_r46_for_ChatGPT/video/GAMEPLAY_05_06_07_GRAY_geometry_real_touch.mp4\" && unzip -tq RAINBOW_r46_for_ChatGPT_LITE.zip && ls -la RAINBOW_r46_for_ChatGPT_LITE.zip && unzip -l RAINBOW_r46_for_ChatGPT_LITE.zip | tail -1", "description": "Make a smaller zip without the two full-len …[+12 chars]`
+
+### 🧑 User — 2026-11-23T00:44:38.283Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 98546579 Nov 23 00:37 RAINBOW_r46_for_ChatGPT.zip
+> No errors detected in compressed data of RAINBOW_r46_for_ChatGPT_LITE.zip.
+> -rw-r--r-- 1 root root 42221501 Nov 23 00:44 RAINBOW_r46_for_ChatGPT_LITE.zip
+>  42802658                     126 files
+
+### 🤖 Claude — 2026-11-23T00:44:41.450Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/kit46/RAINBOW_r46_for_ChatGPT.zip", "/home/user/rainbow-/qa/kit46/RAINBOW_r46_for_ChatGPT_LITE.zip", "/home/user/rainbow-/qa/kit46/chatgpt/00_START_HERE.md"], "caption": "Full ChatGPT package (98.5 MB, includes the two full 48-second videos) and a LITE version (42 MB, same content minus those two videos). Ask ChatGPT to open 00_START_HERE.md first.", "status": "normal", "display": "attach"}`
+
+### 🧑 User — 2026-11-23T00:44:46.649Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/kit46/RAINBOW_r46_for_ChatGPT.zip → file_uuid: c2f5b7e5-3321-4fe4-971c-e3657faa4c27
+>   /home/user/rainbow-/qa/kit46/RAINBOW_r46_for_ChatGPT_LITE.zip → file_uuid: 2b595306-638b-4df5-a88e-b99bc2c569e9
+>   /home/user/rainbow-/qa/kit46/chatgpt/00_START_HERE.md → file_uuid: 6bd464a7-1493-48e2-89a9-22651c3c22a1
+
+### 🤖 Claude — 2026-11-23T00:44:52.113Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && flock backups/.autosave.lock bash -c 'git add qa/kit46/RAINBOW_r46_for_ChatGPT_LITE.zip && git commit -q -m \"r46: smaller ChatGPT package without the two full-length videos (42 MB)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VxvdiTguYuhxb4aBQ1ConZ\" ; true'; for i in 1 2 3; do timeout 600 git push -q origin claude/rainbow-screens-05-06-10w5xd 2>&1 | tail -1 && break; sleep 20; done; git ls-remote origin refs/heads/claude/rainbow-screens-05-06-10w5xd | cut -c1-12; git rev-parse --short=12 HE …[+80 chars]`
+
+### 🧑 User — 2026-11-23T00:44:56.350Z
+
+> ↩︎ result: On branch claude/rainbow-screens-05-06-10w5xd
+> Your branch is up to date with 'origin/claude/rainbow-screens-05-06-10w5xd'.
+> 
+> nothing to commit, working tree clean
+> 5377d0343f2c
+> 5377d0343f2c
+
+### 🤖 Claude — 2026-11-23T00:45:01.486Z
+
+I've attached the zip again, plus a smaller version in case the big one is too large to upload:
+
+- **`RAINBOW_r46_for_ChatGPT.zip`** (98.5 MB): the full package, including both 48-second gameplay videos.
+- **`RAINBOW_r46_for_ChatGPT_LITE.zip`** (42 MB): the same package without those two long videos. The six short clips are still in it, so ChatGPT can still see Benny swimming, jumping and going through the bends. Use this one if ChatGPT says the file is too big.
+- **`00_START_HERE.md`**: the summary page, also inside both zips. Tell ChatGPT to read it first.
+
+Each zip contains:
+- **Approved paintings:** your pictures for Screens 05 and 06.
+- **Game screens now:** sheets and single phone frames from the start of 05 to the entry of 07.
+- **Before and after:** last round next to this round, at the same places and lanes.
+- **Benny swimming:** frame-by-frame strips of steering, jumping and the steep 06 crest.
+- **Videos:** the full gameplay recordings (full zip only) and six short clips.
+- **Numbers:** all the measurements and test results.
+- **Code:** every code file I built or changed, plus a file listing all changes since the last round.
+
+The Android APK isn't included because it's 247 MB. Both zips are also saved on GitHub, in `qa/kit46/` on branch `claude/rainbow-screens-05-06-10w5xd`.
+
