@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28920,
-   "sha256": "3dd5e2e645e2f71930c269e7efb695d04308b5e0ba57648194ad136e3daba461"
+   "sha256": "78a34a9951e3611f6b2463ed0d8e7d3302e0661379cab20db408abd54c3deca8"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2958,
-   "sha256": "5622376027887eab57adb59b7cc611211d804c3bd5598ad54c076567990cef4c"
+   "sha256": "66f873bb0ab189ffa6d9f30770f95c539840646a7fff383256c58b5c6b49386e"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -23548,8 +23548,8 @@
   },
   {
    "path": "qa/kit46/run/GAMEPLAY_05_06_07_GRAY_geometry_real_touch.mp4",
-   "bytes": 23855152,
-   "sha256": "75bd956745839b62dc38b3fdc645a320718ce6f85f92ccce723a405f2535bfcc"
+   "bytes": 25601474,
+   "sha256": "e2cc53fdfce90475074a04d5d42a636c1134bc51f88573e32f7c94b9512079aa"
   },
   {
    "path": "qa/kit46/run/GAMEPLAY_05_06_07_GRAY_geometry_real_touch_checks.json",
