@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 29385,
-   "sha256": "8384024110843e98c51818e36e67b0fd8f6392f62e964cfd45cde2ab2762b127"
+   "sha256": "814e2b27e3d639f7c5278f326be3713df2a3d5c98b5a55e985944c8b7a3039f1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "c75d1266d167c859a3e29c9ad90223061e9f9596971ddc6df43cb80919de0f63"
+   "sha256": "cfd2a57c36900ce51fe29df1e060befe77651aece19971c2738a23953f4eca1f"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -49568,18 +49568,18 @@
   },
   {
    "path": "tools/mod05/make_tiles.py",
-   "bytes": 9206,
-   "sha256": "3310faec1792fcfdadd6734efd71e7574e6c769e13e0bea50f0be9543c83307c"
+   "bytes": 9302,
+   "sha256": "b86ae6284ad7f63f2d5beda7d756abfbc001ad72e07a6760259d3a5108ce2662"
   },
   {
    "path": "tools/mod05/mod05.html",
-   "bytes": 44493,
-   "sha256": "c6c308c8466374af8da7cdb59744065128832404d3d0d618723165844e0e914b"
+   "bytes": 46302,
+   "sha256": "df5b1f3a64f8ff75390039708aefecd0b976026909387b2db35403e326e7219b"
   },
   {
    "path": "tools/mod05/mod05.json",
-   "bytes": 2779,
-   "sha256": "f4c6416fb59aa0fe44c2e0431851059ea259856f8a94681ede3a7ecb01e2c95d"
+   "bytes": 2794,
+   "sha256": "b6412e23e15cfa5890a65718eb1dc62554a1eee23ba35405fb00d0011c72f8eb"
   },
   {
    "path": "tools/mod05/setup_mod05.sh",

@@ -64,29 +64,29 @@ def wall_tile(WT=1024, HT=2048, SS=2):
     sheen = 1.0 + 0.28 * br
     col = base * sheen[..., None]
     # lit side of each row: the painting's walls brighten toward the hot pink / violet highlight between slot rows
-    ROWS, PER = 4, 4                                                    # slot rows along the tunnel / slots around per tile
+    ROWS, PER = 6, 4                                                    # slot rows along the tunnel / slots around per tile (12 rows per ring section)
     rowY = LEN / ROWS; slotX = ARC / PER
     yr = (Y / rowY) % 1.0                                               # 0..1 inside a row (slot centre at 0.5)
-    lift = np.exp(-((yr - 0.1) / 0.16) ** 2) + np.exp(-((yr - 1.1) / 0.16) ** 2)
+    lift = np.exp(-((yr - 0.0) / 0.12) ** 2) + np.exp(-((yr - 1.0) / 0.12) ** 2)
     hi = lin(PAL['magenta_hi']) * (1 - n1[..., None]) + lin(PAL['violet_hi']) * n1[..., None]
-    col = col * (1 - 0.45 * lift[..., None]) + hi * (0.45 * lift[..., None])
+    col = col * (1 - 0.25 * lift[..., None]) + hi * (0.25 * lift[..., None])
     # bright streaks ALONG the tunnel (vertical in the tile): 5 per tile, varied width, brightness wandering along the tunnel
     for i in range(5):
         x0 = (i + 0.2 + 0.6 * rng.random()) / 5; wd = 0.004 + 0.014 * rng.random(); amp = 0.55 + 0.45 * rng.random()
         dx = np.abs(((u - x0 + 0.5) % 1.0) - 0.5)
         core = np.exp(-(dx / wd) ** 2); glow = np.exp(-(dx / (wd * 4)) ** 2)
-        along = 0.55 + 0.45 * np.sin(2 * np.pi * (v * (1 + i % 2) + rng.random()))
+        along = (0.35 + 0.65 * np.clip(np.sin(2 * np.pi * (v * (2 + i % 3) + rng.random())), 0, 1) ** 2) * (0.6 + 0.4 * pnoise(u, v, 2, 6, 40 + i))
         k = (amp * along)[..., None]
         col = col + k * (0.55 * glow[..., None] * lin(PAL['purple_hi']) + 0.9 * core[..., None] * lin(PAL['streak']))
     # slots: stadium holes, long axis AROUND the tunnel; alternate rows staggered by half a pitch
     ri = np.floor(Y / rowY); xo = (ri % 2) * 0.5 * slotX
     cx = ((X + xo) % slotX) - slotX / 2; cy = (Y % rowY) - rowY / 2
-    L2, R2 = 0.042, 0.016                                               # half length (minus the round end) / radius: 0.116 x 0.032 u slot
+    L2, R2 = 0.030, 0.024                                               # half length (minus the round end) / radius: 0.108 x 0.048 u pill hole
     qx = np.maximum(np.abs(cx) - L2, 0)
     sd = np.sqrt(qx ** 2 + cy ** 2) - R2                                 # signed distance to the slot edge (u)
     px = LEN / h                                                        # world size of one (supersampled) pixel along v
     inside = np.clip(0.5 - sd / (1.2 * px * SS), 0, 1)
-    rim = np.exp(-((sd + 0.002) / 0.0035) ** 2) * (cy > -0.004)        # lit lower lip (toward the light along the tunnel)
+    rim = np.exp(-((sd + 0.003) / 0.005) ** 2) * (cy > -0.006)        # lit lower lip (toward the light along the tunnel)
     dark_out = np.exp(-((sd - 0.004) / 0.004) ** 2)                      # thin shadow ring around each slot
     depth = np.clip(-sd / R2, 0, 1)
     slot = lin(PAL['slot_mid']) * (1 - depth[..., None]) + lin(PAL['slot_deep']) * depth[..., None]

@@ -1090,3 +1090,169 @@ The slot rows are there, but the whole wall is mixed with a pale pink-white, lik
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-23T04:05:19.276Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/mod05/mod05.html'; s=open(p).read()\ndef rep(a,b):\n    global s; assert s.count(a)==1, a[:70]; s=s.replace(a,b)\n# --- ring: front face with three raised concentric bands (the whole gold tile across it), rounded inner edge, banded inner surface\ni0 = s.index(\"const ringGeo = (() => {\"); i1 = s.index(\"g.rotateX(-Math.PI / 2); return g; })();\", i0) + len(\"g.rotateX(-Math.PI / 2); return g; })();\")\ns = s[:i0] + \"\"\"const ringGeo = (() => { const B = LAY.ring.band, DP = LAY.ring.depth, pts = [], vs = [], NF = 30, NI = 30;\n  // front face (toward  …[+5224 chars]`
+
+### 🤖 Claude — 2026-11-23T04:05:20.480Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/sheet6.png"}`
+
+### 🧑 User — 2026-11-23T04:05:27.542Z
+
+> ↩︎ result: ok
+> json ok
+
+### 🧑 User — 2026-11-23T04:05:27.574Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T04:05:49.493Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47 && python3 - <<'EOF'\np='tools/mod05/mod05.html'; s=open(p).read()\na=\"const goldMat = GRAY\"\nassert s.count(a)==1\ns=s.replace(a,\"if (q.get('ringbasic') === '1') { ringMat.metalness = 0; ringMat.envMapIntensity = 0; ringMat.emissiveIntensity = 1; ringMat.color.setScalar(0); }   // debug: the ring texture only\\n\"+a)\nopen(p,'w').write(s)\nEOF\ncp tools/mod05/mod05.html $S/ws/game/play3.html\nrun() { NODE_PATH=$(npm root -g) timeout 600 node tools/reflock/section_run.cjs $S/ws/game $S/$1 st …[+356 chars]`
+
+### 🤖 Claude — 2026-11-23T04:05:50.793Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/zoomJ.png"}`
+
+### 🧑 User — 2026-11-23T04:05:57.972Z
+
+> ↩︎ result: [1]-  Exit 1                  run vJ 1.35 'ringbasic=1&nofog=1'
+> [2]+  Exit 1                  run vK 1.35 'L_paddle_tilt=0'
+
+### 🧑 User — 2026-11-23T04:05:58.001Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T04:06:10.156Z
+
+> 🔧 **Bash** `{"command": "sed -n '/class LatheGeometry/,/computeVertexNormals\\|setAttribute( .uv/p' node_modules/three/src/geometries/LatheGeometry.js | grep -n \"for (\\|uv.\\|vertices.push\\|uvs.push\\|points.length\\|segments\" | head -30", "description": "Inspect LatheGeometry vertex and UV ordering"}`
+
+### 🧑 User — 2026-11-23T04:06:10.197Z
+
+> ↩︎ result: 3:	constructor( points = [ new Vector2( 0, - 0.5 ), new Vector2( 0.5, 0 ), new Vector2( 0, 0.5 ) ], segments = 12, phiStart = 0, phiLength = Math.PI * 2 ) {
+> 11:			segments: segments,
+> 16:		segments = Math.floor( segments );
+> 26:		const uvs = [];
+> 32:		const inverseSegments = 1.0 / segments;
+> 34:		const uv = new Vector2();
+> 43:		for ( let j = 0; j <= ( points.length - 1 ); j ++ ) {
+> 64:				case ( points.length - 1 ):	// special handling for last Vertex on path
+> 95:		// generate vertices, uvs and normals
+> 97:		for ( let i = 0; i <= segments; i ++ ) {
+> 104:			for ( let j = 0; j <= ( points.length - 1 ); j ++ ) {
+> 112:				vertices.push( vertex.x, vertex.y, vertex.z );
+> 116:				uv.x = i / segments;
+> 117:				uv.y = j / ( points.length - 1 );
+> 119:				uvs.push( uv.x, uv.y );
+> 135:		for ( let i = 0; i < segments; i ++ ) {
+> 137:			for ( let j = 0; j < ( points.length - 1 ); j ++ ) {
+> 139:				const base = j + i * points.length;
+> 142:				const b = base + points.length;
+> 143:				const c = base + points.length + 1;
+> 159:		this.setAttribute( 'uv', new Float32BufferAttribute( uvs, 2 ) );
+
+### 🤖 Claude — 2026-11-23T04:06:39.973Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47 && python3 - <<'EOF'\np='tools/mod05/mod05.html'; s=open(p).read()\na=\"\"\"  pts.push(new THREE.Vector2(R + 0.03, B)); vs.push(1.0);\n  const g = new THREE.LatheGeometry(pts, 192); const uv = g.attributes.uv;\"\"\"\nassert s.count(a)==1\ns=s.replace(a,\"\"\"  pts.push(new THREE.Vector2(R + 0.03, B)); vs.push(1.0);\n  pts.reverse(); vs.reverse();   // lathe faces point to the right of the profile's direction: reversed, the front face looks at the camera and the inner surface at the drum axis\n  …[+536 chars]`
+
+### 🤖 Claude — 2026-11-23T04:06:41.130Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/sheet7.png"}`
+
+### 🧑 User — 2026-11-23T04:06:49.410Z
+
+> ↩︎ result: [1]-  Exit 1                  run vL 1.35 ''
+> [2]+  Exit 1                  run vM 1.35 'L_ring_env=0.35&L_ring_glow=1.0'
+
+### 🧑 User — 2026-11-23T04:06:49.440Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T04:07:25.266Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47 && python3 - <<'EOF'\np='tools/mod05/mod05.html'; s=open(p).read()\na=\"const tilt = PD.tilt_deg * DEG * (Math.cos(th) > 0 ? -1 : 1);\"\nassert s.count(a)==1\ns=s.replace(a,\"const tilt = +(q.get('ptilt') ?? PD.tilt_deg) * DEG * (Math.cos(th) > 0 ? -1 : 1);\")\nopen(p,'w').write(s)\nEOF\ncp tools/mod05/mod05.html $S/ws/game/play3.html\nrun() { NODE_PATH=$(npm root -g) timeout 600 node tools/reflock/section_run.cjs $S/ws/game $S/$1 stills $2 0 \"$3\" 2>&1 | grep -E \"rror\" ; }\nfor t in -60 -25 …[+635 chars]`
+
+### 🤖 Claude — 2026-11-23T04:07:26.565Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/paddles.png"}`
+
+### 🧑 User — 2026-11-23T04:07:38.316Z
+
+> ↩︎ result: [1]   Exit 1                  run pt$t 1.35 "ptilt=$t&nofog=1"
+> [2]   Exit 1                  run pt$t 1.35 "ptilt=$t&nofog=1"
+> [4]+  Exit 1                  run pt$t 1.35 "ptilt=$t&nofog=1"
+> [3]+  Exit 1                  run pt$t 1.35 "ptilt=$t&nofog=1"
+
+### 🧑 User — 2026-11-23T04:07:38.443Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-23T04:07:38.439Z
+
+[Image: original 2160x480, displayed at 2000x444. Multiply coordinates by 1.08 to map to original image.]
+
+### 🤖 Claude — 2026-11-23T04:08:27.484Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='/home/user/rainbow-/tools/mod05/make_tiles.py'; s=open(p).read()\ndef rep(a,b):\n    global s; assert s.count(a)==1, a[:60]; s=s.replace(a,b)\nrep(\"col = col * (1 - 0.45 * lift[..., None]) + hi * (0.45 * lift[..., None])\", \"col = col * (1 - 0.25 * lift[..., None]) + hi * (0.25 * lift[..., None])\")\nrep(\"ROWS, PER = 4, 4                                                    # slot rows along the tunnel / slots around per tile\",\n    \"ROWS, PER = 6, 4                                                    # slot rows along the tunnel / slots around per tile (12 …[+4025 chars]`
+
+### 🤖 Claude — 2026-11-23T04:08:28.637Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/sheet8.png"}`
+
+### 🧑 User — 2026-11-23T04:09:19.228Z
+
+> ↩︎ result: tiles ok
+> page ok
+> json ok
+> modular Screen 05 ready: /tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/ws/game  (code from /home/user/rainbow-)
+> loaded in 3.8 s {"LEVEL":30,"meshes":107,"foam":642}
+> {'LEVEL': 30, 'S_REF': 1.2, 'meshes': 107, 'coins': 26, 'foam': 642, 'modules': 21, 'screen': '05-mod', 'tris': 1978794, 'calls': 207}
+
+### 🧑 User — 2026-11-23T04:09:19.263Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T04:09:37.940Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47 && python3 -c \"\nfrom PIL import Image; import numpy as np\nfor f in ['s1.35_l0.png','s8.00_l0.png']:\n    a=np.asarray(Image.open('$S/vN/'+f).convert('RGB')).astype(int)\n    g=(a[...,1]>200)&(a[...,0]<60)&(a[...,2]<60); print(f,'green sentinel px',int(g.sum()))\nim=Image.open('$S/vN/s8.00_l0.png'); im.crop((60,700,330,915)).resize((540,430),Image.NEAREST).save('$S/zoomN.png')\"", "description": "Count hole pixels and zoom the lower frame"}`
+
+### 🧑 User — 2026-11-23T04:09:38.102Z
+
+> ↩︎ result: s1.35_l0.png green sentinel px 0
+> s8.00_l0.png green sentinel px 0
+
+### 🤖 Claude — 2026-11-23T04:09:39.198Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/zoomN.png"}`
+
+### 🧑 User — 2026-11-23T04:09:39.224Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T04:09:45.313Z
+
+> 🔧 **Bash** `{"command": "sed -n '1,30p' tools/kit05/swimfx.js | cut -c1-220; grep -n \"q.get\\|PlaneGeometry\\|depthTest\\|renderOrder\" tools/kit05/swimfx.js | head -20", "description": "Inspect the shared swim effects module"}`
+
+### 🧑 User — 2026-11-23T04:09:45.356Z
+
+> ↩︎ result: // swimfx.js — round 34 (S2, Benny's swimming): the water around Benny while he swims.
+> //  * V-wake: two broken-foam ribbons that start at his waist and spread behind him on the river surface. Every ribbon point is
+> //    WORLD-anchored where he was, drifts with the current (toward the camera) and fades with age, so the wake follows the river's
+> //    path frame (frameAt) and his real lane changes — it is never glued to the screen.
+> //  * Paddle ripples: a flat ring opens on the water where each paw dips in (alternating left / right with his strokes).
+> //  * Kicks: Benny has no separate feet; each flutter kick of his lower back throws a small foam puff + droplets behind him.
+> //  * The painted splash (the approved picture's white fan around his waist) STREAMS: a two-phase flow distortion moves its white
+> //    spray streaks outward and back with the current. Its top centre (the painted fur at his waist) is never distorted, and the
+> //    distortion strength is 0 at the start frame (frame 0 stays pixel-identical to the approved start view).
+> // Driven only by the game clock passed in update() (deterministic tests). ?swimfx=0 turns all of it off.
+> // the painted splash WITHOUT the painted fur …[+2919 chars]
+
+### 🤖 Claude — 2026-11-23T04:09:57.540Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47 && run() { NODE_PATH=$(npm root -g) timeout 600 node tools/reflock/section_run.cjs $S/ws/game $S/$1 stills $2 0 \"$3\" 2>&1 | grep -E \"rror\" ; }\nrun vO 8 'splashpic=0' & run vP 8 'swimfx=0' & wait\npython3 -c \"\nfrom PIL import Image\nS='$S/'\nims=[Image.open(S+d+'/s8.00_l0.png').crop((60,640,330,915)) for d in ('vN','vO','vP')]\nc=Image.new('RGB',(280*3,275),(255,255,255))\nfor i,im in enumerate(ims): c.paste(im,(i*280,0))\nc.resize((280*3*2,550)).save(S+'wake.png')\"", "description": "Iso …[+69 chars]`
+
+### 🤖 Claude — 2026-11-23T04:09:58.741Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/wake.png"}`
+

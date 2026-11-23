@@ -106,20 +106,27 @@ const wallMat = GRAY ? grayM(0x8c8c8c) : new THREE.MeshStandardMaterial({ map: w
 if (q.get('wallbasic') === '1') Object.assign(wallMat, { emissiveIntensity: 0 }) && (wallMat.color.setScalar(0), wallMat.emissive.setScalar(0));   // debug
 const ringMat = GRAY ? grayM(0xb0b0b0) : new THREE.MeshStandardMaterial({ map: ringTex, emissiveMap: ringTex, emissive: 0xffffff, emissiveIntensity: LK.ring_glow,
   metalness: LK.ring_metal, roughness: LK.ring_rough, envMap: ENV, envMapIntensity: LK.ring_env });
-const goldMat = GRAY ? grayM(0xa8a8a8) : new THREE.MeshStandardMaterial({ color: sRGB([251, 160, 70]), emissive: sRGB([239, 111, 50]), emissiveIntensity: LK.pad_glow,
-  metalness: 1.0, roughness: 0.2, envMap: ENV, envMapIntensity: LK.pad_env });
+const padTex = (() => { const c = document.createElement('canvas'); c.width = 8; c.height = 256; const g = c.getContext('2d'), gr = g.createLinearGradient(0, 256, 0, 0);
+  for (const [o, col] of [[0, '#c9601a'], [0.1, '#f39a45'], [0.22, '#ffe7a8'], [0.34, '#f8a24a'], [0.6, '#ea8034'], [0.84, '#d4661f'], [0.93, '#a8400c'], [1, '#ffcf72']]) gr.addColorStop(o, col);
+  g.fillStyle = gr; g.fillRect(0, 0, 8, 256); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.MirroredRepeatWrapping; t.repeat.set(1, 1 / LAY.paddle.reach); return t; })();
+if (q.get('ringbasic') === '1') { ringMat.metalness = 0; ringMat.envMapIntensity = 0; ringMat.emissiveIntensity = 1; ringMat.color.setScalar(0); }   // debug: the ring texture only
+const goldMat = GRAY ? grayM(0xa8a8a8) : new THREE.MeshStandardMaterial({ map: padTex, emissiveMap: padTex, emissive: 0xffffff, emissiveIntensity: LK.pad_glow,
+  metalness: 0.9, roughness: 0.25, envMap: ENV, envMapIntensity: LK.pad_env });
 
 // ---------------- MODULE: wall piece + gold ring + two paddles (built once, cloned along the drum) ----------------
 // wall piece: open cylinder, one ring spacing long, front at z = 0, back at z = -SP; UV u around (seam under the water), v along
 const wallGeo = new THREE.CylinderGeometry(R, R, SP, 192, 1, true); wallGeo.rotateX(Math.PI / 2); wallGeo.translate(0, 0, -SP / 2);
 // gold ring: lathe profile (front face, three raised bands with two grooves on the inner surface, back face); custom v across the profile
-const ringGeo = (() => { const B = LAY.ring.band, DP = LAY.ring.depth, pts = [], vs = [];
-  pts.push(new THREE.Vector2(R + 0.03, 0)); vs.push(0.0);
-  for (let i = 0; i <= 4; i++) { const a = i / 4 * Math.PI / 2; pts.push(new THREE.Vector2(R - DP + 0.02 - 0.02 * Math.sin(a) + 0.0, 0.02 * (1 - Math.cos(a)))); vs.push(0.02 + 0.03 * i / 4); }
-  for (let i = 1; i < 36; i++) { const y = 0.02 + (B - 0.04) * i / 36, f = (y - 0.02) / (B - 0.04), g = Math.abs(Math.sin(f * 3 * Math.PI));
-    pts.push(new THREE.Vector2(R - DP + 0.022 * (1 - g ** 0.6), y)); vs.push(0.05 + 0.9 * f); }
-  for (let i = 0; i <= 4; i++) { const a = i / 4 * Math.PI / 2; pts.push(new THREE.Vector2(R - DP + 0.02 * (1 - Math.cos(a)), B - 0.02 + 0.02 * Math.sin(a))); vs.push(0.95 + 0.03 * i / 4); }
+const ringGeo = (() => { const B = LAY.ring.band, DP = LAY.ring.depth, pts = [], vs = [], NF = 30, NI = 30;
+  // front face (toward the camera): from inside the wall to the inner edge, three raised half-round bands (grooves at 1/3, 2/3) = the tile's three bands
+  for (let i = 0; i <= NF; i++) { const f = i / NF, r = R + 0.03 - (DP + 0.03) * f; pts.push(new THREE.Vector2(r, -0.022 * Math.abs(Math.sin(f * 3 * Math.PI)) ** 0.6)); vs.push(f); }
+  // rounded inner edge
+  for (let i = 1; i <= 4; i++) { const a = i / 4 * Math.PI / 2; pts.push(new THREE.Vector2(R - DP - 0.012 * Math.sin(a), 0.012 * (1 - Math.cos(a)) + 0.006)); vs.push(1.0 - 0.15 * i / 4); }
+  // inner surface (facing the drum axis): three bands along the drum
+  for (let i = 1; i < NI; i++) { const f = i / NI, y = 0.02 + (B - 0.04) * f; pts.push(new THREE.Vector2(R - DP - 0.012 + 0.018 * (1 - Math.abs(Math.sin(f * 3 * Math.PI)) ** 0.6), y)); vs.push(f); }
+  for (let i = 0; i <= 4; i++) { const a = i / 4 * Math.PI / 2; pts.push(new THREE.Vector2(R - DP - 0.012 + 0.03 * (1 - Math.cos(a)), B - 0.02 + 0.02 * Math.sin(a))); vs.push(0.85 + 0.15 * i / 4); }
   pts.push(new THREE.Vector2(R + 0.03, B)); vs.push(1.0);
+  pts.reverse(); vs.reverse();   // lathe faces point to the right of the profile's direction: reversed, the front face looks at the camera and the inner surface at the drum axis
   const g = new THREE.LatheGeometry(pts, 192); const uv = g.attributes.uv;
   for (let i = 0; i < uv.count; i++) uv.setY(i, vs[i % pts.length]);
   g.rotateX(-Math.PI / 2); return g; })();
@@ -129,7 +136,7 @@ const paddleGeo = (() => { const s = new THREE.Shape(); s.moveTo(-PD.length / 2,
   const g = new THREE.ExtrudeGeometry(s, { depth: PD.thick, bevelEnabled: true, bevelThickness: 0.02, bevelSize: 0.02, bevelSegments: 4, curveSegments: 40 });
   g.translate(0, 0, -PD.thick / 2); g.computeVertexNormals(); return g; })();
 const placePaddle = (m, thDeg, zc) => { const th = thDeg * DEG, nIn = new THREE.Vector3(-Math.cos(th), -Math.sin(th), 0), tg = new THREE.Vector3(-Math.sin(th), Math.cos(th), 0);
-  const tilt = PD.tilt_deg * DEG * (Math.cos(th) > 0 ? -1 : 1);             // both sides lean their face toward the drum centre / the camera
+  const tilt = +(q.get('ptilt') ?? PD.tilt_deg) * DEG * (Math.cos(th) > 0 ? -1 : 1);             // both sides lean their face toward the drum centre / the camera
   const p = nIn.clone().multiplyScalar(Math.cos(tilt)).addScaledVector(tg, Math.sin(tilt)).normalize(), a = new THREE.Vector3(0, 0, -1), c = new THREE.Vector3().crossVectors(a, p).normalize();
   m.matrix.makeBasis(a, p, c).setPosition(AX + R * Math.cos(th) - 0.03 * nIn.x, AY + R * Math.sin(th) - 0.03 * nIn.y, zc); m.matrixAutoUpdate = false; };
 const module0 = new THREE.Group();
@@ -155,14 +162,14 @@ const glowTex = (() => { const c = document.createElement('canvas'); c.width = c
 // route). Inside |kU| < RW: the river (cyan silk ribbons + magenta side bands + streaks + sparkles, round-37/38 option-B design ported);
 // beyond the banks: the same water continuing as calmer magenta / violet pool water up to the walls (the 3D foam clusters sit on the banks)
 const WATER_U = { uT: { value: 0 }, uR1: { value: new THREE.Vector4(AX, BX0, BZ0, RT.amp * RT.first_swing) }, uR2: { value: new THREE.Vector4(RT.wavelength, RT.ease_in, RT.centre_ease, RW) },
-  uFlow: { value: LAY.river.flow_speed }, uCamZ: { value: 0 }, uLook: { value: new THREE.Vector3(LK.water_ribbons, LK.water_streaks, LK.water_sparkle) } };
+  uFlow: { value: LAY.river.flow_speed }, uCamZ: { value: 0 }, uLook: { value: new THREE.Vector3(LK.water_ribbons, LK.water_streaks, LK.water_sparkle) }, uLook2: { value: new THREE.Vector2(LK.water_band, 0) } };
 const waterMat = GRAY ? grayM(0x9aa6b4) : new THREE.ShaderMaterial({ fog: true, uniforms: { ...THREE.UniformsUtils.merge([THREE.UniformsLib.fog]), ...WATER_U },
   vertexShader: `#include <fog_pars_vertex>
     varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; vec4 mvPosition = viewMatrix * w; gl_Position = projectionMatrix * mvPosition;
     #include <fog_vertex>
     }`,
   fragmentShader: `#include <fog_pars_fragment>
-    uniform float uT; uniform vec4 uR1; uniform vec4 uR2; uniform float uFlow; uniform float uCamZ; uniform vec3 uLook; varying vec3 vW;
+    uniform float uT; uniform vec4 uR1; uniform vec4 uR2; uniform float uFlow; uniform float uCamZ; uniform vec3 uLook; uniform vec2 uLook2; varying vec3 vW;
     float ez(float x){ x = clamp(x, 0.0, 1.0); return x * x * (3.0 - 2.0 * x); }
     float cX(float z){ float d = uR1.z - z; return uR1.y + (uR1.x - uR1.y) * ez(d / uR2.z) + uR1.w * ez(d / uR2.y) * sin(6.2831853 * d / uR2.x); }
     vec3 c8(float r, float g, float b){ return pow(vec3(r, g, b) / 255.0, vec3(2.2)); }
@@ -193,6 +200,7 @@ const waterMat = GRAY ? grayM(0x9aa6b4) : new THREE.ShaderMaterial({ fog: true, 
       // magenta bands between the cyan core and the banks (wandering a little, wider on the outside of each bend); the pool beyond = magenta / violet
       float pin = 0.52 + 0.06 * sin(tp * 0.71 + sign(u) * 1.7) - 0.08 * bend * sign(u) + 0.04 * (n2(vec2(tp * 0.9, sign(u) * 5.0)) - 0.5);
       float pkE = max(0.03, 1.5 * fwidth(u)), pk = smoothstep(pin - pkE, pin + pkE, au);
+      { float hr = h2(vec2(floor(w), 3.7)), share = 0.85 * smoothstep(0.38, 0.85, au), pkR = smoothstep(hr - 0.04, hr + 0.04, share) * lod; pk = clamp(max(pk * uLook2.x, pkR), 0.0, 1.0); }
       float pool = smoothstep(1.05, 1.6, au);
       vec3 col = mix(blue, pink, pk);
       col = mix(col, mix(pink, mix(blue, c8(150.0, 70.0, 230.0), 0.5), 0.35 + 0.25 * sin(tp * 0.6 + u)), pool * 0.6);
@@ -225,10 +233,10 @@ const waterMat = GRAY ? grayM(0x9aa6b4) : new THREE.ShaderMaterial({ fog: true, 
   const m = new THREE.Mesh(g, waterMat); m.position.set(AX, 0, zf - len / 2); addW(m, 'water', 'water'); }
 
 // ---------------- FOUR foam-cluster shapes, reused along both banks and the wall bases ----------------
-const foamPrefabs = [0, 1, 2, 3].map((k) => { const r = rngOf(900 + k * 77), parts = [[0, 0.38, 0, 0.6]], n = 5 + k;
-  for (let i = 0; i < n; i++) { const a = r() * Math.PI * 2, d = 0.38 + 0.45 * r(), s = 0.24 + 0.3 * r(); parts.push([Math.cos(a) * d, s * 0.55 + 0.12 * r(), Math.sin(a) * d * 0.75, s]); }
-  if (k % 2) parts.push([0.15, 0.78, -0.05, 0.36]);
-  return mergeGeometries(parts.map(([x, y, z, s]) => { const g = new THREE.IcosahedronGeometry(s, 2); g.translate(x, y, z); return g; })); });
+const foamPrefabs = [0, 1, 2, 3].map((k) => { const r = rngOf(900 + k * 77), parts = [[0, 0.3, 0, 0.42, 2]];
+  for (let i = 0; i < 2 + (k % 2); i++) { const a = r() * Math.PI * 2, d = 0.3 + 0.3 * r(), s = 0.26 + 0.14 * r(); parts.push([Math.cos(a) * d, s * 0.6, Math.sin(a) * d * 0.75, s, 2]); }
+  for (let i = 0; i < 12 + 2 * k; i++) { const a = r() * Math.PI * 2, d = 0.2 + 0.75 * r(), s = 0.08 + 0.14 * r() * r(); parts.push([Math.cos(a) * d, s * 0.5 + 0.35 * r() * (1 - d * 0.8), Math.sin(a) * d * 0.8, s, 1]); }
+  return mergeGeometries(parts.map(([x, y, z, s, det]) => { const g = new THREE.IcosahedronGeometry(s, det); g.translate(x, y, z); return g; })); });
 const foamMat = GRAY ? grayM(0xe6e6ea) : new THREE.ShaderMaterial({ fog: true, uniforms: THREE.UniformsUtils.merge([THREE.UniformsLib.fog, {}]),
   vertexShader: `#include <fog_pars_vertex>
     varying vec3 vN; varying vec3 vW; varying float vAO;
@@ -271,7 +279,7 @@ const FOAM = [];   // [x, z, size, prefab, rotation]
 
 // ---------------- iridescent bubbles (one sphere, instanced) ----------------
 const BUB_U = { uTime: { value: 0 } };
-{ const r = rngOf(1212), B = []; for (let i = 0; i < LAY.bubbles.count; i++) { const z = BZ0 - 0.2 - r() * (BZ0 - Z_END - 3), side = r() < 0.5 ? -1 : 1, c = centreX(z);
+{ const r = rngOf(1212), B = []; for (let i = 0; i < LAY.bubbles.count; i++) { const z = i < LAY.bubbles.count * 0.25 ? BZ0 + 0.6 - r() * 7 : BZ0 - 0.2 - r() * (BZ0 - Z_END - 3), side = r() < 0.5 ? -1 : 1, c = centreX(z);
     const x = THREE.MathUtils.clamp(c + side * (RW * (0.75 + 0.9 * r())), AX - CHORD + 0.1, AX + CHORD - 0.1); B.push([x, 0.04 + r() * r() * 0.75, z, 0.022 + r() * r() * 0.06]); }
   const bGeo = new THREE.SphereGeometry(1, 24, 16);
   const bm = GRAY ? grayM(0xdddddd) : new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: { ...BUB_U, uL: { value: new THREE.Vector3(-0.25, 0.8, 0.55).normalize() } },
