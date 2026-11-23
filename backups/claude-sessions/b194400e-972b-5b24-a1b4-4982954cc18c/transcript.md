@@ -6522,3 +6522,15 @@ The textured section run passes every functional check. The gray-geometry run cr
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-23T01:31:29.245Z
+
+> 🔧 **Bash** `{"command": "export NODE_PATH=$(npm root -g); rm -rf /home/user/ws47/pic05; timeout 900 node tools/screenkit/preview.cjs /home/user/ws46/world/game /home/user/ws47/pic05 --screen 05 --area 05 --s picture --nogray > /home/user/ws47/pic05.log 2>&1; python3 -c \"\nimport json; d=json.load(open('/home/user/ws47/pic05/preview.json'))['summary']; print(d['likeness_picture_view'])\"", "description": "Measure the picture-camera match of the new section", "timeout": 960000}`
+
+### 🧑 User — 2026-11-23T01:32:38.796Z
+
+> ↩︎ result: [{'file': 'tex_picture_l0.png', 'share_within_20_levels': 0.2, 'ssim_scenery': 0.334, 'mean_abs_diff_levels': 61.3, 'colour_look_corr': 0.385, 'sharpness_vs_approved': 0.736, 'whole_frame_within_20_levels': 0.178}]
+
+### 🤖 Claude — 2026-11-23T01:32:53.809Z
+
+> 🔧 **Bash** `{"command": "until grep -q EXIT /home/user/ws47/rec/gray.log; do sleep 15; done; tail -n 1 /home/user/ws47/rec/gray.log; python3 -c \"\nimport json; d=json.load(open('/home/user/ws47/rec/gray/checks.json')); print({k:d.get(k) for k in ('frames','errors','benny_offscreen_frames','camera_max_step_u','camera_max_turn_deg_per_frame','scenery_meshes_moved','swipes_sent','coins_end')}); print([(e['dir'],e['result']) for e in d['input_log']])\"; cd /home/user/rainbow- && nice -n 5 python3 -I tools/reflock/encode_run.py /home/user/ws47/rec/gray qa/kit47/run SECTION_05_GRAY_geometry_real_touch 2>&1 | t …[+318 chars]`
+
