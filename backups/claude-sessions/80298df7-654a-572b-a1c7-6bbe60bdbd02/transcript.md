@@ -3572,3 +3572,52 @@ For the plugin, enable "Unity" (by Unity Technologies) from the card I showed ea
 
 Tell me when you've done this and I'll check again. As soon as the computer shows up I'll ask to use its folder (you approve that request on your device). Then I'll check Unity, your sign-in and license there, and start the Screen 05 test.
 
+### 🧑 User — 2026-11-23T10:38:01.402Z
+
+it is
+
+### 🤖 Claude — 2026-11-23T10:38:02.928Z
+
+> 🔧 **mcp__claude-code-remote__list_computer_folders** `{}`
+
+### 🤖 Claude — 2026-11-23T10:38:02.946Z
+
+> 🔧 **ListPlugins** `{"keywords": ["unity"]}`
+
+### 🤖 Claude — 2026-11-23T10:38:02.956Z
+
+> 🔧 **ListAgents** `{}`
+
+### 🧑 User — 2026-11-23T10:38:02.981Z
+
+> ↩︎ result: This session is rainbow-a3 [991942] — the name other sessions use to message it (it is not listed below; a message to it would be a message to yourself).
+> 
+> No reachable agents — no other Claude session is running on this machine right now (peer messaging itself is available; a session appears here once it is started).
+
+### 🧑 User — 2026-11-23T10:38:03.035Z
+
+> ↩︎ result: {"results":[]}
+
+### 🧑 User — 2026-11-23T10:38:03.115Z
+
+> ↩︎ result: {"folders":[],"cannot_be_used":[{"computer_name":"LAPTOP-7BA6G3BC","folder":"claude yes","reason":"not_available","explanation":"This folder is in the user's Remote Control list, but that computer does not offer it to cloud sessions and did not say why. The usual causes: it is inside a hidden directory directly under the home directory or ~/Library, or the Claude app on that computer needs updating (on Windows, to a version that serves folders there)."}]}
+
+### 🤖 Claude — 2026-11-23T10:38:10.338Z
+
+Your laptop is now visible, but it isn't offering its folder to this session, so I still can't use it.
+
+**What I see:**
+- **Computer:** LAPTOP-7BA6G3BC
+- **Folder:** "claude yes", in your Remote Control list
+- **Status:** not available. The laptop doesn't offer this folder to cloud sessions and gave no reason.
+
+**Usual causes (not certain these apply here):**
+- The folder sits inside a hidden folder directly under your home folder. If so, pick or create a normal folder, for example `C:\Users\<you>\RainbowUnity`, and add that one instead.
+- The Claude app on the laptop is out of date. On Windows only newer versions serve folders to cloud sessions, so update the Claude desktop app and restart it.
+
+Since the cause isn't certain, these fixes may not make the folder usable from a cloud session. If they don't, you can do this work in a session that runs on the laptop itself: start a Claude Code session in the Claude desktop app there and give it the same request. That session can drive Unity directly.
+
+**Unity plugin:** still not enabled on your account. Enable "Unity" from the card I showed earlier, or in your claude.ai plugin settings.
+
+Tell me when you've updated the app or changed the folder and I'll check again. As soon as the folder shows as usable, I'll request it (you approve on your device) and start with Unity, your sign-in and the license on the laptop.
+
