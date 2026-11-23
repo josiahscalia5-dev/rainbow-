@@ -45,7 +45,7 @@ const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffe
 renderer.setPixelRatio(q.get('w') ? 1 : Math.min(2, devicePixelRatio)); renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
 const scene = new THREE.Scene(); scene.background = new THREE.Color(q.get('sentinel') ? 0x00ff00 : 0x1a0630);
 const sRGB = (c) => new THREE.Color().setRGB(c[0] / 255, c[1] / 255, c[2] / 255, THREE.SRGBColorSpace);
-if (!GRAY && q.get('nofog') !== '1') scene.fog = new THREE.Fog(sRGB(LAY.fog.color), LAY.fog.near, LAY.fog.far);
+if (!GRAY && q.get('nofog') !== '1') scene.fog = new THREE.Fog(sRGB(q.get('fogc') ? q.get('fogc').split(',').map(Number) : LAY.fog.color), +(q.get('fogn') ?? LAY.fog.near), +(q.get('fogf') ?? LAY.fog.far));
 const camera = new THREE.PerspectiveCamera(LAY.camera.fov, W / H, 0.03, 300); camera.rotation.order = 'YXZ';
 const world = new THREE.Group(); world.name = 'world'; scene.add(world);
 const MESH = [];   // every scenery mesh (QA: static-world audit)
@@ -162,14 +162,14 @@ const glowTex = (() => { const c = document.createElement('canvas'); c.width = c
 // route). Inside |kU| < RW: the river (cyan silk ribbons + magenta side bands + streaks + sparkles, round-37/38 option-B design ported);
 // beyond the banks: the same water continuing as calmer magenta / violet pool water up to the walls (the 3D foam clusters sit on the banks)
 const WATER_U = { uT: { value: 0 }, uR1: { value: new THREE.Vector4(AX, BX0, BZ0, RT.amp * RT.first_swing) }, uR2: { value: new THREE.Vector4(RT.wavelength, RT.ease_in, RT.centre_ease, RW) },
-  uFlow: { value: LAY.river.flow_speed }, uCamZ: { value: 0 }, uLook: { value: new THREE.Vector3(LK.water_ribbons, LK.water_streaks, LK.water_sparkle) }, uLook2: { value: new THREE.Vector2(LK.water_band, 0) } };
+  uFlow: { value: LAY.river.flow_speed }, uCamZ: { value: 0 }, uLook: { value: new THREE.Vector3(LK.water_ribbons, LK.water_streaks, LK.water_sparkle) }, uLook2: { value: new THREE.Vector2(LK.water_band, +(q.get('waterdbg') ?? (q.get('waterflat') === '1' ? 1 : 0))) }, uGain: { value: LK.water_gain } };
 const waterMat = GRAY ? grayM(0x9aa6b4) : new THREE.ShaderMaterial({ fog: true, uniforms: { ...THREE.UniformsUtils.merge([THREE.UniformsLib.fog]), ...WATER_U },
   vertexShader: `#include <fog_pars_vertex>
     varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; vec4 mvPosition = viewMatrix * w; gl_Position = projectionMatrix * mvPosition;
     #include <fog_vertex>
     }`,
   fragmentShader: `#include <fog_pars_fragment>
-    uniform float uT; uniform vec4 uR1; uniform vec4 uR2; uniform float uFlow; uniform float uCamZ; uniform vec3 uLook; uniform vec2 uLook2; varying vec3 vW;
+    uniform float uT; uniform vec4 uR1; uniform vec4 uR2; uniform float uFlow; uniform float uCamZ; uniform vec3 uLook; uniform vec2 uLook2; uniform float uGain; varying vec3 vW;
     float ez(float x){ x = clamp(x, 0.0, 1.0); return x * x * (3.0 - 2.0 * x); }
     float cX(float z){ float d = uR1.z - z; return uR1.y + (uR1.x - uR1.y) * ez(d / uR2.z) + uR1.w * ez(d / uR2.y) * sin(6.2831853 * d / uR2.x); }
     vec3 c8(float r, float g, float b){ return pow(vec3(r, g, b) / 255.0, vec3(2.2)); }
@@ -181,6 +181,7 @@ const waterMat = GRAY ? grayM(0x9aa6b4) : new THREE.ShaderMaterial({ fog: true, 
       float c = cX(vW.z), cs = (cX(vW.z - 0.05) - cX(vW.z + 0.05)) * 10.0;
       float kU = (vW.x - c) / sqrt(1.0 + cs * cs), u = kU / RW, au = abs(u);
       float tp = kT + uT * uFlow;
+      float fwU = fwidth(kU), fwT = fwidth(tp);   // pixel footprint, computed in uniform control flow (derivatives inside the per-cell branches below are undefined)
       float bend = clamp((cX(vW.z - 0.3) - cX(vW.z + 0.3)) * 2.0, -1.0, 1.0);
       // silk ribbons along the flow: deep blue edge -> bright cyan crest + thin highlight, then a crisp step to the next ribbon
       float uu = au < 1.0 ? u : sign(u) * (1.0 + (au - 1.0) * 0.6);           // the pool beyond the banks: same water, wider ribbons
@@ -192,7 +193,7 @@ const waterMat = GRAY ? grayM(0x9aa6b4) : new THREE.ShaderMaterial({ fog: true, 
       float crest = exp(-pow((f - 0.86) / max(0.045, fw * 1.2), 2.0)) * lod * smoothstep(0.15, 0.6, n2(vec2(floor(w) * 7.13, tp * 1.4)));
       float near = 1.0 - smoothstep(0.9, 2.6, kZ);                                  // broad arcs across the flow close to the camera
       sh = clamp(sh + 0.26 * near * sin(6.2832 * (tp * 1.15 + 0.45 * u * u)), 0.0, 1.0);
-      { float X = kU * 95.0 + 2.0 * n2(vec2(kU * 9.0, tp * 1.1)); float fl = 1.0 - smoothstep(0.25, 0.6, fwidth(X)); sh = clamp(sh + 0.12 * fl * sin(X), 0.0, 1.0); }
+      { float X = kU * 95.0 + 2.0 * n2(vec2(kU * 9.0, tp * 1.1)); float fl = 1.0 - smoothstep(0.25, 0.6, fwidth(X)); if (abs(uLook2.y - 4.0) > 0.1) sh = clamp(sh + 0.12 * fl * sin(X), 0.0, 1.0); }
       vec3 bD = c8(4.0, 100.0, 228.0), bM = c8(10.0, 150.0, 248.0), bB = c8(90.0, 225.0, 255.0);
       vec3 pD = c8(164.0, 43.0, 212.0), pM = c8(251.0, 34.0, 217.0), pB = c8(252.0, 134.0, 251.0);
       vec3 blue = sh < 0.55 ? mix(bD, bM, sh / 0.55) : mix(bM, bB, (sh - 0.55) / 0.45);
@@ -206,26 +207,27 @@ const waterMat = GRAY ? grayM(0x9aa6b4) : new THREE.ShaderMaterial({ fog: true, 
       col = mix(col, mix(pink, mix(blue, c8(150.0, 70.0, 230.0), 0.5), 0.35 + 0.25 * sin(tp * 0.6 + u)), pool * 0.6);
       col = mix(col, mix(vec3(0.85, 0.97, 1.0), vec3(1.0, 0.8, 0.97), pk), crest * 0.7);
       // white highlight streaks riding the current, three scales; far ones fade to a gentle brightening
-      for (int L = 0; L < 3; L++) { float cw = L == 0 ? 0.05 : (L == 1 ? 0.11 : 0.026), rl = L == 0 ? 0.32 : (L == 1 ? 0.6 : 0.16);
+      if (abs(uLook2.y - 2.0) > 0.1) for (int L = 0; L < 3; L++) { float cw = L == 0 ? 0.05 : (L == 1 ? 0.11 : 0.026), rl = L == 0 ? 0.32 : (L == 1 ? 0.6 : 0.16);
         vec2 g = vec2(kU / cw, (tp + float(L) * 0.37) / rl); vec2 cell = floor(g); float r = h2(cell + float(L) * 13.0);
-        if (r < uLook.y) { float x0 = (cell.x + 0.25 + 0.5 * h2(cell + 3.3)) * cw, y0 = (cell.y + 0.5) * rl, len = rl * (0.3 + 0.5 * h2(cell + 6.6));
-          float wid = (L == 0 ? 0.005 : (L == 1 ? 0.009 : 0.003)), ww = max(wid, 0.9 * fwidth(kU)), along = abs(tp - y0) / (0.5 * len);
+        if (r < uLook.y) { float x0 = (cell.x + 0.25 + 0.5 * h2(cell + 3.3)) * cw, y0 = (cell.y + 0.5) * rl, len = rl * (0.3 + 0.5 * h2(cell + 6.6)) * mix(0.45, 1.0, smoothstep(1.2, 4.0, kZ));
+          float wid = (L == 0 ? 0.005 : (L == 1 ? 0.009 : 0.003)), ww = max(wid, 0.9 * fwU), along = abs(tp - y0) / (0.5 * len);
           float I = exp(-pow((kU - x0) / ww, 2.0)) * (1.0 - smoothstep(0.35, 1.0, along)) * (wid / ww) * (0.6 + 0.4 * sin(uT * 2.0 + r * 30.0));
           col = mix(col, mix(vec3(0.92, 1.0, 1.0), vec3(1.0, 0.85, 0.98), pk), clamp(I * 0.95, 0.0, 1.0)); } }
       col = mix(col, c8(200.0, 235.0, 255.0), 0.28 * smoothstep(5.0, 16.0, kZ) * exp(-u * u * 1.5));   // glossy glow toward the bright core
       // four-point star sparkles riding the current
-      { vec2 g = vec2(u * 5.0, tp * 2.2); vec2 cell = floor(g); float hh = h2(cell + 0.37);
+      if (abs(uLook2.y - 3.0) > 0.1) { vec2 g = vec2(u * 5.0, tp * 2.2); vec2 cell = floor(g); float hh = h2(cell + 0.37);
         if (hh < uLook.z) { vec2 pc = cell + vec2(0.2 + 0.6 * h2(cell + 1.7), 0.2 + 0.6 * h2(cell + 4.1));
           float dx = (g.x - pc.x) / 5.0 * RW, dy = (g.y - pc.y) / 2.2;
           float sz = 0.8 + 1.4 * h2(cell + 9.3) * h2(cell + 2.9), tw = 0.5 + 0.5 * sin(uT * 3.0 + hh * 40.0); tw *= tw;
           float st = exp(-(dx * dx + dy * dy) / (0.0001 * sz * sz)) + exp(-abs(dx) / (0.035 * sz)) * exp(-dy * dy / (0.00002 * sz)) + 0.6 * exp(-abs(dy) / (0.045 * sz)) * exp(-dx * dx / (0.00001 * sz));
           vec2 fcs = fract(g); st *= smoothstep(0.0, 0.2, min(fcs.x, 1.0 - fcs.x)) * smoothstep(0.0, 0.12, min(fcs.y, 1.0 - fcs.y));
-          float lodS = 1.0 - smoothstep(0.006, 0.03, max(fwidth(kU), fwidth(tp)));
+          float lodS = 1.0 - smoothstep(0.006, 0.03, max(fwU, fwT));
           col = mix(col, vec3(1.0), clamp(st * tw * lodS, 0.0, 1.0)); } }
       // thin bright fringe where the river meets its foam banks (the 3D clusters stand just outside it)
-      float eJ = 0.04 * (n2(vec2(kT * 9.0, sign(u) * 3.0)) - 0.5), eE = max(0.012, 1.5 * fwidth(kU));
+      float eJ = 0.04 * (n2(vec2(kT * 9.0, sign(u) * 3.0)) - 0.5), eE = max(0.012, 1.5 * fwU);
       col = mix(col, vec3(0.96, 0.95, 1.0), 0.75 * exp(-pow((abs(kU) - RW - eJ) / max(0.014, eE), 2.0)));
-      gl_FragColor = vec4(col, 1.0);
+      gl_FragColor = vec4(col * uGain, 1.0);
+      if (abs(uLook2.y - 1.0) < 0.1) gl_FragColor = vec4(0.2, 0.5, 0.2, 1.0);   // debug ?waterflat=1
       #include <colorspace_fragment>
       #include <fog_fragment>
     }` });
