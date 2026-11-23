@@ -37,10 +37,11 @@ void RainbowBubble_float(float2 P, float Seed, float Px, float Fade, float Time,
     hl += pow(max(sin(ang * 9.0 + Seed * 31.0), 0.0), 3.0) * exp(-dr * dr) * (0.7 + 0.3 * P.y);
     float small = 1.0 - smoothstep(10.0, 22.0, pxR);
     hl *= 1.0 - 0.5 * small;
-    // cool lens tint of the interior (approved: the bubbles' insides read cyan-blue / violet against any background)
-    float3 lens = float3(0.42, 0.6, 1.0) * (1.0 - rim) * 0.3;
+    // cool lens tint of the interior (approved: the bubbles' insides read cyan-blue / violet against any background, also
+    // in front of the white foam), a little more body than bubbles.ts' 0.14 so they never vanish against the foam
+    float3 lens = float3(0.3, 0.48, 0.95) * (1.0 - rim) * 0.4;
     Color = film * (0.55 + 0.75 * rim) + lens + float3(1.0, 0.92, 1.0) * edge * 0.45 + float3(1.05, 0.98, 1.05) * hl;
-    float a = clamp(0.14 + 0.1 * sw + rim * 0.6 + edge * 0.35 + hl, 0.0, 0.95);
+    float a = clamp(0.22 + 0.1 * sw + rim * 0.6 + edge * 0.35 + hl, 0.0, 0.95);
     float aa = 1.0 - smoothstep(1.0 - 1.5 / max(Px, 1.5), 1.0, sqrt(d2));   // anti-aliased silhouette
     Alpha = a * aa * saturate(Fade);
 }
@@ -52,12 +53,16 @@ void RainbowBubbleSmall_float(float2 P, float Seed, float Px, float Fade, out fl
     float2 c = float2(P.x, -P.y) * 0.5;
     float d = length(c) * 2.0;
     float ring = smoothstep(0.5, 0.85, d) * (1.0 - smoothstep(0.9, 1.0, d));
-    float3 irid = RBW_Iridescent(d * 0.7 + Seed + atan2(c.y, c.x + 1e-6) * 0.12);
+    // same pink / violet / blue / cyan film arc as the big bubbles (approved 05: no green / orange rims)
+    float h = d * 0.7 + Seed + atan2(c.y, c.x + 1e-6) * 0.12;
+    float3 irid = RBW_Iridescent(0.02 + 0.5 * (0.5 + 0.5 * sin(6.28318 * h)));
     irid = float3(irid.r, irid.g * 0.55 + 0.1, irid.b) * 0.8;
     float hl = RBW_SS(0.26, 0.0, length(c - float2(-0.17, -0.17)));
-    Color = lerp(float3(1.0, 1.0, 1.0), irid, 0.6) * ring * 1.2 + float3(1.0, 1.0, 1.0) * hl * 1.4 + irid * 0.25;
+    // approved small bubbles read as tiny glass beads: bright rim + glint over a cool cyan-blue body
+    float3 body = float3(0.35, 0.55, 1.0) * 0.35 * (1.0 - ring);
+    Color = lerp(float3(1.0, 1.0, 1.0), irid, 0.6) * ring * 1.2 + float3(1.0, 1.0, 1.0) * hl * 1.4 + irid * 0.25 + body;
     float diam = 2.0 * abs(Px);                              // gl_PointSize (device px)
-    Alpha = saturate(ring * 0.8 + hl + 0.12) * (0.35 + 0.65 * smoothstep(3.0, 8.0, diam)) * saturate(Fade);
+    Alpha = saturate(ring * 0.8 + hl + 0.2) * (0.35 + 0.65 * smoothstep(3.0, 8.0, diam)) * saturate(Fade);
 }
 
 void RainbowBubble_half(half2 P, half Seed, half Px, half Fade, half Time, out half3 Color, out half Alpha)

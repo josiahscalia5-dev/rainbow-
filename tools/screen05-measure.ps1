@@ -1,22 +1,28 @@
 # Screen 05 LIKENESS MEASURE (read-only, offline: never touches Unity, the scene or git).
-# Compares real Unity Game-view stills (864x1536, e.g. from tools\screen05-cycle.ps1) with the approved image and prints two
-# measured similarities (100 = the same picture), overall and per area:
-#   look  = AT A GLANCE (tolerant): the same kinds of things in roughly the same places. Mean of
-#           lk_shape   coarse structural similarity (SSIM) at 1/16 size, best alignment within +-48 px
-#           lk_dE      colour-layout difference (CIELAB deltaE, 0 = identical) at 1/32 size within +-64 px -> 1 - dE/50
-#           lk_colours overlap of the two colour distributions in the area (1 = same colours in the same amounts)
-#   exact = EXACT LAYOUT (strict): shapes, colours and outlines in exactly the same places. Mean of
-#           ex_shape   SSIM at 1/8 size, best alignment within +-16 px
-#           ex_dE      colour-layout deltaE at 1/16 size within +-16 px -> 1 - dE/50
-#           ex_edges   correlation of softly blurred edge maps at 1/8 size within +-16 px
-# Calibration (run with -Calibrate) shows what near-identical and wrong-layout copies of the approved image score.
+# Compares real Unity Game-view stills (864x1536 captures of the normal gameplay camera, Benny at s = 14.00, from
+# tools\screen05-cycle.ps1) with the approved image AT IDENTICAL PIXEL POSITIONS - no shifting, cropping, rescaling or
+# alignment search of any kind - and prints two measured similarities (100 = the same picture), for the whole frame
+# (OVERALL) and for fixed areas (the same approved-pixel boxes as the cycle's crops, identical for both images):
+#   visual = VISUAL SIMILARITY (what you see at a glance; blur makes it tolerant of fine texture, not of misplacement). Mean of
+#            v_shape   SSIM of brightness after an 8 px blur, at 1/16 size (54x96 cells, window sigma 1.5 cells ~ 24 px)
+#            v_dE      colour layout: 1 - meanDeltaE/50 at 1/32 size (27x48 cells) after the 8 px blur
+#                      (deltaE = CIELAB colour difference per cell; 0 = identical colours)
+#            v_colours colour distribution: overlap of the two CIELAB colour histograms of the area (8x8x8 bins, smoothed)
+#   layout = LAYOUT SIMILARITY (strict: shapes, colours and outlines in exactly the same places). Mean of
+#            l_shape   SSIM of brightness at 1/8 size (108x192 cells, window sigma 1.5 cells ~ 12 px)
+#            l_dE      colour layout: 1 - meanDeltaE/50 at 1/16 size, 1-cell blur
+#            l_edges   correlation of softly blurred edge maps (Sobel at 1/8 size, blur sigma 1.5 cells)
+# Calibration (-Calibrate) shows what shifted, brighter, blurred and wrong-layout copies of the approved image score.
 # Both numbers are measurement aids, not a human judgement: always show them with the side-by-side image.
+# -Overlay <out.jpg> writes a diagnostic alignment picture (approved outlines over the Unity still and the reverse, same pixel
+# positions) for the first still; it is never used for the scores.
 # Usage:
-#   powershell -NoProfile -ExecutionPolicy Bypass -File C:\RainbowUnity\tools\screen05-measure.ps1 [-Json <out.json>] <still.png> [<still2.png> ...]
+#   powershell -NoProfile -ExecutionPolicy Bypass -File C:\RainbowUnity\tools\screen05-measure.ps1 [-Json <out.json>] [-Overlay <out.jpg>] <still.png> [<still2.png> ...]
 #   powershell -NoProfile -ExecutionPolicy Bypass -File C:\RainbowUnity\tools\screen05-measure.ps1 -Calibrate
 param(
   [string]$Approved = 'C:\RainbowUnity\references\05_flow_into_the_current.png',
   [string]$Json = '',
+  [string]$Overlay = '',
   [switch]$Calibrate,
   [Parameter(Position = 0, ValueFromRemainingArguments = $true)][string[]]$Unity
 )
@@ -208,7 +214,7 @@ public static class Rb05Measure2 {
 
     int w16 = W / 16, h16 = H / 16, n16 = w16 * h16;
     float[] la = Luma(Down(A, 16), n16), lu = Luma(Down(U, 16), n16);
-    for (int dy = -3; dy <= 3; dy++) for (int dx = -3; dx <= 3; dx++) {
+    { int dx = 0, dy = 0;   // identical positions, no alignment search
       float[] ss = Ssim(la, ShiftMap(lu, w16, h16, dx, dy), w16, h16);
       for (int r = 0; r < rc; r++) {
         int x0, y0, x1, y1; Box(regions, r, 16, w16, h16, out x0, out y0, out x1, out y1);
@@ -221,7 +227,7 @@ public static class Rb05Measure2 {
     int w32 = W / 32, h32 = H / 32, n32 = w32 * h32;
     float[][] ca = Lab(Down(A, 32), n32), cu = Lab(Down(U, 32), n32);
     for (int c = 0; c < 3; c++) { ca[c] = Blur(ca[c], w32, h32, 1.0); cu[c] = Blur(cu[c], w32, h32, 1.0); }
-    for (int dy = -2; dy <= 2; dy++) for (int dx = -2; dx <= 2; dx++) {
+    { int dx = 0, dy = 0;   // identical positions, no alignment search
       float[] c0 = ShiftMap(cu[0], w32, h32, dx, dy), c1 = ShiftMap(cu[1], w32, h32, dx, dy), c2 = ShiftMap(cu[2], w32, h32, dx, dy);
       for (int r = 0; r < rc; r++) {
         int x0, y0, x1, y1; Box(regions, r, 32, w32, h32, out x0, out y0, out x1, out y1);
@@ -276,17 +282,70 @@ public static class Rb05Measure2 {
     return Compare(LoadRgb(approvedPath), LoadRgb(unityPath), regions);
   }
 
+  // strongest ~10 % outlines of an image (full size), as a mask
+  static bool[] EdgeMask(float[] rgb) {
+    float[] l = Blur(Luma(rgb, W * H), W, H, 1.5);
+    float[] g = Sobel(l, W, H);
+    float[] sample = new float[(W / 4) * (H / 4)]; int k = 0;
+    for (int y = 0; y < H; y += 4) for (int x = 0; x < W; x += 4) if (k < sample.Length) sample[k++] = g[y * W + x];
+    Array.Sort(sample, 0, k);
+    float thr = sample[(int)(k * 0.90)];
+    bool[] m = new bool[W * H];
+    for (int i = 0; i < W * H; i++) m[i] = g[i] > thr;
+    return m;
+  }
+
+  // ALIGNMENT OVERLAY (diagnostic only, never used for scores): left = Unity still (dimmed) with the APPROVED outlines in
+  // yellow; right = approved (dimmed) with the UNITY outlines in cyan. Same pixel positions, no shifting or scaling.
+  public static void Overlay(string approvedPath, string unityPath, string outPath) {
+    float[] A = LoadRgb(approvedPath), U = LoadRgb(unityPath);
+    bool[] ea = EdgeMask(A), eu = EdgeMask(U);
+    using (Bitmap bmp = new Bitmap(W * 2 + 12, H + 44, PixelFormat.Format24bppRgb)) {
+      BitmapData d = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.WriteOnly, PixelFormat.Format24bppRgb);
+      byte[] row = new byte[d.Stride];
+      for (int y = 0; y < bmp.Height; y++) {
+        for (int x = 0; x < bmp.Width; x++) { row[x * 3] = 36; row[x * 3 + 1] = 18; row[x * 3 + 2] = 24; }
+        int sy = y - 44;
+        if (sy >= 0 && sy < H) {
+          for (int x = 0; x < W; x++) {
+            int i = sy * W + x;
+            byte r, g, b;
+            if (ea[i]) { r = 255; g = 230; b = 0; }
+            else { r = (byte)(U[i * 3] * 0.5f); g = (byte)(U[i * 3 + 1] * 0.5f); b = (byte)(U[i * 3 + 2] * 0.5f); }
+            row[x * 3] = b; row[x * 3 + 1] = g; row[x * 3 + 2] = r;
+            int x2 = W + 12 + x;
+            if (eu[i]) { r = 0; g = 230; b = 255; }
+            else { r = (byte)(A[i * 3] * 0.5f); g = (byte)(A[i * 3 + 1] * 0.5f); b = (byte)(A[i * 3 + 2] * 0.5f); }
+            row[x2 * 3] = b; row[x2 * 3 + 1] = g; row[x2 * 3 + 2] = r;
+          }
+        }
+        Marshal.Copy(row, 0, new IntPtr(d.Scan0.ToInt64() + (long)y * d.Stride), d.Stride);
+      }
+      bmp.UnlockBits(d);
+      using (Graphics gr = Graphics.FromImage(bmp))
+      using (Font f = new Font("Segoe UI", 15f, FontStyle.Bold)) {
+        gr.DrawString("UNITY (dimmed) + APPROVED outlines (yellow)", f, Brushes.White, 10, 10);
+        gr.DrawString("APPROVED (dimmed) + UNITY outlines (cyan)", f, Brushes.White, W + 22, 10);
+      }
+      ImageCodecInfo jpg = null;
+      foreach (ImageCodecInfo c in ImageCodecInfo.GetImageEncoders()) if (c.MimeType == "image/jpeg") jpg = c;
+      EncoderParameters ep = new EncoderParameters(1);
+      ep.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 85L);
+      bmp.Save(outPath, jpg, ep);
+    }
+  }
+
   // returns per region: shape (best SSIM), deltaE (best), edges (best correlation)
   public static double[] Compare(float[] A, float[] U, int[] regions) {
     int rc = regions.Length / 4;
     double[] best = new double[rc * 3];
     for (int r = 0; r < rc; r++) { best[r * 3] = -1; best[r * 3 + 1] = 1e9; best[r * 3 + 2] = -1; }
 
-    // shape + edges at 1/8 size, shifts +-2 cells
+    // shape + edges at 1/8 size - identical positions, no alignment search (dx = dy = 0)
     int w8 = W / 8, h8 = H / 8, n8 = w8 * h8;
     float[] la = Luma(Down(A, 8), n8), lu = Luma(Down(U, 8), n8);
     float[] ea = Blur(Sobel(la, w8, h8), w8, h8, 1.5), euBase = Blur(Sobel(lu, w8, h8), w8, h8, 1.5);
-    for (int dy = -2; dy <= 2; dy++) for (int dx = -2; dx <= 2; dx++) {
+    { int dx = 0, dy = 0;
       float[] lus = ShiftMap(lu, w8, h8, dx, dy), eus = ShiftMap(euBase, w8, h8, dx, dy);
       float[] ss = Ssim(la, lus, w8, h8);
       for (int r = 0; r < rc; r++) {
@@ -306,11 +365,11 @@ public static class Rb05Measure2 {
       }
     }
 
-    // colour layout at 1/16 size, softly blurred, shifts +-1 cell
+    // colour layout at 1/16 size, softly blurred - identical positions, no alignment search
     int w16 = W / 16, h16 = H / 16, n16 = w16 * h16;
     float[][] ca = Lab(Down(A, 16), n16), cu = Lab(Down(U, 16), n16);
     for (int c = 0; c < 3; c++) { ca[c] = Blur(ca[c], w16, h16, 1.0); cu[c] = Blur(cu[c], w16, h16, 1.0); }
-    for (int dy = -1; dy <= 1; dy++) for (int dx = -1; dx <= 1; dx++) {
+    { int dx = 0, dy = 0;
       float[] c0 = ShiftMap(cu[0], w16, h16, dx, dy), c1 = ShiftMap(cu[1], w16, h16, dx, dy), c2 = ShiftMap(cu[2], w16, h16, dx, dy);
       for (int r = 0; r < rc; r++) {
         int x0, y0, x1, y1; Box(regions, r, 16, w16, h16, out x0, out y0, out x1, out y1);
@@ -352,13 +411,13 @@ function Get-Rows([double[]]$r, [double[]]$l) {
   $rows = @(); $i = 0
   foreach ($k in $Areas.Keys) {
     $shape = $r[$i * 3]; $de = $r[$i * 3 + 1]; $edge = $r[$i * 3 + 2]
-    $exact = 100.0 * ([Math]::Max(0.0, $shape) + [Math]::Max(0.0, 1.0 - $de / 50.0) + [Math]::Max(0.0, $edge)) / 3.0
+    $layout = 100.0 * ([Math]::Max(0.0, $shape) + [Math]::Max(0.0, 1.0 - $de / 50.0) + [Math]::Max(0.0, $edge)) / 3.0
     $lshape = $l[$i * 3]; $lde = $l[$i * 3 + 1]; $lhist = $l[$i * 3 + 2]
-    $look = 100.0 * ([Math]::Max(0.0, $lshape) + [Math]::Max(0.0, 1.0 - $lde / 50.0) + $lhist) / 3.0
+    $visual = 100.0 * ([Math]::Max(0.0, $lshape) + [Math]::Max(0.0, 1.0 - $lde / 50.0) + $lhist) / 3.0
     $rows += [pscustomobject]@{
-      area = $k; look = [Math]::Round($look, 1); exact = [Math]::Round($exact, 1)
-      lk_shape = [Math]::Round($lshape, 3); lk_dE = [Math]::Round($lde, 1); lk_colours = [Math]::Round($lhist, 3)
-      ex_shape = [Math]::Round($shape, 3); ex_dE = [Math]::Round($de, 1); ex_edges = [Math]::Round($edge, 3)
+      area = $k; visual = [Math]::Round($visual, 1); layout = [Math]::Round($layout, 1)
+      v_shape = [Math]::Round($lshape, 3); v_dE = [Math]::Round($lde, 1); v_colours = [Math]::Round($lhist, 3)
+      l_shape = [Math]::Round($shape, 3); l_dE = [Math]::Round($de, 1); l_edges = [Math]::Round($edge, 3)
     }
     $i++
   }
@@ -384,10 +443,10 @@ if ($Calibrate) {
     'mirrored left-right (wrong layout)'    = { [Rb05Measure2]::FlipX($A) }
     'upside down (wrong layout)'            = { [Rb05Measure2]::FlipY($A) }
   }
-  Write-Output 'CALIBRATION: approved image vs changed copies of itself (overall)      look   exact'
+  Write-Output 'CALIBRATION: approved image vs changed copies of itself (OVERALL)     visual  layout'
   foreach ($k in $tests.Keys) {
     $rows = Measure-Pair $A (& $tests[$k])
-    Write-Output ("  {0,-62} {1,6} {2,7}" -f $k, $rows[0].look, $rows[0].exact)
+    Write-Output ("  {0,-62} {1,6} {2,7}" -f $k, $rows[0].visual, $rows[0].layout)
   }
   Write-Output ''
 }
@@ -395,11 +454,13 @@ if ($Calibrate) {
 $all = @()
 foreach ($u in $Unity) {
   if (-not (Test-Path -LiteralPath $u)) { Write-Output "MISSING: $u"; continue }
-  $rows = Measure-Pair $A ([Rb05Measure2]::LoadRgb((Resolve-Path -LiteralPath $u).Path))
-  Write-Output ("MATCH  {0}   (approved vs Unity; 100 = same picture; look = at a glance, exact = exact layout)" -f (Split-Path -Leaf $u))
-  Write-Output ($rows | Format-Table area, look, exact, lk_shape, lk_dE, lk_colours, ex_shape, ex_dE, ex_edges -AutoSize | Out-String -Width 160).TrimEnd()
-  Write-Output ("SCORE look={0} exact={1}" -f $rows[0].look, $rows[0].exact)
+  $uPath = (Resolve-Path -LiteralPath $u).Path
+  $rows = Measure-Pair $A ([Rb05Measure2]::LoadRgb($uPath))
+  Write-Output ("MATCH  {0}   (approved vs Unity at identical positions; 100 = same picture)" -f (Split-Path -Leaf $u))
+  Write-Output ($rows | Format-Table area, visual, layout, v_shape, v_dE, v_colours, l_shape, l_dE, l_edges -AutoSize | Out-String -Width 160).TrimEnd()
+  Write-Output ("SCORE visual={0} layout={1}" -f $rows[0].visual, $rows[0].layout)
   Write-Output ''
   $all += [pscustomobject]@{ still = $u; areas = $rows }
+  if ($Overlay -and $all.Count -eq 1) { [Rb05Measure2]::Overlay($appPath, $uPath, $Overlay); Write-Output "OVERLAY $Overlay" }
 }
 if ($Json) { $all | ConvertTo-Json -Depth 5 | Out-File -Encoding utf8 -FilePath $Json }

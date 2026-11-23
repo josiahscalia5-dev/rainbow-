@@ -42,7 +42,16 @@ every Claude account.
 - Likeness target 90-95 %: only state a number with real measurements and side-by-side images.
 - Match shapes, proportions, composition, materials and richness, not just colours; keep the scenery consistent while Benny
   swims, steers and jumps; fix the biggest visible differences first and conserve credits.
-- Do NOT start Screen 06 (or any other screen) until the user explicitly approves Screen 05.
+- Do NOT start Screen 06 (or any other screen) until the user explicitly approves Screen 05. Never declare Screen 05
+  approved yourself.
+- User's priority order (2026-11-23 18:00 local): recreate the approved COMPOSITION in the playable scene, not pretty parts:
+  (1) tunnel geometry, perspective, depth and camera framing; (2) the narrow winding S-shaped river and its exact proportions;
+  (3) purple walls, gold rings, LARGER copper paddles; (4) narrow, TALLER foam banks; (5) Benny's size, position, waterline,
+  splash; (6) coin placement and HUD. Target: 90-95 % visual similarity.
+- Honest comparisons only: the real Unity Game view at 864x1536, Benny at s = 14.00 with the normal gameplay camera, beside
+  the approved image at the same resolution. Never shift, crop, rescale or retouch stills to raise a score, and never give
+  the capture its own camera pose. Report BOTH scores from `tools/screen05-measure.ps1` (visual similarity and layout
+  similarity) with how they are calculated.
 - Never commit or upload passwords, tokens, Unity license files (`*.ulf`, `*.alf`), anything from `~/.claude`, or Git credentials.
 
 ## Where things are

@@ -18,7 +18,7 @@ namespace Rainbow.Screen05
     /// corridor or reaches the end of its life shrinks away quickly. The shader caps the on-screen size (bubbles.ts uMaxPx).
     /// Unity addition (round 2, approved 05 while moving): with the camera moving at 11 u/s the side bubbles leave the frame
     /// at the sides long before they reach its bottom, so a small WAKE set (3 big + 9 small) is thrown up inside Benny's
-    /// splash fans beside his body, rides the current at 0.7-0.86x his speed and falls slowly behind him toward the bottom
+    /// splash fans beside his body (alternating sides), rides the current at 0.78-0.9x his speed and falls slowly behind him toward the bottom
     /// corners, growing in perspective (the approved big bubbles at the bottom corners and the small ones beside the splash).
     /// Benny's position comes only from Screen05Events.BennyS (contract); the camera is Camera.main of THIS frame (the
     /// component runs after the Cinemachine brain). One dynamic mesh (4 vertices per bubble: position = centre, UV0 = (corner,
@@ -45,7 +45,7 @@ namespace Rainbow.Screen05
         public int wakeBigCount = 3;
         public int wakeSmallCount = 9;
         [Tooltip("Wake bubbles keep this share of Benny's speed (the rest = how fast they fall behind him).")]
-        public Vector2 wakeCarry = new Vector2(0.7f, 0.86f);
+        public Vector2 wakeCarry = new Vector2(0.78f, 0.9f);
         public uint seed = 0x0B0Bu;
 
         struct Bubble
@@ -282,17 +282,16 @@ namespace Rainbow.Screen05
         /// the spray and drifts toward the bottom corner of the frame while it grows in perspective. initial = fill the whole
         /// trail at once (restart / teleport), anywhere between the fans and the camera.
         /// </summary>
-        void SpawnWake(ref Bubble b, bool initial, float bennyDepth, float speed)
+        void SpawnWake(ref Bubble b, bool initial, float bennyDepth, float speed, float side)
         {
             b.phase = Rand() * 6.2832f;
             b.seed = Rand();
             b.age = 0f;
-            b.life = Range(2.5f, 4.5f);
+            b.life = Range(3f, 5f);
             b.dead = true;
-            float side = Rand() < 0.5f ? -1f : 1f;
             for (int attempt = 0; attempt < 5; attempt++)
             {
-                float yPx = Range(1020f, 1180f);
+                float yPx = Range(990f, 1150f);
                 float yn = 1f - 2f * yPx / RefH;
                 float xn = side * Range(0.52f, 0.78f);
                 Vector3 ray = camFwd + camRight * (xn * tanH) + camUp * (yn * tanV);
@@ -349,7 +348,7 @@ namespace Rainbow.Screen05
                 bennySpeed = stageSpeed;
                 for (int i = 0; i < bubbles.Length; i++)
                 {
-                    if (bubbles[i].wake) SpawnWake(ref bubbles[i], true, bennyDepth, stageSpeed);
+                    if (bubbles[i].wake) SpawnWake(ref bubbles[i], true, bennyDepth, stageSpeed, (i & 1) == 0 ? -1f : 1f);
                     else Spawn(ref bubbles[i], true);
                 }
             }
@@ -366,7 +365,7 @@ namespace Rainbow.Screen05
                 if (a < 0 || b.age > b.life || b.pos.z > RiverPath.TunnelLength - 1f)
                 {
                     if (!b.wake) Spawn(ref b, false);
-                    else if (emitWake) SpawnWake(ref b, false, bennyDepth, bennySpeed);
+                    else if (emitWake) SpawnWake(ref b, false, bennyDepth, bennySpeed, (i & 1) == 0 ? -1f : 1f);   // alternate sides
                     else b.dead = true;                                          // Benny stopped / jumped: no new wake bubbles
                 }
                 else if (a == 0) b.life = Mathf.Min(b.life, b.age + 0.3f);      // drifted into the corridor: shrink away

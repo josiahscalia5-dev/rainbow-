@@ -5,6 +5,22 @@ Read this first in any new Claude account or session. **This is an existing proj
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
+**UPDATE 2026-11-23 23:05 UTC (USER PRIORITY = COMPOSITION):** the user wants the approved Screen 05 COMPOSITION recreated in
+the playable scene, in this order: (1) tunnel geometry, perspective, depth, camera framing; (2) narrow winding S-shaped river
+and its proportions; (3) purple walls, gold rings, larger copper paddles; (4) narrow, taller foam banks; (5) Benny's size,
+position, waterline, splash; (6) coins and HUD. Target 90–95 % VISUAL similarity; report visual AND layout similarity with
+how they are calculated; no score manipulation by alignment/cropping (the measure tool now compares at identical positions,
+no shift search); identical 864×1536 resolution and the normal gameplay camera at s = 14.00. Round 3 = composition-first
+workflow `staging/shared/round3-composition.workflow.js` (launch after round 2 finishes). The water-contact test from the
+tool evaluation is folded into round 3's Benny stage. Never declare Screen 05 approved; no Screen 06.
+
+**UPDATE 2026-11-23 23:00 UTC (tool evaluation):** see `docs/tool-evaluation-2026-11-23.md`. Unity AI Material Generator: not
+now (credits unknown - the user must sign in to Unity in the browser pane to check; needs package/Cloud link or the beta CLI
+`ai` plugin; adds surface detail, not the shapes that dominate the gap). ShoreLine: do not import (v1.0, no docs/ratings,
+Asset Store EULA blocks pushing it to the public GitHub branch); borrow its water-contact idea natively. Material Maker: skip.
+**Next small test after round 2:** analytic water-contact at Benny's waterline (absorption + contact foam line in the wake
+section of `RainbowRiver.hlsl`), judged on splash/benny crops + `tools/screen05-measure.ps1` + steer/jump; keep only if closer.
+
 **UPDATE 2026-11-23 22:45 UTC (likeness measuring + round-3 plan):** new read-only tool `tools/screen05-measure.ps1 <still.png> ...`
 prints two calibrated scores vs the approved image (100 = same picture), overall and per crop area: **look** (at a glance:
 coarse shapes/colour layout within ±48–64 px + colour distribution) and **exact** (strict layout within ±16 px). `-Calibrate`:
