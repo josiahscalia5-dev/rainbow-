@@ -168,6 +168,9 @@ namespace Rainbow.Screen05.EditorTools
             mat.SetFloat("_NearFade", 1.5f);
             mat.SetFloat("_SoftDepth", 0.3f);
             mat.SetFloat("_Intensity", 1.4f);
+            // (bubbles round 2026-11-23) bubbles.ts on-screen caps: MAX_PX_RIDE 66 / MAX_PX_SMALL 22 px diameters (864x1536)
+            mat.SetFloat("_MaxPx", 33f);
+            mat.SetFloat("_MaxPxSmall", 11f);
             EditorUtility.SetDirty(mat);
 
             var go = new GameObject("Bubbles05");

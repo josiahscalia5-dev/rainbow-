@@ -3,33 +3,40 @@ using UnityEngine;
 namespace Rainbow.Screen05
 {
     /// <summary>
-    /// Iridescent soap bubbles floating above the river (Agent 3). Port of src/vfx/bubbles.ts (ride mode, ref 05):
-    /// RIDE.high = 19 large bubbles + 22 small ones (small05) visible at once, at the SIDES of the stream (over the
-    /// outer water and the foam banks), never over the coin line or Benny, drifting downstream with the current
-    /// (big 0.1x, small 0.2x the stage speed 11) and rising slowly (0.04-0.16 u/s), life 7-15 s, recycled ahead of
-    /// Benny (respawns start far away, small on screen, and grow naturally as he swims toward them).
-    /// Benny's position comes only from Screen05Events.BennyS (contract); the main camera's x keeps the lane above
-    /// Benny clear. One dynamic mesh (4 vertices per bubble: position = centre, UV0 = (corner, radius, seed),
-    /// colour.a = fade); Rainbow/Water/Bubble expands the camera-facing quads. No per-frame allocations.
+    /// Iridescent soap bubbles at the SIDES of the stream (Agent 3; bubbles round 2026-11-23). Port of src/vfx/bubbles.ts,
+    /// ride mode (ref 05): RIDE.high = 19 large impostor bubbles + 22 small ring bubbles (small05) visible at once, over the
+    /// foam banks, the outer water and the lower walls - never over the stream corridor where Benny, his splash and the
+    /// coin line are.
+    /// Placement is done in SCREEN space like the original, so it holds for any camera (hard left / right, jumps): pick a
+    /// side point of the portrait frame, cast its view ray to the water and float the bubble between the camera and that
+    /// point (kept inside the tube, above the water and the foam heap); the world radius is chosen from the wanted
+    /// on-screen diameter there (big 25-65 px, small 6-20 px). From then on the bubble lives in world space: it drifts
+    /// downstream with the current (big 0.1x, small 0.2x the stage speed 11), rises slowly (0.04-0.16 u/s), wobbles a
+    /// little and lives 7-15 s. A new bubble grows from nothing (pop factor) - respawns appear in the upper half of the
+    /// frame, far and small, and grow naturally on screen as Benny swims toward them. Bubbles are recycled only where
+    /// nobody sees them (out of the frame or closer to the camera than the shader's near fade); one that drifts into the
+    /// corridor or reaches the end of its life shrinks away quickly. The shader caps the on-screen size (bubbles.ts uMaxPx).
+    /// Benny's position comes only from Screen05Events.BennyS (contract); the camera is Camera.main of THIS frame (the
+    /// component runs after the Cinemachine brain). One dynamic mesh (4 vertices per bubble: position = centre, UV0 = (corner,
+    /// radius, seed + 1 for small bubbles), colour.a = fade); Rainbow/Water/Bubble expands the camera-facing quads.
+    /// No per-frame allocations.
     /// </summary>
+    [DefaultExecutionOrder(1000)]
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
     [AddComponentMenu("Rainbow/Water/Bubble Field")]
     public class BubbleField : MonoBehaviour
     {
         [Tooltip("Large soap bubbles (bubbles.ts RIDE.high.big = 19).")]
         public int bigCount = 19;
-        [Tooltip("Small bubbles near the banks (bubbles.ts RIDE.high.small05 = 22).")]
+        [Tooltip("Small ring bubbles near the banks (bubbles.ts RIDE.high.small05 = 22).")]
         public int smallCount = 22;
-        [Tooltip("Spawn window ahead of Benny (u along the course).")]
-        public float spawnAheadMin = 3f;
-        public float spawnAheadMax = 30f;
-        [Tooltip("Bubbles further than this behind Benny are recycled (the camera sits 6.4 u behind him).")]
-        public float recycleBehind = 7f;
         [Tooltip("Stage speed (course.ts 05 = 11): bubbles drift with the current.")]
         public float stageSpeed = 11f;
-        [Tooltip("Half width of the clear lane above Benny (around the main camera's x).")]
-        public float bennyLane = 1.3f;
-        public uint seed = 0xB0BB1E5u;
+        [Tooltip("Wanted on-screen DIAMETER at spawn, big bubbles (bubbles.ts BIG_PX, px of the 864x1536 frame).")]
+        public Vector2 bigPx = new Vector2(25f, 65f);
+        [Tooltip("Wanted on-screen DIAMETER at spawn, small bubbles (bubbles.ts 6 + 14 * rand^1.4).")]
+        public Vector2 smallPx = new Vector2(6f, 20f);
+        public uint seed = 0x0B0Bu;
 
         struct Bubble
         {
@@ -38,6 +45,11 @@ namespace Rainbow.Screen05
             public bool big;
         }
 
+        const float RefH = 1536f;                    // the approved frame height: bubbles.ts sizes / caps are authored for it
+        const float PortraitAspect = 864f / 1536f;
+        const float CoreLane = 0.19f;                // bubbles.ts CORE_LANE: half width (NDC x) of the lane kept clear around the coin line
+        const int CoreN = 24;
+
         Bubble[] bubbles;
         Mesh mesh;
         Vector3[] verts;
@@ -45,10 +57,21 @@ namespace Rainbow.Screen05
         Color32[] cols;
         uint rng = 1u;
         float lastS = float.NaN;
+        Vector3 lastCam = new Vector3(1e9f, 1e9f, 1e9f);
+        float nearRecycle = 1.5f;
+
+        // camera basis of the current frame
+        Vector3 camPos, camFwd, camRight, camUp;
+        Matrix4x4 worldToCam;
+        float tanV = 0.6f, tanH = 0.34f, tanHView = 0.34f, focalRef = 1280f;
+        // projected coin line (NDC of the portrait frame), sorted bottom -> top
+        readonly float[] coreX = new float[CoreN], coreY = new float[CoreN];
+        int coreN;
 
         void OnEnable()
         {
             lastS = float.NaN;
+            lastCam = new Vector3(1e9f, 1e9f, 1e9f);
         }
 
         void OnDestroy()
@@ -88,19 +111,34 @@ namespace Rainbow.Screen05
             mesh.triangles = tris;
             mesh.bounds = new Bounds(Vector3.zero, Vector3.one * 1000f);   // quads are expanded in the shader
             GetComponent<MeshFilter>().sharedMesh = mesh;
+            // recycle only where the shader has faded a bubble out completely (no visible pop near the camera)
+            Material mat = GetComponent<MeshRenderer>().sharedMaterial;
+            if (mat != null && mat.HasProperty("_NearFade")) nearRecycle = Mathf.Max(0.5f, mat.GetFloat("_NearFade"));
             rng = seed == 0u ? 1u : seed;
         }
 
+        // mulberry32 (the generator of bubbles.ts)
         float Rand()
         {
-            rng ^= rng << 13;
-            rng ^= rng >> 17;
-            rng ^= rng << 5;
-            return (rng & 0xFFFFFFu) / 16777216f;
+            unchecked
+            {
+                rng += 0x6D2B79F5u;
+                uint t = rng;
+                t = (t ^ (t >> 15)) * (t | 1u);
+                t ^= t + (t ^ (t >> 7)) * (t | 61u);
+                return (t ^ (t >> 14)) / 4294967296f;
+            }
         }
 
         float Range(float lo, float hi) { return lo + (hi - lo) * Rand(); }
 
+        static float SS(float a, float b, float x)
+        {
+            float t = Mathf.Clamp01((x - a) / (b - a));
+            return t * t * (3f - 2f * t);
+        }
+
+        /// <summary>|x| of the tunnel wall at height y (circle of TunnelRadius about the axis at WaterY + FloorDepth).</summary>
         static float WallHalfWidth(float y)
         {
             float dy = RiverPath.FloorDepth - (y - RiverPath.WaterY);
@@ -108,74 +146,168 @@ namespace Rainbow.Screen05
             return Mathf.Sqrt(Mathf.Max(rr * rr - dy * dy, 0f));
         }
 
-        void SpawnAll(float bennyS)
+        /// <summary>Highest foam-bank top at camera distance dist (RainbowFoam.hlsl grows the heap 0.62..1.45x with distance).</summary>
+        static float FoamTop(float dist) => 1.05f * Mathf.Lerp(0.62f, 1.45f, SS(5f, 30f, dist));
+
+        /// <summary>World x of the coin line / cyan core (CoinTrail: latK 0.7 * CORE_SWING 0.9 * meander from the route centre).</summary>
+        static float CoinLineX(float s) => 1.63f * RiverPath.Meander(s);
+
+        void SetView(Camera cam)
         {
-            for (int i = 0; i < bubbles.Length; i++) Spawn(ref bubbles[i], bennyS, true);
+            Transform ct = cam.transform;
+            camPos = ct.position;
+            camFwd = ct.forward;
+            camRight = ct.right;
+            camUp = ct.up;
+            worldToCam = cam.worldToCameraMatrix;
+            tanV = Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
+            tanHView = tanV * cam.aspect;                                   // the frame actually shown (recycling)
+            tanH = tanV * Mathf.Min(cam.aspect, PortraitAspect);            // placement + corridor: the portrait 9:16 frame
+            focalRef = RefH / (2f * tanV);                                  // px of the 1536-high frame per unit at depth 1
         }
 
-        void Spawn(ref Bubble b, float bennyS, bool initial)
+        /// <summary>Projected coin line from just ahead of Benny to the far field (bubbles.ts coreX / coreY).</summary>
+        void ProjectCore(float focusS)
+        {
+            coreN = 0;
+            for (int k = 0; k < CoreN; k++)
+            {
+                float s = Mathf.Min(RiverPath.TunnelLength - 1f, focusS + 1f + k * k * 0.06f + k * 0.5f);
+                Vector3 v = worldToCam.MultiplyPoint3x4(new Vector3(CoinLineX(s), RiverPath.WaterY + 0.05f, s));
+                float depth = -v.z;
+                if (depth < 1f) continue;
+                float yn = v.y / (depth * tanV);
+                if (coreN > 0 && yn <= coreY[coreN - 1]) continue;   // keep it monotonic in screen y
+                coreX[coreN] = v.x / (depth * tanH);
+                coreY[coreN] = yn;
+                coreN++;
+            }
+        }
+
+        /// <summary>
+        /// bubbles.ts allowed(): 1 = fine, 0 = in the no-bubble corridor (stream centre: Benny, splash, coin line) or the
+        /// upper tube / HUD, -1 = out of the frame or inside the shader's near fade. r (world radius) widens the corridor.
+        /// </summary>
+        int Allowed(Vector3 p, float r)
+        {
+            Vector3 v = worldToCam.MultiplyPoint3x4(p);
+            float depth = -v.z;
+            if (depth < nearRecycle) return -1;
+            float yn = v.y / (depth * tanV);
+            if (Mathf.Abs(v.x / (depth * tanHView)) > 1.12f || yn < -1.12f || yn > 1.1f) return -1;
+            if (yn > 0.62f) return 0;                                    // upper tube / HUD: keep clear (ref 05 has none there)
+            float xn = v.x / (depth * tanH);
+            float rN = r / (depth * tanH);
+            float corridor = yn < 0.1f ? 0.47f : 0.3f;
+            if (Mathf.Abs(xn) - rN < corridor) return 0;
+            // the route ahead (cyan core + coin line) winds off the screen centre in 05: keep a lane clear around it
+            if (coreN > 1 && yn <= coreY[coreN - 1] && yn >= coreY[0] - 0.4f)
+            {
+                int i = 0;
+                while (i < coreN - 2 && coreY[i + 1] < yn) i++;
+                float t = Mathf.Clamp01((yn - coreY[i]) / Mathf.Max(1e-4f, coreY[i + 1] - coreY[i]));
+                float xc = coreX[i] + (coreX[i + 1] - coreX[i]) * t;
+                if (Mathf.Abs(xn - xc) - rN < CoreLane) return 0;
+            }
+            return 1;
+        }
+
+        void Spawn(ref Bubble b, bool initial)
         {
             b.phase = Rand() * 6.2832f;
             b.seed = Rand();
             b.age = initial ? Range(0.5f, 3f) : 0f;
             b.life = Range(7f, 15f);
-            // Approved image: bubbles beside and behind Benny too, down to ~2 u in front of the camera (6.4 u behind him).
-            float s = bennyS + (initial ? Range(-recycleBehind + 2.5f, spawnAheadMax) : Range(spawnAheadMax * 0.5f, spawnAheadMax));
-            s = Mathf.Clamp(s, RiverPath.TunnelStart + 1f, RiverPath.TunnelLength - 2f);
-            b.r = b.big ? 0.16f + 0.34f * Mathf.Pow(Rand(), 1.1f) : 0.04f + 0.07f * Mathf.Pow(Rand(), 1.4f);
             float side = Rand() < 0.5f ? -1f : 1f;
-            float d = RiverPath.Meander(s);
-            float x = side * Range(b.big ? 2.8f : 2.4f, 5.4f);
-            float lane = 2.1f + b.r;                                   // keep the coin line / cyan core clear
-            if (Mathf.Abs(x - d) < lane) x = d + side * lane;
-            float y = RiverPath.WaterY + (b.big ? Range(0.6f, 2.6f) : Range(0.3f, 1.6f));   // read against water and walls, not only the foam
-            float floor = RiverPath.WaterY + RiverSurface.BaseHeight(x, s) + b.r
-                        + (RiverSurface.OnStream(x, s, 0.3f) ? 0.15f : 0.55f);   // above the water / the bank foam
-            y = Mathf.Max(y, floor);
-            float wall = WallHalfWidth(y) - b.r - 0.35f;
-            x = Mathf.Clamp(x, -wall, wall);
-            b.pos = new Vector3(x, y, s);
-            b.vel = RiverPath.Forward(s) * (stageSpeed * (b.big ? 0.1f : 0.2f)) + Vector3.up * Range(0.04f, 0.16f);
+            Vector3 p = camPos + camFwd * 10f;
+            float r = 0.1f;
+            for (int attempt = 0; attempt < 5; attempt++)
+            {
+                // a side point of the portrait frame (initial fill: the whole side band, respawns: the upper part = far)
+                float yPx = initial ? Range(530f, 1290f) : Range(530f, 820f);
+                float yn = 1f - 2f * yPx / RefH;
+                float xn = side * Range(b.big ? 0.55f : 0.5f, 0.97f);
+                Vector3 ray = camFwd + camRight * (xn * tanH) + camUp * (yn * tanV);
+                // distance (along the view axis) to the water plane, then somewhere between the camera and that point
+                float dw = ray.y < -1e-3f ? (RiverPath.WaterY - camPos.y) / ray.y : 40f;
+                dw = Mathf.Clamp(dw, 3f, 40f);
+                float d = Mathf.Max(3.9f, dw * Range(b.big ? 0.55f : 0.6f, 0.92f));
+                // keep inside the tube: shorten the ray while the point is beyond the wall
+                for (int k = 0; k < 4; k++)
+                {
+                    p = camPos + ray * d;
+                    if (Mathf.Abs(p.x) <= WallHalfWidth(p.y) - 0.45f) break;
+                    d *= 0.85f;
+                }
+                float depth = Mathf.Max(2.5f, Vector3.Dot(p - camPos, camFwd));
+                // world radius from the wanted on-screen diameter at this depth
+                float px = b.big ? bigPx.x + (bigPx.y - bigPx.x) * Mathf.Pow(Rand(), 1.25f)
+                                 : smallPx.x + (smallPx.y - smallPx.x) * Mathf.Pow(Rand(), 1.4f);
+                r = px * depth / (2f * focalRef);
+                r = b.big ? Mathf.Clamp(r, 0.05f, 0.5f) : Mathf.Clamp(r, 0.01f, 0.15f);
+                // never under the water or buried in the bank foam heap
+                float s = Mathf.Clamp(p.z, RiverPath.TunnelStart + 1f, RiverPath.TunnelLength - 1f);
+                float floor = RiverSurface.HeightAt(p.x, s)
+                            + (FoamBank.InChannel(p.x, s, -r) ? 0.15f + 0.5f * r : 0.85f * FoamTop(Vector3.Distance(p, camPos)) + 0.4f * r);
+                if (p.y < floor) p.y = floor;
+                float wall = WallHalfWidth(p.y) - r - 0.25f;
+                p.x = Mathf.Clamp(p.x, -wall, wall);
+                if (Allowed(p, b.big ? r : r * 0.5f) > 0) break;
+            }
+            b.pos = p;
+            b.r = r;
+            float sv = Mathf.Clamp(p.z, RiverPath.TunnelStart, RiverPath.TunnelLength);
+            b.vel = RiverPath.Forward(sv) * (stageSpeed * (b.big ? 0.1f : 0.2f)) + Vector3.up * Range(0.04f, 0.16f);
         }
 
         void LateUpdate()
         {
             if (bubbles == null || mesh == null) Init();
             if (bubbles.Length == 0) return;
+            Camera cam = Camera.main;
+            if (cam == null) return;
+            SetView(cam);
             float s = Screen05Events.BennyS;
-            if (float.IsNaN(lastS) || Mathf.Abs(s - lastS) > 6f) SpawnAll(s);   // first frame, restart or teleport
+            ProjectCore(s);
+            // respawn everything after a restart / teleport / camera jump (the screen-space placement needs the camera that
+            // will actually show the bubbles); re-seeded from s so captures of the same moment are deterministic
+            bool jump = float.IsNaN(lastS) || Mathf.Abs(s - lastS) > 6f || (lastCam - camPos).sqrMagnitude > 12.25f;
             lastS = s;
+            lastCam = camPos;
+            if (jump)
+            {
+                rng = (seed ^ (uint)Mathf.RoundToInt(Mathf.Abs(s) * 16f)) | 1u;
+                for (int i = 0; i < bubbles.Length; i++) Spawn(ref bubbles[i], true);
+            }
 
             float dt = Mathf.Min(Time.deltaTime, 0.05f);
             float t = Time.time;
-            Camera cam = Camera.main;
-            bool hasCam = cam != null;
-            float camX = hasCam ? cam.transform.position.x : 0f;
             Matrix4x4 toLocal = transform.worldToLocalMatrix;
-
             for (int i = 0; i < bubbles.Length; i++)
             {
                 Bubble b = bubbles[i];
                 b.age += dt;
                 b.pos += b.vel * dt;
-                if (b.age > b.life || b.pos.z < s - recycleBehind || b.pos.z > RiverPath.TunnelLength - 1f)
-                    Spawn(ref b, s, false);
+                b.pos += new Vector3(Mathf.Sin(t * 1.3f + b.phase), Mathf.Cos(t * 1.1f + b.phase * 1.7f), Mathf.Sin(t * 0.9f + b.phase * 0.6f)) * (0.12f * dt);
+                int a = Allowed(b.pos, b.big ? b.r : 0f);
+                if (a < 0 || b.age > b.life || b.pos.z > RiverPath.TunnelLength - 1f) Spawn(ref b, false);
+                else if (a == 0) b.life = Mathf.Min(b.life, b.age + 0.3f);      // drifted into the corridor: shrink away
                 bubbles[i] = b;
 
-                float fade = Mathf.Clamp01(Mathf.Min(b.age, b.life - b.age) / 0.4f);
-                var p = new Vector3(b.pos.x + Mathf.Sin(t * 0.9f + b.phase) * 0.06f,
-                                    b.pos.y + Mathf.Sin(t * 1.3f + b.phase * 1.7f) * 0.05f,
-                                    b.pos.z);
-                if (hasCam) fade *= Mathf.Clamp01((Mathf.Abs(p.x - camX) - (bennyLane + b.r)) / 0.6f);
-                Vector3 lp = toLocal.MultiplyPoint3x4(p);
-                byte a = (byte)Mathf.RoundToInt(fade * 255f);
+                // grow from nothing when born, shrink away at the end (bubbles.ts pop), gentle breathing of the big ones
+                float pop = b.big ? Mathf.Min(1f, b.age * 1.5f, (b.life - b.age) * 2f) : Mathf.Min(1f, b.age * 3f, (b.life - b.age) * 3f);
+                pop = Mathf.Max(0f, pop);
+                float size = b.r * pop * (b.big ? 1f + 0.04f * Mathf.Sin(t * 4f + b.phase) : 1f);
+                byte alpha = (byte)Mathf.RoundToInt(Mathf.Clamp01(pop * 2f) * 255f);
+                Vector3 lp = toLocal.MultiplyPoint3x4(b.pos);
+                float w = Mathf.Min(b.seed, 0.999f) + (b.big ? 0f : 1f);
                 int v = i * 4;
                 for (int k = 0; k < 4; k++)
                 {
                     verts[v + k] = lp;
-                    uvs[v + k].z = b.r;
-                    uvs[v + k].w = b.seed;
-                    cols[v + k].a = a;
+                    uvs[v + k].z = size;
+                    uvs[v + k].w = w;
+                    cols[v + k].a = alpha;
                 }
             }
             mesh.vertices = verts;
