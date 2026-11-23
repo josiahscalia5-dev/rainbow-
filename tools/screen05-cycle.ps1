@@ -7,11 +7,16 @@
 #   powershell -NoProfile -ExecutionPolicy Bypass -File C:\RainbowUnity\tools\screen05-cycle.ps1 -Tag water_try1 -Areas water
 #   -Areas: any of water, foam, bubbles, splash, light, all (default all)   -NoRebuild: skip recompile + rebuild
 #   -Series: also capture s = 10 / 14 / 20 (moving view)                     -Tag: short name for the files (letters, digits, _)
+#   -EvalBeforePlay <AgentScripts\x.cs>: run that C# file in Edit mode after the rebuild, before Play (e.g. live material tweaks;
+#      a later full rebuild resets them, so copy good values into the builder)
+#   -EvalAtHold <AgentScripts\x.cs>: run that C# file while paused at s = 14, just before the still (e.g. runtime component tweaks)
 param(
   [string]$Tag = 'cycle',
   [string[]]$Areas = @('all'),
   [switch]$NoRebuild,
   [switch]$Series,
+  [string]$EvalBeforePlay = '',
+  [string]$EvalAtHold = '',
   [string]$OutDir = 'C:\RainbowUnity\UnityProject\Recordings\Screen05\work'
 )
 $ErrorActionPreference = 'Continue'
@@ -81,10 +86,10 @@ try { do {
     for ($i = 0; $i -lt 60; $i++) {
       $r = Invoke-Unity @('command', 'script', 'recompile_status', '--project-path', $Proj, '--result-only')
       try { $rc = $r.Text | ConvertFrom-Json } catch { $rc = $null }
-      if ($null -ne $rc -and $rc.status -eq 'completed') { break }
+      if ($null -ne $rc -and $rc.status -notmatch 'compil|progress|pending|queued|reload') { break }
       Start-Sleep -Seconds 5
     }
-    if ($null -eq $rc -or $rc.status -ne 'completed') { Write-Output "RECOMPILE did not finish in time:`n$($r.Text)"; $exit = 2; break }
+    if ($null -eq $rc -or $rc.status -match 'compil|progress|pending|queued|reload') { Write-Output "RECOMPILE did not finish in time:`n$($r.Text)"; $exit = 2; break }
     if ($rc.compilationFailed -or $rc.failed) {
       Write-Output 'COMPILE ERRORS (fix them, then run the cycle again):'
       $rc.errors | ForEach-Object { Write-Output ('  ' + ($_ | Out-String).Trim()) }
@@ -94,6 +99,13 @@ try { do {
     $b = Invoke-Eval 'AgentScripts/screen05_build_scene.cs' 600
     Write-Output $b.Text
     if ($b.Code -ne 0 -or $b.Text -match 'FAILED|MISSING') { Write-Output 'BUILD FAILED (see lines above and the console below)'; $exit = 3 }
+  }
+
+  if ($exit -eq 0 -and $EvalBeforePlay) {
+    Step "eval (Edit mode) $EvalBeforePlay"
+    $e = Invoke-Eval $EvalBeforePlay 300
+    Write-Output ('  ' + $e.Text)
+    if ($e.Code -ne 0) { Write-Output 'EVAL FAILED (see above)'; $exit = 9 }
   }
 
   if ($exit -eq 0) {
@@ -113,6 +125,13 @@ try { do {
     $h = Invoke-Eval 'AgentScripts/screen05_hold_approved.cs' 90
     Write-Output ('  ' + $h.Text)
     if ($h.Text -notmatch 'paused at frame') { $exit = 7 }
+  }
+
+  if ($exit -eq 0 -and $EvalAtHold) {
+    Step "eval (paused at s = 14) $EvalAtHold"
+    $e = Invoke-Eval $EvalAtHold 300
+    Write-Output ('  ' + $e.Text)
+    if ($e.Code -ne 0) { Write-Output 'EVAL FAILED (see above)'; $exit = 9 }
   }
 
   if ($exit -eq 0) {
