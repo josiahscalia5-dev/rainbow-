@@ -57,39 +57,60 @@ Original plan below (steps 1–3 are done):
 5. Update this handoff (keep these NEXT-TASK markers). Autosave pushes to GitHub every 5 minutes.
 <!-- NEXT-TASK:END -->
 
-## ✅ CURRENT STATE (2026-11-23 18:25 UTC)
-* **Git**: branch `unity/screen05-dev`, newest commits are on GitHub (checked with `git ls-remote`). Working tree saved.
-* **Five-minute autosave = Windows Task Scheduler task "Rainbow Unity Autosave"** (created 2026-11-23 13:18 local, every
-  5 min, hidden, runs as the user while signed in). It runs `tools/autosave.ps1` (one pass: commit + push only when
+## ✅ CURRENT STATE (2026-11-23 21:55 UTC) — verified by the new Claude account
+This also completes the user's 16:13 local request "SAVE EVERYTHING TO MY GITHUB NOW" (the old account made and pushed the
+checkpoint commit but hit its limit before updating this file and confirming).
+* **Git / GitHub**: branch `unity/screen05-dev`. The user's requested checkpoint = `759d746` (16:21 local, "Screen 05 round 2 in
+  progress"); newer autosave commits follow it. Every check today: local HEAD = GitHub (`git ls-remote`), push dry-run OK.
+  Git LFS: 2 objects (`benny31.glb` 5.2 MB, stored once and used twice; round-1 gameplay mp4 7.2 MB) confirmed STORED on GitHub
+  via the LFS batch API. Library/Temp/Logs/UserSettings and `Recordings/Screen05/work` are git-ignored (regenerable).
+* **Five-minute autosave = Windows Task Scheduler task "Rainbow Unity Autosave"** (the only one; no Claude scheduled tasks or
+  shell loops). Every 5 min, hidden, runs as the user while signed in: `tools/autosave.ps1` (one pass: commit + push only when
   something changed or a push is pending; never force-push/merge/reset/delete; leaves out likely secrets and >50 MB non-LFS
-  files). Verified: first run 13:19 committed `4fc8139` and pushed it (push exit 0). Log `.git/autosave.log`, last pass
-  `.git/autosave.status`. It needs no Claude session, so it survives account switches and restarts.
-  Repair (safe to re-run, never duplicates): `tools/setup-resume-system.ps1`.
-* Why it was broken: the old autosave was a loop in the previous Claude session's background shell; it died with that
-  session (last autosave 12:46 local, commit `42af05a`).
-* **Unity**: 6000.3.29f1 installed + Unity Personal active; project `C:\RainbowUnity\UnityProject` (URP 17.3.0, Input System
-  1.20.1, Cinemachine 3.1.7, Pipeline 1.0.1, glTFast 6.21.0, Splines 2.9.2). The Editor is **closed** right now
-  (`unity status` → exit 12, no Editor). It was open earlier today.
-* **Specialists**: Agent 1 (setup runbook + 15 test-tool files) **finished**; tools copied into `UnityProject/Assets/Rainbow/Testing`
-  + `UnityProject/AgentScripts` and compiled with no errors (commit `610a16e`); not yet used in Play mode (no scene yet).
-  Agents 2, 3, 4 **unfinished**: they stopped at 17:40 UTC when the previous account hit its 5-hour limit (HTTP 429). All files
-  they had written are committed (autosaves up to `42af05a`).
-* Screen 05 scene: **not built yet** (only `Assets/Scenes/SampleScene.unity` exists). Coordinator files: `Assets/Rainbow/Shared/RiverPath.cs`,
-  `Assets/Rainbow/Editor/Screen05SceneBuilder.cs`.
-* **Resume helpers** (already in place, all read-only): `CLAUDE.md`; `.claude/settings.json` SessionStart hook →
-  `tools/session-start.ps1` (prints a status block); `/resume-rainbow` skill; desktop shortcut "Resume Rainbow"; a short pointer
-  in `%USERPROFILE%\.claude\CLAUDE.md`.
-* Laptop: C: 10.2 GB free, RAM ~1.8 GB free.
-* Errors today: 5-hour usage limit on the previous account (17:39 UTC); autosave loop died with that session; Unity Editor closed.
+  files). Log `.git/autosave.log`, last pass `.git/autosave.status`. Needs no Claude session, so it survives account switches
+  and restarts. Repair (safe to re-run, never duplicates): `tools/setup-resume-system.ps1`.
+* **Unity**: 6000.3.29f1 + Unity Personal (and Asset Store) licenses active; Editor OPEN with this project since 13:23 local;
+  `unity status` = ready (port 7800); CLI 1.0.1; the Pipeline 1.0.1 bridge answers commands. Packages (all already in
+  `Library/PackageCache`, no reinstall): URP 17.3.0, Input System 1.20.1, Cinemachine 3.1.7, Pipeline 1.0.1, glTFast 6.21.0,
+  Splines 2.9.2, ProBuilder 6.1.4, Animation Rigging 1.4.1, Timeline 1.8.13, Test Framework 1.6.0, uGUI 2.0.0. Recompile at
+  21:45 UTC: 0 errors.
+* **Screen 05**: `Assets/Rainbow/Scenes/Screen05.unity` is built from code (menu Rainbow → Build Screen 05 Scene) and plays
+  (swim, steer, jump, coins, HUD). Target: the approved `references/05_flow_into_the_current.png` only (binding rules below).
+* **Specialists**: all 4 original specialists FINISHED (README.md in each staging folder) and integrated. Round 2 fix workflow
+  (`staging/shared/round2-fixes.workflow.js`): water bands ✔ and lighting/scenery ✔ (`evidence/screen05/round2_progress/NOTES.md`);
+  splash/water contact and foam banks were interrupted at 21:21 UTC and are RUNNING again (run `wf_14866b3f-a9e`, 21:44 UTC);
+  bubbles, the final integration (full cycle + 12 s gameplay recording) and two reviewers are queued after them.
+* **Remaining visual differences** vs the approved image (newest still: `work/20261123_162048_splash_t1_sbs.jpg`):
+  1. Foam banks: a flat snowy strip on the far banks only, nothing in the lower half (approved: thick pearly clustered soap foam
+     along both banks down to the near corners) — foam agent running.
+  2. Bubbles: none visible (approved: about 25–35 iridescent bubbles) — bubbles agent queued.
+  3. Benny's splash: he now sits in the water with a collar and two spray fans, but the fans are straight white streaks and a hard
+     ring shows under him (approved: bubbly foam spray, droplets, soft V wake) — splash agent running.
+  4. The open river reads ~1.5× too wide at mid/far distance (Three.js `channel05` narrowing + far foam shelves not ported).
+  5. Scenery: deep walls lack the concentric dark slot rows; paddles smaller, higher and tilted (approved: big D-trays with a thick
+     polished rim near the horizon); rings less polished; far glow merges into one over-saturated orange disc.
+  6. Camera: about 0.5 m too far back (near ring ~4 % small), vanishing point ~9 px right, Benny ~30–40 px lower than approved.
+* **Resume helpers** (read-only): `CLAUDE.md`; `.claude/settings.json` SessionStart hook → `tools/session-start.ps1`;
+  `/resume-rainbow` skill; desktop shortcut "Resume Rainbow"; a short pointer in `%USERPROFILE%\.claude\CLAUDE.md`.
+* Laptop: C: 8.5 GB free, RAM ~1.6 GB free. Errors today: two 5-hour usage limits (17:39 and 21:21 UTC); nothing was lost.
 
 ## Switching Claude accounts (what the user does)
 1. Wait until the newest autosave is pushed (or ask Claude "save now"). Everything is in `C:\RainbowUnity` and on GitHub.
 2. In the Claude app: click your name/initials at the bottom left → **Log out** → sign in with the other account.
 3. Click **Code** → start a new session → choose the folder **`C:\RainbowUnity`** → type **Resume Rainbow** → Enter.
+   (The user's sessions so far were opened in `C:\Users\josia\.unity`; that works too — Claude then reads this file and
+   `CLAUDE.md` by hand, because the automatic status check only runs for sessions opened in `C:\RainbowUnity`.)
    (If the "Unity" plugin is missing in that account, it is optional: + → Add plugins → search "Unity" → Install.)
 
 ---
 # History (older notes; the sections above win where they disagree)
+
+## Earlier state (2026-11-23 18:25 UTC, superseded)
+* Autosave was moved from a loop in a Claude background shell (it died with that session; last loop autosave 12:46 local,
+  `42af05a`) to the Windows task; its first run 13:19 committed `4fc8139` and pushed it.
+* The Editor was closed at that time; Agent 1 (setup runbook + 15 test-tool files) was finished and its tools compiled
+  (`610a16e`); Agents 2, 3, 4 had stopped at 17:40 UTC at the previous account's 5-hour limit (files kept, autosaves up to
+  `42af05a`) and were finished later; the Screen 05 scene was not built yet then.
 
 ## CURRENT STATE (2026-11-23 ~14:00 UTC) — Unity is installed, licensed and connected
 * Windows restarted 2026-11-23 07:54 local → C: free went 8.2 → 16.6 GB.
