@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28923,
-   "sha256": "3857bac1cb3275894ea2d528c188f56056022fc267f0d7e907cef15fec8bd267"
+   "sha256": "6fea88c31c9c996611e3cf8a05687efe241c815268e90f19af724950722bf2f0"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2961,
-   "sha256": "155b1edf17247e2b5b40745faf71d903ceed1b2090430f1d56f0c08e79ac349d"
+   "sha256": "45ac201c335ba70d87eea0d3298a4de2f1fc2b471d9f3517e3149ce0b17ac537"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -50038,8 +50038,8 @@
   },
   {
    "path": "tools/screenkit/water_strip.py",
-   "bytes": 14269,
-   "sha256": "d80f767bd07123b09776ad66978e1a763bb6b02969a25d9291e801aa8e19fc3a"
+   "bytes": 15095,
+   "sha256": "a765143b272b2ce7f910e1583a3c6c4f2d8fdf8f59101a09a6788ac9e2adb3b9"
   },
   {
    "path": "tools/spector/spector_capture_test.mjs",

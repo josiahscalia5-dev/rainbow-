@@ -5825,3 +5825,143 @@ The strip came out with zero painted rows, so something in my validity test is t
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_strip.py'; s=open(p).read()\nold=\"rowvalid = (valid & (np.abs(LG) < 0.9)).mean(1)                    # how much of the river is painted on this row\"\nnew=\"rowvalid = valid[:, np.abs(lat) < 0.9].mean(1)                     # how much of the river (|lat| < 0.9) is painted on this row\"\nassert s.count(old)==1; s=s.replace(old,new); open(p,'w').write(s)\nEOF\npython3 -I tools/screenkit/water_strip.py /home/user/ws46/world/s05/game /home/user/ws47/strip_test 2>&1 | tail -2; cd /home/user/ws47/strip_test && python3 -c \"\nfrom PIL import I …[+770 chars]`
 
+### 🧑 User — 2026-11-23T00:56:23.511Z
+
+> ↩︎ result: strip: 2976 x 768 texels, d -3.0..28.0, painted rows 980, tile d 2.25+3.2, detail source {'side': -1, 'lat0': 0.5, 'd0': 2.55, 'px_per_texel': 0.446}, foam edges -0.86 / 0.53
+> (768, 2976)
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-23T00:56:24.958Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws47/strip_view.jpg"}`
+
+### 🧑 User — 2026-11-23T00:56:24.999Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T00:57:36.307Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json, sys, numpy as np\nsys.argv=['x','/home/user/ws46/world/s05/game','/home/user/ws47/strip_test']\nsrc=open('tools/screenkit/water_strip.py').read().split('# ---- 3. the continuation tile')[0]\ng={}; exec(compile(src,'ws','exec'), g)\nfe_l, fe_r, dd = g['fe_l'], g['fe_r'], g['dd']\nfor d in (0.8,1.2,1.6,2,2.5,3,4,5,6,7,8,9,10,11,12,14,16,18,20):\n    i=int((d-g['D0'])*g['PXU']); w=slice(max(0,i-8),i+8)\n    l=np.nanmedian(fe_l[w]) if np.isfinite(fe_l[w]).any() else np.nan; r=np.nanmedian(fe_r[w]) if np.isfinite(fe_r[w]).any() else np.nan\n    print(f\" …[+240 chars]`
+
+### 🧑 User — 2026-11-23T00:57:37.901Z
+
+> ↩︎ result: d   0.8  foam L +nan  R +nan  centre +nan  width nan  f_d 14.83 f_l 6.35
+> d   1.2  foam L -0.18  R +nan  centre +nan  width nan  f_d 7.23 f_l 4.44
+> d   1.6  foam L -0.50  R +0.52  centre +0.01  width 1.02  f_d 4.31 f_l 3.43
+> d   2.0  foam L +nan  R +0.61  centre +nan  width nan  f_d 2.83 f_l 2.78
+> d   2.5  foam L -0.46  R +0.52  centre +0.03  width 0.98  f_d 1.87 f_l 2.26
+> d   3.0  foam L -1.07  R +0.68  centre -0.19  width 1.76  f_d 1.48 f_l 1.92
+> d   4.0  foam L -0.98  R +0.34  centre -0.32  width 1.32  f_d 0.87 f_l 1.47
+> d   5.0  foam L -0.81  R +nan  centre +nan  width nan  f_d 1.15 f_l 1.25
+> d   6.0  foam L -1.08  R +0.84  centre -0.12  width 1.92  f_d 0.46 f_l 1.00
+> d   7.0  foam L -0.20  R +0.65  centre +0.22  width 0.85  f_d 0.26 f_l 0.85
+> d   8.0  foam L +nan  R +1.30  centre +nan  width nan  f_d 0.24 f_l 0.74
+> d   9.0  foam L -0.41  R +0.64  centre +0.12  width 1.05  f_d 0.22 f_l 0.66
+> d  10.0  foam L -0.84  R +0.08  centre -0.38  width 0.92  f_d 0.19 f_l 0.60
+> d  11.0  foam L +nan  R +0.50  centre +nan  width nan  f_d 0.16 f_l 0.54
+> d  12.0  foam L +nan  R +0.64  centre +nan  width nan  f_d 0.15 f_l 0.50
+> d  14.0  foam L -1.29  R +0.89  centre -0.20  width 2.19  f_d 0.11 f_l 0.43
+> d  16 …[+212 chars]
+
+### 🤖 Claude — 2026-11-23T00:58:37.696Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_strip.py'; s=open(p).read()\nstart=s.index('# ---- 5 (first): painted foam -> outer water; the foam\\'s inner edge per d')\ns=s[:start]+'''# ---- 3. fill the unusable texels of the painted rows (Benny's guessed fill, gold, painted foam) smoothly: pull-push (no streaks) ------------------\ndef pullpush(img, w):\n    \"\"\"normalized-convolution pyramid fill: invalid texels take a smooth blend of the valid texels around them (all scales)\"\"\"\n    levels = [(img * w[..., None], w.astype(np.float32))]\n    while min(levels[-1][1].shape) >  …[+6609 chars]`
+
+### 🧑 User — 2026-11-23T00:58:37.766Z
+
+> ↩︎ result: 37:zr = P[:, 2]; assert np.all(np.diff(zr) < 0), 'route z must decrease along the route'
+> 50:LAT = SC.get('lat', 1.45); NL = SC.get('nl', 768); PXU = SC.get('px_per_u', 80); D0 = SC.get('d0', -(D['z0'] - zr[0]) - 0.3); D1 = SC.get('d1', float(len(P) - 1) * L['route']['ds'] + 0.5)
+
+### 🤖 Claude — 2026-11-23T00:58:41.204Z
+
+My rewrite cut out the foam-edge measurement and Benny's painted position, which the new code still needs. Putting them back.
+
+### 🤖 Claude — 2026-11-23T00:58:45.564Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_strip.py'; s=open(p).read()\nanchor=\"# ---- 3. fill the unusable texels of the painted rows\"\nadd='''# ---- painted foam: inner edge per d (scanning outward from the river centre) --------------------------------------------------------------------\ndef inner_edges(fm, ok):\n    left = np.full(fm.shape[0], np.nan); right = np.full(fm.shape[0], np.nan); c = NL // 2; hw = int(0.55 * NL / (2 * LAT))\n    for i in range(fm.shape[0]):\n        if ok[i, c - hw:c + hw].mean() < 0.5: continue\n        jr = np.nonzero(fm[i, c:])[0]; jl = np.non …[+628 chars]`
+
+### 🧑 User — 2026-11-23T00:58:48.072Z
+
+> ↩︎ result: File "/home/user/rainbow-/tools/screenkit/water_strip.py", line 118, in quilt_forward
+>     blend = np.where(rows < cut[None, :], tail, patch[:PO]); blend = gaussian_filter(blend, (1.0, 0.0, 0.0))
+> ValueError: operands could not be broadcast together with shapes (20,768) (20,768,3) (20,768,3) 
+> 
+> real	0m2.445s
+> user	0m2.818s
+> sys	0m0.388s
+
+### 🤖 Claude — 2026-11-23T00:58:53.623Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/        blend = np.where(rows < cut\\[None, :\\], tail, patch\\[:PO\\]); blend = gaussian_filter(blend, (1.0, 0.0, 0.0))/        blend = np.where((rows < cut[None, :])[..., None], tail, patch[:PO]); blend = gaussian_filter(blend, (1.0, 0.0, 0.0))/' tools/screenkit/water_strip.py && time python3 -I tools/screenkit/water_strip.py /home/user/ws46/world/s05/game /home/user/ws47/strip_test 2>&1 | tail -3; cd /home/user/ws47/strip_test && python3 -c \"\nfrom PIL import Image\na=Image.open('strip_debug.jpg'); print(a.size); W=Image.new('RGB',(a.size[0]*2+10,a.size[1]),'white'); …[+376 chars]`
+
+### 🧑 User — 2026-11-23T00:59:09.227Z
+
+> ↩︎ result: strip: 3689 x 768 texels, d -3.264040809897354..42.85, painted d 0.8..4.60, quilt source d 2.30..4.60, foam edges -0.88 / 0.69 (measured -0.88 / 0.69)
+> 
+> real	0m15.435s
+> user	0m15.400s
+> sys	0m0.587s
+> (384, 1844)
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: tools/screenkit/water_strip.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-23T00:59:10.653Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws47/strip_view2.jpg"}`
+
+### 🧑 User — 2026-11-23T00:59:10.679Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T00:59:40.788Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/screenkit/water_strip.py", "offset": 100, "limit": 50}`
+
+### 🧑 User — 2026-11-23T00:59:40.812Z
+
+> ↩︎ result: 100	# cut across the river - the same painted texture everywhere, no loop, no switch.
+> 101	QS0, QS1 = SC.get('quilt_src', [dB + 0.95, dB + 3.25]); qa, qb = int((QS0 - D0) * PXU), int((QS1 - D0) * PXU)
+> 102	SRC = filled[qa:qb]; SRC = np.concatenate([SRC, SRC[:, ::-1]], 0)            # + its mirror across the river (the river is near symmetric)
+> 103	PH, PO = int(SC.get('quilt_patch', 0.8) * PXU), int(SC.get('quilt_overlap', 0.25) * PXU); rng = np.random.default_rng(47)
+> 104	half = SRC.shape[0] // 2; cands = [j for j in range(0, half - PH)] + [half + j for j in range(0, half - PH)]
+> 105	def mincut(e):   # e: (PO, NL) error -> per lat column the row where the new patch takes over (smooth seam across the river)
+> 106	    E = e.copy(); back = np.zeros_like(E, dtype=np.int8)
+> 107	    for i in range(1, E.shape[1]):
+> 108	        prev = np.stack([np.r_[np.inf, E[:-1, i - 1]], E[:, i - 1], np.r_[E[1:, i - 1], np.inf]], 0); k = prev.argmin(0); back[:, i] = k - 1; E[:, i] += prev[k, np.arange(E.shape[0])]
+> 109	    cut = np.zeros(E.shape[1], int); cut[-1] = int(E[:, -1].argmin())
+> 110	    for i in range(E.shape[1] - 1, 0, -1): cut[i - 1] = cut[i] + back[cut[i], i]
+> 111	    return np.clip(cut, 0, E.shape[0]  …[+3126 chars]
+
+### 🤖 Claude — 2026-11-23T00:59:56.739Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_strip.py'; s=open(p).read()\na=s.index(\"def quilt_forward(seed, n_rows):\"); b=s.index(\"# ---- 5. foam: the painted foam banks\")\nnew='''def quilt_forward(seed, n_rows):\n    out = seed.copy(); recent = []\n    while out.shape[0] < seed.shape[0] + n_rows:\n        tail = out[-PO:]; errs = np.array([((SRC[j:j + PO, ::4] - tail[:, ::4]) ** 2).sum() for j in cands])\n        order = [k for k in np.argsort(errs) if all(abs(cands[k] - r) > PH for r in recent)][:12]   # r47b: varied - never a recently used window\n        j = cands[int(rng. …[+3100 chars]`
+
+### 🧑 User — 2026-11-23T00:59:59.238Z
+
+> ↩︎ result: File "numpy/random/_generator.pyx", line 874, in numpy.random._generator.Generator.choice
+> ValueError: a cannot be empty unless no samples are taken
+> 
+> real	0m2.420s
+> user	0m2.888s
+> sys	0m0.286s
+
+### 🤖 Claude — 2026-11-23T01:00:05.279Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_strip.py'; s=open(p).read()\nold=\"\"\"        order = [k for k in np.argsort(errs) if all(abs(cands[k] - r) > PH for r in recent)][:12]   # r47b: varied - never a recently used window\n        j = cands[int(rng.choice(order))]; patch = SRC[j:j + PH]; recent = (recent + [j])[-6:]\"\"\"\nnew=\"\"\"        order = [k for k in np.argsort(errs) if all(abs(cands[k] - r) > PH // 2 for r in recent)][:12] or list(np.argsort(errs)[:12])   # r47b: varied\n        j = cands[int(rng.choice(order))]; patch = SRC[j:j + PH]; recent = (recent + [j])[-3: …[+363 chars]`
+
+### 🧑 User — 2026-11-23T01:00:21.228Z
+
+> ↩︎ result: strip: 3689 x 768 texels, d -3.264040809897354..42.85, painted d 0.8..4.60, quilt source d 2.30..4.60, foam edges -0.88 / 0.69 (measured -0.88 / 0.69)
+> 
+> real	0m15.859s
+> user	0m15.984s
+> sys	0m0.577s
+
+### 🤖 Claude — 2026-11-23T01:00:22.780Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws47/strip_view3.jpg"}`
+
+### 🧑 User — 2026-11-23T01:00:22.805Z
+
+> ↩︎ result: [image]
+

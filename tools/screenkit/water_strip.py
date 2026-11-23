@@ -47,7 +47,7 @@ def project(Pw):
     return CX + F * q[..., 0] / np.maximum(depth, 1e-6), CY - F * q[..., 1] / np.maximum(depth, 1e-6), depth
 
 # ---- 1. rectify the painted floor water -------------------------------------------------------------------------------------------------
-LAT = SC.get('lat', 1.45); NL = SC.get('nl', 768); PXU = SC.get('px_per_u', 96); D0, D1 = SC.get('d0', -3.0), SC.get('d1', 28.0)
+LAT = SC.get('lat', 1.45); NL = SC.get('nl', 768); PXU = SC.get('px_per_u', 80); D0 = SC.get('d0', -8.0); D1 = SC.get('d1', float(len(P) - 1) * L['route']['ds'] + 0.5)
 lat = np.linspace(-LAT, LAT, NL); dd = D0 + np.arange(int((D1 - D0) * PXU)) / PXU; NDv = len(dd)
 LG, DG = np.meshgrid(lat, dd)                                   # rows = d, cols = lat
 Pw = world(LG, DG); px, py, dep = project(Pw)
@@ -68,103 +68,100 @@ gx_d = np.gradient(px, axis=0); gy_d = np.gradient(py, axis=0); gx_l = np.gradie
 f_d = np.hypot(gx_d, gy_d); f_l = np.hypot(gx_l, gy_l)          # picture pixels per texel
 need = np.clip((1.0 / np.maximum(np.minimum(f_d, f_l), 1e-3) - 1.3) / 2.5, 0, 1)   # 0 = painting is sharp enough here, 1 = add full detail
 
-# ---- 5 (first): painted foam -> outer water; the foam's inner edge per d ---------------------------------------------------------------------
+# ---- painted foam: inner edge per d (scanning outward from the river centre) --------------------------------------------------------------------
 def inner_edges(fm, ok):
-    """per row: the lat where foam starts on each side (scanning outward from the centre); NaN where unknown"""
-    left = np.full(fm.shape[0], np.nan); right = np.full(fm.shape[0], np.nan); c = NL // 2
+    left = np.full(fm.shape[0], np.nan); right = np.full(fm.shape[0], np.nan); c = NL // 2; hw = int(0.55 * NL / (2 * LAT))
     for i in range(fm.shape[0]):
-        r = fm[i]; o = ok[i]
-        if o[c - int(0.55 * NL / (2 * LAT)):c + int(0.55 * NL / (2 * LAT))].mean() < 0.5: continue   # need the river centre in view
-        jr = np.nonzero(r[c:])[0]; jl = np.nonzero(r[:c][::-1])[0]
+        if ok[i, c - hw:c + hw].mean() < 0.5: continue
+        jr = np.nonzero(fm[i, c:])[0]; jl = np.nonzero(fm[i, :c][::-1])[0]
         if len(jr): right[i] = lat[c + jr[0]]
         if len(jl): left[i] = lat[c - 1 - jl[0]]
     return left, right
 fe_l, fe_r = inner_edges(foam & onfloor, inside & onfloor)
+dB = float(CAM.get('s_ref', 1.2)) + L['benny'].get('ahead', 0.0)   # Benny's painted water point along the route
 
-def fill_rows(img, ok):
-    """invalid texels: copy, per row, the nearest valid texel toward the river centre (outer water continues outward), then a light blur"""
-    out = img.copy(); c = NL // 2
-    for i in range(img.shape[0]):
-        o = ok[i]
-        if not o.any(): continue
-        idx = np.nonzero(o)[0]
-        for side in (1, -1):
-            rng = range(c, NL) if side > 0 else range(c - 1, -1, -1); last = None
-            for j in rng:
-                if o[j]: last = j
-                elif last is not None: out[i, j] = img[i, last]
-            if last is None:   # nothing valid on this side of the centre: nearest valid texel overall
-                for j in rng: out[i, j] = img[i, idx[np.argmin(np.abs(idx - j))]]
-    return out
+# ---- 3. fill the unusable texels of the painted rows (Benny's guessed fill, gold, painted foam) smoothly: pull-push (no streaks) ------------------
+def pullpush(img, w):
+    """normalized-convolution pyramid fill: invalid texels take a smooth blend of the valid texels around them (all scales)"""
+    levels = [(img * w[..., None], w.astype(np.float32))]
+    while min(levels[-1][1].shape) > 4:
+        a, b = levels[-1]; h, w_ = b.shape[0] // 2 * 2, b.shape[1] // 2 * 2
+        a2 = a[:h, :w_].reshape(h // 2, 2, w_ // 2, 2, 3).sum((1, 3)); b2 = b[:h, :w_].reshape(h // 2, 2, w_ // 2, 2).sum((1, 3))
+        levels.append((a2, b2))
+    a, b = levels[-1]; cur = a / np.maximum(b, 1e-6)[..., None]
+    for a, b in reversed(levels[:-1]):
+        up = np.repeat(np.repeat(cur, 2, 0), 2, 1); up = np.pad(up, ((0, b.shape[0] - up.shape[0]), (0, b.shape[1] - up.shape[1]), (0, 0)), mode='edge')
+        up = gaussian_filter(up, (1, 1, 0)); wb = np.clip(b, 0, 1)[..., None]; cur = a / np.maximum(b, 1e-6)[..., None] * wb + up * (1 - wb)
+    return cur
+filled = np.clip(pullpush(rgb, valid), 0, 1)
 
-# ---- 3. the continuation tile: the painted river just ahead of Benny, made periodic along d ----------------------------------------------------
-dB = float(L['cams'][0].get('s_ref', 1.2)) + L['benny'].get('ahead', 0.0)
-T0, TL = SC.get('tile_d0', dB + 0.9), SC.get('tile_len', 3.2); OV = SC.get('tile_overlap', 0.9)
-i0, i1, io = int((T0 - D0) * PXU), int((T0 + TL - D0) * PXU), int(OV * PXU)
-win = fill_rows(rgb, valid)[i0 - io:i1]                          # the window + an overlap before it
-tile = win[io:].copy(); w = (np.arange(io) / io)[:, None, None]   # last io rows of the tile blend into the rows before its start -> loops
-tile[-io:] = tile[-io:] * (1 - w) + win[:io] * w
-tile_need = need[i0:i1].mean()
-
-# ---- 4. detail: the sharpest painted water (bottom of the picture beside Benny) as a seamless high-frequency tile -----------------------------
-DL, DD = SC.get('det_lat', 0.5), SC.get('det_len', 0.42); DPX = SC.get('det_px_per_u', 512)
-dl = np.linspace(0, DL, int(DL * DPX), endpoint=False); dz = np.linspace(0, DD, int(DD * DPX), endpoint=False)
-cands = []
-for side in (-1, 1):
-    for l0 in np.arange(0.3, 0.95, 0.05):
-        for d0 in np.arange(0.7, dB + 1.6, 0.05):
-            LGd, DGd = np.meshgrid(side * (l0 + dl), d0 + dz); x_, y_, dp_ = project(world(LGd, DGd))
-            if dp_.min() < 0.05 or x_.min() < 0 or x_.max() > Wp - 1 or y_.max() > Hp - 1 or y_.min() < HUD: continue
-            m_ = sample(mask, x_, y_, order=0)
-            if (m_ >= 200).mean() > 0.03: continue
-            c_ = sample(plate, x_, y_); g_ = (c_[..., 0] > 0.45) & (c_[..., 0] > c_[..., 2] * 1.5)
-            if g_.mean() > 0.03: continue
-            f_ = np.hypot(np.gradient(x_, axis=0), np.gradient(y_, axis=0)).mean()
-            cands.append((f_, side, l0, d0, c_))
-if not cands: raise SystemExit('no clean detail source found')
-cands.sort(key=lambda t: -t[0]); fbest, sside, sl0, sd0, src = cands[0]
-lum = src @ np.array([0.299, 0.587, 0.114], np.float32); low = gaussian_filter(lum, 6, mode='wrap')
-hp = lum - low                                                     # high-pass luminance (streaks, sparkles, arcs)
-def make_periodic(a, ov=0.25):
-    h, w_ = a.shape; oh, ow = int(h * ov), int(w_ * ov); b = a.copy()
-    t = (np.arange(oh) / oh)[:, None]; b[-oh:] = a[-oh:] * (1 - t) + a[:oh] * t
-    t = (np.arange(ow) / ow)[None, :]; c = b.copy(); c[:, -ow:] = b[:, -ow:] * (1 - t) + b[:, :ow] * t; return c
-hp = make_periodic(hp); hp = hp / (np.abs(hp).max() + 1e-6)
-det = np.stack([np.clip(0.5 + 0.5 * hp, 0, 1)] * 3, -1)        # 0.5 = no change
-
-# ---- compose the core strip: painted where valid, the tile where not, cross-faded far ahead into the tile -------------------------------------
-filled = fill_rows(rgb, valid)
-tile_at = lambda dvals: tile[((dvals - T0) * PXU).astype(int) % tile.shape[0]]
-TROW = tile_at(dd)                                                 # (NDv, NL, 3)
-rowvalid = valid[:, np.abs(lat) < 0.9].mean(1)                     # how much of the river (|lat| < 0.9) is painted on this row
-wp = np.clip((rowvalid - 0.35) / 0.3, 0, 1)
-far0, far1 = SC.get('far_blend', [16.0, 22.0]); wp *= 1 - np.clip((dd - far0) / (far1 - far0), 0, 1)
-wp = uniform_filter1d(wp, int(0.6 * PXU), mode='nearest')          # no sudden change along the flow
-texw = gaussian_filter(valid.astype(np.float32), 2.0) * wp[:, None]
-core = filled * texw[..., None] + TROW * (1 - texw[..., None])
-alpha = need * texw + tile_need * (1 - texw)
-# pure painted-foam rows in the tile were replaced already (fill_rows on the window); a last mild smoothing ACROSS the flow only at fills
+# ---- 4. the continuation: image QUILTING from the sharp painted stretch (d where the painting has >= ~1 picture px per texel along the flow) ----
+# non-periodic: each new 0.8 u piece is the source window (or its mirror across the river) whose overlap matches best, joined by a minimum-error
+# cut across the river - the same painted texture everywhere, no loop, no switch.
+QS0, QS1 = SC.get('quilt_src', [dB + 0.95, dB + 3.25]); qa, qb = int((QS0 - D0) * PXU), int((QS1 - D0) * PXU)
+SRC = filled[qa:qb]; SRC = np.concatenate([SRC, SRC[:, ::-1]], 0)            # + its mirror across the river (the river is near symmetric)
+PH, PO = int(SC.get('quilt_patch', 0.8) * PXU), int(SC.get('quilt_overlap', 0.25) * PXU); rng = np.random.default_rng(47)
+half = SRC.shape[0] // 2; cands = [j for j in range(0, half - PH)] + [half + j for j in range(0, half - PH)]
+def mincut(e):   # e: (PO, NL) error -> per lat column the row where the new patch takes over (smooth seam across the river)
+    E = e.copy(); back = np.zeros_like(E, dtype=np.int8)
+    for i in range(1, E.shape[1]):
+        prev = np.stack([np.r_[np.inf, E[:-1, i - 1]], E[:, i - 1], np.r_[E[1:, i - 1], np.inf]], 0); k = prev.argmin(0); back[:, i] = k - 1; E[:, i] += prev[k, np.arange(E.shape[0])]
+    cut = np.zeros(E.shape[1], int); cut[-1] = int(E[:, -1].argmin())
+    for i in range(E.shape[1] - 1, 0, -1): cut[i - 1] = cut[i] + back[cut[i], i]
+    return np.clip(cut, 0, E.shape[0] - 1)
+def quilt_forward(seed, n_rows):
+    out = seed.copy(); recent = []
+    while out.shape[0] < seed.shape[0] + n_rows:
+        tail = out[-PO:]; errs = np.array([((SRC[j:j + PO, ::4] - tail[:, ::4]) ** 2).sum() for j in cands])
+        order = [k for k in np.argsort(errs) if all(abs(cands[k] - r) > PH // 2 for r in recent)][:12] or list(np.argsort(errs)[:12])   # r47b: varied
+        j = cands[int(rng.choice(order))]; patch = SRC[j:j + PH]; recent = (recent + [j])[-3:]
+        cut = mincut(((patch[:PO] - tail) ** 2).sum(-1)); rows = np.arange(PO)[:, None]
+        blend = np.where((rows < cut[None, :])[..., None], tail, patch[:PO]); blend = gaussian_filter(blend, (1.0, 0.0, 0.0))
+        out = np.concatenate([out[:-PO], blend, patch[PO:]], 0)
+    return out[seed.shape[0]:seed.shape[0] + n_rows]
+P0, P1 = SC.get('painted', [0.8, dB + 3.25]); p0, p1 = int((P0 - D0) * PXU), int((P1 - D0) * PXU)
+# Q = a whole synthesized painted river (quilted from the sharp stretch, seeded with the painted rows themselves so it joins them)
+Q = filled.copy(); Q[p1:] = quilt_forward(filled[p1 - PO * 2:p1], NDv - p1); Q[:p0] = quilt_forward(filled[p0:p0 + PO * 2][::-1], p0)[::-1]
+inner = quilt_forward(filled[qa:qa + PO * 2], p1 - p0)                       # texture for the holes INSIDE the painted stretch (Benny, foam, gold)
+# curved flow: beyond the painted stretch the bands swing across the river like the painted ribbons (fades in, never inside the painted rows)
+SA, SL = SC.get('swing', [0.22, 6.5]); fade = np.clip((dd - P1 - 0.5) / 3.0, 0, 1) + np.clip((P0 - 0.5 - dd) / 3.0, 0, 1)
+shift = SA * np.sin(2 * np.pi * (dd - P1) / SL) * np.clip(fade, 0, 1) + 0.6 * SA * np.sin(2 * np.pi * (dd - P1) / (SL * 0.43) + 1.3) * np.clip(fade, 0, 1)
+for i in np.nonzero(np.abs(shift) > 1e-4)[0]:
+    for c in range(3): Q[i, :, c] = np.interp(lat - shift[i], lat, Q[i, :, c])
+core = Q.copy()
+# the painting's broad structure over the far stretch (low frequencies only, where the picture has them): the picture-camera view keeps its colours
+LF1 = SC.get('lowfreq_until', 14.0); lf_rows = (dd > P1) & (dd < LF1)
+rowok = valid[:, np.abs(lat) < 0.9].mean(1)
+w_lf = np.clip((rowok - 0.3) / 0.3, 0, 1) * lf_rows * np.clip((LF1 - dd) / 3.0, 0, 1) * np.clip((dd - P1) / 0.6, 0, 1)
+w_lf = uniform_filter1d(w_lf, int(0.5 * PXU), mode='nearest')
+sig = (np.clip(2.0 / np.maximum(f_d[:, NL // 2], 1e-3), 2, 40), 6.0)
+for i0_ in range(p1, min(NDv, int((LF1 - D0) * PXU)), 64):   # band-wise blur with the local picture resolution along d
+    i1_ = min(NDv, i0_ + 64); sd = float(np.median(sig[0][i0_:i1_]))
+    lo_p = gaussian_filter(filled, (sd, 6.0, 0))[i0_:i1_]; lo_q = gaussian_filter(core, (sd, 6.0, 0))[i0_:i1_]
+    core[i0_:i1_] = np.clip(core[i0_:i1_] + (lo_p - lo_q) * w_lf[i0_:i1_, None, None], 0, 1)
+# painted rows: the painting exactly where it is valid; in its holes the surrounding painted colours (smooth fill) + painted TEXTURE (quilt detail)
+texw = gaussian_filter(valid.astype(np.float32), 1.5); keep = slice(p0, p1)
+hole = filled[keep] + (inner - gaussian_filter(inner, (6, 6, 0)))
+core[keep] = filled[keep] * texw[keep][..., None] + np.clip(hole, 0, 1) * (1 - texw[keep][..., None])
 core = np.clip(core, 0, 1)
 
+# ---- 5. foam: the painted foam banks' inner edges (medians over the painted stretch) -> real 3D foam heaps along the river edges (world.html) --
+okr = (dd > 1.5) & (dd < 10)
+def med(a):
+    v = a[okr]; v = v[np.isfinite(v)]; return float(np.median(v)) if len(v) else np.nan
+fl_, fr_ = med(fe_l), med(fe_r)
+FL = min(fl_ if np.isfinite(fl_) else -0.85, -0.66); FR = max(fr_ if np.isfinite(fr_) else 0.85, 0.66)   # never inside Benny's reach (lanes +-0.3 + body)
+# under / beyond the foam banks: plain outer water (the painting's soft cyan-lavender beside the foam), no wall-coloured smears
+outer = np.median(filled[(dd > 1.5) & (dd < 4.5)][:, (np.abs(lat) > 0.6) & (np.abs(lat) < 0.75)].reshape(-1, 3), 0)
+wo = np.clip((np.maximum(FL - 0.08 - lat, lat - FR - 0.08)) / 0.12, 0, 1)[None, :, None]
+core = core * (1 - wo) + outer[None, None, :] * wo
+
 # ---- outputs ------------------------------------------------------------------------------------------------------------------------------
-Image.fromarray(np.dstack([(core * 255).round().astype(np.uint8), (np.clip(alpha, 0, 1) * 255).round().astype(np.uint8)]), 'RGBA').save(os.path.join(OUT, 'strip_core.png'))
-Image.fromarray((np.clip(tile, 0, 1) * 255).round().astype(np.uint8)).save(os.path.join(OUT, 'strip_tile.png'))
-Image.fromarray((det * 255).round().astype(np.uint8)).save(os.path.join(OUT, 'strip_detail.png'))
-# foam edges along d (every 0.1 u): measured on the painting, else the tile's average edge; never inside Benny's reach (|lat| >= 0.62)
-def smooth_nan(a, n):
-    ok = ~np.isnan(a); v = np.where(ok, a, 0.0); wv = uniform_filter1d(ok.astype(float), n, mode='nearest'); return np.where(wv > 0.05, uniform_filter1d(v, n, mode='nearest') / np.maximum(wv, 1e-6), np.nan)
-el, er = smooth_nan(fe_l, int(0.8 * PXU)), smooth_nan(fe_r, int(0.8 * PXU))
-tl_l = np.nanmedian(el[i0:i1]) if np.isfinite(el[i0:i1]).any() else -0.85; tl_r = np.nanmedian(er[i0:i1]) if np.isfinite(er[i0:i1]).any() else 0.85
-el = np.where(np.isnan(el), tl_l, el); er = np.where(np.isnan(er), tl_r, er)
-step = int(0.1 * PXU); fd = dd[::step]
-edges = {'d': fd.round(3).tolist(), 'left': np.minimum(el[::step], -0.62).round(3).tolist(), 'right': np.maximum(er[::step], 0.62).round(3).tolist(),
-         'tile_left': round(float(min(tl_l, -0.62)), 3), 'tile_right': round(float(max(tl_r, 0.62)), 3)}
-meta = {'lat': LAT, 'nl': NL, 'px_per_u': PXU, 'd0': D0, 'd1': float(dd[-1] + 1 / PXU), 'tile_d0': T0, 'tile_len': TL, 'det_lat': DL, 'det_len': DD,
-        'route_z': [float(zA), float(zB)], 'route_len': float(dP[-1]), 'water_y': WY, 'detail_source': {'side': int(sside), 'lat0': round(float(sl0), 3), 'd0': round(float(sd0), 3), 'px_per_texel': round(float(fbest), 3)},
-        'painted_rows': int((wp > 0.5).sum()), 'tile_detail_need': round(float(tile_need), 3), 'foam_edges': edges,
-        'files': {'core': 'strip_core.png', 'tile': 'strip_tile.png', 'detail': 'strip_detail.png'}}
-json.dump(meta, open(os.path.join(OUT, 'strip.json'), 'w'))
-# debug sheet: core (alpha shown as a red tint), tile, validity
-dbg = (core * 255).astype(np.uint8).copy(); dbg[..., 0] = np.maximum(dbg[..., 0], (alpha * 120).astype(np.uint8))
-Image.fromarray(dbg).resize((NL // 2, NDv // 2)).save(os.path.join(OUT, 'strip_debug.jpg'), quality=85)
-print(f"strip: {NDv} x {NL} texels, d {D0}..{D1}, painted rows {meta['painted_rows']}, tile d {T0:.2f}+{TL}, detail source {meta['detail_source']}, foam edges {tl_l:.2f} / {tl_r:.2f}")
+Image.fromarray((core * 255).round().astype(np.uint8)).save(os.path.join(OUT, 'strip_core.jpg'), quality=93)
+meta = {'lat': LAT, 'nl': NL, 'px_per_u': PXU, 'd0': D0, 'd1': float(dd[-1] + 1 / PXU), 'painted': [P0, P1], 'quilt_src': [QS0, QS1], 'lowfreq_until': LF1,
+        'route_z': [float(zA), float(zB)], 'route_len': float(dP[-1]), 'water_y': WY, 'foam_edges': {'left': round(FL, 3), 'right': round(FR, 3), 'measured': [fl_, fr_]},
+        'picture_px_per_texel_along_flow': {str(d): round(float(np.median(f_d[int((d - D0) * PXU), NL // 2 - 60:NL // 2 + 60])), 2) for d in (1, 2, 3, 4, 6, 8, 10, 14) if D0 < d < D1},
+        'file': 'strip_core.jpg'}
+json.dump(meta, open(os.path.join(OUT, 'strip.json'), 'w'), indent=1)
+Image.fromarray((core * 255).astype(np.uint8)).resize((NL // 2, NDv // 2)).transpose(Image.FLIP_TOP_BOTTOM).save(os.path.join(OUT, 'strip_debug.jpg'), quality=85)
+print(f"strip: {NDv} x {NL} texels, d {D0}..{meta['d1']:.2f}, painted d {P0}..{P1:.2f}, quilt source d {QS0:.2f}..{QS1:.2f}, foam edges {FL:.2f} / {FR:.2f} (measured {fl_:.2f} / {fr_:.2f})")
