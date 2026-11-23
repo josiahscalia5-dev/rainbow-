@@ -1,3 +1,8 @@
+# ▶▶▶▶▶ NEWEST — ROUND 47 (2026-11-23 ~05:00 UTC, branch `ccr-6deca498-03lhkc`): MODULAR Screen 05 — a short playable section built from reusable
+parts (one tunnel module cloned along the drum, one gold ring + one paddle shape, four foam-heap shapes, repeating wall tile in the approved picture's
+measured colours, ONE water material, one gentle S from the user's new layout preview), Benny + swipes + coins reused; measured, recorded with real
+touch, compromises listed for the user. WAITING for the user's verdict before extending it. Resume: **`docs/briefs/2026-11-23-r47/RESUME_R47.md`**,
+results `qa/mod47/README.md`, phone build (private) https://claude.ai/artifact/SqRksN3PVEvvYHpmkav7wa.
 # ▶▶▶▶ NEWEST — ROUND 46 (2026-11-22 ~23:00 UTC, branch `claude/rainbow-screens-05-06-10w5xd`): Screens 05 + 06 fixes — Benny clipping (real cause:
 rest-pose box + route swing 0.84 u + guard before the wall clamp), foam bank in the lane, ribbon connector water, 06 rich rainbow water, wall-template
 colour gate, 07 far-end cap; measured BEFORE (true r45b rebuilt) vs NEW with the same checker. Resume: **`docs/briefs/2026-11-22-r46/RESUME_R46.md`**, results `qa/kit46/`.

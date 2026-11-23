@@ -1451,5 +1451,16 @@
   "s4_qa": "playwright-visual-qa",
   "s5_builder": "general-purpose (Rainbow Screen Builder skill)"
  },
- "previous_current_focus": "Screen 05 water — NEW APPROACH (user 2026-11-16 ~15:40): reproduce the ACTUAL approved water design by camera-matched texture projection / baking of the user's original artwork onto the real river mesh (Specialist 1, running), then animate that same design (Specialist 2, queued). Branch claude/rainbow-05-water-projection; ccr-451ea8c7-3nqlis is the protected working version (T2 default, W12 candidates). No more procedural / bloom / saturation rounds."
+ "previous_current_focus": "Screen 05 water — NEW APPROACH (user 2026-11-16 ~15:40): reproduce the ACTUAL approved water design by camera-matched texture projection / baking of the user's original artwork onto the real river mesh (Specialist 1, running), then animate that same design (Specialist 2, queued). Branch claude/rainbow-05-water-projection; ccr-451ea8c7-3nqlis is the protected working version (T2 default, W12 candidates). No more procedural / bloom / saturation rounds.",
+ "round47": {
+  "date": "2026-11-23",
+  "branch": "ccr-6deca498-03lhkc",
+  "lead_only": true,
+  "specialists_running": [],
+  "what": "MODULAR Screen 05 test section (tools/mod05): reusable tunnel module, ring + paddle shapes, 4 foam heaps, repeating wall tile, one water material, gentle S; Benny/controls reused",
+  "resume": "docs/briefs/2026-11-23-r47/RESUME_R47.md",
+  "results": "qa/mod47/README.md",
+  "waiting_for": "user's verdict on the look + listed compromises before extending to other screens",
+  "credits_spent": 0
+ }
 }

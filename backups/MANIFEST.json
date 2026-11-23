@@ -113,8 +113,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 23675,
-   "sha256": "644b61d0db406158c8c8c4940ec3460286565646d9ef896d554b6adcd319260c"
+   "bytes": 23999,
+   "sha256": "30177011605dd7e4b03ee9133104aa6af2f61e35b3beee89e5f39f60a0076217"
   },
   {
    "path": "README_FIRST.md",
@@ -803,8 +803,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 82281,
-   "sha256": "79a904cf65bea9c9a1da92da5c82f11b80f16f25ba276b3afbb5be11aacf186e"
+   "bytes": 82813,
+   "sha256": "ac7a4d93644714341e67297d6b0716352e97352f0042a55964ea720e4f421da2"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 29385,
-   "sha256": "f6f502dbc4c24b610c807242d05830532d640de08c11eaebbbda95ade2da26f7"
+   "sha256": "4cd122a29124b51e5f503c200dc26c8ee4eab9290b9cc1753619baff204ca09b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "82d2e709490cfd8c4731ba597c85188f0af8ddbd1ca75cad489abab033883d75"
+   "sha256": "2b1b7a2d3cdc579e719eea1ac9893cea9d95705de9e8f0ead1afda366b11128f"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -10813,8 +10813,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 84440,
-   "sha256": "3a34ef80df8880ae6a07e93952e162a89bd6755aeb38c3a4a7cf8439c21d833b"
+   "bytes": 85150,
+   "sha256": "eabbb940c494cd3168474a7c15138290e201a2a6c844d5a952a703b35d82dab2"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -11750,6 +11750,11 @@
    "path": "docs/briefs/2026-11-22-r46/RESUME_R46.md",
    "bytes": 4061,
    "sha256": "7f56a376973b85c2c296a0fcfbd3c979699a580dba032eb5fe4c1c3d0bcfedbe"
+  },
+  {
+   "path": "docs/briefs/2026-11-23-r47/RESUME_R47.md",
+   "bytes": 3274,
+   "sha256": "6cb333d8eb849c8e9dd6d5f052aef08c8a38462331022fd3a58d73a4c7528915"
   },
   {
    "path": "docs/briefs/2026-11-23-r47/USER_PREVIEW_R47_05_layout.png",
@@ -36015,6 +36020,76 @@
    "path": "qa/match/audit/10_metrics.json",
    "bytes": 592,
    "sha256": "c2a7e116d72811073394e54a9ba394a926d9018ba4e79f67e357521c98b775c0"
+  },
+  {
+   "path": "qa/mod47/A_START_APPROVED_BEFORE_NEW.jpg",
+   "bytes": 551815,
+   "sha256": "1d762827d161aa71fbb0b7188b81bef0e664a3386affb9d9291a76704cbe5368"
+  },
+  {
+   "path": "qa/mod47/B_SWIMMING_NEW.jpg",
+   "bytes": 540678,
+   "sha256": "66d22ba9666dd932486ae1c76c1265e16e611847612a0654d4c916fff6f1d3c3"
+  },
+  {
+   "path": "qa/mod47/C_STEERING_NEW.jpg",
+   "bytes": 673816,
+   "sha256": "4119bf40d0141f0fedf240e9720d0315a7422cda922765532f3cab7402587cc3"
+  },
+  {
+   "path": "qa/mod47/D_INMOTION_BEFORE_vs_NEW.jpg",
+   "bytes": 543427,
+   "sha256": "2a7bdbb4a65eda1c98b54bcc8ab8323ca3e98637aa4840039bf350a4f6a3680f"
+  },
+  {
+   "path": "qa/mod47/README.md",
+   "bytes": 7134,
+   "sha256": "3eddc38961b5e5ee7dec3fec976b882028d75cd70b54edce1336e6b27e53b59d"
+  },
+  {
+   "path": "qa/mod47/stills/01_APPROVED_05_phone_frame.png",
+   "bytes": 782660,
+   "sha256": "8660cd161328f13805cc9115d5b077ca42ee854aa47882a253656868b74b81fe"
+  },
+  {
+   "path": "qa/mod47/stills/02_BEFORE_r46_picture_baked_start.png",
+   "bytes": 715006,
+   "sha256": "e3d9143682c046bcd357382494f9c9cd2302508f123daf76b5aaed9758d131f0"
+  },
+  {
+   "path": "qa/mod47/stills/03_NEW_r47_modular_start.png",
+   "bytes": 574888,
+   "sha256": "14d837cb95f20152f387d42adff2410dd6f325418b46bce4ffdbf87ac0ed986d"
+  },
+  {
+   "path": "qa/mod47/stills/04_NEW_r47_swimming_s8.png",
+   "bytes": 565729,
+   "sha256": "ca00408903c06dc591a09b512f5a9dea9e73166541418e95430d72b1d50dea2c"
+  },
+  {
+   "path": "qa/mod47/stills/05_NEW_r47_swimming_s16.png",
+   "bytes": 568864,
+   "sha256": "8d33c5d0ce8c3425e4019d46aa37bf2a39372d898cac6303a15a8d1e2afc32a2"
+  },
+  {
+   "path": "qa/mod47/stills/06_NEW_r47_steer_LEFT_s5.png",
+   "bytes": 586230,
+   "sha256": "ba6d7943d4a4e5e482cebea547e23dfe37ef3cb830eb1c99dad061df8cb32d32"
+  },
+  {
+   "path": "qa/mod47/stills/07_NEW_r47_steer_RIGHT_s5.png",
+   "bytes": 580520,
+   "sha256": "6a4548b5201f52bcb935c39111e2d05232a050b33e43a8baa00e8df81174bd24"
+  },
+  {
+   "path": "qa/mod47/stills/08_NEW_r47_steer_LEFT_s11.png",
+   "bytes": 547143,
+   "sha256": "331a84567fa7a060b28a89e620e647b9f7775b506d74068acbf8e9d965927e18"
+  },
+  {
+   "path": "qa/mod47/stills/09_NEW_r47_steer_RIGHT_s11.png",
+   "bytes": 568891,
+   "sha256": "7c3cf7d8ba7b5b103d86ff5559047c36fea7a9dffa7d237f9f62e745c867f542"
   },
   {
    "path": "qa/parallel_preview/04/1_APPROVED_04.png",
