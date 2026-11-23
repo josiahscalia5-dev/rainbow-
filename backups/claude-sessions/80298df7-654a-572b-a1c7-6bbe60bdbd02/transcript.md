@@ -3443,3 +3443,49 @@ Verification is complete. I'll record your order and these findings in the proje
 
 > 🔧 **Bash** `{"command": "for i in $(seq 1 20); do out=$(timeout 200 python3 scripts/rainbow-autosave.py --reason manual:r48-unity-check 2>&1 | tail -2); echo \"$out\" | grep -qi \"another autosave\" || break; sleep 8; done; echo \"$out\" | tail -1; git status --short | head -3; echo \"local $(git rev-parse HEAD)\"; git ls-remote origin refs/heads/ccr-6deca498-03lhkc; git ls-files docs/briefs/2026-11-23-r48", "description": "Save the evaluation notes and verify the push", "timeout": 400000}`
 
+### 🧑 User — 2026-11-23T10:29:40.103Z
+
+> ↩︎ result: }
+> local 544bc51f9219f73aff7366be5a4de65ef9f32276
+> 544bc51f9219f73aff7366be5a4de65ef9f32276	refs/heads/ccr-6deca498-03lhkc
+> docs/briefs/2026-11-23-r48/UNITY_EVAL_R48.md
+
+### 🤖 Claude — 2026-11-23T10:29:54.634Z
+
+The check is done, and I can't build the Unity version yet: there is no computer running Unity that I can control, and no Unity license. I stopped there and didn't install Unity or sign in anywhere, because those steps need your own Unity account and computer.
+
+| Requirement | Status |
+|---|---|
+| Computer running Unity Editor that I can control | **Missing.** No computer of yours is connected to this session. This cloud machine has no graphics card and no Unity, and Unity says its supported Linux-container Editor is still "coming soon". |
+| Unity 6.3 LTS | **Not installed anywhere.** The newest 6.3 LTS is 6000.3.29f1. |
+| Unity sign-in and license | **Missing.** The free Personal license only activates after you sign in to your Unity account in a browser. Unity's announcement says running agents on a headless or container Editor needs its paid Build Server license, which is outside your free-tools rule. |
+| Unity CLI | **Works.** I installed the official CLI here (version 1.0.1) and it can see the 6.3 LTS releases. It would also need installing on your computer. |
+| Unity's official agent plugin | **Available, not enabled.** I've shown you the install card above. |
+| Pipeline package | **Blocked.** It installs into a project that is open in a running Unity Editor, and none exists yet. |
+| Android phone for performance numbers | **Missing.** None is connected and this machine can't run an emulator, so I'll report no performance figures. |
+| Your existing game | **Saved and unchanged.** |
+
+No new image came through with your message, so I'll use your approved Screen 05 (`references/05_flow_into_the_current.png`) as the visual specification.
+
+**What I need from you (free route):**
+1. On your own computer (Windows 10 21H1+, macOS 14+ or Ubuntu 22.04+, with a graphics card and about 20 GB free), start a Claude Code session: the Claude Desktop app, or `claude remote-control` in a terminal in a folder, which then shows up in the Claude Code app.
+2. Install the Unity CLI there: `curl -fsSL https://unity.com/install.sh | bash` on Mac or Linux, `irm https://unity.com/install.ps1 | iex` on Windows.
+3. Run `unity auth login` and sign in yourself, then allow me to activate the free Personal license and install Unity 6000.3.29f1 with Android support.
+4. Enable the Unity plugin from the card, or run `unity setup claude` on that computer.
+5. Optional: plug in an Android phone over USB if you want measured performance.
+
+Once that is in place I'll do the work you asked for:
+- create the separate URP project and import Benny 31 and the Screen 05 models;
+- build the section with the camera, river, gold fittings, drum, water, Benny's shading and water contact, steering, jump, coins and ending;
+- capture it at your picture's portrait proportions;
+- make the Android build and a continuous recording;
+- list the remaining differences.
+
+The findings are saved in `docs/briefs/2026-11-23-r48/UNITY_EVAL_R48.md` on branch `ccr-6deca498-03lhkc` (commit `544bc51`, GitHub matches). One earlier session-start problem still stands: the World Labs key was rejected (HTTP 401). This test doesn't need it.
+
+Sources:
+- [The Unity CLI 1.0 is here](https://unity.com/the-unity-cli-1.0-is-here)
+- [Meet the Unity CLI](https://unity.com/blog/meet-the-unity-cli)
+- [Unity CLI release notes, November 2026](https://docs.unity.com/en-us/unity-cli/release-notes/2026/november)
+- [Unity AI MCP: how to get started](https://unity.com/blog/unity-ai-mcp-how-to-get-started)
+
