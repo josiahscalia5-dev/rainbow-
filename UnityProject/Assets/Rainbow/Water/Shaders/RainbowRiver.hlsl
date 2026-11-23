@@ -388,18 +388,20 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
         col = lerp(col, foamCol, wakeF);
         wakeK = max(max(wakeF, shadeK * 0.8 * wk), max(fanZ * 0.45, glow * 0.5) * wk);
     }
-    // landing splash: an expanding broken foam ring (starts at his footprint, not under the fur)
+    // landing splash: an expanding broken ring of fine bubbly foam (starts at his footprint, not under the fur).
+    // (splash round 2026-11-23) no filled disc any more: its coarse cells tiled the whole water behind him with a pale
+    // honeycomb for a second after every landing
     [branch] if (Splash.w > 0.001 && Splash.z < 1.2)
     {
         float age = Splash.z;
         float2 dS = float2(lat - Splash.x, s - Splash.y);
         float dr = length(dS);
-        float ringR = rbw * 1.25 + age * 3.0;
-        float ringW = 0.18 + age * 0.35;
+        float ringR = rbw * 1.25 + age * 2.2;
+        float ringW = 0.1 + age * 0.18;
         float ring = 1.0 - smoothstep(0.0, ringW, abs(dr - ringR));
-        float inner = (1.0 - smoothstep(rbw * 1.15, ringR, dr)) * 0.5;
-        float cr = RBW_Cells(dS * 6.0 + age * 2.0);
-        float burst = saturate((ring + inner) * RBW_SS(0.75, 0.2, cr)) * (1.0 - age / 1.2) * saturate(Splash.w);
+        float cr = RBW_Cells(dS * 14.0 + age * 3.0);
+        float fade = 1.0 - age / 1.2;
+        float burst = saturate(ring * RBW_SS(0.7, 0.25, cr)) * fade * fade * saturate(Splash.w);
         col = lerp(col, float3(1.2, 1.25, 1.3), burst);
         wakeK = max(wakeK, burst);
     }

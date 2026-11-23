@@ -149,7 +149,7 @@ Shader "Rainbow/Water/Splash"
                     p = SPL_Rope(u, side, a, seed, len, R);
                     tg = SPL_Rope(min(u + 0.04, 1.0), side, a, seed, len, R) - SPL_Rope(max(u - 0.04, 0.0), side, a, seed, len, R);
                     // wide enough to hold the blobs and the droplets beside them (the visible strand is carved by noise)
-                    w = lerp(0.055, 0.02, pow(u, 0.6)) * (0.6 + 0.6 * SPL_Hs(seed * 19.1)) * _RopeWidth;
+                    w = lerp(0.065, 0.022, pow(u, 0.6)) * (0.6 + 0.6 * SPL_Hs(seed * 19.1)) * _RopeWidth;
                 }
                 else if (type < 1.5)
                 {
@@ -166,11 +166,12 @@ Shader "Rainbow/Water/Splash"
                 {
                     // bubbly suds piled on his FLANKS at the water (approved: soap-bubble masses beside his lower body,
                     // pushed outward-back), from beside him round to ~36 deg from straight back - never a ring behind him
-                    float th = lerp(1.5, 0.7, a) + (SPL_Hs(seed * 3.1) - 0.5) * 0.14;
+                    // (approved masses: left centred ~(lat 0.9, back 0.6), right from (0.75, 0.3) out to (1.15, 1.0))
+                    float th = lerp(1.32, 0.6, a) + (SPL_Hs(seed * 3.1) - 0.5) * 0.14;
                     float2 root = float2(sin(th), cos(th)) * SPL_RootR(th, R) * (0.98 + 0.1 * SPL_Hs(seed * 2.9));
-                    float dA = th * 0.85 + (SPL_Hs(seed * 4.3) - 0.5) * 0.2;
+                    float dA = th * 0.95 + (SPL_Hs(seed * 4.3) - 0.5) * 0.2;
                     float2 dir = float2(sin(dA), cos(dA));
-                    len = 0.3 + 0.4 * SPL_Hs(seed * 7.3);
+                    len = 0.35 + 0.4 * SPL_Hs(seed * 7.3);
                     float2 q = root + dir * u * len;
                     p = float3(side * q.x, 0.04 + 0.07 * sin(3.14159 * u) * (0.6 + 0.4 * SPL_Hs(seed * 8.1)), -q.y);
                     tg = float3(side * dir.x, 0.0, -dir.y);
@@ -222,7 +223,7 @@ Shader "Rainbow/Water/Splash"
                     float2 g = float2(uv.x * len * i.d2.y, uv.y * wv) * 22.0 + float2(-t * 3.0 + seed * 31.0, seed * 7.0);
                     float c1 = RBW_Cells(g);
                     float c2 = RBW_Cells(g * 1.3 + 4.7);
-                    float wid = (0.16 + 0.3 * RBW_VNoise(float2(g.x * 0.35, seed * 13.0))) * (1.0 - 0.45 * uv.x);
+                    float wid = (0.2 + 0.32 * RBW_VNoise(float2(g.x * 0.35, seed * 13.0))) * (1.0 - 0.4 * uv.x);
                     float edgeN = ac + (c1 - 0.45) * 0.3;
                     float streak = (1.0 - smoothstep(wid - 0.06, wid + 0.05, edgeN)) * (1.0 - smoothstep(0.62, 0.95, uv.x));
                     float solid = 1.0 - smoothstep(0.0, 0.45, uv.x);              // near the root the lumps merge
@@ -267,8 +268,8 @@ Shader "Rainbow/Water/Splash"
                     film += float3(0.2, 0.2, 0.22) * (1.0 - smoothstep(0.05, 0.14, cB));
                     float gap = 1.0 - smoothstep(0.3, 0.6, dome);
                     float hole = (1.0 - smoothstep(0.12, 0.26, cb)) * gap;
-                    col = lerp(film, float3(0.36, 0.52, 1.0), hole * 0.75);
-                    alpha = shape * lerp(0.85, 0.55, hole);
+                    col = lerp(film, float3(0.3, 0.46, 1.0), hole * 0.8);
+                    alpha = shape * lerp(0.94, 0.6, hole);
                 }
                 // soft where it touches the water or his fur (no hard intersection lines)
                 float2 suv = GetNormalizedScreenSpaceUV(i.positionCS);

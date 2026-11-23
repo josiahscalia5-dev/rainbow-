@@ -203,7 +203,7 @@ namespace Rainbow.Screen05
                     }
 
                     // 2b) crest sprinkle: small bubbles resting on / between the rim bubbles (fine foam texture, many sizes)
-                    int nCrest = 2 + (rng.Next() < 0.5f ? 1 : 0);
+                    int nCrest = Mathf.FloorToInt(cl * 3.2f + rng.Next());               // only on the mounds
                     for (int k = 0; k < nCrest; k++)
                     {
                         float u = rng.Next();
@@ -233,13 +233,38 @@ namespace Rainbow.Screen05
                         }
                     }
 
-                    // 4) a few loose small bubbles resting on the foam
-                    if (rng.Next() < 0.3f)
+                    // 3b) heaps: compact rounded mounds of PACKED bubbles where the mound noise is high (approved: the low
+                    //     clumps beside / behind Benny, the rounded mounds along the far banks). Dense enough that the
+                    //     mound stays closed when the shader shrinks the bubbles near the camera.
+                    if (rng.Next() < 0.6f * SS(0.35f, 0.8f, cl))
+                    {
+                        float hx = edge + side * rng.Range(0.12f, 0.6f);
+                        float hz = s + rng.Range(-0.5f, 0.5f) * step;
+                        float hR = rng.Range(0.25f, 0.42f);                                 // footprint radius
+                        float hH = rng.Range(0.12f, 0.24f) * (0.7f + 0.5f * cl);           // mound height
+                        int nH = 14 + Mathf.FloorToInt(rng.Next() * 9f);
+                        for (int k = 0; k < nH; k++)
+                        {
+                            float a = rng.Next() * 2f * Mathf.PI;
+                            float q = Mathf.Sqrt(rng.Next());                              // 0 middle .. 1 edge
+                            float hxk = hx + Mathf.Cos(a) * q * hR * 0.85f;
+                            float hzk = hz + Mathf.Sin(a) * q * hR * 1.25f;
+                            float u = rng.Next();
+                            float r = Mathf.Lerp(0.06f, 0.2f, Mathf.Pow(u, 1.5f)) * (1.15f - 0.45f * q);
+                            float y = RiverPath.WaterY + RiverSurface.BaseHeight(hxk, hzk) + hH * (1f - q * q)
+                                    + r * rng.Range(-0.35f, 0.15f);
+                            AddAt(list, rng, side, new Vector3(Mathf.Clamp(hxk, -WallX, WallX), y, hzk), r,
+                                  Mathf.Lerp(0.97f, 0.8f, 1f - q));
+                        }
+                    }
+
+                    // 4) a few loose small bubbles resting on the mounds
+                    if (rng.Next() < 0.3f * cl)
                     {
                         float r = rng.Range(0.03f, 0.065f);
                         float x = edge + side * rng.Range(0.1f, Mathf.Min(0.9f, Mathf.Max(0.15f, shelfW)));
                         float z = s + rng.Range(-0.5f, 0.5f) * step;
-                        float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + rng.Range(0.22f, 0.45f) * (0.6f + 0.6f * cl);
+                        float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + rng.Range(0.1f, 0.28f) * (0.6f + 0.6f * cl);
                         AddAt(list, rng, side, new Vector3(Mathf.Clamp(x, -WallX, WallX), y, z), r, 1f);
                     }
                     s += step;
