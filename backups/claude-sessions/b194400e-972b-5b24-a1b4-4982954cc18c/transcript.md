@@ -5348,3 +5348,65 @@ Package built: 98.5 MB, 128 files. Checking its contents, looking at one of the 
 
 > 🔧 **Bash** `{"command": "rm -rf qa/kit46/RAINBOW_r46_for_ChatGPT_stage && unzip -tq qa/kit46/RAINBOW_r46_for_ChatGPT.zip && flock backups/.autosave.lock bash -c 'git add qa/kit46/RAINBOW_r46_for_ChatGPT.zip qa/kit46/chatgpt/00_START_HERE.md tools/world/r46_chatgpt_package.py && git commit -q -m \"r46: ChatGPT package (summary, how Benny swims, pictures, swim sequences, videos, numbers, code + diff)\n\nqa/kit46/RAINBOW_r46_for_ChatGPT.zip (98.5 MB, 128 files, no APK) made by\ntools/world/r46_chatgpt_package.py from the final real-touch run.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude …[+527 chars]`
 
+### 🧑 User — 2026-11-23T00:44:05.531Z
+
+> ↩︎ result: No errors detected in compressed data of qa/kit46/RAINBOW_r46_for_ChatGPT.zip.
+> On branch claude/rainbow-screens-05-06-10w5xd
+> Your branch is up to date with 'origin/claude/rainbow-screens-05-06-10w5xd'.
+> 
+> nothing to commit, working tree clean
+> 1
+> Everything up-to-date
+> 9b6d9a1f5479
+> 9b6d9a1f5479
+
+### 🤖 Claude — 2026-11-23T00:44:08.167Z
+
+The five-minute autosave had already committed and pushed the zip (GitHub = local at `9b6d9a1`, zip stored in Git LFS). Sending it to you now.
+
+### 🤖 Claude — 2026-11-23T00:44:09.666Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/kit46/RAINBOW_r46_for_ChatGPT.zip", "/home/user/rainbow-/qa/kit46/chatgpt/00_START_HERE.md"], "caption": "The ChatGPT package (98.5 MB, 128 files). Tell ChatGPT to open 00_START_HERE.md first; it's also attached separately so you can read it.", "status": "normal", "display": "attach"}`
+
+### 🧑 User — 2026-11-23T00:44:17.362Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/qa/kit46/RAINBOW_r46_for_ChatGPT.zip → file_uuid: a83435f1-ebbc-44e9-a7e5-663674899a93
+>   /home/user/rainbow-/qa/kit46/chatgpt/00_START_HERE.md → file_uuid: 199d1228-1f05-4751-add9-11f467c09aa8
+
+### 🤖 Claude — 2026-11-23T00:44:27.843Z
+
+I've sent you the zip, `RAINBOW_r46_for_ChatGPT.zip` (98.5 MB, 128 files). Tell ChatGPT to open `00_START_HERE.md` first; it explains the game, this round's fixes and the numbers.
+
+**What's in the zip:**
+
+| Folder | What ChatGPT gets |
+|---|---|
+| `images/1_approved/` | Your approved paintings for Screens 05 and 06 (and 07, the next screen) |
+| `images/2_app_screens_now/` | The app's screens as they look now: six phone frames each for 05 and 06 |
+| `images/3_phone_frames_final_run/` | 16 single phone frames from the start of 05 to the entry of 07 |
+| `images/4_before_vs_new/` | The previous round beside this round at the same places and lanes, plus the exact bug frames |
+| `images/5_benny_swimming/` | Frame-by-frame strips: a lane change, a double swipe, a jump, the hardest bend, the steep 06 crest, the way into 07 |
+| `video/` | The full 48-second run (textured, and the same run in gray shapes) plus six short clips |
+| `code/` | All the source files I built or changed, plus one file listing every change since the last round |
+| `measurements/` | All the before/after numbers and test results |
+| `docs/` | The results README, notes and lessons |
+
+The Android APK is not inside: at 247 MB it's too big. It's on GitHub at `qa/kit46/Rainbow_r46_world_05_06_debug.apk`.
+
+**How Benny swims through the level**
+- **It's one continuous world.** Benny swims from Screen 04 through the two bonus sections, then 05, 06 and 07, and the game takes over at 08, with no loading in between.
+- **He moves forward on his own** along the middle of the river, about four of his own body lengths per second.
+- **You steer with swipes.** There are three lanes (left, centre, right):
+  - Swipe left or right to change lane; it takes about a quarter of a second and never jumps, even with double swipes.
+  - Swipe up to jump out of the water, with a splash and a bouncy landing.
+  - Swipe down to dive under and pop back up.
+- **His body is animated while he swims.** His paws paddle one after the other, faster while he changes lanes. His back legs kick, his body bobs gently with each stroke, and the pompom swings. He leans up to 15° into each turn.
+- **He really sits in the water.** About 12 % of his body is under the surface, as in your paintings, with each screen's own painted splash, a wake, ripples and bubbles around him. On 06's steep crest the water tilts up to 72°; he leans with it but stays mostly upright like the painted Benny.
+- **The camera follows him.** At each picture position it matches your painting's viewpoint exactly. In between it follows Benny smoothly, stays away from the drum walls, and keeps his whole body on screen.
+- **Coins** are collected when they touch his body, including in mid-air during a jump (the jump strip shows this: 1,350 → 1,360).
+
+### 🧑 User — 2026-11-23T00:44:30.788Z
+
+Can you give me the zip file for the ChatGPT for all the files, code files, to all the, you know, images on my mobile app screen that you built, like a summary, just everything that you built and everything. So I could send it to ChatGPT, and ChatGPT could see it, how it looks and everything.
+
