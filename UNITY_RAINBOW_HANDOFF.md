@@ -1,10 +1,26 @@
 # Rainbow Unity — handoff (latest verified state)
 
-Last verified: **2026-11-23 21:47 UTC** (16:47 New York time), Claude session on the user's laptop (after the second account switch).
+Last verified: **2026-11-23 23:30 UTC** (18:30 New York time), Claude session on the user's laptop (after the third account switch).
 Read this first in any new Claude account or session. **This is an existing project — never start over.**
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
+**UPDATE 2026-11-23 23:30 UTC (third Claude account; ROUND 3 RUNNING):** the second account hit its 5-hour limit at 23:07 UTC
+while the round-2 BUBBLES agent was starting its final check. The new account verified everything (Git = GitHub `f67c5f1`,
+one autosave task, Editor open + ready, nothing running) and finished round 2 itself: `bubbles_final` cycle 18:25 local exit 0,
+compile-clean, 0 warnings, gameplay check 33-50 visible bubbles and none over Benny while steering/jumping. Round 2's separate
+integration/review was SKIPPED to save credits (round 3's own Integrate/Review cover it). Honest round-3 baseline (S = 14.00,
+normal camera): `evidence/screen05/ROUND3_BASELINE.png` + `_sbs.jpg`, scores **visual 52.4 / layout 32.7** (round-2 start
+51.1 / 32.1). `tools/screen05-cycle.ps1` now prints the measure table + writes `<still>_overlay.jpg` after every cycle.
+The user (18:15 local) read and APPROVED skipping all three tools in `docs/tool-evaluation-2026-11-23.md` (install nothing).
+The water-contact test is NOT started yet: it is part of round 3's BENNY stage (the splash agent's contact shadow behind Benny
+already exists - build on it). **Round 3 = Workflow run `wf_9320b9e1-c74`** (launched 23:28 UTC, session
+`df1b2c26-91e9-4240-8bd4-29c06e5960e0`; journal: `%USERPROFILE%\.claude\projects\C--Users-josia--unity\df1b2c26-91e9-4240-8bd4-29c06e5960e0\subagents\workflows\wf_9320b9e1-c74\journal.jsonl`):
+frame -> river | tunnel -> benny -> integrate -> 2 reviewers. **If interrupted:** read that journal, put every area with a
+"result" line into `args.skip`, write `args.notes.<area>` for the interrupted one (its newest files + work stills), and relaunch
+`staging/shared/round3-composition.workflow.js` with the same `baseline` + `context` args, saved exactly in
+`staging/shared/round3-args.json`. After round 3: send the user the ROUND3_FINAL side-by-side + both scores + the recording.
+
 **UPDATE 2026-11-23 23:05 UTC (USER PRIORITY = COMPOSITION):** the user wants the approved Screen 05 COMPOSITION recreated in
 the playable scene, in this order: (1) tunnel geometry, perspective, depth, camera framing; (2) narrow winding S-shaped river
 and its proportions; (3) purple walls, gold rings, larger copper paddles; (4) narrow, taller foam banks; (5) Benny's size,
@@ -87,6 +103,9 @@ Original plan below (steps 1–3 are done):
 <!-- NEXT-TASK:END -->
 
 ## ✅ CURRENT STATE (2026-11-23 21:55 UTC) — verified by the new Claude account
+**Newer (23:30 UTC, third account):** round 2 is COMPLETE (water, lighting/scenery, splash, foam, bubbles); round 3
+(composition-first) is RUNNING as run `wf_9320b9e1-c74` (see the first NEXT-TASK entry). Newest honest still:
+`evidence/screen05/ROUND3_BASELINE.png` (visual 52.4 / layout 32.7). The bullets below are older where they disagree.
 This also completes the user's 16:13 local request "SAVE EVERYTHING TO MY GITHUB NOW" (the old account made and pushed the
 checkpoint commit but hit its limit before updating this file and confirming).
 * **Git / GitHub**: branch `unity/screen05-dev`. The user's requested checkpoint = `759d746` (16:21 local, "Screen 05 round 2 in

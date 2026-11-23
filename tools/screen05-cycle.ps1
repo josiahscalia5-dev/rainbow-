@@ -1,6 +1,7 @@
 # Screen 05 TEST CYCLE (coordinator + fix agents). Only ONE cycle runs at a time (lock file), because there is one Editor.
 #   1 stop Play   2 recompile (stops on compile errors)   3 full scene rebuild (Rainbow -> Build Screen 05 Scene)
 #   4 Play   5 hold at the approved view (s = 14, paused)   6 exact 864x1536 still   7 side-by-side + area crops vs approved
+#   + likeness scores (tools\screen05-measure.ps1: visual / layout, OVERALL and per area) + outline overlay (*_overlay.jpg)
 #   8 console warnings/errors raised during the cycle.  Leaves the Editor in Play mode, PAUSED at s = 14.
 # Work images go to UnityProject\Recordings\Screen05\work (git-ignored). Final evidence is copied by hand to evidence\screen05.
 # Usage:
@@ -153,6 +154,11 @@ try { do {
         [void](& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Tools 'make-crop-compare.ps1') -Unity $still -X $bx[0] -Y $bx[1] -W $bx[2] -H $bx[3] -Zoom $bx[4] -Out $out)
         Write-Output ("CROP   {0,-13} {1}" -f $n, $out)
       }
+      # likeness scores vs the approved image at IDENTICAL pixel positions (read-only; how they are calculated:
+      # header of tools\screen05-measure.ps1) + the outline overlay picture
+      $ov = $base + '_overlay.jpg'
+      $ms = (& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Tools 'screen05-measure.ps1') -Overlay $ov $still | Out-String).Trim()
+      Write-Output $ms   # ends with the line "OVERLAY <path>"
     }
   }
 
