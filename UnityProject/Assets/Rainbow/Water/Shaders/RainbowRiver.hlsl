@@ -335,50 +335,50 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     }
 
     // ---- Benny's wake at the waterline (driven by SplashWake through _RainbowBenny) ----
+    // (splash round 2026-11-23) The whitewater fans, the froth collar and the droplet crown are real 3D splash now
+    // (Rainbow/Water/Splash + spray beads, SplashWake.cs). The water only adds what lies flat on it: a soft bright contact
+    // glow and a broken bubbly rim round his REAL waterline footprint (benny31 at the ride height: ~0.9 u toward the
+    // camera, ~0.8 u beside him; the old collar sat on the 0.6 u chord, hidden under the fur) and a faint wet sheen where
+    // the two fans pour onto the water. The fanning white ray lines and the churned trail cells are gone (they read as
+    // white squiggles and pale blotches; the approved water straight behind him is clear glossy cyan).
     float2 dB = float2(dlB, db);
     float distB = length(dB);
-    float behindB = max(-db, 0.0);
-    float aF = dlB / (rbw * 0.9 + behindB * 0.75);  // fanning ray coordinate
-    float rayP = aF * 7.0;
-    float fwRay = max(fwidth(rayP) * pxK, 1e-4);
     float wakeK = 0.0;
-    [branch] if (wk > 0.001 && distB < rbw * 8.0)
+    [branch] if (wk > 0.001 && distB < rbw * 4.0)
     {
-        // broken bubbly foam collar hugging the waterline (wider at his sides and behind him)
-        float rOut = rbw * (1.35 + 0.45 * saturate(behindB * 0.8));
-        float collar = smoothstep(rbw * 0.82, rbw * 0.98, distB) * (1.0 - smoothstep(rbw * 1.0, rOut, distB));
-        float cc = RBW_Cells(dB * 5.5 + float2(0.0, time * 1.3));
-        float cc2 = RBW_Cells(dB * 11.0 + float2(3.1, time * 2.1));
+        float cosB = clamp(-db / max(distB, 1e-3), -1.0, 1.0);    // 1 = straight back (toward the camera)
+        float rF = rbw * 1.24 * (1.0 + 0.1 * saturate(cosB));    // his footprint radius in this direction
+        float e = distB - rF;                                     // > 0 = water outside the fur
+        float cc = RBW_Cells(dB * 8.0 + float2(0.0, time * 1.3));
+        float cc2 = RBW_Cells(dB * 17.0 + float2(3.1, time * 2.1));
         float bubbly = saturate(1.0 - cc * 1.15) * 0.65 + saturate(1.0 - cc2 * 1.2) * 0.35;
-        float foamW = collar * smoothstep(0.15, 0.55, bubbly + collar * 0.25);
-        // white spray fans streaming back and out from his sides (approved: radiating white streaks)
-        float sideA = abs(aF);
-        float fanMask = smoothstep(0.55, 0.8, sideA) * (1.0 - smoothstep(1.25, 1.6, sideA))
-                      * smoothstep(0.15, 0.6, behindB) * exp(-behindB * 0.5);
-        float rid = floor(rayP);
-        float rh = RBW_Hash12(float2(rid, 3.7));
-        float dpx = abs(frac(rayP) - (0.3 + 0.4 * rh)) / fwRay;
-        float rayLine = 1.0 - smoothstep(0.8, 2.6, dpx);
-        float raySeg = smoothstep(0.35, 0.75, RBW_VNoise(float2(rid * 2.3, behindB * 2.4 + time * 7.0)));
-        float rays = rayLine * raySeg * fanMask;
-        // short churned trail right behind him
-        float trail = exp(-behindB * 1.1) * (1.0 - smoothstep(rbw * 0.5, rbw * 1.25, abs(dlB)))
-                    * step(db, 0.0) * smoothstep(0.35, 0.65, bubbly) * 0.6;
-        float wakeF = saturate(max(max(foamW, rays), trail)) * wk;
+        // broken bubbly rim hugging the waterline (a little wider behind him and toward his flanks)
+        float rimW = 0.1 + 0.1 * saturate(cosB);
+        float rim = smoothstep(-0.08, -0.01, e) * (1.0 - smoothstep(rimW * 0.35, rimW, e));
+        float foamW = rim * smoothstep(0.3, 0.65, bubbly + rim * 0.15);
+        // soft bright contact glow: brightest under the fur edge, falling off over ~0.1 u of open water
+        float glow = smoothstep(-0.12, 0.0, e) * exp(-max(e, 0.0) * 14.0);
+        // wet sheen where the fans pour onto the water: beside him round to his back flank (25..90 deg from straight back)
+        float angB = acos(cosB);
+        float fanZ = RBW_SS(0.4, 0.65, angB) * (1.0 - RBW_SS(1.4, 1.65, angB)) * smoothstep(0.0, 0.06, e)
+                   * (1.0 - smoothstep(0.08, 0.5, e));
+        float wakeF = saturate(foamW) * wk;
         float3 foamCol = lerp(float3(0.78, 0.86, 1.0), float3(1.25, 1.28, 1.32), saturate(bubbly * 1.2));
+        col = lerp(col, lerp(col, RBW_CAQUAW, 0.6), fanZ * wk * 0.45);
+        col += float3(0.25, 0.5, 0.55) * glow * wk * 0.6;
         col = lerp(col, foamCol, wakeF);
-        wakeK = wakeF;
+        wakeK = max(wakeF, max(fanZ * 0.45, glow * 0.5) * wk);
     }
-    // landing splash: an expanding broken foam ring
+    // landing splash: an expanding broken foam ring (starts at his footprint, not under the fur)
     [branch] if (Splash.w > 0.001 && Splash.z < 1.2)
     {
         float age = Splash.z;
         float2 dS = float2(lat - Splash.x, s - Splash.y);
         float dr = length(dS);
-        float ringR = rbw + age * 3.0;
+        float ringR = rbw * 1.25 + age * 3.0;
         float ringW = 0.18 + age * 0.35;
         float ring = 1.0 - smoothstep(0.0, ringW, abs(dr - ringR));
-        float inner = (1.0 - smoothstep(rbw * 0.9, ringR, dr)) * 0.5;
+        float inner = (1.0 - smoothstep(rbw * 1.15, ringR, dr)) * 0.5;
         float cr = RBW_Cells(dS * 6.0 + age * 2.0);
         float burst = saturate((ring + inner) * RBW_SS(0.75, 0.2, cr)) * (1.0 - age / 1.2) * saturate(Splash.w);
         col = lerp(col, float3(1.2, 1.25, 1.3), burst);

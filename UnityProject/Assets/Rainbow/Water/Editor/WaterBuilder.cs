@@ -175,11 +175,22 @@ namespace Rainbow.Screen05.EditorTools
 
         static void PrepareSprayMaterial()
         {
-            // SplashWake (added to Benny by Agent 4's builder) loads this at runtime: Resources.Load("RainbowSpray05")
+            // SplashWake (added to Benny by Agent 4's builder) loads these at runtime: Resources.Load("RainbowSpray05")
+            // for the droplets and Resources.Load("RainbowSplash05") for the whitewater fans / froth collar / crown
             Material mat = GetOrCreateMaterial(ResDir + "/RainbowSpray05.mat", "Rainbow/Water/Spray");
             mat.SetFloat("_SoftDepth", 0.12f);
             mat.SetFloat("_Intensity", 1f);
             EditorUtility.SetDirty(mat);
+
+            // (splash round 2026-11-23) make sure the fan shader is imported before it is looked up by name
+            AssetDatabase.ImportAsset(Dir + "/Shaders/RainbowSplash.shader", ImportAssetOptions.ForceSynchronousImport);
+            Material fan = GetOrCreateMaterial(ResDir + "/RainbowSplash05.mat", "Rainbow/Water/Splash");
+            fan.SetFloat("_SoftDepth", 0.05f);      // ropes ride 0.035-0.1 above the water: only their very ends fade
+            fan.SetFloat("_Intensity", 1f);
+            fan.SetFloat("_Len", 1.55f);            // riderSplash.ts createRiderSplash05 uLen
+            fan.SetFloat("_RopeWidth", 1f);
+            fan.SetFloat("_FootprintBack", 0.1f);   // benny31 footprint ~0.9 u toward the camera vs ~0.8 u beside him
+            EditorUtility.SetDirty(fan);
         }
 
         // ------------------------------------------------------------------ lights

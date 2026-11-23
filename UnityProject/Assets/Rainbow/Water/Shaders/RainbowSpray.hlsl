@@ -1,19 +1,21 @@
-// Rainbow Screen 05 - Benny's white splash spray droplets (Agent 3). Shader Graph Custom Function file.
-// Each droplet is a velocity-aligned streak quad (SplashWake.cs): P.x = along the motion (-1 tail .. +1 head),
+// Rainbow Screen 05 - Benny's splash spray droplets (Agent 3). Shader Graph Custom Function file.
+// Each droplet is a small quad stretched a little along its motion (SplashWake.cs): P.x = along the motion (-1 .. +1),
 // P.y = across (-1..1). Output is PREMULTIPLIED (blend One OneMinusSrcAlpha).
+// (splash round 2026-11-23) port of the spray.ts water bead (approved 05 droplets): translucent cyan body, brighter rim,
+// a white glint - never a solid white disc or a white streak.
 #ifndef RAINBOW_SPRAY_INCLUDED
 #define RAINBOW_SPRAY_INCLUDED
 
 void RainbowSpray_float(float2 P, float Alpha, out float3 Color, out float OutAlpha)
 {
-    float across = saturate(1.0 - abs(P.y));
-    across = across * across * (3.0 - 2.0 * across);
-    float along = smoothstep(-1.0, -0.1, P.x) * (1.0 - smoothstep(0.55, 1.0, P.x));
-    float head = exp(-(P.x - 0.45) * (P.x - 0.45) * 6.0);    // brighter droplet head
-    float a = saturate(across * along * (0.55 + 0.45 * head)) * saturate(Alpha);
-    float3 c = lerp(float3(0.78, 0.92, 1.05), float3(1.25, 1.3, 1.35), head * across);   // white with a cyan cast
+    float d = length(P);
+    float body = 1.0 - smoothstep(0.7, 1.0, d);
+    float rim = smoothstep(0.45, 0.85, d) * body;
+    float hl = 1.0 - smoothstep(0.0, 0.32, length(P * 0.5 - float2(0.14, 0.14)));
+    float3 c = lerp(float3(0.5, 0.88, 1.0), float3(1.15, 1.18, 1.2), saturate(rim * 0.6 + hl));
+    float a = saturate((body * 0.38 + rim * 0.3 + hl * 0.5) * saturate(Alpha));
     Color = c * a;
-    OutAlpha = a * 0.9;
+    OutAlpha = a;
 }
 
 void RainbowSpray_half(half2 P, half Alpha, out half3 Color, out half OutAlpha)
