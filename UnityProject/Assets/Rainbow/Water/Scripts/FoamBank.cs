@@ -152,7 +152,7 @@ namespace Rainbow.Screen05
         /// <summary>Smooth 1-D value noise along s (mound density), 0..1.</summary>
         static float ClusterNoise(float s, int side)
         {
-            float p = s * 0.33f + (side > 0 ? 57.3f : 11.9f);
+            float p = s * 0.55f + (side > 0 ? 57.3f : 11.9f);                  // ~1-2 m clumps (approved near field)
             float i = Mathf.Floor(p);
             float f = p - i;
             f = f * f * (3f - 2f * f);
@@ -191,7 +191,7 @@ namespace Rainbow.Screen05
 
                     // 2) rim: the round mound along the waterline - bubbles of many sizes (most small, a few big), piled
                     //    where the mound noise is high
-                    int nRim = 2 + (rng.Next() < 0.3f + 0.5f * cl ? 1 : 0);
+                    int nRim = 1 + Mathf.FloorToInt(cl * 2.6f + rng.Next());           // clumps and low stretches
                     for (int k = 0; k < nRim; k++)
                     {
                         float u = Mathf.Pow(rng.Next(), 1.6f);
@@ -207,14 +207,14 @@ namespace Rainbow.Screen05
                     float body = shelfW - 0.5f;
                     if (body > 0.05f)
                     {
-                        float n = body / 0.42f * (0.7f + 0.5f * rng.Next());
+                        float n = body / 0.36f * (0.3f + 1.0f * cl) * (0.8f + 0.4f * rng.Next());
                         int nFill = Mathf.FloorToInt(n) + (rng.Next() < n - Mathf.Floor(n) ? 1 : 0);
                         for (int k = 0; k < nFill; k++)
                         {
                             float f = rng.Next();
                             float x = edge + side * (0.5f + f * body);
                             float u = rng.Next();
-                            float r = Mathf.Lerp(0.07f, 0.2f + 0.1f * cl, u * u) * (1f - 0.35f * f);
+                            float r = Mathf.Lerp(0.08f, 0.22f + 0.1f * cl, u * u) * (1f - 0.3f * f);
                             int bi = Add(list, rng, side, x, s + rng.Range(-0.5f, 0.5f) * step, r,
                                          rng.Range(0.32f, 0.5f) + 0.05f * f, rng.Range(0.74f, 0.9f));
                             if (bi >= 0 && rng.Next() < (0.08f + 0.25f * cl) * (1f - f)) Pile(list, rng, list[bi], side, 0.93f);

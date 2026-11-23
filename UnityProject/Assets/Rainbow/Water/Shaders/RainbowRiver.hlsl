@@ -325,17 +325,22 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
         c1 = lerp(c0, c1, f1);
         c1u = lerp(c0u, c1u, f1);
         f1 = max(f1, 1.0 - smoothstep(0.1, 0.3, fl2 * 0.67));
-        float shelf = smoothstep(-0.1, 0.08, e2 + (0.5 - c1) * 0.3 * f1);
+        // close to the camera the flat lather gives way to open water: there the bank is only the 3D bubble clumps
+        // (approved: low separate clumps beside / behind Benny with water between them; a flat sheet read as ice)
+        float shelfFar = smoothstep(6.5, 12.5, distance(_WorldSpaceCameraPos, PositionWS));
+        float shelf = smoothstep(-0.1, 0.08, e2 + (0.5 - c1) * 0.3 * f1) * shelfFar;
         float dome = 1.0 - smoothstep(0.15, 0.78, c1);
         float lit = saturate((c1u - c1) * 3.2 + 0.55);
-        float tS = lerp(0.6, 0.3 + 0.55 * dome * (0.45 + 0.55 * lit) + 0.2 * lit, f1);
+        // deep lather between the bubbles: periwinkle / blue-violet creases, lavender-white cell tops
+        float tS = lerp(0.5, 0.2 + 0.55 * dome * (0.45 + 0.55 * lit) + 0.15 * lit, f1);
         tS -= (1.0 - smoothstep(0.03, 0.2, c2)) * f2 * 0.3;                 // small open bubbles
         float cb = RBW_Cells(float2(lat * 3.4 + 0.7, sm * 0.8));
         float fb = 1.0 - smoothstep(0.1, 0.3, fl2 * 3.4);
-        tS = lerp(tS, lerp(0.92, 0.4, smoothstep(0.2, 0.8, cb)) * (0.85 + 0.25 * lit), fb * 0.6);
+        tS = lerp(tS, lerp(0.85, 0.3, smoothstep(0.2, 0.8, cb)) * (0.85 + 0.25 * lit), fb * 0.6);
         tS -= (1.0 - smoothstep(0.0, 0.3, e2)) * 0.3;                         // blue-violet crease at the waterline
         float3 fo = RBW_Soap05(tS);
-        col = lerp(col, col * float3(0.55, 0.6, 0.9), (1.0 - smoothstep(0.0, 0.5, -e2)) * 0.5 * (1.0 - shelf));
+        col = lerp(col, col * float3(0.55, 0.6, 0.9),
+                   (1.0 - smoothstep(0.0, 0.5, -e2)) * 0.5 * (1.0 - shelf) * lerp(0.35, 1.0, shelfFar));
         col = lerp(col, fo, shelf);
         foamK = shelf;
     }
@@ -363,9 +368,9 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
         float cc2 = RBW_Cells(dB * 17.0 + float2(3.1, time * 2.1));
         float bubbly = saturate(1.0 - cc * 1.15) * 0.65 + saturate(1.0 - cc2 * 1.2) * 0.35;
         // contact shadow behind him (strongest at the fur, gone ~0.55 u out; soft wedge edges)
-        float latK = 1.0 - smoothstep(0.16, 0.44, abs(dlB));
-        float shadeK = latK * smoothstep(-0.1, 0.35, cosB) * smoothstep(-0.06, 0.0, e) * (1.0 - smoothstep(0.04, 0.55, e));
-        col = lerp(col, float3(0.012, 0.06, 0.2), shadeK * 0.9 * wk);
+        float latK = 1.0 - smoothstep(0.2 + 0.1 * max(e, 0.0), 0.46 + 0.15 * max(e, 0.0), abs(dlB));
+        float shadeK = latK * smoothstep(-0.1, 0.35, cosB) * smoothstep(-0.06, 0.0, e) * (1.0 - smoothstep(0.1, 0.75, e));
+        col = lerp(col, float3(0.006, 0.035, 0.15), shadeK * 0.92 * wk);
         // broken bubbly rim hugging the waterline on his flanks only
         float rim = smoothstep(-0.08, -0.01, e) * (1.0 - smoothstep(0.04, 0.13, e)) * flankK;
         float foamW = rim * smoothstep(0.3, 0.65, bubbly + rim * 0.15);

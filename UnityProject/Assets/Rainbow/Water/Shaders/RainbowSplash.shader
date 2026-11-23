@@ -140,7 +140,7 @@ Shader "Rainbow/Water/Splash"
                 {
                     // splash strand: fixed shape, breathing length; blobs, droplets and bubbles stream back along it in the
                     // fragment shader. Outer strands (a = 0) are the longest; the inner ones end ~1.9 u behind him.
-                    len = _Len * lerp(1.0, 0.68, a) * (0.55 + 0.45 * SPL_Hs(seed * 7.3)) * (0.92 + 0.08 * sin(t * 2.3 + seed * 20.0))
+                    len = _Len * lerp(1.1, 0.85, a) * (0.65 + 0.35 * SPL_Hs(seed * 7.3)) * (0.92 + 0.08 * sin(t * 2.3 + seed * 20.0))
                         * (0.6 + 0.4 * str);
                     p = SPL_Rope(u, side, a, seed, len, R);
                     tg = SPL_Rope(min(u + 0.04, 1.0), side, a, seed, len, R) - SPL_Rope(max(u - 0.04, 0.0), side, a, seed, len, R);
@@ -162,11 +162,11 @@ Shader "Rainbow/Water/Splash"
                 {
                     // bubbly suds piled on his FLANKS at the water (approved: soap-bubble masses beside his lower body,
                     // pushed outward-back), from beside him round to ~36 deg from straight back - never a ring behind him
-                    float th = lerp(1.62, 0.62, a) + (SPL_Hs(seed * 3.1) - 0.5) * 0.14;
+                    float th = lerp(1.5, 0.7, a) + (SPL_Hs(seed * 3.1) - 0.5) * 0.14;
                     float2 root = float2(sin(th), cos(th)) * SPL_RootR(th, R) * (0.98 + 0.1 * SPL_Hs(seed * 2.9));
-                    float dA = th * 0.72 + (SPL_Hs(seed * 4.3) - 0.5) * 0.2;
+                    float dA = th * 0.85 + (SPL_Hs(seed * 4.3) - 0.5) * 0.2;
                     float2 dir = float2(sin(dA), cos(dA));
-                    len = 0.28 + 0.34 * SPL_Hs(seed * 7.3);
+                    len = 0.3 + 0.4 * SPL_Hs(seed * 7.3);
                     float2 q = root + dir * u * len;
                     p = float3(side * q.x, 0.04 + 0.07 * sin(3.14159 * u) * (0.6 + 0.4 * SPL_Hs(seed * 8.1)), -q.y);
                     tg = float3(side * dir.x, 0.0, -dir.y);
@@ -212,21 +212,26 @@ Shader "Rainbow/Water/Splash"
                     // splash strand (splash round 2026-11-23; approved: white water breaking into blobs, droplets and
                     // small bubbles with the water showing between them - never smooth white hair). Round cells in WORLD
                     // units along / across the strand (~0.045 u blobs, ~0.035 u droplet cells), streaming back along it.
+                    // A continuous white streak with a ragged, wandering width runs along most of the strand, lumps of
+                    // foam cling to it (bubbly near the root), and a few droplets fly beside it and off its tail.
                     float wv = max(i.d2.x, 1e-3);
                     float2 g = float2(uv.x * len * i.d2.y, uv.y * wv) * 22.0 + float2(-t * 3.0 + seed * 31.0, seed * 7.0);
                     float c1 = RBW_Cells(g);
                     float c2 = RBW_Cells(g * 1.3 + 4.7);
-                    float solid = 1.0 - smoothstep(0.05, 0.55, uv.x);              // near the root the blobs merge
-                    float body = 1.0 - smoothstep(0.36, 0.52, c1 + ac * lerp(0.3, 0.8, uv.x) - solid * 0.2);
-                    float core = (1.0 - smoothstep(0.12, 0.4, ac)) * (1.0 - smoothstep(0.3, 0.85, uv.x)) * 0.5;
-                    float drops = (1.0 - smoothstep(0.17, 0.27, c2)) * smoothstep(0.2, 0.55, ac + uv.x * 0.45)
+                    float wid = (0.16 + 0.3 * RBW_VNoise(float2(g.x * 0.35, seed * 13.0))) * (1.0 - 0.45 * uv.x);
+                    float edgeN = ac + (c1 - 0.45) * 0.3;
+                    float streak = (1.0 - smoothstep(wid - 0.06, wid + 0.05, edgeN)) * (1.0 - smoothstep(0.62, 0.95, uv.x));
+                    float solid = 1.0 - smoothstep(0.0, 0.45, uv.x);              // near the root the lumps merge
+                    float lump = 1.0 - smoothstep(0.34, 0.48, c1 + ac * 0.75 - solid * 0.18);
+                    float drops = (1.0 - smoothstep(0.13, 0.21, c2)) * smoothstep(0.35, 0.65, ac + uv.x * 0.35)
                                 * (1.0 - smoothstep(0.85, 1.0, ac));
-                    float holes = (1.0 - smoothstep(0.12, 0.22, c2)) * body * (1.0 - smoothstep(0.15, 0.6, uv.x));
-                    float tail = (1.0 - smoothstep(0.68, 1.0, uv.x)) * smoothstep(0.0, 0.05, uv.x);
-                    alpha = max(max(body * lerp(0.95, 0.62, uv.x), core), drops * 0.9) * tail;
-                    col = lerp(cyan, white, saturate(1.3 - uv.x * 0.75 - ac * 0.45));
+                    float holes = (1.0 - smoothstep(0.1, 0.19, c2)) * max(streak, lump) * (1.0 - smoothstep(0.1, 0.5, uv.x));
+                    float tail = (1.0 - smoothstep(0.8, 1.0, uv.x)) * smoothstep(0.0, 0.04, uv.x);
+                    float bodyA = max(streak * lerp(0.95, 0.7, uv.x), lump * lerp(0.9, 0.55, uv.x));
+                    alpha = max(bodyA, drops * 0.85) * tail;
+                    col = lerp(cyan, white, saturate(1.35 - uv.x * 0.6 - ac * 0.5));
                     col = lerp(col, white, drops * 0.5);
-                    col = lerp(col, blue, holes * 0.6);
+                    col = lerp(col, float3(0.7, 0.74, 1.0), holes * 0.55);       // shaded lavender-blue bubble holes
                 }
                 else if (type < 1.5)
                 {
@@ -243,20 +248,22 @@ Shader "Rainbow/Water/Splash"
                 {
                     // bubbly suds on his flanks (approved: piled soap bubbles - lavender-white film, lit tops, blue-tinted
                     // round holes - with a lumpy outline), small + big bubble cells in world units
+                    // big soft bubbles (~0.1 u, round on screen): white domes with lavender-blue rims, a bright glint
+                    // each, small blue-tinted bubbles in the gaps between them; lumpy outline
                     float wv = max(i.d2.x, 1e-3);
                     float2 g = float2(uv.x * len * i.d2.y, uv.y * wv) * 24.0 + float2(-t * 0.3 + seed * 17.0, seed * 5.0);
-                    float cb = RBW_Cells(g);
-                    float cbu = RBW_Cells(g + float2(0.0, 0.16));
-                    float cB = RBW_Cells(g * 0.45 + 2.7);
-                    float lumpy = (cB - 0.45) * 0.6;
-                    float shape = (1.0 - smoothstep(0.42, 0.95, ac + lumpy)) * smoothstep(0.0, 0.16, uv.x)
+                    float cB = RBW_Cells(g * 0.42 + 2.7);
+                    float cb = RBW_Cells(g + 1.3);
+                    float lumpy = (cB - 0.45) * 0.7;
+                    float shape = (1.0 - smoothstep(0.45, 0.95, ac + lumpy)) * smoothstep(0.0, 0.16, uv.x)
                                 * (1.0 - smoothstep(0.62, 1.0, uv.x + lumpy * 0.4));
-                    float hole = 1.0 - smoothstep(0.16, 0.3, cb);
-                    float lit = saturate((cbu - cb) * 3.0 + 0.55);
-                    float dome = 1.0 - smoothstep(0.2, 0.75, cb);
-                    float3 film = lerp(float3(0.62, 0.64, 0.98), white, saturate(dome * (0.45 + 0.55 * lit) + 0.3 * lit));
-                    col = lerp(film, float3(0.4, 0.58, 1.0), hole * 0.7);
-                    alpha = shape * lerp(0.92, 0.55, hole);
+                    float dome = 1.0 - smoothstep(0.1, 0.78, cB);
+                    float3 film = lerp(float3(0.58, 0.6, 0.96), white, saturate(pow(dome, 0.7) * 1.1));
+                    film += float3(0.2, 0.2, 0.22) * (1.0 - smoothstep(0.05, 0.14, cB));
+                    float gap = 1.0 - smoothstep(0.35, 0.6, dome);
+                    float hole = (1.0 - smoothstep(0.1, 0.22, cb)) * gap;
+                    col = lerp(film, float3(0.4, 0.56, 1.0), hole * 0.65);
+                    alpha = shape * lerp(0.94, 0.6, hole);
                 }
                 // soft where it touches the water or his fur (no hard intersection lines)
                 float2 suv = GetNormalizedScreenSpaceUV(i.positionCS);

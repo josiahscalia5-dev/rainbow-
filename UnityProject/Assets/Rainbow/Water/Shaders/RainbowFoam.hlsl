@@ -79,7 +79,7 @@ void RBW_FoamVertex(float3 centreWS, float4 uv0, float4 uv1, float sOffset, floa
     // approved: 30-60 px bubbles in the low clumps beside Benny, 20-40 px bubbles in the tall far banks): bubbles and
     // their pile heights scale smoothly about the river floor (WaterY = 0) with the distance to the camera
     float base = RBW_FoamBaseHeight(c.x, uv1.z, uv1.w);
-    float k = lerp(0.42, 1.0, smoothstep(5.0, 24.0, distance(_WorldSpaceCameraPos, c)));
+    float k = lerp(0.5, 1.45, smoothstep(5.0, 30.0, distance(_WorldSpaceCameraPos, c)));
     c.y = base + (c.y - base) * k;
     r *= k;
     // the puffs float on the stream: they ride the same swell as the water (RBW_RiverWave)
