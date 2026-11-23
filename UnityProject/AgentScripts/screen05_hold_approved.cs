@@ -16,32 +16,39 @@ Time.captureFramerate = 30;
 // few fixed 1/30 s frames pass first; after that the swim is exactly swimSpeed per second
 int f0 = Time.frameCount;
 await Wait.Until(() => Time.frameCount >= f0 + 3, timeoutMs: 30000, because: "the Game view is not ticking (run: unity command editor set_auto_tick)");
-// pass A (calibration): how far Benny travels in settleFrames from a teleport, in this frame phase (the eval continuation
-// can land before or after Benny's Update, which shifts the result by one frame = swimSpeed / 30 between Editor sessions)
-flow.Restart();
-if (hud != null) hud.ShowHint("", 0f);
+// Frame round 2026-11-23: the eval continuation runs in the middle of a frame (after Benny's Update, before LateUpdate),
+// so pausing right there froze a HALF frame: Benny at the new s but the camera (Cinemachine, LateUpdate) still one swim
+// step behind (0.37 m further back than any rendered gameplay frame). Each pass now pauses one frame early and then
+// advances ONE COMPLETE frame with EditorApplication.Step(), so the still is a whole gameplay frame (camera, pom-pom,
+// wake and bubbles all updated for the same s). Pass A calibrates the travel of this exact sequence; pass B repeats it
+// from the corrected start (up to 4 tries, so a frame-phase slip of one 1/30 s step is corrected: S = 14.00 every time).
+var cam = Camera.main;
 float startS = targetS - benny.swimSpeed * settleFrames / 30f;
-benny.TeleportTo(startS, Rainbow.Screen05.RiverPath.Meander(startS));
-f0 = Time.frameCount;
-await Wait.Until(() => Time.frameCount >= f0 + settleFrames, timeoutMs: 30000, because: "the Game view is not ticking (run: unity command editor set_auto_tick)");
-float travel = benny.S - startS;
-// pass B: the same run, started so that Benny is exactly at targetS when the Editor pauses. The frame phase of the eval
-// continuation can still differ from pass A by one frame (S = 13.63 / 14.37 = one 1/30 s swim step off): then correct
-// the start by the measured error and run pass B again (frame round 2026-11-23; at most 4 tries).
-for (int attempt = 0; attempt < 4; attempt++)
+float travel = 0f;
+string tries = "";
+for (int pass = 0; pass < 5; pass++)
 {
+    if (EditorApplication.isPaused) EditorApplication.isPaused = false;
+    int fu = Time.frameCount;
+    await Wait.Until(() => Time.frameCount >= fu + 1, timeoutMs: 30000, because: "the Game view is not ticking (run: unity command editor set_auto_tick)");
     flow.Restart();
     if (hud != null) hud.ShowHint("", 0f);
-    startS = targetS - travel;
+    if (pass > 0) startS = targetS - travel;
     benny.TeleportTo(startS, Rainbow.Screen05.RiverPath.Meander(startS));
     f0 = Time.frameCount;
-    await Wait.Until(() => Time.frameCount >= f0 + settleFrames, timeoutMs: 30000, because: "the Game view is not ticking (run: unity command editor set_auto_tick)");
+    await Wait.Until(() => Time.frameCount >= f0 + settleFrames - 1, timeoutMs: 30000, because: "the Game view is not ticking (run: unity command editor set_auto_tick)");
+    EditorApplication.isPaused = true;
+    int fs = Time.frameCount;
+    EditorApplication.Step();
+    await Wait.Until(() => Time.frameCount > fs, timeoutMs: 30000, because: "EditorApplication.Step did not advance a frame");
+    if (pass == 0) { travel = benny.S - startS; continue; }   // pass A: calibration only
     float err = benny.S - targetS;
+    tries += (tries.Length > 0 ? "," : "") + benny.S.ToString("0.00");
     if (Mathf.Abs(err) < 0.02f) break;
     travel += err;
 }
-EditorApplication.isPaused = true;
 Time.captureFramerate = 0;
-var cam = Camera.main;
+float lagZ = (benny.S - cam.transform.position.z);
 return "paused at frame " + Time.frameCount + ": Benny S=" + benny.S.ToString("0.00") + " x=" + benny.LateralX.ToString("0.00")
-    + " | camera " + cam.transform.position + " euler " + cam.transform.eulerAngles;
+    + " | camera " + cam.transform.position.ToString("F2") + " euler " + cam.transform.eulerAngles.ToString("F2")
+    + " | S - camZ " + lagZ.ToString("0.00") + " | tries " + tries;
