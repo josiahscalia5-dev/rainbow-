@@ -31,13 +31,13 @@ Material:
     m_Floats:
     - _BakeGain: 4
     - _FuzzPower: 2.6
-    - _FuzzStrength: 0.35
+    - _FuzzStrength: 0.15
     - _LightInfluence: 0.35
     - _NoiseScale: 70
     - _NoiseStrength: 0.07
     - _Wrap: 0.6
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _FuzzColor: {r: 1, g: 0.82, b: 0.93, a: 1}
+    - _FuzzColor: {r: 1, g: 0.62, b: 0.86, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

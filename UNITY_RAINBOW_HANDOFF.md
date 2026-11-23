@@ -5,6 +5,17 @@ Read this first in any new Claude account or session. **This is an existing proj
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
+**UPDATE 2026-11-23 19:20 UTC:** all 4 specialists are DONE and integrated; the full scene builds and plays
+(`Assets/Rainbow/Scenes/Screen05.unity`, Rainbow → Build Screen 05 Scene). ProBuilder 6.1.4 + Animation Rigging 1.4.1 added.
+Round 1 evidence: `evidence/screen05/round1_*.jpg`. Five biggest differences found: (1) foam banks too thin/flat,
+(2) bubbles invisible (they spawn 11–30 u ahead over the white foam), (3) water = many thin outlined stripes instead of
+broad satin pink bands, (4) walls: holes too sparse + white "spoke" streaks, (5) Benny's white splash wake missing.
+Walls/gold/Benny fur were tuned live in `UnityProject/AgentScripts/screen05_tune_look.cs` (materials saved; SSAO turned off)
+— these values must still be copied into `EnvironmentBuilder.SetupWall/SetupGold` or a rebuild resets them. The round-2 fix
+workflow (river+wake, foam, bubbles) was stopped by the user mid-way: check `git diff` in Assets/Rainbow/Water before rebuilding.
+Useful scripts: `AgentScripts/screen05_hold_approved.cs` (pause at the approved view), `screen05_series_approved.cs`
+(before/at/after stills), `screen05_framedebug.cs` (Frame Debugger list), `screen05_record_gameplay.cs` (run reset first).
+Original plan below (steps 1–3 are done):
 **Next unfinished task: finish the short playable Screen 05 test (original approved reference only).**
 1. Open the Unity Editor if it is closed: `unity open C:\RainbowUnity\UnityProject --until-ready`, then check
    `unity status --project-path C:\RainbowUnity\UnityProject` (state must be ready).

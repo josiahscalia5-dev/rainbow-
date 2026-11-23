@@ -31,12 +31,12 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnvBlur: 1
-    - _EnvIntensity: 1.15
-    - _Exposure: 1
+    - _EnvIntensity: 0.5
+    - _Exposure: 0.82
     - _Gold: 2
     - _GoldMode: 2
     - _LightInfluence: 0
-    - _StripIntensity: 3.2
+    - _StripIntensity: 1.4
     m_Colors:
     - _BandF: {r: 44, g: 110, b: 0, a: 0}
     - _BandG: {r: 0.21, g: 0.4, b: -0.45, a: 0.16}
