@@ -173,6 +173,8 @@ namespace Rainbow.Screen05.EditorTools
 
             UniversalAdditionalCameraData data = cam.GetUniversalAdditionalCameraData();
             data.renderPostProcessing = true;
+            // bubbles and splash spray soften their edges against the scene depth (AgentScripts/screen05_camera_depth.cs)
+            data.requiresDepthOption = CameraOverrideOption.On;
             data.antialiasing = AntialiasingMode.FastApproximateAntialiasing;
             data.stopNaN = false;
             data.dithering = true;

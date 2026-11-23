@@ -156,9 +156,12 @@ namespace Rainbow.Screen05.EditorTools
         static void BuildBubbles(Transform root)
         {
             Material mat = GetOrCreateMaterial(MatDir + "/RainbowBubble05.mat", "Rainbow/Water/Bubble");
-            mat.SetFloat("_NearFade", 3.2f);       // bubbles.ts uNear
+            // Coordinator tuning 2026-11-23 (AgentScripts/screen05_bubble_nearfade.cs, commit be4abef): bubbles may come
+            // closer to the camera (the approved image has big bubbles near the bottom corners) and read a bit stronger.
+            // bubbles.ts uNear was 3.2 / intensity 1.
+            mat.SetFloat("_NearFade", 1.5f);
             mat.SetFloat("_SoftDepth", 0.3f);
-            mat.SetFloat("_Intensity", 1f);
+            mat.SetFloat("_Intensity", 1.4f);
             EditorUtility.SetDirty(mat);
 
             var go = new GameObject("Bubbles05");

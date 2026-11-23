@@ -146,7 +146,10 @@ namespace Rainbow.Screen05.EditorTools
         // ------------------------------------------------------------------ materials
         static void SetupWall(Material m, Texture2D pano)
         {
-            SetHex(m, "_BaseColor", "#dc9ef0");
+            // Coordinator look tuning 2026-11-23 (AgentScripts/screen05_tune_look.cs, compared against the approved image):
+            // a touch more violet, softer pink streaks, more mid tint, and dense small slots elongated along the tunnel.
+            // These exact values were saved in DrumWall05.mat (commit a78f508); keep them here so a rebuild keeps the look.
+            SetCol(m, "_BaseColor", new Color(0.80f, 0.60f, 0.98f, 1f));         // was #dc9ef0
             SetHex(m, "_HoleColor", "#0c0014");
             SetHex(m, "_EmissionColor", "#3c0848");
             SetFloat(m, "_EmissionStrength", 0.16f);
@@ -155,14 +158,17 @@ namespace Rainbow.Screen05.EditorTools
             SetTex(m, "_EnvPano", pano);
             SetFloat(m, "_EnvIntensity", 0.9f);
             SetFloat(m, "_EnvBlur", 0.6f);
-            SetHex(m, "_StripColor", "#ffd9f6");
-            SetFloat(m, "_StripIntensity", 4.4f);
+            SetCol(m, "_StripColor", new Color(1f, 0.70f, 0.97f, 1f));           // was #ffd9f6
+            SetFloat(m, "_StripIntensity", 2.8f);                                // was 4.4
             SetVec(m, "_StripParams", new Vector4(28f, 0.017f, 0f, 0.8f));
             SetHex(m, "_MidTint", "#8a30d2");
-            SetVec(m, "_MidRange", new Vector4(8f, 50f, 0.45f, 0f));
+            SetVec(m, "_MidRange", new Vector4(8f, 50f, 0.6f, 0f));              // was 0.45 mid-tint mix
             SetGlow(m);
-            SetVec(m, "_SlotPitch", new Vector4(DrumLayout05.SlotArcPitch, DrumLayout05.SlotRowPitch, DrumLayout05.SlotRowOffset(), 0f));
-            SetVec(m, "_SlotSize", new Vector4(DrumLayout05.SlotHalfLength, DrumLayout05.SlotHalfWidth, DrumLayout05.SlotCoverage(), 0.5f));
+            // slots: arc pitch 0.50 m, row pitch 0.70 m (was 2*PI*R/64 = 0.746 and Bay/10 = 1.4), half sizes 0.19 x 0.08 m,
+            // mean coverage 0.158 (= stadium area / cell area), lip glow 1.0 (was 0.5). DrumLayout05 constants stay as they
+            // are because the ring placement (RingSlots / SlotRowOffset) depends on them.
+            SetVec(m, "_SlotPitch", new Vector4(0.50f, 0.70f, 0f, 0f));
+            SetVec(m, "_SlotSize", new Vector4(0.19f, 0.08f, 0.158f, 1.0f));
             SetHex(m, "_RimColor", "#ff8ceb");
             SetVec(m, "_FloorSheet", new Vector4(RiverPath.WaterY + 0.06f, 0.35f, 5.4f, 1f));
             SetHex(m, "_FloorColorA", "#c81f9c");
@@ -188,15 +194,18 @@ namespace Rainbow.Screen05.EditorTools
             SetVec(m, "_PaddleParams", new Vector4(0.55f, 0.12f, 1f, 0f));
             SetVec(m, "_FrameParams", new Vector4(0.3f, 0.06f, 0f, 0f));
             SetTex(m, "_EnvPano", pano);
-            SetFloat(m, "_EnvIntensity", mode == 1 ? 1.35f : 1.15f);
+            // Coordinator look tuning 2026-11-23 (screen05_tune_look.cs, saved in commit a78f508): less white reflection
+            // so the orange gold palette shows. Rings + frame: env 0.5 / strips 1.4 (was 1.15 / 3.2); paddles: env 0.7 /
+            // strips 1.2 (was 1.35 / 2.4); exposure 0.82 for all (was 1).
+            SetFloat(m, "_EnvIntensity", mode == 1 ? 0.7f : 0.5f);
             SetFloat(m, "_EnvBlur", 1f);
             SetHex(m, "_StripColor", "#fff0c8");
-            SetFloat(m, "_StripIntensity", mode == 1 ? 2.4f : 3.2f);
+            SetFloat(m, "_StripIntensity", mode == 1 ? 1.2f : 1.4f);
             SetVec(m, "_StripParams", new Vector4(28f, 0.022f, 0f, 0.65f));
             SetHex(m, "_MidTint", "#8a30d2");
             SetVec(m, "_MidRange", new Vector4(8f, 50f, 0f, 0f));
             SetGlow(m);
-            SetFloat(m, "_Exposure", 1f);
+            SetFloat(m, "_Exposure", 0.82f);
             SetFloat(m, "_LightInfluence", mode == 2 ? 0f : 0.25f);
             EditorUtility.SetDirty(m);
         }
@@ -252,6 +261,11 @@ namespace Rainbow.Screen05.EditorTools
         {
             if (!m.HasProperty(prop)) return;
             if (ColorUtility.TryParseHtmlString(hex, out Color c)) m.SetColor(prop, c);   // sRGB -> linear by Unity
+        }
+
+        static void SetCol(Material m, string prop, Color c)
+        {
+            if (m.HasProperty(prop)) m.SetColor(prop, c);   // same storage as SetHex (sRGB values, Unity linearises)
         }
 
         static void SetFloat(Material m, string prop, float v)
