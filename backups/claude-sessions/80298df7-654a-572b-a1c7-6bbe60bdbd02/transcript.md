@@ -3099,3 +3099,347 @@ I'll start with the checks you asked for: whether a computer with Unity Editor i
 > product	type	expires
 > License: none active. Run unity license activate to activate one.
 
+### 🤖 Claude — 2026-11-23T10:28:29.657Z
+
+Last check before writing up: which of your existing models would be candidates for the Unity import, so the report can say what's ready to bring over.
+
+### 🤖 Claude — 2026-11-23T10:28:30.851Z
+
+> 🔧 **Bash** `{"command": "ls -la assets/models/ | head -30; git ls-files | grep -iE \"\\.(glb|gltf|fbx|blend)$\" | grep -iE \"05|benny|drum|ring|tunnel|section|kit\" | head -20", "description": "List existing Benny and environment models"}`
+
+### 🧑 User — 2026-11-23T10:28:30.897Z
+
+> ↩︎ result: total 10912
+> drwxr-xr-x 2 root root    4096 Nov 23 03:40 .
+> drwxr-xr-x 4 root root    4096 Nov 23 03:40 ..
+> -rw-r--r-- 1 root root 1126892 Nov 23 03:44 benny.glb
+> -rw-r--r-- 1 root root 5492416 Nov 23 03:44 benny31.glb
+> -rw-r--r-- 1 root root  992168 Nov 23 03:44 lids05.glb
+> -rw-r--r-- 1 root root 3546480 Nov 23 03:44 rainbow_girl.glb
+> assets/models/benny.glb
+> assets/models/benny31.glb
+> assets/models/lids05.glb
+> public/screen06/benny31.glb
+> public/section/benny31.glb
+> public/section/section.glb
+> public/world/a05/scene.glb
+> public/world/aAB/section.glb
+> public/world/benny31.glb
+> qa/benny/r31/gen/hunyuan2.glb
+> qa/benny/r31/gen/hunyuan3.glb
+> qa/benny/r31/gen/rodin.glb
+> qa/benny/r31/gen/thrixel.glb
+> qa/benny/r31/gen/trellis.glb
+> qa/benny/r31/gen/tripo25.glb
+> qa/pilot05/marble_feas/blender/marble05_projection.blend
+> qa/pilot05/proj/tunnel/lid/lids05.blend
+> qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend
+> qa/pilot05/wave6/camera_lock/screen05_layout.blend
+> qa/pilot05/wave6/camera_lock/screen05_layout.glb
+
+### 🤖 Claude — 2026-11-23T10:28:33.066Z
+
+Installing the CLI also made Unity's own `unity-cli` skill available. Let me load it, to check its guidance on running without a display and on licensing before I report:
+
+### 🤖 Claude — 2026-11-23T10:28:34.415Z
+
+> 🔧 **Skill** `{"skill": "unity-cli", "args": "Check only: what this skill says about (1) running the Unity Editor on a Linux machine with no display or GPU (batchmode, capture/screenshots, play mode), (2) license activation requirements (Personal vs service account vs Build Server), (3) the Pipeline package install. Do not install anything."}`
+
+### 🧑 User — 2026-11-23T10:28:34.461Z
+
+> ↩︎ result: Launching skill: unity-cli
+
+### 🧑 User — 2026-11-23T10:28:34.457Z
+
+Base directory for this skill: /root/.claude/skills/unity-cli
+
+# Unity CLI
+
+**Always use the latest version of the Unity CLI unless you are told to use a
+specific version.** Newer releases regularly add commands and output fields
+these docs describe, so an outdated CLI fails in ways that read like the docs
+being wrong. Check with `unity self-update --check --format json`.
+
+**When you can run shell commands, use `unity command` and the rest of this CLI, not the Unity MCP server.** The CLI reaches more than the server's tools. MCP is for clients that have no shell.
+
+## Find a command: search, don't grep help
+
+**Never filter `unity --help` or a group's help with `grep`.** Help is long, and a grep over it drops the match or the context around it. Use the CLI's own search:
+
+```bash
+unity commands --grep license                 # built-in commands, plugins and the connected Editor's Pipeline commands
+unity command --query screenshot              # the same search
+```
+
+`unity commands --grep <pattern>` and `unity command --query <term>` are one search. It covers the CLI's built-in commands, the plugin catalog (installed or not) and the Pipeline commands of the live connected Editor, best match first. Plain words each match in any order; regex characters make it a regular expression (Rust `regex` syntax, case-insensitive; no lookaround or backreferences, which are refused with a usage error). Each row says how to run it (`invoke`): `unity projects link cloud`, `unity command create_gameobject`, `unity <id>` for an installed plugin, or `unity plugin install <id>` for one not yet installed. In `--format json` each row also carries `kind` (`command`, `plugin`, `pipeline`), `path`, `description` and `matchedOn` (`name`, `description` or `option`), so act on `invoke` rather than parsing the table.
+
+- **Search before you work around the CLI or tell the user it can't help.** A request that names a Unity service, store or product feature (finding Asset Store assets, generating a texture, a cloud build) may be served by a catalog plugin that isn't installed yet, and nothing else on the machine will say so. Search with the request's own words (`unity commands --grep "asset store"`). A row whose `invoke` is `unity plugin install <id>` is that plugin: tell the user, and ask before installing it ([Use a catalog plugin](references/common-workflows.md#use-a-catalog-plugin-for-a-task-the-built-in-commands-dont-cover)).
+- Use `unity command --query <term>` to search a specific Editor (`--project-path <project>`) or a Player (`--runtime <pattern>`, e.g. `unity command --query screenshot --runtime MyGame`).
+- `commands --grep` waits at most 3 seconds for the Editor; `command --query` waits for it. When the Editor was not searched, a last line says why (no Editor, no answer in time, several Editors) and what to run. Wait for the Editor first with `unity status --until-ready --project-path <project>`: before it connects, no Pipeline row is not proof nothing exists.
+
+Fields and flags: [integration-advanced.md](references/integration-advanced.md#querying-the-command-list).
+
+## Drive a running Unity Editor (if one is open)
+
+**If a Unity Editor is open on this machine, this CLI can control it live** — create and modify GameObjects, edit scenes and assets, inspect the hierarchy, and run arbitrary C# — through the project's **Pipeline** package (`com.unity.pipeline`). This runs entirely on your local machine, in your own user account, against your own open Editor: it is not remote access and grants no privilege you don't already have at your own terminal. When an Editor is available, drive it instead of hand-editing scene or asset files.
+
+```bash
+unity status                    # confirm a connected Editor (look for state "ready")
+unity command                   # list the commands the Editor exposes
+unity command editor.playmode start   # run one — e.g. enter Play mode
+unity command editor.playmode start --help   # its parameters, read from the Editor
+# Run arbitrary C# — e.g. add a GameObject named "Joe" — when the Editor exposes script eval:
+unity command script eval 'new UnityEngine.GameObject("Joe");'
+```
+
+> **Verifying a running game, not just editing a scene?** Entering Play mode is setup, not proof:
+> an unfocused Editor or a locked desktop can freeze at frame 1 while `unity status` still reports it
+> as playing, and a screenshot can render a frozen frame that looks alive, or a flat color. The
+> ordered recipe for playing, confirming the game is actually advancing, capturing the view, reading
+> the console, and tuning it live with `script eval` is in
+> [playmode-verification-loop.md](references/playmode-verification-loop.md).
+
+### More than one Editor open? Pass `--project-path`
+
+Every Editor-driving command takes `--project-path <path>`. **Pass it whenever more than one Editor may be running** — without it the CLI targets the Editor whose project contains the current directory, so the target follows the shell's cwd:
+
+```bash
+unity command editor.playmode start --project-path /path/to/MyProject
+```
+
+To pin one Editor when several share a project (worktrees, duplicate projects, Multiplayer Play Mode players), `unity command`, `list`, `job` and `mcp` also take `--port <number>`, `--pid <number>` or `--instance <name>` (the MPPM instance name or `vpId`); a pin that matches no running Editor exits 12 with `EDITOR_NOT_RUNNING`. A `unity status` instance's `project` field is what `--project-path` takes. For `unity command`/`list`/`job`/`mcp`, matching no running project fails with `AMBIGUOUS_EDITOR` and lists the candidates. [Details](references/integration-advanced.md#targeting-one-of-several-running-editors).
+
+**Several worktrees or agent sessions? One Editor per worktree.** Pin every Editor call to your own project with `--project-path <full path>` or `UNITY_PROJECT_PATH`, and never drive an Editor open on a sibling checkout, because it edits that checkout. Full recipe: [worktrees.md](references/worktrees.md).
+
+Requires the project's `com.unity.pipeline` package (Unity 6.0+) — add it once with `unity pipeline install`. Full details — launching a batch-mode Editor to drive, `unity command` tool discovery, and authoring custom `[CliCommand]` tools — are in [integration-advanced.md](references/integration-advanced.md).
+
+The package also ships a deeper `unity-pipeline` agent skill, invisible to clients inside `Library/PackageCache` — in a project with the package, run `unity skill install <client> --local` once to mirror it beside this skill.
+
+> **Can't connect / commands time out? Check for Safe Mode first.** C# compile errors boot the Editor into **Safe Mode**, where the Pipeline package doesn't load, so `unity command` and `unity recompile` can't connect (`unity recompile` exits `12`). Run `unity status`: it reports Safe Mode and lists the compile errors (`safeMode.compileErrors` under `--format json`). Fix them and the Editor leaves Safe Mode. Full loop: [integration-advanced.md → Recovering from Safe Mode](references/integration-advanced.md#recovering-from-safe-mode-connection-fails-because-of-compile-errors).
+
+> **Running as a sandboxed coding agent and `unity status` reports no instances?** A restrictive sandbox can hide an Editor that is genuinely running from this CLI's view of it — don't treat that alone as proof the Editor is down. Full detail in [integration-advanced.md → Sandboxed agent tooling can hide a running Editor](references/integration-advanced.md#sandboxed-agent-tooling-can-hide-a-running-editor).
+
+> **A call timed out, or the Editor's lifecycle failed? Tell the user, don't silently work around it.** First rule out [Safe Mode](references/integration-advanced.md#recovering-from-safe-mode-connection-fails-because-of-compile-errors), a sandbox, and an Editor that is still importing or loading. Read `errors[0].code` under `--format json`, and give a slow import a longer `--timeout`. If it is still one of these, report it:
+>
+> - a command that times out
+> - an Editor that never reaches `ready` under `unity status --until-ready` (exit 6)
+> - a connection that drops mid-command
+> - an Editor that quits or restarts under you
+> - a `unity open` that never produces an Editor
+>
+> Don't quietly retry in a loop, switch to another Editor, or fall back to hand-editing scene and asset files. Say what you ran, what failed and what you already tried. Then offer to file it with `unity bug --area pipeline-package` (`--area editor` when the Editor itself quit or never started), and ask first: `unity bug` sends logs to Unity, so never run it on your own initiative.
+
+## Install the CLI (if not already installed)
+
+First check if the CLI is available:
+
+```bash
+which unity && unity --version
+```
+
+If not found, install it:
+
+**macOS / Linux**
+```bash
+curl -fsSL https://unity.com/install.sh | bash
+```
+
+**Windows (PowerShell)**
+```powershell
+irm https://unity.com/install.ps1 | iex
+```
+
+After installing, open a new shell so `unity` is on PATH, then verify with `unity --version`. If the install script fails or the binary is still not found, tell the user and stop; if the command itself fails with a permissions error or crash, the installation may be broken — suggest re-running the install script.
+
+---
+
+## Global flags
+
+Every command accepts `--format json|ndjson|tsv`, `--non-interactive`, `--proxy` and more. Confirmation flags such as `--yes` are command-specific, not global: check the command's own help. Use `--format json` whenever you parse output. Full list: [global-flags-env.md](references/global-flags-env.md#global-flags).
+
+## Environment variables
+
+The CLI reads `UNITY_*` variables for credentials, proxies, paths and CI behavior. Full list: [global-flags-env.md](references/global-flags-env.md#environment-variables).
+
+## Getting help
+
+Append `-h` or `--help` to any command or subcommand, at any level: `unity --help`, `unity projects create --help`.
+
+`unity command <name> --help` asks the connected Editor for that command and prints its usage, description and parameters (name, type, required, default); a group name alone (`unity command editor.playmode --help`) lists the group's commands. The Editor gets at most 3 seconds. With no Editor, or no such command, the generic `unity command` help prints with one line saying why the parameters are missing and what to run. Help exits 0 either way and runs nothing.
+
+Not sure which command? [Search, don't grep help](#find-a-command-search-dont-grep-help). `unity --help` and the unknown-command error end with that pointer too. Each search ends by naming the source it skipped and the command that searches it (`data.hint` in JSON): follow it before concluding nothing exists.
+
+## Exit codes
+
+`0` is success; any other code is a failure with a stable meaning (for example `7` for a network failure, `12` when no running Editor answers, `11` for a missing project, release or module). Branch on the code, not on message text. The table is in [exit-codes.md](references/exit-codes.md).
+
+## Guardrails
+
+- **Do only what the user asked.** Run the command that does it, nothing more, because Editors, licenses and projects are the user's own.
+- **Ask before** installing or uninstalling an Editor, activating or returning a license, signing in or out, publishing, or running a command that deletes or overwrites project files, because these are slow or hard to undo.
+- **Make a restore point before changing a project**: confirm a clean commit (`git status`) or a Unity Version Control checkin, and tell the user how to return to it.
+- **Never run `console clear`**: it also deletes the user's own entries. Read only your own entries, from a cursor you saved before your first Editor operation.
+- **Save the console cursor first**: run `unity command console status` before your first Editor operation and keep its cursor.
+- **Finish with a console check** (`console get -- --since <saved cursor> --level error`, so task errors are included) and a short final report: what you ran, what changed, what failed or was skipped, and the next step.
+
+## Commands
+
+The full per-command reference — syntax, flags, and examples — lives in grouped files under
+[`references/`](references/). **Read the file for the command group you need**; all the global
+flags, environment variables, and exit codes above apply throughout. Every command also supports
+`-h` / `--help` (see [Getting help](#getting-help)). What changed in this skill between CLI
+releases: [CHANGELOG.md](references/CHANGELOG.md).
+
+| Commands | Reference file |
+|---|---|
+| `auth` (login / logout / status / list / switch / default / consumers / revoke), `license` (activate / return / server), `cloud` (org / project) | [auth-license-cloud.md](references/auth-license-cloud.md) |
+| `pipeline cloud-build` (targets incl. groups, create, update, auditlog / builds incl. steps, timeline, failures, artifacts, log, download, start, cancel / credentials upload / connections / scm check-url / org free-tier / project / tooling), `pipeline automation` (apps / pipelines incl. trigger / jobs incl. watch, logs, terminate, resume, approve, reject / automations / bots / profiles / templates, plus `apps versions`, `pipelines versions`, `jobs stats`) | [cloud-automation.md](references/cloud-automation.md) |
+| `editors` (list / running / add / default / path / install-path / info / upgrade / prune / verify / module), `install`, `uninstall`, `modules`, `install-modules`, `terms` (accept / status) | [editors-install.md](references/editors-install.md) |
+| `projects` (list / create / clone / open / link / require / upgrade / export / import / pin / size / clean / exec; its help reads "Create, open, upgrade, and link local Unity projects (Unity Cloud, GitHub/GitLab)", so linking a folder to Unity Cloud is `projects link cloud`, not `cloud`), `open`, `close`, `releases`, `templates` (list / info / create / pack / delete), `assets` (`inspect` / `export`) | [projects-templates.md](references/projects-templates.md) |
+| `config` (proxy / update-check / accelerator / get / set / list / unset / resolve), `context` (save / use / list / current / delete), `hub install` | [config-hub.md](references/config-hub.md) |
+| `run`, `test`, `build` (+ `build run`), `recompile`, `watch` (`test`) | [build-run-test.md](references/build-run-test.md) |
+| `logs`, `doctor`, `env`, `version`, `cache`, `ci init`, `analytics`, `changelog`, `docs` (+ `toc`), `language`, `completion`, `bug`, `self-update`, `self-uninstall`, `diagnose proxy`, `diagnose accelerator`, `diagnose update` | [diagnostics-maintenance.md](references/diagnostics-maintenance.md). To find, cite and version-match Unity docs: [docs-workflow.md](references/docs-workflow.md) |
+| `mcp` (+ `configure`), `setup claude` / `codex` / `grok` / `antigravity` / `copilot` / `qwen` / `vscode` / `opencode`, `skill` (install / refresh / show), `plugin` (install / remove / upgrade / list / changelog), local `pipeline` (install / upgrade / list / list-versions), `command` / `commands` / `status` / `list`, `job` (status / wait / cancel), answering an open modal dialog (`command editor dialog` / `editor dialog answer`, or `editor.dialog list` / `answer` / `dismiss`), `shell` | [integration-advanced.md](references/integration-advanced.md) |
+| `vcs` — `setup` / `status` / `sync` / `switch` / `doctor` / `providers` / `merge-setup` / `conflicts` / `explain` / `resolve` / `diff` / `blame` / `summarize` / `affected` / `hooks`, `vcs git` (`migrate-lfs` / `worktree`), `vcs uvcs` (`locks` / `changesets` / `review`) | [version-control.md](references/version-control.md) |
+| `collaboration` (alias `collab`) — `annotations` / `attachments` / `thumbnail` / `reactions` / `read` / `subscribe` / `jira` | [collaboration.md](references/collaboration.md) |
+
+## Common workflows
+
+Step-by-step recipes live in [common-workflows.md](references/common-workflows.md). Read it before you attempt one of these:
+
+- inspect and run cloud builds and Pipeline Automation jobs
+- edit a scene, GameObject, or asset (`unity status` first)
+- use a catalog plugin for a task the built-in commands don't cover
+- bootstrap a new project from scratch, and set up source control
+- find and install a missing Editor, open a project with the right Editor
+- CI: activate a license, build, run tests and publish results
+- debug the CLI
+
+## Notifications
+
+A `--format json` or `--format ndjson` envelope may carry a `notifications`
+array: advisories about the user's environment rather than about the command
+you ran. **When one is present, tell the user** — they have no other way to see
+it, because the human-facing equivalent is a terminal banner that never reaches
+you.
+
+The key is absent when there is nothing to report, so read it as
+`envelope.notifications ?? []`.
+
+```jsonc
+{
+  "code": "CLI_UPDATE_AVAILABLE",
+  "message": "A new version of the Unity CLI is available: 1.0.0-beta.8 → 1.0.0-beta.9",
+  "data": { "current": "1.0.0-beta.8", "latest": "1.0.0-beta.9" },
+  "remediation": { "command": "unity self-update", "requiresUserApproval": true }
+}
+```
+
+Branch on `code`; `message` is localized and meant for display. `data` is
+shaped per `code`.
+
+`PLUGIN_UPDATE_AVAILABLE` means an installed plugin has a newer version.
+`data` is `{ "plugin": "<id>", "current": "…", "latest": "…" }`, and the
+remediation is `unity plugin upgrade <id>`. There is one entry per outdated
+plugin.
+
+`remediation` says how the notification gets resolved. It may be absent, which
+means the notification is informational and there is nothing to run.
+
+`FEX_EMU_EXPERIMENTAL` means the command ran, or will run, the x86_64 Editor
+through FEX-Emu on Linux arm64. Tell the user it is experimental and
+unsupported and that C# script compilation is known to crash there.
+
+**`requiresUserApproval: true` means do not run `remediation.command`
+yourself.** Surface the notification and the command, and let the user decide.
+
+---
+
+## Notes
+
+Short-flag rules, prompt suppression for CI, and other cross-cutting details: [notes.md](references/notes.md). Read it when a flag or prompt behaves unexpectedly.
+
+
+
+ARGUMENTS: Check only: what this skill says about (1) running the Unity Editor on a Linux machine with no display or GPU (batchmode, capture/screenshots, play mode), (2) license activation requirements (Personal vs service account vs Build Server), (3) the Pipeline package install. Do not install anything.
+
+### 🤖 Claude — 2026-11-23T10:28:38.375Z
+
+> 🔧 **Grep** `{"pattern": "(?i)(no display|headless|xvfb|nographics|-nographics|gpu|batchmode|batch mode|build server|personal|service account|container)", "path": "/root/.claude/skills/unity-cli/references", "output_mode": "content", "head_limit": 60}`
+
+### 🧑 User — 2026-11-23T10:28:38.429Z
+
+> ↩︎ result: /root/.claude/skills/unity-cli/references/CHANGELOG.md:156:- **The Unity Editor Software Terms dialog**: `projects-templates.md` says a first windowed open can stop at it despite `-acceptSoftwareTermsForThisRunOnly`, that `unity status` reports it as `STATUS_BLOCKED_BY_DIALOG_SOFTWARE_TERMS`, and that only the user accepts it. It also says `unity open` passes the flag only on a headless open, and `--args` cannot remove it.
+> /root/.claude/skills/unity-cli/references/CHANGELOG.md:159:[Omitted long matching line]
+> /root/.claude/skills/unity-cli/references/CHANGELOG.md:198:[Omitted long matching line]
+> /root/.claude/skills/unity-cli/references/CHANGELOG.md:253:[Omitted long matching line]
+> /root/.claude/skills/unity-cli/references/CHANGELOG.md:265:- **`unity assets export <asset-path...> --output <file.unitypackage>`**: new subcommand, the write-side companion to `unity assets inspect`. The Assets section in `projects-templates.md` (retitled to cover both) documents the flags (`--project`, `--no-dependencies`), the batchmode-Editor requirement, pre-spawn path validation (exit `6` on a missing, outside-project, or non-`Assets`/`Packages` path), and the `--format json`/`ndjson`/`tsv` shapes. …[+9729 chars]
+
+### 🤖 Claude — 2026-11-23T10:28:40.127Z
+
+> 🔧 **Read** `{"file_path": "/root/.claude/skills/unity-cli/references/auth-license-cloud.md", "offset": 140, "limit": 85}`
+
+### 🧑 User — 2026-11-23T10:28:40.149Z
+
+> ↩︎ result: 140	
+> 141	The two still share one account list. So an account you signed in to in the Hub shows up in `unity auth accounts` even though the CLI is not signed in to it, and `unity auth status` can report "not signed in" while `auth accounts` shows that account. To use it from the CLI, try `unity auth switch <account>` first: when that account's sign-in is readable on this machine, it becomes the CLI's active account with no browser round trip. When it has no usable sign-in, run `unity auth login` and sign in as that account in the browser; `auth switch` cannot sign an account in.
+> 142	
+> 143	**Using the Hub's sign-in is your explicit choice.** When the CLI is signed out and the Hub is signed in, `unity auth login` shows the Hub's account and the `unity auth switch <account>` command that makes it the CLI's active account with no browser sign-in, then carries on with the browser sign-in. It asks nothing, and bare `unity auth` prints its group help. Running that `switch` command makes the Hub's account the CLI's active account, exactly as `unity auth switch` always does, and changes nothing in the Hub. The CLI never takes the Hub's sign-in on its own. `unity auth status --json` reports `a …[+10355 chars]
+
+### 🤖 Claude — 2026-11-23T10:28:40.785Z
+
+> 🔧 **Read** `{"file_path": "/root/.claude/skills/unity-cli/references/common-workflows.md", "offset": 205, "limit": 25}`
+
+### 🧑 User — 2026-11-23T10:28:40.810Z
+
+> ↩︎ result: 205	#    is live from the first open.
+> 206	unity pipeline install --project-path ~/UnityProjects/MyGame
+> 207	
+> 208	# 6. Open the project and wait until its Editor is ready to take commands. Pass the project's
+> 209	#    full path: a path that exists matches that project's Editor only, so an Editor open on a
+> 210	#    sibling checkout such as ~/UnityProjects/MyGame-lighting can't end the wait.
+> 211	cd ~/UnityProjects/MyGame
+> 212	unity open .
+> 213	unity status --until-ready --project-path ~/UnityProjects/MyGame --format json
+> 214	```
+> 215	
+> 216	**Then build the scene in the live Editor, not in batch mode.** Create GameObjects, wire
+> 217	components, and set asset references with `unity command script eval` (or the Editor's own `unity command`
+> 218	tools) against the running Editor, and read the result back the same way. Each step can be
+> 219	checked before the next one. A script run through `unity run -- -executeMethod` is the
+> 220	**fallback** for when no Editor can stay open (CI, a headless build box). It can't see what it
+> 221	produced: a reference saved as null, such as a `UIDocument` with no `PanelSettings`, still
+> 222	reports success. If you do use batch mode, open the result in a live Editor and …[+502 chars]
+
+### 🤖 Claude — 2026-11-23T10:28:56.949Z
+
+Verification is complete. I'll record your order and these findings in the project, so the next session (on your computer, if you set that up) can continue from them:
+
+### 🤖 Claude — 2026-11-23T10:29:13.234Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-23-r48/UNITY_EVAL_R48.md", "content": "# Round 48 (2026-11-23) — Unity evaluation: user's order (verbatim) + requirement check\n\n## User's order (verbatim)\n> I want to evaluate Unity as the engine for my Rainbow game because matching my approved screen is my priority.\n>\n> First verify that we have access to a suitable computer running Unity Editor, and that you can control it through Unity's official agent\n> plugin, Unity CLI and Pipeline package. Report any missing requirement clearly.\n>\n> Create a separate Unity 6.3 LTS project us …[+4539 chars]`
+
+### 🧑 User — 2026-11-23T10:29:13.335Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-23-r48/UNITY_EVAL_R48.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-23T10:29:13.638Z
+
+> 🔧 **ToolSearch** `{"query": "select:SuggestPluginInstall", "max_results": 1}`
+
+### 🧑 User — 2026-11-23T10:29:13.654Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-23T10:29:17.326Z
+
+> 🔧 **SuggestPluginInstall** `{"contextLabel": "Unity's official agent plugin, needed for the Unity evaluation", "plugins": [{"pluginId": "plugin_012dAT1EB1GCjar34htA97xJ", "pluginName": "Unity", "description": "Unity's official plugin for Claude Code, with curated skills for game development, monetization, and performance optimization.", "skills": [{"name": "unity-cli"}, {"name": "new-unity-project"}, {"name": "migrate-birp-to-urp"}, {"name": "urp-postprocessing"}, {"name": "unity-package-management"}, {"name": "asset-transformer-toolkit"}, {"name": "physics-3d-collision"}]}], "trigger": "user_asked"}`
+
+### 🧑 User — 2026-11-23T10:29:17.341Z
+
+> ↩︎ result: {"contextLabel":"Unity's official agent plugin, needed for the Unity evaluation","plugins":[{"pluginId":"plugin_012dAT1EB1GCjar34htA97xJ","pluginName":"Unity","description":"Unity's official plugin for Claude Code, with curated skills for game development, monetization, and performance optimization."}],"note":"Plugin card rendered. The user enables the plugin out of band — call ListPlugins on follow-up to discover what was actually installed.","trigger":"user_asked"}
+
+### 🤖 Claude — 2026-11-23T10:29:20.679Z
+
+> 🔧 **Bash** `{"command": "for i in $(seq 1 20); do out=$(timeout 200 python3 scripts/rainbow-autosave.py --reason manual:r48-unity-check 2>&1 | tail -2); echo \"$out\" | grep -qi \"another autosave\" || break; sleep 8; done; echo \"$out\" | tail -1; git status --short | head -3; echo \"local $(git rev-parse HEAD)\"; git ls-remote origin refs/heads/ccr-6deca498-03lhkc; git ls-files docs/briefs/2026-11-23-r48", "description": "Save the evaluation notes and verify the push", "timeout": 400000}`
+

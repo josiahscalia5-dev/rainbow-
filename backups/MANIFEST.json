@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 29385,
-   "sha256": "5330abebc12d45ea409c8d2a71c8f9f82e88492a0ca7c38bfcf1a5a3e20293c5"
+   "sha256": "c9bc6b9d8bc813175a1ecc0e5a3a406db8ac028c36439b0a0831663fc09f7c70"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "e7fc09df7c3a69fabbd8e6208c183bb46ec0e618a22ee976ae753f50276245d4"
+   "sha256": "ac67aafb5c2851e26fd5ccb38e5d0e3eaf5a922441b42b47e4057d969c0de9e9"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -11765,6 +11765,11 @@
    "path": "docs/briefs/2026-11-23-r47/USER_R47.md",
    "bytes": 1657,
    "sha256": "0a429365dc16f31ced053079a9b4d6f33656b7933ec94aa9c4513b4385ef3d3f"
+  },
+  {
+   "path": "docs/briefs/2026-11-23-r48/UNITY_EVAL_R48.md",
+   "bytes": 4996,
+   "sha256": "e9a1c9236161ae69f0d63ec0ff44b638df979e78ca4cb1f3a10d5cac9e4d963d"
   },
   {
    "path": "docs/characters/benny.md",
