@@ -5965,3 +5965,132 @@ My rewrite cut out the foam-edge measurement and Benny's painted position, which
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-23T01:01:20.276Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_strip.py'; s=open(p).read()\nold=\"D0 = SC.get('d0', -(D['z0'] - zr[0]) - 0.3)\"\nnew=\"D0 = SC.get('d0', -8.0)\"\nassert s.count(old)==1; s=s.replace(old,new)\nold=\"FL = min(fl_ if np.isfinite(fl_) else -0.85, -0.66); FR = max(fr_ if np.isfinite(fr_) else 0.85, 0.66)   # never inside Benny's reach (lanes +-0.3 + body)\\n\"\nnew=old+\"\"\"# under / beyond the foam banks: plain outer water (the painting's soft cyan-lavender beside the foam), no wall-coloured smears\nouter = np.median(filled[(dd > 1.5) & (dd < 4.5)][:, (np.abs(lat) > 0.6) …[+488 chars]`
+
+### 🧑 User — 2026-11-23T01:01:37.255Z
+
+> ↩︎ result: strip: 4068 x 768 texels, d -8.0..42.85, painted d 0.8..4.60, quilt source d 2.30..4.60, foam edges -0.88 / 0.69 (measured -0.88 / 0.69)
+
+### 🤖 Claude — 2026-11-23T01:01:50.206Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/screens/05/fit05.py'; s=open(p).read()\nanchor=\"lay['tpl_wall_gate'] = 'strict'\"\nassert s.count(anchor)==1\nadd=\"\"\"\n# r47 (user: \"the detailed painted water ahead has a visible boundary where it meets the simpler striped water beneath Benny\"): the water was TWO\n# surfaces (the drum-floor pool + a raised route ribbon that began with a straight cut in front of Benny), each with its own camera-projected bake\n# and a switch to generated water when magnified. Now ONE floor surface at the connectors' height and ONE flow-space material for …[+1336 chars]`
+
+### 🧑 User — 2026-11-23T01:01:50.282Z
+
+> ↩︎ result: 95:lay['water_strip'] = {'px_per_u': 80, 'd0': -8.0}
+
+### 🤖 Claude — 2026-11-23T01:02:33.516Z
+
+> 🔧 **Bash** `{"command": "cat >> tools/screenkit/water_ribbon.js <<'EOF'\n\n// ---------------------------------------------------------------------------------------------------------------------------------------------\n// r47 ONE continuous river material (tools/screenkit/water_strip.py): every water texel of an area samples the same flow-space texture at\n// (lat, d) - lat = sideways distance from Benny's route, d = distance along it - with EXACTLY the bake's inverse mapping (route x by z, slope\n// over +-0.03 u, arc length by z, straight extensions beyond the route's ends). The texture is the approve …[+3253 chars]`
+
+### 🧑 User — 2026-11-23T01:02:33.637Z
+
+> ↩︎ result: function true
+
+### 🤖 Claude — 2026-11-23T01:02:52.275Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^import { RIBBON_GLSL\\|const waterMatKit\\|uBakeZ: { value\\|if (uRibbon > 0.5) { gRUv = vec4(uRUv.x, u, d, 0.0); col = ribbonWater(vL, uT, uFlow, vW); }\\|col = mix(col, bakeMix(col, vUv, vW, uBake, uDen, uBakeOn, uSharp, uLodBias, uT), 1.0 - smoothstep(uBakeZ.x, uBakeZ.y, vL.z));\\|uniform vec2 uBakeZ;\\|if (q.get('water') !== 'paint' && (LAY.water_style\\|const waterMatConn = \\|uOnS\\|if (uOn_a > 0.5) { vec3 La\\|if (uOn_b > 0.5) { vec3 Lb\\|uniform sampler2D uAx; uniform vec4 uAxZ;\" tools/world/world.html | cut -c1-180", "description": "Locate water material code  …[+23 chars]`
+
+### 🧑 User — 2026-11-23T01:02:52.317Z
+
+> ↩︎ result: 41:import { RIBBON_GLSL, routeUniforms, loadDetail, ribbonCopy, ribbonUniformsAs } from './water_ribbon.js';   // r45 test ?water=ribbon: clean ribbon water drawn from the painting
+> 158:const waterMatKit = (halfW, len, along0, isPool, A, own = true) => new THREE.ShaderMaterial({ side: THREE.DoubleSide, polygonOffset: !!isPool, polygonOffsetFactor: isPool ? 2 :
+> 162:    uBakeZ: { value: new THREE.Vector2(own && A.ribbonU ? (A.LAY?.drum?.z0 ?? 3) - 1.5 : 1e9, own && A.ribbonU ? (A.LAY?.drum?.z0 ?? 3) : 2e9) } },   // r46: the picture bake f
+> 165:    uniform sampler2D uSw; uniform float uSwOn; uniform vec4 uSwGeo; uniform float uFlow; varying vec3 vL; uniform vec4 uFar; uniform vec3 uFarCol; uniform vec2 uBakeZ;
+> 172:      if (uRibbon > 0.5) { gRUv = vec4(uRUv.x, u, d, 0.0); col = ribbonWater(vL, uT, uFlow, vW); }   // r45: the clean painted ribbons
+> 175:      col = mix(col, bakeMix(col, vUv, vW, uBake, uDen, uBakeOn, uSharp, uLodBias, uT), 1.0 - smoothstep(uBakeZ.x, uBakeZ.y, vL.z));
+> 184:const waterMatConn = (c, base, Aa, Ab) => { const ax = axisTex(c.axis), zs = c.axis[0][2], ze = c.axis[c.axis.length - 1][2], side = (A, sx) => (A?.ribbonU ? { ...ribbonUniform
+> 188:  m.fragmentShader = m. …[+593 chars]
+
+### 🤖 Claude — 2026-11-23T01:02:54.435Z
+
+> 🔧 **Bash** `{"command": "sed -n 158,160p tools/world/world.html | cut -c1-600; sed -n 184,188p tools/world/world.html | cut -c1-900", "description": "Read the full waterMatKit and waterMatConn headers"}`
+
+### 🧑 User — 2026-11-23T01:02:54.481Z
+
+> ↩︎ result: const waterMatKit = (halfW, len, along0, isPool, A, own = true) => new THREE.ShaderMaterial({ side: THREE.DoubleSide, polygonOffset: !!isPool, polygonOffsetFactor: isPool ? 2 : 0, polygonOffsetUnits: isPool ? 4 : 0,
+>   uniforms: { uRouteX: { value: null }, uRouteZ: { value: new THREE.Vector4(0, 1, 1, 0) }, uRStyle: { value: 0 }, ...(own && A.ribbonU ? A.ribbonU : {}), uRibbon: { value: own && A.ribbonU ? 1 : 0 }, uRUv: { value: new THREE.Vector4(isPool ? 0 : 1, 0, 0, 0) },
+>     uT: WT, uGlow: A.glow, uSharp: { value: new THREE.Vector2(SHARPX, own && A.ribbonU ? (A.LAY?.bake_keep_mag ?? 1.0) : 2.2) }, /* ribbon: the bake gives way as soon as it is magnified (r46: layout bake_keep_mag, 06 = 2.2) */ uLodBias: { value: A.lodBias }, uBake: { value: null }, uBakeOn: { value: 0 }, uDen: { value: null }, uGeo: { value: new THREE.Vector4(halfW, len, along0, isPool ? 1 : 0) },
+> const waterMatConn = (c, base, Aa, Ab) => { const ax = axisTex(c.axis), zs = c.axis[0][2], ze = c.axis[c.axis.length - 1][2], side = (A, sx) => (A?.ribbonU ? { ...ribbonUniformsAs(A.ribbonU, sx), ['uRUv' + sx]: { value: new THREE.Vector4(2, 0, 0, 0) }, ['uRibbon' + sx]: { value: 1 },
+>     ['uMi' + sx]: { value: (A.Mi ??=  …[+935 chars]
+
+### 🤖 Claude — 2026-11-23T01:02:56.359Z
+
+Now the edits to `world.html`: the strip in the water material (replacing both the generated ribbon and the picture bake on water), strip-aware connectors, and loading the strip.
+
+### 🤖 Claude — 2026-11-23T01:03:14.137Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\ndef rep(old,new,cnt=1):\n    global s; assert s.count(old)==cnt, (s.count(old), old[:80]); s=s.replace(old,new)\nrep(\"import { RIBBON_GLSL, routeUniforms, loadDetail, ribbonCopy, ribbonUniformsAs } from './water_ribbon.js';\",\n    \"import { RIBBON_GLSL, routeUniforms, loadDetail, ribbonCopy, ribbonUniformsAs, STRIP_GLSL, stripCopy, stripUniforms } from './water_ribbon.js';\")\n# waterMatKit: strip uniforms + branch\nrep(\"uRUv: { value: new THREE.Vector4(isPool ? 0 : 1, 0, 0, 0) },\\n    uT: WT, uGlow: A.glow,\",\ …[+4134 chars]`
+
+### 🧑 User — 2026-11-23T01:03:14.213Z
+
+> ↩︎ result: Traceback (most recent call last):
+>   File "<stdin>", line 27, in <module>
+>   File "<stdin>", line 3, in rep
+> AssertionError: (2, '  const ms = []; g.traverse((o) => { if (o.isMesh) ms.push(o); });\n')
+> 0
+
+### 🤖 Claude — 2026-11-23T01:03:17.698Z
+
+That anchor appears twice in the file (the bonus sections use the same line), so nothing was written. Using the line just before it in the Screen 05 loader instead.
+
+### 🤖 Claude — 2026-11-23T01:03:34.552Z
+
+> 🔧 **Bash** `{"command": "grep -n \"if (A.ribbonU && q.get('rich') === '0') A.ribbonU.uRich.value = 0;\" tools/world/world.html | head; python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\ndef rep(old,new,cnt=1):\n    global s; assert s.count(old)==cnt, (s.count(old), old[:80]); s=s.replace(old,new)\nrep(\"import { RIBBON_GLSL, routeUniforms, loadDetail, ribbonCopy, ribbonUniformsAs } from './water_ribbon.js';\",\n    \"import { RIBBON_GLSL, routeUniforms, loadDetail, ribbonCopy, ribbonUniformsAs, STRIP_GLSL, stripCopy, stripUniforms } from './water_ribbon.js';\")\nrep(\"uRUv: { value: new THRE …[+4033 chars]`
+
+### 🧑 User — 2026-11-23T01:03:34.625Z
+
+> ↩︎ result: 269:  if (A.ribbonU && q.get('rich') === '0') A.ribbonU.uRich.value = 0;   // r46 A/B switch: ?rich=0 = the round-45b ribbon water
+> 3
+
+### 🤖 Claude — 2026-11-23T01:03:57.283Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^const kitFoamMat = (A) => new THREE.ShaderMaterial\\|  vertexShader: \\`varying vec3 vN; varying vec3 vW;\\|    void main(){ vec4 w = modelMatrix \\* vec4(position, 1.0); vec3 n = normalize(mat3(modelMatrix) \\* normal);\\|  if (MANI?.foam) FOAMS.push(...MANI.foam.map((f) => { const P = new THREE.Vector3\" tools/world/world.html", "description": "Locate foam material and kit foam anchors"}`
+
+### 🧑 User — 2026-11-23T01:03:57.319Z
+
+> ↩︎ result: 235:const kitFoamMat = (A) => new THREE.ShaderMaterial({ uniforms: { uL: { value: new THREE.Vector3(-0.25, 0.8, 0.55).normalize() }, uGlow: A.glow },
+> 241:  vertexShader: `varying vec3 vN; varying vec3 vW;
+> 244:    void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vec3 n = normalize(mat3(modelMatrix) * normal);
+> 310:  if (MANI?.foam) FOAMS.push(...MANI.foam.map((f) => { const P = new THREE.Vector3(f[0], f[1], f[2]).applyMatrix4(M); return [P.x, P.y, P.z, ...f.slice(3)]; }));
+
+### 🤖 Claude — 2026-11-23T01:04:11.410Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\ndef rep(old,new,cnt=1):\n    global s; assert s.count(old)==cnt, (s.count(old), old[:80]); s=s.replace(old,new)\nrep(\"const kitFoamMat = (A) => new THREE.ShaderMaterial({\", \"const kitFoamMat = (A, inst = false) => new THREE.ShaderMaterial({\")\nrep(\"    void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vec3 n = normalize(mat3(modelMatrix) * normal);\",\n    \"    void main(){ vec4 w = modelMatrix * ${inst ? 'instanceMatrix * ' : ''}vec4(position, 1.0); vec3 n = normalize(mat3(modelMatrix) * ${inst ? 'mat3( …[+2803 chars]`
+
+### 🧑 User — 2026-11-23T01:04:11.496Z
+
+> ↩︎ result: 54:const DEG = Math.PI / 180, UPV = new THREE.Vector3(0, 1, 0);
+
+### 🤖 Claude — 2026-11-23T01:04:16.323Z
+
+The foam is in place. Rebuilding the world: Screen 05's geometry and bake re-run (single water surface, no old foam banks) and the strip builder runs. Then I'll look at the section frame by frame.
+
+### 🤖 Claude — 2026-11-23T01:04:18.684Z
+
+> 🔧 **Bash** `{"command": "(python3 -I tools/world/build_world.py /home/user/ws46/world > /home/user/ws47/build1.log 2>&1; echo EXIT $? >> /home/user/ws47/build1.log); grep -E \"area|detail|EXIT|Error|error\" /home/user/ws47/build1.log | head; ls -la /home/user/ws46/world/game/a05/baked/strip* 2>&1 | head; grep -c water_route /home/user/ws46/world/s05/game/layout.json; python3 -c \"\nimport json; L=json.load(open('/home/user/ws46/world/game/a05/layout.json')); print(L['no_route_ribbon'], L['drum']['pool_y'], L['foam_pool'], L['foam_banks'], L['water_strip'])\"", "description": "Rebuild the world with the si …[+49 chars]`
+
+### 🧑 User — 2026-11-23T01:06:01.367Z
+
+> ↩︎ result: area 04   cached                                      2.7 s
+>   area 05   built fit,geometry,bake                    70.8 s
+>   area 06   cached                                      2.7 s
+>   area 07   cached                                      3.0 s
+>   detail    ran       22.5 s
+> EXIT 0
+> -rw-r--r-- 1 root root    561 Nov 23 01:06 /home/user/ws46/world/game/a05/baked/strip.json
+> -rw-r--r-- 1 root root 615984 Nov 23 01:06 /home/user/ws46/world/game/a05/baked/strip_core.jpg
+> -rw-r--r-- 1 root root 139709 Nov 23 01:06 /home/user/ws46/world/game/a05/baked/strip_debug.jpg
+> 0
+> True -0.012 False [{'side': -1, 'off': 0.5, 'spacing': 0.15, 'size': 0.075, 's0': 15.2, 'seed': 20}, {'side': 1, 'off': 0.5, 'spacing': 0.15, 'size': 0.075, 's0': 15.2, 'seed': 22}] {'px_per_u': 80, 'd0': -8.0}
+
+### 🤖 Claude — 2026-11-23T01:06:06.196Z
+
+The build ran, but Screen 05's old route-following foam banks are still on: their setting comes later in `fit05.py` than my override. Moving my overrides below it.
+
+### 🤖 Claude — 2026-11-23T01:06:09.891Z
+
+> 🔧 **Bash** `{"command": "grep -n \"lay\\['foam_banks'\\] = \\|lay\\['foam_pool'\\] = False; lay\\['foam_banks'\\] = \\[\\]\\|^for kv in a.set\" tools/screenkit/screens/05/fit05.py; python3 - <<'EOF'\np='tools/screenkit/screens/05/fit05.py'; s=open(p).read()\ns=s.replace(\"\\nlay['foam_pool'] = False; lay['foam_banks'] = []\",\"\",1)\nanchor=\"for kv in a.set:\"\nassert s.count(anchor)==1\ns=s.replace(anchor, \"if lay.get('water_strip'): lay['foam_pool'] = False; lay['foam_banks'] = []   # r47: the strip's measured foam edges place the 3D foam (world.html)\\n\"+anchor,1)\nopen(p,'w').write(s)\nEOF\n(python …[+411 chars]`
+

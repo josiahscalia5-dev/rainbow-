@@ -44,6 +44,8 @@ def main():
             L = json.load(open(os.path.join(G, 'a' + nn, 'layout.json'))); man = json.load(open(os.path.join(G, 'a' + nn, 'baked', 'manifest.json')))
             if L.get('water_style') == 'ribbon' and 'floor' in man.get('templates', {}):
                 kit.run([sys.executable, '-I', os.path.join(REPO, 'tools/screenkit/water_detail.py'), os.path.join(G, 'a' + nn, 'baked')])
+            if L.get('water_strip'):   # r47: ONE continuous flow-space river material (needs the area's clean plate + mask from its own build)
+                kit.run([sys.executable, '-I', os.path.join(REPO, 'tools/screenkit/water_strip.py'), os.path.join(ws, 's' + nn, 'game'), os.path.join(G, 'a' + nn, 'baked')])
     B.timed('detail', f_det)
     out = B.timed('layout', lambda: kit.run([sys.executable, '-I', os.path.join(HERE, 'world_layout.py'), os.path.join(G, 'a04', 'layout.json'), os.path.join(G, 'aAB', 'section.json'), G,
                                              os.path.join(G, 'a05', 'layout.json'), os.path.join(G, 'a06', 'layout.json'), os.path.join(G, 'a07', 'layout.json')], log=os.path.join(ws, 'world_layout.log')))

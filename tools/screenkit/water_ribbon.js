@@ -133,3 +133,32 @@ export async function loadDetail(THREE, tl, base, MANI, U) {
   const ld = async (f) => { const t = await tl.loadAsync(base + f); t.colorSpace = THREE.NoColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; return t; };
   U.uDetC.value = await ld('detail_cyan.jpg'); U.uDetP.value = await ld('detail_pink.jpg'); U.uDetCM.value.set(...D.cyan_mean, 1); U.uDetPM.value.set(...D.pink_mean, 1); U.uDetS.value = D.tile_m; U.uDetOn.value = 1; return true;
 }
+
+// ---------------------------------------------------------------------------------------------------------------------------------------------
+// r47 ONE continuous river material (tools/screenkit/water_strip.py): every water texel of an area samples the same flow-space texture at
+// (lat, d) - lat = sideways distance from Benny's route, d = distance along it - with EXACTLY the bake's inverse mapping (route x by z, slope
+// over +-0.03 u, arc length by z, straight extensions beyond the route's ends). The texture is the approved painting re-mapped along the river,
+// continued by quilting its sharp stretch, so there is no painted patch, no switch to generated water, no seam between surfaces.
+// Flow: two samples offset along d, cross-faded (anchored to the painted layout, never drifting away from it).
+export const STRIP_GLSL = `
+uniform sampler2D uStrip, uStripR, uStripD; uniform vec4 uStripP; uniform vec4 uStripZ; uniform vec4 uStripE;
+float stripTex1(sampler2D tx, float z){ float x = clamp((z - uStripZ.x) / (uStripZ.y - uStripZ.x), 0.0, 1.0) * (uStripE.y - 1.0), i = floor(x), f = x - i;
+  return mix(texture2D(tx, vec2((i + 0.5) / uStripE.y, 0.5)).r, texture2D(tx, vec2((min(i + 1.0, uStripE.y - 1.0) + 0.5) / uStripE.y, 0.5)).r, f); }
+vec2 stripLD(vec3 L){ float z = L.z, rx = stripTex1(uStripR, z), sl = (stripTex1(uStripR, z + 0.03) - stripTex1(uStripR, z - 0.03)) / 0.06;
+  float d = z > uStripZ.y ? -(z - uStripZ.y) : z < uStripZ.x ? uStripE.x + (uStripZ.x - z) : stripTex1(uStripD, z);
+  return vec2((L.x - rx) / sqrt(1.0 + sl * sl), d); }
+vec3 stripWater(vec3 L, float t){ vec2 ld = stripLD(L); float p = fract(t * 0.35), w1 = 1.0 - abs(2.0 * p - 1.0);
+  float u = (ld.x + uStripP.x) / (2.0 * uStripP.x), v1 = (ld.y + (p - 0.5) * uStripP.w - uStripP.y) / uStripP.z, v2 = (ld.y + (fract(p + 0.5) - 0.5) * uStripP.w - uStripP.y) / uStripP.z;
+  return mix(texture2D(uStrip, vec2(u, v2)).rgb, texture2D(uStrip, vec2(u, v1)).rgb, w1); }`;
+export const stripCopy = (sfx) => STRIP_GLSL.replace(/\b(uStripR|uStripD|uStripP|uStripZ|uStripE|uStrip|stripTex1|stripLD|stripWater)\b/g, '$1' + sfx);
+// uniforms of an area's strip: the route x by z and arc length by z (float, 4096 samples), the strip texture, its ranges
+export function stripUniforms(THREE, LAY, meta, tex) {
+  const P = LAY.route.points, ds = LAY.route.ds, N = 4096, zA = P[0][2], zB = P[P.length - 1][2], dEnd = (P.length - 1) * ds;
+  const rx = new Float32Array(N), dz = new Float32Array(N); let k = P.length - 1;   // z ascending from zB (route end) to zA (route start)
+  for (let i = 0; i < N; i++) { const z = zB + (zA - zB) * i / (N - 1); while (k > 0 && P[k - 1][2] <= z) k--; const j = Math.max(1, Math.min(P.length - 1, k)), a = P[j - 1], b = P[j];
+    const f = b[2] !== a[2] ? Math.min(1, Math.max(0, (z - a[2]) / (b[2] - a[2]))) : 0; rx[i] = a[0] + (b[0] - a[0]) * f; dz[i] = ((j - 1) + f) * ds; }
+  const mk = (data) => { const t = new THREE.DataTexture(data, N, 1, THREE.RedFormat, THREE.FloatType); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; };
+  tex.colorSpace = THREE.NoColorSpace; tex.anisotropy = 8; tex.wrapS = tex.wrapT = THREE.ClampToEdgeWrapping;
+  return { uStrip: { value: tex }, uStripR: { value: mk(rx) }, uStripD: { value: mk(dz) }, uStripP: { value: new THREE.Vector4(meta.lat, meta.d0, meta.d1 - meta.d0, LAY.water_strip?.flow ?? 0.3) },
+    uStripZ: { value: new THREE.Vector4(zB, zA, 0, 0) }, uStripE: { value: new THREE.Vector4(dEnd, N, 0, 0) } };
+}

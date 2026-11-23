@@ -38,7 +38,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { installControls } from './controls.js';
 import { installQA } from './qa.js';   // r45: QA views for the automated preview check
-import { RIBBON_GLSL, routeUniforms, loadDetail, ribbonCopy, ribbonUniformsAs } from './water_ribbon.js';   // r45 test ?water=ribbon: clean ribbon water drawn from the painting's structure
+import { RIBBON_GLSL, routeUniforms, loadDetail, ribbonCopy, ribbonUniformsAs, STRIP_GLSL, stripCopy, stripUniforms } from './water_ribbon.js';   // r45 test ?water=ribbon: clean ribbon water drawn from the painting's structure
 import { famOf as kitFamOf, loadTemplates, applyTemplates } from './bake.js';   // r45: the screen kit's artwork-sampled materials (wall / ring / tray templates, water swatches)
 const q = new URLSearchParams(location.search);
 for (const [k, v] of [['c_LANE', '0.3'], ['c_LAT_MAX', '0.36'], ['speed', '2.2'], ['fx_RIP_SIZE', '0.03']]) if (!q.has(k)) q.set(k, v);   // r45: smaller ripple rings
@@ -157,22 +157,25 @@ const WVERT = 'varying vec2 vUv; varying vec3 vW; varying vec3 vL; void main(){ 
 // kit areas: water in its own UVs (u across, v along the flow)
 const waterMatKit = (halfW, len, along0, isPool, A, own = true) => new THREE.ShaderMaterial({ side: THREE.DoubleSide, polygonOffset: !!isPool, polygonOffsetFactor: isPool ? 2 : 0, polygonOffsetUnits: isPool ? 4 : 0,
   uniforms: { uRouteX: { value: null }, uRouteZ: { value: new THREE.Vector4(0, 1, 1, 0) }, uRStyle: { value: 0 }, ...(own && A.ribbonU ? A.ribbonU : {}), uRibbon: { value: own && A.ribbonU ? 1 : 0 }, uRUv: { value: new THREE.Vector4(isPool ? 0 : 1, 0, 0, 0) },
+    ...(own && A.stripU ? A.stripU : {}), uStripOn: { value: own && A.stripU ? 1 : 0 },   /* r47: ONE flow-space river material */
     uT: WT, uGlow: A.glow, uSharp: { value: new THREE.Vector2(SHARPX, own && A.ribbonU ? (A.LAY?.bake_keep_mag ?? 1.0) : 2.2) }, /* ribbon: the bake gives way as soon as it is magnified (r46: layout bake_keep_mag, 06 = 2.2) */ uLodBias: { value: A.lodBias }, uBake: { value: null }, uBakeOn: { value: 0 }, uDen: { value: null }, uGeo: { value: new THREE.Vector4(halfW, len, along0, isPool ? 1 : 0) },
     uSw: { value: null }, uSwOn: { value: 0 }, uSwGeo: { value: new THREE.Vector4(0, 1, 0, 0) }, uFlow: { value: A.LAY?.water_flow ?? 1.2 }, uFar: A.far ?? FAR0, uFarCol: A.farCol ?? FARC0,   // r45: painted flow swatch (bake.js)
     uBakeZ: { value: new THREE.Vector2(own && A.ribbonU ? (A.LAY?.drum?.z0 ?? 3) - 1.5 : 1e9, own && A.ribbonU ? (A.LAY?.drum?.z0 ?? 3) : 2e9) } },   // r46: the picture bake fades in over the area's first 1.5 u (no seam at the connector)
   vertexShader: WVERT,
   fragmentShader: `uniform float uT; uniform vec3 uGlow; uniform sampler2D uBake; uniform float uBakeOn; uniform sampler2D uDen; uniform vec2 uSharp; uniform float uLodBias; uniform vec4 uGeo; varying vec2 vUv; varying vec3 vW;
-    uniform sampler2D uSw; uniform float uSwOn; uniform vec4 uSwGeo; uniform float uFlow; varying vec3 vL; uniform vec4 uFar; uniform vec3 uFarCol; uniform vec2 uBakeZ;
+    uniform sampler2D uSw; uniform float uSwOn; uniform vec4 uSwGeo; uniform float uFlow; varying vec3 vL; uniform vec4 uFar; uniform vec3 uFarCol; uniform vec2 uBakeZ; uniform float uStripOn;
     ${WATER_CORE}
     ${RIBBON_GLSL}
+    ${STRIP_GLSL}
     void main(){ float RW = uGeo.x, u = vUv.x * 2.0 - 1.0, uw = u * RW, d = uGeo.z + (1.0 - vUv.y) * uGeo.y, tp = d + uT * 1.6;
       vec3 col = uSwOn > 1.5 ? texture(uSw, vec2((vL.x - uSwGeo.z) / uSwGeo.w, (-vL.z + uT * uFlow - uSwGeo.x) / uSwGeo.y)).rgb   // r45: the painted floor, every band, world-anchored
                : uSwOn > 0.5 ? texture(uSw, vec2(vUv.x, (d + uT * uFlow - uSwGeo.x) / uSwGeo.y)).rgb   // the painted river itself, flowing toward the camera
                              : waterCol(u, uw, tp, 0.62, 0.96, 1.0 - uGeo.w * 0.6, 0.0, 0.0);   // = tools/screenkit/screen.html (pools: pink edges damped)
-      if (uRibbon > 0.5) { gRUv = vec4(uRUv.x, u, d, 0.0); col = ribbonWater(vL, uT, uFlow, vW); }   // r45: the clean painted ribbons
+      if (uStripOn > 0.5) col = stripWater(vL, uT);   // r47: the painted river in its own flow space - the same on every water surface
+      else if (uRibbon > 0.5) { gRUv = vec4(uRUv.x, u, d, 0.0); col = ribbonWater(vL, uT, uFlow, vW); }   // r45: the clean painted ribbons
       else if (uSwOn > 1.5) { vec3 pc = waterCol(u, uw, tp, 0.62, 0.96, 0.0, 0.0, 0.0); float dash = clamp((pc.g - 0.75) * 4.0, 0.0, 1.0) * step(0.9, pc.r); col = mix(col, vec3(0.93, 1.0, 1.0), 0.85 * dash); }   // crisp sparkle dashes close up
       col = mix(col, uFarCol, uFar.w * uFar.z * pow(smoothstep(uFar.x, uFar.y, distance(cameraPosition, vW)), 1.4));   // under the painted pixels
-      col = mix(col, bakeMix(col, vUv, vW, uBake, uDen, uBakeOn, uSharp, uLodBias, uT), 1.0 - smoothstep(uBakeZ.x, uBakeZ.y, vL.z));
+      if (uStripOn < 0.5) col = mix(col, bakeMix(col, vUv, vW, uBake, uDen, uBakeOn, uSharp, uLodBias, uT), 1.0 - smoothstep(uBakeZ.x, uBakeZ.y, vL.z));   /* r47: no per-mesh picture bake on strip water */
       col = mix(col, vec3(0.95, 1.0, 1.0), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(col, 1.0); }` });
 // r46 (Screen 05 frames 0-90 and 690-720: a hard seam, then plain cyan): the connector water strips between two areas wore a plain swatch.
 // Now a connector continues the ribbon water of the area on EACH side (05: cyan + hot-pink S-ribbons, sparkles), cross-fading along its length:
@@ -181,11 +184,13 @@ const waterMatKit = (halfW, len, along0, isPool, A, own = true) => new THREE.Sha
 const axisTex = (axis) => { const P = [...axis].sort((a, b) => a[2] - b[2]), z0 = P[0][2], z1 = P[P.length - 1][2], N = 512, data = new Float32Array(N); let k = 0;
   for (let i = 0; i < N; i++) { const z = z0 + (z1 - z0) * i / (N - 1); while (k < P.length - 2 && P[k + 1][2] < z) k++; const a = P[k], b = P[k + 1] ?? a, f = b[2] > a[2] ? (z - a[2]) / (b[2] - a[2]) : 0; data[i] = a[0] + (b[0] - a[0]) * Math.min(1, Math.max(0, f)); }
   const t = new THREE.DataTexture(data, N, 1, THREE.RedFormat, THREE.FloatType); t.minFilter = t.magFilter = THREE.LinearFilter; t.needsUpdate = true; return { t, z0, z1 }; };
-const waterMatConn = (c, base, Aa, Ab) => { const ax = axisTex(c.axis), zs = c.axis[0][2], ze = c.axis[c.axis.length - 1][2], side = (A, sx) => (A?.ribbonU ? { ...ribbonUniformsAs(A.ribbonU, sx), ['uRUv' + sx]: { value: new THREE.Vector4(2, 0, 0, 0) }, ['uRibbon' + sx]: { value: 1 },
+const waterMatConn = (c, base, Aa, Ab) => { const ax = axisTex(c.axis), zs = c.axis[0][2], ze = c.axis[c.axis.length - 1][2], side = (A, sx) => ({ ...(A?.stripU ? ribbonUniformsAs(A.stripU, sx) : {}), ['uOnS' + sx]: { value: A?.stripU ? 1 : 0 } }), sideR = (A, sx) => (A?.ribbonU ? { ...ribbonUniformsAs(A.ribbonU, sx), ['uRUv' + sx]: { value: new THREE.Vector4(2, 0, 0, 0) }, ['uRibbon' + sx]: { value: 1 },
     ['uMi' + sx]: { value: (A.Mi ??= A.M.clone().invert()) }, ['uOn' + sx]: { value: 1 }, ['uFl' + sx]: { value: A.LAY?.water_flow ?? 1.2 } } : { ['uOn' + sx]: { value: 0 }, ['uMi' + sx]: { value: new THREE.Matrix4() }, ['uFl' + sx]: { value: 1.2 },
     ...ribbonUniformsAs({ uRouteX: { value: null }, uRouteZ: { value: new THREE.Vector4(0, 1, 1, 0) }, uRStyle: { value: 0 }, uRUv: { value: new THREE.Vector4() }, uRibbon: { value: 0 }, uDetC: { value: null }, uDetP: { value: null }, uDetCM: { value: new THREE.Vector4(1, 1, 1, 1) }, uDetPM: { value: new THREE.Vector4(1, 1, 1, 1) }, uDetS: { value: 1 }, uDetOn: { value: 0 } }, sx) });
-  const m = base; Object.assign(m.uniforms, side(Aa, '_a'), side(Ab, '_b'), { uAx: { value: ax.t }, uAxZ: { value: new THREE.Vector4(ax.z0, ax.z1, zs, ze) } });
-  m.fragmentShader = m.fragmentShader.replace('void main(){', `uniform sampler2D uAx; uniform vec4 uAxZ; uniform mat4 uMi_a, uMi_b; uniform float uOn_a, uOn_b, uFl_a, uFl_b;
+  const m = base; Object.assign(m.uniforms, sideR(Aa, '_a'), sideR(Ab, '_b'), side(Aa, '_a'), side(Ab, '_b'), { uAx: { value: ax.t }, uAxZ: { value: new THREE.Vector4(ax.z0, ax.z1, zs, ze) } });
+  m.fragmentShader = m.fragmentShader.replace('void main(){', `uniform sampler2D uAx; uniform vec4 uAxZ; uniform mat4 uMi_a, uMi_b; uniform float uOn_a, uOn_b, uFl_a, uFl_b; uniform float uOnS_a, uOnS_b;
+    ${stripCopy('_a')}
+    ${stripCopy('_b')}
     ${ribbonCopy('_a')}
     ${ribbonCopy('_b')}
     void main(){`).replace('col = mix(col, uFarCol,', `{ float zt = clamp((vW.z - uAxZ.x) / (uAxZ.y - uAxZ.x), 0.0, 1.0), e = 0.03 / max(1e-3, uAxZ.y - uAxZ.x);
@@ -193,8 +198,10 @@ const waterMatConn = (c, base, Aa, Ab) => { const ax = axisTex(c.axis), zs = c.a
         float k = smoothstep(0.12, 0.88, (uAxZ.z - vW.z) / max(1e-3, uAxZ.z - uAxZ.w)); vec3 ca = col, cb = col;
         /* r46b: each side uses its OWN area's lateral (its route texture, clamped beyond its ends) exactly like that area's water - the connector
            axis ends 0.14 u beside 05's route start, which shifted the ribbons at the join (frames 40-90) */
-        if (uOn_a > 0.5) { vec3 La = (uMi_a * vec4(vW, 1.0)).xyz; gRUv_a = vec4(0.0); ca = ribbonWater_a(La, uT, uFl_a, vW); }
-        if (uOn_b > 0.5) { vec3 Lb = (uMi_b * vec4(vW, 1.0)).xyz; gRUv_b = vec4(0.0); cb = ribbonWater_b(Lb, uT, uFl_b, vW); }
+        if (uOnS_a > 0.5) ca = stripWater_a((uMi_a * vec4(vW, 1.0)).xyz, uT);   /* r47: the area's ONE river material continues into its connector */
+        else if (uOn_a > 0.5) { vec3 La = (uMi_a * vec4(vW, 1.0)).xyz; gRUv_a = vec4(0.0); ca = ribbonWater_a(La, uT, uFl_a, vW); }
+        if (uOnS_b > 0.5) cb = stripWater_b((uMi_b * vec4(vW, 1.0)).xyz, uT);
+        else if (uOn_b > 0.5) { vec3 Lb = (uMi_b * vec4(vW, 1.0)).xyz; gRUv_b = vec4(0.0); cb = ribbonWater_b(Lb, uT, uFl_b, vW); }
         latm += 0.0;
         col = mix(ca, cb, k); }
       col = mix(col, uFarCol,`);
@@ -225,7 +232,7 @@ const loadBake = async (A, meshes) => {
 const MESH = [], WATER = [], CLAMPS = [], FOAMS = [], BUBBLES = [];
 
 // the kit page's foam banks (screen.html): lit lavender-white shading, the area's glow
-const kitFoamMat = (A) => new THREE.ShaderMaterial({ uniforms: { uL: { value: new THREE.Vector3(-0.25, 0.8, 0.55).normalize() }, uGlow: A.glow },
+const kitFoamMat = (A, inst = false) => new THREE.ShaderMaterial({ uniforms: { uL: { value: new THREE.Vector3(-0.25, 0.8, 0.55).normalize() }, uGlow: A.glow },
   // r46 (user: "the white foam bank looks like large polygonal blocks, especially close to the camera"): the r45 pattern was a 2-D Voronoi in
   // world x / z whose straight cell borders drew crystal facets on every heap. Now the foam is made of ROUND BUBBLES in 3-D: each cell holds a
   // sphere-like bubble of its own size (power distance -> circles, never straight seams), its normal bends like a little dome (soft lavender
@@ -234,7 +241,7 @@ const kitFoamMat = (A) => new THREE.ShaderMaterial({ uniforms: { uL: { value: ne
   vertexShader: `varying vec3 vN; varying vec3 vW;
     float fh3(vec3 p){ return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }
     float fn3(vec3 p){ vec3 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(mix(fh3(i), fh3(i + vec3(1, 0, 0)), f.x), mix(fh3(i + vec3(0, 1, 0)), fh3(i + vec3(1, 1, 0)), f.x), f.y), mix(mix(fh3(i + vec3(0, 0, 1)), fh3(i + vec3(1, 0, 1)), f.x), mix(fh3(i + vec3(0, 1, 1)), fh3(i + vec3(1, 1, 1)), f.x), f.y), f.z); }
-    void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vec3 n = normalize(mat3(modelMatrix) * normal);
+    void main(){ vec4 w = modelMatrix * ${inst ? 'instanceMatrix * ' : ''}vec4(position, 1.0); vec3 n = normalize(mat3(modelMatrix) * ${inst ? 'mat3(instanceMatrix) * ' : ''}normal);
       w.xyz += n * (0.018 * (fn3(w.xyz * 14.0) - 0.5) + 0.008 * (fn3(w.xyz * 31.0 + 5.0) - 0.5)); vW = w.xyz; vN = n; gl_Position = projectionMatrix * viewMatrix * w; }`,
   fragmentShader: `varying vec3 vN; varying vec3 vW; uniform vec3 uL; uniform vec3 uGlow; vec3 c3(float r, float g, float b){ return vec3(r, g, b) / 255.0; }
     vec3 bh3(vec3 p){ p = vec3(dot(p, vec3(127.1, 311.7, 74.7)), dot(p, vec3(269.5, 183.3, 246.1)), dot(p, vec3(113.5, 271.9, 124.6))); return fract(sin(p) * 43758.5453); }
@@ -267,6 +274,9 @@ const loadKit = async (A) => {
   const famOf = kitFamOf;   // r45: bake.js (paddlerep_* = the repeated trays -> copper)
   if (q.get('water') !== 'paint' && (LAY.water_style === 'ribbon' || LAY.water_style === 'ribbon06' || (q.get('water') === 'ribbon' && (q.get('ribbonareas') ?? '05').split(',').includes(A.id)))) A.ribbonU = routeUniforms(THREE, LAY);   // r45: clean ribbon water (?water=paint = the old painted swatch)
   if (A.ribbonU && q.get('rich') === '0') A.ribbonU.uRich.value = 0;   // r46 A/B switch: ?rich=0 = the round-45b ribbon water
+  if (LAY.water_strip && q.get('strip') !== '0') {   // r47: ONE continuous river material (baked/strip.json + strip_core.jpg, tools/screenkit/water_strip.py)
+    const meta = await fetch(A.dir + 'baked/strip.json').then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    if (meta) { const tex = await tl.loadAsync(A.dir + 'baked/' + meta.file); A.stripU = stripUniforms(THREE, LAY, meta, tex); A.stripMeta = meta; } }
   const ms = []; g.traverse((o) => { if (o.isMesh) ms.push(o); });
   const RLENa = (LAY.route.points.length - 1) * LAY.route.ds, NSEG = ms.filter((o) => /^water_/.test(o.name)).length, SEG_LEN = RLENa / Math.max(1, NSEG);
   for (const o of ms) { const n = o.name, fam = famOf(n); o.geometry.computeBoundingBox(); const sz = o.geometry.boundingBox.getSize(new THREE.Vector3()); let m;
@@ -298,6 +308,22 @@ const loadKit = async (A) => {
   CLAMPS.push((p) => { const L = p.clone().applyMatrix4(Mi); if (L.z > DR.z0 + 0.5 || L.z < DR.z1) return false; const dx = L.x - DR.axis_x, dy = L.y - DR.axis_y, rr = Math.hypot(dx, dy), lim = DR.r - 0.3;
     if (rr > lim) { L.x = DR.axis_x + dx * lim / rr; L.y = DR.axis_y + dy * lim / rr; p.copy(L.applyMatrix4(M)); return true; } return false; });
   if (MANI?.foam) FOAMS.push(...MANI.foam.map((f) => { const P = new THREE.Vector3(f[0], f[1], f[2]).applyMatrix4(M); return [P.x, P.y, P.z, ...f.slice(3)]; }));
+  // r47 (user: "make the foam follow the actual river edges"): real 3D foam heaps along the painted foam banks' measured inner edges (both banks,
+  // the whole strip incl. the painted stretch), placed with the strip's own mapping (lat, d) -> area x / z, sitting in the water, never in a lane
+  if (A.stripMeta && q.get('stripfoam') !== '0') {
+    const SM = A.stripMeta, FE = SM.foam_edges, RP_ = LAY.route.points, dsR = LAY.route.ds, zA = RP_[0][2], zB = RP_[RP_.length - 1][2], dEnd = (RP_.length - 1) * dsR, WYl = DR.pool_y ?? -0.02;
+    const rxz = (z) => { if (z >= zA) return RP_[0][0]; if (z <= zB) return RP_[RP_.length - 1][0]; let lo = 0, hi = RP_.length - 1; while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (RP_[mid][2] > z) lo = mid; else hi = mid; }
+      const a = RP_[lo], b = RP_[hi]; return a[0] + (b[0] - a[0]) * (z - a[2]) / (b[2] - a[2]); };
+    const zOfD = (d) => { if (d < 0) return zA - d; if (d > dEnd) return zB - (d - dEnd); const x = d / dsR, i = Math.min(RP_.length - 2, Math.floor(x)); return RP_[i][2] + (RP_[i + 1][2] - RP_[i][2]) * (x - i); };
+    const toL = (lat, d) => { const z = zOfD(d), sl = (rxz(z + 0.03) - rxz(z - 0.03)) / 0.06; return [rxz(z) + lat * Math.sqrt(1 + sl * sl), z]; };
+    let sd = 4711; const rnd = () => ((sd = (sd * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); const H = [];
+    for (const [side, edge] of [[-1, FE.left], [1, FE.right]]) for (let d = Math.max(SM.d0 + 2, -6); d < SM.d1 - 0.5; d += 0.075) {
+      const n = 2 + Math.floor(rnd() * 2);
+      for (let k = 0; k < n; k++) { const r = 0.045 + 0.07 * rnd() * (k ? 0.8 : 1), lat = edge + side * (r * 0.75 + rnd() * 0.2), [x, z] = toL(lat, d + (rnd() - 0.5) * 0.06); H.push([x, WYl + r * 0.12, z, r, rnd() * 6.283]); } }
+    const fg = new THREE.IcosahedronGeometry(1, 2), fm = new THREE.InstancedMesh(fg, GRAY ? new THREE.MeshBasicMaterial({ color: 0xe8e8ee }) : kitFoamMat(A, true), H.length);
+    const mI = new THREE.Matrix4(), qI = new THREE.Quaternion(), pI = new THREE.Vector3(), sI = new THREE.Vector3();
+    H.forEach(([x, y, z, r, a], i) => { pI.set(x, y, z); qI.setFromAxisAngle(UPV, a); sI.set(r * 1.15, r * 0.62, r); fm.setMatrixAt(i, mI.compose(pI, qI, sI)); });
+    fm.name = 'foam_strip_edges'; fm.userData.fam = 'foam'; fm.userData.area = A.id; fm.frustumCulled = false; g.add(fm); MESH.push(fm); A.stripFoamCount = H.length; }
   // bubbles exactly as the area's own page places them (its painted bubbles + the same seeded extras along ITS route, same bobbing phases)
   { const rp = (() => { let x = 777; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
     const LP = LAY.route.points.map(V3), LDS = LAY.route.ds, LB = LAY.route.bank ?? LP.map(() => 0), LL = (LP.length - 1) * LDS;

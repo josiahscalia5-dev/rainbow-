@@ -86,7 +86,14 @@ lay['machinery'] = {'every': 2, 'clear_y': [float(cam.C[1]), 0.5], 'scale': 0.8,
 # the water is the clean ribbon water drawn from the painting's structure (tools/screenkit/water_ribbon.js)
 lay['cam_axis'] = {'follow': 0.6}; lay['water_style'] = 'ribbon'
 lay['water_rich'] = 1   # r46: deep-blue troughs + seams, silk highlights in the pink, ripple arcs close up, a second sparkle layer, a little swirl
-lay['tpl_wall_gate'] = 'strict'   # r46: only purple / magenta painted pixels build the repeated drum-wall period (no water / foam / bubble shards, no tray smears)
+lay['tpl_wall_gate'] = 'strict'
+# r47 (user: "the detailed painted water ahead has a visible boundary where it meets the simpler striped water beneath Benny"): the water was TWO
+# surfaces (the drum-floor pool + a raised route ribbon that began with a straight cut in front of Benny), each with its own camera-projected bake
+# and a switch to generated water when magnified. Now ONE floor surface at the connectors' height and ONE flow-space material for every water
+# texel (tools/screenkit/water_strip.py: the painting re-mapped along the river, continued by quilting its sharp stretch); real 3D foam heaps
+# along the painted foam's measured inner edges (world.html) instead of the drum-edge banks
+lay['water_strip'] = {'px_per_u': 80, 'd0': -8.0}
+lay['no_route_ribbon'] = True; lay['drum']['pool_y'] = -0.012   # r46: only purple / magenta painted pixels build the repeated drum-wall period (no water / foam / bubble shards, no tray smears)
 # r46: the camera follows the river's swing almost fully (the river stays under the view as in the picture) and lane changes by 0.65 (Benny visibly
 # moves when steering); soft limit 0.85 u from the drum axis; small damped turn toward Benny near an edge (world.html)
 lay['cam_axis'].update({'follow_route': 0.9, 'follow_lane': 0.65, 'max_off': 0.85, 'knee': 0.25})
@@ -99,6 +106,7 @@ lay['lod_bias'] = -1.4   # r45: the painted detail stays crisp at grazing angles
 lay['bubbles_banks'] = {'from': 14.0, 'every': 0.55, 'lat': [0.55, 1.15], 'r': [0.025, 0.075], 'h': 0.4}; lay['bubbles_from'] = 14.0   # beyond the painted stretch
 # the painted S-river (pink edges + cyan core) at the coin trail: 310 px wide at y 650 -> its real width at that depth (river ribbon option)
 Pr = cam.on_plane_y(485.0, 650.0); RIVER_W = 310.0 * float(-(cam.R.T @ (Pr - cam.C))[2]) / cam.F; lay['river_width'] = RIVER_W; lay['route']['width'] = RIVER_W
+if lay.get('water_strip'): lay['foam_pool'] = False; lay['foam_banks'] = []   # r47: the strip's measured foam edges place the 3D foam (world.html)
 for kv in a.set:
     k, v = kv.split('=', 1); v = json.loads(v)
     if k == 'river_ribbon' and v:                                # one-factor test: the S-river as its own water ribbon along Benny's route
