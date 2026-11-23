@@ -239,7 +239,7 @@ namespace Rainbow.Screen05.EditorTools
             if (cube != null)
             {
                 RenderSettings.defaultReflectionMode = DefaultReflectionMode.Custom;
-                RenderSettings.customReflection = cube;
+                RenderSettings.customReflectionTexture = cube;
                 RenderSettings.reflectionIntensity = 1f;
             }
             else
