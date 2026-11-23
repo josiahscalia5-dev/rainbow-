@@ -168,7 +168,8 @@ float3 RBW_FoamColor(float3 Nv, float px, float seed, float ao, float tint, floa
     float4 mf = RBW_MicroFoam(mp, dens);
     float kf = 1.0 - smoothstep(0.5, 0.9, fwidth(mp.x) + fwidth(mp.y));
     // tone S-curve: few grey mid-tones, a broad white-lavender lit area and clearly blue shading
-    t = 0.12 + 0.95 * smoothstep(0.38, 1.12, t - 0.06 * big);
+    // (foam round: the S-curve sits a little lower than foam.ts so the lit caps reach pearly white)
+    t = 0.12 + 0.95 * smoothstep(0.34, 1.0, t - 0.06 * big);
     t += (mf.z - 0.6) * 0.2 * dens * kf - mf.x * 0.55 * kf + mf.y * 0.3 * kf;
     float3 col = RBW_Soap05(t + 0.04 * tint);
     col = lerp(col, float3(1.0, 0.97, 1.07), smoothstep(0.75, 1.0, t) * 0.3);

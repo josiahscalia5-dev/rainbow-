@@ -1,9 +1,11 @@
 // Rainbow Screen 05 - Benny's splash at the waterline (splash round 2026-11-23). Port of src/vfx/riderSplash.ts
-// createRiderSplash05 (wave 8, the default 05 fan layout = the approved V of whitewater fans):
-//   type 0  whitewater ropes lying on the water, poured back-outward from his flanks (bubbly lace, lumpy edges,
-//           white root -> translucent cyan tail)
+// createRiderSplash05 (wave 8, the default 05 fan layout = the approved V of whitewater fans), refitted to the approved
+// image (screen05_splash_probe2: approved px -> water plane in Benny's frame):
+//   type 0  splash strands lying on the water, leaving his flanks (~24..77 deg from straight back) and running back
+//           toward the camera: a ragged white streak with clinging foam lumps, lace holes and droplets (never smooth hair)
 //   type 1  a low crown of droplet jets thrown up beside the body (chains of small translucent beads)
-//   type 2  root froth: lace pads of fine bubbles hugging the fur at the waterline (the foam collar)
+//   type 2  bubbly suds piled on his flanks (big soft soap bubbles), never a ring straight behind him
+// The water straight behind him gets a dark contact shadow instead (RainbowRiver.hlsl, wake section).
 // One static mesh built once by SplashWake.cs (no per-frame CPU vertex work): every ribbon is shaped and animated here.
 // Object space = Benny's waterline frame (origin on the water under his body centre, +x = his right, +z = forward).
 // Every vertex is set onto the animated river surface (same swell formula as the river, RBW_RiverWave), so the splash
@@ -94,9 +96,11 @@ Shader "Rainbow/Water/Splash"
             float3 SPL_Rope(float u, float side, float a, float seed, float len, float R)
             {
                 float thR = lerp(1.35, 0.42, a) + (SPL_Hs(seed * 3.1) - 0.5) * 0.16;
-                float phi = lerp(0.3, 0.04, a) + (SPL_Hs(seed * 5.7) - 0.5) * 0.16 + 0.22 * u * u;
+                float phi = lerp(0.3, 0.04, a) + (SPL_Hs(seed * 5.7) - 0.5) * 0.16 + 0.22 * u * u
+                          + (SPL_Hs(seed * 6.1) - 0.5) * 0.4 * u;                  // each strand curls its own way
                 float2 root = float2(sin(thR), cos(thR)) * SPL_RootR(thR, R) * (1.03 + 0.08 * SPL_Hs(seed * 2.3));
-                float2 q = root + float2(sin(phi), cos(phi)) * u * len;
+                float2 q = root + float2(sin(phi), cos(phi)) * u * len
+                         + float2(cos(phi), -sin(phi)) * (0.03 * u * sin(u * 8.0 + seed * 40.0));   // and wavers a little
                 float y = 0.03 + 0.05 * SPL_Hs(seed * 9.1) * sin(3.14159 * min(u * 1.6, 1.0)) * (1.0 - u);
                 return float3(side * q.x, y, -q.y);
             }
@@ -225,13 +229,14 @@ Shader "Rainbow/Water/Splash"
                     float lump = 1.0 - smoothstep(0.34, 0.48, c1 + ac * 0.75 - solid * 0.18);
                     float drops = (1.0 - smoothstep(0.13, 0.21, c2)) * smoothstep(0.35, 0.65, ac + uv.x * 0.35)
                                 * (1.0 - smoothstep(0.85, 1.0, ac));
-                    float holes = (1.0 - smoothstep(0.1, 0.19, c2)) * max(streak, lump) * (1.0 - smoothstep(0.1, 0.5, uv.x));
+                    float holes = (1.0 - smoothstep(0.13, 0.23, c2)) * max(streak, lump) * (1.0 - smoothstep(0.1, 0.55, uv.x));
                     float tail = (1.0 - smoothstep(0.8, 1.0, uv.x)) * smoothstep(0.0, 0.04, uv.x);
                     float bodyA = max(streak * lerp(0.95, 0.7, uv.x), lump * lerp(0.9, 0.55, uv.x));
                     alpha = max(bodyA, drops * 0.85) * tail;
                     col = lerp(cyan, white, saturate(1.35 - uv.x * 0.6 - ac * 0.5));
+                    col = lerp(col, float3(0.74, 0.78, 1.0), saturate(edgeN / max(wid + 0.05, 0.05)) * 0.4);   // shaded sides
                     col = lerp(col, white, drops * 0.5);
-                    col = lerp(col, float3(0.7, 0.74, 1.0), holes * 0.55);       // shaded lavender-blue bubble holes
+                    col = lerp(col, float3(0.5, 0.6, 1.0), holes * 0.6);         // lavender-blue bubble holes (lace)
                 }
                 else if (type < 1.5)
                 {
@@ -258,12 +263,12 @@ Shader "Rainbow/Water/Splash"
                     float shape = (1.0 - smoothstep(0.45, 0.95, ac + lumpy)) * smoothstep(0.0, 0.16, uv.x)
                                 * (1.0 - smoothstep(0.62, 1.0, uv.x + lumpy * 0.4));
                     float dome = 1.0 - smoothstep(0.1, 0.78, cB);
-                    float3 film = lerp(float3(0.58, 0.6, 0.96), white, saturate(pow(dome, 0.7) * 1.1));
+                    float3 film = lerp(float3(0.5, 0.54, 0.95), white, saturate(pow(dome, 1.4) * 1.05));
                     film += float3(0.2, 0.2, 0.22) * (1.0 - smoothstep(0.05, 0.14, cB));
-                    float gap = 1.0 - smoothstep(0.35, 0.6, dome);
-                    float hole = (1.0 - smoothstep(0.1, 0.22, cb)) * gap;
-                    col = lerp(film, float3(0.4, 0.56, 1.0), hole * 0.65);
-                    alpha = shape * lerp(0.94, 0.6, hole);
+                    float gap = 1.0 - smoothstep(0.3, 0.6, dome);
+                    float hole = (1.0 - smoothstep(0.12, 0.26, cb)) * gap;
+                    col = lerp(film, float3(0.36, 0.52, 1.0), hole * 0.75);
+                    alpha = shape * lerp(0.85, 0.55, hole);
                 }
                 // soft where it touches the water or his fur (no hard intersection lines)
                 float2 suv = GetNormalizedScreenSpaceUV(i.positionCS);

@@ -194,12 +194,24 @@ namespace Rainbow.Screen05
                     int nRim = 1 + Mathf.FloorToInt(cl * 2.6f + rng.Next());           // clumps and low stretches
                     for (int k = 0; k < nRim; k++)
                     {
-                        float u = Mathf.Pow(rng.Next(), 1.6f);
-                        float r = Mathf.Lerp(0.09f, 0.26f + 0.16f * cl, u);
+                        float u = Mathf.Pow(rng.Next(), 2.0f);
+                        float r = Mathf.Lerp(0.07f, 0.28f + 0.16f * cl, u);
                         float x = edge + side * (r * 0.5f + rng.Range(0.0f, 0.35f));
                         int bi = Add(list, rng, side, x, s + rng.Range(-0.5f, 0.5f) * step, r, rng.Range(0.2f, 0.38f),
                                      rng.Range(0.84f, 0.97f));
                         if (bi >= 0 && rng.Next() < 0.15f + 0.55f * cl) Pile(list, rng, list[bi], side, 0.97f);
+                    }
+
+                    // 2b) crest sprinkle: small bubbles resting on / between the rim bubbles (fine foam texture, many sizes)
+                    int nCrest = 2 + (rng.Next() < 0.5f ? 1 : 0);
+                    for (int k = 0; k < nCrest; k++)
+                    {
+                        float u = rng.Next();
+                        float r = 0.03f + 0.055f * u * u;
+                        float x = edge + side * rng.Range(0.05f, 0.65f);
+                        float z = s + rng.Range(-0.5f, 0.5f) * step;
+                        float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + rng.Range(0.08f, 0.3f) * (0.6f + 0.8f * cl);
+                        AddAt(list, rng, side, new Vector3(Mathf.Clamp(x, -WallX, WallX), y, z), r, rng.Range(0.92f, 1f));
                     }
 
                     // 3) heap body from the rim to the wall: a LOW lather of smaller bubbles (bigger next to the rim mound,
@@ -214,7 +226,7 @@ namespace Rainbow.Screen05
                             float f = rng.Next();
                             float x = edge + side * (0.5f + f * body);
                             float u = rng.Next();
-                            float r = Mathf.Lerp(0.08f, 0.22f + 0.1f * cl, u * u) * (1f - 0.3f * f);
+                            float r = Mathf.Lerp(0.06f, 0.22f + 0.12f * cl, Mathf.Pow(u, 2.4f)) * (1f - 0.3f * f);
                             int bi = Add(list, rng, side, x, s + rng.Range(-0.5f, 0.5f) * step, r,
                                          rng.Range(0.32f, 0.5f) + 0.05f * f, rng.Range(0.74f, 0.9f));
                             if (bi >= 0 && rng.Next() < (0.08f + 0.25f * cl) * (1f - f)) Pile(list, rng, list[bi], side, 0.93f);

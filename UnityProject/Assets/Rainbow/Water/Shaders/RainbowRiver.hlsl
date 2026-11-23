@@ -370,6 +370,8 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
         // contact shadow behind him (strongest at the fur, gone ~0.55 u out; soft wedge edges)
         float latK = 1.0 - smoothstep(0.2 + 0.1 * max(e, 0.0), 0.46 + 0.15 * max(e, 0.0), abs(dlB));
         float shadeK = latK * smoothstep(-0.1, 0.35, cosB) * smoothstep(-0.06, 0.0, e) * (1.0 - smoothstep(0.1, 0.75, e));
+        // his body blocks the reflected glare there too (no glossy arcs / flares inside the shadow)
+        col = lerp(col, min(col, float3(0.1, 0.45, 0.85)), saturate(shadeK * wk * 2.0));
         col = lerp(col, float3(0.006, 0.035, 0.15), shadeK * 0.92 * wk);
         // broken bubbly rim hugging the waterline on his flanks only
         float rim = smoothstep(-0.08, -0.01, e) * (1.0 - smoothstep(0.04, 0.13, e)) * flankK;
