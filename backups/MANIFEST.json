@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28920,
-   "sha256": "812666e1e417d763efbf8474678ce450442efad6875c6557ddd7951261253871"
+   "sha256": "76537bb84da7ad0d838ce7971268482b01cc0b041183c5e119064552da0604d8"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2958,
-   "sha256": "c92d0c3cb32dd866345d039255f3fb96038b04a69434206df14fdfce6ff0cda5"
+   "sha256": "a967de777507a8506adb348299c19e8b6e879fd8e87b8b3f925de65b65f73ddc"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -50070,6 +50070,11 @@
    "path": "tools/world/probe_frames.cjs",
    "bytes": 4945,
    "sha256": "aa5b366292852d2c2338433dd0126e0952eaa810bb6b4fa3db04d67811fc8e37"
+  },
+  {
+   "path": "tools/world/r46_chatgpt_package.py",
+   "bytes": 8846,
+   "sha256": "edca4618ebab5500c59894dc1a72ab8a0c49abf6c66dfe5eb1642647eb04ca14"
   },
   {
    "path": "tools/world/r46_pairs.py",

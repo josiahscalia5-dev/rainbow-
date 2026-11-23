@@ -5160,3 +5160,90 @@ Next, I need your review of 05 and 06 before touching 07–10. Open `qa/kit46/RE
 Can you give me the zip file for the ChatGPT for all the files, code files, to all the, you know, images on my mobile app screen that you built, like a summary, just everything that you built and everything. So I could send it to ChatGPT, and ChatGPT could see it, how it looks and everything.
 What are the pink character how he swims through the level of the game or screen etc
 
+### 🤖 Claude — 2026-11-23T00:30:50.766Z
+
+I'll build that package. First a look at how the Round 45 ChatGPT zip was organised, so the new one follows the same layout.
+
+### 🤖 Claude — 2026-11-23T00:30:52.830Z
+
+> 🔧 **Bash** `{"command": "unzip -l qa/kit45/RAINBOW_for_ChatGPT.zip | awk '{print $4}' | sed 's#/[^/]*$##' | sort | uniq -c | sort -rn | head -30; unzip -l qa/kit45/RAINBOW_for_ChatGPT.zip | tail -1; unzip -p qa/kit45/RAINBOW_for_ChatGPT.zip $(unzip -l qa/kit45/RAINBOW_for_ChatGPT.zip | awk '{print $4}' | grep -i \"readme\\|START\\|summary\" | head -1) | head -40", "description": "Inspect the round 45 ChatGPT package layout"}`
+
+### 🧑 User — 2026-11-23T00:30:52.905Z
+
+> ↩︎ result: 28 RAINBOW_for_ChatGPT/code/tools/kit05
+>      25 RAINBOW_for_ChatGPT/code/tools/screenkit
+>      19 RAINBOW_for_ChatGPT/code/tools/reflock
+>      14 RAINBOW_for_ChatGPT/images/latest
+>      14 RAINBOW_for_ChatGPT/code/src/vfx
+>      13 RAINBOW_for_ChatGPT/images/approved
+>      10 RAINBOW_for_ChatGPT/code/src/world
+>      10 RAINBOW_for_ChatGPT/code/src/characters/benny
+>       9 RAINBOW_for_ChatGPT/video
+>       8 RAINBOW_for_ChatGPT/code/tools/world
+>       6 RAINBOW_for_ChatGPT/code/tools/kit05/qa
+>       5 RAINBOW_for_ChatGPT/code/src/game
+>       5 RAINBOW_for_ChatGPT/code/src/characters/girl
+>       4 RAINBOW_for_ChatGPT/docs/timing
+>       3 RAINBOW_for_ChatGPT/docs
+>       3 
+>       2 RAINBOW_for_ChatGPT/images/approved/original_png
+>       2 RAINBOW_for_ChatGPT/code/tools/screenkit/screens/07
+>       2 RAINBOW_for_ChatGPT/code/tools/screenkit/screens/06
+>       2 RAINBOW_for_ChatGPT/code/tools/screenkit/screens/05
+>       2 RAINBOW_for_ChatGPT/code/tools/screenkit/screens/04
+>       2 RAINBOW_for_ChatGPT/code/tools/screenkit/eval
+>       2 RAINBOW_for_ChatGPT/code/src/ui
+>       2 RAINBOW_for_ChatGPT/code/src/render
+>       2 RAINBOW_for_ChatGPT/code/src/gameplay
+>       1 RAINBOW_for_ChatGPT/code/tools/reflock/screens
+>  …[+8851 chars]
+
+### 🤖 Claude — 2026-11-23T00:31:06.385Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,40p tools/kit05/controls.js | cut -c1-260; grep -n \"LANE\\|SPEED\\|LEAP\\|DIVE\\|BODY_LO\\|BODY_HI\\|COIN_R\\|ARM_AMP\\|KICK_RATE\\|BOB_AMP\" tools/kit05/controls.js | head -30 | cut -c1-220", "description": "Read Benny controls parameters"}`
+
+### 🧑 User — 2026-11-23T00:31:06.434Z
+
+> ↩︎ result: // controls.js -- Screen 05 swipe controls for play3.html (installed by the "// [controls]" hook lines there).
+> // Lanes (swipe left / right), leap (swipe up), dive (swipe down), the 26-coin trail (perspective size, coinScreen), the level end,
+> // natural swim animation (stroke roll, faster paddling while changing lanes, lean / yaw into the move, pom-pom inertia),
+> // splash + droplets + bubbles on leaving / entering the water, and the follow-camera offsets.
+> // Everything is driven by the game clock passed to window.step(t, dt, ...) so tests stay deterministic.
+> // Benny faces +t (away from the camera, the approved picture shows his back); his model +x is the river's right (+r).
+> // Round 34 (S2): lane swipes act at once, also in the middle of a lane change (a reversal redirects him smoothly) and in the air /
+> // under water; leap and dive are Hermite / ballistic height segments that can hand over to each other (swipe down in the air = dive
+> // straight in, swipe up under water = leap out), a buoyancy spring settles him after every landing / resurfacing; the bank is
+> // rate-limited; paws paddle alternately (power stroke down and back), his lower back flutter-kicks, and swimfx.js adds the  …[+6371 chars]
+
+### 🤖 Claude — 2026-11-23T00:31:13.524Z
+
+Now building the package. I'm also saving the packaging script in the repo (`tools/world/r46_chatgpt_package.py`), so the next round can produce the same package in one command.
+
+### 🤖 Claude — 2026-11-23T00:31:47.076Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/world/r46_chatgpt_package.py", "content": "\"\"\"Rainbow round 46 - one ZIP for another AI assistant (ChatGPT) to SEE and READ everything built for Screens 05 + 06:\nsummary + how Benny swims, the approved pictures, the app's screens now, before / after pairs, swim sequences, the recordings, the numbers, the code\n(full files + the round-46 diff) and the notes. Nothing secret, no paid assets, no APK (247 MB - on GitHub, path in the summary).\n  python3 -I tools/world/r46_chatgpt_package.py <final textured run dir> <out.zip>\"\"\"\nimport os, sys, json,  …[+8444 chars]`
+
+### 🧑 User — 2026-11-23T00:31:47.121Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/world/r46_chatgpt_package.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-23T00:31:50.020Z
+
+Next, the summary page ChatGPT will read first. Checking the forward speed used in real play so the description is accurate.
+
+### 🤖 Claude — 2026-11-23T00:31:51.973Z
+
+> 🔧 **Bash** `{"command": "grep -n \"q.get('speed')\\|speed ??\\|SPEED\" tools/world/world.html | head -5 | cut -c1-200; grep -n \"function fwd\" -A 3 tools/kit05/controls.js | cut -c1-200; grep -n \"c_LANE\\|LANE:\" tools/world/world.html | head -3 | cut -c1-200; python3 -c \"\nimport json; W=json.load(open('/home/user/ws46/world/game/world.json')); print([(a['id'], round(a['s0'],1), round(a['s1'],1)) for a in W['areas']], W['LEVEL'])\"", "description": "Check play speed, lane width and area ranges"}`
+
+### 🧑 User — 2026-11-23T00:31:52.062Z
+
+> ↩︎ result: 589:  if (t >= AB.turbo.until - AB.turbo.dur && t < AB.turbo.until) speed = (speed ?? +q.get('speed')) * 1.6;
+> 590:  const v = CT.fwd(speed ?? +q.get('speed')); st.s = Math.min(st.s + v * dt, LEVEL + 0.5); st.t = t; TIME.value = t; WT.value = t;
+> 695:    if (st.s < LEVEL) window.step((now - t0) / 1000, dt, 0, +q.get('speed')); renderer.render(scene, camera);
+> 535:  function fwd(speed) { return S.done ? speed * clamp((S.sStop - getS()) / P.GLIDE, 0, 1) : speed; }
+> 536-
+> 537-  return { c, update, orient, anim, water, hits, state, fwd, P };
+> 538-}
+> 44:for (const [k, v] of [['c_LANE', '0.3'], ['c_LAT_MAX', '0.36'], ['speed', '2.2'], ['fx_RIP_SIZE', '0.03']]) if (!q.has(k)) q.set(k, v);   // r45: smaller ripple rings
+> [('04', 0.0, 25.2), ('AB', 25.2, 87.3), ('05', 87.3, 141.8), ('06', 141.8, 187.6), ('07', 187.6, 246.4)] 246.35000000000002
+
