@@ -4,9 +4,10 @@
 //   RainbowRiverWave_float / RainbowRiverWave_half    -> vertex swell height (world y offset)
 // Port of src/vfx/waterRibbon.ts, Screen 05 path W10 (?water05) + W12 silk05 + W11 foam shelf (puff05):
 // electric-cyan core between two hot-pink satin S-bands that follow the course meander (+ the band S `sbend05`),
-// hue ramp pink -> violet -> periwinkle -> cyan across each band edge, flow-aligned brushed satin, long silk streaks,
-// swell highlights, glossy glints toward the bright tunnel end, flares carried by the current, near-field swells and
-// lightning flares behind Benny, diagonal pink wake sweeps, and Benny's white waterline wake (collar + spray fans).
+// hue ramp pink -> violet -> periwinkle -> cyan across each band edge, flow-aligned brushed satin, fine silky satin
+// streaks (RBW_Satin, lanes warped so they never outline the bands), swell highlights, glossy glints toward the bright
+// tunnel end, flares carried by the current, near-field ∩ swells with 4-point flares along the arcs behind Benny,
+// curved pink wake sweeps, and Benny's white waterline wake (collar + spray fans).
 // Everything is procedural in world (x, s): one continuous material along the whole course, no textures, no seams.
 //
 // Inputs (all world space; the river mesh sits at the identity transform):
@@ -173,7 +174,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     // (water round 2026-11-23) curved sweeps: they bend out toward the bottom corners (centre grows with back^2, not as
     // straight diagonal planks), a little broader, and they end where the approved ones hide behind the gold frame
     float cW = 0.25 + 0.42 * back + 0.16 * back * back + 0.05 * sin(v5 * 1.7 + (dlB >= 0.0 ? 1.9 : -1.9)) * back;
-    float wW = (0.12 + 0.12 * back) * smoothstep(0.6, 1.3, back) * wk * (1.0 - smoothstep(2.4, 3.8, back));
+    float wW = (0.12 + 0.12 * back) * smoothstep(0.6, 1.3, back) * wk * (1.0 - smoothstep(1.9, 3.0, back));
 
     // ---- band coordinate of the nearer band: -1 bank-side edge .. +1 core-side edge ----
     float tL5 = sdL / max(wL, 1e-3);
@@ -197,14 +198,15 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
 
     // near field: broad glossy swells rolling past Benny, bowed around his track (approved: BRIGHT azure water with soft
     // lighter ∩ arcs, near ladder p5 #0092EA / p50 #00B6FC / p75 #09E0FF - no dark troughs, no ring stripes)
-    float ph = v5 * 12.0 + 13.0 * dlB * dlB / (1.0 + 0.25 * back) + 0.9 * RBW_VNoise(float2(dlB * 0.9 + 3.0, v5 * 0.6));
+    // (round-topped ∩ arcs, bowed a little more than glsl it04's 9 so their sides fall toward the bottom corners)
+    float ph = v5 * 12.0 + 17.0 * dlB * dlB / (1.0 + 0.25 * back) + 0.9 * RBW_VNoise(float2(dlB * 0.9 + 3.0, v5 * 0.6));
     float sv = 0.5 + 0.5 * sin(ph);
     float3 nb = lerp(lerp(RBW_CDEEP2, RBW_CMID, 0.3), RBW_CMID, smoothstep(0.0, 0.45, sv));
     nb = lerp(nb, RBW_CBRIGHT, smoothstep(0.45, 0.92, sv) * 0.9);
     float segN = smoothstep(0.15, 0.45, RBW_VNoise(float2(dlB * 1.4 + 9.0, v5 * 1.3)));   // long, mostly unbroken arcs
     float sp = max(sin(ph + 1.0), 1e-4);
     float crestN = (pow(sp, 36.0) + 0.5 * pow(sp, 7.0)) * segN;
-    nb = lerp(nb, RBW_CAQUA, saturate(0.5 * pow(sp, 4.0) * (0.4 + 0.6 * segN)));
+    nb = lerp(nb, RBW_CAQUA, saturate(0.7 * pow(sp, 4.0) * (0.4 + 0.6 * segN)));
     nb = lerp(nb, RBW_CAQUAW, saturate(pow(sp, 16.0) * segN) * 0.9);
     nb += float3(0.35, 0.55, 0.6) * pow(sp, 40.0) * segN;                                // glossy arc line
     cy = lerp(cy, nb, near5);
@@ -271,7 +273,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     // sparse short glossy dashes (approved: bright white-aqua / white-pink speed streaks scattered through the satin)
     float2 sS5 = RBW_SilkStreak(Xw, v5 * 6.0, 3.1, 2.7, 0.3, pxK) * kS5 * (1.0 - smoothstep(0.12, 0.3, fwsR));
     c5 = lerp(c5, lerp(RBW_CAQUA, RBW_PLIGHT, pk5), sS5.y * 0.3);
-    c5 += lerp(float3(1.4, 1.9, 2.0), float3(2.0, 1.5, 2.0), pk5) * sS5.x * 0.5;
+    c5 += lerp(float3(1.4, 1.9, 2.0), float3(2.0, 1.5, 2.0), pk5) * sS5.x * 0.4;
     // near field behind Benny: long soft streaks along the fanning flow lines (X fans out from his track), so the near
     // water streams out toward the bottom corners like the approved; stronger on the pink wake sweeps (satin plumes)
     float kN5 = near5 * bOn * smoothstep(0.3, 1.2, back);
@@ -285,7 +287,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float flA = RBW_FlowGlint(float2(X * 1.6, v5 * 0.12), 0.8, 48.0, 4.6, 0.0, time, pxK);
     // + a denser set of small sparkles in the mid field (approved: the satin glitters all over, cyan and pink); faded
     // early with distance so the far river does not turn into white dots
-    flA = max(flA, 0.6 * (1.0 - smoothstep(0.08, 0.2, fwsR))
+    flA = max(flA, 0.5 * (1.0 - smoothstep(0.08, 0.2, fwsR))
                  * RBW_FlowGlint(float2(Xw * 4.3 + 0.37, v5 * 0.31 + 2.1), 0.55, 20.0, 4.0, 0.0, time + 1.9, pxK));
     float gC = (ph - 0.571) / 6.2832 + 0.5;
     float flN = RBW_FlowGlintW(float2(gC, dlB * 1.25 + 0.37), 0.85, 70.0, 3.0, 0.0, time + 2.7, pxK, 2.6);

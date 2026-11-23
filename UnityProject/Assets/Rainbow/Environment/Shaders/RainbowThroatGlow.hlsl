@@ -22,10 +22,11 @@ void RainbowThroatGlow_float(float2 UV, float Time, out float3 Color)
     const float3 WARM = float3(0.97, 0.43, 0.17);       // display ~(250,150,75)
     const float3 RIM  = float3(0.9, 0.32, 0.12);        // display ~(245,128,65) orange, no pink
     float r = length(UV) * _ThroatParams.w;
-    float3 c = lerp(RIM, WARM, 1.0 - smoothstep(0.7, 0.92, r));
-    c = lerp(c, GOLD, 1.0 - smoothstep(0.46, 0.66, r));
-    c = lerp(c, PALE, 1.0 - smoothstep(0.26, 0.46, r));
-    c = lerp(c, CORE, 1.0 - smoothstep(0.08, 0.26, r));
+    // radii measured at the approved camera (cap ~35 px): white to ~10 px, pale yellow to ~17, gold to ~27
+    float3 c = lerp(RIM, WARM, 1.0 - smoothstep(0.76, 0.95, r));
+    c = lerp(c, GOLD, 1.0 - smoothstep(0.55, 0.76, r));
+    c = lerp(c, PALE, 1.0 - smoothstep(0.36, 0.55, r));
+    c = lerp(c, CORE, 1.0 - smoothstep(0.16, 0.34, r));
     float ang = atan2(UV.y, UV.x);
     float rays = pow(saturate(0.5 + 0.5 * sin(ang * _ThroatParams.y + 1.3 * sin(ang * 3.0 + Time * _ThroatParams.z))), 6.0);
     c += PALE * rays * _ThroatParams.x * smoothstep(0.15, 0.35, r) * (1.0 - smoothstep(0.55, 0.95, r));
