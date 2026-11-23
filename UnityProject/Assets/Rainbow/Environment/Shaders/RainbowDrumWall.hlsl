@@ -20,6 +20,7 @@
 //   float4 _FloorSheet;     (sheet top world y, blend height m, flow speed m/s, strength 0..1)
 //   float4 _FloorColorA, _FloorColorB;                   pink flow sheet colours ('#c81f9c', '#ff4fc0')
 //   float  _Exposure;
+//   float4 _WallFar;        (fade start m, fade end m, strip light kept far away, panorama reflection kept far away)
 #ifndef RAINBOW_DRUM_WALL_INCLUDED
 #define RAINBOW_DRUM_WALL_INCLUDED
 
@@ -89,8 +90,12 @@ void RainbowDrumWall_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float3 F0 = lerp(float3(0.04, 0.04, 0.04), base, metal);
     float ndv = saturate(dot(N, V));
     float3 F = F0 + (max((1.0 - rough).xxx, F0) - F0) * pow(1.0 - ndv, 5.0);
-    float3 env = RainbowSamplePano(reflect(-V, N), _EnvBlur + rough * 7.0) * _EnvIntensity;
-    env += RainbowTubeStripRadiance(V, N, rough) * (1.0 - 0.5 * sheet);
+    // Light round 2026-11-23: deeper in the tunnel the lengthwise strip reflections converged into long white radial
+    // spokes round the throat (approved: the far walls are violet with dark slot rows, the spokes only faint), so the
+    // strips and the panorama reflection are faded with view distance (_WallFar: start m, end m, strips kept, env kept).
+    float farK = smoothstep(_WallFar.x, _WallFar.y, dist);
+    float3 env = RainbowSamplePano(reflect(-V, N), _EnvBlur + rough * 7.0) * _EnvIntensity * lerp(1.0, _WallFar.w, farK);
+    env += RainbowTubeStripRadiance(V, N, rough) * (1.0 - 0.5 * sheet) * lerp(1.0, _WallFar.z, farK);
     float3 spec = env * F * (1.0 - 0.9 * hole);
 
     float3 emission = _EmissionColor.rgb * _EmissionStrength * sol * (1.0 - mt * 0.5);

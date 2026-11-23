@@ -18,6 +18,7 @@
 //   float4 _BandF;   (view distance where rings start fading to rose-copper, distance where fully faded, -, -)
 //   float4 _PaddleParams;  (env highlight strength, strip streak strength, contour darkness, -)
 //   float4 _FrameParams;   (moving glint strength, glint frequency, -, -)
+//   float4 _GoldTone;      ring band tone curve (exponents r, g, b, amount 0..1)
 //   float  _Exposure;
 #ifndef RAINBOW_GOLD_METAL_INCLUDED
 #define RAINBOW_GOLD_METAL_INCLUDED
@@ -75,12 +76,12 @@ float3 RainbowBandShade(float deep, float3 N, float3 V, float3 P, float3 axisWS)
     float ft = min(fwidth(t), fwidth(frac(t + 0.5)));
     float d = frac(t + 0.5) - 0.5;
     float sw = _BandS.y + ft * 0.7;
-    float hw = _BandS.y * 3.0 + ft * 0.7;
+    float hw = _BandS.y * 2.2 + ft * 0.7;          // light round: tighter yellow halo (was 3x: broad pale patches)
     float sp = exp(-d * d / (sw * sw)) * lerp(1.0, _BandS.y / sw, 0.6);
     float halo = exp(-d * d / (hw * hw));
     float across = inMain * smoothstep(0.25, 0.5, ndv) * (1.0 - smoothstep(0.93, 0.99, abs(m)))
                  + inLip * (1.0 - inMain) * 0.4 * smoothstep(0.2, 0.4, ndv);
-    col = lerp(col, BC_HALO, halo * across * 0.8);
+    col = lerp(col, BC_HALO, halo * across * 0.65);
     col += BC_SPOT * sp * across * _BandS.z * (1.0 - 0.4 * deep);
     return col;
 }
@@ -98,6 +99,11 @@ void RainbowGoldRing_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float dist = length(_WorldSpaceCameraPos.xyz - PositionWS);
     float deep = smoothstep(_BandF.x, _BandF.y, dist);
     float3 bc = RainbowBandShade(deep, N, V, PositionOS, AxisWS);
+    // materials.ts withBandShading `tone` (screen 05 test G1, measured on the approved image: ring gold mean (231,125,85),
+    // G/R 0.48, while the plain palette gave pale peach G/R 0.64): per-channel exponents deepen the mid-tones toward
+    // saturated orange-gold, highlights above 1 stay bright. _GoldTone = (exponents r, g, b, amount 0..1).
+    float3 toned = pow(saturate(bc), max(_GoldTone.xyz, 0.01)) + max(bc - 1.0, 0.0);
+    bc = lerp(bc, toned, _GoldTone.w);
     Color = RainbowApplyFarGlow(bc, dist) * _Exposure;
 }
 

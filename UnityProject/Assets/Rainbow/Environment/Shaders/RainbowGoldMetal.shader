@@ -24,6 +24,7 @@ Shader "Rainbow/Screen05/GoldMetal"
         _FarGlowRange ("Far glow (near, far, strength, -)", Vector) = (80, 260, 1.6, 0)
         _Exposure ("Exposure", Float) = 1
         _LightInfluence ("Direct light influence", Float) = 0.25
+        _GoldTone ("Ring tone curve (exponents r, g, b, amount)", Vector) = (1, 1, 1, 0)
     }
 
     SubShader
@@ -53,6 +54,7 @@ Shader "Rainbow/Screen05/GoldMetal"
             float4 _FarGlowRange;
             float _Exposure;
             float _LightInfluence;
+            float4 _GoldTone;
         CBUFFER_END
 
         TEXTURE2D(_EnvPano);
@@ -116,7 +118,7 @@ Shader "Rainbow/Screen05/GoldMetal"
                 o.axisWS = TransformObjectToWorldDir(float3(0.0, 0.0, 1.0));
                 o.color = input.color;
                 o.uv = float4(input.uv0, input.uv1);
-                o.fogFactor = ComputeFogFactor(p.positionCS.z);
+                o.fogFactor = RainbowFogFactor(p.positionCS);
                 return o;
             }
 

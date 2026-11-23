@@ -29,8 +29,12 @@ namespace Rainbow.Screen05
         public const float EyeS = RiverPath.StartS - EyeBack;
         public const float Bay = 14f;
         public const float RingInset = 0.02f;
-        /// <summary>Real tunnel end: the far throat cap. Far ring at eye + 222 is inside it.</summary>
-        public const float ThroatS = 250f;
+        /// <summary>
+        /// Real tunnel end: the far throat cap (light round 2026-11-23: 250 -> 290 so the approved 7th ring above the
+        /// vanishing point, top r ~40 px, exists; the cap then spans r ~35 px like the approved glow; the rider camera's far
+        /// clip is 300 m and the camera never sits behind s ~3, so the cap is never clipped).
+        /// </summary>
+        public const float ThroatS = 290f;
         public const float TunnelStart = RiverPath.TunnelStart;
         /// <summary>The playable river (Agent 3) ends here; the far river chord (far throat) continues it.</summary>
         public const float FarRiverStart = RiverPath.TunnelLength;
@@ -76,7 +80,11 @@ namespace Rainbow.Screen05
         /// <summary>Rings with s above this use FarBand.</summary>
         public const float FarBandFromS = 80f;
 
-        static readonly float[] FarRingDepths = { 59f, 97f, 161f, 222f };
+        // Light round 2026-11-23: ring tops measured straight up from the approved vanishing point (492,488) sit at
+        // r = 292, 180, 112, 74, 54, 40 px (+ the glow). With the approved camera (ring top 8.56 m above it, f 1278 px)
+        // that is depth ~ 10940 / r: the near ring B (47.6) and the first two far rings already match; the deeper ones were
+        // at 161 / 222 (tops 68 / 49 px) and the 40 px ring was missing. environment.ts ringDv = [59, 97, 161, 222, 322].
+        static readonly float[] FarRingDepths = { 59f, 97f, 150f, 205f, 272f };
 
         static float Smooth(float e0, float e1, float x)
         {
@@ -128,8 +136,8 @@ namespace Rainbow.Screen05
 
         /// <summary>
         /// All real gold rings, ascending s. Near: the slots minus the anchor slot (replaced by the first far ring), the
-        /// slot 26 u ahead of the eye moved to eye + 20 (ring A). Far: eye + [59, 97, 161, 222].
-        /// Default: 5.6, 19.6, 27.6, 47.6, 66.6, 104.6, 168.6, 229.6.
+        /// slot 26 u ahead of the eye moved to eye + 20 (ring A). Far: eye + [59, 97, 150, 205, 272].
+        /// Default: 5.6, 19.6, 27.6, 47.6, 66.6, 104.6, 157.6, 212.6, 279.6.
         /// </summary>
         public static List<float> RingPositions()
         {

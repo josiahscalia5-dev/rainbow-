@@ -5,6 +5,17 @@
 #ifndef RAINBOW_ENV_LIGHTING_INCLUDED
 #define RAINBOW_ENV_LIGHTING_INCLUDED
 
+// Fog depth cap for the tunnel surfaces (light round 2026-11-23). The scene keeps Game.ts FogExp2('#ffbde9', 0.0035), but
+// in the Three.js game the deep 05 rings / walls were a forced-perspective block squeezed into the last ~6 real units at
+// ~60 u from the eye, so that fog never touched them (~4 %). In this port the tunnel is REAL to ~290 m and the same fog
+// washed the far rings and walls 40-55 % pale pink (the pink disc round the throat). Fog depth is capped at that distance.
+#define RB_FOG_MAX_DEPTH 60.0
+real RainbowFogFactor(float4 positionCS)
+{
+    float z = UNITY_Z_0_FAR_FROM_CLIPSPACE(positionCS.z);
+    return ComputeFogFactorZ0ToFar(min(z, RB_FOG_MAX_DEPTH));
+}
+
 float3 RainbowBRDF(float3 L, float3 radiance, float3 N, float3 V, float3 diffuse, float3 F0, float rough)
 {
     float ndl = saturate(dot(N, L));

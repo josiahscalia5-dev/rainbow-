@@ -29,6 +29,7 @@ Shader "Rainbow/Screen05/DrumWall"
         _FloorColorB ("Floor sheet colour B", Color) = (1.0, 0.310, 0.753, 1)
         _Exposure ("Exposure", Float) = 1
         _LightInfluence ("Direct light influence", Float) = 1
+        _WallFar ("Far wall (fade start m, fade end m, strips kept, reflection kept)", Vector) = (30, 100, 0.35, 0.8)
     }
 
     SubShader
@@ -63,6 +64,7 @@ Shader "Rainbow/Screen05/DrumWall"
             float4 _FloorColorB;
             float _Exposure;
             float _LightInfluence;
+            float4 _WallFar;
         CBUFFER_END
 
         TEXTURE2D(_EnvPano);
@@ -117,7 +119,7 @@ Shader "Rainbow/Screen05/DrumWall"
                 o.positionWS = p.positionWS;
                 o.normalWS = TransformObjectToWorldNormal(input.normalOS);
                 o.uv = input.uv;
-                o.fogFactor = ComputeFogFactor(p.positionCS.z);
+                o.fogFactor = RainbowFogFactor(p.positionCS);
                 return o;
             }
 
