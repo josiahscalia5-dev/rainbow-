@@ -55,7 +55,7 @@ namespace Rainbow.Screen05
             if (sprites.pause == null) sprites.pause = UISpriteFactory.ToSprite(UISpriteFactory.PauseButton("hud_pause", 128));
             if (sprites.panel == null) sprites.panel = UISpriteFactory.ToSprite(PanelTexture());
             if (sprites.button == null) sprites.button = UISpriteFactory.ToSprite(ButtonTexture());
-            if (sprites.white == null) sprites.white = UISpriteFactory.ToSprite(UISpriteFactory.Pill("hud_white", 8, 8, 0f, Color.white, Color.white, 0f, Color.white, 0f));
+            if (sprites.white == null) sprites.white = UISpriteFactory.ToSprite(UISpriteFactory.Solid("hud_white", 8, Color.white));
             Assign(barImage, sprites.bar);
             Assign(bannerImage, sprites.banner);
             Assign(heartImage, sprites.heart);

@@ -159,12 +159,14 @@ namespace Rainbow.Screen05.EditorTools
         }
 
         // ---- glb -> skinned mesh -------------------------------------------------------------------------------------
+#pragma warning disable 0649 // filled by JsonUtility
         [Serializable] class GJson { public GAccessor[] accessors; public GBufferView[] bufferViews; public GMesh[] meshes; }
         [Serializable] class GAccessor { public int bufferView = -1; public int byteOffset; public int componentType; public int count; public string type; }
         [Serializable] class GBufferView { public int buffer; public int byteOffset; public int byteLength; public int byteStride; }
         [Serializable] class GMesh { public string name; public GPrimitive[] primitives; }
         [Serializable] class GPrimitive { public GAttributes attributes; public int indices = -1; public int mode = 4; }
         [Serializable] class GAttributes { public int POSITION = -1; public int NORMAL = -1; public int TEXCOORD_0 = -1; }
+#pragma warning restore 0649
 
         static float Smooth(float e0, float e1, float x)
         {

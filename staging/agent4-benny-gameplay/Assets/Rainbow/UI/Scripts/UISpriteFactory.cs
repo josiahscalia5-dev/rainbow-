@@ -32,6 +32,17 @@ namespace Rainbow.Screen05
             return t;
         }
 
+        /// <summary>Fully opaque single-colour texture (dividers, overlays, hurt flash).</summary>
+        public static Texture2D Solid(string name, int size, Color c)
+        {
+            Texture2D t = NewTex(size, size, name);
+            Color[] px = new Color[size * size];
+            for (int i = 0; i < px.Length; i++) px[i] = c;
+            t.SetPixels(px);
+            t.Apply(false, false);
+            return t;
+        }
+
         static float RoundedRectSdf(float px, float py, float hx, float hy, float r)
         {
             float qx = Mathf.Abs(px) - hx + r, qy = Mathf.Abs(py) - hy + r;

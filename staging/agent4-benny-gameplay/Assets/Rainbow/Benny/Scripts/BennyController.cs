@@ -14,6 +14,8 @@ namespace Rainbow.Screen05
     ///
     /// Contract API: Instance, S (= RiverPath s of his route point = world Z), LateralX (world X = offset from the tunnel
     /// line, the value RiverPath.ClampLateral works on), TeleportTo(s, lateralX).
+    /// Steering moves a lateral offset from the SwimRoute centre line (Three.js course frame: lat 0 = centreline +
+    /// meander05), so with no input Benny follows the S-curve; world X = route X + offset, clamped with ClampLateral.
     /// </summary>
     [DefaultExecutionOrder(-50)]
     public class BennyController : MonoBehaviour
@@ -78,7 +80,7 @@ namespace Rainbow.Screen05
         static readonly int JumpId = Animator.StringToHash("Jump");
         static readonly int VerticalSpeedId = Animator.StringToHash("VerticalSpeed");
 
-        float distance, speed, vLat, steerSmoothed, visSteer;
+        float distance, speed, vLat, steerSmoothed, visSteer, offset;
         float height, vy;
         bool grounded = true, swimming, placed;
         float lift, pitch;
@@ -134,14 +136,17 @@ namespace Rainbow.Screen05
         {
             if (route != null) route.EnsureReady();
             distance = route != null ? route.DistanceAtS(s) : s - RiverPath.TunnelStart;
+            Vector3 rp, rf;
+            SampleRoute(distance, out rp, out rf);
             LateralX = RiverPath.ClampLateral(lateralX, BodyRadius, bankMargin);
+            offset = LateralX - rp.x;
             vLat = 0f; steerSmoothed = 0f; visSteer = 0f;
             height = 0f; vy = 0f; grounded = true;
             edgeTime = 0f; bumpCooldown = 0f;
             lift = rideLift; pitch = ridePitchRad;
             pomAngX = pomVelX = pomAngZ = pomVelZ = 0f;
             placed = true;
-            Place();
+            Place(rp, rf);
             lastY = transform.position.y; lastVy = 0f;
             if (hasAnimator)
             {
@@ -184,14 +189,18 @@ namespace Rainbow.Screen05
             speed = Mathf.MoveTowards(speed, swimming ? swimSpeed : 0f, (swimming ? 30f : 9f) * dt);
             distance += speed * dt;
 
-            // ---- steering (Game.ts override branch, continuous)
+            // ---- steering (Game.ts override branch, continuous): offset from the route centre line
+            Vector3 rp, rf;
+            SampleRoute(distance, out rp, out rf);
             steerSmoothed += (steerIn - steerSmoothed) * Mathf.Min(1f, dt * steerResponse);
             vLat += (steerSmoothed * maxSideSpeed - vLat) * Mathf.Min(1f, dt * sideResponse);
-            float x = LateralX + vLat * dt;
+            offset += vLat * dt;
+            float x = rp.x + offset;
             float lim = RiverPath.ClampLateral(1e6f, BodyRadius, bankMargin);
             bool atEdge = false;
             if (x > lim) { x = lim; if (vLat > 0f) vLat = 0f; atEdge = true; }
             else if (x < -lim) { x = -lim; if (vLat < 0f) vLat = 0f; atEdge = true; }
+            offset = x - rp.x;
             LateralX = x;
 
             // ---- foam-bank bump (Game.ts: hugging the wall > 0.6 s costs a heart and bounces him back)
@@ -242,7 +251,7 @@ namespace Rainbow.Screen05
             lift += (liftTarget - lift) * ease;
             pitch += (pitchTarget - pitch) * ease;
 
-            Place();
+            Place(rp, rf);
 
             // ---- animation parameters
             visSteer = Mathf.Clamp(vLat / Mathf.Max(0.01f, maxSideSpeed), -1f, 1f);
@@ -264,15 +273,20 @@ namespace Rainbow.Screen05
             Screen05Events.BennyS = S;
         }
 
-        void Place()
+        /// <summary>Route centre-line point and horizontal forward at arc-length distance d.</summary>
+        void SampleRoute(float d, out Vector3 p, out Vector3 fwd)
         {
-            Vector3 p, fwd, right;
-            if (route != null) route.SampleAtDistance(distance, out p, out fwd, out right);
+            Vector3 right;
+            if (route != null) route.SampleAtDistance(d, out p, out fwd, out right);
             else
             {
-                float s = RiverPath.TunnelStart + distance;
-                p = RiverPath.CorePoint(s); fwd = RiverPath.Forward(s); right = RiverPath.Right(s);
+                float s = RiverPath.TunnelStart + d;
+                p = RiverPath.CorePoint(s); fwd = RiverPath.Forward(s);
             }
+        }
+
+        void Place(Vector3 p, Vector3 fwd)
+        {
             S = p.z;
             transform.SetPositionAndRotation(
                 new Vector3(LateralX, RiverPath.WaterY + RootRide + height, S),
