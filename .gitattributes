@@ -1,0 +1,30 @@
+# Text files: normalise line endings in the repository.
+* text=auto
+
+# Git LFS for large binary art & builds (same rules as the main Rainbow branch).
+# Approved reference PNG/JPG and textures stay in plain git so they remain byte-identical without LFS.
+*.blend filter=lfs diff=lfs merge=lfs -text
+*.glb   filter=lfs diff=lfs merge=lfs -text
+*.ply   filter=lfs diff=lfs merge=lfs -text
+*.spz   filter=lfs diff=lfs merge=lfs -text
+*.fbx   filter=lfs diff=lfs merge=lfs -text
+*.hdr   filter=lfs diff=lfs merge=lfs -text
+*.exr   filter=lfs diff=lfs merge=lfs -text
+*.ktx2  filter=lfs diff=lfs merge=lfs -text
+*.psd   filter=lfs diff=lfs merge=lfs -text
+*.mp4   filter=lfs diff=lfs merge=lfs -text
+*.webm  filter=lfs diff=lfs merge=lfs -text
+*.mov   filter=lfs diff=lfs merge=lfs -text
+*.apk   filter=lfs diff=lfs merge=lfs -text
+*.aab   filter=lfs diff=lfs merge=lfs -text
+*.zip   filter=lfs diff=lfs merge=lfs -text
+
+# Binary images / fonts / audio (no text conversion).
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.tga  binary
+*.ttf  binary
+*.otf  binary
+*.wav  binary
+*.ogg  binary

@@ -1,0 +1,38 @@
+# ---- Unity generated folders and files (never commit) ----
+UnityProject/[Ll]ibrary/
+UnityProject/[Tt]emp/
+UnityProject/[Oo]bj/
+UnityProject/[Bb]uild/
+UnityProject/[Bb]uilds/
+UnityProject/[Ll]ogs/
+UnityProject/[Uu]ser[Ss]ettings/
+UnityProject/[Mm]emoryCaptures/
+UnityProject/[Rr]ecordings/
+UnityProject/.vs/
+UnityProject/.vscode/
+UnityProject/.idea/
+UnityProject/*.csproj
+UnityProject/*.sln
+UnityProject/*.slnx
+UnityProject/*.user
+UnityProject/*.pidb
+UnityProject/*.booproj
+UnityProject/*.svd
+UnityProject/*.pdb
+UnityProject/*.mdb
+UnityProject/*.opendb
+UnityProject/*.VC.db
+UnityProject/sysinfo.txt
+UnityProject/crashlytics-build.properties
+
+# ---- licenses, secrets and credentials (never commit) ----
+*.ulf
+*.alf
+.env
+*.pem
+*.key
+
+# ---- OS clutter ----
+Thumbs.db
+Desktop.ini
+.DS_Store
