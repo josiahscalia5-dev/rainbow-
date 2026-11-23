@@ -25,7 +25,7 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _FootprintBack: 0.1
+    - _FootprintBack: 0.14
     - _Intensity: 1
     - _Len: 1.55
     - _RopeWidth: 1

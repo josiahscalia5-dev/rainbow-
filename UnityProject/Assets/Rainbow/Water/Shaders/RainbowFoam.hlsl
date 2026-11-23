@@ -75,6 +75,13 @@ void RBW_FoamVertex(float3 centreWS, float4 uv0, float4 uv1, float sOffset, floa
     float3 c = centreWS;
     float r = uv0.z;
     float seed = uv0.w;
+    // perspective size compensation (foam.ts rafts: "bubbles grow with distance so their on-screen size stays ~10-45 px",
+    // approved: 30-60 px bubbles in the low clumps beside Benny, 20-40 px bubbles in the tall far banks): bubbles and
+    // their pile heights scale smoothly about the river floor (WaterY = 0) with the distance to the camera
+    float base = RBW_FoamBaseHeight(c.x, uv1.z, uv1.w);
+    float k = lerp(0.42, 1.0, smoothstep(5.0, 24.0, distance(_WorldSpaceCameraPos, c)));
+    c.y = base + (c.y - base) * k;
+    r *= k;
     // the puffs float on the stream: they ride the same swell as the water (RBW_RiverWave)
     c.y += RBW_FoamBob(c.x, c.z, uv1.z, uv1.w, sOffset, waveAmp, time);
     // gentle breathing of the lather (foam.ts)
@@ -151,8 +158,10 @@ float3 RBW_FoamColor(float3 Nv, float px, float seed, float ao, float tint, floa
     float big = smoothstep(18.0, 40.0, px);                       // the ref's big near bumps show large white caps
     // steep key light from the upper left: white caps only on the lit top, lavender middle, blue lower half
     float tl = dot(Nv, normalize(float3(-0.4, 0.85, 0.35)));
-    float t = 0.52 + 0.62 * tl - pow(1.0 - z, 1.5) * (0.25 + 0.35 * saturate(0.5 - q.y * 0.7)) - (1.0 - ao) * 0.3
-            + 0.06 * big;
+    // (median of the approved bank foam is a light periwinkle #ABB8FA, only the top 10-30 % is white: a little lower
+    //  than foam.ts, with deeper blue-violet crevices round each bubble)
+    float t = 0.47 + 0.62 * tl - pow(1.0 - z, 1.3) * (0.32 + 0.4 * saturate(0.5 - q.y * 0.7)) - (1.0 - ao) * 0.4
+            + 0.04 * big;
     // fine open bubbles: dense on the lower half and the flanks, sparse on the lit top
     float2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(px / 8.0, 1.2, 12.0) + seed * 37.0;
     float dens = clamp(0.25 + 0.9 * RBW_SS(0.35, -0.6, q.y) + 0.35 * (1.0 - z) - 0.2 * big, 0.0, 0.95);
