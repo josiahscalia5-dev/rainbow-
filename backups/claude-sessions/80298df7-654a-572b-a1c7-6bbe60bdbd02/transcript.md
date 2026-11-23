@@ -829,3 +829,264 @@ Now the palette. I'll measure the wall (violet/magenta) and gold colours straigh
 > swimfx.js
 > wall_tile.png
 
+### 🤖 Claude — 2026-11-23T03:59:59.715Z
+
+Folder assembled. First render: the start view, plus two points further down the river, using the existing harness (green sentinel on, so any hole in the world shows up pure green).
+
+### 🤖 Claude — 2026-11-23T04:00:01.916Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47 && NODE_PATH=$(npm root -g) timeout 600 node tools/reflock/section_run.cjs $S/ws/game $S/st1 stills 1.35,6,12 0 'sentinel=1' 2>&1 | tail -12", "description": "Render three stills of the modular section", "timeout": 620000}`
+
+### 🧑 User — 2026-11-23T04:00:14.822Z
+
+> ↩︎ result: loaded in 4.5 s {"LEVEL":30,"meshes":107,"foam":637}
+> /tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/st1/s1.35_l0.png
+> /tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/st1/s6.00_l0.png
+> /tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/st1/s12.00_l0.png
+
+### 🤖 Claude — 2026-11-23T04:00:18.940Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47 && python3 -c \"\nfrom PIL import Image\nS='$S/'\nref=Image.open('references/05_flow_into_the_current.png'); s=915/ref.height; ref=ref.resize((round(ref.width*s),915),Image.LANCZOS); x=(ref.width-412)//2; ref=ref.crop((x,0,x+412,915))\nims=[ref]+[Image.open(S+'st1/'+f) for f in ['s1.35_l0.png','s6.00_l0.png','s12.00_l0.png']]\nc=Image.new('RGB',(412*4+30,915),(255,255,255))\nfor i,im in enumerate(ims): c.paste(im.convert('RGB'),(i*422,0))\nc.save(S+'sheet1.png')\n\"; cat $S/st1/stills.json 2>/d …[+80 chars]`
+
+### 🧑 User — 2026-11-23T04:00:19.350Z
+
+> ↩︎ result: {
+>  "errors": [],
+>  "info": {
+>   "LEVEL": 30,
+>   "S_REF": 1.2,
+>   "meshes": 107,
+>   "coins": 26,
+>   "foam": 637,
+>   "modules": 21,
+>   "screen": "05-mod",
+>   "tris": 2177134,
+>   "calls": 207
+>  },
+>  "stills": [
+>   {
+>    "file": "s1.35_l0.png",
+>    "target": 1.35,
+>    "s": 1.35,
+>    "cam": {
+>     "p": [
+>      0,
+>      0.734,
+>      0
+>     ],
+>     "q": [
+>      -0.11709,
+>      0.02669,
+>      0.00315,
+>      0.99276
+>     ],
+>     "fov": 64
+>    },
+>    "box": {
+>     "x0": 80.7,
+>     "x1": 332.7,
+>     "y0": 435.8,
+>     "y1": 719.8
+>    }
+>   },
+>   {
+>    "file": "s6.00_l0.png",
+>    "target": 6,
+>    "s": 6,
+>    "cam": {
+>     "p": [
+>      0.0522,
+>      0.
+
+### 🤖 Claude — 2026-11-23T04:00:21.370Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/sheet1.png"}`
+
+### 🧑 User — 2026-11-23T04:00:21.522Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T04:01:08.764Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/marble05/viewer/splash.png"}`
+
+### 🧑 User — 2026-11-23T04:01:08.794Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T04:01:12.385Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image; import numpy as np\nim=Image.open('tools/marble05/viewer/splash.png'); print(im.mode, im.size)\na=np.asarray(im)\nif a.shape[2]==4: al=a[...,3]; print('alpha>200 share',(al>200).mean().round(3),'alpha<20',(al<20).mean().round(3))\n\"; ls tools/screenkit/splash_cut.py && sed -n '1,12p' tools/screenkit/splash_cut.py", "description": "Check splash sprite transparency and the splash cutter"}`
+
+### 🧑 User — 2026-11-23T04:01:12.575Z
+
+> ↩︎ result: RGBA (799, 309)
+> alpha>200 share 0.361 alpha<20 0.442
+> tools/screenkit/splash_cut.py
+> """Rainbow screen kit (round 45) - Benny's splash cut from the screen's OWN approved picture. The shared splash.png carried a patch of dark
+> painted water under the spray (it showed as a dark smudge under Benny) and, at the size the screens use, its white spray barely showed.
+> This cuts the WHITE SPRAY around Benny's waterline out of the approved picture (bright, low-saturation pixels; Benny's pink fur and the
+> water are transparent), feathers it, and records where his water contact sits in it and how many picture pixels his painted height is,
+> so the game draws it at his real water point, at his size, exactly where the painting has it.
+>   python3 -I tools/screenkit/splash_cut.py <picture> <segNN.json> <out dir>   -> splash_pic.png + splash_pic.json"""
+> import sys, os, json
+> import numpy as np, cv2
+> from PIL import Image
+> pic, segp, out = sys.argv[1:4]; os.makedirs(out, exist_ok=True); sp = json.load(open(segp))
+> im = np.asarray(Image.open(pic).convert('RGB')).astype(np.float32); H, W = im.shape[:2]
+> bx0, by0, bx1, by1 = sp['benny_box']; cx, cy, rx, ry = sp.get('splash_ellipse', [(bx0 + bx1) / 2, by1, (bx1 - bx …[+14 chars]
+
+### 🤖 Claude — 2026-11-23T04:01:17.497Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47 && timeout 120 python3 -I tools/screenkit/splash_cut.py references/05_flow_into_the_current.png tools/screenkit/screens/05/segment05.json $S/splash 2>&1 | tail -3; ls $S/splash; cat $S/splash/splash_pic.json", "description": "Cut the white spray from the approved picture"}`
+
+### 🧑 User — 2026-11-23T04:01:17.840Z
+
+> ↩︎ result: splash {'w_px': 660, 'h_px': 308, 'anchor_px': [330.0, 173.0], 'benny_px': 430.0, 'alpha_share': 0.104}
+> splash_pic.json
+> splash_pic.png
+> {"w_px": 660, "h_px": 308, "anchor_px": [330.0, 173.0], "benny_px": 430.0, "alpha_share": 0.104}
+
+### 🤖 Claude — 2026-11-23T04:01:24.097Z
+
+Now the look fixes, with every look value in `mod05.json` under `look` and overridable per URL (`?L_wall_glow=…`) for quick A/B tests:
+
+### 🤖 Claude — 2026-11-23T04:01:27.701Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/mod05/mod05.json", "old_string": " \"fog\": { \"color\": [255, 222, 228], \"near\": 9.0, \"far\": 44.0 },", "new_string": " \"fog\": { \"color\": [255, 214, 200], \"near\": 12.0, \"far\": 62.0 },\n \"splash_pic\": { \"w_px\": 660, \"h_px\": 308, \"anchor_px\": [330.0, 173.0], \"benny_px\": 430.0, \"scale\": 1.0, \"_note\": \"the white spray cut from the approved picture (tools/screenkit/splash_cut.py), anchored at Benny's water contact\" },\n \"look\": { \"_note\": \"every value can be overridden per URL as ?L_<key>=value for A/B t …[+377 chars]`
+
+### 🧑 User — 2026-11-23T04:01:27.766Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/mod05/mod05.json has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-23T04:01:29.354Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/mod05/mod05.json", "old_string": " \"ring\": { \"band\": 0.32, \"depth\": 0.13 },\n \"paddle\": { \"length\": 0.62, \"reach\": 0.30, \"thick\": 0.075, \"tilt_deg\": 50, \"at\": 0.42,", "new_string": " \"ring\": { \"band\": 0.40, \"depth\": 0.19 },\n \"paddle\": { \"length\": 0.78, \"reach\": 0.40, \"thick\": 0.12, \"tilt_deg\": 50, \"at\": 0.42,"}`
+
+### 🧑 User — 2026-11-23T04:01:29.433Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/mod05/mod05.json has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-23T04:01:30.402Z
+
+Now the page: tunable materials, lighter foam, the painted spray, and water parameters.
+
+### 🤖 Claude — 2026-11-23T04:01:54.366Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/mod05/mod05.html'; s=open(p).read()\ndef rep(a,b,n=1):\n    global s\n    assert s.count(a)==n, (s.count(a), a[:80]); s=s.replace(a,b)\n# look values with URL overrides\nrep(\"const GRAY = q.get('gray') === '1';\",\n    \"const GRAY = q.get('gray') === '1';\\nconst LK = Object.fromEntries(Object.entries(LAY.look).filter(([k]) => k[0] !== '_').map(([k, v]) => [k, q.has('L_' + k) ? +q.get('L_' + k) : v]));   // look values (?L_<key>= overrides)\")\n# materials\nrep(\"\"\"const wallMat = GRAY ? grayM(0x8c8c8c) : new THREE.MeshStandardMaterial({ map: wallTe …[+6047 chars]`
+
+### 🧑 User — 2026-11-23T04:01:54.475Z
+
+> ↩︎ result: ok
+> modular Screen 05 ready: /tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/ws/game  (code from /home/user/rainbow-)
+> [This command modified 2 files you've previously read: tools/mod05/setup_mod05.sh, tools/mod05/mod05.html. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-23T04:01:56.719Z
+
+Re-render with the fixes (start view and two swimming points), next to the approved picture:
+
+### 🤖 Claude — 2026-11-23T04:02:01.574Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47 && cat > $S/sheet.py <<'EOF'\nimport sys\nfrom PIL import Image\nout, *fs = sys.argv[1:]\nref = Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png'); s = 915 / ref.height; ref = ref.resize((round(ref.width * s), 915), Image.LANCZOS); x = (ref.width - 412) // 2; ref = ref.crop((x, 0, x + 412, 915))\nims = [ref] + [Image.open(f).convert('RGB') for f in fs]\nc = Image.new('RGB', (422 * len(ims) - 10, 915), (255, 255, 255))\nfor i, im in enumerate(ims): c.paste(im, (i * 422, 0) …[+476 chars]`
+
+### 🧑 User — 2026-11-23T04:02:11.188Z
+
+> ↩︎ result: loaded in 3.3 s {"LEVEL":30,"meshes":107,"foam":649}
+> {'LEVEL': 30, 'S_REF': 1.2, 'meshes': 107, 'coins': 26, 'foam': 649, 'modules': 21, 'screen': '05-mod', 'tris': 1493294, 'calls': 207}
+
+### 🤖 Claude — 2026-11-23T04:02:13.554Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/sheet2.png"}`
+
+### 🧑 User — 2026-11-23T04:02:13.707Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T04:02:40.564Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47 && run() { NODE_PATH=$(npm root -g) timeout 600 node tools/reflock/section_run.cjs $S/ws/game $S/$1 stills $2 0 \"$3\" 2>&1 | grep -E \"rror\" ; }\nrun vA 1.35 'L_wall_env=0&L_wall_diffuse=0&L_wall_glow=1&L_ring_env=0&L_ring_glow=1&L_pad_env=0' &\nrun vB 1.35 'L_wall_env=0.12&L_wall_diffuse=0&L_wall_glow=1&L_wall_metal=0.4&L_ring_env=0.35&L_ring_glow=1&L_pad_env=0.4' &\nrun vC 1.35 'L_wall_env=0.2&L_wall_diffuse=0.05&L_wall_glow=0.9&L_wall_metal=0.7&L_wall_rough=0.45&L_ring_env=0.5&L_ring_glow= …[+210 chars]`
+
+### 🤖 Claude — 2026-11-23T04:02:41.715Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/sheet3.png"}`
+
+### 🧑 User — 2026-11-23T04:02:51.540Z
+
+> ↩︎ result: [1]   Exit 1                  run vA 1.35 'L_wall_env=0&L_wall_diffuse=0&L_wall_glow=1&L_ring_env=0&L_ring_glow=1&L_pad_env=0'
+> [2]-  Exit 1                  run vB 1.35 'L_wall_env=0.12&L_wall_diffuse=0&L_wall_glow=1&L_wall_metal=0.4&L_ring_env=0.35&L_ring_glow=1&L_pad_env=0.4'
+> [3]+  Exit 1                  run vC 1.35 'L_wall_env=0.2&L_wall_diffuse=0.05&L_wall_glow=0.9&L_wall_metal=0.7&L_wall_rough=0.45&L_ring_env=0.5&L_ring_glow=0.9&L_pad_env=0.5'
+
+### 🧑 User — 2026-11-23T04:02:51.672Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T04:03:03.335Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47 && python3 -c \"\nfrom PIL import Image; import numpy as np\nt=np.asarray(Image.open('$S/ws/tiles/wall_tile.png').convert('RGB')).astype(float)\nprint('tile mean',t.reshape(-1,3).mean(0).round(), 'median',np.median(t.reshape(-1,3),0))\nr=np.asarray(Image.open('$S/vA/s1.35_l0.png').convert('RGB')).astype(float)\nprint('render top-left wall (0-60, 100-250) mean', r[100:250,0:60].reshape(-1,3).mean(0).round())\nprint('render upper wall (20-80 rows, 150-260 cols) mean', r[95:130,150:260].reshape(-1 …[+290 chars]`
+
+### 🧑 User — 2026-11-23T04:03:03.704Z
+
+> ↩︎ result: tile mean [197.  69. 197.] median [202.  64. 203.]
+> render top-left wall (0-60, 100-250) mean [244. 142. 169.]
+> render upper wall (20-80 rows, 150-260 cols) mean [255. 153. 136.]
+> approved wall left (y250-450,x0-120) mean [205.  84. 104.]
+
+### 🤖 Claude — 2026-11-23T04:03:14.628Z
+
+The rendered wall (244, 142, 169) is far lighter than the tile itself (197, 69, 197), even with reflections switched off. Let me zoom into the rendered wall to see what is actually being drawn.
+
+### 🤖 Claude — 2026-11-23T04:03:16.716Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47 && python3 -c \"\nfrom PIL import Image\nim=Image.open('$S/vA/s1.35_l0.png'); im.crop((0,80,206,330)).resize((618,750),Image.NEAREST).save('$S/zoomA.png')\"", "description": "Zoom into the rendered wall area"}`
+
+### 🧑 User — 2026-11-23T04:03:16.824Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-23T04:03:18.910Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/zoomA.png"}`
+
+### 🧑 User — 2026-11-23T04:03:18.931Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T04:03:34.187Z
+
+The slot rows are there, but the whole wall is mixed with a pale pink-white, like a haze. Two quick diagnostic switches, fog off and a plain unlit wall, will isolate the cause:
+
+### 🤖 Claude — 2026-11-23T04:03:40.141Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47 && python3 - <<'EOF'\np='tools/mod05/mod05.html'; s=open(p).read()\na=\"if (!GRAY) scene.fog = new THREE.Fog(sRGB(LAY.fog.color), LAY.fog.near, LAY.fog.far);\"\nassert s.count(a)==1\ns=s.replace(a,\"if (!GRAY && q.get('nofog') !== '1') scene.fog = new THREE.Fog(sRGB(LAY.fog.color), LAY.fog.near, LAY.fog.far);\")\na=\"const ringMat = GRAY\"\ns=s.replace(a,\"if (q.get('wallbasic') === '1') Object.assign(wallMat, { emissiveIntensity: 0 }) && (wallMat.color.setScalar(0), wallMat.emissive.setScalar( …[+532 chars]`
+
+### 🤖 Claude — 2026-11-23T04:03:41.347Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/sheet4.png"}`
+
+### 🧑 User — 2026-11-23T04:03:48.650Z
+
+> ↩︎ result: [1]-  Exit 1                  run vD 1.35 'nofog=1&L_wall_env=0&L_wall_diffuse=0&L_wall_glow=1'
+> [2]+  Exit 1                  run vE 1.35 'L_wall_env=0&L_wall_diffuse=0&L_wall_glow=0'
+
+### 🧑 User — 2026-11-23T04:03:48.680Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T04:04:10.177Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47 && python3 - <<'EOF'\np='tools/mod05/mod05.html'; s=open(p).read()\ndef rep(a,b):\n    global s; assert s.count(a)==1, a[:70]; s=s.replace(a,b)\nrep(\"const ENV = pmrem.fromScene(envScene, 0.0, 0.1, 100).texture; scene.environment = ENV;\",\n    \"const ENV = pmrem.fromScene(envScene, 0.0, 0.1, 100).texture;   // set per material (material.envMap): only then does envMapIntensity apply (scene.environment ignores it)\")\nrep(\"emissiveIntensity: LK.wall_glow, metalness: LK.wall_metal, roughness:  …[+1484 chars]`
+
+### 🤖 Claude — 2026-11-23T04:04:11.430Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/sheet5.png"}`
+
+### 🧑 User — 2026-11-23T04:04:20.934Z
+
+> ↩︎ result: [1]   Exit 1                  run vF 1.35 'L_wall_env=0&L_wall_diffuse=0&L_wall_glow=1&L_ring_env=0.3&L_ring_glow=1'
+> [2]-  Exit 1                  run vG 1.35 ''
+> [3]+  Exit 1                  run vH 1.35 'L_wall_env=0.2&L_wall_glow=0.9&L_wall_metal=0.8&L_wall_rough=0.4&L_ring_env=0.6&L_ring_glow=0.85&L_ring_metal=1'
+
+### 🧑 User — 2026-11-23T04:04:21.063Z
+
+> ↩︎ result: [image]
+

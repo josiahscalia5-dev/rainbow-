@@ -18,6 +18,8 @@ cp -f "$SRC/tools/mod05/mod05.json" mod05.json
 cp -f "$SRC/tools/kit05/controls.js" controls.js
 cp -f "$SRC/tools/kit05/swimfx.js" swimfx.js
 for f in wall_tile.png ring_tile.png; do ln -sf "$WS/tiles/$f" "$f"; done
+if [ ! -f "$WS/tiles/splash_pic.png" ]; then python3 -I "$SRC/tools/screenkit/splash_cut.py" "$SRC/references/05_flow_into_the_current.png" "$SRC/tools/screenkit/screens/05/segment05.json" "$WS/tiles" >/dev/null; fi
+ln -sf "$WS/tiles/splash_pic.png" splash_pic.png
 ln -sf "$AR/assets/models/benny31.glb" benny31.glb
 ln -sf "$AR/assets/textures/benny31/bake.png" bake.png
 ln -sf "$AR/assets/textures/paint/05_coin.png" coin.png
