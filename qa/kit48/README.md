@@ -27,6 +27,17 @@ the painted splash detail (the painted spray sprite is kept), and fur detail (no
 * Foam banks are uniform white mounds (no bubble clusters).
 * Benny: material and contact improved, fur unchanged; splash is the existing painted spray.
 
+## Functional checks of the candidate run (same 9 real touch swipes as the round-47 section; materials only changed, no geometry)
+| check | result (285 frames, 9.5 s, normal speed) |
+|---|---|
+| touches sent / detected / applied | 9 / 9 / 9 (8 lane changes incl. 2 double swipes, 1 jump) |
+| Benny's whole animated body outside the screen | 0 frames |
+| hole pixels | 0 frames |
+| scenery moving with the camera | none |
+| camera step / turn per frame | 0.110 u (limit 0.117) / 0.51 deg; camera clearance >= 0.72 u |
+| water under Benny | every frame, gap <= 0.012 u; lean max 13 deg |
+| coins | 1,330 -> 1,370 (the same 4 coins as the default version) |
+
 ## Files
 `APPROVED_vs_CANDIDATE.jpg` (your picture beside the candidate at the approved camera), `stills/` (before / at / after the approved camera,
 and run frames with both steering extremes and the jump), `run/SECTION_05_SIMPLE_candidate_real_touch.mp4` + `_checks.json`.

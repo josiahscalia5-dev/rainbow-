@@ -1,0 +1,99 @@
+{
+ "frames": 285,
+ "errors": [],
+ "benny_offscreen_frames": 0,
+ "benny_offscreen_list": [],
+ "camera_max_step_u": 0.11,
+ "camera_max_step_expected_u": 0.1173,
+ "camera_max_turn_deg_per_frame": 0.509,
+ "static_world_meshes": 419,
+ "scenery_meshes_moved": [],
+ "hole_pixels_max": 0,
+ "hole_frames": 0,
+ "holes_checked_frames": 0,
+ "frame_qa": {
+  "camera_clearance_min_u": 0.724,
+  "water_gap_abs_max_u": 0.012,
+  "frames_without_water_under_benny": 0,
+  "immersion_min": -0.51,
+  "immersion_max": 0.155,
+  "benny_tilt_vs_surface_max_deg": 13.16,
+  "bank_max_deg": 0,
+  "benny_height_px_min": 273.29999999999995,
+  "benny_height_px_max": 309.7,
+  "benny_lean_max_deg": 13.16,
+  "benny_lean_max_step_deg_per_frame": 2.69,
+  "camera_roll_max_deg": 0.82,
+  "camera_roll_max_step_deg_per_frame": 0.08
+ },
+ "edge_guard": {
+  "max_optical_shift_px": 18.7,
+  "last_optical_corrections": 30
+ },
+ "swipes_sent": 9,
+ "input_mode": "real CDP touch gestures",
+ "input_log": [
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 0.5,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 1.3,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 1.567,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 2,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 3.4,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 4.6,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 4.867,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 6,
+   "result": "lane"
+  },
+  {
+   "dir": "up",
+   "src": "touch",
+   "clock": 7,
+   "result": "leap"
+  }
+ ],
+ "coins_end": 1370,
+ "socks_end": 0,
+ "s_end": 113.327,
+ "lat_range": [
+  -0.3,
+  0.3
+ ],
+ "hole_frames_checked": 285
+}
