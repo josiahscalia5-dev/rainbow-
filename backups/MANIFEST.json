@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28920,
-   "sha256": "2a2a831ec57a98ad719f64cf58ab3bba732b6efa50b96dce23ccea917d5f9920"
+   "sha256": "5729f10d11250bc28d27202f2b0b6f3026f2384d885dce05c300284aa37de944"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2958,
-   "sha256": "6eb10f041f37b7cad6162d6e0763a333a5ce6d3bb50353df123bc5b490ec8101"
+   "sha256": "f04cdeeffb4864da28c68ad8c85936c0cbc22900603733c2e7974e36743218e7"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -23535,6 +23535,16 @@
    "path": "qa/kit46/evidence/frame0415_BEFORE_vs_NEW.jpg",
    "bytes": 329501,
    "sha256": "4d9326a8192719e8ab30da2600fab7dc91c111bac0c85dd1a417e6dfbb65f751"
+  },
+  {
+   "path": "qa/kit46/preview_now/APP_NOW_05_gameplay_frames.jpg",
+   "bytes": 843424,
+   "sha256": "c98396bb0665de7a7dfb333121e61a3ac8a310996bd5236e65273e2304622162"
+  },
+  {
+   "path": "qa/kit46/preview_now/APP_NOW_06_gameplay_frames.jpg",
+   "bytes": 847609,
+   "sha256": "f09b5dd3471457c4e590c427c4368e57342b008c5a68dccd89d85c0b3da3fee3"
   },
   {
    "path": "qa/kit46/run/GAMEPLAY_05_06_07_GRAY_geometry_real_touch.mp4",
