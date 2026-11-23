@@ -1,0 +1,401 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Rainbow 05 modular</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<style>
+html,body{margin:0;background:#1a0630;overflow:hidden;font-family:system-ui,-apple-system,sans-serif}canvas{display:block}
+#hud{position:fixed;left:0;right:0;top:8px;display:flex;flex-direction:column;align-items:center;gap:7px;pointer-events:none;z-index:5}
+.bar{display:flex;gap:26px;align-items:center;background:linear-gradient(#7b2bbf,#4a1386);border:2px solid #d9a7ff;border-radius:30px;padding:5px 20px;color:#fff;font-weight:800;font-size:21px;box-shadow:0 2px 8px #0006}
+.title{background:#5a1aa0e0;border:2px solid #f2c14e;border-radius:20px;padding:4px 16px;color:#fff;font-weight:800;font-style:italic;font-size:16px;letter-spacing:.4px}
+.pill{display:inline-flex;align-items:center;gap:6px}.plus{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#7c3aed;border:2px solid #e9d5ff;font-size:16px;line-height:1}
+#pause{position:fixed;top:8px;right:10px;width:46px;height:46px;border-radius:50%;border:3px solid #f2c14e;background:linear-gradient(#8b3fd9,#4a1386);color:#fff;font-weight:900;font-size:18px;pointer-events:auto;z-index:6}
+#pausedLay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#1a063088;color:#fff;font-size:30px;font-weight:900;z-index:7}
+#load{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:20px;background:#2a0b4a;z-index:8}
+</style>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script>
+</head><body>
+<div id="hud"><div class="bar"><span class="pill">&#10084;&#65039; 5/5 <span class="plus">+</span></span><span class="pill"><span id="coins">&#129689; 0</span></span></div>
+<div class="title" id="title"></div></div>
+<button id="pause" data-noswipe aria-label="pause">&#10074;&#10074;</button><div id="pausedLay">Paused</div><div id="load">Building the washer&hellip;</div>
+<script type="module">
+// ======================================================================================================================================
+// Rainbow Screen 05 - MODULAR build (round 47, 2026-11-23, user order docs/briefs/2026-11-23-r47/USER_R47.md).
+// The approved Screen 05 look rebuilt from a SMALL SET OF REUSABLE PARTS instead of the painting's pixels:
+//   * ONE tunnel module = a wall piece (repeating wall texture wall_tile.png), one gold ring (ring_tile.png), two gold paddles;
+//     the module is cloned every 2.6 u along the straight drum (only the paddle angles alternate per clone)
+//   * ONE gentle S river route (Benny's path and the river's centre line are the same curve)
+//   * ONE continuous water material over the whole floor (the river drawn live in river space: cyan silk ribbons, magenta bands,
+//     white streaks, star sparkles; colours = the round-37/38 measurements of the user's own water art)
+//   * FOUR foam-cluster shapes reused along both river banks and the wall bases; iridescent bubbles
+//   * shared game code unchanged: Benny 31 (paddling shader), tools/kit05/controls.js swipes, swimfx.js, coins, splash, HUD
+// Camera / drum / Benny / coin sizes = the measured fit of the approved picture (fit05.py). Layout values: mod05.json.
+// QA contract = tools/reflock/section_run.cjs (ready, sectionInfo, step, renderNow, camInfo, bennyBox, sceneAudit, input.swipe).
+// Switches: ?gray=1 geometry test (plain grey materials) · ?sentinel=1 holes show pure green · ?play=1 real-time phone play
+// ======================================================================================================================================
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+import { installControls } from './controls.js';
+const q = new URLSearchParams(location.search);
+const LAY = await (await fetch('mod05.json')).json();
+for (const [k, v] of [['c_LANE', String(LAY.lane)], ['c_LAT_MAX', String(LAY.lane * 1.2)], ['speed', String(LAY.speed)]]) if (!q.has(k)) q.set(k, v);
+const W = +(q.get('w') ?? innerWidth), H = +(q.get('h') ?? innerHeight);
+const GRAY = q.get('gray') === '1';
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(q.get('w') ? 1 : Math.min(2, devicePixelRatio)); renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene(); scene.background = new THREE.Color(q.get('sentinel') ? 0x00ff00 : 0x1a0630);
+const sRGB = (c) => new THREE.Color().setRGB(c[0] / 255, c[1] / 255, c[2] / 255, THREE.SRGBColorSpace);
+if (!GRAY) scene.fog = new THREE.Fog(sRGB(LAY.fog.color), LAY.fog.near, LAY.fog.far);
+const camera = new THREE.PerspectiveCamera(LAY.camera.fov, W / H, 0.03, 300); camera.rotation.order = 'YXZ';
+const world = new THREE.Group(); world.name = 'world'; scene.add(world);
+const MESH = [];   // every scenery mesh (QA: static-world audit)
+const addW = (m, name, fam) => { m.name = name; m.userData.fam = fam; world.add(m); m.traverse((o) => { if (o.isMesh) MESH.push(o); }); return m; };
+document.getElementById('title').textContent = LAY.number + ' · ' + LAY.title;
+const DEG = Math.PI / 180, UPV = new THREE.Vector3(0, 1, 0);
+const sstep = (a, b, x) => { const k = Math.min(1, Math.max(0, (x - a) / (b - a))); return k * k * (3 - 2 * k); };
+const rngOf = (seed) => { let x = seed >>> 0; return () => ((x = (Math.imul(x, 1103515245) + 12345) & 0x7fffffff) / 0x7fffffff); };
+
+// ---------------- the drum + the ONE gentle river route ----------------
+const D = LAY.drum, AX = D.axis_x, AY = D.axis_y, R = D.r, CHORD = Math.sqrt(R * R - AY * AY);
+const BW = LAY.benny.water, BX0 = BW[0], BZ0 = BW[2], RT = LAY.route, RW = LAY.river.half_width;
+const SP = LAY.section.spacing, RING0 = LAY.section.first_ring_z, NSEC = LAY.section.count;
+const ringZ = (k) => RING0 - k * SP;
+const Z_END = ringZ(NSEC - 1) - SP;                         // the bright far end of the tunnel
+const ease = (x) => (x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x));
+// river centre x at depth z: from Benny's painted water point, eased onto the drum axis, + one gentle S (first swing to the right like the painting)
+const centreX = (z) => { const d = BZ0 - z; return BX0 + (AX - BX0) * ease(d / RT.centre_ease) + RT.first_swing * RT.amp * ease(d / RT.ease_in) * Math.sin(2 * Math.PI * d / RT.wavelength); };
+// route polyline by arc length (ds = 0.05), starting 1.2 u behind Benny's painted point (S_REF = his painted point)
+const RDS = 0.05, RP = [];
+{ const z0 = BZ0 + 1.2, z1 = Z_END + 1.0; let acc = 0, next = 0, px = centreX(z0), pz = z0;
+  RP.push(new THREE.Vector3(px, 0, pz));
+  for (let z = z0 - 0.002; z > z1; z -= 0.002) { const x = centreX(z); acc += Math.hypot(x - px, z - pz); px = x; pz = z; if (acc >= next + RDS) { next += RDS; RP.push(new THREE.Vector3(x, 0, z)); } } }
+const RLEN = (RP.length - 1) * RDS;
+const S_REF = (() => { let b = 0, bd = 1e9; RP.forEach((p, i) => { const d = Math.abs(p.z - BZ0); if (d < bd) { bd = d; b = i; } }); return b * RDS; })();
+const AHEAD = LAY.benny.ahead, LEVEL = Math.min(RLEN - 2, LAY.level.length);
+const at = (s, out) => { const x = Math.min(Math.max(s / RDS, 0), RP.length - 1.0001), i = Math.floor(x), f = x - i; return out.copy(RP[i]).lerp(RP[i + 1], f); };
+const _a = new THREE.Vector3(), _b = new THREE.Vector3();
+const frameAt = (s) => { at(Math.min(RLEN, s + 0.06), _a); at(Math.max(0, s - 0.06), _b); const t = _a.clone().sub(_b).normalize();
+  const r = new THREE.Vector3().crossVectors(t, UPV).normalize(), n = new THREE.Vector3().crossVectors(r, t).normalize(); return { t, r, n }; };
+
+// ---------------- lighting: one small generated environment (violet / magenta walls, bright ring bands, warm far core, cyan floor) ----
+// gives the metal its finish (gold rings + paddles reflect it; the walls get a soft sheen); no punctual lights
+const pmrem = new THREE.PMREMGenerator(renderer);
+const envScene = new THREE.Scene();
+envScene.add(new THREE.Mesh(new THREE.SphereGeometry(10, 96, 48), new THREE.ShaderMaterial({ side: THREE.BackSide,
+  vertexShader: 'varying vec3 vD; void main(){ vD = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+  fragmentShader: `varying vec3 vD; void main(){ vec3 d = normalize(vD); float a = atan(d.y, d.x);
+    vec3 wall = mix(vec3(0.30, 0.04, 0.62), vec3(0.85, 0.10, 0.55), 0.5 + 0.5 * sin(a * 3.0 + 0.6));
+    float bands = pow(0.5 + 0.5 * cos(d.z * 22.0), 10.0) * (1.0 - 0.6 * abs(d.z));
+    float strips = pow(0.5 + 0.5 * cos(a * 8.0), 30.0) * 0.8;
+    float core = pow(max(-d.z, 0.0), 18.0), back = pow(max(d.z, 0.0), 6.0);
+    vec3 floorC = vec3(0.02, 0.40, 1.0) * smoothstep(-0.05, -0.6, d.y);
+    vec3 col = wall * 0.9 + bands * vec3(3.2, 2.4, 1.5) + strips * vec3(2.0, 1.1, 2.0) + core * vec3(7.0, 6.0, 4.0) + back * vec3(1.2, 0.5, 1.1) + floorC;
+    gl_FragColor = vec4(col, 1.0); }` })));
+const ENV = pmrem.fromScene(envScene, 0.0, 0.1, 100).texture; scene.environment = ENV;
+
+// ---------------- repeating textures ----------------
+const tl = new THREE.TextureLoader();
+const tex = async (f, rx = 1, ry = 1) => { const t = await tl.loadAsync(f); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = renderer.capabilities.getMaxAnisotropy(); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(rx, ry); return t; };
+const [wallTex, ringTex] = await Promise.all([tex('wall_tile.png', 16, 2), tex('ring_tile.png', 12, 1)]);
+
+// ---------------- materials (one per kind, shared by every clone) ----------------
+const grayM = (c) => new THREE.MeshStandardMaterial({ color: c, roughness: 0.7, metalness: 0.0 });
+const wallMat = GRAY ? grayM(0x8c8c8c) : new THREE.MeshStandardMaterial({ map: wallTex, emissiveMap: wallTex, emissive: 0xffffff, emissiveIntensity: +(q.get('wallglow') ?? 0.62),
+  metalness: 0.55, roughness: 0.3, envMapIntensity: 0.55, side: THREE.BackSide });
+const ringMat = GRAY ? grayM(0xb0b0b0) : new THREE.MeshStandardMaterial({ map: ringTex, emissiveMap: ringTex, emissive: 0xffffff, emissiveIntensity: +(q.get('ringglow') ?? 0.42),
+  metalness: 1.0, roughness: 0.22, envMapIntensity: 1.0 });
+const goldMat = GRAY ? grayM(0xa8a8a8) : new THREE.MeshStandardMaterial({ color: sRGB([251, 150, 70]), emissive: sRGB([200, 80, 14]), emissiveIntensity: +(q.get('padglow') ?? 0.55),
+  metalness: 1.0, roughness: 0.2, envMapIntensity: 1.1 });
+
+// ---------------- MODULE: wall piece + gold ring + two paddles (built once, cloned along the drum) ----------------
+// wall piece: open cylinder, one ring spacing long, front at z = 0, back at z = -SP; UV u around (seam under the water), v along
+const wallGeo = new THREE.CylinderGeometry(R, R, SP, 192, 1, true); wallGeo.rotateX(Math.PI / 2); wallGeo.translate(0, 0, -SP / 2);
+// gold ring: lathe profile (front face, three raised bands with two grooves on the inner surface, back face); custom v across the profile
+const ringGeo = (() => { const B = LAY.ring.band, DP = LAY.ring.depth, pts = [], vs = [];
+  pts.push(new THREE.Vector2(R + 0.03, 0)); vs.push(0.0);
+  for (let i = 0; i <= 4; i++) { const a = i / 4 * Math.PI / 2; pts.push(new THREE.Vector2(R - DP + 0.02 - 0.02 * Math.sin(a) + 0.0, 0.02 * (1 - Math.cos(a)))); vs.push(0.02 + 0.03 * i / 4); }
+  for (let i = 1; i < 36; i++) { const y = 0.02 + (B - 0.04) * i / 36, f = (y - 0.02) / (B - 0.04), g = Math.abs(Math.sin(f * 3 * Math.PI));
+    pts.push(new THREE.Vector2(R - DP + 0.022 * (1 - g ** 0.6), y)); vs.push(0.05 + 0.9 * f); }
+  for (let i = 0; i <= 4; i++) { const a = i / 4 * Math.PI / 2; pts.push(new THREE.Vector2(R - DP + 0.02 * (1 - Math.cos(a)), B - 0.02 + 0.02 * Math.sin(a))); vs.push(0.95 + 0.03 * i / 4); }
+  pts.push(new THREE.Vector2(R + 0.03, B)); vs.push(1.0);
+  const g = new THREE.LatheGeometry(pts, 192); const uv = g.attributes.uv;
+  for (let i = 0; i < uv.count; i++) uv.setY(i, vs[i % pts.length]);
+  g.rotateX(-Math.PI / 2); return g; })();
+// paddle: a D-shaped gold slab (straight edge on the wall along the drum, round edge reaching inward), bevelled rim
+const PD = LAY.paddle;
+const paddleGeo = (() => { const s = new THREE.Shape(); s.moveTo(-PD.length / 2, 0); s.lineTo(PD.length / 2, 0); s.absellipse(0, 0, PD.length / 2, PD.reach, 0, Math.PI, false);
+  const g = new THREE.ExtrudeGeometry(s, { depth: PD.thick, bevelEnabled: true, bevelThickness: 0.02, bevelSize: 0.02, bevelSegments: 4, curveSegments: 40 });
+  g.translate(0, 0, -PD.thick / 2); g.computeVertexNormals(); return g; })();
+const placePaddle = (m, thDeg, zc) => { const th = thDeg * DEG, nIn = new THREE.Vector3(-Math.cos(th), -Math.sin(th), 0), tg = new THREE.Vector3(-Math.sin(th), Math.cos(th), 0);
+  const tilt = PD.tilt_deg * DEG * (Math.cos(th) > 0 ? -1 : 1);             // both sides lean their face toward the drum centre / the camera
+  const p = nIn.clone().multiplyScalar(Math.cos(tilt)).addScaledVector(tg, Math.sin(tilt)).normalize(), a = new THREE.Vector3(0, 0, -1), c = new THREE.Vector3().crossVectors(a, p).normalize();
+  m.matrix.makeBasis(a, p, c).setPosition(AX + R * Math.cos(th) - 0.03 * nIn.x, AY + R * Math.sin(th) - 0.03 * nIn.y, zc); m.matrixAutoUpdate = false; };
+const module0 = new THREE.Group();
+module0.add(Object.assign(new THREE.Mesh(wallGeo, wallMat), { name: 'wall' }), Object.assign(new THREE.Mesh(ringGeo, ringMat), { name: 'ring' }),
+  Object.assign(new THREE.Mesh(paddleGeo, goldMat), { name: 'paddleL' }), Object.assign(new THREE.Mesh(paddleGeo, goldMat), { name: 'paddleR' }));
+for (let k = -3; k < NSEC; k++) {
+  const m = module0.clone(), z0 = ringZ(k);
+  m.children[0].position.set(AX, AY, z0); m.children[1].position.set(AX, AY, z0);
+  const kk = ((k % 2) + 2) % 2;
+  placePaddle(m.children[2], PD.left_deg[kk], z0 - PD.at * SP); placePaddle(m.children[3], PD.right_deg[kk], z0 - PD.at * SP);
+  if (k < 0) { m.children[2].visible = m.children[3].visible = false; }   // no paddles behind the camera's start
+  addW(m, 'module_' + k, 'module');
+}
+// the bright far end: an end wall + a soft glow (the painting's warm core at the end of the tunnel)
+const glowTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getContext('2d'), gr = g.createRadialGradient(128, 128, 0, 128, 128, 128);
+  for (const [o, col] of [[0, 'rgba(255,255,248,1)'], [0.14, 'rgba(255,250,215,1)'], [0.32, 'rgba(255,226,160,0.75)'], [0.6, 'rgba(255,190,170,0.25)'], [1, 'rgba(255,170,200,0)']]) gr.addColorStop(o, col);
+  g.fillStyle = gr; g.fillRect(0, 0, 256, 256); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; })();
+{ const cap = new THREE.Mesh(new THREE.CircleGeometry(R + 0.05, 96), new THREE.MeshBasicMaterial({ color: sRGB(LAY.glow.color), fog: false })); cap.position.set(AX, AY, Z_END); addW(cap, 'far_end', 'end');
+  const gl = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, fog: false, transparent: true, depthWrite: false })); gl.scale.setScalar(R * 4.2); gl.position.set(AX, AY * 0.6, Z_END + 0.6); gl.renderOrder = 3; addW(gl, 'far_glow', 'end'); }
+
+// ---------------- ONE continuous water material over the whole floor ----------------
+// river space: d = distance down the drum from Benny's painted point, kU = distance across from the S centre line (the same function as the
+// route). Inside |kU| < RW: the river (cyan silk ribbons + magenta side bands + streaks + sparkles, round-37/38 option-B design ported);
+// beyond the banks: the same water continuing as calmer magenta / violet pool water up to the walls (the 3D foam clusters sit on the banks)
+const WATER_U = { uT: { value: 0 }, uR1: { value: new THREE.Vector4(AX, BX0, BZ0, RT.amp * RT.first_swing) }, uR2: { value: new THREE.Vector4(RT.wavelength, RT.ease_in, RT.centre_ease, RW) },
+  uFlow: { value: LAY.river.flow_speed }, uCamZ: { value: 0 } };
+const waterMat = GRAY ? grayM(0x9aa6b4) : new THREE.ShaderMaterial({ fog: true, uniforms: { ...THREE.UniformsUtils.merge([THREE.UniformsLib.fog]), ...WATER_U },
+  vertexShader: `#include <fog_pars_vertex>
+    varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; vec4 mvPosition = viewMatrix * w; gl_Position = projectionMatrix * mvPosition;
+    #include <fog_vertex>
+    }`,
+  fragmentShader: `#include <fog_pars_fragment>
+    uniform float uT; uniform vec4 uR1; uniform vec4 uR2; uniform float uFlow; uniform float uCamZ; varying vec3 vW;
+    float ez(float x){ x = clamp(x, 0.0, 1.0); return x * x * (3.0 - 2.0 * x); }
+    float cX(float z){ float d = uR1.z - z; return uR1.y + (uR1.x - uR1.y) * ez(d / uR2.z) + uR1.w * ez(d / uR2.y) * sin(6.2831853 * d / uR2.x); }
+    vec3 c8(float r, float g, float b){ return pow(vec3(r, g, b) / 255.0, vec3(2.2)); }
+    float h2(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
+    float n2(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+      return mix(mix(h2(i), h2(i + vec2(1.0, 0.0)), f.x), mix(h2(i + vec2(0.0, 1.0)), h2(i + vec2(1.0, 1.0)), f.x), f.y); }
+    void main(){
+      float RW = uR2.w, kT = uR1.z - vW.z, kZ = max(uCamZ - vW.z, 1e-3);
+      float c = cX(vW.z), cs = (cX(vW.z - 0.05) - cX(vW.z + 0.05)) * 10.0;
+      float kU = (vW.x - c) / sqrt(1.0 + cs * cs), u = kU / RW, au = abs(u);
+      float tp = kT + uT * uFlow;
+      float bend = clamp((cX(vW.z - 0.3) - cX(vW.z + 0.3)) * 2.0, -1.0, 1.0);
+      // silk ribbons along the flow: deep blue edge -> bright cyan crest + thin highlight, then a crisp step to the next ribbon
+      float uu = au < 1.0 ? u : sign(u) * (1.0 + (au - 1.0) * 0.6);           // the pool beyond the banks: same water, wider ribbons
+      float mea = 0.55 * sin(tp * 0.83 + uu * 2.3) + 0.35 * sin(tp * 1.71 - uu * 3.1 + 1.3) + 0.7 * (n2(vec2(uu * 1.6, tp * 0.45)) - 0.5);
+      float w = uu * 9.0 * 0.5 + mea;
+      float f = fract(w), fw = max(fwidth(w), 1e-4), lod = 1.0 - smoothstep(0.15, 0.5, fw), dropW = max(0.06, 1.5 * fw);
+      float sh = 0.2 + 0.5 * pow(smoothstep(0.0, 0.92, f), 2.2) - 0.3 * (1.0 - smoothstep(0.0, max(0.14, 2.0 * fw), f)) * smoothstep(0.0, 0.5 * dropW, f) - 0.36 * smoothstep(1.0 - dropW, 1.0, f);
+      sh = mix(0.38, clamp(sh, 0.0, 1.0), lod);
+      float crest = exp(-pow((f - 0.86) / max(0.045, fw * 1.2), 2.0)) * lod * smoothstep(0.15, 0.6, n2(vec2(floor(w) * 7.13, tp * 1.4)));
+      float near = 1.0 - smoothstep(0.9, 2.6, kZ);                                  // broad arcs across the flow close to the camera
+      sh = clamp(sh + 0.26 * near * sin(6.2832 * (tp * 1.15 + 0.45 * u * u)), 0.0, 1.0);
+      { float X = kU * 95.0 + 2.0 * n2(vec2(kU * 9.0, tp * 1.1)); float fl = 1.0 - smoothstep(0.25, 0.6, fwidth(X)); sh = clamp(sh + 0.12 * fl * sin(X), 0.0, 1.0); }
+      vec3 bD = c8(4.0, 100.0, 228.0), bM = c8(10.0, 150.0, 248.0), bB = c8(90.0, 225.0, 255.0);
+      vec3 pD = c8(164.0, 43.0, 212.0), pM = c8(251.0, 34.0, 217.0), pB = c8(252.0, 134.0, 251.0);
+      vec3 blue = sh < 0.55 ? mix(bD, bM, sh / 0.55) : mix(bM, bB, (sh - 0.55) / 0.45);
+      vec3 pink = sh < 0.55 ? mix(pD, pM, sh / 0.55) : mix(pM, pB, (sh - 0.55) / 0.45);
+      // magenta bands between the cyan core and the banks (wandering a little, wider on the outside of each bend); the pool beyond = magenta / violet
+      float pin = 0.52 + 0.06 * sin(tp * 0.71 + sign(u) * 1.7) - 0.08 * bend * sign(u) + 0.04 * (n2(vec2(tp * 0.9, sign(u) * 5.0)) - 0.5);
+      float pkE = max(0.03, 1.5 * fwidth(u)), pk = smoothstep(pin - pkE, pin + pkE, au);
+      float pool = smoothstep(1.05, 1.6, au);
+      vec3 col = mix(blue, pink, pk);
+      col = mix(col, mix(pink, mix(blue, c8(150.0, 70.0, 230.0), 0.5), 0.35 + 0.25 * sin(tp * 0.6 + u)), pool * 0.6);
+      col = mix(col, mix(vec3(0.85, 0.97, 1.0), vec3(1.0, 0.8, 0.97), pk), crest * 0.7);
+      // white highlight streaks riding the current, three scales; far ones fade to a gentle brightening
+      for (int L = 0; L < 3; L++) { float cw = L == 0 ? 0.05 : (L == 1 ? 0.11 : 0.026), rl = L == 0 ? 0.32 : (L == 1 ? 0.6 : 0.16);
+        vec2 g = vec2(kU / cw, (tp + float(L) * 0.37) / rl); vec2 cell = floor(g); float r = h2(cell + float(L) * 13.0);
+        if (r < 0.8) { float x0 = (cell.x + 0.25 + 0.5 * h2(cell + 3.3)) * cw, y0 = (cell.y + 0.5) * rl, len = rl * (0.3 + 0.5 * h2(cell + 6.6));
+          float wid = (L == 0 ? 0.005 : (L == 1 ? 0.009 : 0.003)), ww = max(wid, 0.9 * fwidth(kU)), along = abs(tp - y0) / (0.5 * len);
+          float I = exp(-pow((kU - x0) / ww, 2.0)) * (1.0 - smoothstep(0.35, 1.0, along)) * (wid / ww) * (0.6 + 0.4 * sin(uT * 2.0 + r * 30.0));
+          col = mix(col, mix(vec3(0.92, 1.0, 1.0), vec3(1.0, 0.85, 0.98), pk), clamp(I * 0.95, 0.0, 1.0)); } }
+      col = mix(col, c8(200.0, 235.0, 255.0), 0.28 * smoothstep(5.0, 16.0, kZ) * exp(-u * u * 1.5));   // glossy glow toward the bright core
+      // four-point star sparkles riding the current
+      { vec2 g = vec2(u * 5.0, tp * 2.2); vec2 cell = floor(g); float hh = h2(cell + 0.37);
+        if (hh < 0.75) { vec2 pc = cell + vec2(0.2 + 0.6 * h2(cell + 1.7), 0.2 + 0.6 * h2(cell + 4.1));
+          float dx = (g.x - pc.x) / 5.0 * RW, dy = (g.y - pc.y) / 2.2;
+          float sz = 0.8 + 1.4 * h2(cell + 9.3) * h2(cell + 2.9), tw = 0.5 + 0.5 * sin(uT * 3.0 + hh * 40.0); tw *= tw;
+          float st = exp(-(dx * dx + dy * dy) / (0.0001 * sz * sz)) + exp(-abs(dx) / (0.035 * sz)) * exp(-dy * dy / (0.00002 * sz)) + 0.6 * exp(-abs(dy) / (0.045 * sz)) * exp(-dx * dx / (0.00001 * sz));
+          vec2 fcs = fract(g); st *= smoothstep(0.0, 0.2, min(fcs.x, 1.0 - fcs.x)) * smoothstep(0.0, 0.12, min(fcs.y, 1.0 - fcs.y));
+          float lodS = 1.0 - smoothstep(0.006, 0.03, max(fwidth(kU), fwidth(tp)));
+          col = mix(col, vec3(1.0), clamp(st * tw * lodS, 0.0, 1.0)); } }
+      // thin bright fringe where the river meets its foam banks (the 3D clusters stand just outside it)
+      float eJ = 0.04 * (n2(vec2(kT * 9.0, sign(u) * 3.0)) - 0.5), eE = max(0.012, 1.5 * fwidth(kU));
+      col = mix(col, vec3(0.96, 0.95, 1.0), 0.75 * exp(-pow((abs(kU) - RW - eJ) / max(0.014, eE), 2.0)));
+      gl_FragColor = vec4(col, 1.0);
+      #include <colorspace_fragment>
+      #include <fog_fragment>
+    }` });
+{ const zf = BZ0 + 2.5, len = zf - Z_END; const g = new THREE.PlaneGeometry(2 * CHORD + 0.06, len, 1, 1); g.rotateX(-Math.PI / 2);
+  const m = new THREE.Mesh(g, waterMat); m.position.set(AX, 0, zf - len / 2); addW(m, 'water', 'water'); }
+
+// ---------------- FOUR foam-cluster shapes, reused along both banks and the wall bases ----------------
+const foamPrefabs = [0, 1, 2, 3].map((k) => { const r = rngOf(900 + k * 77), parts = [[0, 0.38, 0, 0.6]], n = 5 + k;
+  for (let i = 0; i < n; i++) { const a = r() * Math.PI * 2, d = 0.38 + 0.45 * r(), s = 0.24 + 0.3 * r(); parts.push([Math.cos(a) * d, s * 0.55 + 0.12 * r(), Math.sin(a) * d * 0.75, s]); }
+  if (k % 2) parts.push([0.15, 0.78, -0.05, 0.36]);
+  return mergeGeometries(parts.map(([x, y, z, s]) => { const g = new THREE.IcosahedronGeometry(s, 3); g.translate(x, y, z); return g; })); });
+const foamMat = GRAY ? grayM(0xe6e6ea) : new THREE.ShaderMaterial({ fog: true, uniforms: THREE.UniformsUtils.merge([THREE.UniformsLib.fog, {}]),
+  vertexShader: `#include <fog_pars_vertex>
+    varying vec3 vN; varying vec3 vW; varying float vAO;
+    float fh(vec3 p){ return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453); }
+    float fn(vec3 p){ vec3 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(mix(fh(i), fh(i + vec3(1, 0, 0)), f.x), mix(fh(i + vec3(0, 1, 0)), fh(i + vec3(1, 1, 0)), f.x), f.y), mix(mix(fh(i + vec3(0, 0, 1)), fh(i + vec3(1, 0, 1)), f.x), mix(fh(i + vec3(0, 1, 1)), fh(i + vec3(1, 1, 1)), f.x), f.y), f.z); }
+    void main(){ vec4 w0 = modelMatrix * vec4(position, 1.0); float b = fn(w0.xyz * 22.0) * 0.6 + fn(w0.xyz * 47.0) * 0.4;
+      vec3 Nw = normalize(mat3(modelMatrix) * normal); vec4 w = w0 + vec4(Nw * (b - 0.5) * 0.012, 0.0); vW = w.xyz; vN = Nw; vAO = smoothstep(0.0, 0.07, w.y);
+      vec4 mvPosition = viewMatrix * w; gl_Position = projectionMatrix * mvPosition;
+      #include <fog_vertex>
+    }`,
+  fragmentShader: `#include <fog_pars_fragment>
+    varying vec3 vN; varying vec3 vW; varying float vAO;
+    vec3 c8(float r, float g, float b){ return pow(vec3(r, g, b) / 255.0, vec3(2.2)); }
+    void main(){ vec3 N = normalize(vN), V = normalize(cameraPosition - vW);
+      float lit = clamp(0.28 + 0.5 * dot(N, normalize(vec3(-0.2, 0.75, 0.62))) + 0.25 * (N.y * 0.5 + 0.5), 0.0, 1.0) * mix(0.75, 1.0, vAO);
+      vec3 col = lit < 0.5 ? mix(c8(120.0, 105.0, 205.0), c8(190.0, 185.0, 240.0), lit / 0.5) : mix(c8(190.0, 185.0, 240.0), c8(252.0, 250.0, 255.0), (lit - 0.5) / 0.5);
+      float fr = pow(1.0 - abs(dot(N, V)), 2.4);
+      col += fr * 0.22 * (0.5 + 0.5 * cos(6.2832 * (fr * 1.4 + N.x * 0.3 + vec3(0.0, 0.33, 0.67))));
+      col = mix(col, c8(255.0, 190.0, 240.0), 0.12 * (1.0 - vAO));                // pink water light at the foot of each heap
+      gl_FragColor = vec4(col, 1.0);
+      #include <colorspace_fragment>
+      #include <fog_fragment>
+    }` });
+// placement: bank clusters just outside the river edge on both sides (an outer row every few steps), wall-base clusters along the water line;
+// merged per drum section so each section is one draw call and the sections behind the camera are culled
+const FOAM = [];   // [x, z, size, prefab, rotation]
+{ const r = rngOf(4747), F = LAY.foam; const zA = BZ0 + 0.9;
+  for (const side of [-1, 1]) {
+    let i = 0; for (let z = zA; z > Z_END + 0.5; z -= F.bank_step * (0.8 + 0.4 * r()), i++) {
+      const s = F.size[0] + (F.size[1] - F.size[0]) * r(), c = centreX(z), x = c + side * (RW + F.bank_gap + s * 0.55 + 0.03 * r());
+      if (Math.abs(x - AX) < CHORD - 0.12) FOAM.push([x, z, s, Math.floor(r() * 4), r() * 6.28]);
+      if (i % 3 === 1) { const s2 = s * 0.8, x2 = x + side * (s * 0.9 + s2 * 0.4); if (Math.abs(x2 - AX) < CHORD - 0.12) FOAM.push([x2, z - 0.1, s2, Math.floor(r() * 4), r() * 6.28]); }
+    }
+    for (let z = zA - 1.0; z > Z_END + 0.5; z -= F.wall_step * (0.8 + 0.4 * r())) { const s = 0.2 + 0.12 * r(); FOAM.push([AX + side * (CHORD - s * 0.35), z, s, Math.floor(r() * 4), r() * 6.28]); }
+  } }
+{ const bySec = new Map(); for (const f of FOAM) { const k = Math.floor((RING0 - f[1]) / SP); if (!bySec.has(k)) bySec.set(k, []); bySec.get(k).push(f); }
+  const M4 = new THREE.Matrix4(), Q = new THREE.Quaternion();
+  for (const [k, list] of bySec) { const g = mergeGeometries(list.map(([x, z, s, p, rot]) => foamPrefabs[p].clone().applyMatrix4(M4.compose(new THREE.Vector3(x, -0.02, z), Q.setFromAxisAngle(UPV, rot), new THREE.Vector3(s, s * 0.85, s)))));
+    g.computeBoundingSphere(); addW(new THREE.Mesh(g, foamMat), 'foam_sec_' + k, 'foam'); } }
+
+// ---------------- iridescent bubbles (one sphere, instanced) ----------------
+const BUB_U = { uTime: { value: 0 } };
+{ const r = rngOf(1212), B = []; for (let i = 0; i < LAY.bubbles.count; i++) { const z = BZ0 - 0.2 - r() * (BZ0 - Z_END - 3), side = r() < 0.5 ? -1 : 1, c = centreX(z);
+    const x = THREE.MathUtils.clamp(c + side * (RW * (0.75 + 0.9 * r())), AX - CHORD + 0.1, AX + CHORD - 0.1); B.push([x, 0.04 + r() * r() * 0.75, z, 0.022 + r() * r() * 0.06]); }
+  const bGeo = new THREE.SphereGeometry(1, 24, 16);
+  const bm = GRAY ? grayM(0xdddddd) : new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: { ...BUB_U, uL: { value: new THREE.Vector3(-0.25, 0.8, 0.55).normalize() } },
+    vertexShader: 'uniform float uTime; varying vec3 vN; varying vec3 vW; void main(){ vec4 w = modelMatrix * instanceMatrix * vec4(position, 1.0); float ph = instanceMatrix[3].x * 13.0 + instanceMatrix[3].z * 7.0; w.y += 0.012 * sin(uTime * 1.3 + ph); vW = w.xyz; vN = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
+    fragmentShader: `varying vec3 vN; varying vec3 vW; uniform vec3 uL; void main(){ vec3 N = normalize(vN), V = normalize(cameraPosition - vW); float c = abs(dot(N, V)), f = pow(1.0 - c, 1.6);
+      vec3 film = 0.6 + 0.4 * cos(6.2832 * (f * 1.8 + N.y * 0.35 + vec3(0.0, 0.33, 0.67)));
+      float sp = pow(max(dot(reflect(-V, N), uL), 0.0), 60.0) + 0.6 * pow(max(dot(reflect(-V, N), normalize(vec3(0.4, 0.2, 0.9))), 0.0), 90.0);
+      vec3 col = mix(vec3(1.0), film, 0.9) + sp; gl_FragColor = vec4(min(col, vec3(1.0)), clamp(0.16 + 0.75 * f * f + 0.35 * f + 1.3 * sp, 0.0, 0.97)); }` });
+  const bubbles = new THREE.InstancedMesh(bGeo, bm, B.length); const m4 = new THREE.Matrix4(), qI = new THREE.Quaternion();
+  B.forEach(([x, y, z, s], i) => bubbles.setMatrixAt(i, m4.compose(new THREE.Vector3(x, y, z), qI, new THREE.Vector3(s, s, s)))); bubbles.frustumCulled = false; bubbles.renderOrder = 7;
+  addW(bubbles, 'bubbles', 'bubble'); }
+
+// ---------------- Benny (round-32 Benny: mesh, bake, paddling shader) - same code as the kit game / screen kit ----------------
+const VERT_HEAD = `uniform float uT; uniform float uSwim; uniform vec2 uPom; uniform float uArmA; uniform float uKick; uniform float uKickA; uniform float uBobA;
+vec3 b31rot(vec3 r, vec3 ax, float a){ float c = cos(a), s = sin(a); return r * c + cross(ax, r) * s + ax * dot(ax, r) * (1.0 - c); }`;
+const VERT_BODY = `vec3 p = position; float side = p.x >= 0.0 ? 1.0 : -1.0;
+float wa = smoothstep(0.30, 0.37, abs(p.x)) * (1.0 - smoothstep(0.08, 0.16, abs(p.y + 0.18)));
+float ph0 = uT * 7.5 + (side > 0.0 ? 0.0 : 3.14159); float ph = ph0 - 0.28 * sin(ph0);
+vec3 piv = vec3(side * 0.31, -0.18, 0.0); vec3 q = p - piv;
+q = b31rot(q, vec3(0.0, 0.0, 1.0), -side * uSwim * wa * uArmA * sin(ph)); q = b31rot(q, vec3(0.0, 1.0, 0.0), side * uSwim * wa * 0.5 * cos(ph)); p = piv + q;
+float kz = smoothstep(0.06, 0.24, p.z) * (1.0 - smoothstep(-0.36, -0.2, p.y)) * smoothstep(0.02, 0.1, abs(p.x)) * (1.0 - smoothstep(0.26, 0.34, abs(p.x)));
+p += vec3(0.0, 0.35, 1.0) * (uKickA * 0.045 * kz * sin(uKick * 11.0 + (side > 0.0 ? 0.0 : 3.14159)));
+float sp = sin(uT * 7.5); p.y += uBobA * sp * sp;
+float wp = smoothstep(0.17, 0.27, p.y); vec3 pp = vec3(0.0, 0.19, 0.05); vec3 r = p - pp;
+r = b31rot(r, vec3(1.0, 0.0, 0.0), uPom.x * wp); r = b31rot(r, vec3(0.0, 0.0, 1.0), uPom.y * wp); p = pp + r;
+float sq = 1.0 + 0.03 * uSwim * sin(uT * 15.0); p.y = (p.y + 0.5) * sq - 0.5; p.xz /= sqrt(sq);
+vec3 transformed = p;`;
+const bgl = await new GLTFLoader().loadAsync('benny31.glb');
+const bmap = await tl.loadAsync('bake.png'); bmap.colorSpace = THREE.SRGBColorSpace; bmap.flipY = false; bmap.anisotropy = 8;
+let bgeo = null; bgl.scene.traverse((o) => { if (o.isMesh && !bgeo) bgeo = o.geometry; });
+const U = { uT: { value: 0 }, uSwim: { value: 1 }, uPom: { value: new THREE.Vector2() }, uArmA: { value: 0.42 }, uKick: { value: 0 }, uKickA: { value: 1 }, uBobA: { value: 0 } };
+const bmat = new THREE.MeshBasicMaterial({ map: bmap, color: new THREE.Color(4, 4, 4), fog: false });
+bmat.onBeforeCompile = (sh) => { Object.assign(sh.uniforms, U); sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + VERT_HEAD).replace('#include <begin_vertex>', VERT_BODY);
+  sh.fragmentShader = sh.fragmentShader.replace('#include <colorspace_fragment>', `#include <colorspace_fragment>
+    { vec3 col = gl_FragColor.rgb; float l = dot(col, vec3(0.2126, 0.7152, 0.0722)); col = mix(vec3(l), col, 1.36); col = (col - 0.5) * 1.15 + 0.5; gl_FragColor.rgb = clamp(col, 0.0, 1.0); }`); };
+const bmesh = new THREE.Mesh(bgeo, bmat); bmesh.frustumCulled = false;
+const bennyH = LAY.benny.height, KH = 0.9 * bennyH / (0.99 * 0.78);
+const holder = new THREE.Group(); holder.rotation.y = Math.PI; holder.scale.setScalar(KH); holder.position.y = 0.496 * KH - 0.22 * 0.99 * KH; holder.add(bmesh);
+bmesh.scale.set(0.8, 0.84, 0.8); const BS = +(q.get('bsize') ?? LAY.benny.bsize); holder.scale.multiplyScalar(BS); holder.position.y *= BS; holder.position.y += +(q.get('blift') ?? LAY.benny.lift);
+const benny = new THREE.Group(); benny.add(holder); scene.add(benny);
+const pxW = bennyH / 400;
+const splashTex = await tl.loadAsync('splash.png'); splashTex.colorSpace = THREE.SRGBColorSpace;
+const splash = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneMapped: false, transparent: true, depthWrite: false, depthTest: true, fog: false })); splash.renderOrder = 5; scene.add(splash);
+const bubTex = await tl.loadAsync('bubble.png'); bubTex.colorSpace = THREE.SRGBColorSpace;
+const ctex = await tl.loadAsync('coin.png'); ctex.colorSpace = THREE.SRGBColorSpace;
+const coinD = 2 * LAY.coin_radius;
+const TRAIL = [], TRAIL_S = []; for (let s = 0; s <= LEVEL + 1e-9; s += 0.05) { TRAIL.push(at(s, new THREE.Vector3()).toArray()); TRAIL_S.push(+s.toFixed(4)); }
+const coins = []; let coinCount = +(q.get('coins') ?? LAY.coins_start); const coinEl = document.getElementById('coins'); coinEl.textContent = '\u{1FA99} ' + coinCount.toLocaleString('en-US');
+const st = { s: +(q.get('s0') ?? (S_REF + AHEAD)), lat: 0, t: 0, camX: { x: 0, v: 0 }, guard: 0 };
+const CT = installControls({ THREE, TR: { trail: TRAIL, trail_s: TRAIL_S, N: 0 }, canvas: renderer.domElement, camera, q, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex: ctex, coinD,
+  bennyFullH: 0.99 * KH, pxW, coinEl, getS: () => st.s, getCoins: () => coinCount, render: () => renderer.render(scene, camera) });
+// coins: a line up the river centre (like the approved picture / the preview), then lane runs; s = Benny's start + offset
+const SB = S_REF + AHEAD;
+const LAYC = [[1.5, 0], [2.6, 0], [3.6, 0], [4.6, 0], [5.6, 0], [6.6, 0], [9.0, 0.3], [9.8, 0.3], [10.6, 0.3], [12.4, 0], [13.2, 0], [14.0, 0],
+  [15.8, -0.3], [16.6, -0.3], [17.4, -0.3], [19.4, 0.3], [20.3, 0], [21.2, -0.3], [22.1, 0], [23.0, 0.3], [24.8, 0], [25.6, 0], [26.4, 0], [27.0, -0.3], [27.6, -0.3], [28.2, -0.3]]
+  .map(([o, l]) => [SB + o, l]).filter((c) => c[0] < LEVEL - 0.4);
+coins.forEach((c, i) => { const L = LAYC[i]; if (!L) { c.sp.visible = false; c.s = 1e9; c.got = 0; return; } const F = frameAt(L[0]); c.s = L[0]; c.lat = L[1]; c.h = 0;
+  at(L[0], c.p0).addScaledVector(F.r, L[1]).addScaledVector(F.n, coinD * 0.5); c.n0.copy(F.n); c.sp.position.copy(c.p0); c.kind = Math.abs(L[1]) >= 0.1 ? 'lane' : 'water'; });
+const coin3 = (() => { const geo = new THREE.CylinderGeometry(0.5, 0.5, 0.12, 48, 1); geo.rotateX(Math.PI / 2);
+  const face = new THREE.MeshBasicMaterial({ map: ctex, toneMapped: false, alphaTest: 0.4 }), rim = new THREE.MeshBasicMaterial({ color: sRGB([219, 128, 20]), toneMapped: false });
+  return coins.map((c, i) => { const m = new THREE.Mesh(geo, [rim, face, face]); m.name = 'coin3d_' + i; scene.add(m); c.sp.material.colorWrite = false; return m; }); })();
+
+// ---------------- camera: the approved picture's camera, kept looking straight down the drum (the painted composition), sliding with Benny ------
+// (round-46 cam_axis rule: follows the river's swing by 0.9 and his lanes by 0.65, soft limit from the drum axis; a guard keeps his whole body on screen)
+const CAM = LAY.camera, camQ = new THREE.Quaternion().setFromEuler(new THREE.Euler(CAM.pitch, CAM.yaw, 0, 'YXZ'));
+const DZ = CAM.pos[2] - (BZ0 - AHEAD), DX0 = CAM.pos[0] - BX0;                 // camera relative to Benny's start point
+const cds = (o, target, omega, dt) => { const y = o.x - target, j = o.v + omega * y, e = Math.exp(-omega * dt); o.x = target + (y + j * dt) * e; o.v = (o.v - omega * j * dt) * e; return o.x; };
+const softLim = (x, lim, knee) => { const m = Math.abs(x), k0 = lim - knee; return m <= k0 ? x : Math.sign(x) * (k0 + knee * Math.tanh((m - k0) / knee)); };
+const tmp = new THREE.Vector3(), tB = new THREE.Vector3(), rB = new THREE.Vector3(), mB = new THREE.Matrix4();
+const camAt = (dt) => {
+  const p = at(st.s, tmp), target = BX0 + DX0 + CAM.follow_route * (p.x - BX0) + CAM.follow_lane * st.lat;
+  const x = dt > 0 ? cds(st.camX, target, 7, dt) : (st.camX.x = target, st.camX.v = 0, target);
+  camera.position.set(AX + softLim(x - AX, CAM.max_off, CAM.knee), CAM.pos[1] + CT.c.camH, p.z + DZ); camera.quaternion.copy(camQ); camera.updateMatrixWorld();
+  // on-screen guard: if any part of Benny would leave the frame, slide the camera sideways just enough (after the soft limit)
+  const fpx = H / 2 / Math.tan(camera.fov * DEG / 2), M = 6;
+  for (let k = 0; k < 2; k++) { const bb = window.bennyBox(); const dpx = bb.x0 < M ? bb.x0 - M : bb.x1 > W - M ? bb.x1 - (W - M) : 0; if (!dpx) break;
+    camera.position.x += dpx * camera.position.distanceTo(benny.position) / fpx; camera.updateMatrixWorld(); st.guard++; }
+};
+// level end: the warm white light at the end of the tunnel grows and fills the screen over the last 1.25 u
+const endEl = document.createElement('div'); endEl.style.cssText = 'position:fixed;inset:0;pointer-events:none;opacity:0;z-index:4'; document.body.appendChild(endEl);
+const endP = new THREE.Vector3(AX, AY * 0.6, Z_END); let endK = 0;
+const updateEnd = (s) => { const x = THREE.MathUtils.clamp((s - (LEVEL - 1.25)) / 1.1, 0, 1); endK = x * x * (3 - 2 * x); if (endK <= 0) { endEl.style.opacity = '0'; return; }
+  const p = endP.clone().project(camera), cx = (p.x + 1) / 2 * W, cy = (1 - p.y) / 2 * H, e = endK, Dg = Math.hypot(W, H), r1 = (0.02 + 0.5 * e) * Dg, r2 = r1 + (0.08 + 0.5 * e) * Dg, r3 = r2 + 0.4 * Dg;
+  endEl.style.background = `radial-gradient(circle at ${cx.toFixed(1)}px ${cy.toFixed(1)}px, rgba(255,253,242,1) 0px, rgba(255,240,190,1) ${r1.toFixed(1)}px, rgba(255,214,140,${(0.55 + 0.45 * e).toFixed(3)}) ${r2.toFixed(1)}px, rgba(255,200,130,${(e * e).toFixed(3)}) ${r3.toFixed(1)}px)`;
+  endEl.style.opacity = Math.min(1, e * 1.25).toFixed(3); };
+document.getElementById('pause').addEventListener('click', (e) => { e.stopPropagation(); window.paused = !window.paused; document.getElementById('pausedLay').style.display = window.paused ? 'flex' : 'none'; });
+window.paused = false;
+const SPK = +(q.get('splash') ?? 0.75);
+window.step = (t, dt, steer, speed) => {
+  const v = CT.fwd(speed ?? +q.get('speed')); st.s = Math.min(st.s + v * dt, LEVEL + 0.5); st.t = t; WATER_U.uT.value = t; BUB_U.uTime.value = t;
+  st.lat = CT.update(t, dt).lat; const F = frameAt(st.s);
+  at(st.s, tmp).addScaledVector(F.r, st.lat); benny.position.copy(tmp).addScaledVector(F.n, Math.sin(t * Math.PI * 1.6) * 0.006 + CT.c.h);
+  tB.copy(F.t); rB.copy(F.r).negate(); benny.quaternion.setFromRotationMatrix(mB.makeBasis(rB, F.n, tB)); CT.orient(benny.quaternion);
+  U.uT.value = t; U.uSwim.value = 1; U.uPom.value.set(Math.sin(t * 5.0) * 0.06, 0); CT.anim(0);
+  splash.scale.set(799 * pxW * 0.85 * SPK * (1 + 0.05 * Math.sin(t * 9)), 309 * pxW * 0.9 * SPK * (1 + 0.07 * Math.sin(t * 7 + 1)), 1);
+  splash.position.copy(benny.position).addScaledVector(F.t, 0.09).addScaledVector(F.n, -CT.c.h + splash.scale.y * 0.3);
+  CT.water(F, v, dt);
+  camAt(dt); WATER_U.uCamZ.value = camera.position.z;
+  updateEnd(st.s);
+  for (const c of coins) { if (c.got < 0 && CT.hits(c)) { c.got = t; coinCount += 10; coinEl.textContent = '\u{1FA99} ' + coinCount.toLocaleString('en-US'); }
+    if (c.got >= 0 && c.s < 1e8) { const k = (t - c.got) / 0.4; c.sp.visible = k < 1; if (k < 1) { c.sp.position.copy(benny.position).addScaledVector(F.n, bennyH * (1.05 + 0.6 * k)); c.sp.scale.setScalar(coinD * 0.7 * (1 - 0.5 * k)); } } }
+  coins.forEach((c, i) => { const m = coin3[i]; m.visible = c.sp.visible && c.s < 1e8; if (!m.visible) return; m.position.copy(c.sp.position);
+    m.scale.setScalar(c.got >= 0 ? c.sp.scale.x : coinD); m.quaternion.setFromAxisAngle(F.n, 0.5 * Math.sin(t * 1.9 + i * 1.3)); });
+  return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, socks: 0, z: +benny.position.z.toFixed(3), guard: st.guard, ...CT.state() };
+};
+window.renderNow = async (n = 1) => { for (let i = 0; i < n; i++) renderer.render(scene, camera); return true; };
+window.camInfo = () => ({ p: camera.position.toArray().map((x) => +x.toFixed(4)), q: camera.quaternion.toArray().map((x) => +x.toFixed(5)), fov: camera.fov });
+window.bennyInfo = () => { const p = benny.position.clone().project(camera); return { x: +((p.x + 1) / 2 * W).toFixed(1), y: +((1 - p.y) / 2 * H).toFixed(1) }; };
+window.bennyBox = () => { benny.updateMatrixWorld(true); const a = bmesh.geometry.attributes.position, v = new THREE.Vector3(); let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+  for (let i = 0; i < a.count; i += 3) { v.fromBufferAttribute(a, i).applyMatrix4(bmesh.matrixWorld).project(camera); const x = (v.x + 1) / 2 * W, y = (1 - v.y) / 2 * H; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+  return { x0: +x0.toFixed(1), x1: +x1.toFixed(1), y0: +y0.toFixed(1), y1: +y1.toFixed(1) }; };
+window.sceneAudit = () => { scene.updateMatrixWorld(true); return MESH.map((o) => ({ name: o.name || o.parent?.name, m: o.matrixWorld.elements.map((x) => +x.toFixed(5)) })); };
+window.sectionInfo = () => ({ LEVEL: +LEVEL.toFixed(3), S_REF: +S_REF.toFixed(3), meshes: MESH.length, coins: LAYC.length, foam: FOAM.length, modules: NSEC + 3, screen: '05-mod',
+  tris: renderer.info.render.triangles, calls: renderer.info.render.calls });
+window.qaGoto = (s) => { st.s = s; window.step(st.t, 0, 0, 0); return st.s; };
+window.qaRoute = () => ({ RLEN: +RLEN.toFixed(3), S_REF, LEVEL, Z_END, maxOff: +Math.max(...RP.map((p) => Math.abs(p.x - AX))).toFixed(3), chord: +CHORD.toFixed(3) });
+window.state = () => ({ s: st.s });
+window.step(0, 0, 0, 0);
+document.getElementById('load').style.display = 'none';
+renderer.render(scene, camera);
+window.ready = true;
+if (q.get('play')) {   // real-time play (phone): tap to swim, swipes steer
+  let t0 = null, last = 0; const tapEl = document.createElement('div'); tapEl.textContent = 'Tap to swim'; tapEl.style.cssText = 'position:fixed;left:0;right:0;bottom:22%;text-align:center;color:#fff;font-weight:800;font-size:26px;text-shadow:0 2px 6px #000a;z-index:9';
+  document.body.appendChild(tapEl); let go = false; addEventListener('pointerdown', () => { go = true; tapEl.remove(); }, { once: true });
+  const loop = (now) => { requestAnimationFrame(loop); if (!go) { renderer.render(scene, camera); return; } if (t0 === null) { t0 = now; last = now; } const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    if (window.paused) { t0 += now - last; last = now; renderer.render(scene, camera); return; }
+    if (st.s < LEVEL) window.step((now - t0) / 1000, dt, 0, +q.get('speed')); renderer.render(scene, camera); };
+  requestAnimationFrame(loop);
+}
+</script></body></html>

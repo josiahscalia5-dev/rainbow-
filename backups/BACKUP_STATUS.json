@@ -1,20 +1,20 @@
 {
   "last_run": {
-    "time": "2026-11-23T03:49:58+00:00",
+    "time": "2026-11-23T03:54:58+00:00",
     "reason": "daemon",
     "result": "committed+pushed",
-    "files_staged": 8,
+    "files_staged": 7,
     "pushed_verified": true,
     "branch": "ccr-6deca498-03lhkc",
     "note": "following session branch 'ccr-6deca498-03lhkc' (config branch 'claude/rainbow-r22-restore-ut3m39')",
-    "commit": "96e9addaa32ad4f93d266fd35dfb2c43d7b1c65d",
-    "duration_s": 20
+    "commit": "b3da314d9da0a5062a117c05dc595d0ec111b9b5",
+    "duration_s": 18
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-6deca498-03lhkc",
-  "last_verified_remote_sha": "96e9addaa32ad4f93d266fd35dfb2c43d7b1c65d",
-  "last_successful_backup_utc": "2026-11-23T03:49:58+00:00",
+  "last_verified_remote_sha": "b3da314d9da0a5062a117c05dc595d0ec111b9b5",
+  "last_successful_backup_utc": "2026-11-23T03:54:58+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=634); see backups/RECOVERY.md for limits",
-  "next_scheduled_utc": "2026-11-23T03:55:00+00:00"
+  "next_scheduled_utc": "2026-11-23T04:00:00+00:00"
 }

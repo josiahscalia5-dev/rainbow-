@@ -739,3 +739,93 @@ Now the palette. I'll measure the wall (violet/magenta) and gold colours straigh
 
 > ↩︎ result: File created successfully at: /home/user/rainbow-/tools/mod05/mod05.json (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-23T03:56:48.456Z
+
+> 🔧 **Bash** `{"command": "node -e \"console.log(require('./node_modules/three/package.json').version)\" 2>/dev/null; ls node_modules/three/examples/jsm/utils/BufferGeometryUtils.js node_modules/three/examples/jsm/loaders/GLTFLoader.js 2>&1 | head -2; sed -n '96,135p' tools/kit05/controls.js; grep -n \"hits(c)\\|hits =\\|function hits\\|const hits\" tools/kit05/controls.js", "description": "Check three.js version and coin fields in controls"}`
+
+### 🧑 User — 2026-11-23T03:56:48.570Z
+
+> ↩︎ result: 0.170.0
+> node_modules/three/examples/jsm/loaders/GLTFLoader.js
+> node_modules/three/examples/jsm/utils/BufferGeometryUtils.js
+>   //    the most responsive choice, as in Subway Surfers; queueing them made a lane change arrive up to 0.6 s late).
+>   //  * down during a leap = he dives straight in from the air (smooth hand-over from his current height and speed);
+>   //    up under water = he swims up and leaps out of the surface without stopping (the rising speed hands over to the leap).
+>   //  * up during a leap / down during a dive is remembered only in its last V_BUFFER s (then it starts on landing / resurfacing);
+>   //    earlier it is ignored, so a nervous double swipe never triggers a surprise move long after.
+>   function request(dir, src) {
+>     if (!['left', 'right', 'up', 'down'].includes(dir)) return false;
+>     const e = { dir, src, clock: +S.clock.toFixed(3) }; log.push(e);
+>     e.result = start(dir); return true;
+>   }
+>   // Gestures are read on the WINDOW, not only on the canvas: any full-screen overlay added later (HUD, vignette, title,
+>   // water layers) can never swallow a swipe. Touches that start on a real control (button, link, input, [data-noswipe])
+>   // are left alone so those s …[+2498 chars]
+
+### 🤖 Claude — 2026-11-23T03:56:51.207Z
+
+> 🔧 **Bash** `{"command": "sed -n '225,240p;450,470p' tools/kit05/controls.js", "description": "Read coin creation and hit test in controls"}`
+
+### 🧑 User — 2026-11-23T03:56:51.233Z
+
+> ↩︎ result: // per coin, every step AFTER the camera has moved (called from hits(), i.e. play3's coin loop): perspective size, and coins he
+>   // missed (other lane / under a leap) shrink + sink away behind him instead of sliding huge past the camera.
+>   // (scale, not opacity: the coin material uses alphaTest 0.35, an opacity fade would pop)
+>   function coinLook(k) {
+>     const gone = smooth(0.06, 0.36, getS() - k.s);
+>     k.sp.position.copy(k.p0).addScaledVector(k.n0, -0.09 * gone);
+>     const z = (camera ? mOf(camera.position.distanceTo(k.sp.position)) : 1) * (1 - gone);
+>     k.sp.visible = z > 0.01; k.sp.scale.set(COIN_SIZE * z, COIN_SIZE * z, 1);
+>   }
+>   // coinLayout(): the 26 coins as {s, lat, h} (+ run, run kind, world centre p and the river normal n there, for QA)
+>   window.coinLayout = () => LAYOUT.map((L, i) => ({ s: L.s, lat: +L.lat.toFixed(3), h: L.h, run: L.run, runKind: L.runKind,
+>     p: coins.find((c) => c.s === L.s && c.lat === L.lat)?.p0.toArray().map((x) => +x.toFixed(4)), n: coins.find((c) => c.s === L.s && c.lat === L.lat)?.n0.toArray().map((x) => +x.toFixed(4)) }));
+>   window.levelEnd = () => +S_DONE.toFixed(3);
+> 
+>   // ---------------- water effects: leap / dive splashes, droplets, d …[+1426 chars]
+
+### 🤖 Claude — 2026-11-23T03:59:35.251Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/mod05/mod05.html", "content": "<!doctype html>\n<html><head><meta charset=\"utf-8\"><title>Rainbow 05 modular</title>\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no\">\n<style>\nhtml,body{margin:0;background:#1a0630;overflow:hidden;font-family:system-ui,-apple-system,sans-serif}canvas{display:block}\n#hud{position:fixed;left:0;right:0;top:8px;display:flex;flex-direction:column;align-items:center;gap:7px;pointer-events:none;z-index:5}\n.bar{display:flex;gap:26px;align-items:center;background:line …[+42817 chars]`
+
+### 🧑 User — 2026-11-23T03:59:35.373Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/mod05/mod05.html (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-23T03:59:46.563Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/mod05/mod05.html'; s=open(p).read()\na=\"const waterMat = GRAY ? grayM(0x9aa6b4) : new THREE.ShaderMaterial({ fog: true, uniforms: THREE.UniformsUtils.merge([THREE.UniformsLib.fog, {}]),\"\nb=\"const waterMat = GRAY ? grayM(0x9aa6b4) : new THREE.ShaderMaterial({ fog: true, uniforms: { ...THREE.UniformsUtils.merge([THREE.UniformsLib.fog]), ...WATER_U },\"\nassert s.count(a)==1; s=s.replace(a,b)\na2=\"// water uniforms live in the ShaderMaterial (merged copies): keep the route values there\\nif (waterMat.uniforms) { Object.assign(waterMat.uniforms, WATER_ …[+553 chars]`
+
+### 🧑 User — 2026-11-23T03:59:46.626Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-23T03:59:54.945Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/mod05/setup_mod05.sh", "content": "#!/usr/bin/env bash\n# Round 47 (2026-11-23): runnable folder for the MODULAR Screen 05 section (tools/mod05).\n#   bash tools/mod05/setup_mod05.sh <workspace> [asset_repo=/home/user/rainbow-]\n# <ws>/tiles = the repeating textures (make_tiles.py, ~30 s, cached: re-made only when make_tiles.py changes)\n# <ws>/game  = play3.html (= mod05.html) + mod05.json + the shared game code (tools/kit05/controls.js, swimfx.js) + Benny 31, coin, splash,\n#              bubble sprites + three.js (the repo's node_modules). Same QA co …[+1413 chars]`
+
+### 🧑 User — 2026-11-23T03:59:55.005Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/mod05/setup_mod05.sh (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-23T03:59:57.202Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47 && mkdir -p $S/ws/tiles && cp $S/tiles/*.png $S/ws/tiles/ && sha256sum tools/mod05/make_tiles.py | cut -c1-16 > $S/ws/tiles/.hash && bash tools/mod05/setup_mod05.sh $S/ws && ls $S/ws/game", "description": "Assemble the runnable modular Screen 05 folder"}`
+
+### 🧑 User — 2026-11-23T03:59:57.274Z
+
+> ↩︎ result: modular Screen 05 ready: /tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/ws/game  (code from /home/user/rainbow-)
+> bake.png
+> benny31.glb
+> bubble.png
+> coin.png
+> controls.js
+> glint.png
+> mod05.json
+> node_modules
+> play3.html
+> ring_tile.png
+> splash.png
+> swimfx.js
+> wall_tile.png
+

@@ -833,8 +833,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 29384,
-   "sha256": "e6ba14c7425bd08bfad10962e3ebb8059a7e3836b41338929b908e6c9f7ebfde"
+   "bytes": 29385,
+   "sha256": "454c23d84bcba00f69ffebee2fcfc3a4fbd7d6cca1428ff9b9610e2df0ea8dc3"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "7e674a48c7849bb60e72673b52462f6527d4d5c577d6c83e99d551d5d1cbc7e1"
+   "sha256": "c4eb06c9329891f516e7c5daa96a1fc3e765cb1ee1d52005cfc799b35298cbb8"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -49572,9 +49572,19 @@
    "sha256": "3310faec1792fcfdadd6734efd71e7574e6c769e13e0bea50f0be9543c83307c"
   },
   {
+   "path": "tools/mod05/mod05.html",
+   "bytes": 42663,
+   "sha256": "1cb75ba17d3b7e39f8d35f3dffe483a2fea42f1ed13731d92cf56abef7082559"
+  },
+  {
    "path": "tools/mod05/mod05.json",
    "bytes": 2123,
    "sha256": "da089c5b4f65b3c1bcec0b1ccd979f34552be07565517dcf4ad29313efe5cd98"
+  },
+  {
+   "path": "tools/mod05/setup_mod05.sh",
+   "bytes": 1848,
+   "sha256": "6c3baca50d3457d6551cbd063620452542be06136ee8957ce1a7edcb823b3615"
   },
   {
    "path": "tools/model-lab.html",
