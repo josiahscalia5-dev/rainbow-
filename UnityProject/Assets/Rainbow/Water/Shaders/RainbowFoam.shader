@@ -1,11 +1,16 @@
-// Rainbow Screen 05 - soap-foam puffs (Agent 3). Hand-written URP wrapper around RainbowFoam.hlsl.
-// Mesh: FoamBank chunks (UV0 = (seed, ao), UV1 = (puff centre xyz, radius), object = world at identity).
+// Rainbow Screen 05 - soap-foam bank bubbles (foam area, round 2 2026-11-23). Hand-written URP wrapper around
+// RainbowFoam.hlsl: camera-facing sphere IMPOSTORS with the true per-pixel sphere depth (all passes write SV_Depth, so
+// the depth texture, soft particles and SSAO see round bubbles sunk into the water, not flat quads).
+// Mesh: FoamBank chunks (POSITION = puff centre, UV0 = (corner x, corner y, radius, seed), UV1 = (ao, tint, stream
+// centre, stream half width)); the object sits at the identity transform (world-space puffs).
 Shader "Rainbow/Water/Foam"
 {
     Properties
     {
         _FoamLightDir ("Spec light direction (toward the light)", Vector) = (0.264, 0.88, -0.396, 0)
         _Brightness ("Brightness", Range(0.5, 1.5)) = 1.0
+        _SOffset ("Three.js master-s offset (s + offset)", Float) = 116.7
+        _WaveAmp ("River swell amplitude (units)", Float) = 0.1
     }
 
     SubShader
@@ -19,25 +24,48 @@ Shader "Rainbow/Water/Foam"
         CBUFFER_START(UnityPerMaterial)
             float4 _FoamLightDir;
             float _Brightness;
+            float _SOffset;
+            float _WaveAmp;
         CBUFFER_END
+
+        // global written every frame by Rainbow.Screen05.SplashWake (zero = no Benny)
+        float4 _RainbowBenny;     // x = s (world z), y = world x, z = wake strength, w = waterline radius
 
         #include "Assets/Rainbow/Water/Shaders/RainbowFoam.hlsl"
 
         struct FoamAttributes
         {
-            float4 positionOS : POSITION;
-            float3 normalOS   : NORMAL;
-            float2 uv0        : TEXCOORD0;   // seed, ao
-            float4 uv1        : TEXCOORD1;   // centre (object space), radius
+            float4 positionOS : POSITION;    // puff centre
+            float4 uv0        : TEXCOORD0;   // corner x, corner y, radius, seed
+            float4 uv1        : TEXCOORD1;   // ao, tint, stream centre x, stream half width
             UNITY_VERTEX_INPUT_INSTANCE_ID
         };
 
-        void FoamWorld(FoamAttributes v, out float3 positionWS, out float4 centreRadius)
+        struct FoamVaryings
         {
-            float3 c = TransformObjectToWorld(v.uv1.xyz);
-            float3 p = TransformObjectToWorld(v.positionOS.xyz);
-            centreRadius = float4(c, v.uv1.w);
-            RainbowFoamVertex_float(p, centreRadius, v.uv0.x, _Time.y, positionWS);
+            float4 positionCS   : SV_POSITION;
+            float3 positionWS   : TEXCOORD0;   // quad point on the sphere's front tangent plane
+            float4 centreRadius : TEXCOORD1;
+            float4 cornerSeed   : TEXCOORD2;   // corner xy, seed, ao
+            float2 tintFog      : TEXCOORD3;   // tint, fog factor
+            UNITY_VERTEX_OUTPUT_STEREO
+        };
+
+        FoamVaryings FoamVert(FoamAttributes v)
+        {
+            FoamVaryings o = (FoamVaryings)0;
+            UNITY_SETUP_INSTANCE_ID(v);
+            UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+            float3 pw;
+            float4 cr;
+            RBW_FoamVertex(TransformObjectToWorld(v.positionOS.xyz), v.uv0, v.uv1, _SOffset, _WaveAmp, _RainbowBenny,
+                           _Time.y, pw, cr);
+            o.positionWS = pw;
+            o.centreRadius = cr;
+            o.cornerSeed = float4(v.uv0.xy, v.uv0.w, v.uv1.x);
+            o.positionCS = TransformWorldToHClip(pw);
+            o.tintFog = float2(v.uv1.y, ComputeFogFactor(o.positionCS.z));
+            return o;
         }
         ENDHLSL
 
@@ -45,8 +73,9 @@ Shader "Rainbow/Water/Foam"
         {
             Name "ForwardLit"
             Tags { "LightMode" = "UniversalForward" }
-            Cull Back
+            Cull Off
             ZWrite On
+            ZTest LEqual
 
             HLSLPROGRAM
             #pragma target 3.0
@@ -54,40 +83,18 @@ Shader "Rainbow/Water/Foam"
             #pragma fragment FoamFrag
             #pragma multi_compile_fog
 
-            struct Varyings
-            {
-                float4 positionCS   : SV_POSITION;
-                float3 positionWS   : TEXCOORD0;
-                float4 centreRadius : TEXCOORD1;
-                float2 seedAO       : TEXCOORD2;
-                float  fogFactor    : TEXCOORD3;
-                UNITY_VERTEX_OUTPUT_STEREO
-            };
-
-            Varyings FoamVert(FoamAttributes v)
-            {
-                Varyings o = (Varyings)0;
-                UNITY_SETUP_INSTANCE_ID(v);
-                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-                float3 pw;
-                float4 cr;
-                FoamWorld(v, pw, cr);
-                o.positionWS = pw;
-                o.centreRadius = cr;
-                o.seedAO = v.uv0;
-                o.positionCS = TransformWorldToHClip(pw);
-                o.fogFactor = ComputeFogFactor(o.positionCS.z);
-                return o;
-            }
-
-            half4 FoamFrag(Varyings i) : SV_Target
+            half4 FoamFrag(FoamVaryings i, out float outDepth : SV_Depth) : SV_Target
             {
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
-                float3 viewDir = GetWorldSpaceNormalizeViewDir(i.positionWS);
-                float3 col;
-                RainbowFoam_float(i.positionWS, i.centreRadius, i.seedAO.x, i.seedAO.y, viewDir, _FoamLightDir.xyz, col);
+                float px = RBW_FoamPx(i.cornerSeed.xy);
+                float3 P, N;
+                float h = RBW_FoamTrace(i.positionWS, i.centreRadius, P, N);
+                float3 Nv = TransformWorldToViewDir(N, false);
+                float3 col = RBW_FoamColor(Nv, px, i.cornerSeed.z, i.cornerSeed.w, i.tintFog.x, _FoamLightDir.xyz);
+                clip(RBW_FoamKeep(h, Nv.xy, px, i.cornerSeed.z));
+                outDepth = RBW_FoamDepth(P);
                 col *= _Brightness;
-                col = MixFog(col, i.fogFactor);
+                col = MixFog(col, i.tintFog.y);
                 return half4(col, 1.0);
             }
             ENDHLSL
@@ -97,36 +104,25 @@ Shader "Rainbow/Water/Foam"
         {
             Name "DepthOnly"
             Tags { "LightMode" = "DepthOnly" }
-            Cull Back
+            Cull Off
             ZWrite On
             ColorMask R
 
             HLSLPROGRAM
             #pragma target 3.0
-            #pragma vertex DepthVert
+            #pragma vertex FoamVert
             #pragma fragment DepthFrag
 
-            struct DepthVaryings
+            half DepthFrag(FoamVaryings i, out float outDepth : SV_Depth) : SV_Target
             {
-                float4 positionCS : SV_POSITION;
-                UNITY_VERTEX_OUTPUT_STEREO
-            };
-
-            DepthVaryings DepthVert(FoamAttributes v)
-            {
-                DepthVaryings o = (DepthVaryings)0;
-                UNITY_SETUP_INSTANCE_ID(v);
-                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-                float3 pw;
-                float4 cr;
-                FoamWorld(v, pw, cr);
-                o.positionCS = TransformWorldToHClip(pw);
-                return o;
-            }
-
-            half DepthFrag(DepthVaryings i) : SV_Target
-            {
-                return i.positionCS.z;
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
+                float px = RBW_FoamPx(i.cornerSeed.xy);
+                float3 P, N;
+                float h = RBW_FoamTrace(i.positionWS, i.centreRadius, P, N);
+                float3 Nv = TransformWorldToViewDir(N, false);
+                clip(RBW_FoamKeep(h, Nv.xy, px, i.cornerSeed.z));
+                outDepth = RBW_FoamDepth(P);
+                return outDepth;
             }
             ENDHLSL
         }
@@ -135,38 +131,25 @@ Shader "Rainbow/Water/Foam"
         {
             Name "DepthNormals"
             Tags { "LightMode" = "DepthNormals" }
-            Cull Back
+            Cull Off
             ZWrite On
 
             HLSLPROGRAM
             #pragma target 3.0
-            #pragma vertex DepthNormalsVert
+            #pragma vertex FoamVert
             #pragma fragment DepthNormalsFrag
             #pragma multi_compile_fragment _ _GBUFFER_NORMALS_OCT
 
-            struct DNVaryings
+            half4 DepthNormalsFrag(FoamVaryings i, out float outDepth : SV_Depth) : SV_Target
             {
-                float4 positionCS : SV_POSITION;
-                float3 normalWS   : TEXCOORD0;
-                UNITY_VERTEX_OUTPUT_STEREO
-            };
-
-            DNVaryings DepthNormalsVert(FoamAttributes v)
-            {
-                DNVaryings o = (DNVaryings)0;
-                UNITY_SETUP_INSTANCE_ID(v);
-                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-                float3 pw;
-                float4 cr;
-                FoamWorld(v, pw, cr);
-                o.positionCS = TransformWorldToHClip(pw);
-                o.normalWS = normalize(pw - cr.xyz);
-                return o;
-            }
-
-            half4 DepthNormalsFrag(DNVaryings i) : SV_Target
-            {
-                float3 normalWS = normalize(i.normalWS);
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
+                float px = RBW_FoamPx(i.cornerSeed.xy);
+                float3 P, N;
+                float h = RBW_FoamTrace(i.positionWS, i.centreRadius, P, N);
+                float3 Nv = TransformWorldToViewDir(N, false);
+                clip(RBW_FoamKeep(h, Nv.xy, px, i.cornerSeed.z));
+                outDepth = RBW_FoamDepth(P);
+                float3 normalWS = normalize(N);
                 #if defined(_GBUFFER_NORMALS_OCT)
                     float2 octNormalWS = PackNormalOctQuadEncode(normalWS);
                     float2 remapped = saturate(octNormalWS * 0.5 + 0.5);

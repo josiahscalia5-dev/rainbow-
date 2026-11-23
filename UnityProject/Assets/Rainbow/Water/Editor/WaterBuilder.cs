@@ -112,9 +112,13 @@ namespace Rainbow.Screen05.EditorTools
         // ------------------------------------------------------------------ foam banks
         static void BuildFoam(Transform root, out int puffCount, out int chunkCount)
         {
+            // (foam round 2026-11-23) sphere-impostor soap bubbles; they ride the river swell (same values as the River)
+            AssetDatabase.ImportAsset(Dir + "/Shaders/RainbowFoam.shader", ImportAssetOptions.ForceSynchronousImport);
             Material mat = GetOrCreateMaterial(MatDir + "/RainbowFoam05.mat", "Rainbow/Water/Foam");
             mat.SetVector("_FoamLightDir", new Vector4(ToSun.x, ToSun.y, ToSun.z, 0f));
             mat.SetFloat("_Brightness", 1f);
+            mat.SetFloat("_SOffset", RiverSurface.SOffset);
+            mat.SetFloat("_WaveAmp", RiverSurface.WaveAmp);
             EditorUtility.SetDirty(mat);
 
             var foamRoot = new GameObject("FoamBanks05");

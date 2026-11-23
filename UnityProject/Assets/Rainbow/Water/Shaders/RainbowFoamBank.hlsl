@@ -71,6 +71,20 @@ float2 RBW_BankEdges(float d, float hw, float Mb, float sm)
     return float2(max(eL, -hw), min(eR, hw));
 }
 
+// foam.ts SOAP05_GLSL soap05(): approved soap colour ramp, t = 0 blue-violet crevice -> blue -> periwinkle ->
+// lavender-white -> 1 white top cap (shared by the 3D bubbles and the river's flat lather between them)
+static const float3 RBW_SOAP_CREV = float3(0.23, 0.22, 0.66);
+
+float3 RBW_Soap05(float t)
+{
+    t = saturate(t) * 5.0;
+    float3 c = lerp(RBW_SOAP_CREV, float3(0.26, 0.38, 0.84), saturate(t));
+    c = lerp(c, float3(0.38, 0.54, 0.97), saturate(t - 1.0));
+    c = lerp(c, float3(0.56, 0.63, 0.96), saturate(t - 2.0));
+    c = lerp(c, float3(0.78, 0.79, 0.98), saturate(t - 3.0));
+    return lerp(c, float3(1.05, 1.03, 1.08), saturate(t - 4.0));
+}
+
 // the river swell of RainbowRiver.hlsl (RBW_RiverWave) at a foam puff, so puffs on the stream ride the water
 float RBW_FoamBob(float x, float s, float d, float hw, float sOffset, float amp, float time)
 {

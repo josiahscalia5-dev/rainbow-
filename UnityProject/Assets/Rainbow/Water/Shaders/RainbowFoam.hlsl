@@ -1,105 +1,182 @@
-// Rainbow Screen 05 - pearly soap-foam puffs along the river banks (Agent 3). Shader Graph Custom Function file:
-//   RainbowFoamVertex_float / _half : breathing + slow wobble of each puff about its own centre (world space)
-//   RainbowFoam_float / _half       : soap colour (port of src/vfx/foam.ts SOAP05_GLSL soap05()/soapT() + berm/puff
-//                                     shading: white bubble tops, periwinkle bodies, blue-violet crevices, pores,
-//                                     soap-film iridescent rim, soft spec)
-// Per-vertex data from FoamBank.cs: UV0 = (seed, ambient occlusion), UV1 = (puff centre xyz, radius).
+// Rainbow Screen 05 - pearly soap-foam bank bubbles (foam area, round 2 2026-11-23).
+// Every puff of FoamBank.cs is a camera-facing sphere IMPOSTOR (4 vertices): the quad sits on the sphere's front tangent
+// plane, the fragment ray-traces the sphere (exactly round at every distance) and writes the TRUE per-pixel sphere depth,
+// so the bubbles sink into the water and into each other with curved creases (one merged foam mound, not stacked discs).
+// Port of src/vfx/foam.ts BANK_BUB_VERT / BANK_BUB_FRAG (wave 8 fine-foam impostors): SOAP05_GLSL colour ramp (white lit
+// caps, lavender-white bodies, periwinkle / blue-violet undersides and crevices), MICRO_GLSL fine open bubbles on the lower
+// half and the flanks, the scalloped lower outline of the bigger lumps, glossy little bubbles with a thin blue rim for the
+// tiny lace bubbles, plus a faint pearly soap-film sheen.
+// Vertex data (FoamBank.BuildMesh): POSITION = puff centre (all 4 corners), UV0 = (corner x, corner y, radius, seed),
+// UV1 = (ambient occlusion, tint -1..1, stream centre x, stream half width).
+// Needs (from the .shader): _WorldSpaceCameraPos, UNITY_MATRIX_V / VP (URP Core.hlsl).
 #ifndef RAINBOW_FOAM_INCLUDED
 #define RAINBOW_FOAM_INCLUDED
 
 #include "Assets/Rainbow/Water/Shaders/RainbowWaterCommon.hlsl"
+#include "Assets/Rainbow/Water/Shaders/RainbowFoamBank.hlsl"
 
-static const float3 RBW_SOAP_CREV = float3(0.23, 0.22, 0.66);
+// (RBW_Soap05, the approved soap colour ramp, lives in RainbowFoamBank.hlsl: the river's flat lather uses it too)
 
-float3 RBW_Soap05(float t)
+// foam.ts microFoam(): fine soap-foam micro texture. p in cells, dens 0..1 = share of cells that are open bubbles.
+// Returns (hole = blue open bubble, lip = its lit lower-right rim, dome = cell interior, speck = glossy speck).
+float4 RBW_MicroFoam(float2 p, float dens)
 {
-    t = saturate(t) * 5.0;
-    float3 c = lerp(RBW_SOAP_CREV, float3(0.26, 0.38, 0.84), saturate(t));
-    c = lerp(c, float3(0.38, 0.54, 0.97), saturate(t - 1.0));
-    c = lerp(c, float3(0.56, 0.63, 0.96), saturate(t - 2.0));
-    c = lerp(c, float3(0.78, 0.79, 0.98), saturate(t - 3.0));
-    return lerp(c, float3(1.05, 1.03, 1.08), saturate(t - 4.0));
+    float2 i = floor(p);
+    float2 f = frac(p);
+    float d1 = 8.0, d2 = 8.0;
+    float2 r1 = float2(0.0, 0.0);
+    float2 g1 = float2(0.0, 0.0);
+    [unroll] for (int yy = -1; yy <= 1; yy++)
+    {
+        [unroll] for (int xx = -1; xx <= 1; xx++)
+        {
+            float2 g = float2((float)xx, (float)yy);
+            float2 o = float2(RBW_Hash12(i + g), RBW_Hash12(i + g + 19.7));
+            float2 r = g + o - f;
+            float dd = dot(r, r);
+            bool nearer = dd < d1;
+            d2 = nearer ? d1 : min(d2, dd);
+            d1 = nearer ? dd : d1;
+            r1 = nearer ? r : r1;
+            g1 = nearer ? g : g1;
+        }
+    }
+    float2 h1 = float2(RBW_Hash12(i + g1 + 7.3), RBW_Hash12(i + g1 + 3.1));
+    d1 = sqrt(d1);
+    d2 = sqrt(d2);
+    float rad = 0.17 + 0.2 * h1.x;
+    float on = step(h1.y, dens);
+    float2 dir = -r1 / max(d1, 1e-4);
+    float hole = (1.0 - smoothstep(rad * 0.68, rad, d1)) * on;
+    float ring = smoothstep(rad * 0.7, rad, d1) * (1.0 - smoothstep(rad, rad * 1.55, d1));
+    float lip = ring * on * saturate(dot(dir, float2(0.6, -0.8)) * 0.7 + 0.45);
+    float dome = smoothstep(0.0, 0.32, d2 - d1);
+    float speck = (1.0 - smoothstep(0.03, 0.08, length(-r1 - float2(-0.13, 0.15)))) * (1.0 - on) * step(0.55, h1.x);
+    return float4(hole, lip, dome, speck);
 }
 
-// Nv = VIEW-space normal (x right, y up, z toward the camera - the same convention as three.js)
-float RBW_SoapT(float3 Nv)
+// static river floor height (RiverSurface.BaseHeight: raised stream edges + foam shelf rise) at x for stream d / hw
+float RBW_FoamBaseHeight(float x, float d, float hw)
 {
-    float3 Lv = normalize(float3(-0.35, 0.8, 0.5));
-    float wrap = saturate(dot(Nv, Lv) * 0.55 + 0.5);
-    float up = saturate(Nv.y * 0.5 + 0.5);
-    return smoothstep(0.1, 0.8, wrap * 0.6 + up * 0.4);
+    hw = max(hw, 0.5);
+    float lr = abs(x - d);
+    float u = min(lr / hw, 1.0);
+    float sh = saturate((lr - hw) / 1.2);
+    sh = sh * sh * (3.0 - 2.0 * sh);
+    return 0.28 * u * u * u + 0.12 * sh;
 }
 
-// bubble cells on the puff surface: side band uses (azimuth, height) with the seam on the far (+Z) side,
-// the cap uses a top projection; both in world units so bubbles keep one size on every puff
-float RBW_FoamCells(float3 n, float r, float k, float seed)
+// Vertex: puff centre / radius after the river swell, the lather's breathing and Benny parting the foam, and the quad
+// corner on the sphere's front tangent plane (half size = radius covers the whole silhouette from any view).
+//   benny = _RainbowBenny (s, world x, wake, waterline radius; w = 0: no Benny)
+void RBW_FoamVertex(float3 centreWS, float4 uv0, float4 uv1, float sOffset, float waveAmp, float4 benny, float time,
+                    out float3 positionWS, out float4 centreRadius)
 {
-    float az = atan2(n.x, -n.z);                       // seam faces +Z (away from the riding camera)
-    float2 pSide = float2(az * r * 0.9, asin(clamp(n.y, -1.0, 1.0)) * r) * k + seed * 17.3;
-    float2 pTop = n.xz * r * k + seed * 9.1 + 31.0;
-    float wTop = smoothstep(0.62, 0.86, n.y);
-    return lerp(RBW_Cells(pSide), RBW_Cells(pTop), wTop);
+    float3 c = centreWS;
+    float r = uv0.z;
+    float seed = uv0.w;
+    // the puffs float on the stream: they ride the same swell as the water (RBW_RiverWave)
+    c.y += RBW_FoamBob(c.x, c.z, uv1.z, uv1.w, sOffset, waveAmp, time);
+    // gentle breathing of the lather (foam.ts)
+    r *= 1.0 + 0.03 * sin(time * 1.7 + seed * 40.0);
+    // Benny ploughs through the bank: puffs close to him part and shrink (smoothly, no popping)
+    float2 dB = float2(c.x - benny.y, c.z - benny.x);
+    float dl = length(dB);
+    float rb = max(benny.w, 0.5);
+    float part = step(0.001, benny.w) * (1.0 - smoothstep(rb * 1.1, rb * 2.4, dl));
+    c.xz += dB / max(dl, 1e-3) * (part * rb * 0.45);
+    r *= 1.0 - 0.8 * part;
+    float3 toCam = _WorldSpaceCameraPos - c;
+    float D = max(length(toCam), 1e-3);
+    float3 f = toCam / D;                                          // toward the camera
+    float3 rt = normalize(cross(float3(0.0, 1.0, 0.0), -f) + float3(1e-5, 0.0, 0.0));
+    float3 up = cross(-f, rt);
+    positionWS = c + f * min(r, D * 0.5) + (rt * uv0.x + up * uv0.y) * (r * 1.02);
+    centreRadius = float4(c, r);
 }
 
-void RainbowFoamVertex_float(float3 PositionWS, float4 CentreRadius, float Seed, float Time, out float3 OutPositionWS)
+// Ray-traces the bubble through the fragment's quad position. Returns the hit point P (world), the unit normal N and
+// h (< 0: the view ray misses the sphere -> discard). Computed relative to the quad (small numbers: exact far away too).
+float RBW_FoamTrace(float3 positionWS, float4 centreRadius, out float3 P, out float3 N)
 {
-    float3 c = CentreRadius.xyz;
-    float br = 1.0 + 0.035 * sin(Time * 1.7 + Seed * 40.0);     // gentle breathing of the lather (foam.ts)
-    float wob = 0.03 * sin(Time * 0.9 + Seed * 17.0);             // slow soft squash
-    float3 off = PositionWS - c;
-    off.y *= 1.0 + wob;
-    off.xz *= 1.0 - wob * 0.5;
-    OutPositionWS = c + off * br;
+    float3 rd = normalize(positionWS - _WorldSpaceCameraPos);
+    float3 oc = positionWS - centreRadius.xyz;
+    float b = dot(oc, rd);
+    float3 v = oc - b * rd;                                        // centre -> ray, perpendicular
+    float r = max(centreRadius.w, 1e-4);
+    float h = r * r - dot(v, v);
+    float t = -b - sqrt(max(h, 0.0));
+    P = positionWS + rd * t;
+    N = (P - centreRadius.xyz) / r;
+    return h;
 }
 
-void RainbowFoamVertex_half(half3 PositionWS, half4 CentreRadius, half Seed, half Time, out half3 OutPositionWS)
+// device depth of a world point (SV_Depth)
+float RBW_FoamDepth(float3 P)
 {
-    float3 p;
-    RainbowFoamVertex_float((float3)PositionWS, (float4)CentreRadius, (float)Seed, (float)Time, p);
-    OutPositionWS = (half3)p;
+    float4 hc = TransformWorldToHClip(P);
+#if UNITY_REVERSED_Z
+    return hc.z / hc.w;
+#else
+    return hc.z / hc.w * 0.5 + 0.5;
+#endif
 }
 
-void RainbowFoam_float(float3 PositionWS, float4 CentreRadius, float Seed, float AO, float3 ViewDirWS, float3 LightDirWS,
-                       out float3 Color)
+// Silhouette test incl. the scalloped lower outline of the bigger lumps (foam.ts BANK_BUB_FRAG): > 0 keeps the pixel.
+// q = view-space normal xy (0 centre .. 1 rim), px = on-screen diameter in reference px.
+float RBW_FoamKeep(float h, float2 q, float px, float seed)
 {
-    float pxK = RBW_PxScale();
-    float r = max(CentreRadius.w, 0.02);
-    float3 n = normalize(PositionWS - CentreRadius.xyz);         // perfectly round shading whatever the tessellation
-    float fw = max(fwidth(PositionWS.x), max(fwidth(PositionWS.y), fwidth(PositionWS.z))) * pxK;   // units per ref px
-    float k1 = 1.0 - smoothstep(0.12, 0.3, fw * 3.0);           // detail fade (cells per pixel)
-    float k2 = 1.0 - smoothstep(0.12, 0.3, fw * 7.0);
-    float c1 = lerp(0.45, RBW_FoamCells(n, r, 3.0, Seed), k1);
-    float c2 = lerp(0.45, RBW_FoamCells(n, r, 7.0, Seed + 0.37), k2);
-    float bub = (1.0 - c1 * c1) * 0.6 + (1.0 - c2 * c2) * 0.4;   // bubble domes, deep crevices
-    float3 N = RBW_BumpNormal(PositionWS, n, bub * 0.06);
-    float3 V = normalize(ViewDirWS);
-    float3 L = normalize(LightDirWS);
-    float3 Nv = TransformWorldToViewDir(N, true);
-    float t5 = RBW_SoapT(Nv) * 0.55 + 0.45 * lerp(0.55, bub, max(k1, 0.3)) - 0.1;
-    t5 -= smoothstep(0.55, 0.95, c1) * 0.45 * k1 + smoothstep(0.62, 0.95, c2) * 0.25 * k2;
-    float3 col = RBW_Soap05(t5 + 0.12);
-    // tiny pores (open bubbles)
-    float2 pp = float2(atan2(n.x, -n.z) * r, n.y * r) * 7.0 + 5.0 + Seed * 3.1;
-    float pc = RBW_Cells(pp);
-    float kp = 1.0 - smoothstep(0.1, 0.25, fw * 7.0);
-    col = lerp(col, RBW_SOAP_CREV, (1.0 - smoothstep(0.1, 0.2, pc)) * step(0.62, RBW_Hash12(floor(pp))) * 0.6 * kp);
-    // soft spec + soap-film rim
-    float spec = pow(saturate(dot(reflect(-V, N), L)), 28.0);
-    float fres = pow(1.0 - saturate(dot(N, V)), 3.0);
-    col += float3(1.0, 1.0, 1.0) * spec * 0.3 + RBW_Iridescent(fres * 1.4 + c1 * 0.6) * fres * 0.18;
-    // contact shade toward the water line + per-puff occlusion and tint variety
-    col *= lerp(0.8, 1.0, saturate(n.y * 0.6 + 0.6)) * lerp(0.78, 1.0, saturate(AO));
-    float tint = RBW_Hash12(float2(Seed * 91.7, 3.3)) - 0.5;
-    col *= float3(1.0 + 0.03 * tint, 1.0 - 0.02 * abs(tint), 1.0 + 0.02 * tint);
-    Color = col;
+    float d = length(q);
+    float ang = atan2(q.y, q.x);
+    float nS = clamp(floor(px / 8.0), 5.0, 16.0);
+    float sc = abs(sin(ang * nS * 0.5 + seed * 31.0));
+    float amp = 0.11 * smoothstep(16.0, 34.0, px) * RBW_SS(0.45, -0.35, q.y / max(d, 1e-3));
+    float R = 1.0 - amp * (1.0 - sc);
+    return min(h, R - d);
 }
 
-void RainbowFoam_half(half3 PositionWS, half4 CentreRadius, half Seed, half AO, half3 ViewDirWS, half3 LightDirWS,
-                      out half3 Color)
+// on-screen diameter of the impostor in reference px of the 864x1536 frame (corner runs -1..1 across the quad)
+float RBW_FoamPx(float2 corner)
 {
-    float3 c;
-    RainbowFoam_float((float3)PositionWS, (float4)CentreRadius, (float)Seed, (float)AO, (float3)ViewDirWS, (float3)LightDirWS, c);
-    Color = (half3)c;
+    return 2.0 / max(fwidth(corner.x) * RBW_PxScale(), 1e-4);
+}
+
+// Soap colour of one bubble pixel. Nv = VIEW-space normal (x right, y up, z toward the camera, as three.js),
+// px = on-screen diameter (reference px), ao = ambient occlusion (inner / lower bubbles of a pile bluer), tint -1..1.
+float3 RBW_FoamColor(float3 Nv, float px, float seed, float ao, float tint, float3 lightDirWS)
+{
+    float2 q = Nv.xy;
+    float z = saturate(Nv.z);
+    float d = length(q);
+    float big = smoothstep(18.0, 40.0, px);                       // the ref's big near bumps show large white caps
+    // steep key light from the upper left: white caps only on the lit top, lavender middle, blue lower half
+    float tl = dot(Nv, normalize(float3(-0.4, 0.85, 0.35)));
+    float t = 0.52 + 0.62 * tl - pow(1.0 - z, 1.5) * (0.25 + 0.35 * saturate(0.5 - q.y * 0.7)) - (1.0 - ao) * 0.3
+            + 0.06 * big;
+    // fine open bubbles: dense on the lower half and the flanks, sparse on the lit top
+    float2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(px / 8.0, 1.2, 12.0) + seed * 37.0;
+    float dens = clamp(0.25 + 0.9 * RBW_SS(0.35, -0.6, q.y) + 0.35 * (1.0 - z) - 0.2 * big, 0.0, 0.95);
+    float4 mf = RBW_MicroFoam(mp, dens);
+    float kf = 1.0 - smoothstep(0.5, 0.9, fwidth(mp.x) + fwidth(mp.y));
+    // tone S-curve: few grey mid-tones, a broad white-lavender lit area and clearly blue shading
+    t = 0.12 + 0.95 * smoothstep(0.38, 1.12, t - 0.06 * big);
+    t += (mf.z - 0.6) * 0.2 * dens * kf - mf.x * 0.55 * kf + mf.y * 0.3 * kf;
+    float3 col = RBW_Soap05(t + 0.04 * tint);
+    col = lerp(col, float3(1.0, 0.97, 1.07), smoothstep(0.75, 1.0, t) * 0.3);
+    col += mf.w * 0.45 * kf;
+    // glossy highlight of the key light
+    float3 Lv = TransformWorldToViewDir(lightDirWS, true);
+    float rl = max(dot(reflect(float3(0.0, 0.0, -1.0), Nv), Lv), 0.0);
+    col += pow(rl, 24.0) * 0.25 + pow(rl, 6.0) * 0.1;
+    // pearly soap-film sheen toward the rim (faint pink / lilac / aqua)
+    float fres = pow(1.0 - z, 3.0);
+    col += RBW_Iridescent(fres * 1.3 + seed * 0.7 + 0.15) * fres * 0.1;
+    // tiny bubbles: lavender-white glossy body, thin blue rim, white speck (the lace at the waterline)
+    float tiny = 1.0 - smoothstep(9.0, 16.0, px);
+    float2 qs = q - float2(-0.32, 0.34);
+    float3 cb = lerp(RBW_Soap05(0.8 + 0.1 * tint), RBW_Soap05(0.12), smoothstep(0.5, 0.95, d))
+              + exp(-dot(qs, qs) * 14.0) * 0.55;
+    return lerp(col, cb, tiny);
 }
 
 #endif // RAINBOW_FOAM_INCLUDED

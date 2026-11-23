@@ -20,6 +20,7 @@
 #define RAINBOW_RIVER_INCLUDED
 
 #include "Assets/Rainbow/Water/Shaders/RainbowWaterCommon.hlsl"
+#include "Assets/Rainbow/Water/Shaders/RainbowFoamBank.hlsl"   // foam bank waterlines + soap ramp (foam area)
 
 // ---- W10/W12 palette (shader-linear values solved through exposure 0.86 -> Neutral -> sRGB -> grade sat 1.36 / con 1.15)
 static const float3 RBW_CDEEP   = float3(0.058, 0.197, 0.379);   // #0068AD
