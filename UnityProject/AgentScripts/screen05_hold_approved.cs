@@ -12,13 +12,20 @@ var hud = UnityEngine.Object.FindAnyObjectByType<Rainbow.Screen05.Screen05Hud>()
 if (hud != null) hud.ShowHint("", 0f);
 var benny = Rainbow.Screen05.BennyController.Instance;
 Time.captureFramerate = 30;
-// pass 1 (calibration): measure how far Benny really travels in settleFrames from a teleport (speed is not exactly swimSpeed)
+// warm-up: the frame in which captureFramerate is set still has a long real-time step (Benny would jump ahead), so let a
+// few fixed 1/30 s frames pass first; after that the swim is exactly swimSpeed per second
+int f0 = Time.frameCount;
+await Wait.Until(() => Time.frameCount >= f0 + 3, timeoutMs: 30000, because: "the Game view is not ticking (run: unity command editor set_auto_tick)");
+// pass A (calibration): how far Benny travels in settleFrames from a teleport, in this frame phase (the eval continuation
+// can land before or after Benny's Update, which shifts the result by one frame = swimSpeed / 30 between Editor sessions)
+flow.Restart();
+if (hud != null) hud.ShowHint("", 0f);
 float startS = targetS - benny.swimSpeed * settleFrames / 30f;
 benny.TeleportTo(startS, Rainbow.Screen05.RiverPath.Meander(startS));
-int f0 = Time.frameCount;
+f0 = Time.frameCount;
 await Wait.Until(() => Time.frameCount >= f0 + settleFrames, timeoutMs: 30000, because: "the Game view is not ticking (run: unity command editor set_auto_tick)");
 float travel = benny.S - startS;
-// pass 2: same deterministic run, started so that Benny is exactly at targetS when the Editor pauses
+// pass B: the same run, started so that Benny is exactly at targetS when the Editor pauses
 flow.Restart();
 if (hud != null) hud.ShowHint("", 0f);
 startS = targetS - travel;
