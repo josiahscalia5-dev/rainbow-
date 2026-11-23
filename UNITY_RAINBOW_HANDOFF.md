@@ -17,8 +17,11 @@ Read this first in any new Claude account or session. **This is an existing proj
   (PowerShell 5.1 mangles inline quotes → always pass code with `--file`). Pipeline asset in use: `PC_RPAsset`, GPU "Intel(R) Graphics".
 * Coordinator files in the project: `Assets/Rainbow/Shared/RiverPath.cs`, `Assets/Rainbow/Editor/Screen05SceneBuilder.cs`
   (menu **Rainbow → Build Screen 05 Scene**, finds the specialists' builders by reflection).
-* **Specialists running** (workflow run `wf_2483b79c-4aa`, script `staging/shared/specialists.workflow.js`) — outputs land in
-  `staging/agent1..4`. If they were interrupted: re-run the Workflow tool with that scriptPath and `resumeFromRunId`.
+* **Specialists running** since 08:40 local as 4 parallel background agents (the Workflow runner only allows 2 at a time on
+  this 4-core laptop, so it was stopped before anything was written). Briefs: constants COMMON + AGENT1..4 in
+  `staging/shared/specialists.workflow.js`; outputs land in `staging/agent1..4` (each writes a README.md when done).
+  If they were interrupted: start new agents with "read COMMON + AGENTn in that file and follow them" (see git history).
+* Evidence tool: `tools/make-side-by-side.ps1` (APPROVED vs UNITY image, no percentage claims).
 * **Git**: portable Git 2.56.1 + git-lfs 3.8.1 at `C:\Users\josia\PortableGit` (user approved; SHA-256 verified). Local repo in
   `C:\RainbowUnity`, branch **`unity/screen05-dev`** (orphan, nothing from the 22 GB repo downloaded), remote `origin` =
   the Rainbow repo. Neutral commit author "Rainbow Unity" (no personal email). **Push needs the user's one-time GitHub sign-in**
