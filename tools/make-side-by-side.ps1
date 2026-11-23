@@ -23,6 +23,11 @@ $g.DrawString(('UNITY GAME VIEW  ' + $Label), $font, $white, $W + $gap + 12, 14)
 $g.Dispose(); $a.Dispose(); $u.Dispose()
 $dir = Split-Path -Parent $Out
 if ($dir -and -not (Test-Path $dir)) { New-Item -ItemType Directory -Force -Path $dir | Out-Null }
-$bmp.Save($Out, [System.Drawing.Imaging.ImageFormat]::Png)
+if ($Out -match '\.jpe?g$') {
+  $enc = [System.Drawing.Imaging.ImageCodecInfo]::GetImageEncoders() | Where-Object { $_.MimeType -eq 'image/jpeg' }
+  $ep = New-Object System.Drawing.Imaging.EncoderParameters 1
+  $ep.Param[0] = New-Object System.Drawing.Imaging.EncoderParameter ([System.Drawing.Imaging.Encoder]::Quality), 90L
+  $bmp.Save($Out, $enc, $ep)
+} else { $bmp.Save($Out, [System.Drawing.Imaging.ImageFormat]::Png) }
 $bmp.Dispose()
 "Saved $Out"
