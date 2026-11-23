@@ -21,9 +21,10 @@ export function sprayOnly(THREE, tex) {
 }
 export function installSwimFx({ THREE, scene, splash, q }) {
   const OFF = q.get('swimfx') === '0';
-  const MOVE = q.get('move') === '1';   // round 36c: the user's reference-video swimming (foam collar, bubble trails, big ripple rings, stronger wake)
+  const MOVE = q.get('move') === '1', SIMPLE = q.get('look') === 'simple';   // r48 candidate: contact collar + kicks at his body (no detached foam puffs)   // round 36c: the user's reference-video swimming (foam collar, bubble trails, big ripple rings, stronger wake)
   const P = { WAKE_AGE: 1.1, WAKE_W0: 0.085, WAKE_SPREAD: 0.3, DRIFT: 0.55, WAKE_A: MOVE ? 0.85 : 0.55, RIPPLE_T: MOVE ? 1.0 : 0.75, PUFF_T: 0.6, SPL_FLOW: 0.035,
-    RIP_SIZE: MOVE ? 0.12 : 0.07, RING_EVERY: 0.55, TRAIL_RATE: 110, TRAIL_LIFE: 0.95, COLLAR_A: 0.95 };
+    RIP_SIZE: MOVE ? 0.12 : 0.07, RING_EVERY: 0.55, TRAIL_RATE: 110, TRAIL_LIFE: 0.95, COLLAR_A: 0.95, KICK_BACK: SIMPLE ? 0.04 : 0.11, PUFF_DRIFT: SIMPLE ? 0.12 : -1 };
+  if (SIMPLE) { P.PUFF_T = 0.32; P.COLLAR_A = 0.8; }
   for (const k of Object.keys(P)) { const v = q.get('fx_' + k); if (v != null && v !== '' && !isNaN(+v)) P[k] = +v; }
   const canvasTex = (draw, n = 128) => { const c = document.createElement('canvas'); c.width = c.height = n; draw(c.getContext('2d'), n); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; };
   // a soft broken ring (ripple) and a clustered foam puff, drawn once (no image files)
@@ -45,7 +46,7 @@ export function installSwimFx({ THREE, scene, splash, q }) {
     for (let i = 0; i < 420; i++) { const a = rnd() * Math.PI * 2, r = c * (0.56 + 0.36 * Math.sqrt(rnd())), x = c + Math.cos(a) * r, y = c + Math.sin(a) * r, rr = n * (0.018 + 0.03 * rnd());
       const gr = g.createRadialGradient(x, y, 0, x, y, rr); gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(0.6, 'rgba(238,246,255,0.9)'); gr.addColorStop(1, 'rgba(225,238,255,0)'); g.fillStyle = gr; g.fillRect(x - rr, y - rr, 2 * rr, 2 * rr); } }, 256);
   const collar = new THREE.Mesh(plane, new THREE.MeshBasicMaterial({ map: collarTex, transparent: true, depthWrite: false, toneMapped: false, opacity: 0, polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3 }));
-  collar.renderOrder = 6; collar.frustumCulled = false; collar.visible = MOVE && !OFF; scene.add(collar);
+  collar.renderOrder = 6; collar.frustumCulled = false; collar.visible = (MOVE || SIMPLE) && !OFF; scene.add(collar);
   const collar2 = collar.clone(); collar2.material = collar.material.clone(); collar2.material.map = ringTex; scene.add(collar2); collar2.visible = collar.visible;
   const NB = 180, bPos = new Float32Array(NB * 3), bA = new Float32Array(NB), bS = new Float32Array(NB), bAge = new Float32Array(NB).fill(9), bLife = new Float32Array(NB), bSz = new Float32Array(NB);
   const bVel = Array.from({ length: NB }, () => new THREE.Vector3()), bP = Array.from({ length: NB }, () => new THREE.Vector3()); let bNext = 0, bAcc = 0, ringAcc = 0;
@@ -61,14 +62,16 @@ export function installSwimFx({ THREE, scene, splash, q }) {
     bP[k].copy(p).addScaledVector(F.r, side * (0.11 + 0.05 * rnd())).addScaledVector(F.t, -0.02 - 0.05 * rnd()).addScaledVector(F.n, 0.004 + 0.01 * rnd());
     bVel[k].copy(F.t).multiplyScalar(-P.DRIFT * (0.8 + 0.5 * rnd())).addScaledVector(F.r, side * (0.06 + 0.12 * rnd())).addScaledVector(F.n, 0.02 * rnd());
   }
-  function updMove(o) {
-    const { F, waterPt, dt } = o;
+  function updCollar(o) {
+    const { F, waterPt } = o;
     // foam collar: a broken white ring + a foamy puff ring around his waist on the water, breathing with his strokes
     const sw = 1 + 0.08 * Math.sin(o.armPh * 2) + 0.15 * (o.latK || 0);
     for (const [m, sx, sy, a, rot] of [[collar, 0.44, 0.27, P.COLLAR_A, o.clock * 0.25], [collar2, 0.58, 0.34, P.COLLAR_A * 0.6, -o.clock * 0.4]]) {
       m.position.copy(waterPt).addScaledVector(F.n, 0.004).addScaledVector(F.t, -0.015);
       m.quaternion.setFromRotationMatrix(Mb.makeBasis(F.r, F.t, F.n)); m.scale.set(sx * sw, sy * sw, 1); m.material.rotation = rot;
-      m.material.opacity = a * (o.inWater ? 1 : 0) * Math.min(1, o.s / 0.25); }
+      m.material.opacity = a * (o.inWater ? 1 : 0) * Math.min(1, o.s / 0.25); } }
+  function updMove(o) {
+    const { F, waterPt, dt } = o; updCollar(o);
     // bubble trails from both sides of his body, streaming back toward the camera with the current
     if (dt > 0 && o.inWater && o.s > 0.05) { bAcc += dt * P.TRAIL_RATE * (1 + 0.6 * (o.latK || 0)); while (bAcc >= 1) { bAcc -= 1; emitBubble(waterPt, F, rnd() < 0.5 ? -1 : 1); } }
     // a big ring spreading around him every ~0.55 s
@@ -87,7 +90,7 @@ export function installSwimFx({ THREE, scene, splash, q }) {
   const puff = (p, F, size) => { if (OFF) return; const o = place(0, puffs, pi, p, F, size, P.PUFF_T, 0.9, 0.85); o.m.material.rotation = rnd() * 6.28; pi = (pi + 1) % puffs.length; };
   const updDecals = (list, dt) => { for (const o of list) { if (o.life <= 0) continue; o.age += dt; const k = o.age / o.life;
     if (k >= 1) { o.life = 0; o.m.visible = false; continue; }
-    o.p.addScaledVector(o.t, -P.DRIFT * dt); o.m.position.copy(o.p); const z = o.size * (1 + o.grow * Math.sqrt(k)); o.m.scale.set(z, z * 1.15, 1);
+    o.p.addScaledVector(o.t, -(list === puffs && P.PUFF_DRIFT >= 0 ? P.PUFF_DRIFT : P.DRIFT) * dt); o.m.position.copy(o.p);   // r48: kick puffs stay at his body const z = o.size * (1 + o.grow * Math.sqrt(k)); o.m.scale.set(z, z * 1.15, 1);
     o.m.material.opacity = o.a0 * Math.min(1, k * 8) * (1 - k) * (1 - k); } };
 
   // ---------------- V-wake ribbons ----------------
@@ -180,13 +183,13 @@ export function installSwimFx({ THREE, scene, splash, q }) {
       }
       // kicks: alternating left / right foam puffs + droplets just behind his lower back (toward the camera)
       for (const [side, ph0] of [[1, Math.PI / 2], [-1, Math.PI * 1.5]]) if (wrapCount(lastKick, o.kickPh, ph0) > 0) {
-        v1.copy(waterPt).addScaledVector(F.r, side * 0.06).addScaledVector(F.t, -0.11).addScaledVector(F.n, 0.003); puff(v1, F, 0.07 * o.kickK);
+        v1.copy(waterPt).addScaledVector(F.r, side * 0.06).addScaledVector(F.t, -P.KICK_BACK).addScaledVector(F.n, 0.003); puff(v1, F, 0.07 * o.kickK);
         for (let i = 0; i < 2; i++) { v2.copy(F.n).multiplyScalar(0.45 + rnd() * 0.4).addScaledVector(F.r, side * (0.05 + rnd() * 0.15)).addScaledVector(F.t, -0.35 - rnd() * 0.3);
           o.drop(v1.clone().addScaledVector(F.n, 0.015), v2.clone(), 0.01 + rnd() * 0.012, 0.32 + rnd() * 0.15, 3.6); }
       }
     }
     lastArm = o.armPh; lastKick = o.kickPh;
-    if (MOVE) updMove(o);
+    if (MOVE) updMove(o); else if (SIMPLE) updCollar(o);
     updDecals(ripples, dt); updDecals(puffs, dt);
   }
   window.swimFxInfo = () => ({ wakePts: hist.length, ripples: ripples.filter((r) => r.life > 0).length, puffs: puffs.filter((r) => r.life > 0).length, splFlow: SPL.uSplFlow.value, off: OFF });

@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28923,
-   "sha256": "cdb1870c783198bde78d7cf05388cfdf46aa5ce98a9280dd8f178a99b2a42ce0"
+   "sha256": "f28a34ae43c88fd10d6483674f19e3fc694978ebed81a11363580d2a088f0610"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2961,
-   "sha256": "ace828711a4c0a3eb4d88cc8c3d5b4130a83a97112a995b309bec92025ce2eb5"
+   "sha256": "afd9e121696178df0e4e5d865feb8a3e71cfe3cdc9cde201b7de36328b37fbe0"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -23930,6 +23930,41 @@
    "path": "qa/kit47/stills/still_s97.80_l0.jpg",
    "bytes": 157184,
    "sha256": "44823fd7ea505a76826e38084662b1a58cf8a7d751824d05dad0df466321377a"
+  },
+  {
+   "path": "qa/kit48/APPROVED_vs_CANDIDATE.jpg",
+   "bytes": 357099,
+   "sha256": "3973cbf1ff865b1e92d785e762a3a343667aaef03020566860fef41f1582e0d7"
+  },
+  {
+   "path": "qa/kit48/README.md",
+   "bytes": 3140,
+   "sha256": "d58a161e4294cb744f33c1c2594f4479981a09ac69e72fe88fe5818d99744915"
+  },
+  {
+   "path": "qa/kit48/stills/BEFORE_AT_AFTER_approved_camera.jpg",
+   "bytes": 469425,
+   "sha256": "3d01a4b5881ec76bdcb7810761332b3a9a5e01db9539a2bc27584c03b655f66f"
+  },
+  {
+   "path": "qa/kit48/stills/still_AFTER_it.jpg",
+   "bytes": 134924,
+   "sha256": "8744bd396ab0335449846d8c6a992e36e6d47a836c29e52018fc927ef5859a9e"
+  },
+  {
+   "path": "qa/kit48/stills/still_AT_the_approved_camera.jpg",
+   "bytes": 137524,
+   "sha256": "98c1042dc73c06bd4b1fdc0ec48b674d588072def5e01b240615c395771fe139"
+  },
+  {
+   "path": "qa/kit48/stills/still_BEFORE_the_approved_camera.jpg",
+   "bytes": 133160,
+   "sha256": "c6fc764e5ae68cc5ea82b805609f1be1412ac86411fc7e2e2d404fbee60c020e"
+  },
+  {
+   "path": "qa/kit48/stills/still_bend_beyond_it.jpg",
+   "bytes": 134890,
+   "sha256": "4825d82cc631b41989cf1895f574cd291581831c4a0ebb5eaca01f1a8b07d59f"
   },
   {
    "path": "qa/lead_r5/2026-11-17/README.md",
@@ -49178,8 +49213,8 @@
   },
   {
    "path": "tools/kit05/swimfx.js",
-   "bytes": 19407,
-   "sha256": "d0e152d8feb7bf4dfc6c44fdeea7d62a8d09ec11efbbeae182655e543d875217"
+   "bytes": 19857,
+   "sha256": "da774541285d40f38443fa8602be57d2afe49479c8064f8e21ece3bb67148627"
   },
   {
    "path": "tools/kit05/zoom_likeness.py",
@@ -50128,8 +50163,8 @@
   },
   {
    "path": "tools/screenkit/water_ribbon.js",
-   "bytes": 22612,
-   "sha256": "095164f0a7879a1f57fbf388bfe5f43cec1c0738cd6b2611006a529ae96479d8"
+   "bytes": 25970,
+   "sha256": "5e7fd0b304366f179cfe1b20d36cad80fcad35dd8a85956cf2143e923f1ebea4"
   },
   {
    "path": "tools/screenkit/water_strip.py",
@@ -50203,8 +50238,8 @@
   },
   {
    "path": "tools/world/world.html",
-   "bytes": 101382,
-   "sha256": "5405671562df08f8899c10d6dda0a42b9ed4e9bc5d2f15ad7639ca23d2c35d77"
+   "bytes": 108757,
+   "sha256": "3f2fbf4d4f65e0020f589b20afa146278f553c84bb815531fc28105f3d45dea7"
   },
   {
    "path": "tools/world/world_layout.py",

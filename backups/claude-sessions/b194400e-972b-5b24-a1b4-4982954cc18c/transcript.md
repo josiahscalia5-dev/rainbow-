@@ -6709,3 +6709,175 @@ Round 47 is saved, and the candidate branch `claude/rainbow-05-simple-candidate-
 >       m.material.opacity = a * (o.inWater ? 1 : 0) * Math.min(1, o.s / 0.25); }
 >     // bubble trails from both sides of his  …[+2962 chars]
 
+### 🤖 Claude — 2026-11-23T01:52:08.983Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_ribbon.js'; s=open(p).read()\ndef rep(old,new,cnt=1):\n    global s; assert s.count(old)==cnt, (s.count(old), old[:80]); s=s.replace(old,new)\nrep(\"uniform sampler2D uStrip, uStripR, uStripD; uniform vec4 uStripP; uniform vec4 uStripZ; uniform vec4 uStripE;\",\n    \"uniform sampler2D uStrip, uStripR, uStripD; uniform vec4 uStripP; uniform vec4 uStripZ; uniform vec4 uStripE; uniform float uStripS;\")\nrep(\"vec3 stripWater(vec3 L, float t){ vec2 ld = stripLD(L); float p = fract(t * 0.35), w1 = 1.0 - abs(2.0 * p - 1.0);\",\n\"\"\"// r48  …[+4013 chars]`
+
+### 🧑 User — 2026-11-23T01:52:09.061Z
+
+> ↩︎ result: 164:  float pc = max(exp(-pow((an - 0.68) / 0.12, 2.0)), exp(-pow((an - 1.39) / 0.07, 2.0)));
+
+### 🤖 Claude — 2026-11-23T01:52:12.738Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_ribbon.js'; s=open(p).read()\nold=\"  float pc = max(exp(-pow((an - 0.68) / 0.12, 2.0)), exp(-pow((an - 1.39) / 0.07, 2.0)));\"\nnew=\"  float pa = (an - 0.68) / 0.12, pb = (an - 1.39) / 0.07, pc = max(exp(-pa * pa), exp(-pb * pb));   /* x*x: pow(negative, 2.0) is undefined in GLSL */\"\nassert s.count(old)==1; s=s.replace(old,new); open(p,'w').write(s)\nEOF\ngrep -n \"^const SHARPX\\|^const GRAY = \\|^const BASE\" tools/world/world.html | head", "description": "Avoid pow of negative base in simple water"}`
+
+### 🧑 User — 2026-11-23T01:52:12.804Z
+
+> ↩︎ result: 55:const GRAY = q.get('gray') === '1';
+> 76:const BASE = {
+> 107:const SHARPX = 915 / (H * renderer.getPixelRatio());
+
+### 🤖 Claude — 2026-11-23T01:52:14.349Z
+
+Now the simple tunnel, ring and copper materials, the softer foam, and the switches in the Screen 05 loader.
+
+### 🤖 Claude — 2026-11-23T01:52:42.659Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\ndef rep(old,new,cnt=1):\n    global s; assert s.count(old)==cnt, (s.count(old), old[:80]); s=s.replace(old,new)\nrep(\"const GRAY = q.get('gray') === '1';\",\n    \"const GRAY = q.get('gray') === '1';\\nconst SIMPLE = q.get('look') === 'simple', SIMPLE_AREAS = (q.get('simpleareas') ?? '05').split(',');   // r48 candidate: clean, consistent materials (default unchanged)\")\nanchor=\"// the shared water palette (cyan core, pink edges, short highlight dashes, flowing toward the camera) - two parametrisations:\"\nrep(anc …[+6427 chars]`
+
+### 🧑 User — 2026-11-23T01:52:42.726Z
+
+> ↩︎ result: 366:  const MANI = await loadBake(A, ms);
+> 367:  if (MANI && !GRAY && q.get('tpl') !== '0') { A.TPL = await loadTemplates(THREE, tl, MANI, A.dir + 'baked/'); A.tplApplied = applyTemplates(THREE, ms, A.TPL); }
+
+### 🤖 Claude — 2026-11-23T01:52:56.255Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\ndef rep(old,new,cnt=1):\n    global s; assert s.count(old)==cnt, (s.count(old), old[:80]); s=s.replace(old,new)\nrep(\"    o.material = c.fam === 'ring' ? sceneryMat(BASE.goldring, [4, 1], A) : c.fam === 'pool' ? waterMatKit(Math.max(sz.x, 1.2) / 2, Math.max(sz.z, 1), 0, true, A, false) : sceneryMat(BASE[c.fam] ?? BASE.pink, rep, A);\",\n    \"    o.material = c.fam === 'ring' ? sceneryMat(BASE.goldring, [4, 1], A) : c.fam === 'pool' ? waterMatKit(Math.max(sz.x, 1.2) / 2, Math.max(sz.z, 1), 0, true, A, false) : scene …[+1285 chars]`
+
+### 🧑 User — 2026-11-23T01:52:56.316Z
+
+> ↩︎ result: if (LAY.bubbles_banks) { const bb = LAY.bubbles_banks; for (let s = S_REFa + (SIMPLE && SIMPLE_AREAS.includes(A.id) ? 0.5 : (bb.from ?? 3)); s < LEVa; s += bb.every ?? 0.7) for (const side of [-1, 1]) {   // r45: bubbles along both banks
+>       const F = lfr(s), p = lat_(s, new THREE.Vector3()).addScaledVector(F.r, side * (bb.lat[0] + (bb.lat[1] - bb.lat[0]) * rp())).addScaledVector(F.n, 0.05 + rp() * (bb.h ?? 0.45)); B.push([p.x, p.y, p.z, bb.r[0] + (bb.r[1] - bb.r[0]) * rp() * rp()]); } }
+>     for (const b of B) { const P = new THREE.Vector3(b[0], b[1], b[2]).applyMatrix4(M); BUBBLES.push([P.x, P.y, P.z, b[3], rp() * 6.28]); } }
+>   A.paintedCoins = (LAY.coins ?? []).map(V3).map((p) => p.applyMatrix4(M));
+
+### 🤖 Claude — 2026-11-23T01:53:12.237Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/kit05/swimfx.js'; s=open(p).read()\ndef rep(old,new,cnt=1):\n    global s; assert s.count(old)==cnt, (s.count(old), old[:80]); s=s.replace(old,new)\nrep(\"  const MOVE = q.get('move') === '1';\",\n    \"  const MOVE = q.get('move') === '1', SIMPLE = q.get('look') === 'simple';   // r48 candidate: contact collar + kicks at his body (no detached foam puffs)\")\nrep(\"    RIP_SIZE: MOVE ? 0.12 : 0.07, RING_EVERY: 0.55, TRAIL_RATE: 110, TRAIL_LIFE: 0.95, COLLAR_A: 0.95 };\",\n    \"    RIP_SIZE: MOVE ? 0.12 : 0.07, RING_EVERY: 0.55, TRAIL_RATE: 110, TRAIL_L …[+2859 chars]`
+
+### 🧑 User — 2026-11-23T01:53:12.349Z
+
+> ↩︎ result: checked
+
+### 🤖 Claude — 2026-11-23T01:53:28.305Z
+
+> 🔧 **Bash** `{"command": "grep -n \"bmat.onBeforeCompile = (sh) => {\" -A 3 tools/world/world.html | cut -c1-250; grep -n \"  CT.water(F, v, dt);\" tools/world/world.html", "description": "Locate Benny material hook and water update call"}`
+
+### 🧑 User — 2026-11-23T01:53:28.358Z
+
+> ↩︎ result: 562:bmat.onBeforeCompile = (sh) => { Object.assign(sh.uniforms, U); sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + VERT_HEAD).replace('#include <begin_vertex>', VERT_BODY);
+> 563-  sh.fragmentShader = sh.fragmentShader.replace('#include <colorspace_fragment>', `#include <colorspace_fragment>
+> 564-    { vec3 col = gl_FragColor.rgb; float l = dot(col, vec3(0.2126, 0.7152, 0.0722)); col = mix(vec3(l), col, 1.36); col = (col - 0.5) * 1.15 + 0.5; gl_FragColor.rgb = clamp(col, 0.0, 1.0); }`); };
+> 565-const bmesh = new THREE.Mesh(bgeo, bmat); bmesh.frustumCulled = false;
+> 699:  CT.water(F, v, dt);
+
+### 🤖 Claude — 2026-11-23T01:53:30.368Z
+
+> 🔧 **Bash** `{"command": "grep -n \"onBeforeCompile\" tools/kit05/controls.js | head -5 | cut -c1-200", "description": "Check whether controls.js also patches Benny's shader"}`
+
+### 🧑 User — 2026-11-23T01:53:30.415Z
+
+> ↩︎ result: 268:  const prevCompile = bmat.onBeforeCompile;
+> 269:  bmat.onBeforeCompile = (sh, r) => {
+> 299:    return { screenY: { waterline: rng(ys.line), below: rng(ys.below), above: rng(ys.above) }, plane: P4.toArray().map((x) => +x.toFixed(4)), sub: U.uSub.value.toArray(), meshAbovePlane: [+lo.toFi
+
+### 🤖 Claude — 2026-11-23T01:53:43.690Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\ndef rep(old,new,cnt=1):\n    global s; assert s.count(old)==cnt, (s.count(old), old[:80]); s=s.replace(old,new)\nrep(\"\"\"    { vec3 col = gl_FragColor.rgb; float l = dot(col, vec3(0.2126, 0.7152, 0.0722)); col = mix(vec3(l), col, 1.36); col = (col - 0.5) * 1.15 + 0.5; gl_FragColor.rgb = clamp(col, 0.0, 1.0); }`); };\"\"\",\n\"\"\"    { vec3 col = gl_FragColor.rgb; float l = dot(col, vec3(0.2126, 0.7152, 0.0722)); col = mix(vec3(l), col, 1.36); col = (col - 0.5) * 1.15 + 0.5; gl_FragColor.rgb = clamp(col, 0.0, 1.0); …[+2462 chars]`
+
+### 🧑 User — 2026-11-23T01:53:43.750Z
+
+> ↩︎ result: 688:const tB = new THREE.Vector3(), rB = new THREE.Vector3(), mB = new THREE.Matrix4(), qTmp = new THREE.Quaternion();
+> 570:const CONTACT = SIMPLE ? (() => { const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: { uA: { value: 0.5 } },
+
+### 🤖 Claude — 2026-11-23T01:53:46.318Z
+
+The candidate's materials, Benny's contact shade and the splash fix are written. Next I'll put them into the game and render the first test frames of the simple version.
+
+### 🤖 Claude — 2026-11-23T01:53:49.833Z
+
+> 🔧 **Bash** `{"command": "G=/home/user/ws46/world/game && cp tools/world/world.html $G/play3.html && cp tools/screenkit/water_ribbon.js $G/water_ribbon.js && cp tools/kit05/swimfx.js $G/swimfx.js && export NODE_PATH=$(npm root -g); rm -rf /home/user/ws48/p1; mkdir -p /home/user/ws48; node tools/world/probe_frames.cjs $G /home/user/ws48/p1 25,73,110,160 '[[0.4,\"right\"],[2.6,\"left\"],[2.85,\"left\"]]' 's0=92.5&sentinel=1&look=simple' '[[200,600]]' > /home/user/ws48/p1.log 2>&1; tail -n 2 /home/user/ws48/p1.log; python3 -c \"\nimport json; d=json.load(open('/home/user/ws48/p1/probe.json')); print('errors', …[+230 chars]`
+
+### 🧑 User — 2026-11-23T01:54:12.109Z
+
+> ↩︎ result: probed 110 s 100.567 lat -0.3 box {"x0":47,"x1":301.8,"y0":438.3,"y1":721.3}
+> probed 160 s 104.233 lat -0.3 box {"x0":59.4,"x1":311.8,"y0":422,"y1":710.7}
+> errors []
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-23T01:54:13.426Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws48/p1.jpg"}`
+
+### 🧑 User — 2026-11-23T01:54:13.542Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T01:54:47.575Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_ribbon.js'; s=open(p).read()\ndef rep(old,new,cnt=1):\n    global s; assert s.count(old)==cnt, (s.count(old), old[:80]); s=s.replace(old,new)\nrep(\"  float n = lat / 0.66 + 0.34 * sin(ld.y * 0.55 + 0.4) + 0.12 * sin(ld.y * 1.3 + 2.0);       // the band layout swings across the river (S-curves)\\n  float an = abs(n) + 0.04 * sin(d * 1.1 + n * 2.0);\",\n    \"  float n = lat / 0.66 + 0.55 * sin(ld.y * 0.82 + 0.4) + 0.16 * sin(ld.y * 1.9 + 2.0);       // the ribbons wind across the river in S-curves (painting: one swing every ~3 rings)\\n  …[+3755 chars]`
+
+### 🧑 User — 2026-11-23T01:55:10.638Z
+
+> ↩︎ result: errors []
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-23T01:55:12.424Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws48/p2.jpg"}`
+
+### 🧑 User — 2026-11-23T01:55:12.544Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T01:55:30.323Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_ribbon.js'; s=open(p).read()\ndef rep(old,new,cnt=1):\n    global s; assert s.count(old)==cnt, (s.count(old), old[:80]); s=s.replace(old,new)\nrep(\"  float n = lat / 0.66 + 0.55 * sin(ld.y * 0.82 + 0.4) + 0.16 * sin(ld.y * 1.9 + 2.0);\",\n    \"  float n = lat / 0.66 + 0.48 * sin(ld.y * 0.82 + 0.4) + 0.07 * sin(ld.y * 1.9 + 2.0);\")\nrep(\"  col = mix(col, mix(vec3(0.82, 1.0, 1.0), vec3(1.0, 0.86, 0.97), max(pinkA, pinkB)), 0.42 * bw);\",\n    \"  col = mix(col, mix(vec3(0.75, 0.98, 1.0), vec3(1.0, 0.8, 0.96), max(pinkA, pinkB)), 0.24 * …[+1507 chars]`
+
+### 🧑 User — 2026-11-23T01:55:31.492Z
+
+> ↩︎ result: 01:55
+
+### 🤖 Claude — 2026-11-23T01:55:33.288Z
+
+The candidate's recording (same 9.5 s section, 9 real touch swipes including a jump) and its stills are running. Meanwhile I'm writing the explanation page.
+
+### 🤖 Claude — 2026-11-23T01:55:44.231Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/kit48/README.md", "content": "# Round 48 — SIMPLE candidate of Screen 05 (branch `claude/rainbow-05-simple-candidate-r48`)\n\nA cleaner, simpler version of the same world, built as a **switch** in the existing game: add `look=simple` to the game URL\n(`play3.html?look=simple`). Without it the game is exactly as before, so the two versions can be compared side by side. First pass = one\nshort section of Screen 05 (s 92.5 → 113.3: the approach, the approved camera position at s 97.8, the bend beyond it).\nSame route, same controls, same coins, same camera; n …[+2640 chars]`
+
+### 🧑 User — 2026-11-23T01:55:44.337Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/kit48/README.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-23T01:55:51.879Z
+
+> 🔧 **Bash** `{"command": "until grep -q EXIT /home/user/ws48/rec/stills.log; do sleep 10; done; mkdir -p /home/user/rainbow-/qa/kit48/stills && cd /home/user/ws48/rec/stills && python3 - <<'EOF'\nfrom PIL import Image, ImageDraw, ImageFont\nF=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',18)\nref=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB'); ref=ref.resize((round(ref.width*915/ref.height),915))\ncand=Image.open('s97.80_l0.png').convert('RGB')\nW=Image.new('RGB',(ref.width+4+cand.width,955),(30,15,50)); d=ImageDraw.Draw(W); W.paste(ref, …[+1061 chars]`
+
+### 🧑 User — 2026-11-23T01:56:02.114Z
+
+> ↩︎ result: /home/user/rainbow-/qa/kit48:
+> APPROVED_vs_CANDIDATE.jpg
+> README.md
+> stills
+> 
+> /home/user/rainbow-/qa/kit48/stills:
+> BEFORE_AT_AFTER_approved_camera.jpg
+> still_AFTER_it.jpg
+> still_AT_the_approved_camera.jpg
+> still_BEFORE_the_approved_camera.jpg
+> still_bend_beyond_it.jpg
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-23T01:56:03.869Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/kit48/APPROVED_vs_CANDIDATE.jpg"}`
+
+### 🧑 User — 2026-11-23T01:56:03.901Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T01:56:11.129Z
+
+> 🔧 **Bash** `{"command": "until grep -q EXIT /home/user/ws48/rec/tex.log; do sleep 15; done; cd /home/user/rainbow- && python3 -c \"\nimport json; d=json.load(open('/home/user/ws48/rec/tex/checks.json')); print(json.dumps({k:d.get(k) for k in ('frames','errors','benny_offscreen_frames','camera_max_step_u','camera_max_step_expected_u','camera_max_turn_deg_per_frame','scenery_meshes_moved','edge_guard','frame_qa','swipes_sent','coins_end','s_end')})); print([(e['dir'],e['result']) for e in d['input_log']])\"; mkdir -p qa/kit48/run && nice -n 5 python3 -I tools/reflock/encode_run.py /home/user/ws48/rec/tex qa …[+381 chars]`
+

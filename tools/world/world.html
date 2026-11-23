@@ -53,6 +53,7 @@ const world = new THREE.Group(); world.name = 'world'; scene.add(world);
 const lerp = (a, b, x) => a + (b - a) * x, sstep = (a, b, x) => { const k = Math.min(1, Math.max(0, (x - a) / (b - a))); return k * k * (3 - 2 * k); };
 const DEG = Math.PI / 180, UPV = new THREE.Vector3(0, 1, 0);
 const GRAY = q.get('gray') === '1';
+const SIMPLE = q.get('look') === 'simple', SIMPLE_AREAS = (q.get('simpleareas') ?? '05').split(',');   // r48 candidate: clean, consistent materials (default unchanged)
 const tl = new THREE.TextureLoader(), gltf = new GLTFLoader();
 
 // ---------------- ONE route through every area (world_layout.py): points every ds, bank per point ----------------
@@ -147,6 +148,40 @@ const sceneryMat = (base, rep, A, opts = {}) => new THREE.ShaderMaterial({
         c = alb * env * (uFam < 1.5 ? 1.12 : dif) + vec3(1.0, 0.93, 0.78) * sp * (0.45 + 0.4 * near) + alb * 0.35 * fr + (uFam < 1.5 ? vec3(0.1, 0.06, 0.02) : vec3(0.0)); }
       c = mix(c, vec3(1.0, 0.97, 0.92), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6));
       gl_FragColor = vec4(min(c, vec3(1.0)), uAlpha); }` });
+// ---------------- r48 SIMPLE candidate (?look=simple): one consistent, clean material family on the real 3D surfaces (no painted pixels) ------------
+// wall = lavender / purple perforated drum metal (staggered rounded slots, soft glowing rims, a sheen from its own normals); rings = rounded
+// polished gold with warm lamp studs on the inner face; trays / paddles = clean copper. Lit the same way (soft key + mirrored warm drum).
+const SIMPLE_METAL = `vec3 simpleMetal(vec3 alb, vec3 N, vec3 V){ vec3 Lk = normalize(vec3(-0.25, 0.85, 0.45)); vec3 Rv = reflect(-V, N);
+    float e = smoothstep(-0.55, 0.85, Rv.y + 0.25 * Rv.z); vec3 env = mix(vec3(0.62, 0.32, 0.12), vec3(1.18, 0.98, 0.7), e);
+    float sp = pow(max(dot(reflect(-Lk, N), V), 0.0), 36.0), fr = pow(1.0 - max(dot(N, V), 0.0), 3.0);
+    return alb * env + vec3(1.0, 0.94, 0.8) * sp * 0.6 + alb * 0.3 * fr; }`;
+const simpleMat = (kind, A, rep = [1, 1], axis = null) => new THREE.ShaderMaterial({ side: THREE.DoubleSide,
+  uniforms: { uKind: { value: { wall: 0, ring: 1, copper: 2 }[kind] }, uRep: { value: new THREE.Vector2(...rep) }, uGlow: A.glow, uFar: A.far ?? FAR0, uFarCol: A.farCol ?? FARC0,
+    uAxis: { value: new THREE.Vector2(...(axis ?? [A.LAY?.drum?.axis_x ?? 0, A.LAY?.drum?.axis_y ?? 0])) } },
+  vertexShader: 'varying vec2 vUv; varying vec3 vW; varying vec3 vL; varying vec3 vN; void main(){ vUv = uv; vL = position; vN = normalize(mat3(modelMatrix) * normal); vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
+  fragmentShader: `uniform float uKind; uniform vec2 uRep; uniform vec3 uGlow; uniform vec4 uFar; uniform vec3 uFarCol; uniform vec2 uAxis; varying vec2 vUv; varying vec3 vW; varying vec3 vL; varying vec3 vN;
+    ${SIMPLE_METAL}
+    void main(){ vec3 N = normalize(vN), V = normalize(cameraPosition - vW); if (dot(N, V) < 0.0) N = -N; vec3 c;
+      if (uKind < 0.5) {   // drum wall
+        vec2 g = vUv * uRep * vec2(1.5, 1.6); float row = floor(g.y); g.x += 0.5 * mod(row, 2.0); vec2 f = fract(g) - 0.5;
+        vec2 q = abs(f) - vec2(0.16, 0.05); float sd = length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - 0.16;   // rounded oval slot (capsule), distance
+        float aa = max(fwidth(sd), 1e-4) * 1.2, hole = 1.0 - smoothstep(-aa, aa, sd), rim = (1.0 - smoothstep(0.0, 0.07 + aa, abs(sd))) * (1.0 - hole);
+        float far = smoothstep(0.3, 0.7, length(fwidth(g)));             // where slots get smaller than a few pixels: their average tone
+        float glossy = pow(0.5 + 0.5 * sin(vUv.x * 6.28318 * 9.0 + 1.0), 6.0);   // soft bright light streaks along the drum (the painting's lit metal)
+        vec3 base = mix(vec3(0.6, 0.16, 0.8), vec3(0.93, 0.42, 0.96), 0.45 + 0.4 * N.y + 0.35 * glossy);
+        vec3 wall = mix(base, vec3(0.34, 0.08, 0.52), 0.9 * hole); wall = mix(wall, vec3(1.0, 0.72, 1.0), 0.8 * rim);
+        wall = mix(wall, mix(base, vec3(0.42, 0.14, 0.6), 0.35), far);
+        vec3 Lk = normalize(vec3(-0.25, 0.85, 0.45)); float sp = pow(max(dot(reflect(-Lk, N), V), 0.0), 18.0), fr = pow(1.0 - max(dot(N, V), 0.0), 2.0);
+        c = wall * (0.85 + 0.25 * max(dot(N, Lk), 0.0)) + vec3(1.0, 0.75, 1.0) * (0.35 * sp + 0.18 * fr) * (1.0 - hole); }
+      else if (uKind < 1.5) {   // rounded gold ring + warm lamp studs on its inner face
+        c = simpleMetal(vec3(1.0, 0.72, 0.28), N, V);
+        vec2 r = vL.xy - uAxis; float ang = atan(r.y, r.x), la = fract(ang / 6.28318 * 40.0) - 0.5, inner = smoothstep(0.3, 0.7, dot(N, -normalize(vec3(r, 0.0))));
+        float lamp = exp(-la * la / 0.006) * inner * (1.0 - smoothstep(0.35, 0.9, fwidth(ang / 6.28318 * 40.0)));
+        c = mix(c, vec3(1.0, 0.97, 0.85), 0.9 * lamp); }
+      else c = simpleMetal(vec3(0.95, 0.52, 0.28), N, V);   // copper trays / paddles
+      c = mix(c, uFarCol, uFar.w * uFar.z * pow(smoothstep(uFar.x, uFar.y, distance(cameraPosition, vW)), 1.4));
+      c = mix(c, vec3(1.0, 0.97, 0.92), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6));
+      gl_FragColor = vec4(min(c, vec3(1.0)), 1.0); }` });
 // the shared water palette (cyan core, pink edges, short highlight dashes, flowing toward the camera) - two parametrisations:
 const WATER_CORE = `float hsh(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
   float nse(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(hsh(i), hsh(i + vec2(1, 0)), f.x), mix(hsh(i + vec2(0, 1)), hsh(i + vec2(1, 1)), f.x), f.y); }
@@ -254,7 +289,7 @@ const loadBake = async (A, meshes) => {
 const MESH = [], WATER = [], CLAMPS = [], FOAMS = [], BUBBLES = [];
 
 // the kit page's foam banks (screen.html): lit lavender-white shading, the area's glow
-const kitFoamMat = (A, inst = false) => new THREE.ShaderMaterial({ uniforms: { uL: { value: new THREE.Vector3(-0.25, 0.8, 0.55).normalize() }, uGlow: A.glow },
+const kitFoamMat = (A, inst = false, simple = false) => new THREE.ShaderMaterial({ uniforms: { uL: { value: new THREE.Vector3(-0.25, 0.8, 0.55).normalize() }, uGlow: A.glow },
   // r46 (user: "the white foam bank looks like large polygonal blocks, especially close to the camera"): the r45 pattern was a 2-D Voronoi in
   // world x / z whose straight cell borders drew crystal facets on every heap. Now the foam is made of ROUND BUBBLES in 3-D: each cell holds a
   // sphere-like bubble of its own size (power distance -> circles, never straight seams), its normal bends like a little dome (soft lavender
@@ -273,6 +308,8 @@ const kitFoamMat = (A, inst = false) => new THREE.ShaderMaterial({ uniforms: { u
         vec3 r = f - (g + 0.15 + 0.7 * h); float rad = 0.36 + 0.3 * fract(h.x * 7.13 + h.z * 3.7), d = length(r) / rad; if (d < best) { best = d; br = rad; rv = r / rad; } }
       return vec4(best, br, 0.0, 0.0); }
     void main(){ vec3 N = normalize(vN), V = normalize(cameraPosition - vW); if (dot(N, V) < 0.0) N = -N;
+      ${simple ? `{ vec3 Ls = normalize(vec3(-0.25, 0.8, 0.55)); float l = clamp(0.62 + 0.4 * dot(N, Ls), 0.0, 1.0); vec3 cs = mix(vec3(0.74, 0.7, 0.96), vec3(1.0), smoothstep(0.35, 0.85, l)) + 0.12 * pow(max(dot(reflect(-Ls, N), V), 0.0), 20.0);
+        cs = mix(cs, vec3(1.0, 0.98, 0.95), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(min(cs, vec3(1.0)), 1.0); return; }` : ''}
       vec3 r1 = vec3(0.0), r2 = vec3(0.0); float S1 = 26.0, px1 = length(fwidth(vW * S1)), px2 = px1 * 2.6, k1 = 1.0 - smoothstep(0.35, 0.9, px1), k2 = 1.0 - smoothstep(0.35, 0.9, px2);   // bubbles visible only when >~1 px
       vec4 b1 = vec4(0.5, 0.4, 0.0, 0.0), b2 = vec4(0.5, 0.4, 0.0, 0.0);   /* r46b: the 27-cell search only where the bubbles are visible (half the software render time was far foam) */
       if (k1 > 0.0) b1 = bub(vW * S1, r1); if (k2 > 0.0) b2 = bub(vW * S1 * 2.6 + 11.0, r2);
@@ -301,8 +338,12 @@ const loadKit = async (A) => {
     if (meta) { const tex = await tl.loadAsync(A.dir + 'baked/' + meta.file); A.stripU = stripUniforms(THREE, LAY, meta, tex); A.stripMeta = meta; } }
   const ms = []; g.traverse((o) => { if (o.isMesh) ms.push(o); });
   const RLENa = (LAY.route.points.length - 1) * LAY.route.ds, NSEG = ms.filter((o) => /^water_/.test(o.name)).length, SEG_LEN = RLENa / Math.max(1, NSEG);
+  const SIMPLE_A = SIMPLE && SIMPLE_AREAS.includes(A.id); A.simple = SIMPLE_A; if (SIMPLE_A && A.stripU) A.stripU.uStripS.value = 1;   // r48
   for (const o of ms) { const n = o.name, fam = famOf(n); o.geometry.computeBoundingBox(); const sz = o.geometry.boundingBox.getSize(new THREE.Vector3()); let m;
-    if (fam === 'tunnel' && LAY.tunnel_style === 'gold') m = sceneryMat(BASE.tunnelGold, [Math.round(2 * Math.PI * DR.r / 1.6), Math.max(1, sz.z / (LAY.rings?.spacing ?? 0.95))], A);
+    if (SIMPLE_A && fam === 'tunnel') m = simpleMat('wall', A, [Math.round(2 * Math.PI * DR.r / 0.75), Math.max(1, sz.z / 0.75)]);
+    else if (SIMPLE_A && fam === 'ring') m = simpleMat('ring', A);
+    else if (SIMPLE_A && fam === 'copper') m = simpleMat('copper', A);
+    else if (fam === 'tunnel' && LAY.tunnel_style === 'gold') m = sceneryMat(BASE.tunnelGold, [Math.round(2 * Math.PI * DR.r / 1.6), Math.max(1, sz.z / (LAY.rings?.spacing ?? 0.95))], A);
     else if (fam === 'tunnel') m = sceneryMat(BASE.tunnel, [Math.round(2 * Math.PI * DR.r / (LAY.slot_tile ?? [2.6, 1.2])[0]), Math.max(1, sz.z / (LAY.slot_tile ?? [2.6, 1.2])[1])], A, LAY.clean_metal ? { fam: 'tunnel' } : {});
     else if (fam === 'ring') m = sceneryMat(BASE.goldring, [4, 1], A, LAY.clean_metal ? { fam: 'ring' } : {});
     else if (fam === 'water') { const k = +n.split('_').pop(); m = waterMatKit(LAY.route.width / 2, SEG_LEN, k * SEG_LEN, false, A); WATER.push(o); }
@@ -345,7 +386,7 @@ const loadKit = async (A) => {
       // r47b the painted banks are THICK: big puffy heaps from just outside the river's foam edge to the drum wall (no bare floor beside the foam)
       if (Math.round(d / 0.075) % 3 === 0) { const [x0, z0] = toL(edge, d), sl0 = (rxz(z0 + 0.03) - rxz(z0 - 0.03)) / 0.06, latWall = (DR.axis_x + side * DR.chord - rxz(z0)) / Math.sqrt(1 + sl0 * sl0);
         for (let lt = edge + side * 0.3; side * (latWall - lt) > 0.02; lt += side * 0.17) { const r = 0.11 + 0.08 * rnd(), [x, z] = toL(lt + side * 0.04 * rnd(), d + (rnd() - 0.5) * 0.12); H.push([x, WYl + r * 0.18, z, r, rnd() * 6.283]); } } }
-    const fg = new THREE.IcosahedronGeometry(1, 2), fm = new THREE.InstancedMesh(fg, GRAY ? new THREE.MeshBasicMaterial({ color: 0xe8e8ee }) : kitFoamMat(A, true), H.length);
+    const fg = new THREE.IcosahedronGeometry(1, 2), fm = new THREE.InstancedMesh(fg, GRAY ? new THREE.MeshBasicMaterial({ color: 0xe8e8ee }) : kitFoamMat(A, true, !!A.simple), H.length);
     const mI = new THREE.Matrix4(), qI = new THREE.Quaternion(), pI = new THREE.Vector3(), sI = new THREE.Vector3();
     H.forEach(([x, y, z, r, a], i) => { pI.set(x, y, z); qI.setFromAxisAngle(UPV, a); sI.set(r * 1.15, r * 0.62, r); fm.setMatrixAt(i, mI.compose(pI, qI, sI)); });
     fm.name = 'foam_strip_edges'; fm.userData.fam = 'foam'; fm.userData.area = A.id; fm.frustumCulled = false; g.add(fm); MESH.push(fm); A.stripFoamCount = H.length; }
@@ -359,7 +400,7 @@ const loadKit = async (A) => {
     const S_REFa = LAY.cams[0].s_ref ?? 0, LEVa = Math.min(LL - 1.0, LAY.level_end ?? LL - 1.0);
     const B = (LAY.bubbles ?? []).map((b) => b.slice());
     for (let s = S_REFa + (LAY.bubbles_from ?? 6); s < LEVa; s += 1.2 + rp() * 1.4) { const F = lfr(s), p = lat_(s, new THREE.Vector3()).addScaledVector(F.r, (rp() - 0.5) * 2.2).addScaledVector(F.n, 0.15 + rp() * 0.8); B.push([p.x, p.y, p.z, 0.03 + rp() * rp() * 0.06]); }
-    if (LAY.bubbles_banks) { const bb = LAY.bubbles_banks; for (let s = S_REFa + (bb.from ?? 3); s < LEVa; s += bb.every ?? 0.7) for (const side of [-1, 1]) {   // r45: bubbles along both banks
+    if (LAY.bubbles_banks) { const bb = LAY.bubbles_banks; for (let s = S_REFa + (SIMPLE && SIMPLE_AREAS.includes(A.id) ? 0.5 : (bb.from ?? 3)); s < LEVa; s += bb.every ?? 0.7) for (const side of [-1, 1]) {   // r45: bubbles along both banks
       const F = lfr(s), p = lat_(s, new THREE.Vector3()).addScaledVector(F.r, side * (bb.lat[0] + (bb.lat[1] - bb.lat[0]) * rp())).addScaledVector(F.n, 0.05 + rp() * (bb.h ?? 0.45)); B.push([p.x, p.y, p.z, bb.r[0] + (bb.r[1] - bb.r[0]) * rp() * rp()]); } }
     for (const b of B) { const P = new THREE.Vector3(b[0], b[1], b[2]).applyMatrix4(M); BUBBLES.push([P.x, P.y, P.z, b[3], rp() * 6.28]); } }
   A.paintedCoins = (LAY.coins ?? []).map(V3).map((p) => p.applyMatrix4(M));
@@ -446,12 +487,14 @@ const AREA = Object.fromEntries(WD.areas.map((A) => [A.id, A]));
     if (c.kind === 'tube') { let L = 0; for (let i = 1; i < c.axis.length; i++) L += V3(c.axis[i]).distanceTo(V3(c.axis[i - 1])); const rA = c.r.reduce((a, b) => a + b, 0) / c.r.length;
       rep = c.fam === 'tunnelS' ? [Math.round(2 * Math.PI * rA / 0.75), Math.max(1, L / 0.75)] : [Math.round(2 * Math.PI * rA / 2.6), Math.max(1, L / 1.2)]; }
     o.material = c.fam === 'ring' ? sceneryMat(BASE.goldring, [4, 1], A) : c.fam === 'pool' ? waterMatKit(Math.max(sz.x, 1.2) / 2, Math.max(sz.z, 1), 0, true, A, false) : sceneryMat(BASE[c.fam] ?? BASE.pink, rep, A);
+    if (A?.simple && c.kind === 'tube') o.material = simpleMat('wall', A, rep);   // r48: the candidate's materials continue into its connectors
+    else if (A?.simple && c.fam === 'ring') o.material = simpleMat('ring', A, [1, 1], c.axis_pt ? [c.axis_pt[0], c.axis_pt[1]] : null);
     if (c.fam === 'pool' && c.kind === 'strip_path' && q.get('connwater') !== '0') { const pr = { 'B05': ['AB', '05'], '056': ['05', '06'], '067': ['06', '07'], '04A': ['04', 'AB'] }[o.name.split('_')[1]];   // r46: ribbon water across the join
       if (pr && (AREA[pr[0]]?.ribbonU || AREA[pr[1]]?.ribbonU)) o.material = waterMatConn(c, o.material, AREA[pr[0]], AREA[pr[1]]); }
     o.userData.fam = c.fam === 'pool' ? 'pool' : c.fam; o.userData.area = 'connector'; MESH.push(o); if (c.fam === 'pool') WATER.push(o);
     // r45: a connector wears the artwork templates of the area it belongs to (wall period along its length, ring band, river swatch)
     const T = A?.TPL, u = o.material.uniforms;
-    if (T && u) { if (c.kind === 'tube' && c.fam === 'tunnel' && T.tunnel) { let L = 0; for (let i = 1; i < c.axis.length; i++) L += V3(c.axis[i]).distanceTo(V3(c.axis[i - 1])); u.uTpl.value = T.tunnel.tex; u.uTplOn.value = 1; u.uTplMap.value = 2; u.uTube.value.set(0, T.tunnel.period, L, 0); }
+    if (T && u && !(A?.simple && (c.kind === 'tube' || c.fam === 'ring'))) { if (c.kind === 'tube' && c.fam === 'tunnel' && T.tunnel) { let L = 0; for (let i = 1; i < c.axis.length; i++) L += V3(c.axis[i]).distanceTo(V3(c.axis[i - 1])); u.uTpl.value = T.tunnel.tex; u.uTplOn.value = 1; u.uTplMap.value = 2; u.uTube.value.set(0, T.tunnel.period, L, 0); }
       else if (c.fam === 'ring' && T.ring) { u.uTpl.value = T.ring.tex; u.uTplOn.value = 1; u.uTplMap.value = 0; }
       else if (c.fam === 'pool' && u.uSw && (T.water || T.pool)) { const S = T.water ?? T.pool; u.uSw.value = S.tex; u.uSwOn.value = 1; u.uSwGeo.value.set(S.d0, S.len, 0, 0); } } }); }
 
@@ -519,8 +562,16 @@ const U = { uT: { value: 0 }, uSwim: { value: 1 }, uPom: { value: new THREE.Vect
 const bmat = new THREE.MeshBasicMaterial({ map: bmap, color: new THREE.Color(4, 4, 4) });
 bmat.onBeforeCompile = (sh) => { Object.assign(sh.uniforms, U); sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + VERT_HEAD).replace('#include <begin_vertex>', VERT_BODY);
   sh.fragmentShader = sh.fragmentShader.replace('#include <colorspace_fragment>', `#include <colorspace_fragment>
-    { vec3 col = gl_FragColor.rgb; float l = dot(col, vec3(0.2126, 0.7152, 0.0722)); col = mix(vec3(l), col, 1.36); col = (col - 0.5) * 1.15 + 0.5; gl_FragColor.rgb = clamp(col, 0.0, 1.0); }`); };
+    { vec3 col = gl_FragColor.rgb; float l = dot(col, vec3(0.2126, 0.7152, 0.0722)); col = mix(vec3(l), col, 1.36); col = (col - 0.5) * 1.15 + 0.5; gl_FragColor.rgb = clamp(col, 0.0, 1.0); }`);
+  if (SIMPLE) {   // r48 candidate: a rounder, softer Benny - gentle light from above, a warm pink rim (his fur catching the drum's light), no new fur detail
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vNb;').replace('#include <project_vertex>', '#include <project_vertex>\n  vNb = normalize(normalMatrix * normal);');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vNb;').replace('#include <colorspace_fragment>', `#include <colorspace_fragment>
+      { vec3 Nv = normalize(vNb); float rim = pow(1.0 - abs(Nv.z), 3.0), top = 0.92 + 0.14 * Nv.y; gl_FragColor.rgb = clamp(gl_FragColor.rgb * top + vec3(1.0, 0.72, 0.9) * 0.22 * rim, 0.0, 1.0); }`); } };
 const bmesh = new THREE.Mesh(bgeo, bmat); bmesh.frustumCulled = false;
+const CONTACT = SIMPLE ? (() => { const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: { uA: { value: 0.5 } },
+  vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+  fragmentShader: 'uniform float uA; varying vec2 vUv; void main(){ float r = length((vUv - 0.5) * 2.0); gl_FragColor = vec4(0.0, 0.16, 0.42, uA * (1.0 - smoothstep(0.3, 1.0, r))); }' }));
+  m.renderOrder = 5; m.frustumCulled = false; m.name = 'benny_contact'; scene.add(m); return m; })() : null;   // added to the scene, not the world: it moves with Benny
 // per area: painted height (fit), size factor and float rule (kit r43b: 12 % immersed = bsize 1.19 lift 0.03; section: bsize 1.24, lift 0)
 const BRULE = WD.areas.map((A) => A.kind === 'kit' ? { s0: A.s0, s1: A.s1, h: A.LAY.benny.height, bs: A.LAY.benny.bsize ?? 1.24, lift: A.LAY.benny.lift ?? 0 } : { s0: A.s0, s1: A.s1, h: A.SEC.benny.height, bs: 1.24, lift: 0 });
 const ruleAt = (s) => { let i = BRULE.findIndex((r) => s < r.s1); if (i < 0) i = BRULE.length - 1; const r = BRULE[i], n = BRULE[i + 1]; if (!n) return r; const w = sstep(r.s1 - 1.5, r.s1 + 1.5, s); return { h: lerp(r.h, n.h, w), bs: lerp(r.bs, n.bs, w), lift: lerp(r.lift, n.lift, w) }; };
@@ -655,6 +706,9 @@ window.step = (t, dt, steer, speed) => {
     if (SP) { const k = (WD.benny_h ?? 0.468) / SP.benny_px * (Ak.LAY.splash_pic_scale ?? 1); splash.scale.set(SP.w_px * k * (1 + 0.04 * Math.sin(t * 9)), SP.h_px * k * (1 + 0.05 * Math.sin(t * 7 + 1)), 1);
       at(st.s, splash.position).addScaledVector(F.r, st.lat).addScaledVector(F.t, -0.03).addScaledVector(F.n, 0.004); } }
   CT.water(F, v, dt);
+  if (CONTACT) {   // r48 candidate: a soft contact shade on the water exactly at his water point (shrinks and fades while he is in the air)
+    const kc = Math.max(0, 1 - Math.max(0, CT.c.h) / 0.22); at(st.s, CONTACT.position).addScaledVector(F.r, st.lat).addScaledVector(F.n, 0.002);
+    CONTACT.quaternion.setFromRotationMatrix(mB.makeBasis(F.r, F.t, F.n)); CONTACT.scale.set(0.5 + 0.12 * kc, 0.36 + 0.08 * kc, 1); CONTACT.material.uniforms.uA.value = 0.5 * kc; }
   camAt(st.s, dt); hud(st.s);
   if (t < AB.blast.until) for (const c of coins) if (c.got < 0 && c.s < 1e8 && c.s > st.s - 0.2 && c.s < st.s + 3.0 && Math.abs(c.lat - st.lat) < 0.5) { c.got = t; coinCount += 10; coinEl.textContent = '\u{1FA99} ' + coinCount.toLocaleString('en-US'); }
   for (const [k, id] of [['blast', 'blast'], ['turbo', 'turbo']]) { const a = AB[k], p = t < a.ready ? Math.min(1, (a.ready - t) / (a.dur + a.cd)) : 0; document.querySelector('#' + id + ' .cd').style.setProperty('--p', (p * 100).toFixed(1) + '%'); }

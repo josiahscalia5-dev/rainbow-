@@ -141,13 +141,41 @@ export async function loadDetail(THREE, tl, base, MANI, U) {
 // continued by quilting its sharp stretch, so there is no painted patch, no switch to generated water, no seam between surfaces.
 // Flow: two samples offset along d, cross-faded (anchored to the painted layout, never drifting away from it).
 export const STRIP_GLSL = `
-uniform sampler2D uStrip, uStripR, uStripD; uniform vec4 uStripP; uniform vec4 uStripZ; uniform vec4 uStripE;
+uniform sampler2D uStrip, uStripR, uStripD; uniform vec4 uStripP; uniform vec4 uStripZ; uniform vec4 uStripE; uniform float uStripS;
 float stripTex1(sampler2D tx, float z){ float x = clamp((z - uStripZ.x) / (uStripZ.y - uStripZ.x), 0.0, 1.0) * (uStripE.y - 1.0), i = floor(x), f = x - i;
   return mix(texture2D(tx, vec2((i + 0.5) / uStripE.y, 0.5)).r, texture2D(tx, vec2((min(i + 1.0, uStripE.y - 1.0) + 0.5) / uStripE.y, 0.5)).r, f); }
 vec2 stripLD(vec3 L){ float z = L.z, rx = stripTex1(uStripR, z), sl = (stripTex1(uStripR, z + 0.03) - stripTex1(uStripR, z - 0.03)) / 0.06;
   float d = z > uStripZ.y ? -(z - uStripZ.y) : z < uStripZ.x ? uStripE.x + (uStripZ.x - z) : stripTex1(uStripD, z);
   return vec2((L.x - rx) / sqrt(1.0 + sl * sl), d); }
-vec3 stripWater(vec3 L, float t){ vec2 ld = stripLD(L); float p = fract(t * 0.35), w1 = 1.0 - abs(2.0 * p - 1.0);
+// r48 SIMPLE candidate (?look=simple): clean, rounded, colourful water from the approved colours and BROAD flow shapes only - a bright cyan
+// river, two hot-pink ribbons winding through it in long S-curves, soft wide light bands drifting with the flow, a glossy sheen and a few big
+// soft glints; no painted texture, no tiny streaks. Same continuous (lat, d) mapping as the strip, so it is one body of water everywhere.
+float stripH(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
+float stripN(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(stripH(i), stripH(i + vec2(1, 0)), f.x), mix(stripH(i + vec2(0, 1)), stripH(i + vec2(1, 1)), f.x), f.y); }
+vec3 stripSimple(vec2 ld, float t){
+  float lat = ld.x, d = ld.y + t * 0.9;
+  float n = lat / 0.66 + 0.48 * sin(ld.y * 0.82 + 0.4) + 0.07 * sin(ld.y * 1.9 + 2.0);       // the ribbons wind across the river in S-curves (painting: one swing every ~3 rings)
+  float an = abs(n) + 0.03 * sin(ld.y * 1.4 + n * 2.0);
+  vec3 deep = vec3(0.02, 0.42, 0.93), mid = vec3(0.05, 0.66, 0.99), bright = vec3(0.34, 0.9, 1.0);
+  vec3 col = mix(bright, mid, smoothstep(0.0, 0.36, an)); col = mix(col, mix(deep, mid, 0.35), smoothstep(1.02, 1.2, an) * (1.0 - smoothstep(1.2, 1.3, an))); col = mix(col, deep, smoothstep(1.5, 1.9, an));
+  float e = max(0.035, 1.2 * fwidth(an));
+  float pinkA = smoothstep(0.36 - e, 0.44 + e, an) * (1.0 - smoothstep(0.92 - e, 1.02 + e, an));   // the main hot-pink ribbon on each side (broad)
+  float pinkB = smoothstep(1.22 - e, 1.3 + e, an) * (1.0 - smoothstep(1.48 - e, 1.58 + e, an));    // a thinner outer ribbon
+  float pa = (an - 0.69) / 0.16, pb = (an - 1.39) / 0.07, pc = max(exp(-pa * pa), exp(-pb * pb));   /* x*x: pow(negative, 2.0) is undefined in GLSL */
+  vec3 pink = mix(vec3(0.86, 0.12, 0.66), vec3(1.0, 0.36, 0.86), smoothstep(0.2, 0.9, pc)); pink = mix(pink, vec3(1.0, 0.7, 0.95), 0.45 * pow(pc, 3.0));
+  col = mix(col, pink, max(pinkA, 0.9 * pinkB));
+  // soft wide light bands drifting with the flow (the painting's glossy currents, without the tiny streaks)
+  float band = stripN(vec2(lat * 3.2 + 0.8 * sin(d * 0.4), d * 0.45)); float bw = smoothstep(0.62, 0.92, band) * (1.0 - smoothstep(0.0, 0.25, fwidth(lat * 3.2)));
+  col = mix(col, mix(vec3(0.75, 0.98, 1.0), vec3(1.0, 0.8, 0.96), max(pinkA, pinkB)), 0.24 * bw);
+  float arc = pow(0.5 + 0.5 * sin(d * 3.2 - an * an * 1.6 + 1.5 * stripN(vec2(lat, d * 0.3))), 12.0) * (1.0 - smoothstep(0.3, 1.0, fwidth(d * 3.2)));
+  col = mix(col, vec3(0.9, 1.0, 1.0), 0.2 * arc * (1.0 - 0.6 * max(pinkA, pinkB)));
+  // a few big soft glints (sparse, twinkling), never sub-pixel noise
+  vec2 g = vec2(lat * 2.6, d * 1.1); vec2 c = floor(g); float h = stripH(c + 3.7);
+  if (h < 0.22) { vec2 q = (g - c - 0.5 - 0.3 * (vec2(stripH(c + 1.3), stripH(c + 7.1)) - 0.5)) / vec2(2.6, 1.1); float tw = 0.5 + 0.5 * sin(t * 2.6 + h * 40.0);
+    float st = exp(-dot(q, q) / 0.0009) + exp(-abs(q.x) / 0.05) * exp(-q.y * q.y / 0.00006);
+    col = mix(col, vec3(1.0), clamp(st * (0.35 + 0.65 * tw * tw), 0.0, 1.0) * (1.0 - smoothstep(0.08, 0.35, max(fwidth(g.x), fwidth(g.y))))); }
+  return clamp(col, 0.0, 1.0); }
+vec3 stripWater(vec3 L, float t){ vec2 ld = stripLD(L); if (uStripS > 0.5) return stripSimple(ld, t); float p = fract(t * 0.35), w1 = 1.0 - abs(2.0 * p - 1.0);
   float u = (ld.x + uStripP.x) / (2.0 * uStripP.x), v1 = (ld.y + (p - 0.5) * uStripP.w - uStripP.y) / uStripP.z, v2 = (ld.y + (fract(p + 0.5) - 0.5) * uStripP.w - uStripP.y) / uStripP.z;
   vec3 col = mix(texture2D(uStrip, vec2(u, v2)).rgb, texture2D(uStrip, vec2(u, v1)).rgb, w1);
   // r47b the painting's BROKEN WHITE REFLECTIONS the texture is too coarse to hold close up: thin white streaks along the flow (broken into
@@ -165,7 +193,7 @@ vec3 stripWater(vec3 L, float t){ vec2 ld = stripLD(L); float p = fract(t * 0.35
              + 0.6 * exp(-abs(q.y) / max(0.014, 3.0 * pfy)) * exp(-(q.x * q.x) / (max(0.003, 0.7 * pfx) * max(0.003, 0.7 * pfx)));
     col = mix(col, vec3(1.0), clamp(st * tw * smoothstep(0.3, 0.6, lum), 0.0, 1.0) * (1.0 - smoothstep(0.25, 0.6, max(fwidth(g.x), fwidth(g.y))))); }
   return col; }`;
-export const stripCopy = (sfx) => STRIP_GLSL.replace(/\b(uStripR|uStripD|uStripP|uStripZ|uStripE|uStrip|stripTex1|stripLD|stripWater)\b/g, '$1' + sfx);   // (local names lat, d, g ... are function-scoped)
+export const stripCopy = (sfx) => STRIP_GLSL.replace(/\b(uStripR|uStripD|uStripP|uStripZ|uStripE|uStripS|uStrip|stripTex1|stripLD|stripWater|stripH|stripN|stripSimple)\b/g, '$1' + sfx);   // (local names lat, d, g ... are function-scoped)
 // uniforms of an area's strip: the route x by z and arc length by z (float, 4096 samples), the strip texture, its ranges
 export function stripUniforms(THREE, LAY, meta, tex) {
   const P = LAY.route.points, ds = LAY.route.ds, N = 4096, zA = P[0][2], zB = P[P.length - 1][2], dEnd = (P.length - 1) * ds;
@@ -175,5 +203,5 @@ export function stripUniforms(THREE, LAY, meta, tex) {
   const mk = (data) => { const t = new THREE.DataTexture(data, N, 1, THREE.RedFormat, THREE.FloatType); t.minFilter = t.magFilter = THREE.NearestFilter; t.needsUpdate = true; return t; };
   tex.colorSpace = THREE.NoColorSpace; tex.anisotropy = 8; tex.wrapS = tex.wrapT = THREE.ClampToEdgeWrapping;
   return { uStrip: { value: tex }, uStripR: { value: mk(rx) }, uStripD: { value: mk(dz) }, uStripP: { value: new THREE.Vector4(meta.lat, meta.d0, meta.d1 - meta.d0, LAY.water_strip?.flow ?? 0.3) },
-    uStripZ: { value: new THREE.Vector4(zB, zA, 0, 0) }, uStripE: { value: new THREE.Vector4(dEnd, N, 0, 0) } };
+    uStripZ: { value: new THREE.Vector4(zB, zA, 0, 0) }, uStripE: { value: new THREE.Vector4(dEnd, N, 0, 0) }, uStripS: { value: 0 } };
 }
