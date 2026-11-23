@@ -149,8 +149,23 @@ vec2 stripLD(vec3 L){ float z = L.z, rx = stripTex1(uStripR, z), sl = (stripTex1
   return vec2((L.x - rx) / sqrt(1.0 + sl * sl), d); }
 vec3 stripWater(vec3 L, float t){ vec2 ld = stripLD(L); float p = fract(t * 0.35), w1 = 1.0 - abs(2.0 * p - 1.0);
   float u = (ld.x + uStripP.x) / (2.0 * uStripP.x), v1 = (ld.y + (p - 0.5) * uStripP.w - uStripP.y) / uStripP.z, v2 = (ld.y + (fract(p + 0.5) - 0.5) * uStripP.w - uStripP.y) / uStripP.z;
-  return mix(texture2D(uStrip, vec2(u, v2)).rgb, texture2D(uStrip, vec2(u, v1)).rgb, w1); }`;
-export const stripCopy = (sfx) => STRIP_GLSL.replace(/\b(uStripR|uStripD|uStripP|uStripZ|uStripE|uStrip|stripTex1|stripLD|stripWater)\b/g, '$1' + sfx);
+  vec3 col = mix(texture2D(uStrip, vec2(u, v2)).rgb, texture2D(uStrip, vec2(u, v1)).rgb, w1);
+  // r47b the painting's BROKEN WHITE REFLECTIONS the texture is too coarse to hold close up: thin white streaks along the flow (broken into
+  // dashes, stronger on bright cyan, fading where they would be sub-pixel) + twinkling star glints that keep >= ~2 px on screen
+  float lat = ld.x, d = ld.y + 0.12 * t, lum = dot(col, vec3(0.299, 0.587, 0.114)), cy = clamp((col.b - col.r) * 2.0, 0.0, 1.0);
+  float wv = lat * 46.0 + 0.7 * sin(d * 0.9 + lat * 3.0), fw = max(fwidth(wv), 1e-4), fl = abs(fract(wv) - 0.5) * 2.0;
+  float seg = smoothstep(0.78, 0.95, fract(sin(dot(vec2(floor(wv), floor(d * 1.6 + 0.37 * floor(wv))), vec2(12.9898, 78.233))) * 43758.5453));
+  float streak = (1.0 - smoothstep(0.0, max(0.25, 1.6 * fw), fl)) * seg * (1.0 - smoothstep(0.2, 0.6, fw)) * smoothstep(0.35, 0.75, lum);
+  col = mix(col, vec3(0.95, 1.0, 1.0), 0.6 * streak * (0.5 + 0.5 * cy));
+  vec2 g = vec2(lat * 6.0, ld.y * 2.6); vec2 c = floor(g); float h = fract(sin(dot(c, vec2(41.3, 289.1))) * 43758.5453);
+  if (h < 0.2) { vec2 pc = c + vec2(0.2 + 0.6 * fract(h * 17.0), 0.2 + 0.6 * fract(h * 31.0)); vec2 q = (g - pc) / vec2(6.0, 2.6);
+    float pfx = max(fwidth(lat), 1e-5), pfy = max(fwidth(ld.y), 1e-5), tw = 0.45 + 0.55 * pow(0.5 + 0.5 * sin(t * 3.3 + h * 70.0), 2.0);
+    vec2 cs = vec2(max(0.006, 1.3 * pfx), max(0.006, 1.3 * pfy));
+    float st = exp(-dot(q / cs, q / cs)) + exp(-abs(q.x) / max(0.035, 6.0 * pfx)) * exp(-(q.y * q.y) / (max(0.003, 0.7 * pfy) * max(0.003, 0.7 * pfy)))
+             + 0.6 * exp(-abs(q.y) / max(0.014, 3.0 * pfy)) * exp(-(q.x * q.x) / (max(0.003, 0.7 * pfx) * max(0.003, 0.7 * pfx)));
+    col = mix(col, vec3(1.0), clamp(st * tw * smoothstep(0.3, 0.6, lum), 0.0, 1.0) * (1.0 - smoothstep(0.25, 0.6, max(fwidth(g.x), fwidth(g.y))))); }
+  return col; }`;
+export const stripCopy = (sfx) => STRIP_GLSL.replace(/\b(uStripR|uStripD|uStripP|uStripZ|uStripE|uStrip|stripTex1|stripLD|stripWater)\b/g, '$1' + sfx);   // (local names lat, d, g ... are function-scoped)
 // uniforms of an area's strip: the route x by z and arc length by z (float, 4096 samples), the strip texture, its ranges
 export function stripUniforms(THREE, LAY, meta, tex) {
   const P = LAY.route.points, ds = LAY.route.ds, N = 4096, zA = P[0][2], zB = P[P.length - 1][2], dEnd = (P.length - 1) * ds;

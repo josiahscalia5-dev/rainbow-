@@ -6094,3 +6094,92 @@ The build ran, but Screen 05's old route-following foam banks are still on: thei
 
 > 🔧 **Bash** `{"command": "grep -n \"lay\\['foam_banks'\\] = \\|lay\\['foam_pool'\\] = False; lay\\['foam_banks'\\] = \\[\\]\\|^for kv in a.set\" tools/screenkit/screens/05/fit05.py; python3 - <<'EOF'\np='tools/screenkit/screens/05/fit05.py'; s=open(p).read()\ns=s.replace(\"\\nlay['foam_pool'] = False; lay['foam_banks'] = []\",\"\",1)\nanchor=\"for kv in a.set:\"\nassert s.count(anchor)==1\ns=s.replace(anchor, \"if lay.get('water_strip'): lay['foam_pool'] = False; lay['foam_banks'] = []   # r47: the strip's measured foam edges place the 3D foam (world.html)\\n\"+anchor,1)\nopen(p,'w').write(s)\nEOF\n(python …[+411 chars]`
 
+### 🧑 User — 2026-11-23T01:07:06.535Z
+
+> ↩︎ result: 97:lay['foam_pool'] = False; lay['foam_banks'] = []   # r46: only purple / magenta painted pixels build the repeated drum-wall period (no water / foam / bubble shards, no tray smears)
+> 105:lay['foam_banks'] = [{'side': s_, 'off': 0.5, 'spacing': 0.15, 'size': 0.075, 's0': lay['cams'][0]['s_ref'] + 14.0, 'seed': 21 + s_} for s_ in (-1, 1)]   # beyond the painted stretch, clear of the lanes
+> 110:for kv in a.set:
+>   area 05   built fit,geometry,bake                    38.5 s
+> EXIT 0
+> False []
+
+### 🤖 Claude — 2026-11-23T01:07:10.960Z
+
+Now the old foam banks are off and the floor is one surface. Rendering the section frame by frame (approach, picture camera, beyond) to see whether the patch boundary is gone.
+
+### 🤖 Claude — 2026-11-23T01:07:14.409Z
+
+> 🔧 **Bash** `{"command": "export NODE_PATH=$(npm root -g); cp tools/world/world.html /home/user/ws46/world/game/play3.html; rm -rf /home/user/ws47/p1; node tools/world/probe_frames.cjs /home/user/ws46/world/game /home/user/ws47/p1 0,25,45,60,73,100,150,220 '[]' 's0=92.5&sentinel=1' '[[200,600]]' > /home/user/ws47/p1.log 2>&1; tail -n 3 /home/user/ws47/p1.log; python3 -c \"\nimport json; d=json.load(open('/home/user/ws47/p1/probe.json')); print('errors', d['errors'][:3]); print([(f['frame'], f['s']) for f in d['frames']])\"; cd /home/user/ws47/p1 && montage f_00000.png f_00025.png f_00045.png f_00060.png -t …[+233 chars]`
+
+### 🧑 User — 2026-11-23T01:07:48.745Z
+
+> ↩︎ result: probed 100 s 99.833 lat 0 box {"x0":92.3,"x1":343.3,"y0":427.3,"y1":722}
+> probed 150 s 103.5 lat 0 box {"x0":83.8,"x1":330.9,"y0":430.2,"y1":719.7}
+> probed 220 s 108.633 lat 0 box {"x0":73.5,"x1":329.8,"y0":433,"y1":718.1}
+> errors []
+> [(0, 92.5), (25, 94.333), (45, 95.8), (60, 96.9), (73, 97.853), (100, 99.833), (150, 103.5), (220, 108.633)]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-23T01:07:50.658Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws47/p1a.jpg"}`
+
+### 🧑 User — 2026-11-23T01:07:50.786Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T01:07:56.242Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws47/p1b.jpg"}`
+
+### 🧑 User — 2026-11-23T01:07:56.364Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T01:08:43.616Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_strip.py'; s=open(p).read()\nold=\"SA, SL = SC.get('swing', [0.22, 6.5]); fade = np.clip((dd - P1 - 0.5) / 3.0, 0, 1) + np.clip((P0 - 0.5 - dd) / 3.0, 0, 1)\\nshift = SA * np.sin(2 * np.pi * (dd - P1) / SL) * np.clip(fade, 0, 1) + 0.6 * SA * np.sin(2 * np.pi * (dd - P1) / (SL * 0.43) + 1.3) * np.clip(fade, 0, 1)\"\nnew=\"SA, SL = SC.get('swing', [0.2, 9.0]); fade = np.clip((dd - P1 - 0.5) / 3.0, 0, 1) + np.clip((P0 - 0.5 - dd) / 3.0, 0, 1)\\nshift = SA * np.sin(2 * np.pi * (dd - P1) / SL) * np.clip(fade, 0, 1)   # r47b: one long smooth S …[+4628 chars]`
+
+### 🧑 User — 2026-11-23T01:09:28.924Z
+
+> ↩︎ result: detail    ran       20.4 s
+> EXIT 0
+> errors []
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-23T01:09:30.497Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws47/p2.jpg"}`
+
+### 🧑 User — 2026-11-23T01:09:30.626Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T01:09:42.930Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^const sceneryMat\" tools/world/world.html && sed -n \"$(grep -n '^const sceneryMat' tools/world/world.html | cut -d: -f1),+22p\" tools/world/world.html | cut -c1-330", "description": "Read the scenery material used by rings, trays and walls"}`
+
+### 🧑 User — 2026-11-23T01:09:42.982Z
+
+> ↩︎ result: 109:const sceneryMat = (base, rep, A, opts = {}) => new THREE.ShaderMaterial({
+> const sceneryMat = (base, rep, A, opts = {}) => new THREE.ShaderMaterial({
+>   side: THREE.DoubleSide, transparent: !!opts.transparent, depthWrite: !opts.transparent,
+>   uniforms: { uBase: { value: base }, uRep: { value: new THREE.Vector2(...rep) }, uBake: { value: null }, uBakeOn: { value: 0 }, uScroll: { value: new THREE.Vector2(...(opts.scroll ?? [0, 0])) },
+>     uTint: { value: new THREE.Color(...(opts.tint ?? [1, 1, 1])) }, uAlpha: { value: opts.alpha ?? 1 }, uDen: { value: null }, uGlow: A.glow, uTime: TIME,
+>     uSharp: { value: new THREE.Vector2(SHARPX, A.sharp) }, uLodBias: { value: A.lodBias },
+>     uTpl: { value: null }, uTplOn: { value: 0 }, uTplMap: { value: 0 }, uTube: { value: new THREE.Vector4(0, 1, 0, 0) }, uFar: A.far ?? FAR0, uFarCol: A.farCol ?? FARC0 },   // r45: artwork template (bake.js) + far glow
+>   vertexShader: 'varying vec2 vUv; varying vec3 vW; varying vec3 vL; void main(){ vUv = uv; vL = position; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
+>   fragmentShader: `uniform sampler2D uBase; uniform vec2 uRep; uniform sampler …[+2004 chars]
+
+### 🤖 Claude — 2026-11-23T01:10:28.002Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\ndef rep(old,new,cnt=1):\n    global s; assert s.count(old)==cnt, (s.count(old), old[:80]); s=s.replace(old,new)\nrep(\"    uTpl: { value: null }, uTplOn: { value: 0 }, uTplMap: { value: 0 }, uTube: { value: new THREE.Vector4(0, 1, 0, 0) }, uFar: A.far ?? FAR0, uFarCol: A.farCol ?? FARC0 },   // r45: artwork template (bake.js) + far glow\\n  vertexShader: 'varying vec2 vUv; varying vec3 vW; varying vec3 vL; void main(){ vUv = uv; vL = position; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = proj …[+4914 chars]`
+
+### 🧑 User — 2026-11-23T01:10:28.109Z
+
+> ↩︎ result: [('paddle_0_m', True), ('paddle_1_m', True), ('paddle_2_m', True), ('paddle_3_m', True), ('ring_00_m', True), ('ring_01_m', True)]
+
+### 🤖 Claude — 2026-11-23T01:10:38.401Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/  float seg = smoothstep(0.62, 0.9, fract(sin(dot(vec2(floor(wv), floor(d \\* 1.6 + 0.37 \\* floor(wv))), vec2(12.9898, 78.233))) \\* 43758.5453));/  float seg = smoothstep(0.78, 0.95, fract(sin(dot(vec2(floor(wv), floor(d * 1.6 + 0.37 * floor(wv))), vec2(12.9898, 78.233))) * 43758.5453));/' tools/screenkit/water_ribbon.js && grep -c \"smoothstep(0.78, 0.95\" tools/screenkit/water_ribbon.js && (python3 -I tools/world/build_world.py /home/user/ws46/world > /home/user/ws47/build4.log 2>&1; echo EXIT $? >> /home/user/ws47/build4.log); grep -E \"area 05|EXIT\" /home/user/ws4 …[+605 chars]`
+

@@ -124,8 +124,8 @@ P0, P1 = SC.get('painted', [0.8, dB + 3.25]); p0, p1 = int((P0 - D0) * PXU), int
 Q = filled.copy(); Q[p1:] = quilt_forward(filled[p1 - PO * 2:p1], NDv - p1); Q[:p0] = quilt_forward(filled[p0:p0 + PO * 2][::-1], p0)[::-1]
 inner = quilt_forward(filled[qa:qa + PO * 2], p1 - p0)                       # texture for the holes INSIDE the painted stretch (Benny, foam, gold)
 # curved flow: beyond the painted stretch the bands swing across the river like the painted ribbons (fades in, never inside the painted rows)
-SA, SL = SC.get('swing', [0.22, 6.5]); fade = np.clip((dd - P1 - 0.5) / 3.0, 0, 1) + np.clip((P0 - 0.5 - dd) / 3.0, 0, 1)
-shift = SA * np.sin(2 * np.pi * (dd - P1) / SL) * np.clip(fade, 0, 1) + 0.6 * SA * np.sin(2 * np.pi * (dd - P1) / (SL * 0.43) + 1.3) * np.clip(fade, 0, 1)
+SA, SL = SC.get('swing', [0.2, 9.0]); fade = np.clip((dd - P1 - 0.5) / 3.0, 0, 1) + np.clip((P0 - 0.5 - dd) / 3.0, 0, 1)
+shift = SA * np.sin(2 * np.pi * (dd - P1) / SL) * np.clip(fade, 0, 1)   # r47b: one long smooth S (two sines kinked into zig-zags)
 for i in np.nonzero(np.abs(shift) > 1e-4)[0]:
     for c in range(3): Q[i, :, c] = np.interp(lat - shift[i], lat, Q[i, :, c])
 core = Q.copy()

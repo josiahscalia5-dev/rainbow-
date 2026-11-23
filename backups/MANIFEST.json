@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28923,
-   "sha256": "09d8b317a4ace815e55fe05a953937662d09cea65c819df39a31e9f7eb6b5cdb"
+   "sha256": "cfb4c7bfdb2950d73a4af9ed5d0d211e098c8632b874f3c05af72408e7fc1955"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2961,
-   "sha256": "792964c0f236ce9acaff09357fbcfaedddeead71c06e3605fbe859feedb0f2f5"
+   "sha256": "e28adf50e36ff8092abbf8902cd135af26e036f48ef7204b4152efe10b1b4838"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -49978,8 +49978,8 @@
   },
   {
    "path": "tools/screenkit/screens/05/fit05.py",
-   "bytes": 12336,
-   "sha256": "dc6bd1e8911166db0318ca7d52c37d57993a80a7656f935c4dd0a482a77ba5a9"
+   "bytes": 12483,
+   "sha256": "189667a4b5d6c3343f2dba5621b113257bd5255d277c14ba6e23846022e1a867"
   },
   {
    "path": "tools/screenkit/screens/05/segment05.json",
@@ -50033,13 +50033,13 @@
   },
   {
    "path": "tools/screenkit/water_ribbon.js",
-   "bytes": 20781,
-   "sha256": "1a3d0ce70642f86b7309291599ddbce62b3c64b6672e86c58fdbd4726fa53361"
+   "bytes": 22612,
+   "sha256": "095164f0a7879a1f57fbf388bfe5f43cec1c0738cd6b2611006a529ae96479d8"
   },
   {
    "path": "tools/screenkit/water_strip.py",
-   "bytes": 15095,
-   "sha256": "a765143b272b2ce7f910e1583a3c6c4f2d8fdf8f59101a09a6788ac9e2adb3b9"
+   "bytes": 15070,
+   "sha256": "befce957b3497074623af92dc137daf7b6b01126e42e90206f58b0dca753819f"
   },
   {
    "path": "tools/spector/spector_capture_test.mjs",
@@ -50108,8 +50108,8 @@
   },
   {
    "path": "tools/world/world.html",
-   "bytes": 97934,
-   "sha256": "011238735a8450a241dff4dc4a49f6d2f591da8e41d22d97226a0c567acf2cab"
+   "bytes": 100525,
+   "sha256": "16303084f9f85bd46941b1aac875413f48ec7e39985d265f42e82f7a82382803"
   },
   {
    "path": "tools/world/world_layout.py",

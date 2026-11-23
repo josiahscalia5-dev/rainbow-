@@ -111,20 +111,35 @@ const sceneryMat = (base, rep, A, opts = {}) => new THREE.ShaderMaterial({
   uniforms: { uBase: { value: base }, uRep: { value: new THREE.Vector2(...rep) }, uBake: { value: null }, uBakeOn: { value: 0 }, uScroll: { value: new THREE.Vector2(...(opts.scroll ?? [0, 0])) },
     uTint: { value: new THREE.Color(...(opts.tint ?? [1, 1, 1])) }, uAlpha: { value: opts.alpha ?? 1 }, uDen: { value: null }, uGlow: A.glow, uTime: TIME,
     uSharp: { value: new THREE.Vector2(SHARPX, A.sharp) }, uLodBias: { value: A.lodBias },
-    uTpl: { value: null }, uTplOn: { value: 0 }, uTplMap: { value: 0 }, uTube: { value: new THREE.Vector4(0, 1, 0, 0) }, uFar: A.far ?? FAR0, uFarCol: A.farCol ?? FARC0 },   // r45: artwork template (bake.js) + far glow
-  vertexShader: 'varying vec2 vUv; varying vec3 vW; varying vec3 vL; void main(){ vUv = uv; vL = position; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
+    uTpl: { value: null }, uTplOn: { value: 0 }, uTplMap: { value: 0 }, uTube: { value: new THREE.Vector4(0, 1, 0, 0) }, uFar: A.far ?? FAR0, uFarCol: A.farCol ?? FARC0,   // r45: artwork template (bake.js) + far glow
+    uFam: { value: { tunnel: 0, ring: 1, copper: 2 }[opts.fam] ?? 3 } },   // r47: per-family clean physical material (layout clean_metal)
+  vertexShader: 'varying vec2 vUv; varying vec3 vW; varying vec3 vL; varying vec3 vN; void main(){ vUv = uv; vL = position; vN = normalize(mat3(modelMatrix) * normal); vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
   fragmentShader: `uniform sampler2D uBase; uniform vec2 uRep; uniform sampler2D uBake; uniform float uBakeOn; uniform vec2 uScroll; uniform vec3 uTint; uniform float uAlpha; uniform vec3 uGlow; uniform float uTime;
     uniform sampler2D uDen; uniform vec2 uSharp; uniform float uLodBias; uniform sampler2D uTpl; uniform float uTplOn; uniform float uTplMap; uniform vec4 uTube; varying vec2 vUv; varying vec3 vW; varying vec3 vL;
-    uniform vec4 uFar; uniform vec3 uFarCol;
+    uniform vec4 uFar; uniform vec3 uFarCol; uniform float uFam; varying vec3 vN;
     void main(){ vec2 su = vUv + uScroll * uTime; vec3 c = texture2D(uBase, su * uRep).rgb * uTint;
       // the painting's own wall / ring / tray: 0 = mesh UVs, 1 = drum period (u around, local z phase-locked to the rings), 2 = connector tube (v x length)
       if (uTplOn > 0.5) c = texture(uTpl, uTplMap > 1.5 ? vec2(vUv.x, vUv.y * uTube.z / uTube.y) : uTplMap > 0.5 ? vec2(vUv.x, (uTube.x - vL.z) / uTube.y) : vUv).rgb;
       c = mix(c, uFarCol, uFar.w * uFar.z * pow(smoothstep(uFar.x, uFar.y, distance(cameraPosition, vW)), 1.4));   // r45: bright warm core far ahead (under the painted pixels)
       if (uBakeOn > 0.5) { vec4 b = texture(uBake, su, uLodBias); vec4 dd = texture2D(uDen, vUv); float pd = (dd.r + dd.g / 255.0) * 4000.0;
         float magE = uSharp.x / max(max(length(dFdx(vW)), length(dFdy(vW))), 1e-6) / max(pd, 1.0);
-        c = mix(c, b.rgb, dd.b * (1.0 - smoothstep(uSharp.y, uSharp.y * 2.3, magE))); }
+        float wb = dd.b * (1.0 - smoothstep(uSharp.y, uSharp.y * 2.3, magE));
+        // r47: on the drum WALL a baked pixel that is really a painted ring / tray / bubble / water (the 3D ones stand elsewhere) is not wall:
+        // gold / copper / brown (r >= 1.8 b) or cyan / pale blue (g >= 1.02 r) -> the clean wall period shows (no stray painted fragments)
+        if (uFam < 0.5) { vec3 q = b.rgb; float gold = step(q.b * 1.6, q.r) * step(q.r * 0.42, q.g) * step(q.g, q.r * 0.97) * step(0.35, q.r);
+          wb *= 1.0 - max(gold, max(step(1.02 * q.r, q.g), step(1.8 * q.b, q.r))); }
+        c = mix(c, b.rgb, wb); }
+      // r47 gold rings / copper paddles as PHYSICAL metal: shaded by their own 3D normals (soft key light, a sharp warm highlight, an edge sheen);
+      // close up, where the painting would be magnified, the colour becomes clean gold / copper (no blurry painted pixels on a passing ring)
+      if (uFam > 0.5 && uFam < 2.5 && dot(vN, vN) > 0.01) { vec3 N = normalize(vN); vec3 V = normalize(cameraPosition - vW); if (dot(N, V) < 0.0) N = -N;
+        vec3 Lk = normalize(vec3(-0.25, 0.85, 0.45)), Lf = normalize(vec3(0.15, 0.25, 1.0));
+        float near = smoothstep(0.006, 0.0018, max(length(dFdx(vW)), length(dFdy(vW))));
+        vec3 metal = uFam < 1.5 ? vec3(0.98, 0.68, 0.26) : vec3(0.93, 0.5, 0.26), alb = mix(c, metal * (0.7 + 0.45 * dot(c, vec3(0.333))), 0.65 * near);
+        float dif = 0.78 + 0.32 * max(dot(N, Lk), 0.0), sp = pow(max(dot(reflect(-Lk, N), V), 0.0), 40.0) + 0.6 * pow(max(dot(reflect(-Lf, N), V), 0.0), 22.0);
+        float fr = pow(1.0 - max(dot(N, V), 0.0), 3.0);
+        c = alb * dif + vec3(1.0, 0.92, 0.74) * sp * (0.35 + 0.4 * near) + alb * 0.3 * fr; }
       c = mix(c, vec3(1.0, 0.97, 0.92), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6));
-      gl_FragColor = vec4(c, uAlpha); }` });
+      gl_FragColor = vec4(min(c, vec3(1.0)), uAlpha); }` });
 // the shared water palette (cyan core, pink edges, short highlight dashes, flowing toward the camera) - two parametrisations:
 const WATER_CORE = `float hsh(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
   float nse(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(hsh(i), hsh(i + vec2(1, 0)), f.x), mix(hsh(i + vec2(0, 1)), hsh(i + vec2(1, 1)), f.x), f.y); }
@@ -281,13 +296,13 @@ const loadKit = async (A) => {
   const RLENa = (LAY.route.points.length - 1) * LAY.route.ds, NSEG = ms.filter((o) => /^water_/.test(o.name)).length, SEG_LEN = RLENa / Math.max(1, NSEG);
   for (const o of ms) { const n = o.name, fam = famOf(n); o.geometry.computeBoundingBox(); const sz = o.geometry.boundingBox.getSize(new THREE.Vector3()); let m;
     if (fam === 'tunnel' && LAY.tunnel_style === 'gold') m = sceneryMat(BASE.tunnelGold, [Math.round(2 * Math.PI * DR.r / 1.6), Math.max(1, sz.z / (LAY.rings?.spacing ?? 0.95))], A);
-    else if (fam === 'tunnel') m = sceneryMat(BASE.tunnel, [Math.round(2 * Math.PI * DR.r / (LAY.slot_tile ?? [2.6, 1.2])[0]), Math.max(1, sz.z / (LAY.slot_tile ?? [2.6, 1.2])[1])], A);
-    else if (fam === 'ring') m = sceneryMat(BASE.goldring, [4, 1], A);
+    else if (fam === 'tunnel') m = sceneryMat(BASE.tunnel, [Math.round(2 * Math.PI * DR.r / (LAY.slot_tile ?? [2.6, 1.2])[0]), Math.max(1, sz.z / (LAY.slot_tile ?? [2.6, 1.2])[1])], A, LAY.clean_metal ? { fam: 'tunnel' } : {});
+    else if (fam === 'ring') m = sceneryMat(BASE.goldring, [4, 1], A, LAY.clean_metal ? { fam: 'ring' } : {});
     else if (fam === 'water') { const k = +n.split('_').pop(); m = waterMatKit(LAY.route.width / 2, SEG_LEN, k * SEG_LEN, false, A); WATER.push(o); }
     else if (fam === 'pool') { m = waterMatKit(DR.chord, sz.z, -o.geometry.boundingBox.max.z, true, A); WATER.push(o); }
     else if (fam === 'funnel') m = waterMatKit(Math.PI * (LAY.funnel?.a_out ?? 2), Math.max(0.5, sz.z), 0, false, A);
     else if (fam === 'flume') m = sceneryMat(BASE.flume, [1, 6], A);
-    else if (fam === 'copper') m = sceneryMat(BASE.copper, [1, 1], A);
+    else if (fam === 'copper') m = sceneryMat(BASE.copper, [1, 1], A, LAY.clean_metal ? { fam: 'copper' } : {});
     else if (fam === 'wall') m = sceneryMat(BASE.wall, [Math.max(1, sz.x / 1.6), Math.max(1, sz.y / 1.6)], A);
     else if (fam === 'arrow') m = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.86, 0.98, 1.0), toneMapped: false });
     else if (fam === 'foam') m = kitFoamMat(A);   // the kit page's lit lavender-white foam banks (not baked)
@@ -319,7 +334,10 @@ const loadKit = async (A) => {
     let sd = 4711; const rnd = () => ((sd = (sd * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); const H = [];
     for (const [side, edge] of [[-1, FE.left], [1, FE.right]]) for (let d = Math.max(SM.d0 + 2, -6); d < SM.d1 - 0.5; d += 0.075) {
       const n = 2 + Math.floor(rnd() * 2);
-      for (let k = 0; k < n; k++) { const r = 0.045 + 0.07 * rnd() * (k ? 0.8 : 1), lat = edge + side * (r * 0.75 + rnd() * 0.2), [x, z] = toL(lat, d + (rnd() - 0.5) * 0.06); H.push([x, WYl + r * 0.12, z, r, rnd() * 6.283]); } }
+      for (let k = 0; k < n; k++) { const r = 0.045 + 0.07 * rnd() * (k ? 0.8 : 1), lat = edge + side * (r * 0.75 + rnd() * 0.2), [x, z] = toL(lat, d + (rnd() - 0.5) * 0.06); H.push([x, WYl + r * 0.12, z, r, rnd() * 6.283]); }
+      // r47b the painted banks are THICK: big puffy heaps from just outside the river's foam edge to the drum wall (no bare floor beside the foam)
+      if (Math.round(d / 0.075) % 3 === 0) { const [x0, z0] = toL(edge, d), sl0 = (rxz(z0 + 0.03) - rxz(z0 - 0.03)) / 0.06, latWall = (DR.axis_x + side * DR.chord - rxz(z0)) / Math.sqrt(1 + sl0 * sl0);
+        for (let lt = edge + side * 0.3; side * (latWall - lt) > 0.02; lt += side * 0.17) { const r = 0.11 + 0.08 * rnd(), [x, z] = toL(lt + side * 0.04 * rnd(), d + (rnd() - 0.5) * 0.12); H.push([x, WYl + r * 0.18, z, r, rnd() * 6.283]); } } }
     const fg = new THREE.IcosahedronGeometry(1, 2), fm = new THREE.InstancedMesh(fg, GRAY ? new THREE.MeshBasicMaterial({ color: 0xe8e8ee }) : kitFoamMat(A, true), H.length);
     const mI = new THREE.Matrix4(), qI = new THREE.Quaternion(), pI = new THREE.Vector3(), sI = new THREE.Vector3();
     H.forEach(([x, y, z, r, a], i) => { pI.set(x, y, z); qI.setFromAxisAngle(UPV, a); sI.set(r * 1.15, r * 0.62, r); fm.setMatrixAt(i, mI.compose(pI, qI, sI)); });
