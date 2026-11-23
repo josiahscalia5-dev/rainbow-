@@ -53,6 +53,6 @@ Material:
     - _SlotSize: {r: 0.19, g: 0.08, b: 0.158, a: 1}
     - _StripColor: {r: 1, g: 0.7, b: 0.97, a: 1}
     - _StripParams: {r: 28, g: 0.017, b: 0, a: 0.8}
-    - _WallFar: {r: 30, g: 100, b: 0.35, a: 0.8}
+    - _WallFar: {r: 25, g: 90, b: 0.25, a: 0.6}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

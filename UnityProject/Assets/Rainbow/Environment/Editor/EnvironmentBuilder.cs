@@ -177,9 +177,9 @@ namespace Rainbow.Screen05.EditorTools
             SetHex(m, "_FloorColorB", "#ff4fc0");
             SetFloat(m, "_Exposure", 1f);
             SetFloat(m, "_LightInfluence", 1f);
-            // light round 2026-11-23: strips / reflection fade with view distance (strips 35 %, panorama 80 % beyond 100 m)
-            // so the deep walls stay violet with slot rows instead of white radial spokes converging on the throat
-            SetVec(m, "_WallFar", new Vector4(30f, 100f, 0.35f, 0.8f));
+            // light round 2026-11-23: strips / reflection fade with view distance (strips 8 %, panorama 50 % beyond 80 m)
+            // so the deep walls stay violet instead of pink-white radial spokes converging on the throat
+            SetVec(m, "_WallFar", new Vector4(25f, 80f, 0.08f, 0.5f));
             EditorUtility.SetDirty(m);
         }
 
@@ -194,10 +194,14 @@ namespace Rainbow.Screen05.EditorTools
             }
             SetFloat(m, "_Gold", mode);
             SetFloat(m, "_GoldMode", mode);
-            // light round 2026-11-23: smaller, softer marquee spots (were 0.055 / 1.6: clipped white bars across the band)
-            SetVec(m, "_BandS", new Vector4(20f, 0.045f, 1.1f, 0f));
-            // ring tone curve = environment.ts TONE05 (test G1, measured: approved ring gold G/R 0.48, plain palette 0.64)
-            SetVec(m, "_GoldTone", mode == 0 ? new Vector4(1.35f, 1.75f, 1.3f, 1f) : new Vector4(1f, 1f, 1f, 0f));
+            // light round 2026-11-23: smaller, softer marquee spots on the band crown (were 0.055 / 1.6 across the whole
+            // band: clipped white bars)
+            SetVec(m, "_BandS", new Vector4(20f, 0.045f, 1.0f, 0f));
+            // tone curve after environment.ts TONE05 [1.35, 1.75, 1.3] (test G1, measured: approved ring gold G/R 0.48,
+            // plain palette 0.64); blue exponent raised to 1.5 here because TONE05 left the rings rose-pink in this grade.
+            // Rings AND paddles (the paddles read as brown wood without it); the near frame a milder curve (it was pale
+            // yellow-cream G/R 0.67-0.95 where the approved corners are orange G/R ~0.5 with thin white-yellow lines).
+            SetVec(m, "_GoldTone", mode == 2 ? new Vector4(1.15f, 1.3f, 1.3f, 1f) : new Vector4(1.3f, 1.6f, 1.5f, 1f));
             SetVec(m, "_BandF", new Vector4(44f, 110f, 0f, 0f));
             SetVec(m, "_PaddleParams", new Vector4(0.55f, 0.12f, 1f, 0f));
             SetVec(m, "_FrameParams", new Vector4(0.3f, 0.06f, 0f, 0f));
@@ -205,16 +209,18 @@ namespace Rainbow.Screen05.EditorTools
             // Coordinator look tuning 2026-11-23 (screen05_tune_look.cs, saved in commit a78f508): less white reflection
             // so the orange gold palette shows. Rings + frame: env 0.5 / strips 1.4 (was 1.15 / 3.2); paddles: env 0.7 /
             // strips 1.2 (was 1.35 / 2.4); exposure 0.82 for all (was 1).
-            SetFloat(m, "_EnvIntensity", mode == 1 ? 0.7f : 0.5f);
-            SetFloat(m, "_EnvBlur", 1f);
+            SetFloat(m, "_EnvIntensity", mode == 1 ? 0.55f : 0.5f);
+            // paddles: blurrier reflection (light round: the sharp panorama ring lights on the curved rim read as wood grain)
+            SetFloat(m, "_EnvBlur", mode == 1 ? 3f : 1f);
             SetHex(m, "_StripColor", "#fff0c8");
             SetFloat(m, "_StripIntensity", mode == 1 ? 1.2f : 1.4f);
             SetVec(m, "_StripParams", new Vector4(28f, 0.022f, 0f, 0.65f));
             SetHex(m, "_MidTint", "#8a30d2");
             SetVec(m, "_MidRange", new Vector4(8f, 50f, 0f, 0f));
             SetGlow(m);
-            // rings 0.95 (light round: the tone curve above darkens the mid-tones, this keeps the approved brightness)
-            SetFloat(m, "_Exposure", mode == 0 ? 0.95f : 0.82f);
+            // 0.95 for rings, paddles and frame (light round: the tone curve above darkens the mid-tones, this keeps the
+            // approved brightness)
+            SetFloat(m, "_Exposure", 0.95f);
             SetFloat(m, "_LightInfluence", mode == 2 ? 0f : 0.25f);
             EditorUtility.SetDirty(m);
         }

@@ -95,8 +95,8 @@ float3 RBW_BumpNormal(float3 pos, float3 n, float h)
 }
 
 // 4-point flare on a FLOW-aligned, world-anchored cell grid g = (across, along). Sizes in reference px.
-// (glsl.ts flowGlint) Derivatives are taken before any early-out.
-float RBW_FlowGlint(float2 g, float density, float L, float stretch, float horiz, float time, float pxK)
+// (glsl.ts flowGlint) Derivatives are taken before any early-out. thick scales the arm thickness / core size (1 = glsl.ts).
+float RBW_FlowGlintW(float2 g, float density, float L, float stretch, float horiz, float time, float pxK, float thick)
 {
     float2 gx = ddx(g) * pxK;
     float2 gy = ddy(g) * pxK;
@@ -116,13 +116,19 @@ float RBW_FlowGlint(float2 g, float density, float L, float stretch, float horiz
     float la = 0.38 / max(max(abs(ca.x), abs(ca.y)), 1e-6);
     float lb = 0.38 / max(max(abs(cb.x), abs(cb.y)), 1e-6);
     float l = L * (0.55 + 0.9 * frac(hs * 37.0));
+    float it = 1.0 / max(thick, 0.25);
     float tA = max(0.0, 1.0 - abs(pa) / min(l * stretch, la));
-    float armA = exp(-abs(pb) * 0.85) * tA;
-    float armB = exp(-abs(pa) * 0.85) * max(0.0, 1.0 - abs(pb) / min(l, lb));
-    float core = exp(-dot(p, p) * 0.22) * 1.4;
-    float glowA = exp(-abs(pb) * 0.2) * tA * tA * 0.3;
+    float armA = exp(-abs(pb) * 0.85 * it) * tA;
+    float armB = exp(-abs(pa) * 0.85 * it) * max(0.0, 1.0 - abs(pb) / min(l, lb));
+    float core = exp(-dot(p, p) * 0.22 * it * it) * 1.4;
+    float glowA = exp(-abs(pb) * 0.2 * it) * tA * tA * 0.3;
     float tw = 0.55 + 0.45 * pow(0.5 + 0.5 * sin(time * 5.0 + hs * 60.0), 2.0);
     return ((armA * armA + armB * armB) * 1.6 + core + glowA) * tw;
+}
+
+float RBW_FlowGlint(float2 g, float density, float L, float stretch, float horiz, float time, float pxK)
+{
+    return RBW_FlowGlintW(g, density, L, stretch, horiz, time, pxK, 1.0);
 }
 
 // jagged white "lightning" flare lying along screen-horizontal (waterRibbon.ts bolt05). returns x = core, y = halo

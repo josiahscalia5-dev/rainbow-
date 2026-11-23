@@ -171,7 +171,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     // (water round 2026-11-23) curved sweeps: they bend out toward the bottom corners (centre grows with back^2, not as
     // straight diagonal planks), a little broader, and they end where the approved ones hide behind the gold frame
     float cW = 0.25 + 0.42 * back + 0.16 * back * back + 0.05 * sin(v5 * 1.7 + (dlB >= 0.0 ? 1.9 : -1.9)) * back;
-    float wW = (0.12 + 0.12 * back) * smoothstep(0.6, 1.3, back) * wk * (1.0 - smoothstep(4.0, 6.5, back));
+    float wW = (0.12 + 0.12 * back) * smoothstep(0.6, 1.3, back) * wk * (1.0 - smoothstep(2.4, 3.8, back));
 
     // ---- band coordinate of the nearer band: -1 bank-side edge .. +1 core-side edge ----
     float tL5 = sdL / max(wL, 1e-3);
@@ -184,12 +184,13 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float at = abs(tb);
 
     // ---- electric cyan ----
-    float h5 = saturate(0.5 + lane5 * 0.8 + (br - 0.5) * 0.7);
+    // (water round 2026-11-23: median a little deeper and less green - approved mid cyan p50 #00A9F9 = CMID)
+    float h5 = saturate(0.46 + lane5 * 0.8 + (br - 0.5) * 0.7);
     float3 cy = lerp(RBW_CDEEP, RBW_CDEEP2, smoothstep(0.0, 0.22, h5));
     cy = lerp(cy, RBW_CMID, smoothstep(0.22, 0.45, h5));
     cy = lerp(cy, RBW_CBRIGHT, smoothstep(0.5, 0.76, h5) * 0.85);
-    cy = lerp(cy, RBW_CAQUA, bglow * 0.6);
-    cy = lerp(cy, RBW_CAQUA, bcore * 0.8);
+    cy = lerp(cy, RBW_CAQUA, bglow * 0.45);
+    cy = lerp(cy, RBW_CAQUA, bcore * 0.7);
     cy += float3(0.5, 0.9, 0.9) * bcore * bcore * bcore * 0.8;
 
     // near field: broad glossy swells rolling past Benny, bowed around his track (approved: BRIGHT azure water with soft
@@ -262,18 +263,26 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     // crisp 2-px white lines at fixed band-relative positions, which drew white outlines along every band edge.
     float kS5 = mid5 * (1.0 - smoothstep(0.3, 0.8, fwsR));
     float sat5 = max(RBW_Satin(Xw, v5, 7.0, 1.3, pxK), RBW_Satin(Xw, v5, 11.0, 6.1, pxK) * 0.75);
-    float3 satC = lerp(lerp(RBW_CBRIGHT, RBW_CAQUAW, 0.55), lerp(RBW_PLIGHT, RBW_PPALE, 0.55), pk5);
-    c5 = lerp(c5, satC, sat5 * kS5 * 0.5);
-    float2 sS5 = RBW_SilkStreak(Xw, v5 * 4.0, 3.1, 2.7, 0.2, pxK) * kS5;
-    c5 = lerp(c5, lerp(RBW_CAQUA, RBW_PLIGHT, pk5), sS5.y * 0.25);
-    c5 += lerp(float3(1.4, 1.9, 2.0), float3(2.0, 1.5, 2.0), pk5) * sS5.x * 0.35;
+    float3 satC = lerp(lerp(RBW_CBRIGHT, RBW_CAQUAW, 0.55), lerp(RBW_PPALE, RBW_PWHITE, 0.3), pk5);
+    c5 = lerp(c5, satC, sat5 * kS5 * 0.55);
+    // sparse short glossy dashes (approved: bright white-aqua / white-pink speed streaks scattered through the satin)
+    float2 sS5 = RBW_SilkStreak(Xw, v5 * 6.0, 3.1, 2.7, 0.3, pxK) * kS5;
+    c5 = lerp(c5, lerp(RBW_CAQUA, RBW_PLIGHT, pk5), sS5.y * 0.3);
+    c5 += lerp(float3(1.4, 1.9, 2.0), float3(2.0, 1.5, 2.0), pk5) * sS5.x * 0.7;
+    // near field behind Benny: long soft streaks along the fanning flow lines (X fans out from his track), so the near
+    // water streams out toward the bottom corners like the approved (also combs the pink wake sweeps)
+    float kN5 = near5 * bOn * smoothstep(0.3, 1.2, back);
+    float fan5 = RBW_Satin(X, v5 * 0.5, 9.0, 3.7, pxK) * kN5;
+    c5 = lerp(c5, lerp(RBW_CAQUAW, RBW_PWHITE, pk5), fan5 * 0.5);
 
     // flares carried by the current (mid: along the flow) + near: crisp 4-point flares lying ALONG the ∩ swell arcs (one
     // row of cells per crest, long arm along the arc - approved: sharp white star flares on the near arcs). (water round
     // 2026-11-23: replaces the jagged 'lightning' bolts, which read as white zigzag squiggles)
     float flA = RBW_FlowGlint(float2(X * 1.6, v5 * 0.12), 0.8, 48.0, 4.6, 0.0, time, pxK);
+    // + a denser set of small sparkles (approved mid field: the satin glitters all over, cyan and pink)
+    flA = max(flA, 0.8 * RBW_FlowGlint(float2(Xw * 4.3 + 0.37, v5 * 0.31 + 2.1), 0.55, 20.0, 4.0, 0.0, time + 1.9, pxK));
     float gC = (ph - 0.571) / 6.2832 + 0.5;
-    float flN = RBW_FlowGlint(float2(gC, dlB * 1.25 + 0.37), 0.75, 50.0, 3.0, 0.0, time + 2.7, pxK);
+    float flN = RBW_FlowGlintW(float2(gC, dlB * 1.25 + 0.37), 0.85, 58.0, 3.0, 0.0, time + 2.7, pxK, 1.9);
     float glN = near5 * (1.0 - 0.6 * pk5);
     c5 = lerp(c5, RBW_CAQUA, saturate(flN * 0.25) * glN);
     c5 += lerp(float3(1.7, 2.1, 2.2), float3(2.2, 1.7, 2.2), pk5)

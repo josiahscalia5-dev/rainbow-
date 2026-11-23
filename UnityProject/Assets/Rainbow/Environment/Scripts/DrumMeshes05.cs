@@ -205,14 +205,16 @@ namespace Rainbow.Screen05
                 new Vector2(0.965f, 0f), new Vector2(1.0f, 0.06f * h), new Vector2(1.025f, 0.4f * h),          // lip, outer bulge
                 new Vector2(1.0f, 0.85f * h), new Vector2(0.95f, h), new Vector2(0f, h),                       // closed back
             };
-            Color lavender = new Color(0.55f, 0.36f, 0.74f, 0.75f);
+            // light round 2026-11-23: the open side the rider looks into (floor + inner rim face) read as a pale cream cut
+            // face / lavender board; the approved trays are copper-gold all over (peach-copper inner face, orange-gold rim,
+            // one pale highlight line), so floor = copper and the inner rim gold -> pale -> gold (white only from reflections)
+            Color copper = new Color(0.80f, 0.36f, 0.22f, 0.8f);        // (231,160,130)-ish peach copper
             Color gold = new Color(0.8678f, 0.4731f, 0.2587f, 1f);      // (252,165,95)
             Color pale = new Color(0.9089f, 0.6835f, 0.3326f, 1f);      // (249,205,112)
-            Color white = new Color(1.0471f, 0.9918f, 0.7441f, 1f);     // (254,245,200)
             Color orange = new Color(0.7866f, 0.2857f, 0.1249f, 0.9f);  // (250,119,38)
             Color peach = new Color(0.838f, 0.3415f, 0.2905f, 0.8f);    // (254,133,115)
             Color plum = new Color(0.298f, 0.0954f, 0.168f, 0.3f);      // (150,40,92)
-            Color[] pc = { lavender, lavender, gold, pale, white, pale, gold, orange, gold, peach, plum, plum };
+            Color[] pc = { copper, copper, gold, gold, pale, gold, gold, orange, gold, peach, plum, plum };
 
             int n = prof.Length;
             var n2 = new Vector2[n];

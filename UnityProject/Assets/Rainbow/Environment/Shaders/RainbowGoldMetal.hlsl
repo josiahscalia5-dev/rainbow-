@@ -60,8 +60,10 @@ float3 RainbowBandShade(float deep, float3 N, float3 V, float3 P, float3 axisWS)
     float3 c = lerp(BC_DARK, lerp(BC_LIPS, BC_ROSE, topArc), smoothstep(0.03, 0.12, ndv));
     c = lerp(c, BC_ORANGE, smoothstep(0.13, 0.22, ndv));
     c = lerp(c, body, smoothstep(0.26, 0.4, ndv));
-    float hl = exp(-RbSq((nzv + 0.8) / 0.07)) * smoothstep(0.3, 0.5, ndv);
-    c = lerp(c, BC_PEAK, hl * (0.95 - 0.6 * deep) * (0.35 + 0.65 * topArc));
+    // light round: a broader, stronger pale crown highlight on the ring sides too (approved: rounded polished bands with
+    // a bright warm line along every ring; was 0.07 wide and 35 % away from the top arc)
+    float hl = exp(-RbSq((nzv + 0.8) / 0.09)) * smoothstep(0.3, 0.5, ndv);
+    c = lerp(c, BC_PEAK, hl * (0.95 - 0.6 * deep) * (0.6 + 0.4 * topArc));
     c = lerp(c, lerp(BC_LINE, BC_GROOVE, topArc), exp(-RbSq((m + 0.84) / 0.07)) * 0.9);
     c = lerp(c, BC_DARK, smoothstep(0.9, 1.0, abs(m)) * 0.85);
     float3 cl = lerp(BC_DARK, lerp(BC_LIPS, lerp(BC_ROSE, BC_CROWN, 0.55), topArc), smoothstep(0.05, 0.3, ndv));
@@ -79,11 +81,23 @@ float3 RainbowBandShade(float deep, float3 N, float3 V, float3 P, float3 axisWS)
     float hw = _BandS.y * 2.2 + ft * 0.7;          // light round: tighter yellow halo (was 3x: broad pale patches)
     float sp = exp(-d * d / (sw * sw)) * lerp(1.0, _BandS.y / sw, 0.6);
     float halo = exp(-d * d / (hw * hw));
-    float across = inMain * smoothstep(0.25, 0.5, ndv) * (1.0 - smoothstep(0.93, 0.99, abs(m)))
-                 + inLip * (1.0 - inMain) * 0.4 * smoothstep(0.2, 0.4, ndv);
+    // light round: the spot is a round bulb on the band's crown (approved: small warm dots), not a bar across the whole
+    // band width (on the ring sides, seen edge-on, the bar became a 40 px clipped-white slab)
+    float crown = exp(-RbSq(m / 0.5));
+    float across = inMain * smoothstep(0.25, 0.5, ndv) * (1.0 - smoothstep(0.93, 0.99, abs(m))) * crown
+                 + inLip * (1.0 - inMain) * 0.25 * smoothstep(0.2, 0.4, ndv);
     col = lerp(col, BC_HALO, halo * across * 0.65);
     col += BC_SPOT * sp * across * _BandS.z * (1.0 - 0.4 * deep);
     return col;
+}
+
+// materials.ts withBandShading `tone` (screen 05 test G1, measured on the approved image: ring gold mean (231,125,85),
+// G/R 0.48, while the plain palette gave pale peach G/R 0.64): per-channel exponents deepen the mid-tones toward
+// saturated orange-gold, highlights above 1 stay bright. _GoldTone = (exponents r, g, b, amount 0..1).
+float3 RainbowGoldToneCurve(float3 c)
+{
+    float3 toned = pow(saturate(c), max(_GoldTone.xyz, 0.01)) + max(c - 1.0, 0.0);
+    return lerp(c, toned, _GoldTone.w);
 }
 
 float3 RainbowApplyFarGlow(float3 c, float dist)
@@ -98,12 +112,7 @@ void RainbowGoldRing_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float3 V = normalize(ViewDirWS);
     float dist = length(_WorldSpaceCameraPos.xyz - PositionWS);
     float deep = smoothstep(_BandF.x, _BandF.y, dist);
-    float3 bc = RainbowBandShade(deep, N, V, PositionOS, AxisWS);
-    // materials.ts withBandShading `tone` (screen 05 test G1, measured on the approved image: ring gold mean (231,125,85),
-    // G/R 0.48, while the plain palette gave pale peach G/R 0.64): per-channel exponents deepen the mid-tones toward
-    // saturated orange-gold, highlights above 1 stay bright. _GoldTone = (exponents r, g, b, amount 0..1).
-    float3 toned = pow(saturate(bc), max(_GoldTone.xyz, 0.01)) + max(bc - 1.0, 0.0);
-    bc = lerp(bc, toned, _GoldTone.w);
+    float3 bc = RainbowGoldToneCurve(RainbowBandShade(deep, N, V, PositionOS, AxisWS));
     Color = RainbowApplyFarGlow(bc, dist) * _Exposure;
 }
 
@@ -125,7 +134,7 @@ void RainbowGoldPaddle_float(float3 PositionWS, float3 NormalWS, float3 ViewDirW
     float3 tint = lerp(base, float3(1.0, 0.86, 0.6), 0.45);
     col += tint * smoothstep(0.3, 1.0, envL) * polish * _PaddleParams.x;                        // reflected ring lights
     col += RainbowTubeStripRadiance(V, N, 0.15) * polish * _PaddleParams.y * lerp(base, float3(1.0, 1.0, 1.0), 0.5); // streaks
-    Color = RainbowApplyFarGlow(col, dist) * _Exposure;
+    Color = RainbowApplyFarGlow(RainbowGoldToneCurve(col), dist) * _Exposure;
 }
 
 // Near frame (materials.ts nearFrameMaterial.frameShade). UV.x along the arc, UV.y across the band (0 = edge toward the
@@ -141,7 +150,7 @@ void RainbowGoldFrame_float(float3 NormalWS, float3 ViewDirWS, float2 UV, float 
         c = float3(0.7669, 0.3044, 0.1155);                                                         // (245,125,30)
         c = lerp(c, float3(0.9079, 0.6239, 0.2219), 1.0 - smoothstep(0.3, 0.42, v));                // (252,195,72)
         c = lerp(c, float3(0.8461, 0.4509, 0.0961), exp(-RbSq((v - 0.16) / 0.025)));               // thin orange line
-        c = lerp(c, float3(1.2, 1.12, 0.98), 1.0 - smoothstep(0.07, 0.13, v));                      // white inner bevel
+        c = lerp(c, float3(1.2, 1.12, 0.98), 1.0 - smoothstep(0.025, 0.06, v));                     // thin white inner bevel (light round: was 0.07-0.13, a 35 px cream band)
         c = lerp(c, float3(1.0, 0.82, 0.5), exp(-RbSq((v - 0.62) / 0.035)) * 0.7);                 // pale striation
         c = lerp(c, float3(0.4522, 0.1464, 0.0954), smoothstep(0.93, 1.0, v));                      // outer contour
         c = lerp(c, float3(0.32, 0.09, 0.07), smoothstep(0.965, 0.995, u));                         // dark cut face
@@ -160,7 +169,7 @@ void RainbowGoldFrame_float(float3 NormalWS, float3 ViewDirWS, float2 UV, float 
     float travel = _WorldSpaceCameraPos.z * _FrameParams.y;
     float gl = frac(u * 2.0 - travel) - 0.5;
     c += BC_SPOT * exp(-gl * gl / 0.0025) * _FrameParams.x * smoothstep(0.05, 0.2, v) * (1.0 - smoothstep(0.6, 0.85, v));
-    Color = c * lerp(0.78, 1.0, ndv) * _Exposure;
+    Color = RainbowGoldToneCurve(c) * lerp(0.78, 1.0, ndv) * _Exposure;
 }
 
 void RainbowGoldMetal_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS, float3 PositionOS, float3 AxisWS,

@@ -40,7 +40,7 @@ Material:
     m_Colors:
     - _BandF: {r: 44, g: 110, b: 0, a: 0}
     - _BandG: {r: 0.21, g: 0.4, b: -0.45, a: 0.16}
-    - _BandS: {r: 20, g: 0.045, b: 1.1, a: 0}
+    - _BandS: {r: 20, g: 0.045, b: 1, a: 0}
     - _FarGlowColor: {r: 1, g: 0.6117647, b: 0.3529412, a: 1}
     - _FarGlowRange: {r: 95, g: 330, b: 1.5, a: 0}
     - _FrameParams: {r: 0.3, g: 0.06, b: 0, a: 0}
