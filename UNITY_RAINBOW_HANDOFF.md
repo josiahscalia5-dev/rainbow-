@@ -1,10 +1,24 @@
 # Rainbow Unity — handoff (latest verified state)
 
-Last verified: **2026-11-23 18:25 UTC** (13:25 New York time), Claude session on the user's laptop (after switching accounts).
+Last verified: **2026-11-23 21:47 UTC** (16:47 New York time), Claude session on the user's laptop (after the second account switch).
 Read this first in any new Claude account or session. **This is an existing project — never start over.**
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
+**UPDATE 2026-11-23 21:47 UTC (new Claude account, round 2 RESUMED):** the previous account hit its 5-hour limit at 21:21 UTC
+while the round-2 splash + foam agents were working (checkpoint `759d746`). The new account re-verified everything (Unity
+6000.3.29f1 + Unity Personal active, Editor open, `unity status` ready on port 7800, all packages in `Library/PackageCache`,
+GitHub in sync + push dry-run OK, exactly one autosave task) and recompiled (0 errors). Note: the Claude Code sessions are
+opened in `C:\Users\josia\.unity` (the user calls it their workspace; it only holds Unity's MCP relay + Claude settings); the
+project itself is here in `C:\RainbowUnity`. The optional "Unity" Claude plugin is not added to the new account (not needed).
+Round 2 relaunched as Workflow run `wf_14866b3f-a9e` with `args.skip = ["water","scenery"]` and `args.notes` (new: per-area
+text appended to the brief) telling splash/foam what their interrupted attempt left: splash = new `RainbowSplash.shader`,
+rewritten `SplashWake.cs`, first result `work/20261123_162048_splash_t1_*`; foam = new `RainbowFoamBank.hlsl` + rewritten
+`FoamBank.cs` (sphere impostors), never tested. If interrupted AGAIN: look at the run's `journal.jsonl`
+(`%USERPROFILE%\.claude\projects\C--Users-josia--unity\394c2944-483b-4b91-b420-f0503d3c2477\subagents\workflows\wf_14866b3f-a9e`)
+to see which areas returned a result, add those to `skip`, and relaunch
+`staging/shared/round2-fixes.workflow.js` with `notes` describing the unfinished areas' newest files and work images.
+
 **UPDATE 2026-11-23 20:30 UTC (round 2 started):** the tuned wall / gold / Benny-fur / bubble values are now IN the builders
 (EnvironmentBuilder.SetupWall/SetupGold, BennyRigBuilder.BennyMaterial, WaterBuilder.BuildBubbles, camera depth in
 GameplayBuilder) — verified: a full rebuild leaves all 141 material values identical (commit `c1a3217`, pushed).
