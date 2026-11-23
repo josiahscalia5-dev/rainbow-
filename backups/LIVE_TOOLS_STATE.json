@@ -1,5 +1,5 @@
 {
- "time_utc": "2026-11-23T03:45:12+00:00",
+ "time_utc": "2026-11-23T03:46:30+00:00",
  "lead_branch": "ccr-6deca498-03lhkc",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
@@ -49,8 +49,12 @@
    }
   }
  },
- "plugins_installed_locally": [],
- "plugins_enabled_user_settings": [],
+ "plugins_installed_locally": [
+  "worldlabs@worldlabs"
+ ],
+ "plugins_enabled_user_settings": [
+  "worldlabs@worldlabs"
+ ],
  "plugins_synced_from_claude_account": [
   "Accelerate design workflows \u2014 critique, design system management, UX writing, accessibilit",
   "TypeScript/JavaScript language server for Claude Code that runs TypeScript 7's native LSP ",
@@ -69,7 +73,10 @@
   "skill-creator",
   "typescript-native-lsp"
  ],
- "mcp_servers_configured": [],
+ "mcp_servers_configured": [
+  "spectorjs",
+  "worldlabs"
+ ],
  "hooks_project": [
   "PreCompact",
   "SessionEnd",
