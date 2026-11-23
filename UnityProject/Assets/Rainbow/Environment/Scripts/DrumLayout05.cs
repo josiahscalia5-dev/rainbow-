@@ -17,24 +17,39 @@ namespace Rainbow.Screen05
     ///  * paddles ........... lid05 { angle 8, droop -34, size 2.2, thickness 0.36, stretch 1, sink 0.1 },
     ///                        one pair 2.7 u camera-side of every ring slot.
     /// Frame: RiverPath (tunnel line along +Z at x = 0, +X = rider's right, water plane y = 0). s = distance along +Z.
+    ///
+    /// FRAME ROUND 2026-11-23 (fitted to references/05_flow_into_the_current.png with the real gameplay camera at s = 14:
+    /// camera (x, 3.40, 7.48), pitch 12.78 deg, yaw 2.78 deg left, vFOV 62 = vanishing point (496, 478) of 864x1536):
+    ///  * cross-section: radius 7.6 -> 6.8, axis 4.3 -> 4.25 above the water (FloorDepth 2.55). The approved purple walls
+    ///    come down right behind the narrow foam rims (wall / foam junction ~(220, 600), (120, 700) left, (690, 600),
+    ///    (850, 700) right) while the ring centres sit only ~0.12 r above the vanishing point (axis ~0.85 m above the camera):
+    ///    with Benny's fixed size that is a tube of r ~6.3-6.8 m. 7.6 m put the walls at x = +-6.27 (+-7.24 near the camera)
+    ///    = the wide flat foam fields; now x = +-5.31 at the water / +-5.67 at the foam top (+-6.2 near the camera).
+    ///  * near floor 2 -> 1 m: the approved near ring (left crown ~(10, 480), foot on the foam ~(90, 700)) is centred on the
+    ///    vanishing-point height, i.e. the near axis is ~level with the camera (3.25 m); 2 m put it 67 px below.
+    ///  * rings: real rings at the depths whose crowns match the approved crowns measured straight up from the vanishing
+    ///    point (y 210, 308, 378, 415, 434, 448, 456 = r 268, 170, 100, 63, 44, 30, 22 px) + the near ring: see
+    ///    RingPositions(). The approved deep rings are spaced ever wider (forced perspective), so the tunnel now runs to
+    ///    the throat cap at s 470 (cap r ~19 px = the small bright point) and the rider camera's far clip is 520 m.
+    ///  * paddles: placed one by one on the approved trays (big left nearer than big right): see PaddleSlots().
     /// </summary>
     public static class DrumLayout05
     {
-        public const float Radius = 7.6f;
-        public const float FloorDepth = 3.3f;
-        public const float NearFloorExtra = 2.0f;
-        /// <summary>STAGE_CAM['05'].back: the checkpoint camera sits 6.4 u behind Benny's start.</summary>
-        public const float EyeBack = 6.4f;
+        public const float Radius = 6.8f;
+        public const float FloorDepth = 2.55f;
+        public const float NearFloorExtra = 1.0f;
+        /// <summary>Screen05CameraRig.back: the approved-view camera sits 6.52 m behind Benny's start.</summary>
+        public const float EyeBack = 6.52f;
         /// <summary>s of the locked approved-view camera (sCam05).</summary>
         public const float EyeS = RiverPath.StartS - EyeBack;
         public const float Bay = 14f;
         public const float RingInset = 0.02f;
         /// <summary>
-        /// Real tunnel end: the far throat cap (light round 2026-11-23: 250 -> 290 so the approved 7th ring above the
-        /// vanishing point, top r ~40 px, exists; the cap then spans r ~35 px like the approved glow; the rider camera's far
-        /// clip is 300 m and the camera never sits behind s ~3, so the cap is never clipped).
+        /// Real tunnel end: the far throat cap (frame round 2026-11-23: 290 -> 470, behind the approved 22 px ring at s 450;
+        /// the cap spans r ~19 px = the approved small bright point; camera far clip 520 m, the camera never sits behind
+        /// s ~3, so the cap is never clipped).
         /// </summary>
-        public const float ThroatS = 290f;
+        public const float ThroatS = 470f;
         public const float TunnelStart = RiverPath.TunnelStart;
         /// <summary>The playable river (Agent 3) ends here; the far river chord (far throat) continues it.</summary>
         public const float FarRiverStart = RiverPath.TunnelLength;

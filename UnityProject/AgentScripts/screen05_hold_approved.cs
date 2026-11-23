@@ -18,10 +18,11 @@ int f0 = Time.frameCount;
 await Wait.Until(() => Time.frameCount >= f0 + 3, timeoutMs: 30000, because: "the Game view is not ticking (run: unity command editor set_auto_tick)");
 // Frame round 2026-11-23: the eval continuation runs in the middle of a frame (after Benny's Update, before LateUpdate),
 // so pausing right there froze a HALF frame: Benny at the new s but the camera (Cinemachine, LateUpdate) still one swim
-// step behind (0.37 m further back than any rendered gameplay frame). Each pass now pauses one frame early and then
-// advances ONE COMPLETE frame with EditorApplication.Step(), so the still is a whole gameplay frame (camera, pom-pom,
-// wake and bubbles all updated for the same s). Pass A calibrates the travel of this exact sequence; pass B repeats it
-// from the corrected start (up to 4 tries, so a frame-phase slip of one 1/30 s step is corrected: S = 14.00 every time).
+// step behind (0.37 m further back than any rendered gameplay frame). Each pass now requests the pause through
+// EditorApplication.delayCall (editor loop, between frames; EditorApplication.Step from here would re-enter the PlayerLoop),
+// so the frame completes and the still is a whole gameplay frame (camera, pom-pom, wake and bubbles all updated for the
+// same s). Pass A calibrates the travel of this exact sequence; pass B repeats it from the corrected start (up to 4
+// tries, so a frame-phase slip of one 1/30 s step is corrected: S = 14.00 every time).
 var cam = Camera.main;
 float startS = targetS - benny.swimSpeed * settleFrames / 30f;
 float travel = 0f;
@@ -36,11 +37,11 @@ for (int pass = 0; pass < 5; pass++)
     if (pass > 0) startS = targetS - travel;
     benny.TeleportTo(startS, Rainbow.Screen05.RiverPath.Meander(startS));
     f0 = Time.frameCount;
-    await Wait.Until(() => Time.frameCount >= f0 + settleFrames - 1, timeoutMs: 30000, because: "the Game view is not ticking (run: unity command editor set_auto_tick)");
-    EditorApplication.isPaused = true;
-    int fs = Time.frameCount;
-    EditorApplication.Step();
-    await Wait.Until(() => Time.frameCount > fs, timeoutMs: 30000, because: "EditorApplication.Step did not advance a frame");
+    await Wait.Until(() => Time.frameCount >= f0 + settleFrames, timeoutMs: 30000, because: "the Game view is not ticking (run: unity command editor set_auto_tick)");
+    // pause from the editor loop (delayCall runs between frames), never from inside the PlayerLoop: the frame this
+    // continuation runs in completes first (LateUpdate: camera, pom-pom; rendering), then the Editor pauses
+    EditorApplication.delayCall += () => { EditorApplication.isPaused = true; };
+    await Wait.Until(() => EditorApplication.isPaused, timeoutMs: 30000, because: "the Editor did not pause");
     if (pass == 0) { travel = benny.S - startS; continue; }   // pass A: calibration only
     float err = benny.S - targetS;
     tries += (tries.Length > 0 ? "," : "") + benny.S.ToString("0.00");
