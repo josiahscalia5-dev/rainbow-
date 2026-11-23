@@ -3673,3 +3673,138 @@ differences, and report device performance only if measured on a real phone. Fre
 
 If you'd rather keep working from your phone, fix the folder sharing and tell me. I'll check again, ask to use the folder (you approve on the laptop) and do the same steps from here.
 
+### 🧑 User — 2026-11-23T10:41:26.607Z
+
+Claudia, I have the Unity plugin installed, but Unity Editor is not installed on my Windows laptop.
+
+Please help me set up Unity Personal for free on my laptop.
+
+First, check whether Unity Hub and Unity Editor are installed. If not, guide me through installing Unity Hub, activating my free Personal license, and installing Unity 6.3 LTS with Android Build Support.
+
+Then verify that your Unity plugin can communicate with the actual Unity Editor.
+
+Once connected, create a separate test project for my Rainbow game using my original approved Screen 05. Reuse my existing assets and keep my current game unchanged.
+
+Do not start rebuilding the entire game until the Unity connection is verified and we have a successful playable Screen 05 test.
+
+### 🤖 Claude — 2026-11-23T10:41:33.419Z
+
+I'll check the laptop connection first, then look up Unity's exact install steps for Windows so the guide is accurate.
+
+### 🤖 Claude — 2026-11-23T10:41:33.570Z
+
+> 🔧 **mcp__claude-code-remote__list_computer_folders** `{}`
+
+### 🧑 User — 2026-11-23T10:41:33.763Z
+
+> ↩︎ result: {"folders":[],"cannot_be_used":[{"computer_name":"LAPTOP-7BA6G3BC","folder":"claude yes","reason":"not_available","explanation":"This folder is in the user's Remote Control list, but that computer does not offer it to cloud sessions and did not say why. The usual causes: it is inside a hidden directory directly under the home directory or ~/Library, or the Claude app on that computer needs updating (on Windows, to a version that serves folders there)."}]}
+
+### 🤖 Claude — 2026-11-23T10:41:34.775Z
+
+> 🔧 **Grep** `{"pattern": "(?i)(android-sdk|android-open-jdk|android-ndk|-m android|module ids?|windows)", "path": "/root/.claude/skills/unity-cli/references/editors-install.md", "output_mode": "content", "head_limit": 30}`
+
+### 🧑 User — 2026-11-23T10:41:34.810Z
+
+> ↩︎ result: 211:unity editor module remove 6000.0.47f1 -m android -a arm64   # disambiguate side-by-side installs
+> 212:unity editors module remove 6000.0.47f1 -m android --yes     # skip the confirm prompt (required non-interactively)
+> 257:- It writes only the Editor's own preference, for the current user: `HKCU\Software\Unity Technologies\Unity Editor 5.x` on Windows, the `com.unity3d.UnityEditor5.x` defaults domain on macOS, `~/.local/share/unity3d/prefs` (or `$XDG_DATA_HOME/unity3d/prefs`) on Linux. Close every open Unity Editor first: on macOS and Linux a running Editor can overwrite the answer when it saves its own preferences.
+> 269:unity install 6000.0.47f1 --module windows-mono --module android
+> 300:unity install 6000.0.47f1 -m android ios          # space-separated
+> 301:unity install 6000.0.47f1 -m android -m ios       # repeated flag (same effect)
+> 303:# Windows: keep the install service unelevated. The Editor's NSIS installer is manifested
+> 313:[Omitted long matching line]
+> 315:On an interactive terminal, `unity install` also reports progress to the terminal application itself via the `OSC 9;4` escape sequence — on Windows Terminal the taskbar icon fills with download/install progress and sp …[+2054 chars]
+
+### 🤖 Claude — 2026-11-23T10:41:35.774Z
+
+> 🔧 **Grep** `{"pattern": "(?i)(getting an editor to drive|unity status|pipeline install|setup claude|hub install)", "path": "/root/.claude/skills/unity-cli/references", "output_mode": "content", "head_limit": 25}`
+
+### 🧑 User — 2026-11-23T10:41:35.814Z
+
+> ↩︎ result: /root/.claude/skills/unity-cli/references/CHANGELOG.md:147:- **Safe Mode in `unity status`**: the Safe Mode recovery in `integration-advanced.md` and the Safe Mode notes in `SKILL.md` now start from `unity status`, which reports an Editor in Safe Mode (`STATUS_SAFE_MODE`) and lists its compile errors (`safeMode.compileErrors` under `--format json`). Reading `Editor.log` by hand is the fallback when it can't.
+> /root/.claude/skills/unity-cli/references/CHANGELOG.md:149:- **Named dialog codes on `unity open --until-ready`**: `projects-templates.md` says the Safe Mode prompt, the Auto Graphics API Notice and the Software Terms dialog are reported as `OPEN_BLOCKED_BY_DIALOG_SAFE_MODE`, `_GRAPHICS_API` and `_SOFTWARE_TERMS`, with the same remedies `unity status` gives (and the Safe Mode compile errors), and that all keep the `OPEN_BLOCKED_BY_DIALOG` prefix. `integration-advanced.md`'s Safe Mode recovery names the `open` code too.
+> /root/.claude/skills/unity-cli/references/CHANGELOG.md:156:- **The Unity Editor Software Terms dialog**: `projects-templates.md` says a first windowed open can stop at it despite `-acceptSoftwareTermsForThisRunOnly`, that `unity status` reports it as `STATUS_BLOC …[+5588 chars]
+
+### 🤖 Claude — 2026-11-23T10:41:42.130Z
+
+> 🔧 **Bash** `{"command": "export PATH=\"$HOME/.local/bin:$PATH\" UNITY_NO_BANNER=1 UNITY_NON_INTERACTIVE=1 UNITY_NO_PAGER=1; unity releases --operating-system windows --lts --limit 3 2>&1 | head -6; echo ---; timeout 120 unity install 6000.3.29f1 --dry-run --operating-system windows -m android --format json 2>/dev/null | python3 -c \"\nimport json,sys; d=json.load(sys.stdin); x=d.get('data',d)\ned=x.get('editor',{}); print('editor', {k:ed.get(k) for k in ('version','operatingSystem','downloadSize','installedSize','alreadyInstalled') if k in ed})\nfor m in x.get('modules',[]): print('module', {k:m.get(k) fo …[+315 chars]`
+
+### 🧑 User — 2026-11-23T10:41:45.322Z
+
+> ↩︎ result: version	stream	lts	installed
+> 6000.3.29f1	LTS	true	false
+> 6000.0.86f1	LTS	true	false
+> 6000.0.85f2	LTS	true	false
+> ---
+> editor {'version': '6000.3.29f1', 'operatingSystem': 'windows', 'downloadSize': 4205154408}
+> module {'id': 'android', 'name': 'Android Build Support', 'downloadSize': 1553353992}
+> module {'id': 'android-open-jdk-17.0.21+9', 'name': 'OpenJDK', 'downloadSize': 115288086}
+> module {'id': 'android-ndk-r27c', 'name': 'Android NDK', 'downloadSize': 781511249}
+> module {'id': 'cmake-3.22.1', 'name': 'CMake', 'downloadSize': 16116742}
+> module {'id': 'android-sdk-build-tools-36.0.0', 'name': 'Android SDK Build Tools', 'downloadSize': 58699878}
+> module {'id': 'android-sdk-platform-tools-37.0.1', 'name': 'Android SDK Platform Tools', 'downloadSize': 8044989}
+> module {'id': 'android-sdk-platforms-34', 'name': 'Android SDK Platforms 34', 'downloadSize': 63180079}
+> module {'id': 'android-sdk-platforms-35', 'name': 'Android SDK Platforms 35', 'downloadSize': 64281654}
+> module {'id': 'android-sdk-platforms-36', 'name': 'Android SDK Platforms 36', 'downloadSize': 65878410}
+> module {'id': 'android-sdk-platforms-37.0', 'name': 'Android SDK Platforms 37', 'downloadSize': 67281901}
+> module {'id': 'andro …[+225 chars]
+
+### 🤖 Claude — 2026-11-23T10:42:05.683Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-23-r48/UNITY_EVAL_R48.md <<'EOF'\n\n## Update 2026-11-23 ~10:50 UTC\n* User: Unity plugin installed on the account (the `unity:*` skills load in this cloud session); Unity Editor NOT installed on the Windows laptop\n  `LAPTOP-7BA6G3BC`. The laptop's Remote Control folder \"claude yes\" is still `not_available` to cloud sessions (cause not reported by the laptop),\n  so this cloud session cannot check or drive the laptop yet.\n* Windows install, measured with `unity install 6000.3.29f1 --dry-run --operating-system windows -m android` (Unity CLI 1.0.1):\n  …[+814 chars]`
+
+### 🧑 User — 2026-11-23T10:42:05.745Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-23T10:42:15.715Z
+
+I can't check your laptop myself yet: its shared folder ("claude yes") still isn't available to this cloud session. So for now you run the steps and tell me what you see. Here's the whole setup.
+
+**Before you start:** the install downloads about 7.2 GB (Unity 6.3 LTS is 4.2 GB, Android support about 3 GB). Keep at least 25 GB free on the laptop, and use a good Wi-Fi connection.
+
+### Step 1: Check what's already installed
+Open the Start menu and type **Unity Hub**. If it appears, Hub is installed; skip to Step 3.
+
+### Step 2: Install Unity Hub
+1. Go to **unity.com/download** and click **Download for Windows**.
+2. Run the installer and accept the defaults.
+3. Open Unity Hub.
+
+### Step 3: Sign in and activate the free Personal license
+1. In Unity Hub, click **Sign in**. Create a free Unity account if you don't have one. You type your password only into Unity's own page; never paste it into chat.
+2. Open the **gear icon (Settings) → Licenses → Add license → Get a free personal license**.
+3. Accept the terms. Unity Personal is free if you meet Unity's eligibility, which the Hub shows at this step.
+
+### Step 4: Install Unity 6.3 LTS with Android support
+1. In Hub, open **Installs → Install Editor**.
+2. Choose **Unity 6.3 LTS**. The newest version is **6000.3.29f1**.
+3. On the modules screen, tick **Android Build Support**, and under it **OpenJDK** and **Android SDK & NDK Tools**.
+4. Click **Install** and wait for it to finish.
+
+### Step 5: Install Unity's command-line tool (this is what the plugin uses to talk to the Editor)
+1. Open **PowerShell** from the Start menu.
+2. Paste this line and press Enter:
+   ```
+   irm https://unity.com/install.ps1 | iex
+   ```
+3. Close PowerShell, open it again, and run:
+   ```
+   unity --version
+   unity editors list
+   unity license status
+   ```
+4. Send me what those three commands print. It should show version 1.0 or newer, the 6000.3.29f1 Editor, and an active Personal license.
+
+### Step 6: Let me reach the laptop to verify the connection
+To check that the Unity plugin actually controls the Editor, I need a session that can reach the laptop. Either works:
+- **From here (your phone):** in the Claude desktop app on the laptop, open **Settings → Claude Code → Remote Control** and add a plain new folder such as `C:\RainbowUnity` (not inside a hidden folder). Update the app if an update is offered, then fully quit and reopen it. Tell me when it's done and I'll ask to use that folder; you approve on the laptop.
+- **On the laptop:** start a Claude Code session in the desktop app with `C:\RainbowUnity` as its folder.
+
+Once I'm connected, I'll do these in order, without touching your current game:
+1. Check that Unity's Editor connection package is installed and that the plugin's commands re
+
+### 🧑 User — 2026-11-23T10:42:15.718Z
+
+[Request interrupted by user]
+

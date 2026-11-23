@@ -45,3 +45,14 @@ Recommended free route: the user's own computer (Windows 10 21H1+ / macOS 14+ / 
 `irm https://unity.com/install.ps1 | iex` on Windows), the user's own Unity sign-in (`unity auth login`) + free Personal license, Unity
 6000.3.29f1 with Android support, and Unity's Claude Code plugin (`unity setup claude`). Then: separate project (outside the existing game's
 folders), URP, glTFast, Screen 05 section, captures at 412 x 915 / 864 x 1536 proportions, APK, continuous recording.
+
+## Update 2026-11-23 ~10:50 UTC
+* User: Unity plugin installed on the account (the `unity:*` skills load in this cloud session); Unity Editor NOT installed on the Windows laptop
+  `LAPTOP-7BA6G3BC`. The laptop's Remote Control folder "claude yes" is still `not_available` to cloud sessions (cause not reported by the laptop),
+  so this cloud session cannot check or drive the laptop yet.
+* Windows install, measured with `unity install 6000.3.29f1 --dry-run --operating-system windows -m android` (Unity CLI 1.0.1):
+  Editor 6000.3.29f1 = 4.2 GB download; Android Build Support 1.55 GB + OpenJDK 17.0.21 + Android NDK r27c + CMake 3.22.1 + SDK build-tools 36,
+  platform-tools 37.0.1, platforms 34 / 35 / 36 / 37, command-line tools 21.0 ("Android SDK & NDK Tools"); total download 7.15 GB.
+* Order of work (user, binding): install Hub + free Personal license + 6.3 LTS with Android -> verify the Unity plugin / CLI talks to the real Editor
+  (`unity status` ready, `unity command` lists Editor commands via com.unity.pipeline) -> separate Screen 05 test project from the approved picture,
+  existing assets reused, current game unchanged. NO rebuild of the whole game before the connection is verified and a playable 05 test succeeds.
