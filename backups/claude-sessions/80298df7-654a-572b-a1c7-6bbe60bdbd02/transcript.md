@@ -3851,3 +3851,69 @@ That session runs directly on the laptop. It can install Unity, let you sign in 
 
 If you'd rather keep working with me from your phone: in the Claude desktop app on the laptop, go to **Settings → Claude Code → Remote Control**, add `C:\RainbowUnity`, update the app if an update is offered, then quit and reopen it. Tell me when that's done and I'll ask to use the folder; you approve on the laptop. Either way, nothing in your current game changes.
 
+### 🧑 User — 2026-11-23T10:51:17.113Z
+
+Claudia, I am now using Claude Code directly on my Windows laptop.
+
+My working folder is C:\RainbowUnity.
+
+First, confirm that this session has access to my laptop's local files and can execute commands locally.
+
+Then help me install Unity Hub, activate my free Unity Personal license through Unity's official sign-in page, and install Unity 6.3 LTS with Android Build Support.
+
+Verify that the Unity CLI and Unity plugin can communicate with the running Unity Editor.
+
+After setup, create a separate Unity test project for my existing Rainbow game, using my approved Screen 05 as the visual reference.
+
+My GitHub repository is josiahscalia5-dev/rainbow-, branch ccr-6deca498-03lhkc.
+
+Do not modify my existing game. Only build one short playable Screen 05 test using my existing assets.
+
+Tell me when you need me to sign in or approve an installation.
+
+### 🤖 Claude — 2026-11-23T10:51:20.958Z
+
+The first step you asked for is confirming that this session can reach your laptop's files and run commands there. I'll check that directly rather than assume it:
+
+### 🤖 Claude — 2026-11-23T10:51:22.467Z
+
+> 🔧 **Bash** `{"command": "echo \"host: $(hostname)\"; uname -a; pwd; ls -d /mnt/c /c \"C:/RainbowUnity\" 2>&1 | head -3; cmd.exe /c ver 2>&1 | head -2; powershell.exe -Command '$PSVersionTable.PSVersion' 2>&1 | head -3", "description": "Check which machine this session runs on"}`
+
+### 🧑 User — 2026-11-23T10:51:22.556Z
+
+> ↩︎ result: host: vm
+> Linux vm 6.18.44-fc-v726 #1 SMP PREEMPT_DYNAMIC @0 x86_64 x86_64 x86_64 GNU/Linux
+> /home/user/rainbow-
+> ls: cannot access '/mnt/c': No such file or directory
+> ls: cannot access '/c': No such file or directory
+> ls: cannot access 'C:/RainbowUnity': No such file or directory
+> /bin/bash: line 2: cmd.exe: command not found
+> /bin/bash: line 2: powershell.exe: command not found
+
+### 🤖 Claude — 2026-11-23T10:51:22.567Z
+
+> 🔧 **mcp__claude-code-remote__list_computer_folders** `{}`
+
+### 🧑 User — 2026-11-23T10:51:22.747Z
+
+> ↩︎ result: {"folders":[],"cannot_be_used":[{"computer_name":"LAPTOP-7BA6G3BC","folder":"claude yes","reason":"not_available","explanation":"This folder is in the user's Remote Control list, but that computer does not offer it to cloud sessions and did not say why. The usual causes: it is inside a hidden directory directly under the home directory or ~/Library, or the Claude app on that computer needs updating (on Windows, to a version that serves folders there)."}]}
+
+### 🤖 Claude — 2026-11-23T10:51:33.641Z
+
+I checked, and this session is not running on your laptop. It's still the cloud session from before:
+
+- **Machine:** Linux, named "vm". Your laptop is LAPTOP-7BA6G3BC.
+- **Working folder:** `/home/user/rainbow-` (the cloud copy of your game), not `C:\RainbowUnity`.
+- **Windows access:** there is no `C:` drive and no PowerShell here.
+- **Laptop folders shared with this session:** still only "claude yes", and it is still not available. `C:\RainbowUnity` isn't in the shared list.
+
+So I can't install anything on your laptop or see its files from here. Most likely you're seeing this same cloud conversation in the desktop app. Messages in this chat still go to the cloud machine.
+
+**To get a session that really runs on the laptop:**
+1. In the Claude desktop app, start a **new** Claude Code session, choose the option to run it locally on this computer rather than in the cloud, and pick `C:\RainbowUnity` as its folder.
+2. Or open **PowerShell**, install Claude Code with `irm https://claude.ai/install.ps1 | iex`, then run `cd C:\RainbowUnity` followed by `claude`.
+
+**How to know it worked:** ask the new session to run `hostname` and `Get-Location`. They should show `LAPTOP-7BA6G3BC` and `C:\RainbowUnity`.
+
+Then paste your last message into that local session. It will tell you when to sign in through Unity's page and when to approve each installation, and it will leave your existing game untouched. Everything it needs is saved on GitHub: branch `ccr-6deca498-03lhkc`, notes in `docs/briefs/2026-11-23-r48/UNITY_EVAL_R48.md`.
+
