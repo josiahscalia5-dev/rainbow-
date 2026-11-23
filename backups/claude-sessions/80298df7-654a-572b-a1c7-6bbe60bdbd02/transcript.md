@@ -285,3 +285,284 @@ Before building, let me confirm the autosave pushed this branch, then look at th
 > python3 -I tools/screenkit/compare_screen.py 06 /tmp/st06/s1.20_l0.png /tmp/ws06/seg/mask.png /tmp/cmp06 [--before F]   # measured likeness
 > TOUC …[+3678 chars]
 
+### 🤖 Claude — 2026-11-23T03:46:11.928Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/kit05/kitgame.html"}`
+
+### 🧑 User — 2026-11-23T03:46:12.062Z
+
+> ↩︎ result: 1	<!doctype html>
+> 2	<html><head><meta charset="utf-8"><title>Screen 05 tunnel kit game test</title>
+> 3	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+> 4	<style>
+> 5	html,body{margin:0;background:#000;overflow:hidden;font-family:system-ui,sans-serif}canvas{display:block}
+> 6	#hud{position:fixed;left:0;right:0;top:10px;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+> 7	.bar{display:flex;gap:28px;align-items:center;background:linear-gradient(#7b2bbf,#4a1386);border:2px solid #d9a7ff;border-radius:30px;padding:6px 22px;color:#fff;font-weight:800;font-size:22px;box-shadow:0 2px 8px #0006}
+> 8	.title{background:#5a1aa0e0;border:2px solid #f2c14e;border-radius:20px;padding:4px 18px;color:#fff;font-weight:800;font-style:italic;font-size:17px;letter-spacing:.5px}
+> 9	</style>
+> 10	<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script>
+> 11	</head><body>
+> 12	<div id="hud"><div class="bar"><span>&#10084;&#65039; 5/5</span><span id="coins">&#129689; 1,420</span></div><div class="title">05 &middot; FLOW INTO THE CURRENT</d …[+38290 chars]
+
+### 🤖 Claude — 2026-11-23T03:46:13.224Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/kit05/kitgame.html", "offset": 380, "limit": 352}`
+
+### 🧑 User — 2026-11-23T03:46:13.335Z
+
+> ↩︎ result: 380	  return m; })();
+> 381	const THW = Math.asin(K.HW / K.RT), FOAM_H = 16 * Math.PI / 180;
+> 382	for (const side of [1, -1]) {   // right: from -THW upward; left: from PI + THW upward
+> 383	  if (PUFFS) break;
+> 384	  scene.add(new THREE.Mesh(grid(500, 6, (a, b) => { const t = 0.3 + a * 90; const th = side > 0 ? -THW + b * FOAM_H : Math.PI + THW - b * FOAM_H;
+> 385	    return [P(t, th, K.RT * 0.985), t / 1.3, b]; }), foamMat));
+> 386	}
+> 387	// ---- round 35 (lead): painted foam DOMES along both banks + floating iridescent bubbles ----
+> 388	// The domes are the user's own foam bank (bake_puffs.py) drawn as camera-facing billboards standing on the water at both wall bases, so
+> 389	// the banks stay round painted puffs from every position (the round-33 wall-base strip was a flat band seen edge-on: white spikes).
+> 390	// Thicker (two rows) on the inner side of each bend. Both fade in exactly where the walls hand over from their own painted pixels
+> 391	// (distance now / distance at the start < K.own.fade), so the start view stays the approved picture. ?puffs=0 = round-34 strip.
+> 392	const FADEP = W37 ? new THREE.Vector4(50, 60, 0, 0) : new THREE.Vector4(...OWNFADE, 0, 0);   // round 37 B / C: no paint …[+40756 chars]
+
+### 🤖 Claude — 2026-11-23T03:46:19.883Z
+
+> 🔧 **Bash** `{"command": "sed -n '1,80p' tools/kit05/controls.js", "description": "Read the start of the swipe controls module"}`
+
+### 🧑 User — 2026-11-23T03:46:19.915Z
+
+> ↩︎ result: // controls.js -- Screen 05 swipe controls for play3.html (installed by the "// [controls]" hook lines there).
+> // Lanes (swipe left / right), leap (swipe up), dive (swipe down), the 26-coin trail (perspective size, coinScreen), the level end,
+> // natural swim animation (stroke roll, faster paddling while changing lanes, lean / yaw into the move, pom-pom inertia),
+> // splash + droplets + bubbles on leaving / entering the water, and the follow-camera offsets.
+> // Everything is driven by the game clock passed to window.step(t, dt, ...) so tests stay deterministic.
+> // Benny faces +t (away from the camera, the approved picture shows his back); his model +x is the river's right (+r).
+> // Round 34 (S2): lane swipes act at once, also in the middle of a lane change (a reversal redirects him smoothly) and in the air /
+> // under water; leap and dive are Hermite / ballistic height segments that can hand over to each other (swipe down in the air = dive
+> // straight in, swipe up under water = leap out), a buoyancy spring settles him after every landing / resurfacing; the bank is
+> // rate-limited; paws paddle alternately (power stroke down and back), his lower back flutter-kicks, and swimfx.js adds the  …[+5609 chars]
+
+### 🤖 Claude — 2026-11-23T03:46:21.389Z
+
+> 🔧 **Bash** `{"command": "grep -n \"installControls\\|benny31\\|bake.png\\|swimfx\\|coinTex\\|TR =\\|const TR\\|camera.position\\|live.js\" tools/screenkit/screen.html | head -40; ls tools/screenkit/screens/ tools/screenkit/screens/05 2>/dev/null | head; cat tools/kit05/setup_kit.sh | head -50", "description": "Find reuse points in the generic screen page and kit setup"}`
+
+### 🧑 User — 2026-11-23T03:46:21.431Z
+
+> ↩︎ result: 26:// Shared game code: Benny 31 (paddling shader), tools/kit05/controls.js swipes, swimfx.js, the coin / splash textures.
+> 31:import { installControls } from './controls.js';
+> 261:const bgl = await new GLTFLoader().loadAsync('benny31.glb');
+> 262:const bmap = await tl.loadAsync('bake.png'); bmap.colorSpace = THREE.SRGBColorSpace; bmap.flipY = false; bmap.anisotropy = 8;
+> 285:const TRAIL = [], TRAIL_S = []; for (let s = 0; s <= LEVEL + 1e-9; s += 0.05) { TRAIL.push(at(s, new THREE.Vector3()).toArray()); TRAIL_S.push(+s.toFixed(4)); }
+> 287:const CT = installControls({ THREE, TR: { trail: TRAIL, trail_s: TRAIL_S, N: 0 }, canvas: renderer.domElement, camera, q, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex: ctex, coinD,
+> 312:const OFF = V3(LAY.cams[0].pos).sub(P0).applyMatrix4(M0i);                   // camera position in Benny's route frame at the picture
+> 326:  at(sc, camera.position).add(st.rigO).addScaledVector(F.r, cds(st.camLat, CAMK * st.lat, 9, dt)); camera.quaternion.copy(st.rigQ); camera.updateMatrixWorld();
+> 329:    camera.position.addScaledVector(r, dpx * camera.position.distanceTo(benny.position) / fpx).addScaledVector(n, -dpy * camera.position.dist …[+3887 chars]
+
+### 🤖 Claude — 2026-11-23T03:46:23.406Z
+
+`screen.html` is the generic page with real perspective (no painting remap). Let me read its Benny, route and camera section — that's what I'll reuse.
+
+### 🤖 Claude — 2026-11-23T03:46:24.110Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/screenkit/screen.html", "offset": 1, "limit": 60}`
+
+### 🧑 User — 2026-11-23T03:46:24.123Z
+
+> ↩︎ result: 1	<!doctype html>
+> 2	<html><head><meta charset="utf-8"><title>Rainbow screen</title>
+> 3	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+> 4	<style>
+> 5	html,body{margin:0;background:#1a0630;overflow:hidden;font-family:system-ui,-apple-system,sans-serif}canvas{display:block}
+> 6	#hud{position:fixed;left:0;right:0;top:8px;display:flex;flex-direction:column;align-items:center;gap:7px;pointer-events:none}
+> 7	.bar{display:flex;gap:26px;align-items:center;background:linear-gradient(#7b2bbf,#4a1386);border:2px solid #d9a7ff;border-radius:30px;padding:5px 20px;color:#fff;font-weight:800;font-size:21px;box-shadow:0 2px 8px #0006}
+> 8	.title{background:#5a1aa0e0;border:2px solid #f2c14e;border-radius:20px;padding:4px 16px;color:#fff;font-weight:800;font-style:italic;font-size:16px;letter-spacing:.4px}
+> 9	.pill{display:inline-flex;align-items:center;gap:6px}.plus{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#7c3aed;border:2px solid #e9d5ff;font-size:16px;line-height:1}
+> 10	#pause{position:fixed;top:8px;right:10px;width:46px;height:46px;border-radius:50%;border:3px solid #f2c14e;back …[+5281 chars]
+
+### 🤖 Claude — 2026-11-23T03:46:24.815Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/screenkit/screen.html", "offset": 225, "limit": 190}`
+
+### 🧑 User — 2026-11-23T03:46:24.840Z
+
+> ↩︎ result: 225	      float fn(vec3 p){ vec3 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(mix(fh(i), fh(i + vec3(1, 0, 0)), f.x), mix(fh(i + vec3(0, 1, 0)), fh(i + vec3(1, 1, 0)), f.x), f.y), mix(mix(fh(i + vec3(0, 0, 1)), fh(i + vec3(1, 0, 1)), f.x), mix(fh(i + vec3(0, 1, 1)), fh(i + vec3(1, 1, 1)), f.x), f.y), f.z); }
+> 226	      void main(){ vCol = aCol; vec3 o = instanceMatrix[3].xyz * 7.0; float b = fn(position * 5.0 + o) * 0.55 + fn(position * 11.0 + o.zxy) * 0.3;
+> 227	        vec3 p = position * (0.82 + 0.42 * b); vec4 w = modelMatrix * instanceMatrix * vec4(p, 1.0); vW = w.xyz;
+> 228	        vN = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normalize(normal + 0.9 * (b - 0.45) * normal)); gl_Position = projectionMatrix * viewMatrix * w; }`,
+> 229	    fragmentShader: `varying vec4 vCol; varying vec3 vN; varying vec3 vW; uniform vec3 uL; uniform vec3 uGlow;
+> 230	      void main(){ vec3 col = min(vec3(1.0), vCol.rgb * (0.82 + 0.3 * dot(normalize(vN), uL))); col = mix(col, vec3(1.0, 0.98, 0.95), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(col, 1.0); }` });
+> 231	  const foam = new THREE.InstancedMesh(fGeo, GRAY ? new THREE.MeshBasicM …[+24431 chars]
+
+### 🤖 Claude — 2026-11-23T03:47:05.337Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nfor f in ['references/05_flow_into_the_current.png','/root/.claude/uploads/80298df7-654a-572b-a1c7-6bbe60bdbd02/d404ead6-image.png']:\n    im=Image.open(f); print(f, im.size, im.mode)\n\"; sha256sum -c scripts/reference.sha256 2>&1 | tail -3", "description": "Check image sizes and reference checksums"}`
+
+### 🧑 User — 2026-11-23T03:47:05.475Z
+
+> ↩︎ result: references/05_flow_into_the_current.png (864, 1536) RGB
+> /root/.claude/uploads/80298df7-654a-572b-a1c7-6bbe60bdbd02/d404ead6-image.png (941, 1672) RGB
+> references/11_safely_home_final_victory.png: OK
+> character_references/official_cartoon_girl_original.jpg: OK
+> references/water/05_water_isolated_original.png: OK
+
+### 🤖 Claude — 2026-11-23T03:47:06.410Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/05_flow_into_the_current.png"}`
+
+### 🧑 User — 2026-11-23T03:47:06.438Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T03:47:14.942Z
+
+Let me zoom into the wall, ring and paddle detail of the approved picture so the repeating textures copy the right pattern (slot direction, light streaks, gold banding).
+
+### 🤖 Claude — 2026-11-23T03:47:18.646Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47 && cd /home/user/rainbow- && python3 -c \"\nfrom PIL import Image\nim=Image.open('references/05_flow_into_the_current.png')\nS='/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/'\na=im.crop((0,180,300,560)).resize((600,760),Image.LANCZOS)\nb=im.crop((280,190,600,420)).resize((640,460),Image.LANCZOS)\nc=Image.new('RGB',(1240,760),(0,0,0)); c.paste(a,(0,0)); c.paste(b,(600,0))\nc.save(S+'zoom_wall.png')\nd=im.crop((40,300,360,480)).resize((640,360),Imag …[+103 chars]`
+
+### 🧑 User — 2026-11-23T03:47:19.006Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-23T03:47:20.839Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/zoom_wall.png"}`
+
+### 🧑 User — 2026-11-23T03:47:20.865Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T03:47:21.455Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/zoom_paddle.png"}`
+
+### 🧑 User — 2026-11-23T03:47:21.471Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T03:48:08.841Z
+
+> 🔧 **Bash** `{"command": "grep -n \"'fov'\\|\\\"fov\\\"\\|fov\\b\\|benny\\b.*height\\|'lane'\\|\\\"lane\\\"\\|'speed'\\|coin_radius\\|bsize\\|'height'\" tools/screenkit/screens/05/fit05.py | head -30", "description": "Find Benny size, lane, speed, fov in Screen 05 fit"}`
+
+### 🧑 User — 2026-11-23T03:48:08.870Z
+
+> ↩︎ result: 65:lay = {'screen': '05', 'title': 'FLOW INTO THE CURRENT', 'ref': REF, 'fov': cam.fov, 'img': [W, H], 'focal_px': cam.F,
+> 67:       'benny': {'pos': Pb, 'height': HB, 'bsize': 1.19, 'lift': 0.03, 'ahead': 0.15},
+> 68:       'coin_radius': COIN_R, 'coins': coins,
+> 79:       'foam_style': {'spacing': 0.7, 'size': 1.45, 'height': 0.78, 'spread': 1.2, 'detail': 2},   # r45: the painted banks are thick, fluffy and continuous; r46: rounder heaps (icosphere level 2)
+
+### 🤖 Claude — 2026-11-23T03:48:10.495Z
+
+> 🔧 **Bash** `{"command": "sed -n '80,200p' tools/kit05/controls.js | grep -n \"coins.push\\|const coins\\|26\\|TR.trail\\|sprite\\|Sprite\" | head -20; grep -n \"export\\|window\\.\\(coinLayout\\|coinScreen\\)\" tools/kit05/controls.js | head; ls tools/kit05/qa/; sed -n '1,30p' tools/kit05/live.js", "description": "Check coin creation and live-play helper"}`
+
+### 🧑 User — 2026-11-23T03:48:10.542Z
+
+> ↩︎ result: 96:  // ---------------- coin trail (round 32b): ONE single-file trail of 26 coins, HUD 1,420 -> 1,680 when all are collected ----------------
+> 109:    { kind: 'leap-arc', pts: [[12.69, 0.02, 0.10], [13.24, -0.02, 0.26], [13.79, 0.02, 0.42]] },
+> 111:    { kind: 'weave', pts: [[23.74, 0.06, 0], [24.29, -0.10, 0], [24.84, 0.10, 0], [25.54, -0.13, 0], [26.2, 0.08, 0]] },
+> 115:  const TS = TR.trail_s, TEND = TS[TS.length - 1];
+> 117:    if (!TR.XB || !TR.offsets || !TR.trail) return TEND;
+> 119:    let best = 0, bd = Infinity; TR.trail.forEach((p, i) => { const d = (p[0] - X[0]) ** 2 + (p[1] - X[1]) ** 2 + (p[2] - X[2]) ** 2; if (d < bd) { bd = d; best = i; } });
+> 15:export const TUNING = {
+> 67:export function installControls(ctx) {
+> 235:  window.coinLayout = () => LAYOUT.map((L, i) => ({ s: L.s, lat: +L.lat.toFixed(3), h: L.h, run: L.run, runKind: L.runKind,
+> 482:  window.coinScreen = (opt = {}) => {
+> qa_live.cjs
+> qa_play.cjs
+> qa_verdict.py
+> qa_visual.py
+> run_acceptance.sh
+> stretch_viz.py
+> // live.js — Round 34 (2026-11-21): REAL-TIME play of the Screen 05 kit game (play3.html?play=1), for a phone / browser.
+> // (?play=1, not ?live=1: controls.js has its own minimal ?live=1 loop; running both stepped th …[+2434 chars]
+
+### 🤖 Claude — 2026-11-23T03:48:13.240Z
+
+> 🔧 **Bash** `{"command": "sed -n '40,95p' tools/screenkit/screens/05/fit05.py", "description": "Read Screen 05 fit layout values"}`
+
+### 🧑 User — 2026-11-23T03:48:13.270Z
+
+> ↩︎ result: coins = [cam.C + cam.depth_dir(x, y) * dz for (x, y, _), dz in zip(M['coins'], deps)]
+> water_pts = [P - np.array([0, COIN_R, 0]) for P in coins]
+> for w in water_pts: w[1] = 0.0
+> far = water_pts[-1][2] - a.tube_len
+> ctrl = [Pb + np.array([0, 0, 1.2]), Pb] + water_pts + [np.array([water_pts[-1][0] * (1 - k) + xa * k, 0.0, water_pts[-1][2] - 3.0 * (j + 1)]) for j, k in enumerate([0.3, 0.6, 0.85, 1.0])]
+> # r45: the painted S-river keeps winding along the whole tube (the approved picture's S: about +-0.3 drum radii, one swing every ~3 rings),
+> # easing in from the coin trail and straightening for the last 6 u (the world joins 05 -> 06 on the axis)
+> WA, WL = 0.3 * R, 3.0 * 2.6; z_w0 = ctrl[-1][2]
+> for z in np.arange(z_w0 - 1.5, far, -1.5):
+>     k_in = min(1.0, (z_w0 - z) / 4.0); k_out = min(1.0, max(0.0, (z - far) / 6.0)); ctrl.append(np.array([xa + WA * k_in * k_out * math.sin(2 * math.pi * (z_w0 - z) / WL), 0.0, z]))
+> # r46 (Screen 05 frames 405-420): the far painted coins (radius <= 10 px, depths spread +1.2 u apart) pulled the route 0.84 u right of the drum
+> # axis around z -22: with the right lane Benny swam at the very edge of the drum floor (camera 0.3 u from the wall, the river into the foa …[+4645 chars]
+
+### 🤖 Claude — 2026-11-23T03:48:14.999Z
+
+> 🔧 **Bash** `{"command": "sed -n '1,39p' tools/screenkit/screens/05/fit05.py", "description": "Read the top of the Screen 05 fit script"}`
+
+### 🧑 User — 2026-11-23T03:48:15.028Z
+
+> ↩︎ result: """Screen 05 'Flow Into the Current' - FIT step of the screen kit (round 44, for the one connected world). Measures the user's approved picture
+> references/05_flow_into_the_current.png (read-only) and writes ONE physical world for it (<out>/layout.json + fit overlay).
+>   python3 -I tools/screenkit/screens/05/fit05.py <out dir> [--set key=json] [--tube-len L] [--open-end]
+> Measured on the picture (864 x 1536 px, gridded crops qa/world/r44/05/measure):
+>   * the bright tunnel core (vanishing point) at (500, 474); the big gold ring (top (440, 205), sides at the frame edges): circle (437, 560) r 420
+>     -> camera offset from the tube axis = ((500-437)/420, (560-474)/420) radii (right, up); the inner rings agree within the painting's slack.
+>   * the water line at that ring: the foam banks meet the wall at y ~ 700 on both sides -> the axis is (700-560)/420 radii above the water;
+>     with the camera 0.734 above the water this fixes the tube radius.
+>   * Benny: water contact (430, 1185), pompom top (430, 770). Coins (centre, radius): the painted S-trail. Copper trays (centre, width).
+>   * the river fills the tube floor (pink edges + cyan core, S-curves through the coins): the floor water is the tu …[+2068 chars]
+
+### 🤖 Claude — 2026-11-23T03:48:21.419Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47 && timeout 120 python3 -I tools/screenkit/screens/05/fit05.py $S/fit05 2>&1 | tail -5; python3 -c \"\nimport json;L=json.load(open('$S/fit05/layout.json'))\nc=L['cams'][0]; print('fov',L['fov'],'cam',{k:c[k] for k in c if k!='ref'}); print('benny',L['benny']); print('coin_r',L['coin_radius']); print('drum',L['drum']); print('rings',L['rings']); print('paddles',L['paddles']); print('route0',L['route']['points'][:3], len(L['route']['points']), 'width', L['route']['width'])\nprint('lane',L.get('la …[+94 chars]`
+
+### 🧑 User — 2026-11-23T03:48:22.530Z
+
+> ↩︎ result: cam yaw 3.08 pitch -13.45; tube R 1.364 axis (-0.205, 0.455) off/R (0.150, 0.205); ring z -3.99; Benny water (-0.065, -1.164) h 0.453; chord 1.286; route 62.4 u; paddles 4
+> fov 64.0 cam {'pos': [0.0, 0.734, 0.0], 'yaw': 0.0537570624503019, 'pitch': -0.23479579055800356, 'img': [864, 1536], 'fov': 64.0, 'focal_px': 1229.0569183035268, 'name': 'ref05', 's_ref': 1.2000000000000002}
+> benny {'pos': [-0.06476178001643236, 0.0, -1.1640408098973545], 'height': 0.45311797848559016, 'bsize': 1.19, 'lift': 0.03, 'ahead': 0.15}
+> coin_r 0.10806863786881325
+> drum {'axis_x': -0.20461061946902656, 'axis_y': 0.45469026548672564, 'r': 1.364070796460177, 'z0': 3.0, 'z_far': -17.99171583201234, 'z1': -64.67778967556848, 'open_end': False, 'seg': 2.0, 'seg_far': 8.0, 'chord': 1.2860582802607012, 'cam_off_R': [0.15, 0.20476190476190476], 'pool_y': -0.02}
+> rings {'z': [-3.991715832012339], 'spacing': 2.6, 'band': 0.32}
+> paddles [{'pos': [-1.383733608135898, 1.140516858258402, -4.876004927830971], 'width': 0.575209543515488}, {'pos': [-1.4820741619649722, 0.9329956442451197, -8.897087659093911], 'width': 0.6349957860978198}, {'pos': [1.0226422897314746, 1.0501224065526977, -8.52582976629439], 'width': 0.4975116 …[+320 chars]
+
+### 🤖 Claude — 2026-11-23T03:49:54.164Z
+
+> 🔧 **TaskCreate** `{"subject": "Save user order + preview (r47 brief)", "description": "docs/briefs/2026-11-23-r47/USER_R47.md + preview image copy", "activeForm": "Saving the user's order and preview"}`
+
+### 🧑 User — 2026-11-23T03:49:54.176Z
+
+> ↩︎ result: Task #1 created successfully: Save user order + preview (r47 brief)
+
+### 🤖 Claude — 2026-11-23T03:49:55.263Z
+
+> 🔧 **TaskCreate** `{"subject": "Build repeating tiles from measured approved palette", "description": "tools/mod05/make_tiles.py: wall tile (slots, streaks), measured colours", "activeForm": "Building repeating wall textures"}`
+
+### 🧑 User — 2026-11-23T03:49:55.273Z
+
+> ↩︎ result: Task #2 created successfully: Build repeating tiles from measured approved palette
+
+### 🤖 Claude — 2026-11-23T03:49:56.363Z
+
+> 🔧 **TaskCreate** `{"subject": "Modular Screen 05 page (tunnel/ring/paddle/foam modules, one water material, Benny+controls reused)", "description": "tools/mod05/mod05.html + layout + setup script", "activeForm": "Building the modular Screen 05 section"}`
+
+### 🧑 User — 2026-11-23T03:49:56.373Z
+
+> ↩︎ result: Task #3 created successfully: Modular Screen 05 page (tunnel/ring/paddle/foam modules, one water material, Benny+controls reused)
+
+### 🤖 Claude — 2026-11-23T03:49:57.713Z
+
+> 🔧 **TaskCreate** `{"subject": "Capture in motion: start, swimming, steering L/R, clip; measure vs approved", "description": "stills + mp4 with real swipes, compare_screen numbers, approved|new pictures", "activeForm": "Capturing Benny swimming and steering"}`
+
+### 🧑 User — 2026-11-23T03:49:57.725Z
+
+> ↩︎ result: Task #4 created successfully: Capture in motion: start, swimming, steering L/R, clip; measure vs approved
+
+### 🤖 Claude — 2026-11-23T03:49:58.614Z
+
+> 🔧 **TaskCreate** `{"subject": "Report: compromises, handoff, autosave verify", "description": "README, handoff top section, AGENTS_STATUS, save + verify SHA", "activeForm": "Writing the report and saving"}`
+
+### 🧑 User — 2026-11-23T03:49:58.633Z
+
+> ↩︎ result: Task #5 created successfully: Report: compromises, handoff, autosave verify
+
