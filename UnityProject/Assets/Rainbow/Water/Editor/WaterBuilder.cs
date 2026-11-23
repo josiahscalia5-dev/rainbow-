@@ -136,7 +136,9 @@ namespace Rainbow.Screen05.EditorTools
                 LODGroup lg = go.AddComponent<LODGroup>();
                 lg.SetLODs(new[]
                 {
-                    new LOD(0.3f, new[] { r0 }),       // 10 u chunk: full puffs within ~28 u of the camera
+                    // 10 u chunk: all bubbles within ~70 u of the camera (impostors cost 4 vertices each; switching at
+                    // ~28 u dropped every small bubble at once in plain view = popping as Benny approached)
+                    new LOD(0.12f, new[] { r0 }),
                     new LOD(0.002f, new[] { r1 }),
                 });
                 lg.RecalculateBounds();

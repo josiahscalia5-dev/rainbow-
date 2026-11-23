@@ -9,12 +9,16 @@ namespace Rainbow.Screen05
     /// heap of clustered round soap bubbles of many sizes (big puffs, many small ones, 0.4-1 m tall), with a bubbly
     /// scalloped waterline and lavender / blue creases.
     /// Layout: BankEdges (CPU mirror of RBW_BankEdges in Shaders/RainbowFoamBank.hlsl - keep identical): the foam waterline
-    /// runs just outside each pink band, the river shader draws the flat foam shelf from there to the wall, and these puffs
-    /// pile on it: a lace of small bubbles on the waterline, the round rim mound, the heap body up to the wall and a few
-    /// loose small bubbles (cluster noise along s: naturally varied mounds and low stretches, never repeated blobs).
+    /// runs just outside each pink band, the river shader draws the flat foam shelf from there to the wall (faded out close
+    /// to the camera, where only these 3D clumps stand on open water), and these puffs pile on it: a lace of small bubbles
+    /// on the waterline, the round rim mound, a sprinkle of small bubbles on its crest, a low heap body up to the wall,
+    /// compact packed mounds where the cluster noise is high and a few loose small bubbles (cluster noise along s:
+    /// naturally varied mounds and low stretches, never repeated blobs).
     /// Deterministic (same result on every build). Port of src/vfx/foam.ts (05 berm / bank puffs, wave-8 fine-foam lumps).
     /// Each puff is a camera-facing sphere IMPOSTOR (4 vertices, true per-pixel sphere depth in Shaders/RainbowFoam.shader),
     /// so every bubble is perfectly round at any distance and sinks into the water and its neighbours with curved creases.
+    /// The shader scales each bubble (and its height above the floor) smoothly with the camera distance, 0.62 near .. 1.45
+    /// far (foam.ts rafts: on-screen sizes stay ~10-45 px), so radii here are mid-distance sizes.
     /// Vertex data: POSITION = puff centre, UV0 = (corner x, corner y, radius, seed), UV1 = (ao, tint, stream centre, stream
     /// half width) - the shader lets the puffs on the stream ride the river swell and parts them around Benny.
     /// </summary>
