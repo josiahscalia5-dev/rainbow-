@@ -132,7 +132,7 @@ namespace Rainbow.Screen05.EditorTools
                 LODGroup lg = go.AddComponent<LODGroup>();
                 lg.SetLODs(new[]
                 {
-                    new LOD(0.22f, new[] { r0 }),
+                    new LOD(0.3f, new[] { r0 }),       // 10 u chunk: full puffs within ~28 u of the camera
                     new LOD(0.002f, new[] { r1 }),
                 });
                 lg.RecalculateBounds();
