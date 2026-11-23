@@ -53,7 +53,8 @@ const world = new THREE.Group(); world.name = 'world'; scene.add(world);
 const lerp = (a, b, x) => a + (b - a) * x, sstep = (a, b, x) => { const k = Math.min(1, Math.max(0, (x - a) / (b - a))); return k * k * (3 - 2 * k); };
 const DEG = Math.PI / 180, UPV = new THREE.Vector3(0, 1, 0);
 const GRAY = q.get('gray') === '1';
-const SIMPLE = q.get('look') === 'simple', SIMPLE_AREAS = (q.get('simpleareas') ?? '05').split(',');   // r48 candidate: clean, consistent materials (default unchanged)
+const KITLOOK = q.get('look') === 'kit';   // r49 KIT candidate: the approved look built from repeating parts + repeating textures
+const SIMPLE = q.get('look') === 'simple' || KITLOOK, SIMPLE_AREAS = (q.get('simpleareas') ?? '05').split(',');   // r48 candidate: clean, consistent materials (default unchanged)
 const tl = new THREE.TextureLoader(), gltf = new GLTFLoader();
 
 // ---------------- ONE route through every area (world_layout.py): points every ds, bank per point ----------------
@@ -182,6 +183,24 @@ const simpleMat = (kind, A, rep = [1, 1], axis = null) => new THREE.ShaderMateri
       c = mix(c, uFarCol, uFar.w * uFar.z * pow(smoothstep(uFar.x, uFar.y, distance(cameraPosition, vW)), 1.4));
       c = mix(c, vec3(1.0, 0.97, 0.92), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6));
       gl_FragColor = vec4(min(c, vec3(1.0)), 1.0); }` });
+// r49 KIT wall: the repeating drum-wall tile (tools/screenkit/kit_textures.py: approved colours, slots along the drum, bevels) lit by its normal
+// map; bright pink-white light lines along the drum at fixed angles (the painting's lit metal), soft sheen, far tone from the texture's mips
+const KITTEX = KITLOOK ? (() => { const ld = (f, srgb) => { const t = tl.load('kittex/' + f); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; t.colorSpace = THREE.NoColorSpace; void srgb; return t; };   /* display values, like every other texture here */
+  return { alb: ld('wall_albedo.png', true), nrm: ld('wall_normal.png', false) }; })() : null;
+const kitWallMat = (A, rep) => new THREE.ShaderMaterial({ side: THREE.DoubleSide,
+  uniforms: { uAlb: { value: KITTEX.alb }, uNrm: { value: KITTEX.nrm }, uRep: { value: new THREE.Vector2(...rep) }, uGlow: A.glow, uFar: A.far ?? FAR0, uFarCol: A.farCol ?? FARC0 },
+  vertexShader: 'varying vec2 vUv; varying vec3 vW; varying vec3 vN; varying vec3 vTu; void main(){ vUv = uv; vN = normalize(mat3(modelMatrix) * normal); vec3 Ta = normalize(mat3(modelMatrix) * vec3(0.0, 0.0, -1.0)); vTu = normalize(cross(vN, Ta)); vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
+  fragmentShader: `uniform sampler2D uAlb, uNrm; uniform vec2 uRep; uniform vec3 uGlow; uniform vec4 uFar; uniform vec3 uFarCol; varying vec2 vUv; varying vec3 vW; varying vec3 vN; varying vec3 vTu;
+    void main(){ vec2 uvt = vUv * uRep; vec3 alb = texture2D(uAlb, uvt).rgb; vec3 tn = texture2D(uNrm, uvt).rgb * 2.0 - 1.0;
+      vec3 N = normalize(vN), V = normalize(cameraPosition - vW); if (dot(N, V) < 0.0) N = -N; vec3 Tu = normalize(vTu - N * dot(vTu, N)), Ta = cross(N, Tu);
+      vec3 Np = normalize(N * tn.z + Tu * tn.x + Ta * tn.y);
+      vec3 Lk = normalize(vec3(-0.25, 0.85, 0.45)); float dif = 0.8 + 0.3 * max(dot(Np, Lk), 0.0);
+      float sp = pow(max(dot(reflect(-Lk, Np), V), 0.0), 24.0), fr = pow(1.0 - max(dot(Np, V), 0.0), 2.5);
+      float ang = vUv.x * 6.28318, lines = pow(0.5 + 0.5 * cos(ang * 7.0 + 0.6), 40.0) + 0.6 * pow(0.5 + 0.5 * cos(ang * 13.0 + 2.1), 60.0);   // light lines along the drum
+      float onPlate = smoothstep(0.25, 0.45, dot(alb, vec3(0.333)));
+      vec3 c = alb * dif + vec3(1.0, 0.72, 1.0) * (0.35 * sp + 0.22 * fr) * onPlate + vec3(1.0, 0.82, 1.0) * 0.55 * lines * onPlate;
+      c = mix(c, uFarCol, uFar.w * uFar.z * pow(smoothstep(uFar.x, uFar.y, distance(cameraPosition, vW)), 1.4));
+      c = mix(c, vec3(1.0, 0.97, 0.92), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(min(c, vec3(1.0)), 1.0); }` });
 // the shared water palette (cyan core, pink edges, short highlight dashes, flowing toward the camera) - two parametrisations:
 const WATER_CORE = `float hsh(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
   float nse(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(hsh(i), hsh(i + vec2(1, 0)), f.x), mix(hsh(i + vec2(0, 1)), hsh(i + vec2(1, 1)), f.x), f.y); }
@@ -338,9 +357,10 @@ const loadKit = async (A) => {
     if (meta) { const tex = await tl.loadAsync(A.dir + 'baked/' + meta.file); A.stripU = stripUniforms(THREE, LAY, meta, tex); A.stripMeta = meta; } }
   const ms = []; g.traverse((o) => { if (o.isMesh) ms.push(o); });
   const RLENa = (LAY.route.points.length - 1) * LAY.route.ds, NSEG = ms.filter((o) => /^water_/.test(o.name)).length, SEG_LEN = RLENa / Math.max(1, NSEG);
-  const SIMPLE_A = SIMPLE && SIMPLE_AREAS.includes(A.id); A.simple = SIMPLE_A; if (SIMPLE_A && A.stripU) A.stripU.uStripS.value = 1;   // r48
+  const SIMPLE_A = SIMPLE && SIMPLE_AREAS.includes(A.id); A.simple = SIMPLE_A; A.kitLook = SIMPLE_A && KITLOOK; if (SIMPLE_A && A.stripU) A.stripU.uStripS.value = A.kitLook ? 2 : 1;   // r48 / r49
   for (const o of ms) { const n = o.name, fam = famOf(n); o.geometry.computeBoundingBox(); const sz = o.geometry.boundingBox.getSize(new THREE.Vector3()); let m;
-    if (SIMPLE_A && fam === 'tunnel') m = simpleMat('wall', A, [Math.round(2 * Math.PI * DR.r / 0.75), Math.max(1, sz.z / 0.75)]);
+    if (A.kitLook && fam === 'tunnel') m = kitWallMat(A, [Math.round(2 * Math.PI * DR.r / 1.3), Math.max(1, sz.z / 1.35)]);   // r49: tile = 4 slots around x 3 along
+    else if (SIMPLE_A && fam === 'tunnel') m = simpleMat('wall', A, [Math.round(2 * Math.PI * DR.r / 0.75), Math.max(1, sz.z / 0.75)]);
     else if (SIMPLE_A && fam === 'ring') m = simpleMat('ring', A);
     else if (SIMPLE_A && fam === 'copper') m = simpleMat('copper', A);
     else if (fam === 'tunnel' && LAY.tunnel_style === 'gold') m = sceneryMat(BASE.tunnelGold, [Math.round(2 * Math.PI * DR.r / 1.6), Math.max(1, sz.z / (LAY.rings?.spacing ?? 0.95))], A);
@@ -374,7 +394,7 @@ const loadKit = async (A) => {
   // r47 (user: "make the foam follow the actual river edges"): real 3D foam heaps along the painted foam banks' measured inner edges (both banks,
   // the whole strip incl. the painted stretch), placed with the strip's own mapping (lat, d) -> area x / z, sitting in the water, never in a lane
   if (A.stripMeta && q.get('stripfoam') !== '0') {
-    const SM = A.stripMeta, FE = SM.foam_edges, RP_ = LAY.route.points, dsR = LAY.route.ds, zA = RP_[0][2], zB = RP_[RP_.length - 1][2], dEnd = (RP_.length - 1) * dsR, WYl = DR.pool_y ?? -0.02;
+    const SM = A.stripMeta, FE = A.kitLook && LAY.kit ? { left: -LAY.kit.foam_lat, right: LAY.kit.foam_lat } : SM.foam_edges, RP_ = LAY.route.points, dsR = LAY.route.ds, zA = RP_[0][2], zB = RP_[RP_.length - 1][2], dEnd = (RP_.length - 1) * dsR, WYl = DR.pool_y ?? -0.02;
     const rxz = (z) => { if (z >= zA) return RP_[0][0]; if (z <= zB) return RP_[RP_.length - 1][0]; let lo = 0, hi = RP_.length - 1; while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (RP_[mid][2] > z) lo = mid; else hi = mid; }
       const a = RP_[lo], b = RP_[hi]; return a[0] + (b[0] - a[0]) * (z - a[2]) / (b[2] - a[2]); };
     const zOfD = (d) => { if (d < 0) return zA - d; if (d > dEnd) return zB - (d - dEnd); const x = d / dsR, i = Math.min(RP_.length - 2, Math.floor(x)); return RP_[i][2] + (RP_[i + 1][2] - RP_[i][2]) * (x - i); };
@@ -386,7 +406,13 @@ const loadKit = async (A) => {
       // r47b the painted banks are THICK: big puffy heaps from just outside the river's foam edge to the drum wall (no bare floor beside the foam)
       if (Math.round(d / 0.075) % 3 === 0) { const [x0, z0] = toL(edge, d), sl0 = (rxz(z0 + 0.03) - rxz(z0 - 0.03)) / 0.06, latWall = (DR.axis_x + side * DR.chord - rxz(z0)) / Math.sqrt(1 + sl0 * sl0);
         for (let lt = edge + side * 0.3; side * (latWall - lt) > 0.02; lt += side * 0.17) { const r = 0.11 + 0.08 * rnd(), [x, z] = toL(lt + side * 0.04 * rnd(), d + (rnd() - 0.5) * 0.12); H.push([x, WYl + r * 0.18, z, r, rnd() * 6.283]); } } }
-    const fg = new THREE.IcosahedronGeometry(1, 2), fm = new THREE.InstancedMesh(fg, GRAY ? new THREE.MeshBasicMaterial({ color: 0xe8e8ee }) : kitFoamMat(A, true, !!A.simple), H.length);
+    // r49 KIT: each heap is one of a small set of FOAM CLUSTERS (5-7 bubble domes of different sizes, merged once) instead of a single dome
+    const cluster = (seed) => { let s2 = seed; const r2 = () => ((s2 = (s2 * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); const P = [], I = []; let base = 0;
+      for (let k = 0; k < 6; k++) { const gk = new THREE.IcosahedronGeometry(k ? 0.38 + 0.3 * r2() : 0.62, 2), a = r2() * 6.283, rr = k ? 0.35 + 0.3 * r2() : 0;
+        gk.translate(Math.cos(a) * rr, (k ? 0.12 * r2() : 0.05), Math.sin(a) * rr); const pa = gk.attributes.position.array; for (let i = 0; i < pa.length; i++) P.push(pa[i]);
+        const ix = gk.index ? gk.index.array : [...Array(pa.length / 3).keys()]; for (const v of ix) I.push(v + base); base += pa.length / 3; }
+      const gg = new THREE.BufferGeometry(); gg.setAttribute('position', new THREE.Float32BufferAttribute(P, 3)); gg.setIndex(I); gg.computeVertexNormals(); return gg; };
+    const fg = A.kitLook ? cluster(101) : new THREE.IcosahedronGeometry(1, 2), fm = new THREE.InstancedMesh(fg, GRAY ? new THREE.MeshBasicMaterial({ color: 0xe8e8ee }) : kitFoamMat(A, true, !!A.simple && !A.kitLook), H.length);
     const mI = new THREE.Matrix4(), qI = new THREE.Quaternion(), pI = new THREE.Vector3(), sI = new THREE.Vector3();
     H.forEach(([x, y, z, r, a], i) => { pI.set(x, y, z); qI.setFromAxisAngle(UPV, a); sI.set(r * 1.15, r * 0.62, r); fm.setMatrixAt(i, mI.compose(pI, qI, sI)); });
     fm.name = 'foam_strip_edges'; fm.userData.fam = 'foam'; fm.userData.area = A.id; fm.frustumCulled = false; g.add(fm); MESH.push(fm); A.stripFoamCount = H.length; }
@@ -487,7 +513,8 @@ const AREA = Object.fromEntries(WD.areas.map((A) => [A.id, A]));
     if (c.kind === 'tube') { let L = 0; for (let i = 1; i < c.axis.length; i++) L += V3(c.axis[i]).distanceTo(V3(c.axis[i - 1])); const rA = c.r.reduce((a, b) => a + b, 0) / c.r.length;
       rep = c.fam === 'tunnelS' ? [Math.round(2 * Math.PI * rA / 0.75), Math.max(1, L / 0.75)] : [Math.round(2 * Math.PI * rA / 2.6), Math.max(1, L / 1.2)]; }
     o.material = c.fam === 'ring' ? sceneryMat(BASE.goldring, [4, 1], A) : c.fam === 'pool' ? waterMatKit(Math.max(sz.x, 1.2) / 2, Math.max(sz.z, 1), 0, true, A, false) : sceneryMat(BASE[c.fam] ?? BASE.pink, rep, A);
-    if (A?.simple && c.kind === 'tube') o.material = simpleMat('wall', A, rep);   // r48: the candidate's materials continue into its connectors
+    if (A?.kitLook && c.kind === 'tube') { let L = 0; for (let i = 1; i < c.axis.length; i++) L += V3(c.axis[i]).distanceTo(V3(c.axis[i - 1])); const rA = c.r.reduce((a, b) => a + b, 0) / c.r.length; o.material = kitWallMat(A, [Math.round(2 * Math.PI * rA / 1.3), Math.max(1, L / 1.35)]); }
+    else if (A?.simple && c.kind === 'tube') o.material = simpleMat('wall', A, rep);   // r48: the candidate's materials continue into its connectors
     else if (A?.simple && c.fam === 'ring') o.material = simpleMat('ring', A, [1, 1], c.axis_pt ? [c.axis_pt[0], c.axis_pt[1]] : null);
     if (c.fam === 'pool' && c.kind === 'strip_path' && q.get('connwater') !== '0') { const pr = { 'B05': ['AB', '05'], '056': ['05', '06'], '067': ['06', '07'], '04A': ['04', 'AB'] }[o.name.split('_')[1]];   // r46: ribbon water across the join
       if (pr && (AREA[pr[0]]?.ribbonU || AREA[pr[1]]?.ribbonU)) o.material = waterMatConn(c, o.material, AREA[pr[0]], AREA[pr[1]]); }

@@ -1,6 +1,6 @@
 {
- "time_utc": "2026-11-23T03:20:33+00:00",
- "lead_branch": "claude/rainbow-05-simple-candidate-r48",
+ "time_utc": "2026-11-23T03:25:14+00:00",
+ "lead_branch": "claude/rainbow-05-kit-candidate-r49",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
   "animation-and-gameplay-engineer": "c48094c3ed3d22e7",

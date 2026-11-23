@@ -7049,3 +7049,167 @@ Nothing is left unsaved: the five-minute autosave had already committed and push
 
 So my question stands: shall I rebuild the gold rings, tunnel walls and foam in Blender for the same short Screen 05 section?
 
+### 🧑 User — 2026-11-23T03:20:22.484Z
+
+Keep the visual design of my original approved Screen 05. Use this new preview to guide a small layout adjustment.
+
+Preserve the original colors, metallic finish, water style, Benny, and overall atmosphere. Make construction more manageable with one gentle river route, reusable tunnel sections, repeated gold rings and paddles, and a small set of foam clusters.
+
+Use repeating surface textures for fine wall detail and one continuous water material. Reuse my existing character and gameplay.
+
+Build a short playable section first and show how it looks while Benny swims and steers. Explain any visual compromises before extending the approach to other screens.
+
+### 🤖 Claude — 2026-11-23T03:21:16.730Z
+
+I'll build this as a "kit" candidate of Screen 05. Your original colours, metallic finish, water style and Benny stay; the layout becomes regular, as in your new preview:
+- one gentle river;
+- evenly repeated gold rings and copper paddles;
+- a small set of foam clusters;
+- a repeating wall texture;
+- one continuous water material.
+
+First a look at how the builder passes per-screen options, so the candidate builds next to the current version without changing it.
+
+### 🤖 Claude — 2026-11-23T03:21:17.989Z
+
+> 🔧 **Bash** `{"command": "git status --short | head -3; grep -n \"def build_screen\\|tube_len\\|open_end\\|benny_h\\|def f_fit\\|k_fit\\|fit_args\\|'--set'\\|--tube-len\" tools/screenkit/build.py | head -20", "description": "Check how build options reach the fit script and cache key"}`
+
+### 🧑 User — 2026-11-23T03:21:18.133Z
+
+> ↩︎ result: 20:  python3 -I tools/screenkit/build.py <NN> <workspace> [--tube-len L] [--open-end] [--benny-h H] [--drum-far-end] [--set k=json ...]
+> 136:def build_screen(NN, ws, tube_len=None, open_end=False, benny_h=None, drum_far_end=False, sets=(), preview=True, quiet=False, force=()):
+> 150:    fit_args = (['--tube-len', str(tube_len)] if tube_len else []) + (['--open-end'] if open_end else [])
+> 151:    for s in sets: fit_args += ['--set', s]
+> 152:    k_fit = h_bytes('fit-v1', h_files([os.path.join(SD, f'fit{NN}.py'), os.path.join(HERE, 'fitlib.py')]), ref_h, h_file(da2) if da2 else '', json.dumps(fit_args))
+> 153:    def f_fit(tmp):
+> 154:        run([sys.executable, '-I', os.path.join(SD, f'fit{NN}.py'), tmp] + (['--da2', da2] if da2 else []) + fit_args, log=os.path.join(tmp, 'fit.log'))
+> 159:    B.step('fit', k_fit, {'layout.json': os.path.join(ws, 'fit', 'layout_fit.json'), 'fit_overlay.jpg': os.path.join(ws, 'fit', 'fit_overlay.jpg'), 'fit.log': os.path.join(ws, 'fit', 'fit.log')}, f_fit)
+> 163:        if benny_h: run([sys.executable, '-I', os.path.join(HERE, 'scale_layout.py'), src, lay_p, '--benny-h', str(benny_h)])
+> 166:            L = json.load(open(lay_p)); L['drum']['z1'] = L['drum']['z_far' …[+573 chars]
+
+### 🤖 Claude — 2026-11-23T03:22:23.428Z
+
+> 🔧 **Bash** `{"command": "flock backups/.autosave.lock bash -c 'git checkout -q -b claude/rainbow-05-kit-candidate-r49 && mkdir -p docs/briefs/2026-11-23-r49 && cp \"/root/.claude/uploads/b194400e-972b-5b24-a1b4-4982954cc18c/5147fa55-image.png\" docs/briefs/2026-11-23-r49/PREVIEW_05_layout_guide.png && git branch --show-current'; python3 -c \"\nfrom PIL import Image; im=Image.open('docs/briefs/2026-11-23-r49/PREVIEW_05_layout_guide.png'); print(im.size, im.mode)\"; sha256sum -c scripts/reference.sha256 2>&1 | grep -c ': OK'", "description": "Create r49 branch and store the user's layout preview"}`
+
+### 🧑 User — 2026-11-23T03:22:23.672Z
+
+> ↩︎ result: claude/rainbow-05-kit-candidate-r49
+> (941, 1672) RGB
+> 13
+
+### 🤖 Claude — 2026-11-23T03:22:26.025Z
+
+> 🔧 **Bash** `{"command": "sed -n 20,22p tools/screenkit/screens/05/fit05.py; sed -n 41,62p tools/screenkit/screens/05/fit05.py", "description": "Read fit05 argument and route sections"}`
+
+### 🧑 User — 2026-11-23T03:22:26.067Z
+
+> ↩︎ result: ap = argparse.ArgumentParser(); ap.add_argument('out'); ap.add_argument('--da2'); ap.add_argument('--set', action='append', default=[])
+> ap.add_argument('--tube-len', type=float, default=40.0); ap.add_argument('--open-end', action='store_true')
+> a = ap.parse_args(); os.makedirs(a.out, exist_ok=True)
+> water_pts = [P - np.array([0, COIN_R, 0]) for P in coins]
+> for w in water_pts: w[1] = 0.0
+> far = water_pts[-1][2] - a.tube_len
+> ctrl = [Pb + np.array([0, 0, 1.2]), Pb] + water_pts + [np.array([water_pts[-1][0] * (1 - k) + xa * k, 0.0, water_pts[-1][2] - 3.0 * (j + 1)]) for j, k in enumerate([0.3, 0.6, 0.85, 1.0])]
+> # r45: the painted S-river keeps winding along the whole tube (the approved picture's S: about +-0.3 drum radii, one swing every ~3 rings),
+> # easing in from the coin trail and straightening for the last 6 u (the world joins 05 -> 06 on the axis)
+> WA, WL = 0.3 * R, 3.0 * 2.6; z_w0 = ctrl[-1][2]
+> for z in np.arange(z_w0 - 1.5, far, -1.5):
+>     k_in = min(1.0, (z_w0 - z) / 4.0); k_out = min(1.0, max(0.0, (z - far) / 6.0)); ctrl.append(np.array([xa + WA * k_in * k_out * math.sin(2 * math.pi * (z_w0 - z) / WL), 0.0, z]))
+> # r46 (Screen 05 frames 405-420): the far painted coins (radius <= 10 …[+961 chars]
+
+### 🤖 Claude — 2026-11-23T03:22:41.993Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/screens/05/fit05.py'; s=open(p).read()\ndef rep(old,new,cnt=1):\n    global s; assert s.count(old)==cnt, (s.count(old), old[:80]); s=s.replace(old,new)\nrep(\"a = ap.parse_args(); os.makedirs(a.out, exist_ok=True)\",\n    \"a = ap.parse_args(); os.makedirs(a.out, exist_ok=True)\\nVARIANT = next((json.loads(kv.split('=', 1)[1]) for kv in a.set if kv.split('=', 1)[0] == 'variant'), None)   # r49: 'kit' = the regular kit layout (user's preview)\")\nrep(\"ctrl = [np.array([_cap(float(p[0])), float(p[1]), float(p[2])]) for p in ctrl]\\nroute, s = f …[+3587 chars]`
+
+### 🧑 User — 2026-11-23T03:22:42.116Z
+
+> ↩︎ result: ok
+> 123:lay['rings']['spacing'] = 2.1   # r47: the strip's measured foam edges place the 3D foam (world.html)
+
+### 🤖 Claude — 2026-11-23T03:22:46.832Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^if VARIANT == 'kit':\\|^lay\\['rings'\\]\\['spacing'\\]\\|^for kv in a.set\\|^if lay.get('water_strip')\" tools/screenkit/screens/05/fit05.py", "description": "Verify the order of kit overrides in fit05"}`
+
+### 🧑 User — 2026-11-23T03:22:46.875Z
+
+> ↩︎ result: 59:if VARIANT == 'kit':
+> 117:if lay.get('water_strip'): lay['foam_pool'] = False; lay['foam_banks'] = []
+> 123:lay['rings']['spacing'] = 2.1   # r47: the strip's measured foam edges place the 3D foam (world.html)
+> 124:if VARIANT == 'kit':
+> 130:for kv in a.set:
+
+### 🤖 Claude — 2026-11-23T03:23:05.349Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/screenkit/kit_textures.py", "content": "\"\"\"Rainbow round 49 - the KIT's repeating surface textures (user 2026-11-23: \"use repeating surface textures for fine wall detail\").\nOne seamless tile of the washer drum wall in the approved Screen 05 colours (sampled from references/05_flow_into_the_current.png: magenta\nmetal 214,72,214 / violet 128,46,196 / bright pink-white 255,190,250 / slot interior 70,14,98): staggered rows of rounded slots that run ALONG\nthe drum (they point to the vanishing point, as painted), a soft bevel around every slot, fine b …[+3221 chars]`
+
+### 🧑 User — 2026-11-23T03:23:05.401Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/screenkit/kit_textures.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-23T03:23:08.854Z
+
+> 🔧 **Bash** `{"command": "python3 -I tools/screenkit/kit_textures.py tools/screenkit/kittex && python3 -c \"\nfrom PIL import Image\na=Image.open('tools/screenkit/kittex/wall_albedo.png'); W=Image.new('RGB',(1024,1024)); \nfor i in range(2):\n    for j in range(2): W.paste(a,(i*512,j*512))\nW.resize((512,512)).save('/home/user/ws48/wall_tile_check.png')\"", "description": "Generate the wall textures and preview a 2x2 tiling"}`
+
+### 🧑 User — 2026-11-23T03:23:09.546Z
+
+> ↩︎ result: kit textures: tools/screenkit/kittex wall_albedo.png + wall_normal.png 512 px, tile 4 x 3 slots
+
+### 🤖 Claude — 2026-11-23T03:23:10.983Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws48/wall_tile_check.png"}`
+
+### 🧑 User — 2026-11-23T03:23:11.014Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T03:23:19.653Z
+
+The tile repeats seamlessly. Now the kit materials in the game page: the textured wall, the styled water, and foam made of bubble clusters.
+
+### 🤖 Claude — 2026-11-23T03:23:21.446Z
+
+> 🔧 **Bash** `{"command": "grep -n \"BufferGeometryUtils\\|^import\" tools/world/world.html | head; grep -n \"const FE = SM.foam_edges\\|const fg = new THREE.IcosahedronGeometry(1, 2), fm\\|for (const \\[side, edge\\] of \\[\\[-1, FE.left\\], \\[1, FE.right\\]\\]) for (let d = Math.max(SM.d0 + 2, -6); d < SM.d1 - 0.5; d += 0.075) {\" tools/world/world.html", "description": "Check imports and foam placement anchors"}`
+
+### 🧑 User — 2026-11-23T03:23:21.510Z
+
+> ↩︎ result: 37:import * as THREE from 'three';
+> 38:import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+> 39:import { installControls } from './controls.js';
+> 40:import { installQA } from './qa.js';   // r45: QA views for the automated preview check
+> 41:import { RIBBON_GLSL, routeUniforms, loadDetail, ribbonCopy, ribbonUniformsAs, STRIP_GLSL, stripCopy, stripUniforms } from './water_ribbon.js';   // r45 test ?water=ribbon: clean ribbon water drawn from the painting's structure
+> 42:import { famOf as kitFamOf, loadTemplates, applyTemplates } from './bake.js';   // r45: the screen kit's artwork-sampled materials (wall / ring / tray templates, water swatches)
+> 383:    for (const [side, edge] of [[-1, FE.left], [1, FE.right]]) for (let d = Math.max(SM.d0 + 2, -6); d < SM.d1 - 0.5; d += 0.075) {
+> 389:    const fg = new THREE.IcosahedronGeometry(1, 2), fm = new THREE.InstancedMesh(fg, GRAY ? new THREE.MeshBasicMaterial({ color: 0xe8e8ee }) : kitFoamMat(A, true, !!A.simple), H.length);
+
+### 🤖 Claude — 2026-11-23T03:23:23.244Z
+
+> 🔧 **Bash** `{"command": "sed -n 374,393p tools/world/world.html | cut -c1-260", "description": "Read the foam heap placement block"}`
+
+### 🧑 User — 2026-11-23T03:23:23.282Z
+
+> ↩︎ result: // r47 (user: "make the foam follow the actual river edges"): real 3D foam heaps along the painted foam banks' measured inner edges (both banks,
+>   // the whole strip incl. the painted stretch), placed with the strip's own mapping (lat, d) -> area x / z, sitting in the water, never in a lane
+>   if (A.stripMeta && q.get('stripfoam') !== '0') {
+>     const SM = A.stripMeta, FE = SM.foam_edges, RP_ = LAY.route.points, dsR = LAY.route.ds, zA = RP_[0][2], zB = RP_[RP_.length - 1][2], dEnd = (RP_.length - 1) * dsR, WYl = DR.pool_y ?? -0.02;
+>     const rxz = (z) => { if (z >= zA) return RP_[0][0]; if (z <= zB) return RP_[RP_.length - 1][0]; let lo = 0, hi = RP_.length - 1; while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (RP_[mid][2] > z) lo = mid; else hi = mid; }
+>       const a = RP_[lo], b = RP_[hi]; return a[0] + (b[0] - a[0]) * (z - a[2]) / (b[2] - a[2]); };
+>     const zOfD = (d) => { if (d < 0) return zA - d; if (d > dEnd) return zB - (d - dEnd); const x = d / dsR, i = Math.min(RP_.length - 2, Math.floor(x)); return RP_[i][2] + (RP_[i + 1][2] - RP_[i][2]) * (x - i); };
+>     const toL = (lat, d) => { const z = zOfD(d), sl = (rxz(z + 0.03) - rxz(z - 0.03)) / 0.06; return [rxz(z) + lat * M …[+1915 chars]
+
+### 🤖 Claude — 2026-11-23T03:23:24.536Z
+
+Writing the kit materials into the game page now.
+
+### 🤖 Claude — 2026-11-23T03:23:49.637Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\ndef rep(old,new,cnt=1):\n    global s; assert s.count(old)==cnt, (s.count(old), old[:80]); s=s.replace(old,new)\nrep(\"const SIMPLE = q.get('look') === 'simple', SIMPLE_AREAS = (q.get('simpleareas') ?? '05').split(',');\",\n    \"const KITLOOK = q.get('look') === 'kit';   // r49 KIT candidate: the approved look built from repeating parts + repeating textures\\nconst SIMPLE = q.get('look') === 'simple' || KITLOOK, SIMPLE_AREAS = (q.get('simpleareas') ?? '05').split(',');\")\n# kit wall material (textured) next to simp …[+6009 chars]`
+
+### 🧑 User — 2026-11-23T03:23:49.722Z
+
+> ↩︎ result: 58:const tl = new THREE.TextureLoader(), gltf = new GLTFLoader();
+> 188:const KITTEX = KITLOOK ? (() => { const ld = (f, srgb) => { const t = tl.load('kittex/' + f); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; t.colorSpace = srgb ? THREE.SRGBColorSpace : THREE.NoColorSpace; return t; };
+
+### 🤖 Claude — 2026-11-23T03:24:14.516Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s/t.colorSpace = srgb ? THREE.SRGBColorSpace : THREE.NoColorSpace; return t; };/t.colorSpace = THREE.NoColorSpace; void srgb; return t; };   \\/* display values, like every other texture here *\\//\" tools/world/world.html && python3 - <<'EOF'\np='tools/screenkit/water_ribbon.js'; s=open(p).read()\ndef rep(old,new,cnt=1):\n    global s; assert s.count(old)==cnt, (s.count(old), old[:80]); s=s.replace(old,new)\nrep(\"vec3 stripWater(vec3 L, float t){ vec2 ld = stripLD(L); if (uStripS > 0.5) return stripSimple(ld, t);\",\n\"\"\"// r49 KIT water (uStripS 2): the approved Scre …[+4381 chars]`
+

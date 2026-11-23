@@ -9,7 +9,7 @@ Areas (round 44 route 04 -> A -> B -> 05 -> 06 -> 07; each area's world settings
   04  tube 22 u, open end (the doorway into Bubble Dash)      05  tube 20 u, open end (runs on into the 06 drum)
   06  scaled to the world's ONE Benny (0.468 u), its far drum replaced by the join into 07       07  tube 30 u, open end, scaled
 """
-import argparse, json, os, shutil, subprocess, sys, time
+import argparse, glob, json, os, shutil, subprocess, sys, time
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.abspath(os.path.join(HERE, '..', '..'))
 sys.path.insert(0, os.path.join(REPO, 'tools', 'screenkit'))
 import build as kit   # noqa: E402
@@ -20,10 +20,11 @@ AREAS = [('04', dict(tube_len=22, open_end=True)), ('05', dict(tube_len=20, open
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('ws'); ap.add_argument('--preview', default=''); ap.add_argument('--force', default=''); ap.add_argument('--quiet', action='store_true')
+    ap.add_argument('--variant05', default='')   # r49: 'kit' = the regular kit layout of Screen 05 (separate workspace; the default build is unchanged)
     a = ap.parse_args(); ws = os.path.abspath(a.ws); os.makedirs(ws, exist_ok=True); G = os.path.join(ws, 'game'); force = [s for s in a.force.split(',') if s]
     B = kit.Build(ws, a.quiet, force); t0 = time.time(); area_reports = {}
     for nn, opt in AREAS:   # each area: its own cached kit build (fit -> masks -> GN geometry -> bake + templates)
-        t = time.time(); rep = kit.build_screen(nn, os.path.join(ws, 's' + nn), preview=False, quiet=True, force=force, **opt)
+        t = time.time(); rep = kit.build_screen(nn, os.path.join(ws, 's' + nn), preview=False, quiet=True, force=force, **opt, **({'sets': (f'variant="{a.variant05}"',)} if nn == '05' and a.variant05 else {}))
         area_reports[nn] = rep['steps']; built = [s['step'] for s in rep['steps'] if s['status'] == 'built']
         B.steps.append({'step': f'area {nn}', 'status': ('built: ' + ', '.join(built)) if built else 'cached', 'seconds': round(time.time() - t, 2)})
         B.log(f"  area {nn}   {('built ' + ','.join(built)) if built else 'cached':40s} {time.time() - t:6.1f} s")
@@ -56,8 +57,9 @@ def main():
     B.step('connectors', key, {'connectors.glb': os.path.join(G, 'connectors.glb')}, f_conn)
     def f_files():
         s04 = os.path.join(ws, 's04', 'game')
+        os.makedirs(os.path.join(G, 'kittex'), exist_ok=True)
         for src, dst in [(os.path.join(HERE, 'world.html'), 'play3.html'), (os.path.join(REPO, 'tools/screenkit/bake.js'), 'bake.js'), (os.path.join(REPO, 'tools/screenkit/qa.js'), 'qa.js'), (os.path.join(REPO, 'tools/screenkit/water_ribbon.js'), 'water_ribbon.js'), (os.path.join(REPO, 'tools/kit05/controls.js'), 'controls.js'),
-                         (os.path.join(REPO, 'tools/kit05/swimfx.js'), 'swimfx.js')] + [(os.path.join(s04, f), f) for f in ('benny31.glb', 'bake.png', 'coin.png', 'splash.png', 'bubble.png', 'glint.png')]:
+                         (os.path.join(REPO, 'tools/kit05/swimfx.js'), 'swimfx.js')] + [(p_, os.path.join('kittex', os.path.basename(p_))) for p_ in sorted(glob.glob(os.path.join(REPO, 'tools/screenkit/kittex/*.png')))] + [(os.path.join(s04, f), f) for f in ('benny31.glb', 'bake.png', 'coin.png', 'splash.png', 'bubble.png', 'glint.png')]:
             shutil.copyfile(os.path.realpath(src), os.path.join(G, dst))
         nm = os.path.join(G, 'node_modules')
         if os.path.lexists(nm): os.remove(nm)

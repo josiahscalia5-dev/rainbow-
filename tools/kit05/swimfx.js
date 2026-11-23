@@ -21,7 +21,7 @@ export function sprayOnly(THREE, tex) {
 }
 export function installSwimFx({ THREE, scene, splash, q }) {
   const OFF = q.get('swimfx') === '0';
-  const MOVE = q.get('move') === '1', SIMPLE = q.get('look') === 'simple';   // r48 candidate: contact collar + kicks at his body (no detached foam puffs)   // round 36c: the user's reference-video swimming (foam collar, bubble trails, big ripple rings, stronger wake)
+  const MOVE = q.get('move') === '1', SIMPLE = q.get('look') === 'simple' || q.get('look') === 'kit';   // r48 candidate: contact collar + kicks at his body (no detached foam puffs)   // round 36c: the user's reference-video swimming (foam collar, bubble trails, big ripple rings, stronger wake)
   const P = { WAKE_AGE: 1.1, WAKE_W0: 0.085, WAKE_SPREAD: 0.3, DRIFT: 0.55, WAKE_A: MOVE ? 0.85 : 0.55, RIPPLE_T: MOVE ? 1.0 : 0.75, PUFF_T: 0.6, SPL_FLOW: 0.035,
     RIP_SIZE: MOVE ? 0.12 : 0.07, RING_EVERY: 0.55, TRAIL_RATE: 110, TRAIL_LIFE: 0.95, COLLAR_A: 0.95, KICK_BACK: SIMPLE ? 0.04 : 0.11, PUFF_DRIFT: SIMPLE ? 0.12 : -1 };
   if (SIMPLE) { P.PUFF_T = 0.32; P.COLLAR_A = 0.8; }

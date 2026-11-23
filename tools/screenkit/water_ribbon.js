@@ -175,7 +175,39 @@ vec3 stripSimple(vec2 ld, float t){
     float st = exp(-dot(q, q) / 0.0009) + exp(-abs(q.x) / 0.05) * exp(-q.y * q.y / 0.00006);
     col = mix(col, vec3(1.0), clamp(st * (0.35 + 0.65 * tw * tw), 0.0, 1.0) * (1.0 - smoothstep(0.08, 0.35, max(fwidth(g.x), fwidth(g.y))))); }
   return clamp(col, 0.0, 1.0); }
-vec3 stripWater(vec3 L, float t){ vec2 ld = stripLD(L); if (uStripS > 0.5) return stripSimple(ld, t); float p = fract(t * 0.35), w1 = 1.0 - abs(2.0 * p - 1.0);
+// r49 KIT water (uStripS 2): the approved Screen 05 WATER STYLE as one continuous material - silky strands of saturated cyan and hot pink that
+// follow the river (the painting's colours: cyan 4,139,234 / 10,168,250 / 42,220,249, pink 204,32,159 / 244,60,215 / 248,110,236), fine silk
+// streaks inside every strand, bright white glints with long horizontal flares, deep blue toward the foam. All in (lat, d) of the river.
+vec3 stripStyled(vec2 ld, float t){
+  float lat = ld.x, d = ld.y + t * 1.1, sw = 0.09 * sin(ld.y * 0.9 + 0.5) + 0.05 * sin(ld.y * 2.3 + 1.7);   // strands meander a little inside the river
+  float u = (lat + sw) / 0.82, au = abs(u);
+  vec3 cyD = vec3(4.0, 139.0, 234.0) / 255.0, cyM = vec3(10.0, 168.0, 250.0) / 255.0, cyB = vec3(42.0, 220.0, 249.0) / 255.0;
+  vec3 pkD = vec3(204.0, 32.0, 159.0) / 255.0, pkM = vec3(244.0, 60.0, 215.0) / 255.0, pkB = vec3(248.0, 110.0, 236.0) / 255.0;
+  // strand layout across the river (centre -> edge, both sides): cyan core, pink strand, cyan, broad pink strand, cyan-blue edge
+  float k = au + 0.05 * sin(d * 0.8 + u * 3.0) + 0.03 * stripN(vec2(u * 6.0, d * 0.4));
+  float e = max(0.03, 1.2 * fwidth(k));
+  float p1 = smoothstep(0.2 - e, 0.26 + e, k) * (1.0 - smoothstep(0.36 - e, 0.42 + e, k));
+  float p2 = smoothstep(0.52 - e, 0.58 + e, k) * (1.0 - smoothstep(0.8 - e, 0.86 + e, k));
+  float pk = max(0.85 * p1, p2);
+  vec3 cy = mix(cyB, cyM, smoothstep(0.0, 0.5, k)); cy = mix(cy, cyD, smoothstep(0.85, 1.05, k));
+  float pc = max(p1 * (1.0 - abs(k - 0.31) / 0.11), p2 * (1.0 - abs(k - 0.69) / 0.17));
+  vec3 pink = mix(pkD, pkM, smoothstep(0.0, 0.5, pc)); pink = mix(pink, pkB, smoothstep(0.55, 1.0, pc));
+  vec3 col = mix(cy, pink, pk);
+  // silk: fine streaks along the flow inside every strand (anti-aliased, they fade to their average where smaller than a pixel)
+  float w = u * 70.0 + 1.2 * stripN(vec2(u * 8.0, d * 0.35)), fw = max(fwidth(w), 1e-4), f = abs(fract(w) - 0.5) * 2.0;
+  float silk = (1.0 - smoothstep(0.0, max(0.35, 1.6 * fw), f)) * (0.4 + 0.6 * stripN(vec2(floor(w) * 0.7, d * 1.3))) * (1.0 - smoothstep(0.3, 0.8, fw));
+  col = mix(col, mix(vec3(0.82, 1.0, 1.0), vec3(1.0, 0.75, 0.97), pk), 0.35 * silk);
+  // glossy light bands drifting with the flow
+  float gb = smoothstep(0.6, 0.9, stripN(vec2(u * 2.5, d * 0.5))); col = mix(col, col * 1.18 + 0.05, 0.6 * gb);
+  // white glints with long horizontal flares (painting), screen-size aware so they never shimmer away
+  vec2 g = vec2(u * 9.0, d * 2.2); vec2 c = floor(g); float h = stripH(c + 2.3);
+  if (h < 0.3) { vec2 pcn = c + vec2(0.2 + 0.6 * stripH(c + 5.1), 0.2 + 0.6 * stripH(c + 8.7)); vec2 q = (g - pcn) / vec2(9.0, 2.2);
+    float pfx = max(fwidth(u), 1e-5), pfy = max(fwidth(d), 1e-5), tw = 0.5 + 0.5 * sin(t * 3.4 + h * 70.0);
+    vec2 cs = vec2(max(0.004, 1.3 * pfx), max(0.006, 1.3 * pfy)); float fx_ = max(0.025, 7.0 * pfx), fy_ = max(0.0025, 0.6 * pfy);
+    float st = exp(-dot(q / cs, q / cs)) + exp(-abs(q.x) / fx_) * exp(-(q.y * q.y) / (fy_ * fy_)) + 0.4 * exp(-abs(q.y) / max(0.01, 2.5 * pfy)) * exp(-(q.x * q.x) / (0.0016 + pfx * pfx));
+    col = mix(col, vec3(1.0), clamp(st * (0.45 + 0.55 * tw * tw), 0.0, 1.0)); }
+  return clamp(col, 0.0, 1.0); }
+vec3 stripWater(vec3 L, float t){ vec2 ld = stripLD(L); if (uStripS > 1.5) return stripStyled(ld, t); if (uStripS > 0.5) return stripSimple(ld, t); float p = fract(t * 0.35), w1 = 1.0 - abs(2.0 * p - 1.0);
   float u = (ld.x + uStripP.x) / (2.0 * uStripP.x), v1 = (ld.y + (p - 0.5) * uStripP.w - uStripP.y) / uStripP.z, v2 = (ld.y + (fract(p + 0.5) - 0.5) * uStripP.w - uStripP.y) / uStripP.z;
   vec3 col = mix(texture2D(uStrip, vec2(u, v2)).rgb, texture2D(uStrip, vec2(u, v1)).rgb, w1);
   // r47b the painting's BROKEN WHITE REFLECTIONS the texture is too coarse to hold close up: thin white streaks along the flow (broken into
@@ -193,7 +225,7 @@ vec3 stripWater(vec3 L, float t){ vec2 ld = stripLD(L); if (uStripS > 0.5) retur
              + 0.6 * exp(-abs(q.y) / max(0.014, 3.0 * pfy)) * exp(-(q.x * q.x) / (max(0.003, 0.7 * pfx) * max(0.003, 0.7 * pfx)));
     col = mix(col, vec3(1.0), clamp(st * tw * smoothstep(0.3, 0.6, lum), 0.0, 1.0) * (1.0 - smoothstep(0.25, 0.6, max(fwidth(g.x), fwidth(g.y))))); }
   return col; }`;
-export const stripCopy = (sfx) => STRIP_GLSL.replace(/\b(uStripR|uStripD|uStripP|uStripZ|uStripE|uStripS|uStrip|stripTex1|stripLD|stripWater|stripH|stripN|stripSimple)\b/g, '$1' + sfx);   // (local names lat, d, g ... are function-scoped)
+export const stripCopy = (sfx) => STRIP_GLSL.replace(/\b(uStripR|uStripD|uStripP|uStripZ|uStripE|uStripS|uStrip|stripTex1|stripLD|stripWater|stripH|stripN|stripSimple|stripStyled)\b/g, '$1' + sfx);   // (local names lat, d, g ... are function-scoped)
 // uniforms of an area's strip: the route x by z and arc length by z (float, 4096 samples), the strip texture, its ranges
 export function stripUniforms(THREE, LAY, meta, tex) {
   const P = LAY.route.points, ds = LAY.route.ds, N = 4096, zA = P[0][2], zB = P[P.length - 1][2], dEnd = (P.length - 1) * ds;

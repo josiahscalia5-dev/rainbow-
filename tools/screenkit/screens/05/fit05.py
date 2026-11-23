@@ -20,6 +20,7 @@ import fitlib as fl   # noqa: E402
 ap = argparse.ArgumentParser(); ap.add_argument('out'); ap.add_argument('--da2'); ap.add_argument('--set', action='append', default=[])
 ap.add_argument('--tube-len', type=float, default=40.0); ap.add_argument('--open-end', action='store_true')
 a = ap.parse_args(); os.makedirs(a.out, exist_ok=True)
+VARIANT = next((json.loads(kv.split('=', 1)[1]) for kv in a.set if kv.split('=', 1)[0] == 'variant'), None)   # r49: 'kit' = the regular kit layout (user's preview)
 REF = 'references/05_flow_into_the_current.png'; W, H = 864, 1536
 M = dict(vp=(500.0, 474.0), ring=(437.0, 560.0, 420.0), waterline_y=700.0,
          benny_water=(430.0, 1185.0), benny_top=(430.0, 770.0),
@@ -55,6 +56,13 @@ def _cap(x):
     o = x - xa; a_ = abs(o)
     return x if a_ <= RC_L - RC_K else xa + math.copysign(RC_L - RC_K + RC_K * (1.0 - math.exp(-(a_ - (RC_L - RC_K)) / RC_K)), o)
 ctrl = [np.array([_cap(float(p[0])), float(p[1]), float(p[2])]) for p in ctrl]
+if VARIANT == 'kit':
+    # r49 KIT layout (the user's preview 2026-11-23: "one gentle river route"): through Benny's painted water point, then ONE gentle S along the
+    # whole tube - +-0.2 u around the drum axis, one swing every 3 rings (7.8 u), easing out over the last 6 u (the world joins 05 -> 06 on the axis)
+    KA, KL = 0.2, 3.0 * 2.6; off0 = float(Pb[0] - xa); ph0 = math.asin(max(-1.0, min(1.0, off0 / KA)))
+    ctrl = [Pb + np.array([0, 0, 1.2]), Pb]
+    for z in np.arange(Pb[2] - 0.75, far, -0.75):
+        k_out = min(1.0, max(0.0, (z - far) / 6.0)); ctrl.append(np.array([xa + KA * k_out * math.sin(ph0 + 2 * math.pi * (Pb[2] - z) / KL), 0.0, z]))
 route, s = fl.catmull_rom(np.array(ctrl), 0.05)
 route[:, 1] = 0.0
 paddles = []
@@ -113,6 +121,12 @@ lay['clean_metal'] = True   # r47: rings / paddles shaded as physical metal, wal
 # one even spacing is the best physical fit: 2.1 u puts rings at -3.99 (fitted) / -8.19 / -14.49 (two painted rings within 0.1 u; -6.09 vs
 # painted -5.46). The wall's painted ring pixels are no longer used, so the 3D rings ARE the rings - consistent while swimming
 lay['rings']['spacing'] = 2.1   # r47: the strip's measured foam edges place the 3D foam (world.html)
+if VARIANT == 'kit':
+    # r49 KIT: evenly repeated gold rings (2.6 u, broad rounded bands; also one ring behind Benny = the painting's big near frame), copper trays at
+    # every ring, the 3D foam clusters along both river edges (world.html), no painted pixels on the water / walls (repeating textures instead)
+    lay['rings'] = {'z': [z_ring0 + 2.6 * k for k in (1, 0)], 'spacing': 2.6, 'band': 0.5}
+    lay['machinery'] = {'every': 1, 'clear_y': [float(cam.C[1]), 0.5], 'scale': 0.8, 'z_from': float(z_ring0 - 0.5)}
+    lay['kit'] = {'foam_lat': 0.82, 'water_half': 0.82}
 for kv in a.set:
     k, v = kv.split('=', 1); v = json.loads(v)
     if k == 'river_ribbon' and v:                                # one-factor test: the S-river as its own water ribbon along Benny's route
