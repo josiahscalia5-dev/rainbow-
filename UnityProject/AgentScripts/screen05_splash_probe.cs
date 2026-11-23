@@ -29,7 +29,8 @@ if (smr != null)
     var m = new Mesh();
     smr.BakeMesh(m, false);
     var vs = m.vertices;
-    Matrix4x4 L = smr.transform.localToWorldMatrix;
+    // BakeMesh(useScale: false) already comes out at world scale: place it with the renderer's position + rotation only
+    Matrix4x4 L = Matrix4x4.TRS(smr.transform.position, smr.transform.rotation, Vector3.one);
     float minDy = 1e9f, maxDy = -1e9f;
     float[] bandLo = { -0.4f, -0.2f, -0.1f, -0.03f, 0.03f, 0.1f, 0.2f, 0.3f, 0.45f, 0.6f, 0.8f };
     float[] bandHi = { -0.2f, -0.1f, -0.03f, 0.03f, 0.1f, 0.2f, 0.3f, 0.45f, 0.6f, 0.8f, 1.0f };
@@ -38,6 +39,11 @@ if (smr != null)
     int[] cnt = new int[nb];
     for (int b = 0; b < nb; b++) { rMin[b] = fMin[b] = pxMin[b] = 1e9f; rMax[b] = fMax[b] = pxMax[b] = pyMax[b] = -1e9f; }
     float scrBottom = -1e9f; float scrBottomX = 0f;
+    // waterline footprint per 15-degree sector (angle from straight BACK toward his right) and the silhouette bottom per
+    // 20-px screen column (lowest point above the water)
+    float[] secR = new float[24];
+    float[] colY = new float[44];
+    for (int k = 0; k < colY.Length; k++) colY[k] = -1f;
     for (int i = 0; i < vs.Length; i++)
     {
         Vector3 w = L.MultiplyPoint3x4(vs[i]);
@@ -49,6 +55,17 @@ if (smr != null)
         float r = Vector3.Dot(d, right), f = Vector3.Dot(d, fwd);
         Vector2 sp = proj(w);
         if (dy > 0f && sp.y > scrBottom) { scrBottom = sp.y; scrBottomX = sp.x; }
+        if (dy > -0.04f && dy < 0.06f)
+        {
+            float ang = Mathf.Atan2(r, -f) * Mathf.Rad2Deg; // 0 = straight back (toward the camera), +90 = his right
+            int sIdx = Mathf.Clamp(Mathf.FloorToInt((ang + 180f) / 15f), 0, 23);
+            secR[sIdx] = Mathf.Max(secR[sIdx], Mathf.Sqrt(r * r + f * f));
+        }
+        if (dy > 0f)
+        {
+            int cI = Mathf.FloorToInt(sp.x / 20f);
+            if (cI >= 0 && cI < colY.Length) colY[cI] = Mathf.Max(colY[cI], sp.y);
+        }
         for (int b = 0; b < nb; b++)
         {
             if (dy < bandLo[b] || dy >= bandHi[b]) continue;
@@ -64,6 +81,12 @@ if (smr != null)
         if (cnt[b] > 0)
             sb.AppendLine(string.Format("  dy {0,5:0.00}..{1,5:0.00} n {2,5}  right {3,6:0.00}..{4,6:0.00}  fwd {5,6:0.00}..{6,6:0.00}  screen x {7,4:0}..{8,4:0} maxY {9,4:0}",
                 bandLo[b], bandHi[b], cnt[b], rMin[b], rMax[b], fMin[b], fMax[b], pxMin[b], pxMax[b], pyMax[b]));
+    var fl = new System.Text.StringBuilder("  waterline footprint radius by angle from back (deg:r):");
+    for (int k = 0; k < 24; k++) fl.Append(" " + (k * 15 - 180 + 7) + ":" + secR[k].ToString("0.00"));
+    sb.AppendLine(fl.ToString());
+    var cl = new System.Text.StringBuilder("  silhouette bottom (screen col x: max y above water):");
+    for (int k = 10; k < 34; k++) if (colY[k] > 0f) cl.Append(" " + (k * 20 + 10) + ":" + colY[k].ToString("0"));
+    sb.AppendLine(cl.ToString());
     UnityEngine.Object.Destroy(m);
 }
 // projection of the water plane around Benny (lat = + right, back = toward the camera)
