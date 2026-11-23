@@ -6881,3 +6881,118 @@ The candidate's recording (same 9.5 s section, 9 real touch swipes including a j
 
 > 🔧 **Bash** `{"command": "until grep -q EXIT /home/user/ws48/rec/tex.log; do sleep 15; done; cd /home/user/rainbow- && python3 -c \"\nimport json; d=json.load(open('/home/user/ws48/rec/tex/checks.json')); print(json.dumps({k:d.get(k) for k in ('frames','errors','benny_offscreen_frames','camera_max_step_u','camera_max_step_expected_u','camera_max_turn_deg_per_frame','scenery_meshes_moved','edge_guard','frame_qa','swipes_sent','coins_end','s_end')})); print([(e['dir'],e['result']) for e in d['input_log']])\"; mkdir -p qa/kit48/run && nice -n 5 python3 -I tools/reflock/encode_run.py /home/user/ws48/rec/tex qa …[+381 chars]`
 
+### 🧑 User — 2026-11-23T02:03:19.385Z
+
+> ↩︎ result: {"frames": 285, "errors": [], "benny_offscreen_frames": 0, "camera_max_step_u": 0.11, "camera_max_step_expected_u": 0.1173, "camera_max_turn_deg_per_frame": 0.509, "scenery_meshes_moved": [], "edge_guard": {"max_optical_shift_px": 18.7, "last_optical_corrections": 30}, "frame_qa": {"camera_clearance_min_u": 0.724, "water_gap_abs_max_u": 0.012, "frames_without_water_under_benny": 0, "immersion_min": -0.51, "immersion_max": 0.155, "benny_tilt_vs_surface_max_deg": 13.16, "bank_max_deg": 0, "benny_height_px_min": 273.29999999999995, "benny_height_px_max": 309.7, "benny_lean_max_deg": 13.16, "benny_lean_max_step_deg_per_frame": 2.69, "camera_roll_max_deg": 0.82, "camera_roll_max_step_deg_per_frame": 0.08}, "swipes_sent": 9, "coins_end": 1370, "s_end": 113.327}
+> [('right', 'lane'), ('left', 'lane'), ('left', 'lane'), ('right', 'lane'), ('right', 'lane'), ('left', 'lane'), ('left', 'lane'), ('right', 'lane'), ('up', 'leap')]
+> wrote qa/kit48/run/SECTION_05_SIMPLE_candidate_real_touch.mp4 4.9 MB 285 frames
+> holes 0 0 285
+
+### 🤖 Claude — 2026-11-23T02:03:24.878Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/ws48/rec/tex && python3 - <<'EOF'\nimport json\nfrom PIL import Image, ImageDraw, ImageFont\nF=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',17)\nL=json.load(open('run_log.json'))\npicks=[(20,'RIGHT lane'),(52,'LEFT lane'),(72,'approved camera position'),(115,'RIGHT lane'),(155,'LEFT lane, bend'),(222,'jump'),(270,'end of section')]\nW=Image.new('RGB',(len(picks)*416,915+60),(30,15,50)); d=ImageDraw.Draw(W)\nfor k,(i,t) in enumerate(picks):\n    f=L[i]; W.paste(Image.open(f'f_{i:05d}.png').convert('RGB'),(k*416,60)); d.text((k*416+8,6),t,f …[+281 chars]`
+
+### 🧑 User — 2026-11-23T02:03:25.090Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-23T02:03:25.331Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/kit48/stills/SECTION_05_SIMPLE_run_frames.jpg"}`
+
+### 🧑 User — 2026-11-23T02:03:25.439Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-23T02:03:25.431Z
+
+[Image: original 2912x975, displayed at 2000x670. Multiply coordinates by 1.46 to map to original image.]
+
+### 🤖 Claude — 2026-11-23T02:03:35.352Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/kit48/README.md'; s=open(p).read()\ns=s.replace(\"## Files\", \"\"\"## Functional checks of the candidate run (same 9 real touch swipes as the round-47 section; materials only changed, no geometry)\n| check | result (285 frames, 9.5 s, normal speed) |\n|---|---|\n| touches sent / detected / applied | 9 / 9 / 9 (8 lane changes incl. 2 double swipes, 1 jump) |\n| Benny's whole animated body outside the screen | 0 frames |\n| hole pixels | 0 frames |\n| scenery moving with the camera | none |\n| camera step / turn per frame | 0.110 u (limit 0.117) / 0.51 deg; …[+1459 chars]`
+
+### 🧑 User — 2026-11-23T02:03:40.968Z
+
+> ↩︎ result: Uploading LFS objects: 100% (1/1), 4.9 MB | 0 B/s, done.
+> 82de16cd908b
+> 82de16cd908b
+> AUTOSAVE OK | branch claude/rainbow-05-simple-candidate-r48 | scheduler daemon | last verified backup 2026-11-23T02:01:19+00:00 (2.4 min ago) | local 82de16c remote 82de16c (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-23T02:03:45.660Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/kit48/APPROVED_vs_CANDIDATE.jpg", "/home/user/rainbow-/qa/kit48/run/SECTION_05_SIMPLE_candidate_real_touch.mp4", "/home/user/rainbow-/qa/kit48/stills/SECTION_05_SIMPLE_run_frames.jpg", "/home/user/rainbow-/qa/kit48/stills/BEFORE_AT_AFTER_approved_camera.jpg", "/home/user/rainbow-/qa/kit48/README.md", "/home/user/rainbow-/qa/kit47/stills/SECTION_05_run_stills_sheet.jpg", "/home/user/rainbow-/qa/kit47/README.md"], "caption": "Simple candidate: your approved picture beside a real game screenshot at the same camera, the uninterrupted 9.5 s recording (forward swim …[+230 chars]`
+
+### 🧑 User — 2026-11-23T02:03:46.791Z
+
+> ↩︎ result: 7 files delivered to user.
+>   /home/user/rainbow-/qa/kit48/APPROVED_vs_CANDIDATE.jpg → file_uuid: b283e373-757c-4a5a-b687-da4da450b675
+>   /home/user/rainbow-/qa/kit48/run/SECTION_05_SIMPLE_candidate_real_touch.mp4 → file_uuid: 1c32b2d8-2929-494d-a9b7-b6fa5109726a
+>   /home/user/rainbow-/qa/kit48/stills/SECTION_05_SIMPLE_run_frames.jpg → file_uuid: 928ef3af-b55f-46f5-90e3-0123f52510e1
+>   /home/user/rainbow-/qa/kit48/stills/BEFORE_AT_AFTER_approved_camera.jpg → file_uuid: 2eee8f2f-aa42-4837-a54e-02389236cdf7
+>   /home/user/rainbow-/qa/kit48/README.md → file_uuid: a72a49c8-ad9f-4da5-9aa5-a6bb47610bbf
+>   /home/user/rainbow-/qa/kit47/stills/SECTION_05_run_stills_sheet.jpg → file_uuid: 2b1c32d0-a293-4b3f-90cd-891e4f74c41d
+>   /home/user/rainbow-/qa/kit47/README.md → file_uuid: bc736d49-5cbc-456f-becd-319608633d5e
+
+### 🤖 Claude — 2026-11-23T02:03:49.387Z
+
+> 🔧 **TaskUpdate** `{"taskId": "13", "status": "completed", "description": "?look=simple candidate built and recorded (qa/kit48), functional checks pass, pushed 82de16c. Awaiting the user's judgement."}`
+
+### 🧑 User — 2026-11-23T02:03:49.412Z
+
+> ↩︎ result: Updated task #13 description, status
+
+### 🤖 Claude — 2026-11-23T02:04:00.659Z
+
+The simple candidate of Screen 05 is ready for you to judge. I've sent you:
+- your approved picture beside a real game screenshot at the same camera;
+- one uninterrupted 9.5-second recording with forward swimming, both steering extremes and a jump;
+- still sheets from before, at and after the approved camera position.
+
+The candidate is a switch in your existing game: add `look=simple` to the game page address. Without it the game is unchanged, so you can compare the two directly.
+
+**Round 47 first (your previous request, not approved).** I removed the boundary in the water where the painted patch met the plainer water: the river is now one continuous surface. The cause was two overlapping water surfaces, each with its own painted texture. The approved look was not achieved, though. Seen from the approved camera position, that version looked clearly less like your painting than Round 46: the rings came out as thin tubes and the water was smeared. `qa/kit47/README.md` lists what would have to be rebuilt to fix that. The simple candidate builds on that continuous river.
+
+**What the candidate uses.** Same route, controls, coins and camera as before. I didn't change any shapes, only materials, so no extra contact or collision checks were needed.
+
+| Part | Candidate look |
+|---|---|
+| Tunnel | Lavender/purple drum metal with rounded oval perforations and soft pink-lit rims |
+| Rings | Your existing rounded Blender rings in polished gold, with warm lamp dots |
+| Machinery | Clean copper trays |
+| Water | One continuous bright cyan river with broad hot-pink ribbons winding through it in S-curves, plus soft light bands; no painted patch anywhere |
+| Foam and bubbles | Soft white foam banks along the river edges, with bubbles along both banks |
+
+**Benny.** I kept the existing model and didn't add fur detail:
+- **Light:** softer light from above and a warm pink edge glow, so he reads rounder.
+- **Water contact:** a soft shade on the water directly under him, and a foam ring at his waist.
+- **Splash:** the white kick puffs that used to drift away in front of the camera now stay at his body.
+
+**Gameplay checks** (285 frames at normal speed):
+
+| Check | Result |
+|---|---|
+| Touch swipes | all 9 applied (8 lane changes and 1 jump) |
+| Benny cut off at the screen edge | 0 frames |
+| Holes in the scenery | 0 frames |
+| Scenery moving with the camera | none |
+| Camera movement | smooth, no jumps |
+| Water under Benny | in every frame |
+| Coins | the same 4 collected as in the current version |
+
+**What I simplified:** the painted textures, tiny water streaks and sparkles, complicated reflections, individual foam bubbles and fine surface detail.
+
+**Still needs improvement:**
+- The water close to the camera is softer and more pastel than your painting's saturated cyan and pink.
+- Far away, the pink ribbons compress into zig-zags.
+- The tunnel walls are less bright and magenta than in the painting, and the slots form a very regular grid.
+- The rings are thinner than the painted broad gold bands.
+- The foam banks are plain white mounds.
+
+If this direction feels like your game, I'll apply it to the rest of Screen 05 next, then Screen 06. Everything is saved on GitHub on branch `claude/rainbow-05-simple-candidate-r48` (`82de16c`), and the five-minute autosave is running and verified. The Round 46 branch is untouched.
+
+### 🧑 User — 2026-11-23T02:04:08.554Z
+
+Should use blender etc something make this happen
+

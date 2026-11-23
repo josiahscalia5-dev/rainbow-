@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28923,
-   "sha256": "f28a34ae43c88fd10d6483674f19e3fc694978ebed81a11363580d2a088f0610"
+   "sha256": "2463f4f4dab7a2e984ce0794457b714e53dcb7c181763007b4b693dde0d17648"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2961,
-   "sha256": "d5bb3a31faf8d6f1d253fe6eb08eb0c5d27311851470692e6d627daf0ce6b131"
+   "sha256": "7000c209085b20b1cf7c77c724da32a9b40d0194918d2e09edac7133b8edfbcd"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -23938,13 +23938,28 @@
   },
   {
    "path": "qa/kit48/README.md",
-   "bytes": 3140,
-   "sha256": "d58a161e4294cb744f33c1c2594f4479981a09ac69e72fe88fe5818d99744915"
+   "bytes": 3796,
+   "sha256": "a02ee9d41e58e39c14aab5ccea15af03acaeb7e5c01cb56c014e25933229ba70"
+  },
+  {
+   "path": "qa/kit48/run/SECTION_05_SIMPLE_candidate_real_touch.mp4",
+   "bytes": 4897469,
+   "sha256": "62034a73c58448fd772d248dc4d0afb6df333155c897e0540edb8c68c765baf9"
+  },
+  {
+   "path": "qa/kit48/run/SECTION_05_SIMPLE_candidate_real_touch_checks.json",
+   "bytes": 1831,
+   "sha256": "755c26ecff130c790b4ac329097d52216bc4730849b408228fbf1c1a42b40d0c"
   },
   {
    "path": "qa/kit48/stills/BEFORE_AT_AFTER_approved_camera.jpg",
    "bytes": 469425,
    "sha256": "3d01a4b5881ec76bdcb7810761332b3a9a5e01db9539a2bc27584c03b655f66f"
+  },
+  {
+   "path": "qa/kit48/stills/SECTION_05_SIMPLE_run_frames.jpg",
+   "bytes": 756962,
+   "sha256": "b71a71011e292434e0c60907a3bc652a51c7bc951280f880799c5efe459a050f"
   },
   {
    "path": "qa/kit48/stills/still_AFTER_it.jpg",
