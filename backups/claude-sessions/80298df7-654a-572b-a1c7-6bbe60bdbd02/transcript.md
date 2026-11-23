@@ -3621,3 +3621,55 @@ Since the cause isn't certain, these fixes may not make the folder usable from a
 
 Tell me when you've updated the app or changed the folder and I'll check again. As soon as the folder shows as usable, I'll request it (you approve on your device) and start with Unity, your sign-in and the license on the laptop.
 
+### 🧑 User — 2026-11-23T10:39:28.726Z
+
+i did it
+
+### 🤖 Claude — 2026-11-23T10:39:30.751Z
+
+The Unity plugin is now active in this session: its skills (`unity:unity-cli`, `unity:new-unity-project` and the rest) just loaded. Checking the laptop again:
+
+### 🤖 Claude — 2026-11-23T10:39:30.755Z
+
+> 🔧 **mcp__claude-code-remote__list_computer_folders** `{}`
+
+### 🧑 User — 2026-11-23T10:39:30.936Z
+
+> ↩︎ result: {"folders":[],"cannot_be_used":[{"computer_name":"LAPTOP-7BA6G3BC","folder":"claude yes","reason":"not_available","explanation":"This folder is in the user's Remote Control list, but that computer does not offer it to cloud sessions and did not say why. The usual causes: it is inside a hidden directory directly under the home directory or ~/Library, or the Claude app on that computer needs updating (on Windows, to a version that serves folders there)."}]}
+
+### 🤖 Claude — 2026-11-23T10:39:31.052Z
+
+> 🔧 **ListPlugins** `{"keywords": ["unity"]}`
+
+### 🧑 User — 2026-11-23T10:39:31.159Z
+
+> ↩︎ result: {"results":[]}
+
+### 🤖 Claude — 2026-11-23T10:39:45.056Z
+
+The Unity plugin is working now: its skills, including `unity-cli` and `new-unity-project`, loaded into this session. The laptop still won't share its folder. LAPTOP-7BA6G3BC shows the same folder, "claude yes", with the same status: it doesn't offer the folder to cloud sessions and gives no reason.
+
+The likely causes are the same as before:
+
+- **Hidden location:** the folder sits inside a hidden folder directly under your home folder.
+- **App version:** the Windows Claude app is a version that doesn't serve folders to cloud sessions.
+
+It still shows the same folder name, so either the change didn't take effect yet (fully quit and reopen the Claude app), or the cause is something else. I can't tell which from here, and I won't keep you going in circles on it.
+
+**The most reliable way forward** is to run this test in a Claude Code session on the laptop itself, in the Claude desktop app there. That session can drive Unity directly through the CLI and the Unity plugin. Paste this into it:
+
+```
+Rainbow game: evaluate Unity for Screen 05. Repo josiahscalia5-dev/rainbow-, branch ccr-6deca498-03lhkc.
+Read docs/briefs/2026-11-23-r48/UNITY_EVAL_R48.md (my order verbatim + the requirement check) and CLAUDE.md first.
+On this computer: install the Unity CLI if missing (irm https://unity.com/install.ps1 | iex), let me sign in (unity auth login),
+then ask me before activating the free Personal license and installing Unity 6000.3.29f1 with Android support.
+Create a SEPARATE Unity 6.3 LTS URP project outside the existing game's folders (my existing game must stay untouched and saved),
+add com.unity.pipeline and glTFast, import assets/models/benny31.glb and the Screen 05 models that import correctly, and build the
+short playable Screen 05 section from references/05_flow_into_the_current.png: camera + river layout, rounded gold fittings, purple drum,
+flowing cyan/pink water, soft Benny shading and water contact, forward movement, left/right steering, jump, coins, a readable ending.
+Show it at the reference's portrait proportions, make an Android APK and a continuous gameplay recording, list the remaining visual
+differences, and report device performance only if measured on a real phone. Free tools and existing assets only.
+```
+
+If you'd rather keep working from your phone, fix the folder sharing and tell me. I'll check again, ask to use the folder (you approve on the laptop) and do the same steps from here.
+

@@ -1,5 +1,5 @@
 {
- "time_utc": "2026-11-23T10:39:02+00:00",
+ "time_utc": "2026-11-23T10:39:59+00:00",
  "lead_branch": "ccr-6deca498-03lhkc",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
@@ -56,13 +56,14 @@
   "worldlabs@worldlabs"
  ],
  "plugins_synced_from_claude_account": [
-  "Accelerate design workflows \u2014 critique, design system management, UX writing, accessibilit",
-  "TypeScript/JavaScript language server for Claude Code that runs TypeScript 7's native LSP ",
-  "Create new skills, improve existing skills, and measure skill performance. Use when users ",
+  "Unity's official plugin for Claude Code, with curated skills for game development, monetiz",
   "Three.js/GLSL debugging for Claude Code \u2014 correlates scene graph, console, GL state, and p",
+  "TypeScript/JavaScript language server for Claude Code that runs TypeScript 7's native LSP ",
+  "Accelerate design workflows \u2014 critique, design system management, UX writing, accessibilit",
   "Semantic code analysis MCP server providing intelligent code understanding, refactoring su",
-  "Browser automation and end-to-end testing MCP server by Microsoft. Enables Claude to inter",
-  "Analyze codebases and recommend tailored Claude Code automations such as hooks, skills, MC"
+  "Analyze codebases and recommend tailored Claude Code automations such as hooks, skills, MC",
+  "Create new skills, improve existing skills, and measure skill performance. Use when users ",
+  "Browser automation and end-to-end testing MCP server by Microsoft. Enables Claude to inter"
  ],
  "plugins_synced_from_claude_account_names": [
   "claude-code-setup",
@@ -71,7 +72,8 @@
   "playwright",
   "serena",
   "skill-creator",
-  "typescript-native-lsp"
+  "typescript-native-lsp",
+  "unity"
  ],
  "mcp_servers_configured": [
   "spectorjs",
