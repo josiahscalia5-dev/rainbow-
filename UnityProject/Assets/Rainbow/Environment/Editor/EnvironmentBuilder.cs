@@ -59,7 +59,9 @@ namespace Rainbow.Screen05.EditorTools
             SetupGold(frameMat, pano, 2);
             Material throatMat = MakeMaterial("Throat05", "Rainbow/Screen05/ThroatGlow");
             SetFloat(throatMat, "_ThroatIntensity", 1f);
-            SetVec(throatMat, "_ThroatParams", new Vector4(0.25f, 9f, 0.15f, 0.8f));
+            // light round 2026-11-23: no light rays (they bloomed into a white starburst; the approved vanishing point is a
+            // soft warm glow inside the last rings), gradient radius 1:1 with the cap (RainbowThroatGlow.hlsl palette)
+            SetVec(throatMat, "_ThroatParams", new Vector4(0f, 9f, 0.15f, 1f));
             Material farRiverMat = MakeMaterial("FarRiver05", "Rainbow/Screen05/FarRiver");
             float riverHalf = DrumLayout05.WaterChord(DrumLayout05.FarRiverStart) + 0.05f;
             SetupFarRiver(farRiverMat, pano, riverHalf);
@@ -175,6 +177,9 @@ namespace Rainbow.Screen05.EditorTools
             SetHex(m, "_FloorColorB", "#ff4fc0");
             SetFloat(m, "_Exposure", 1f);
             SetFloat(m, "_LightInfluence", 1f);
+            // light round 2026-11-23: strips / reflection fade with view distance (strips 35 %, panorama 80 % beyond 100 m)
+            // so the deep walls stay violet with slot rows instead of white radial spokes converging on the throat
+            SetVec(m, "_WallFar", new Vector4(30f, 100f, 0.35f, 0.8f));
             EditorUtility.SetDirty(m);
         }
 
@@ -189,7 +194,10 @@ namespace Rainbow.Screen05.EditorTools
             }
             SetFloat(m, "_Gold", mode);
             SetFloat(m, "_GoldMode", mode);
-            SetVec(m, "_BandS", new Vector4(20f, 0.055f, 1.6f, 0f));
+            // light round 2026-11-23: smaller, softer marquee spots (were 0.055 / 1.6: clipped white bars across the band)
+            SetVec(m, "_BandS", new Vector4(20f, 0.045f, 1.1f, 0f));
+            // ring tone curve = environment.ts TONE05 (test G1, measured: approved ring gold G/R 0.48, plain palette 0.64)
+            SetVec(m, "_GoldTone", mode == 0 ? new Vector4(1.35f, 1.75f, 1.3f, 1f) : new Vector4(1f, 1f, 1f, 0f));
             SetVec(m, "_BandF", new Vector4(44f, 110f, 0f, 0f));
             SetVec(m, "_PaddleParams", new Vector4(0.55f, 0.12f, 1f, 0f));
             SetVec(m, "_FrameParams", new Vector4(0.3f, 0.06f, 0f, 0f));
@@ -205,7 +213,8 @@ namespace Rainbow.Screen05.EditorTools
             SetHex(m, "_MidTint", "#8a30d2");
             SetVec(m, "_MidRange", new Vector4(8f, 50f, 0f, 0f));
             SetGlow(m);
-            SetFloat(m, "_Exposure", 0.82f);
+            // rings 0.95 (light round: the tone curve above darkens the mid-tones, this keeps the approved brightness)
+            SetFloat(m, "_Exposure", mode == 0 ? 0.95f : 0.82f);
             SetFloat(m, "_LightInfluence", mode == 2 ? 0f : 0.25f);
             EditorUtility.SetDirty(m);
         }
@@ -226,13 +235,15 @@ namespace Rainbow.Screen05.EditorTools
         }
 
         /// <summary>
-        /// Warm throat glow by view distance (materials.ts glowT05 '#ff9c5a', near 95 / far 330 / 1.5 over the virtual
-        /// 430 u far block), compressed to this real tunnel whose throat is ~242 u from the approved camera.
+        /// Warm throat glow by view distance: materials.ts glowT05 '#ff9c5a', near 95 / far 330 / strength 1.5 in the far
+        /// block's VIRTUAL depth. Light round 2026-11-23: the real rings here sit at those virtual depths (DrumLayout05
+        /// FarRingDepths) and the throat at ~283 m, so the original numbers apply 1:1 (the compressed 80 / 260 / 1.6 turned
+        /// the walls orange from ~150 m, where the approved walls are still pink-violet).
         /// </summary>
         static void SetGlow(Material m)
         {
             SetHex(m, "_FarGlowColor", "#ff9c5a");
-            SetVec(m, "_FarGlowRange", new Vector4(80f, 260f, 1.6f, 0f));
+            SetVec(m, "_FarGlowRange", new Vector4(95f, 330f, 1.5f, 0f));
         }
 
         static Material MakeMaterial(string name, string shaderName)

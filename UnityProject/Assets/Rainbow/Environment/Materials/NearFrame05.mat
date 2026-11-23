@@ -40,10 +40,11 @@ Material:
     m_Colors:
     - _BandF: {r: 44, g: 110, b: 0, a: 0}
     - _BandG: {r: 0.21, g: 0.4, b: -0.45, a: 0.16}
-    - _BandS: {r: 20, g: 0.055, b: 1.6, a: 0}
+    - _BandS: {r: 20, g: 0.045, b: 1.1, a: 0}
     - _FarGlowColor: {r: 1, g: 0.6117647, b: 0.3529412, a: 1}
-    - _FarGlowRange: {r: 80, g: 260, b: 1.6, a: 0}
+    - _FarGlowRange: {r: 95, g: 330, b: 1.5, a: 0}
     - _FrameParams: {r: 0.3, g: 0.06, b: 0, a: 0}
+    - _GoldTone: {r: 1, g: 1, b: 1, a: 0}
     - _MidRange: {r: 8, g: 50, b: 0, a: 0}
     - _MidTint: {r: 0.5411765, g: 0.1882353, b: 0.8235294, a: 1}
     - _PaddleParams: {r: 0.55, g: 0.12, b: 1, a: 0}
