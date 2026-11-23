@@ -5,6 +5,19 @@ Read this first in any new Claude account or session. **This is an existing proj
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
+**UPDATE 2026-11-23 22:45 UTC (likeness measuring + round-3 plan):** new read-only tool `tools/screen05-measure.ps1 <still.png> ...`
+prints two calibrated scores vs the approved image (100 = same picture), overall and per crop area: **look** (at a glance:
+coarse shapes/colour layout within ±48–64 px + colour distribution) and **exact** (strict layout within ±16 px). `-Calibrate`:
+the approved image shifted 8–48 px or 15 % brighter scores look ≈ 90–91, mirrored 65, upside down 37 → use look ≥ 90 as the
+measured meaning of the user's 90–95 % target, always with the side-by-side. Scores: round-2 BASELINE look 51.2 / exact 32.3;
+`bubbles_t2` (17:34 local) look 52.3 / exact 32.6. Round 2: splash ✔ and foam ✔ finished (reports in the run journal),
+bubbles running, then integration + 2 critics. **Round 3 plan (biggest differences first):** (1) camera framing + tunnel
+cross-section/depth: walls must rise right behind narrow foam rims (Unity floor too wide, walls at x = ±6.25), many tightly
+spaced concentric rings into a small bright vanishing point, big copper D-tray paddles, wall slot rows; (2) river course
+composition (narrower open river, stronger S-curves at mid distance, foam rims following, coins on the curve); (3) Benny +
+splash + HUD polish (flat-cut bottom at the waterline, suds too high, HUD bar colours). Add the measure to the cycle tool
+after round 2 (not while its agents run cycles).
+
 **UPDATE 2026-11-23 21:47 UTC (new Claude account, round 2 RESUMED):** the previous account hit its 5-hour limit at 21:21 UTC
 while the round-2 splash + foam agents were working (checkpoint `759d746`). The new account re-verified everything (Unity
 6000.3.29f1 + Unity Personal active, Editor open, `unity status` ready on port 7800, all packages in `Library/PackageCache`,
