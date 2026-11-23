@@ -9,13 +9,13 @@ namespace Rainbow.Screen05
     /// (0 = airborne, 1 = full swim) and <see cref="Burst"/> on landing / jump / bank bump.
     ///
     /// Everything is locked to Benny's waterline, so nothing floats disconnected from him:
-    ///  1. The V of whitewater fans (port of src/vfx/riderSplash.ts createRiderSplash05, wave 8): whitewater ropes poured
-    ///     back-outward from his flanks, a froth collar of fine bubbles hugging the fur at the water and a low crown of
-    ///     droplet jets. One static mesh (built once here) drawn every frame in his waterline frame with
-    ///     Rainbow/Water/Splash, which shapes and animates every ribbon on the GPU and sets it onto the animated river
-    ///     surface (depth-tested, soft where it meets the water / fur).
-    ///  2. What lies flat on the water (thin contact line, broken bubbly rim round his real footprint, the landing ring) is
-    ///     drawn by the river shader itself (RainbowRiver.hlsl) from two global vectors written here every frame:
+    ///  1. The V of splash fans (port of src/vfx/riderSplash.ts createRiderSplash05, wave 8, refitted to the approved image
+    ///     in the splash round 2026-11-23): splash strands leaving his flanks and running back toward the camera, bubbly
+    ///     suds piled on his flanks and a low crown of droplet jets - nothing straight behind him. One static mesh (built
+    ///     once here) drawn every frame in his waterline frame with Rainbow/Water/Splash, which shapes and animates every
+    ///     ribbon on the GPU and sets it onto the animated river surface (depth-tested, soft where it meets the water / fur).
+    ///  2. What lies flat on the water (the dark contact shadow straight behind him, a broken bubbly rim on his flanks, the
+    ///     landing ring) is drawn by the river shader itself (RainbowRiver.hlsl) from two global vectors written here every frame:
     ///     _RainbowBenny = (s, x, wake 0..1, waterline radius) and _RainbowSplash = (x, z, age, strength).
     ///  3. Spray droplets (port of src/vfx/spray.ts + the 05 wake() emitter in src/vfx/index.ts): small translucent water
     ///     beads thrown off the two fans, simulated relative to Benny and drawn as one dynamic mesh with
