@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28920,
-   "sha256": "76537bb84da7ad0d838ce7971268482b01cc0b041183c5e119064552da0604d8"
+   "sha256": "309f56e3ed2c3dfd8dc0aa44a4e38aed6efa99834b3aed976c772df15f411500"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2958,
-   "sha256": "a967de777507a8506adb348299c19e8b6e879fd8e87b8b3f925de65b65f73ddc"
+   "sha256": "cb0e32788bf42ea923ffac8ec2643588fbc0e5d7591d72d0796e6624a7055259"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -23512,6 +23512,11 @@
    "sha256": "0cf4dad0aa7b5e28082c5393f6f6538979657d4073170e528a2a60bb16de46d7"
   },
   {
+   "path": "qa/kit46/RAINBOW_r46_for_ChatGPT.zip",
+   "bytes": 98546579,
+   "sha256": "f3eb6bece0fb1f5537438f19c4881cf08a6e4639ffd69896f3154fb0958e5453"
+  },
+  {
    "path": "qa/kit46/README.md",
    "bytes": 7655,
    "sha256": "07f40cf6f91cdce54ab38d65c9131baf47d90e7dcbfd40754760505e3979783c"
@@ -23520,6 +23525,11 @@
    "path": "qa/kit46/Rainbow_r46_world_05_06_debug.apk",
    "bytes": 247348487,
    "sha256": "73b657bf847c0a09f0f8a1f857bd7e8b84395424af7cabf5b88b4bda2bd24077"
+  },
+  {
+   "path": "qa/kit46/chatgpt/00_START_HERE.md",
+   "bytes": 6739,
+   "sha256": "bf9df8b37a71330b97b939a2aba9413782375c186f778589d65646173a50c39b"
   },
   {
    "path": "qa/kit46/evidence/frame0060_BEFORE_vs_NEW.jpg",
