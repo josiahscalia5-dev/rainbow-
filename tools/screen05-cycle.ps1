@@ -148,12 +148,12 @@ try { do {
     [void](Invoke-Eval 'AgentScripts/screen05_hold_approved.cs' 90)   # back to the paused approved view
   }
 
+} while ($false) }
+finally {
   $con = Invoke-Unity @('command', 'console', 'get', '--level', 'warn', '--tail', '25', '--project-path', $Proj)
   $lines = ($con.Text -split "`r?`n") | Where-Object { $_ -match '\S' } | Select-Object -First 60
   Write-Output 'CONSOLE (warnings/errors during this cycle):'
   $lines | ForEach-Object { Write-Output ('  ' + $_) }
-}
-finally {
   if ($null -ne $lock) { $lock.Close() }
 }
 Step "done (exit $exit)"
