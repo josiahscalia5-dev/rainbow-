@@ -71,6 +71,9 @@ namespace Rainbow.Screen05
         float nearRecycle = 1.5f;
         float bennySpeed = 11f;
         static readonly int BennyId = Shader.PropertyToID("_RainbowBenny");   // SplashWake: (s, x, wake 0..1, waterline radius)
+        // Benny's body centre in the portrait frame's NDC + eye depth (read-only from BennyController.Instance)
+        bool hasBenny;
+        float bennyXn, bennyYn, bennyEye;
 
         // camera basis of the current frame
         Vector3 camPos, camFwd, camRight, camUp;
@@ -215,6 +218,14 @@ namespace Rainbow.Screen05
             float rN = r / (depth * tanH);
             float corridor = yn < 0.1f ? 0.47f : 0.3f;
             if (Mathf.Abs(xn) - rN < corridor) return 0;
+            // Benny himself, wherever he is on screen (the corridor assumes him in the middle; steering hard and jumping move
+            // him off centre): no bubble in front of his body / beanie (ellipse 1.15 x 1.35 m around his silhouette centre)
+            if (hasBenny && depth < bennyEye + 1.2f)
+            {
+                float ex = (xn - bennyXn) / (1.15f / (bennyEye * tanH) + rN);
+                float ey = (yn - bennyYn) / (1.35f / (bennyEye * tanV) + r / (depth * tanV));
+                if (ex * ex + ey * ey < 1f) return 0;
+            }
             // the route ahead (cyan core + coin line) winds off the screen centre in 05: keep a lane clear around it
             if (coreN > 1 && yn <= coreY[coreN - 1] && yn >= coreY[0] - 0.4f)
             {
@@ -254,6 +265,9 @@ namespace Rainbow.Screen05
                     if (Mathf.Abs(p.x) <= WallHalfWidth(p.y) - 0.45f) break;
                     d *= 0.85f;
                 }
+                // that side of the frame is all near wall (hard left / right): try the other side instead of clamping
+                // every respawn onto the same strip of wall (they piled up in one clump)
+                if (Mathf.Abs(p.x) > WallHalfWidth(p.y) - 0.45f) { side = -side; continue; }
                 float depth = Mathf.Max(2.5f, Vector3.Dot(p - camPos, camFwd));
                 // world radius from the wanted on-screen diameter at this depth
                 float px = b.big ? bigPx.x + (bigPx.y - bigPx.x) * Mathf.Pow(Rand(), 1.25f)
@@ -330,6 +344,20 @@ namespace Rainbow.Screen05
             SetView(cam);
             float s = Screen05Events.BennyS;
             ProjectCore(s);
+            BennyController bc = BennyController.Instance;
+            hasBenny = false;
+            if (bc != null)
+            {
+                // centre of his silhouette (body + beanie + pompom, ~2.2 m tall from the waterline) ~0.65 m above the body pivot
+                Vector3 vb = worldToCam.MultiplyPoint3x4(bc.BodyCenter + Vector3.up * 0.65f);
+                bennyEye = -vb.z;
+                if (bennyEye > 0.5f)
+                {
+                    hasBenny = true;
+                    bennyXn = vb.x / (bennyEye * tanH);
+                    bennyYn = vb.y / (bennyEye * tanV);
+                }
+            }
             float dt = Mathf.Min(Time.deltaTime, 0.05f);
             // respawn everything after a restart / teleport / camera jump (the screen-space placement needs the camera that
             // will actually show the bubbles); re-seeded from s so captures of the same moment are deterministic
