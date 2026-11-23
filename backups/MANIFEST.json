@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28923,
-   "sha256": "002683daea20565ea0552142cbebad39c9d91a94fac389a9244978c6c443255f"
+   "sha256": "e59f11c91634a731bafa4edcce7713bc526344433aaf0426391fe073b4dfdab4"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2961,
-   "sha256": "49ac9a1a7a5d3b6a5764d0dea9ec5a95daba5fe6e2952f531b60ab167c6da6d6"
+   "sha256": "1fe7c4eb6bc9045ea84c7726985b4c09a4255d6acff4e6b9b7487ce41e9c28a6"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -23835,6 +23835,81 @@
    "path": "qa/kit46/screen06/06_numbers.json",
    "bytes": 774,
    "sha256": "93bc5c5e3072975fb766d51685272978113906d59a073812dd0800d4f991aafd"
+  },
+  {
+   "path": "qa/kit47/run/SECTION_05_TEXTURED_normal_speed_real_touch.mp4",
+   "bytes": 5667989,
+   "sha256": "401977e13509f664fe234a583c971d37d578ccc915ed5aa472f1ad76094e9b70"
+  },
+  {
+   "path": "qa/kit47/run/SECTION_05_TEXTURED_normal_speed_real_touch_checks.json",
+   "bytes": 1831,
+   "sha256": "755c26ecff130c790b4ac329097d52216bc4730849b408228fbf1c1a42b40d0c"
+  },
+  {
+   "path": "qa/kit47/stills/APPROVED_vs_BEFORE_AT_AFTER_approved_camera.jpg",
+   "bytes": 740106,
+   "sha256": "393ecd32eff868e580237181cf6c983fe22dc4cc366a0e6457756abcf308ec88"
+  },
+  {
+   "path": "qa/kit47/stills/SECTION_05_run_stills_sheet.jpg",
+   "bytes": 862876,
+   "sha256": "8d898082aa9aef8bd7f52f2db26bdcdbf177584fe38c0b65ad7ff0d1f893a408"
+  },
+  {
+   "path": "qa/kit47/stills/run_frame0020_approach_RIGHT_extreme.jpg",
+   "bytes": 159886,
+   "sha256": "39e97a41d6d0f49955b94328ee33e4bcf9fe479de65950efd8e1fb58845a09a5"
+  },
+  {
+   "path": "qa/kit47/stills/run_frame0052_approach_LEFT_extreme.jpg",
+   "bytes": 155386,
+   "sha256": "0c514afa04470632fa6d5db29816161b0155b4e89ed581e67a75d9710f3bca57"
+  },
+  {
+   "path": "qa/kit47/stills/run_frame0072_approved_camera_position.jpg",
+   "bytes": 156010,
+   "sha256": "b4751855e2f6706545a17c17f1a242e29ba43c4459dc576ac756f4d5cfddb4d3"
+  },
+  {
+   "path": "qa/kit47/stills/run_frame0115_after_RIGHT_extreme.jpg",
+   "bytes": 154604,
+   "sha256": "c3c65843963f37abb96bb6726d3d25189e0bced7dfd8cdfcdf5c17637cc201a3"
+  },
+  {
+   "path": "qa/kit47/stills/run_frame0155_bend_LEFT_extreme.jpg",
+   "bytes": 150215,
+   "sha256": "faf0db204397c56d89b71a54b2af16c026f54f5239838a153c4d75d1dc65521c"
+  },
+  {
+   "path": "qa/kit47/stills/run_frame0222_jump.jpg",
+   "bytes": 140617,
+   "sha256": "0a3c93b1604b9c33a0e3a6c629e69b32c1eec0a93465955266a5e134cc3bd993"
+  },
+  {
+   "path": "qa/kit47/stills/run_frame0270_end_of_section.jpg",
+   "bytes": 156616,
+   "sha256": "af7755d52e6851e70b3b7745eeb53fc8ff38353e607a8a44ff17dd470d00d9af"
+  },
+  {
+   "path": "qa/kit47/stills/still_s103.00_l0.jpg",
+   "bytes": 153530,
+   "sha256": "2ac9f04876c07eef43a680187a8537481d9adaf1efe9b44e9b386f7de5fb390f"
+  },
+  {
+   "path": "qa/kit47/stills/still_s108.00_l0.jpg",
+   "bytes": 154734,
+   "sha256": "dcb078cba1ea25ac84894ca9af720336ecec3aa1cab5643e00858543808ac1be"
+  },
+  {
+   "path": "qa/kit47/stills/still_s95.00_l0.jpg",
+   "bytes": 156673,
+   "sha256": "7e90288467c5f108b6582f5b65e5c57043e03e7841759ed65310549ff02578ea"
+  },
+  {
+   "path": "qa/kit47/stills/still_s97.80_l0.jpg",
+   "bytes": 157184,
+   "sha256": "44823fd7ea505a76826e38084662b1a58cf8a7d751824d05dad0df466321377a"
   },
   {
    "path": "qa/lead_r5/2026-11-17/README.md",
