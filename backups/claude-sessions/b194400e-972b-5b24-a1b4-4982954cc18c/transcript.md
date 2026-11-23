@@ -5609,3 +5609,219 @@ This is a focused Screen 05 correction on its own branch. Before writing code, I
 
 > 🔧 **Bash** `{"command": "PLAN=$(cat qa/kit45/run/swipe_plan_05_06.json); export NODE_PATH=$(npm root -g); rm -rf /home/user/ws46/r47_probe; node tools/world/probe_frames.cjs /home/user/ws46/world/game /home/user/ws46/r47_probe 105 \"$PLAN\" 's0=88&sentinel=1' '[[150,380],[250,380],[350,380],[150,420],[250,430],[350,420],[120,460],[250,465],[380,460],[250,480],[250,500],[120,520],[380,520],[250,600],[60,700]]' > /dev/null 2>&1; python3 -c \"\nimport json; d=json.load(open('/home/user/ws46/r47_probe/probe.json'))\nfor f in d['frames']:\n    print('frame', f['frame'], 's', f['s'])\n    for p in f['picks']: p …[+212 chars]`
 
+### 🧑 User — 2026-11-23T00:51:23.265Z
+
+> ↩︎ result: frame 105 s 95.7
+>    150 380 [('water_route_01', '05', 5.695, [0.75, 0, -99.91]), ('pool_01', '05', 5.85, [0.74, -0.02, -100.06]), ('ring_02', '05', 11.285, [0.25, -0.72, -105.43])]
+>    250 380 [('water_route_01', '05', 5.718, [1.53, 0, -99.95]), ('pool_01', '05', 5.873, [1.53, -0.02, -100.1]), ('tunnel_05', '05', 10.541, [1.75, -0.62, -104.73])]
+>    350 380 [('tunnel_02', '05', 5.352, [2.21, 0.06, -99.51])]
+>    150 420 [('water_route_00', '05', 4.023, [0.91, 0, -98.22]), ('pool_01', '05', 4.132, [0.9, -0.02, -98.33]), ('tunnel_04', '05', 8.65, [0.49, -0.84, -102.75])]
+>    250 430 [('water_route_00', '05', 3.764, [1.44, 0, -97.97]), ('pool_01', '05', 3.866, [1.45, -0.02, -98.07]), ('tunnel_03', '05', 7.412, [1.61, -0.71, -101.55])]
+>    350 420 [('pool_01', '05', 4.242, [2.02, -0.02, -98.39]), ('tunnel_02', '05', 4.884, [2.13, -0.13, -99.01])]
+>    120 460 [('water_route_00', '05', 3.12, [0.86, 0, -97.29]), ('pool_00', '05', 3.205, [0.85, -0.02, -97.37]), ('ring_00', '05', 6.235, [0.46, -0.73, -100.29])]
+>    250 465 [('water_route_00', '05', 3.041, [1.41, 0, -97.23]), ('pool_00', '05', 3.123, [1.41, -0.02, -97.31]), ('tunnel_03', '05', 6.122, [1.55, -0.74, -100.22])]
+>    380 460 [('pool_01',  …[+908 chars]
+
+### 🤖 Claude — 2026-11-23T00:51:45.438Z
+
+> 🔧 **Bash** `{"command": "grep -n \"class Cam\" -A 40 tools/screenkit/fitlib.py | head -60; python3 -c \"\nimport json; L=json.load(open('/home/user/ws46/world/game/a05/layout.json')); c=L['cams'][0]; print({k:(v if not isinstance(v,list) or len(v)<12 else str(v)[:80]) for k,v in c.items()}); print(L['drum']); print(L['route']['width'], L.get('river_width'), L['benny'])\"", "description": "Read the fitted camera model and 05 layout camera"}`
+
+### 🧑 User — 2026-11-23T00:51:45.518Z
+
+> ↩︎ result: 14:class Cam:
+> 15-    def __init__(self, W, H, fov=FOV):
+> 16-        self.W, self.H, self.fov = W, H, fov
+> 17-        self.F = (H / 2) / math.tan(math.radians(fov / 2)); self.CX, self.CY = W / 2, H / 2
+> 18-        self.R = np.eye(3); self.C = np.zeros(3); self.yaw = 0.0; self.pitch = 0.0
+> 19-
+> 20-    def set(self, yaw, pitch, C):
+> 21-        self.yaw, self.pitch = float(yaw), float(pitch); self.R = rot(yaw, pitch); self.C = np.asarray(C, float); return self
+> 22-
+> 23-    def proj(self, P):
+> 24-        q = self.R.T @ (np.asarray(P, float) - self.C); return np.array([self.CX + self.F * q[0] / -q[2], self.CY - self.F * q[1] / -q[2]]), -q[2]
+> 25-
+> 26-    def ray(self, px, py):
+> 27-        d = self.R @ np.array([(px - self.CX) / self.F, -(py - self.CY) / self.F, -1.0]); return d / np.linalg.norm(d)
+> 28-
+> 29-    def depth_dir(self, px, py):
+> 30-        """ray scaled so that its component along the camera's view axis is 1 (point = C + d * camera-space depth)"""
+> 31-        d = self.R @ np.array([(px - self.CX) / self.F, -(py - self.CY) / self.F, -1.0]); return d
+> 32-
+> 33-    def on_plane_y(self, px, py, y=0.0):
+> 34-        d = self.ray(px, py); lam = (y - self.C[1]) / d[1]; return self.C + lam * d
+> 35-
+> 36-     …[+1670 chars]
+
+### 🤖 Claude — 2026-11-23T00:51:53.568Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/ws46/world/s05/game/ | head -30; ls /home/user/ws46/world/s05/seg/ 2>/dev/null; python3 -c \"\nfrom PIL import Image\nimport numpy as np\nfor f in ['/home/user/ws46/world/s05/seg/plate.png','/home/user/ws46/world/s05/seg/mask.png','/home/user/ws46/world/s05/game/mask_0.png']:\n    try:\n        im=Image.open(f); a=np.asarray(im); print(f, im.size, im.mode, np.unique(a)[:8] if a.ndim==2 else a.shape)\n    except Exception as e: print(f, e)\"", "description": "List 05 workspace plate and mask files"}`
+
+### 🧑 User — 2026-11-23T00:51:54.154Z
+
+> ↩︎ result: bake.js
+> bake.png
+> baked
+> benny31.glb
+> bubble.png
+> coin.png
+> controls.js
+> glint.png
+> layout.json
+> mask_0.png
+> node_modules
+> plate_0.png
+> play3.html
+> qa.js
+> ref_0.png
+> scene.glb
+> splash.png
+> splash_pic.png
+> swimfx.js
+> mask.png
+> plate.png
+> segment.log
+> splash_pic.json
+> /home/user/ws46/world/s05/seg/plate.png (1080, 1920) RGB (1920, 1080, 3)
+> /home/user/ws46/world/s05/seg/mask.png (1080, 1920) L [  0 128 255]
+> /home/user/ws46/world/s05/game/mask_0.png (1080, 1920) L [  0 128 255]
+
+### 🤖 Claude — 2026-11-23T00:52:29.446Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/ws46/world/s05/game/baked/ | grep -v \"_bake.jpg\\|_den.png\" ; python3 -c \"\nimport json; m=json.load(open('/home/user/ws46/world/s05/game/baked/manifest.json')); print(json.dumps(m.get('templates',{}).get('floor'), indent=0)); print(m.get('water_detail'))\"", "description": "List 05 templates and detail tiles"}`
+
+### 🧑 User — 2026-11-23T00:52:29.509Z
+
+> ↩︎ result: total 22644
+> drwxr-xr-x 2 root root    4096 Nov 22 22:28 .
+> drwxr-xr-x 3 root root    4096 Nov 22 23:49 ..
+> -rw-r--r-- 1 root root    6582 Nov 22 22:28 manifest.json
+> -rw-r--r-- 1 root root   73731 Nov 22 22:28 tpl_copper.jpg
+> -rw-r--r-- 1 root root  964740 Nov 22 22:28 tpl_floor.jpg
+> -rw-r--r-- 1 root root  332863 Nov 22 22:28 tpl_pool.jpg
+> -rw-r--r-- 1 root root  165901 Nov 22 22:28 tpl_ring.jpg
+> -rw-r--r-- 3 root root 1690841 Nov 22 22:28 tpl_tunnel.jpg
+> -rw-r--r-- 1 root root  332863 Nov 22 22:28 tpl_water.jpg
+> {
+> "w": 1024,
+> "h": 1194,
+> "cov": 0.896,
+> "map": "floor",
+> "d0": 2.2,
+> "len": 3,
+> "x0": -1.4906688997297277,
+> "xw": 2.5721165605214025,
+> "file": "tpl_floor.jpg"
+> }
+> None
+
+### 🤖 Claude — 2026-11-23T00:52:33.251Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/ws46 && python3 -c \"\nfrom PIL import Image\na=Image.open('world/s05/game/baked/tpl_floor.jpg'); print(a.size); a.resize((512,597)).save('tplfloor_small.png')\nb=Image.open('world/s05/game/baked/tpl_water.jpg'); print(b.size); b.resize((256,460)).save('tplwater_small.png')\nW=Image.new('RGB',(512+8+256,597),'white'); W.paste(Image.open('tplfloor_small.png'),(0,0)); W.paste(Image.open('tplwater_small.png'),(520,0)); W.save('tpl_floor_water.png')\"", "description": "Export the floor and water templates for viewing"}`
+
+### 🧑 User — 2026-11-23T00:52:33.938Z
+
+> ↩︎ result: (1024, 1194)
+> (512, 819)
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-23T00:52:35.462Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/tpl_floor_water.png"}`
+
+### 🧑 User — 2026-11-23T00:52:35.500Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T00:53:12.651Z
+
+> 🔧 **Bash** `{"command": "grep -n \"no_route_ribbon\\|pool_y\\|def channel\\|water_route\\|'pool_'\\|pool_{\\|f'pool\" tools/screenkit/blender_kit.py | head -20", "description": "Find pool and route ribbon construction"}`
+
+### 🧑 User — 2026-11-23T00:53:12.687Z
+
+> ↩︎ result: 15:GEOM_KEYS = ['drum', 'rings', 'route', 'no_route_ribbon', 'route_flume', 'mouth_ring', 'funnel', 'wall', 'pool_front', 'arrows', 'foam_route', 'foam_pool',
+> 155:    z1 = max(D['z1'], z - (4.0 if z > zf else 12.0)); grid(f'pool_{k:02d}', 24, max(4, int((z - z1) / 0.25)), lambda a, b, z=z, z1=z1: ((xa - chord + 2 * chord * a, D.get('pool_y', -0.02), z - (z - z1) * b), (a, b)), flip=False)
+> 159:if not LAY.get('no_route_ribbon'): ribbon('water_route', route, bank, RT['width'], 2.5, flume=LAY.get('route_flume', True))   # r44: 05's S-river has no flume lips
+
+### 🤖 Claude — 2026-11-23T00:55:19.189Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/screenkit/water_strip.py", "content": "\"\"\"Rainbow round 47 - ONE continuous river material for a kit screen (user: \"the detailed painted water ahead has a visible boundary where it\nmeets the simpler striped water beneath Benny ... make the river read as one continuous body of water\").\nWhy the old water had a boundary: two overlapping water surfaces (the drum-floor pool + a raised route ribbon that started abruptly in front of\nBenny), each with its own camera-projected bake that only lines up from the picture camera and that switched to generated …[+13939 chars]`
+
+### 🧑 User — 2026-11-23T00:55:19.255Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/screenkit/water_strip.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-23T00:55:23.557Z
+
+The script is written. Running it on Screen 05's current data to see the rectified painted river.
+
+### 🤖 Claude — 2026-11-23T00:55:25.100Z
+
+> 🔧 **TaskUpdate** `{"taskId": "8", "status": "completed", "description": "Boundary = the raised route ribbon (water_route_*, 1.33 u wide, 2 cm above the pool) starting with a straight cut ~1.5 u ahead of Benny's start, carrying its own picture bake; the pool beside/under it switches to generated water when magnified. Two surfaces, two bakes, a magnification switch."}`
+
+### 🧑 User — 2026-11-23T00:55:25.117Z
+
+> ↩︎ result: Updated task #8 description, status
+
+### 🤖 Claude — 2026-11-23T00:55:25.508Z
+
+> 🔧 **TaskUpdate** `{"taskId": "9", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-23T00:55:25.518Z
+
+> ↩︎ result: Updated task #9 status
+
+### 🤖 Claude — 2026-11-23T00:55:26.910Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/ws47/strip_test && time python3 -I tools/screenkit/water_strip.py /home/user/ws46/world/s05/game /home/user/ws47/strip_test 2>&1 | tail -5; ls -la /home/user/ws47/strip_test", "description": "Run the strip bake on Screen 05", "timeout": 900000}`
+
+### 🧑 User — 2026-11-23T00:55:32.447Z
+
+> ↩︎ result: no clean detail source found
+> 
+> real	0m5.443s
+> user	0m3.127s
+> sys	0m0.298s
+> total 8
+> drwxr-xr-x 2 root root 4096 Nov 23 00:55 .
+> drwxr-xr-x 3 root root 4096 Nov 23 00:55 ..
+
+### 🤖 Claude — 2026-11-23T00:55:44.942Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_strip.py'; s=open(p).read()\nold=\"        for d0 in np.arange(0.45, max(0.5, dB - DD), 0.05):\"\nnew=\"        for d0 in np.arange(0.7, dB + 1.6, 0.05):\"\nassert s.count(old)==1; s=s.replace(old,new)\nold=\"            if (m_ >= 200).mean() > 0.02: continue\"\nnew=\"            if (m_ >= 200).mean() > 0.03: continue\"\nassert s.count(old)==1; s=s.replace(old,new)\nold=\"            if g_.mean() > 0.01: continue\"\nnew=\"            if g_.mean() > 0.03: continue\"\nassert s.count(old)==1; s=s.replace(old,new)\nopen(p,'w').write(s)\nEOF\ …[+242 chars]`
+
+### 🧑 User — 2026-11-23T00:55:52.177Z
+
+> ↩︎ result: strip: 2976 x 768 texels, d -3.0..28.0, painted rows 0, tile d 2.25+3.2, detail source {'side': -1, 'lat0': 0.5, 'd0': 2.55, 'px_per_texel': 0.446}, foam edges -0.86 / 0.53
+> 
+> real	0m7.161s
+> user	0m7.462s
+> sys	0m0.413s
+> strip.json
+> strip_core.png
+> strip_debug.jpg
+> strip_detail.png
+> strip_tile.png
+
+### 🤖 Claude — 2026-11-23T00:55:58.146Z
+
+The strip came out with zero painted rows, so something in my validity test is too strict or the projection is off. Checking each condition on its own.
+
+### 🤖 Claude — 2026-11-23T00:56:02.146Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport runpy, sys, numpy as np\nsys.argv=['x','/home/user/ws46/world/s05/game','/home/user/ws47/strip_test']\nsrc=open('tools/screenkit/water_strip.py').read()\nsrc=src.split('# ---- 2. picture density')[0]\ng={}; exec(compile(src,'ws','exec'), g)\nfor nm in ('inside','onfloor','gold','foam','valid'):\n    a=g[nm]; print(nm, round(float(a.mean()),3), 'rows d 1..8, |lat|<0.9:', round(float(a[int((1-g['D0'])*g['PXU']):int((8-g['D0'])*g['PXU']), np.abs(g['lat'])<0.9].mean()),3))\nmk=g['mk']; print('mask<200', round(float((mk<200)[int(4*96):int(11*96)].mean()),3))\n …[+304 chars]`
+
+### 🧑 User — 2026-11-23T00:56:03.657Z
+
+> ↩︎ result: inside 0.831 rows d 1..8, |lat|<0.9: 0.938
+> onfloor 0.83 rows d 1..8, |lat|<0.9: 0.998
+> gold 0.142 rows d 1..8, |lat|<0.9: 0.015
+> foam 0.119 rows d 1..8, |lat|<0.9: 0.024
+> valid 0.375 rows d 1..8, |lat|<0.9: 0.613
+> mask<200 0.814
+> row d=3 px range [-114.6077346   604.70400402 1358.97599371] py [972.95762342 982.49231008 992.49040506] dep 3.0540776328542907
+> row d=1 px [-1345.29377915   524.10638989  2660.51741481] py [1592.69540459 1660.75707911 1738.54016388]
+
+### 🤖 Claude — 2026-11-23T00:56:15.958Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_strip.py'; s=open(p).read()\nold=\"rowvalid = (valid & (np.abs(LG) < 0.9)).mean(1)                    # how much of the river is painted on this row\"\nnew=\"rowvalid = valid[:, np.abs(lat) < 0.9].mean(1)                     # how much of the river (|lat| < 0.9) is painted on this row\"\nassert s.count(old)==1; s=s.replace(old,new); open(p,'w').write(s)\nEOF\npython3 -I tools/screenkit/water_strip.py /home/user/ws46/world/s05/game /home/user/ws47/strip_test 2>&1 | tail -2; cd /home/user/ws47/strip_test && python3 -c \"\nfrom PIL import I …[+770 chars]`
+
