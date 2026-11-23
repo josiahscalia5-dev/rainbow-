@@ -144,6 +144,12 @@ checkpoint commit but hit its limit before updating this file and confirming).
 * Free tools only (Unity Personal, existing assets). No purchases, paid services or GPU rental without asking.
 * Ask before deleting files. Never commit passwords, tokens or Unity license files.
 * Likeness target 90–95 % — only claim a number with real measurements + visual evidence.
+* **User, 2026-11-23 17:15 local:** keep targeting ~90–95 % likeness to the approved image, matching shapes, proportions,
+  composition, materials and richness (river curves, tunnel depth, gold ring spacing, metallic reflections, water, foam,
+  bubbles, HUD, Benny's natural swimming) — not just colours. Scenery must stay consistent while Benny swims, steers and
+  jumps, and he must look naturally supported by the water. Save successful changes permanently (code/builders, pushed),
+  compare the real Game view after each major improvement, fix the biggest visible differences first, conserve credits.
+  **Do not start Screen 06 until the user approves Screen 05.**
 
 ## Machine (user's laptop)
 * HP 14", Windows 11 Home, Intel N150, 8 GB RAM, Intel integrated GPU, **one drive C:** (~118 GB).

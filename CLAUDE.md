@@ -40,6 +40,9 @@ every Claude account.
 - Real playable 3D: swim, steer, jump, collect coins.
 - Keep the original Three.js game and every other branch untouched. Unity work goes only to branch `unity/screen05-dev`.
 - Likeness target 90-95 %: only state a number with real measurements and side-by-side images.
+- Match shapes, proportions, composition, materials and richness, not just colours; keep the scenery consistent while Benny
+  swims, steers and jumps; fix the biggest visible differences first and conserve credits.
+- Do NOT start Screen 06 (or any other screen) until the user explicitly approves Screen 05.
 - Never commit or upload passwords, tokens, Unity license files (`*.ulf`, `*.alf`), anything from `~/.claude`, or Git credentials.
 
 ## Where things are
