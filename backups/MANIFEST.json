@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 29385,
-   "sha256": "4cd122a29124b51e5f503c200dc26c8ee4eab9290b9cc1753619baff204ca09b"
+   "sha256": "d7f45a2b220d5003c8a2544a144fad0b6a1a794ac17f2d7bb2e720871b71b6a1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "2b1b7a2d3cdc579e719eea1ac9893cea9d95705de9e8f0ead1afda366b11128f"
+   "sha256": "3092efcd005f97d25a0bbc04eb264a5005655f8cb012c62c39ea33d1ed5eceb8"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -36040,6 +36040,16 @@
    "path": "qa/mod47/D_INMOTION_BEFORE_vs_NEW.jpg",
    "bytes": 543427,
    "sha256": "2a7bdbb4a65eda1c98b54bcc8ab8323ca3e98637aa4840039bf350a4f6a3680f"
+  },
+  {
+   "path": "qa/mod47/GAMEPLAY_05_modular_TEXTURED_real_touch.mp4",
+   "bytes": 8412698,
+   "sha256": "7b158887b52892734725f8cfbe0814e8818b1b926324503980a6e053038c9838"
+  },
+  {
+   "path": "qa/mod47/GAMEPLAY_05_modular_TEXTURED_real_touch_checks.json",
+   "bytes": 1348,
+   "sha256": "0ac1c85e530ba2791945f8368133096a4d7045fc8482436ede67fb06d2b655d0"
   },
   {
    "path": "qa/mod47/README.md",

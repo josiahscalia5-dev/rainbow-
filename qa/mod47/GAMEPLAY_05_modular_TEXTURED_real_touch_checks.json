@@ -1,0 +1,86 @@
+{
+ "frames": 425,
+ "errors": [],
+ "benny_offscreen_frames": 0,
+ "benny_offscreen_list": [],
+ "camera_max_step_u": 0.096,
+ "camera_max_step_expected_u": 0.1173,
+ "camera_max_turn_deg_per_frame": 0,
+ "static_world_meshes": 127,
+ "scenery_meshes_moved": [],
+ "hole_pixels_max": 0,
+ "hole_frames": 0,
+ "holes_checked_frames": 0,
+ "swipes_sent": 10,
+ "input_mode": "real CDP touch gestures",
+ "input_log": [
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 1.6,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 2.8,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 3.6,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 5,
+   "result": "lane"
+  },
+  {
+   "dir": "up",
+   "src": "touch",
+   "clock": 6,
+   "result": "leap"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 7.4,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 8.6,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 9.6,
+   "result": "lane"
+  },
+  {
+   "dir": "down",
+   "src": "touch",
+   "clock": 10.8,
+   "result": "dive"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 12,
+   "result": "lane"
+  }
+ ],
+ "coins_end": 1490,
+ "socks_end": 0,
+ "s_end": 30,
+ "lat_range": [
+  -0.3,
+  0.3
+ ],
+ "hole_frames_checked": 425
+}
