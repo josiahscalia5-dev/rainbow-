@@ -4,23 +4,29 @@ using UnityEngine;
 namespace Rainbow.Screen05
 {
     /// <summary>
-    /// Soft pearly foam clouds piled along both river banks (Agent 3). Deterministic placement (same result on every
-    /// build): a lace of small puffs straddling the stream's waterline, medium puffs filling the foam shelf up to the
-    /// wall, and rounded clusters of big puffs with smaller ones piled on top (cluster noise along s, so the banks have
-    /// naturally varied mounds and gaps - never identical repeated blobs). Ported idea and colours: src/vfx/foam.ts
-    /// (bank lace, puffs, wave-7 05 soap shading); shading lives in Shaders/RainbowFoam.hlsl.
-    /// Puffs are low-poly domes merged into chunk meshes (LOD0 12x5, LOD1 7x3); each vertex carries
-    /// UV0 = (seed, ao) and UV1 = (puff centre, radius) so the shader shades every puff as a perfect sphere.
+    /// Thick pearly soap-foam banks along both sides of the river (foam area, round 2 2026-11-23). Approved Screen 05: the
+    /// foam covers the outer water on BOTH sides so the open river is narrower and winds with the pink S-bands; it is a
+    /// heap of clustered round soap bubbles of many sizes (big puffs, many small ones, 0.4-1 m tall), with a bubbly
+    /// scalloped waterline and lavender / blue creases.
+    /// Layout: BankEdges (CPU mirror of RBW_BankEdges in Shaders/RainbowFoamBank.hlsl - keep identical): the foam waterline
+    /// runs just outside each pink band, the river shader draws the flat foam shelf from there to the wall, and these puffs
+    /// pile on it: a lace of small bubbles on the waterline, the round rim mound, the heap body up to the wall and a few
+    /// loose small bubbles (cluster noise along s: naturally varied mounds and low stretches, never repeated blobs).
+    /// Deterministic (same result on every build). Port of src/vfx/foam.ts (05 berm / bank puffs, wave-8 fine-foam lumps).
+    /// Each puff is a camera-facing sphere IMPOSTOR (4 vertices, true per-pixel sphere depth in Shaders/RainbowFoam.shader),
+    /// so every bubble is perfectly round at any distance and sinks into the water and its neighbours with curved creases.
+    /// Vertex data: POSITION = puff centre, UV0 = (corner x, corner y, radius, seed), UV1 = (ao, tint, stream centre, stream
+    /// half width) - the shader lets the puffs on the stream ride the river swell and parts them around Benny.
     /// </summary>
     public static class FoamBank
     {
         public struct Puff
         {
             public Vector3 centre;
-            public Vector3 scale;    // per-axis squash (x across, y up, z along the river)
             public float radius;
             public float seed;
             public float ao;
+            public float tint;
             public int side;         // -1 left bank, +1 right bank
         }
 
@@ -34,6 +40,8 @@ namespace Rainbow.Screen05
 
         /// <summary>|x| of the tunnel wall at the water (between the contract's 6.0 and the Three.js tube's 6.27).</summary>
         public const float WallX = 6.25f;
+        /// <summary>LOD1 keeps only the puffs at least this big (the far banks read the same, much less overdraw).</summary>
+        public const float Lod1MinRadius = 0.13f;
 
         // mulberry32, the generator the Three.js game uses for its seeded effects
         sealed class Rng
@@ -60,7 +68,88 @@ namespace Rainbow.Screen05
             return x - Mathf.Floor(x);
         }
 
-        /// <summary>Smooth 1-D value noise along s (cluster density), 0..1.</summary>
+        static float SS(float a, float b, float x)
+        {
+            float t = Mathf.Clamp01((x - a) / (b - a));
+            return t * t * (3f - 2f * t);
+        }
+
+        static float SMin(float a, float b, float k)
+        {
+            float h = Mathf.Max(k - Mathf.Abs(a - b), 0f) / k;
+            return Mathf.Min(a, b) - h * h * k * 0.25f;
+        }
+
+        /// <summary>
+        /// Waterlines of the left / right foam bank at s, RELATIVE to the stream centre RiverPath.Meander(s): x &lt; 0 &lt; y.
+        /// The open water lies between them, the foam from there to the wall (CPU mirror of RBW_BankEdges).
+        /// </summary>
+        public static Vector2 BankEdges(float s)
+        {
+            float d = RiverPath.Meander(s);
+            float hw = Mathf.Max(RiverSurface.StreamHalfWidth(s), 0.5f);
+            float sm = s + RiverSurface.SOffset;
+            float mb = RiverSurface.CoreSwing * d + RiverSurface.CoreShift(s) + RiverSurface.SBend(sm);
+            return BankEdges(d, hw, mb, sm);
+        }
+
+        /// <summary>RBW_BankEdges (Shaders/RainbowFoamBank.hlsl), line by line.</summary>
+        public static Vector2 BankEdges(float d, float hw, float mb, float sm)
+        {
+            hw = Mathf.Max(hw, 0.5f);
+            float fR = -0.3f * SS(133f, 136f, sm) * (1f - SS(139.5f, 142f, sm))
+                     + 1.9f * SS(146.5f, 154f, sm) * (1f - SS(160f, 168f, sm))
+                     - 0.9f * SS(165f, 170f, sm) * (1f - SS(174f, 180f, sm));
+            float fL = -0.5f * SS(143f, 147f, sm) * (1f - SS(151f, 155f, sm))
+                     + 1.0f * SS(154f, 158f, sm) * (1f - SS(168f, 176f, sm));
+            float offL = hw * (0.62f + 0.03f * Mathf.Sin(sm * 0.13f + 1.7f)) + fL;
+            float offR = hw * (0.62f + 0.03f * Mathf.Sin(sm * 0.11f + 4.2f)) + fR;
+            float wL = hw * 0.205f * (1f + 0.15f * Mathf.Sin(sm * 0.19f + 0.4f));
+            float wR = hw * 0.205f * (1f + 0.15f * Mathf.Sin(sm * 0.17f + 2.9f));
+            float roomL = mb + hw - 0.5f - offL;
+            float roomR = hw - 0.5f - mb - offR;
+            wL = SMin(wL, Mathf.Max(roomL, 0.6f * wL), 0.5f);
+            wR = SMin(wR, Mathf.Max(roomR, 0.6f * wR), 0.5f);
+            offL = SMin(offL, mb + hw - wL - 0.5f, 1.2f);
+            offR = SMin(offR, hw - wR - 0.5f - mb, 1.2f);
+            float eL = mb - offL - wL;
+            float eR = mb + offR + wR;
+            eL -= 0.26f + 0.12f * Mathf.Sin(sm * 0.37f + 1.3f) + 0.07f * Mathf.Sin(sm * 0.91f + 0.4f);
+            eR += 0.26f + 0.12f * Mathf.Sin(sm * 0.41f + 4.1f) + 0.07f * Mathf.Sin(sm * 0.87f + 2.2f);
+            float pL = 0.6f * Mathf.Sin(sm * 0.173f + 0.6f) + 0.4f * Mathf.Sin(sm * 0.419f + 2.3f);
+            float pR = 0.6f * Mathf.Sin(sm * 0.191f + 3.7f) + 0.4f * Mathf.Sin(sm * 0.443f + 0.9f);
+            eL += 0.8f * SS(0.3f, 0.95f, pL);
+            eR -= 0.8f * SS(0.3f, 0.95f, pR);
+            float kL1 = SS(126.6f, 127.6f, sm) * (1f - SS(129.0f, 129.8f, sm));
+            float kL2 = SS(129.0f, 130.0f, sm) * (1f - SS(131.6f, 132.6f, sm));
+            float kR1 = SS(126.6f, 127.6f, sm) * (1f - SS(128.9f, 129.7f, sm));
+            float kR2 = SS(130.6f, 132.0f, sm) * (1f - SS(137.0f, 139.5f, sm));
+            eL = Mathf.Lerp(eL, Mathf.Max(eL, -1.25f), kL1);
+            eL = Mathf.Lerp(eL, Mathf.Max(eL, -2.05f), kL2);
+            eR = Mathf.Lerp(eR, Mathf.Min(eR, 1.3f), kR1);
+            eR = Mathf.Lerp(eR, Mathf.Min(eR, 2.7f), kR2);
+            float coin = 0.63f * d;
+            eL = Mathf.Min(eL, coin - 1.25f);
+            eR = Mathf.Max(eR, coin + 1.25f);
+            return new Vector2(Mathf.Max(eL, -hw), Mathf.Min(eR, hw));
+        }
+
+        /// <summary>World x of the foam waterline on one side (-1 left, +1 right).</summary>
+        public static float WaterlineX(float s, int side)
+        {
+            Vector2 e = BankEdges(s);
+            return RiverPath.Meander(s) + (side < 0 ? e.x : e.y);
+        }
+
+        /// <summary>True when (x, s) lies on the open water between the foam banks (margin = extra distance inside).</summary>
+        public static bool InChannel(float x, float s, float margin = 0f)
+        {
+            Vector2 e = BankEdges(s);
+            float lr = x - RiverPath.Meander(s);
+            return lr >= e.x + margin && lr <= e.y - margin;
+        }
+
+        /// <summary>Smooth 1-D value noise along s (mound density), 0..1.</summary>
         static float ClusterNoise(float s, int side)
         {
             float p = s * 0.33f + (side > 0 ? 57.3f : 11.9f);
@@ -78,82 +167,98 @@ namespace Rainbow.Screen05
 
         public static List<Puff> GeneratePuffs(uint seed = 0x05F0A3u)
         {
-            var list = new List<Puff>(1400);
+            var list = new List<Puff>(9000);
             var rng = new Rng(seed);
             for (int side = -1; side <= 1; side += 2)
             {
-                float s = RiverPath.TunnelStart + 0.3f;
-                while (s < RiverPath.TunnelLength - 0.3f)
+                float s = RiverPath.TunnelStart + 0.15f;
+                while (s < RiverPath.TunnelLength - 0.15f)
                 {
-                    float d = RiverPath.Meander(s);
-                    float hw = RiverSurface.StreamHalfWidth(s);
-                    float edge = d + side * hw;                                   // stream waterline
-                    float shelfW = Mathf.Max(0f, side * (side * WallX - edge));   // foam shelf width to the wall
-                    float cl = ClusterNoise(s, side);
+                    float step = rng.Range(0.26f, 0.4f);
+                    float edge = WaterlineX(s, side);                               // the foam waterline (world x)
+                    float shelfW = Mathf.Max(0f, side * (side * WallX - edge));      // foam from there to the wall
+                    float cl = ClusterNoise(s, side);                               // 0 low stretch .. 1 big mound
 
-                    // 1) lace: small puffs straddling the waterline
-                    int nLace = 1 + (rng.Next() < 0.6f ? 1 : 0);
+                    // 1) lace: small bubbles straddling the waterline (the bubbly scalloped edge)
+                    int nLace = 2 + (rng.Next() < 0.55f ? 1 : 0);
                     for (int k = 0; k < nLace; k++)
-                        Add(list, rng, side, edge + side * rng.Range(-0.22f, 0.12f), s + rng.Range(-0.25f, 0.25f),
-                            rng.Range(0.07f, 0.17f), rng.Range(0.25f, 0.4f), rng.Range(0.85f, 1f));
-
-                    // 2) shelf fill up to the wall
-                    int nFill = Mathf.FloorToInt(shelfW / 0.6f);
-                    for (int k = 0; k < nFill; k++)
-                        Add(list, rng, side, edge + side * (0.25f + rng.Next() * shelfW), s + rng.Range(-0.3f, 0.3f),
-                            rng.Range(0.16f, 0.34f), rng.Range(0.15f, 0.3f), rng.Range(0.8f, 0.95f));
-
-                    // 3) rounded clusters of big puffs, some with smaller ones piled on top
-                    if (cl > 0.42f)
                     {
-                        int nBig = 1 + Mathf.FloorToInt(cl * 2.2f * rng.Range(0.6f, 1f));
-                        for (int k = 0; k < nBig; k++)
+                        float u = rng.Next();
+                        float r = 0.035f + 0.075f * u * u;
+                        Add(list, rng, side, edge + side * rng.Range(-0.17f, 0.05f), s + rng.Range(-0.5f, 0.5f) * step,
+                            r, rng.Range(0.25f, 0.45f), rng.Range(0.9f, 1f));
+                    }
+
+                    // 2) rim: the round mound along the waterline - bubbles of many sizes, piled where the mound noise is high
+                    int nRim = 1 + (rng.Next() < 0.45f + 0.45f * cl ? 1 : 0);
+                    for (int k = 0; k < nRim; k++)
+                    {
+                        float u = rng.Next();
+                        float r = Mathf.Lerp(0.1f, 0.3f + 0.17f * cl, u * u);
+                        float x = edge + side * (r * 0.6f + rng.Range(0.0f, 0.32f));
+                        int bi = Add(list, rng, side, x, s + rng.Range(-0.5f, 0.5f) * step, r, rng.Range(0.22f, 0.4f),
+                                     rng.Range(0.84f, 0.97f));
+                        if (bi >= 0 && rng.Next() < 0.18f + 0.6f * cl) Pile(list, rng, list[bi], side, 0.97f);
+                    }
+
+                    // 3) heap body from the rim to the wall: bigger, lower bubbles, piled against the wall
+                    float body = shelfW - 0.45f;
+                    if (body > 0.05f)
+                    {
+                        float n = body / 0.55f * (0.7f + 0.5f * rng.Next());
+                        int nFill = Mathf.FloorToInt(n) + (rng.Next() < n - Mathf.Floor(n) ? 1 : 0);
+                        for (int k = 0; k < nFill; k++)
                         {
-                            float r = rng.Range(0.3f, 0.42f + 0.33f * cl);
-                            float x = edge + side * rng.Range(-0.05f, 0.55f);
-                            float z = s + rng.Range(-0.35f, 0.35f);
-                            int baseIndex = Add(list, rng, side, x, z, r, rng.Range(0.18f, 0.3f), rng.Range(0.86f, 0.96f));
-                            if (rng.Next() < 0.5f && baseIndex >= 0)
-                            {
-                                Puff b = list[baseIndex];
-                                float r2 = r * rng.Range(0.45f, 0.7f);
-                                var p = new Puff
-                                {
-                                    centre = b.centre + new Vector3(side * r * rng.Range(0.1f, 0.4f), r * rng.Range(0.5f, 0.65f), rng.Range(-0.2f, 0.2f) * r),
-                                    scale = new Vector3(rng.Range(0.92f, 1.08f), rng.Range(0.85f, 1f), rng.Range(1f, 1.25f)),
-                                    radius = r2,
-                                    seed = rng.Next(),
-                                    ao = 1f,
-                                    side = side,
-                                };
-                                list.Add(p);
-                            }
+                            float f = rng.Next();
+                            float x = edge + side * (0.45f + f * body);
+                            float u = rng.Next();
+                            float r = Mathf.Lerp(0.14f, 0.36f, u) + 0.1f * f;
+                            int bi = Add(list, rng, side, x, s + rng.Range(-0.5f, 0.5f) * step, r, rng.Range(0.3f, 0.48f),
+                                         rng.Range(0.74f, 0.9f));
+                            if (bi >= 0 && rng.Next() < 0.1f + 0.3f * cl) Pile(list, rng, list[bi], side, 0.93f);
                         }
                     }
-                    s += rng.Range(0.42f, 0.72f);
+
+                    // 4) a few loose small bubbles resting on the foam
+                    if (rng.Next() < 0.3f)
+                    {
+                        float r = rng.Range(0.03f, 0.065f);
+                        float x = edge + side * rng.Range(0.1f, Mathf.Min(0.9f, Mathf.Max(0.15f, shelfW)));
+                        float z = s + rng.Range(-0.5f, 0.5f) * step;
+                        float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + rng.Range(0.22f, 0.45f) * (0.6f + 0.6f * cl);
+                        AddAt(list, rng, side, new Vector3(Mathf.Clamp(x, -WallX, WallX), y, z), r, 1f);
+                    }
+                    s += step;
                 }
             }
             return list;
+        }
+
+        /// <summary>A smaller bubble piled on top of (and a little outward from) another one.</summary>
+        static void Pile(List<Puff> list, Rng rng, Puff b, int side, float ao)
+        {
+            float r2 = b.radius * rng.Range(0.48f, 0.74f);
+            var c = b.centre + new Vector3(side * b.radius * rng.Range(0.05f, 0.4f), b.radius * rng.Range(0.55f, 0.8f),
+                                           b.radius * rng.Range(-0.35f, 0.35f));
+            AddAt(list, rng, side, c, r2, ao);
         }
 
         static int Add(List<Puff> list, Rng rng, int side, float x, float z, float r, float sink, float ao)
         {
             if (z < RiverPath.TunnelStart || z > RiverPath.TunnelLength) return -1;
             x = Mathf.Clamp(x, -WallX, WallX);
-            float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) - r * sink;
-            list.Add(new Puff
-            {
-                centre = new Vector3(x, y, z),
-                scale = new Vector3(rng.Range(0.9f, 1.1f), rng.Range(0.8f, 1f), rng.Range(1f, 1.35f)),
-                radius = r,
-                seed = rng.Next(),
-                ao = ao,
-                side = side,
-            });
+            float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + r * (1f - 2f * sink);
+            return AddAt(list, rng, side, new Vector3(x, y, z), r, ao);
+        }
+
+        static int AddAt(List<Puff> list, Rng rng, int side, Vector3 c, float r, float ao)
+        {
+            if (c.z < RiverPath.TunnelStart || c.z > RiverPath.TunnelLength) return -1;
+            list.Add(new Puff { centre = c, radius = r, seed = rng.Next(), ao = ao, tint = rng.Range(-1f, 1f), side = side });
             return list.Count - 1;
         }
 
-        /// <summary>Merges the puffs into chunk meshes (per bank side, chunkLength units along s), LOD0 + LOD1.</summary>
+        /// <summary>Merges the puffs into chunk meshes (per bank side, chunkLength units along s): LOD0 all, LOD1 the big ones.</summary>
         public static List<Chunk> BuildChunks(List<Puff> puffs, float chunkLength = 10f)
         {
             var groups = new SortedDictionary<int, List<Puff>>();
@@ -170,85 +275,54 @@ namespace Rainbow.Screen05
                 int ci = kv.Key / 2;
                 string side = (kv.Key % 2) == 1 ? "R" : "L";
                 string nm = "FoamBank05_" + side + "_" + ci.ToString("00");
+                var big = kv.Value.FindAll(p => p.radius >= Lod1MinRadius);
                 chunks.Add(new Chunk
                 {
                     name = nm,
-                    lod0 = BuildMesh(kv.Value, 12, 5, nm + "_LOD0"),
-                    lod1 = BuildMesh(kv.Value, 7, 3, nm + "_LOD1"),
+                    lod0 = BuildMesh(kv.Value, nm + "_LOD0"),
+                    lod1 = BuildMesh(big.Count > 0 ? big : kv.Value, nm + "_LOD1"),
                     puffCount = kv.Value.Count,
                 });
             }
             return chunks;
         }
 
-        /// <summary>Domes (sphere cap from slightly below the equator to the pole) merged into one mesh.</summary>
-        public static Mesh BuildMesh(List<Puff> puffs, int segments, int rings, string name)
+        /// <summary>One camera-facing quad per puff (expanded in the vertex shader); bounds cover the spheres + swell.</summary>
+        public static Mesh BuildMesh(List<Puff> puffs, string name)
         {
-            const float latMin = -0.3f;
-            int vpp = segments * rings + 1;
-            int tpp = segments * (rings - 1) * 2 + segments;
-            int nv = puffs.Count * vpp;
+            int nv = puffs.Count * 4;
             var pos = new Vector3[nv];
-            var nor = new Vector3[nv];
-            var uv0 = new Vector2[nv];
+            var uv0 = new List<Vector4>(nv);
             var uv1 = new List<Vector4>(nv);
-            var tri = new int[puffs.Count * tpp * 3];
+            var tri = new int[puffs.Count * 6];
             int v = 0, t = 0;
+            float maxR = 0f;
             foreach (var p in puffs)
             {
-                int baseV = v;
-                var cr = new Vector4(p.centre.x, p.centre.y, p.centre.z, p.radius);
-                for (int k = 0; k < rings; k++)
+                maxR = Mathf.Max(maxR, p.radius);
+                float d = RiverPath.Meander(p.centre.z);
+                float hw = RiverSurface.StreamHalfWidth(p.centre.z);
+                for (int k = 0; k < 4; k++)
                 {
-                    float lat = latMin + (Mathf.PI * 0.5f - latMin) * k / rings;
-                    float cl = Mathf.Cos(lat), sl = Mathf.Sin(lat);
-                    for (int m = 0; m < segments; m++)
-                    {
-                        float az = 2f * Mathf.PI * (m + 0.5f * (k & 1)) / segments;
-                        var dir = new Vector3(cl * Mathf.Cos(az), sl, cl * Mathf.Sin(az));
-                        pos[v] = p.centre + Vector3.Scale(dir, p.scale) * p.radius;
-                        nor[v] = dir;
-                        uv0[v] = new Vector2(p.seed, p.ao);
-                        uv1.Add(cr);
-                        v++;
-                    }
+                    float cx = (k == 1 || k == 2) ? 1f : -1f;
+                    float cy = k >= 2 ? 1f : -1f;
+                    pos[v + k] = p.centre;
+                    uv0.Add(new Vector4(cx, cy, p.radius, p.seed));
+                    uv1.Add(new Vector4(p.ao, p.tint, d, hw));
                 }
-                pos[v] = p.centre + new Vector3(0f, p.scale.y * p.radius, 0f);
-                nor[v] = Vector3.up;
-                uv0[v] = new Vector2(p.seed, p.ao);
-                uv1.Add(cr);
-                int pole = v;
-                v++;
-                for (int k = 0; k < rings - 1; k++)
-                {
-                    for (int m = 0; m < segments; m++)
-                    {
-                        int m1 = (m + 1) % segments;
-                        int a = baseV + k * segments + m;
-                        int b = baseV + k * segments + m1;
-                        int c = baseV + (k + 1) * segments + m;
-                        int dd = baseV + (k + 1) * segments + m1;
-                        tri[t++] = a; tri[t++] = c; tri[t++] = b;     // outward-facing (clockwise from outside)
-                        tri[t++] = b; tri[t++] = c; tri[t++] = dd;
-                    }
-                }
-                int top = baseV + (rings - 1) * segments;
-                for (int m = 0; m < segments; m++)
-                {
-                    int m1 = (m + 1) % segments;
-                    tri[t++] = top + m; tri[t++] = pole; tri[t++] = top + m1;
-                }
+                tri[t++] = v; tri[t++] = v + 2; tri[t++] = v + 1;
+                tri[t++] = v; tri[t++] = v + 3; tri[t++] = v + 2;
+                v += 4;
             }
             var mesh = new Mesh { name = name };
             mesh.indexFormat = nv > 65000 ? UnityEngine.Rendering.IndexFormat.UInt32 : UnityEngine.Rendering.IndexFormat.UInt16;
             mesh.vertices = pos;
-            mesh.normals = nor;
-            mesh.uv = uv0;
+            mesh.SetUVs(0, uv0);
             mesh.SetUVs(1, uv1);
             mesh.triangles = tri;
             mesh.RecalculateBounds();
             var b2 = mesh.bounds;
-            b2.Expand(0.15f);    // breathing / wobble
+            b2.Expand(2f * maxR + 0.4f);    // sphere radius, swell, breathing, Benny push
             mesh.bounds = b2;
             return mesh;
         }
