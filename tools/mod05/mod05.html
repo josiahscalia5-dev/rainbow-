@@ -40,7 +40,7 @@ const LAY = await (await fetch('mod05.json')).json();
 for (const [k, v] of [['c_LANE', String(LAY.lane)], ['c_LAT_MAX', String(LAY.lane * 1.2)], ['speed', String(LAY.speed)]]) if (!q.has(k)) q.set(k, v);
 const W = +(q.get('w') ?? innerWidth), H = +(q.get('h') ?? innerHeight);
 const GRAY = q.get('gray') === '1';
-const LK = Object.fromEntries(Object.entries(LAY.look).filter(([k]) => k[0] !== '_').map(([k, v]) => [k, q.has('L_' + k) ? +q.get('L_' + k) : v]));   // look values (?L_<key>= overrides)
+const LK = Object.fromEntries(Object.entries(LAY.look).filter(([k]) => k[0] !== '_').map(([k, v]) => [k, q.has('L_' + k) ? (Array.isArray(v) ? q.get('L_' + k).split(',').map(Number) : +q.get('L_' + k)) : v]));   // look values (?L_<key>= overrides)
 const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
 renderer.setPixelRatio(q.get('w') ? 1 : Math.min(2, devicePixelRatio)); renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
 const scene = new THREE.Scene(); scene.background = new THREE.Color(q.get('sentinel') ? 0x00ff00 : 0x1a0630);
@@ -104,7 +104,7 @@ const grayM = (c) => new THREE.MeshStandardMaterial({ color: c, roughness: 0.7, 
 const wallMat = GRAY ? grayM(0x8c8c8c) : new THREE.MeshStandardMaterial({ map: wallTex, color: new THREE.Color(LK.wall_diffuse, LK.wall_diffuse, LK.wall_diffuse), emissiveMap: wallTex, emissive: 0xffffff,
   emissiveIntensity: LK.wall_glow, metalness: LK.wall_metal, roughness: LK.wall_rough, envMap: ENV, envMapIntensity: LK.wall_env, side: THREE.BackSide });
 if (q.get('wallbasic') === '1') Object.assign(wallMat, { emissiveIntensity: 0 }) && (wallMat.color.setScalar(0), wallMat.emissive.setScalar(0));   // debug
-const ringMat = GRAY ? grayM(0xb0b0b0) : new THREE.MeshStandardMaterial({ map: ringTex, emissiveMap: ringTex, emissive: 0xffffff, emissiveIntensity: LK.ring_glow,
+const ringMat = GRAY ? grayM(0xb0b0b0) : new THREE.MeshStandardMaterial({ map: ringTex, color: new THREE.Color(...LK.ring_tint), emissiveMap: ringTex, emissive: new THREE.Color(...LK.ring_tint), emissiveIntensity: LK.ring_glow,
   metalness: LK.ring_metal, roughness: LK.ring_rough, envMap: ENV, envMapIntensity: LK.ring_env });
 const padTex = (() => { const c = document.createElement('canvas'); c.width = 8; c.height = 256; const g = c.getContext('2d'), gr = g.createLinearGradient(0, 256, 0, 0);
   for (const [o, col] of [[0, '#c9601a'], [0.1, '#f39a45'], [0.22, '#ffe7a8'], [0.34, '#f8a24a'], [0.6, '#ea8034'], [0.84, '#d4661f'], [0.93, '#a8400c'], [1, '#ffcf72']]) gr.addColorStop(o, col);
@@ -155,7 +155,7 @@ const glowTex = (() => { const c = document.createElement('canvas'); c.width = c
   for (const [o, col] of [[0, 'rgba(255,255,248,1)'], [0.14, 'rgba(255,250,215,1)'], [0.32, 'rgba(255,226,160,0.75)'], [0.6, 'rgba(255,190,170,0.25)'], [1, 'rgba(255,170,200,0)']]) gr.addColorStop(o, col);
   g.fillStyle = gr; g.fillRect(0, 0, 256, 256); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; })();
 { const cap = new THREE.Mesh(new THREE.CircleGeometry(R + 0.05, 96), new THREE.MeshBasicMaterial({ color: sRGB(LAY.glow.color), fog: false })); cap.position.set(AX, AY, Z_END); addW(cap, 'far_end', 'end');
-  const gl = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, fog: false, transparent: true, depthWrite: false })); gl.scale.setScalar(R * 4.2); gl.position.set(AX, AY * 0.6, Z_END + 0.6); gl.renderOrder = 3; addW(gl, 'far_glow', 'end'); }
+  const gl = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, fog: false, transparent: true, depthWrite: false, depthTest: false }));   // the painted core glow spills over the far rings gl.scale.setScalar(R * 4.2); gl.position.set(AX, AY * 0.6, Z_END + 0.6); gl.renderOrder = 3; addW(gl, 'far_glow', 'end'); window.__glow = gl; }
 
 // ---------------- ONE continuous water material over the whole floor ----------------
 // river space: d = distance down the drum from Benny's painted point, kU = distance across from the S centre line (the same function as the
@@ -387,6 +387,7 @@ window.step = (t, dt, steer, speed) => {
   CT.water(F, v, dt);
   camAt(dt); WATER_U.uCamZ.value = camera.position.z;
   updateEnd(st.s);
+  { const g = window.__glow, d = camera.position.distanceTo(g.position); g.scale.setScalar(2 * LAY.glow.px * d / (H / 2 / Math.tan(camera.fov * DEG / 2))); }   // the bright core keeps the painted size on screen
   for (const c of coins) { if (c.got < 0 && CT.hits(c)) { c.got = t; coinCount += 10; coinEl.textContent = '\u{1FA99} ' + coinCount.toLocaleString('en-US'); }
     if (c.got >= 0 && c.s < 1e8) { const k = (t - c.got) / 0.4; c.sp.visible = k < 1; if (k < 1) { c.sp.position.copy(benny.position).addScaledVector(F.n, bennyH * (1.05 + 0.6 * k)); c.sp.scale.setScalar(coinD * 0.7 * (1 - 0.5 * k)); } } }
   coins.forEach((c, i) => { const m = coin3[i]; m.visible = c.sp.visible && c.s < 1e8; if (!m.visible) return; m.position.copy(c.sp.position);

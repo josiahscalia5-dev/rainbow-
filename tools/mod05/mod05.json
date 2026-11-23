@@ -16,13 +16,13 @@
              "left_deg": [150, 158], "right_deg": [20, 13], "_note": "D-shaped gold slab, straight edge on the wall, tilted toward the tunnel centre; angles alternate per section" },
  "foam": { "bank_step": 0.3, "bank_gap": 0.06, "wall_step": 0.42, "size": [0.15, 0.27], "prefabs": 4 },
  "bubbles": { "count": 220 },
- "fog": { "color": [246, 196, 246], "near": 14.0, "far": 72.0 },
+ "fog": { "color": [185, 90, 170], "near": 5.0, "far": 26.0, "_note": "depth fade toward the far-tunnel magenta measured on the approved picture (25-90 px from its core): far rings dissolve into the wall colour as painted" },
  "splash_pic": { "w_px": 660, "h_px": 308, "anchor_px": [330.0, 173.0], "benny_px": 430.0, "scale": 1.0, "_note": "the white spray cut from the approved picture (tools/screenkit/splash_cut.py), anchored at Benny's water contact" },
  "look": { "_note": "every value can be overridden per URL as ?L_<key>=value for A/B tests",
-   "wall_diffuse": 0.05, "wall_glow": 1.0, "wall_env": 0.18, "wall_metal": 0.7, "wall_rough": 0.38,
-   "ring_glow": 0.7, "ring_env": 0.6, "ring_metal": 1.0, "ring_rough": 0.22,
+   "wall_diffuse": 0.05, "wall_glow": 1.0, "wall_env": 0.08, "wall_metal": 0.7, "wall_rough": 0.38,
+   "ring_glow": 0.55, "ring_tint": [1.0, 0.82, 0.66], "ring_env": 0.6, "ring_metal": 1.0, "ring_rough": 0.22,
    "pad_glow": 0.62, "pad_env": 0.55,
    "water_ribbons": 5.0, "water_streaks": 0.4, "water_sparkle": 0.75, "water_band": 0.6, "water_gain": 1.1,
    "foam_scale": 0.7, "foam_flat": 0.7 },
- "glow": { "color": [255, 246, 214] }
+ "glow": { "color": [255, 246, 214], "px": 92 }
 }
