@@ -5468,3 +5468,144 @@ Each zip contains:
 
 The Android APK isn't included because it's 247 MB. Both zips are also saved on GitHub, in `qa/kit46/` on branch `claude/rainbow-screens-05-06-10w5xd`.
 
+### 🧑 User — 2026-11-23T00:48:21.425Z
+
+Claudia, Round 46 is not visually approved. Preserve the current project and working gameplay, and make the next task a focused correction of Screen 05.
+
+The new textured recording has a clear defect at approximately 00:03: the detailed painted water ahead has a visible boundary where it meets the simpler striped water beneath Benny. The README acknowledges that the painted area only lines up from the reference camera. This must be resolved during actual movement.
+
+Work in a separate branch and produce one short playable section covering the approach to that boundary, the approved camera position, and a bend beyond it.
+
+For this section:
+
+1. Make the river read as one continuous body of water. Preserve the approved cyan/pink currents, curved flow, broken white reflections, foam, and bubbles throughout the section. Remove the visible change between the painted patch and the generated continuation.
+
+2. Inspect the actual channel shape and surface mapping. Correct the geometry or material construction where necessary. Increasing glow, adding noise, or softening the boundary alone is not sufficient.
+
+3. Match the nearby gold rings and copper paddles as physical shapes, with clean materials that remain convincing when approached and passed. Remove stray painted fragments from the wall texture.
+
+4. Make the foam follow the actual river edges. Place Benny’s splash and wake at his contact with the water, and check his posture while steering.
+
+5. Preserve the existing controls, pickups, collisions, approved artwork, and successful checkpoints. Continue this game.
+
+Show the result as an uninterrupted normal-speed recording with forward movement and both steering extremes. Include corresponding stills at the approved camera, before it, and after it. State the remaining visible differences plainly.
+
+Report functional checks separately from visual approval. A single-camera pixel score or color histogram is not evidence that the whole moving section matches.
+
+Do not extend this treatment to more screens until this short section demonstrates the approved look throughout movement. If the current pipeline cannot achieve that, identify the specific geometry, texture, or material work that must be replaced before continuing.
+
+### 🤖 Claude — 2026-11-23T00:50:11.201Z
+
+This is a focused Screen 05 correction on its own branch. Before writing code, I'm checking how the five-minute autosave picks its branch, so the new branch's work can't be pushed onto the old branch.
+
+### 🤖 Claude — 2026-11-23T00:50:12.255Z
+
+> 🔧 **Bash** `{"command": "grep -n \"session branch\\|def .*branch\\|current_branch\\|rev-parse --abbrev-ref\\|CLAUDE_CODE_REMOTE\\|protected\" scripts/rainbow-autosave.py | head -20", "description": "Inspect how autosave chooses its push branch"}`
+
+### 🧑 User — 2026-11-23T00:50:12.310Z
+
+> ↩︎ result: 49:    sid = os.environ.get("CLAUDE_CODE_REMOTE_SESSION_ID", "")
+> 216:def push_and_verify(branch: str) -> tuple[bool, str]:
+> 374:        if CFG["branch"] in CFG.get("protected_branches", []) or branch in CFG.get("protected_branches", []):
+> 375:            raise RuntimeError(f"branch {branch!r} is a protected original branch; autosave never pushes to it")
+> 378:            # explicitly allowed session-branch pattern (protected branches were rejected above).
+> 383:            row["note"] = f"following session branch {branch!r} (config branch {CFG['branch']!r})"
+
+### 🤖 Claude — 2026-11-23T00:50:14.090Z
+
+> 🔧 **Bash** `{"command": "sed -n 362,392p scripts/rainbow-autosave.py", "description": "Read autosave branch-following logic"}`
+
+### 🧑 User — 2026-11-23T00:50:14.137Z
+
+> ↩︎ result: except BlockingIOError:
+>         if not args.quiet:
+>             print("another autosave is running; skipping")
+>         return 0
+> 
+>     try:
+>         # ---- 1. identity checks -------------------------------------------------------
+>         url = git("remote", "get-url", CFG["remote_name"]).stdout.strip()
+>         if CFG["remote_url_must_contain"] not in url:
+>             raise RuntimeError(f"remote URL {url!r} is not the verified Rainbow repo; refusing to back up")
+>         branch = git("symbolic-ref", "--short", "HEAD").stdout.strip()
+>         row["branch"] = branch
+>         if CFG["branch"] in CFG.get("protected_branches", []) or branch in CFG.get("protected_branches", []):
+>             raise RuntimeError(f"branch {branch!r} is a protected original branch; autosave never pushes to it")
+>         if branch != CFG["branch"]:
+>             # A new cloud session gets a fresh working-branch name. Follow it only when it matches an
+>             # explicitly allowed session-branch pattern (protected branches were rejected above).
+>             pats = CFG.get("session_branch_patterns", [])
+>             if not any(fnmatch.fnmatchcase(branch, p) for p in pats):
+>                 raise RuntimeError(f"current bra …[+724 chars]
+
+### 🤖 Claude — 2026-11-23T00:50:19.339Z
+
+> 🔧 **Bash** `{"command": "flock backups/.autosave.lock bash -c 'git checkout -q -b claude/rainbow-05-continuous-water-r47 && git branch --show-current && git log --oneline -1'; timeout 300 git push -q -u origin claude/rainbow-05-continuous-water-r47 2>&1 | tail -1; git ls-remote origin refs/heads/claude/rainbow-05-continuous-water-r47 | cut -c1-12", "description": "Create and push the new round 47 branch", "timeout": 400000}`
+
+### 🧑 User — 2026-11-23T00:50:22.136Z
+
+> ↩︎ result: claude/rainbow-05-continuous-water-r47
+> 32d5da4 autosave: Rainbow 2026-11-23 00:46 UTC
+> remote: 
+> 32d5da4a433f
+
+### 🤖 Claude — 2026-11-23T00:50:24.955Z
+
+> 🔧 **TaskCreate** `{"subject": "R47-1: Diagnose the painted-patch boundary (channel shape + surface mapping)", "description": "Probe frames ~00:03 of r46 run; identify which meshes/material paths create the boundary (bake trust edge, magnification switch, route ribbon vs pool, geometry mismatch).", "activeForm": "Diagnosing the painted-patch boundary"}`
+
+### 🧑 User — 2026-11-23T00:50:24.970Z
+
+> ↩︎ result: Task #8 created successfully: R47-1: Diagnose the painted-patch boundary (channel shape + surface mapping)
+
+### 🤖 Claude — 2026-11-23T00:50:26.403Z
+
+> 🔧 **TaskCreate** `{"subject": "R47-2: One continuous river material (flow-space painted strip)", "description": "Rectify the approved river into flow space (lat, d) from the picture camera, build a seamless painted tile from the best stretch, compose low-freq picture + high-freq tile, apply to all water surfaces with one mapping.", "activeForm": "Building one continuous river material"}`
+
+### 🧑 User — 2026-11-23T00:50:26.413Z
+
+> ↩︎ result: Task #9 created successfully: R47-2: One continuous river material (flow-space painted strip)
+
+### 🤖 Claude — 2026-11-23T00:50:27.852Z
+
+> 🔧 **TaskCreate** `{"subject": "R47-3: Clean physical rings/paddles; wall without painted fragments", "description": "Gold ring + copper tray materials that hold up close; wall bake/template gate so painted rings/trays/bubbles don't sit on the wall.", "activeForm": "Cleaning rings, paddles and walls"}`
+
+### 🧑 User — 2026-11-23T00:50:27.863Z
+
+> ↩︎ result: Task #10 created successfully: R47-3: Clean physical rings/paddles; wall without painted fragments
+
+### 🤖 Claude — 2026-11-23T00:50:29.101Z
+
+> 🔧 **TaskCreate** `{"subject": "R47-4: Foam on real river edges; splash/wake contact; steering posture", "description": "Foam banks follow measured river edges through the section; painted foam removed from water texture; check splash and lean.", "activeForm": "Fixing foam edges and splash contact"}`
+
+### 🧑 User — 2026-11-23T00:50:29.112Z
+
+> ↩︎ result: Task #11 created successfully: R47-4: Foam on real river edges; splash/wake contact; steering posture
+
+### 🤖 Claude — 2026-11-23T00:50:30.406Z
+
+> 🔧 **TaskCreate** `{"subject": "R47-5: Short section recording + stills + functional checks; report", "description": "Normal-speed uninterrupted recording (approach -> approved camera -> bend) with both steering extremes; stills before/at/after; functional checks separate from visual; remaining differences; commit/push.", "activeForm": "Recording the corrected Screen 05 section"}`
+
+### 🧑 User — 2026-11-23T00:50:30.433Z
+
+> ↩︎ result: Task #12 created successfully: R47-5: Short section recording + stills + functional checks; report
+
+### 🤖 Claude — 2026-11-23T00:50:34.310Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/ws46/final/tex && montage f_00075.png f_00090.png f_00105.png -tile 3x1 -geometry 412x915+2+2 /home/user/ws46/r47_diag_frames.jpg", "description": "Montage the frames around 00:03"}`
+
+### 🧑 User — 2026-11-23T00:50:34.473Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-23T00:50:36.111Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/r47_diag_frames.jpg"}`
+
+### 🧑 User — 2026-11-23T00:50:36.228Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T00:50:52.741Z
+
+> 🔧 **Bash** `{"command": "PLAN=$(cat qa/kit45/run/swipe_plan_05_06.json); export NODE_PATH=$(npm root -g); rm -rf /home/user/ws46/r47_probe; node tools/world/probe_frames.cjs /home/user/ws46/world/game /home/user/ws46/r47_probe 105 \"$PLAN\" 's0=88&sentinel=1' '[[150,380],[250,380],[350,380],[150,420],[250,430],[350,420],[120,460],[250,465],[380,460],[250,480],[250,500],[120,520],[380,520],[250,600],[60,700]]' > /dev/null 2>&1; python3 -c \"\nimport json; d=json.load(open('/home/user/ws46/r47_probe/probe.json'))\nfor f in d['frames']:\n    print('frame', f['frame'], 's', f['s'])\n    for p in f['picks']: p …[+212 chars]`
+
