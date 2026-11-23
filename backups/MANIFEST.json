@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 29385,
-   "sha256": "3291d1b0df44174410e328371a959d5bce0ec398e50f81931de25cfb16efc9e4"
+   "sha256": "f6f502dbc4c24b610c807242d05830532d640de08c11eaebbbda95ade2da26f7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "7146bdbfc9a96c99c2f4721ad70f7c914a7755051b33784d6a8ade81be3c4a71"
+   "sha256": "82d2e709490cfd8c4731ba597c85188f0af8ddbd1ca75cad489abab033883d75"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -49567,14 +49567,19 @@
    "sha256": "8f9bee468e9096a9a5f8744c256384587b6d6712bb7ba070e0da2602fa369cec"
   },
   {
+   "path": "tools/mod05/build_phone.sh",
+   "bytes": 2071,
+   "sha256": "e48c150e3bcd8f22d6c09bd37c284382c231c50611ac659f2f2254fd47879e9f"
+  },
+  {
    "path": "tools/mod05/make_tiles.py",
    "bytes": 9302,
    "sha256": "b86ae6284ad7f63f2d5beda7d756abfbc001ad72e07a6760259d3a5108ce2662"
   },
   {
    "path": "tools/mod05/mod05.html",
-   "bytes": 47324,
-   "sha256": "068f82c6977a6d9a8dea3edbb09dff401e15e7d9d0998df6286c7b3c13749ad8"
+   "bytes": 47981,
+   "sha256": "51e1e3ebac75fc2ce30cacca739de6c0da9973a1bcc544c53167576ec5d3aa10"
   },
   {
    "path": "tools/mod05/mod05.json",

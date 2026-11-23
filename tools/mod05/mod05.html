@@ -117,7 +117,7 @@ const goldMat = GRAY ? grayM(0xa8a8a8) : new THREE.MeshStandardMaterial({ map: p
 // wall piece: open cylinder, one ring spacing long, front at z = 0, back at z = -SP; UV u around (seam under the water), v along
 const wallGeo = new THREE.CylinderGeometry(R, R, SP, 192, 1, true); wallGeo.rotateX(Math.PI / 2); wallGeo.translate(0, 0, -SP / 2);
 // gold ring: lathe profile (front face, three raised bands with two grooves on the inner surface, back face); custom v across the profile
-const ringGeo = (() => { const B = LAY.ring.band, DP = LAY.ring.depth, pts = [], vs = [], NF = 30, NI = 30;
+const ringGeo = (() => { const B = LAY.ring.band, DP = LAY.ring.depth, pts = [], vs = [], NF = 15, NI = 15;
   // front face (toward the camera): from inside the wall to the inner edge, three raised half-round bands (grooves at 1/3, 2/3) = the tile's three bands
   for (let i = 0; i <= NF; i++) { const f = i / NF, r = R + 0.03 - (DP + 0.03) * f; pts.push(new THREE.Vector2(r, -0.022 * Math.abs(Math.sin(f * 3 * Math.PI)) ** 0.6)); vs.push(f); }
   // rounded inner edge
@@ -127,7 +127,7 @@ const ringGeo = (() => { const B = LAY.ring.band, DP = LAY.ring.depth, pts = [],
   for (let i = 0; i <= 4; i++) { const a = i / 4 * Math.PI / 2; pts.push(new THREE.Vector2(R - DP - 0.012 + 0.03 * (1 - Math.cos(a)), B - 0.02 + 0.02 * Math.sin(a))); vs.push(0.85 + 0.15 * i / 4); }
   pts.push(new THREE.Vector2(R + 0.03, B)); vs.push(1.0);
   pts.reverse(); vs.reverse();   // lathe faces point to the right of the profile's direction: reversed, the front face looks at the camera and the inner surface at the drum axis
-  const g = new THREE.LatheGeometry(pts, 192); const uv = g.attributes.uv;
+  const g = new THREE.LatheGeometry(pts, 128); const uv = g.attributes.uv;
   for (let i = 0; i < uv.count; i++) uv.setY(i, vs[i % pts.length]);
   g.rotateX(-Math.PI / 2); return g; })();
 // paddle: a D-shaped gold slab (straight edge on the wall along the drum, round edge reaching inward), bevelled rim
@@ -155,7 +155,7 @@ const glowTex = (() => { const c = document.createElement('canvas'); c.width = c
   for (const [o, col] of [[0, 'rgba(255,255,248,1)'], [0.14, 'rgba(255,250,215,1)'], [0.32, 'rgba(255,226,160,0.75)'], [0.6, 'rgba(255,190,170,0.25)'], [1, 'rgba(255,170,200,0)']]) gr.addColorStop(o, col);
   g.fillStyle = gr; g.fillRect(0, 0, 256, 256); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; })();
 { const cap = new THREE.Mesh(new THREE.CircleGeometry(R + 0.05, 96), new THREE.MeshBasicMaterial({ color: sRGB(LAY.glow.color), fog: false })); cap.position.set(AX, AY, Z_END); addW(cap, 'far_end', 'end');
-  const gl = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, fog: false, transparent: true, depthWrite: false, depthTest: false }));   // the painted core glow spills over the far rings gl.scale.setScalar(R * 4.2); gl.position.set(AX, AY * 0.6, Z_END + 0.6); gl.renderOrder = 3; addW(gl, 'far_glow', 'end'); window.__glow = gl; }
+  const gl = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, fog: false, transparent: true, depthWrite: false, depthTest: false }));   /* the painted core glow spills over the far rings */ gl.scale.setScalar(R * 4.2); gl.position.set(AX, AY * 0.6, Z_END + 0.6); gl.renderOrder = 3; addW(gl, 'far_glow', 'end'); window.__glow = gl; }
 
 // ---------------- ONE continuous water material over the whole floor ----------------
 // river space: d = distance down the drum from Benny's painted point, kU = distance across from the S centre line (the same function as the
@@ -235,10 +235,13 @@ const waterMat = GRAY ? grayM(0x9aa6b4) : new THREE.ShaderMaterial({ fog: true, 
   const m = new THREE.Mesh(g, waterMat); m.position.set(AX, 0, zf - len / 2); addW(m, 'water', 'water'); }
 
 // ---------------- FOUR foam-cluster shapes, reused along both banks and the wall bases ----------------
-const foamPrefabs = [0, 1, 2, 3].map((k) => { const r = rngOf(900 + k * 77), parts = [[0, 0.3, 0, 0.42, 2]];
+const foamParts = [0, 1, 2, 3].map((k) => { const r = rngOf(900 + k * 77), parts = [[0, 0.3, 0, 0.42, 2]];
   for (let i = 0; i < 2 + (k % 2); i++) { const a = r() * Math.PI * 2, d = 0.3 + 0.3 * r(), s = 0.26 + 0.14 * r(); parts.push([Math.cos(a) * d, s * 0.6, Math.sin(a) * d * 0.75, s, 2]); }
   for (let i = 0; i < 12 + 2 * k; i++) { const a = r() * Math.PI * 2, d = 0.2 + 0.75 * r(), s = 0.08 + 0.14 * r() * r(); parts.push([Math.cos(a) * d, s * 0.5 + 0.35 * r() * (1 - d * 0.8), Math.sin(a) * d * 0.8, s, 1]); }
-  return mergeGeometries(parts.map(([x, y, z, s, det]) => { const g = new THREE.IcosahedronGeometry(s, det); g.translate(x, y, z); return g; })); });
+  return parts; });
+// each heap in two levels of detail (same spheres): full detail near the camera, lighter beyond LAY.foam.lod_far (THREE.LOD per drum section)
+const foamOf = (parts, lo) => mergeGeometries(parts.filter((p, i) => !lo || p[4] === 2 || i % 2 === 0).map(([x, y, z, s, det]) => { const g = new THREE.IcosahedronGeometry(s, Math.max(0, det - (lo ? 1 : 0))); g.translate(x, y, z); return g; }));
+const foamPrefabs = foamParts.map((p) => foamOf(p, false)), foamPrefabsLo = foamParts.map((p) => foamOf(p, true));
 const foamMat = GRAY ? grayM(0xe6e6ea) : new THREE.ShaderMaterial({ fog: true, uniforms: THREE.UniformsUtils.merge([THREE.UniformsLib.fog, {}]),
   vertexShader: `#include <fog_pars_vertex>
     varying vec3 vN; varying vec3 vW; varying float vAO;
@@ -276,14 +279,17 @@ const FOAM = [];   // [x, z, size, prefab, rotation]
   } }
 { const bySec = new Map(); for (const f of FOAM) { const k = Math.floor((RING0 - f[1]) / SP); if (!bySec.has(k)) bySec.set(k, []); bySec.get(k).push(f); }
   const M4 = new THREE.Matrix4(), Q = new THREE.Quaternion();
-  for (const [k, list] of bySec) { const g = mergeGeometries(list.map(([x, z, s, p, rot]) => foamPrefabs[p].clone().applyMatrix4(M4.compose(new THREE.Vector3(x, -0.02, z), Q.setFromAxisAngle(UPV, rot), new THREE.Vector3(s * LK.foam_scale, s * LK.foam_scale * LK.foam_flat, s * LK.foam_scale)))));
-    g.computeBoundingSphere(); addW(new THREE.Mesh(g, foamMat), 'foam_sec_' + k, 'foam'); } }
+  for (const [k, list] of bySec) { const zc = ringZ(k) - SP / 2, lod = new THREE.LOD(); lod.position.set(AX, 0, zc);
+    for (const [set, dist] of [[foamPrefabs, 0], [foamPrefabsLo, LAY.foam.lod_far ?? 7]]) {
+      const g = mergeGeometries(list.map(([x, z, s, p, rot]) => set[p].clone().applyMatrix4(M4.compose(new THREE.Vector3(x - AX, -0.02, z - zc), Q.setFromAxisAngle(UPV, rot), new THREE.Vector3(s * LK.foam_scale, s * LK.foam_scale * LK.foam_flat, s * LK.foam_scale)))));
+      g.computeBoundingSphere(); lod.addLevel(Object.assign(new THREE.Mesh(g, foamMat), { name: 'foam_sec_' + k + (dist ? '_lo' : '_hi') }), dist); }
+    addW(lod, 'foam_sec_' + k, 'foam'); } }
 
 // ---------------- iridescent bubbles (one sphere, instanced) ----------------
 const BUB_U = { uTime: { value: 0 } };
 { const r = rngOf(1212), B = []; for (let i = 0; i < LAY.bubbles.count; i++) { const z = i < LAY.bubbles.count * 0.25 ? BZ0 + 0.6 - r() * 7 : BZ0 - 0.2 - r() * (BZ0 - Z_END - 3), side = r() < 0.5 ? -1 : 1, c = centreX(z);
     const x = THREE.MathUtils.clamp(c + side * (RW * (0.75 + 0.9 * r())), AX - CHORD + 0.1, AX + CHORD - 0.1); B.push([x, 0.04 + r() * r() * 0.75, z, 0.022 + r() * r() * 0.06]); }
-  const bGeo = new THREE.SphereGeometry(1, 24, 16);
+  const bGeo = new THREE.SphereGeometry(1, 18, 12);
   const bm = GRAY ? grayM(0xdddddd) : new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: { ...BUB_U, uL: { value: new THREE.Vector3(-0.25, 0.8, 0.55).normalize() } },
     vertexShader: 'uniform float uTime; varying vec3 vN; varying vec3 vW; void main(){ vec4 w = modelMatrix * instanceMatrix * vec4(position, 1.0); float ph = instanceMatrix[3].x * 13.0 + instanceMatrix[3].z * 7.0; w.y += 0.012 * sin(uTime * 1.3 + ph); vW = w.xyz; vN = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
     fragmentShader: `varying vec3 vN; varying vec3 vW; uniform vec3 uL; void main(){ vec3 N = normalize(vN), V = normalize(cameraPosition - vW); float c = abs(dot(N, V)), f = pow(1.0 - c, 1.6);
