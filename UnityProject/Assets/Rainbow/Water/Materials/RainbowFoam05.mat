@@ -26,6 +26,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _Brightness: 1
+    - _SOffset: 116.7
+    - _WaveAmp: 0.1
     m_Colors:
     - _FoamLightDir: {r: 0.26387972, g: 0.879599, b: -0.39581954, a: 0}
   m_BuildTextureStacks: []

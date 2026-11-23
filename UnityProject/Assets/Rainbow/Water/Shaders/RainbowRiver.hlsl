@@ -301,12 +301,16 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float3 col = c5;
     float foamK = 0.0;
 
-    // ---- W11/W12 foam shelf between the stream edge and the wall: soap puffs, lavender-blue creases,
-    //      scalloped bubbly waterline and a soft blue contact shade on the water beside it ----
-    float eC = abs(latR) - hw;                      // > 0 beyond the stream edge
-    float sgn = latR >= 0.0 ? 1.0 : -1.0;
+    // ---- W11/W12 foam shelf (foam round 2026-11-23): the soap-foam BANKS cover the outer water on both sides from the
+    //      waterlines of RBW_BankEdges (RainbowFoamBank.hlsl, CPU mirror FoamBank.BankEdges: FoamBank.cs piles the 3D
+    //      soap bubbles on this shelf), so the open river is narrower and winds with the S-bands. Flat lather under /
+    //      between the bubbles in the approved soap ramp (lit cell tops lavender-white, periwinkle / blue-violet creases),
+    //      a scalloped bubbly waterline, a soft blue contact shade on the water beside it; Benny parts it ----
+    float2 bkE = RBW_BankEdges(d, hw, M + sbend, sm);
+    float eC = max(bkE.x - latR, latR - bkE.y);     // > 0 on the foam bank (units outward from its waterline)
+    float sgn = latR >= 0.5 * (bkE.x + bkE.y) ? 1.0 : -1.0;
     float wl = (RBW_VNoise(float2(sm * 0.5, sgn * 7.0)) - 0.5) * 0.7;
-    float e2 = eC + wl * 0.8;
+    float e2 = eC + wl * 0.25 - bOn * 1.4 * (1.0 - smoothstep(rbw * 1.1, rbw * 2.4, length(float2(dlB, db))));
     [branch] if (e2 > -1.0)
     {
         float2 pcc = float2(lat * 1.6 + 1.7, sm * 0.36);
@@ -321,27 +325,30 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
         c1 = lerp(c0, c1, f1);
         c1u = lerp(c0u, c1u, f1);
         f1 = max(f1, 1.0 - smoothstep(0.1, 0.3, fl2 * 0.67));
-        float shelf = smoothstep(-0.1, 0.08, e2 + (0.5 - c1) * 0.55 * f1);
+        float shelf = smoothstep(-0.1, 0.08, e2 + (0.5 - c1) * 0.3 * f1);
         float dome = 1.0 - smoothstep(0.15, 0.78, c1);
         float lit = saturate((c1u - c1) * 3.2 + 0.55);
-        float3 fo = lerp(RBW_FOAMLAV * 0.7, RBW_FOAM * 1.14, lerp(0.62, dome * (0.45 + 0.55 * lit) + 0.25 * lit, f1));
-        fo = lerp(fo, float3(0.5, 0.56, 1.05), (1.0 - smoothstep(0.03, 0.2, c2)) * f2 * 0.22);
+        float tS = lerp(0.6, 0.3 + 0.55 * dome * (0.45 + 0.55 * lit) + 0.2 * lit, f1);
+        tS -= (1.0 - smoothstep(0.03, 0.2, c2)) * f2 * 0.3;                 // small open bubbles
         float cb = RBW_Cells(float2(lat * 3.4 + 0.7, sm * 0.8));
         float fb = 1.0 - smoothstep(0.1, 0.3, fl2 * 3.4);
-        fo = lerp(fo, lerp(RBW_FOAM * 1.2, RBW_FOAMLAV * 0.72, smoothstep(0.2, 0.8, cb)) * (0.8 + 0.3 * lit), fb * 0.7);
-        fo = lerp(fo, float3(0.36, 0.42, 0.98), (1.0 - smoothstep(0.0, 0.3, e2)) * 0.4);
+        tS = lerp(tS, lerp(0.92, 0.4, smoothstep(0.2, 0.8, cb)) * (0.85 + 0.25 * lit), fb * 0.6);
+        tS -= (1.0 - smoothstep(0.0, 0.3, e2)) * 0.3;                         // blue-violet crease at the waterline
+        float3 fo = RBW_Soap05(tS);
         col = lerp(col, col * float3(0.55, 0.6, 0.9), (1.0 - smoothstep(0.0, 0.5, -e2)) * 0.5 * (1.0 - shelf));
         col = lerp(col, fo, shelf);
         foamK = shelf;
     }
 
     // ---- Benny's wake at the waterline (driven by SplashWake through _RainbowBenny) ----
-    // (splash round 2026-11-23) The whitewater fans, the froth collar and the droplet crown are real 3D splash now
-    // (Rainbow/Water/Splash + spray beads, SplashWake.cs). The water only adds what lies flat on it: a soft bright contact
-    // glow and a broken bubbly rim round his REAL waterline footprint (benny31 at the ride height: ~0.9 u toward the
-    // camera, ~0.8 u beside him; the old collar sat on the 0.6 u chord, hidden under the fur) and a faint wet sheen where
-    // the two fans pour onto the water. The fanning white ray lines and the churned trail cells are gone (they read as
-    // white squiggles and pale blotches; the approved water straight behind him is clear glossy cyan).
+    // (splash round 2026-11-23) The splash strands, the bubbly suds on his flanks and the droplet crown are real 3D splash
+    // (Rainbow/Water/Splash + spray beads, SplashWake.cs). The water only adds what lies flat on it, round his REAL
+    // waterline footprint (benny31 at the ride height: ~0.91 u toward the camera, ~0.8 u beside him):
+    //  * straight behind him a dark CONTACT SHADOW, no foam (approved, measured: under his bottom the water is dark navy
+    //    #002b7e -> #0468c6 -> normal blue over ~0.5 u, in a narrow wedge |lat| < ~0.35; the white ring that sat there read
+    //    as a hard cut edge, as if he sat on glass)
+    //  * a broken bubbly rim + soft glow only on his flanks (> ~30 deg from straight back), where the splash leaves him
+    //  * a faint wet sheen where the two fans pour onto the water
     float2 dB = float2(dlB, db);
     float distB = length(dB);
     float wakeK = 0.0;
@@ -350,25 +357,29 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
         float cosB = clamp(-db / max(distB, 1e-3), -1.0, 1.0);    // 1 = straight back (toward the camera)
         float rF = rbw * 1.24 * (1.0 + 0.1 * saturate(cosB));    // his footprint radius in this direction
         float e = distB - rF;                                     // > 0 = water outside the fur
+        float angB = acos(cosB);
+        float flankK = RBW_SS(0.42, 0.7, angB) * (1.0 - RBW_SS(1.75, 2.2, angB));
         float cc = RBW_Cells(dB * 8.0 + float2(0.0, time * 1.3));
         float cc2 = RBW_Cells(dB * 17.0 + float2(3.1, time * 2.1));
         float bubbly = saturate(1.0 - cc * 1.15) * 0.65 + saturate(1.0 - cc2 * 1.2) * 0.35;
-        // broken bubbly rim hugging the waterline (a little wider behind him and toward his flanks)
-        float rimW = 0.1 + 0.1 * saturate(cosB);
-        float rim = smoothstep(-0.08, -0.01, e) * (1.0 - smoothstep(rimW * 0.35, rimW, e));
+        // contact shadow behind him (strongest at the fur, gone ~0.55 u out; soft wedge edges)
+        float latK = 1.0 - smoothstep(0.16, 0.44, abs(dlB));
+        float shadeK = latK * smoothstep(-0.1, 0.35, cosB) * smoothstep(-0.06, 0.0, e) * (1.0 - smoothstep(0.04, 0.55, e));
+        col = lerp(col, float3(0.012, 0.06, 0.2), shadeK * 0.9 * wk);
+        // broken bubbly rim hugging the waterline on his flanks only
+        float rim = smoothstep(-0.08, -0.01, e) * (1.0 - smoothstep(0.04, 0.13, e)) * flankK;
         float foamW = rim * smoothstep(0.3, 0.65, bubbly + rim * 0.15);
-        // soft bright contact glow: brightest under the fur edge, falling off over ~0.1 u of open water
-        float glow = smoothstep(-0.12, 0.0, e) * exp(-max(e, 0.0) * 14.0);
+        // soft bright contact glow on the flanks
+        float glow = smoothstep(-0.12, 0.0, e) * exp(-max(e, 0.0) * 14.0) * flankK;
         // wet sheen where the fans pour onto the water: beside him round to his back flank (25..90 deg from straight back)
-        float angB = acos(cosB);
         float fanZ = RBW_SS(0.4, 0.65, angB) * (1.0 - RBW_SS(1.4, 1.65, angB)) * smoothstep(0.0, 0.06, e)
                    * (1.0 - smoothstep(0.08, 0.5, e));
         float wakeF = saturate(foamW) * wk;
         float3 foamCol = lerp(float3(0.78, 0.86, 1.0), float3(1.25, 1.28, 1.32), saturate(bubbly * 1.2));
-        col = lerp(col, lerp(col, RBW_CAQUAW, 0.6), fanZ * wk * 0.45);
-        col += float3(0.25, 0.5, 0.55) * glow * wk * 0.6;
+        col = lerp(col, lerp(col, RBW_CAQUAW, 0.6), fanZ * wk * 0.35);
+        col += float3(0.25, 0.5, 0.55) * glow * wk * 0.4;
         col = lerp(col, foamCol, wakeF);
-        wakeK = max(wakeF, max(fanZ * 0.45, glow * 0.5) * wk);
+        wakeK = max(max(wakeF, shadeK * 0.8 * wk), max(fanZ * 0.45, glow * 0.5) * wk);
     }
     // landing splash: an expanding broken foam ring (starts at his footprint, not under the fur)
     [branch] if (Splash.w > 0.001 && Splash.z < 1.2)

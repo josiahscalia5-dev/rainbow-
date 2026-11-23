@@ -17,7 +17,7 @@ Shader "Rainbow/Water/Splash"
         _Intensity ("Intensity", Range(0.2, 2)) = 1.0
         _Len ("Rope length (riderSplash uLen, units)", Float) = 1.55
         _RopeWidth ("Rope width scale", Float) = 1.0
-        _FootprintBack ("Extra root radius toward the camera (his lean bulges the fur back)", Float) = 0.1
+        _FootprintBack ("Extra root radius toward the camera (his lean bulges the fur back)", Float) = 0.14
     }
 
     SubShader
@@ -72,27 +72,32 @@ Shader "Rainbow/Water/Splash"
                 float4 d0         : TEXCOORD0;   // u, across, seed, type
                 float4 d1         : TEXCOORD1;   // rope length, jet tau, eye depth, strength
                 float  fogFactor  : TEXCOORD2;
+                float2 d2         : TEXCOORD3;   // ribbon half width (view units), on-screen length of one unit along it
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
             float SPL_Hs(float n) { return frac(sin(n * 91.345 + 3.17) * 43758.5453); }
 
-            // root circle: just outside the fur at the water; his ride lean pushes the fur a little further back (toward
-            // the camera) than to the sides (measured footprint of the benny31 mesh: ~0.9 back, ~0.8 beside him)
+            // his REAL waterline footprint (benny31 at the ride height, measured with screen05_splash_probe2:
+            // ~0.91 u straight back toward the camera, ~0.88 at 45 deg, ~0.8 beside him; R = SplashWake waterline radius
+            // ~0.68): the fans start just outside the fur, never under it, and never as a ring across his body
             float SPL_RootR(float th, float R)
             {
-                return R * (1.0 + _FootprintBack * saturate(cos(th)));
+                return R * (1.18 + _FootprintBack * saturate(cos(th)));
             }
 
-            // type 0: whitewater rope on the surface (ropePos, 05 layout: roots from beside the body to its back flank,
-            // directions measured from straight back, curling outward along the rope)
+            // type 0: splash strand lying on the surface. (splash round 2026-11-23, fitted to the approved image through
+            // the probe's approved-px -> water-plane mapping) roots on his flanks from ~77 deg round to ~24 deg from
+            // straight back (the water straight behind him stays clear), running almost straight back toward the camera
+            // and curling a little outward, ending ~1.6-1.9 u behind him (approved: the fans end at y ~1300 between
+            // lat 0.45 and 1.25 on each side)
             float3 SPL_Rope(float u, float side, float a, float seed, float len, float R)
             {
-                float thR = lerp(1.4, 0.5, a) + (SPL_Hs(seed * 3.1) - 0.5) * 0.18;
-                float phi = lerp(0.62, 0.06, a) + (SPL_Hs(seed * 5.7) - 0.5) * 0.26 + 0.25 * u * u;
-                float2 root = float2(sin(thR), cos(thR)) * SPL_RootR(thR, R) * (1.3 + 0.2 * SPL_Hs(seed * 2.3));
+                float thR = lerp(1.35, 0.42, a) + (SPL_Hs(seed * 3.1) - 0.5) * 0.16;
+                float phi = lerp(0.3, 0.04, a) + (SPL_Hs(seed * 5.7) - 0.5) * 0.16 + 0.22 * u * u;
+                float2 root = float2(sin(thR), cos(thR)) * SPL_RootR(thR, R) * (1.03 + 0.08 * SPL_Hs(seed * 2.3));
                 float2 q = root + float2(sin(phi), cos(phi)) * u * len;
-                float y = 0.035 + 0.06 * SPL_Hs(seed * 9.1) * sin(3.14159 * min(u * 1.6, 1.0)) * (1.0 - u);
+                float y = 0.03 + 0.05 * SPL_Hs(seed * 9.1) * sin(3.14159 * min(u * 1.6, 1.0)) * (1.0 - u);
                 return float3(side * q.x, y, -q.y);
             }
 
@@ -101,7 +106,7 @@ Shader "Rainbow/Water/Splash"
             {
                 float thR = lerp(1.6, 0.8, a) + (SPL_Hs(seed * 3.1) - 0.5) * 0.2;
                 float phi = lerp(1.2, 0.45, a) + (SPL_Hs(seed * 5.7) - 0.5) * 0.35;
-                float2 root = float2(sin(thR), cos(thR)) * SPL_RootR(thR, R) * 1.4;
+                float2 root = float2(sin(thR), cos(thR)) * SPL_RootR(thR, R) * 1.12;
                 float len = (0.3 + 0.5 * SPL_Hs(seed * 7.3)) * (0.55 + 0.45 * str);
                 float2 q = root + float2(sin(phi), cos(phi)) * tau * len;
                 float H = (0.12 + 0.3 * SPL_Hs(seed * 9.1)) * str;
@@ -133,11 +138,14 @@ Shader "Rainbow/Water/Splash"
                 float tau = u;
                 if (type < 0.5)
                 {
-                    // rope: fixed shape, breathing length; the lace texture flows along it in the fragment shader
-                    len = _Len * (0.35 + 0.65 * SPL_Hs(seed * 7.3)) * (0.9 + 0.1 * sin(t * 2.3 + seed * 20.0)) * (0.5 + 0.5 * str);
+                    // splash strand: fixed shape, breathing length; blobs, droplets and bubbles stream back along it in the
+                    // fragment shader. Outer strands (a = 0) are the longest; the inner ones end ~1.9 u behind him.
+                    len = _Len * lerp(1.0, 0.68, a) * (0.55 + 0.45 * SPL_Hs(seed * 7.3)) * (0.92 + 0.08 * sin(t * 2.3 + seed * 20.0))
+                        * (0.6 + 0.4 * str);
                     p = SPL_Rope(u, side, a, seed, len, R);
                     tg = SPL_Rope(min(u + 0.04, 1.0), side, a, seed, len, R) - SPL_Rope(max(u - 0.04, 0.0), side, a, seed, len, R);
-                    w = lerp(0.034, 0.008, pow(u, 0.7)) * (0.5 + 0.7 * SPL_Hs(seed * 19.1)) * _RopeWidth;
+                    // wide enough to hold the blobs and the droplets beside them (the visible strand is carved by noise)
+                    w = lerp(0.055, 0.02, pow(u, 0.6)) * (0.6 + 0.6 * SPL_Hs(seed * 19.1)) * _RopeWidth;
                 }
                 else if (type < 1.5)
                 {
@@ -152,15 +160,17 @@ Shader "Rainbow/Water/Splash"
                 }
                 else
                 {
-                    // root froth: lace pads hugging the fur's silhouette at the water, from beside the body round to its back
-                    float th = lerp(1.7, 0.3, a) + (SPL_Hs(seed * 3.1) - 0.5) * 0.12;
-                    float2 root = float2(sin(th), cos(th)) * SPL_RootR(th, R) * (1.25 + 0.15 * SPL_Hs(seed * 2.9));
-                    float2 dir = float2(sin(th + 0.35), cos(th + 0.35));
-                    len = 0.2 + 0.18 * SPL_Hs(seed * 7.3);
+                    // bubbly suds piled on his FLANKS at the water (approved: soap-bubble masses beside his lower body,
+                    // pushed outward-back), from beside him round to ~36 deg from straight back - never a ring behind him
+                    float th = lerp(1.62, 0.62, a) + (SPL_Hs(seed * 3.1) - 0.5) * 0.14;
+                    float2 root = float2(sin(th), cos(th)) * SPL_RootR(th, R) * (0.98 + 0.1 * SPL_Hs(seed * 2.9));
+                    float dA = th * 0.72 + (SPL_Hs(seed * 4.3) - 0.5) * 0.2;
+                    float2 dir = float2(sin(dA), cos(dA));
+                    len = 0.28 + 0.34 * SPL_Hs(seed * 7.3);
                     float2 q = root + dir * u * len;
-                    p = float3(side * q.x, 0.06 + 0.04 * sin(3.14159 * u), -q.y);
+                    p = float3(side * q.x, 0.04 + 0.07 * sin(3.14159 * u) * (0.6 + 0.4 * SPL_Hs(seed * 8.1)), -q.y);
                     tg = float3(side * dir.x, 0.0, -dir.y);
-                    w = (0.05 + 0.045 * SPL_Hs(seed * 19.1)) * (1.0 - 0.35 * u);
+                    w = (0.07 + 0.06 * SPL_Hs(seed * 19.1)) * (1.0 - 0.3 * u);
                 }
                 // onto the animated water: the local y is the height above the surface at that point
                 float3 pw = TransformObjectToWorld(float3(p.x, 0.0, p.z));
@@ -174,6 +184,10 @@ Shader "Rainbow/Water/Splash"
                 o.positionCS = TransformWViewToHClip(pv);
                 o.d0 = float4(u, v.uv0.y, seed, type);
                 o.d1 = float4(len, tau, -pv.z, str);
+                // on-screen length of one unit along the ribbon (strands lying on the water and running toward the
+                // camera are foreshortened ~0.45x): the fragment shader scales its cells by it, so blobs and bubbles
+                // come out ROUND on screen instead of squashed into streaks
+                o.d2 = float2(w, tl2 / max(length(tw), 1e-5));
                 o.fogFactor = ComputeFogFactor(o.positionCS.z);
                 return o;
             }
@@ -195,19 +209,24 @@ Shader "Rainbow/Water/Splash"
                 float alpha;
                 if (type < 0.5)
                 {
-                    // whitewater rope: bubbly lace flowing back along it, lumpy edges, white root -> translucent cyan tail;
-                    // a chain of foam lumps sets a lumpy outline and breaks into separate blobs further out
-                    float2 lp = float2(uv.x * len * 7.0 - t * 2.6 + seed * 31.0, uv.y * 0.8 + seed * 7.0);
-                    float lc = RBW_Cells(lp);
-                    float lump = 1.0 - smoothstep(0.25, 0.75, lc);
-                    float edge = 1.0 - smoothstep(0.25 + 0.6 * lump, 0.35 + 0.65 * lump, ac);
-                    float tail = 1.0 - smoothstep(0.55, 1.0, uv.x);
-                    float brk = lerp(1.0, smoothstep(0.3, 0.6, lump), smoothstep(0.2, 0.75, uv.x));
-                    float hole = (1.0 - smoothstep(0.1, 0.2, RBW_Cells(lp * 2.7 + 3.0))) * (1.0 - smoothstep(0.6, 1.0, ac));
-                    // white only in the rope core, translucent cyan edges / tail, so the water shows between the strands
-                    alpha = edge * tail * brk * smoothstep(0.0, 0.04, uv.x) * lerp(0.9, 0.45, smoothstep(0.3, 1.0, ac + uv.x * 0.5));
-                    col = lerp(cyan, white, saturate(1.2 - uv.x * 0.9 - ac * 0.9));
-                    col = lerp(col, blue, hole * 0.55 * (1.0 - uv.x));
+                    // splash strand (splash round 2026-11-23; approved: white water breaking into blobs, droplets and
+                    // small bubbles with the water showing between them - never smooth white hair). Round cells in WORLD
+                    // units along / across the strand (~0.045 u blobs, ~0.035 u droplet cells), streaming back along it.
+                    float wv = max(i.d2.x, 1e-3);
+                    float2 g = float2(uv.x * len * i.d2.y, uv.y * wv) * 22.0 + float2(-t * 3.0 + seed * 31.0, seed * 7.0);
+                    float c1 = RBW_Cells(g);
+                    float c2 = RBW_Cells(g * 1.3 + 4.7);
+                    float solid = 1.0 - smoothstep(0.05, 0.55, uv.x);              // near the root the blobs merge
+                    float body = 1.0 - smoothstep(0.36, 0.52, c1 + ac * lerp(0.3, 0.8, uv.x) - solid * 0.2);
+                    float core = (1.0 - smoothstep(0.12, 0.4, ac)) * (1.0 - smoothstep(0.3, 0.85, uv.x)) * 0.5;
+                    float drops = (1.0 - smoothstep(0.17, 0.27, c2)) * smoothstep(0.2, 0.55, ac + uv.x * 0.45)
+                                * (1.0 - smoothstep(0.85, 1.0, ac));
+                    float holes = (1.0 - smoothstep(0.12, 0.22, c2)) * body * (1.0 - smoothstep(0.15, 0.6, uv.x));
+                    float tail = (1.0 - smoothstep(0.68, 1.0, uv.x)) * smoothstep(0.0, 0.05, uv.x);
+                    alpha = max(max(body * lerp(0.95, 0.62, uv.x), core), drops * 0.9) * tail;
+                    col = lerp(cyan, white, saturate(1.3 - uv.x * 0.75 - ac * 0.45));
+                    col = lerp(col, white, drops * 0.5);
+                    col = lerp(col, blue, holes * 0.6);
                 }
                 else if (type < 1.5)
                 {
@@ -222,14 +241,22 @@ Shader "Rainbow/Water/Splash"
                 }
                 else
                 {
-                    // froth collar: fine bubbles (white with blue open holes), soft all round
-                    float2 lp = float2(uv.x * len * 14.0 - t * 1.2 + seed * 17.0, uv.y * 2.2 + seed * 5.0);
-                    float lc = RBW_Cells(lp);
-                    float hole = 1.0 - smoothstep(0.1, 0.22, lc);
-                    float lace = 1.0 - smoothstep(0.45, 0.75, lc);
-                    float soft = (1.0 - smoothstep(0.4, 1.0, ac)) * smoothstep(0.0, 0.2, uv.x) * (1.0 - smoothstep(0.6, 1.0, uv.x));
-                    alpha = lace * soft * 0.9;
-                    col = lerp(white, blue, hole * 0.7);
+                    // bubbly suds on his flanks (approved: piled soap bubbles - lavender-white film, lit tops, blue-tinted
+                    // round holes - with a lumpy outline), small + big bubble cells in world units
+                    float wv = max(i.d2.x, 1e-3);
+                    float2 g = float2(uv.x * len * i.d2.y, uv.y * wv) * 24.0 + float2(-t * 0.3 + seed * 17.0, seed * 5.0);
+                    float cb = RBW_Cells(g);
+                    float cbu = RBW_Cells(g + float2(0.0, 0.16));
+                    float cB = RBW_Cells(g * 0.45 + 2.7);
+                    float lumpy = (cB - 0.45) * 0.6;
+                    float shape = (1.0 - smoothstep(0.42, 0.95, ac + lumpy)) * smoothstep(0.0, 0.16, uv.x)
+                                * (1.0 - smoothstep(0.62, 1.0, uv.x + lumpy * 0.4));
+                    float hole = 1.0 - smoothstep(0.16, 0.3, cb);
+                    float lit = saturate((cbu - cb) * 3.0 + 0.55);
+                    float dome = 1.0 - smoothstep(0.2, 0.75, cb);
+                    float3 film = lerp(float3(0.62, 0.64, 0.98), white, saturate(dome * (0.45 + 0.55 * lit) + 0.3 * lit));
+                    col = lerp(film, float3(0.4, 0.58, 1.0), hole * 0.7);
+                    alpha = shape * lerp(0.92, 0.55, hole);
                 }
                 // soft where it touches the water or his fur (no hard intersection lines)
                 float2 suv = GetNormalizedScreenSpaceUV(i.positionCS);

@@ -41,7 +41,8 @@ namespace Rainbow.Screen05
         public float maxWaterlineRadius = 0.86f;
 
         [Header("Fans (riderSplash.ts createRiderSplash05, high quality)")]
-        [Range(0, 64)] public int ropesPerSide = 44;
+        [Tooltip("Splash strands per side (riderSplash.ts high = 44 thin ropes; the approved shows fewer, splashier strands)")]
+        [Range(0, 64)] public int ropesPerSide = 24;
         [Range(0, 64)] public int jetsPerSide = 40;
         [Range(0, 32)] public int frothPerSide = 16;
 

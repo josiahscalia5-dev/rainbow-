@@ -193,7 +193,7 @@ namespace Rainbow.Screen05.EditorTools
             fan.SetFloat("_Intensity", 1f);
             fan.SetFloat("_Len", 1.55f);            // riderSplash.ts createRiderSplash05 uLen
             fan.SetFloat("_RopeWidth", 1f);
-            fan.SetFloat("_FootprintBack", 0.1f);   // benny31 footprint ~0.9 u toward the camera vs ~0.8 u beside him
+            fan.SetFloat("_FootprintBack", 0.14f);  // benny31 footprint ~0.91 u toward the camera vs ~0.8 u beside him
             EditorUtility.SetDirty(fan);
         }
 
