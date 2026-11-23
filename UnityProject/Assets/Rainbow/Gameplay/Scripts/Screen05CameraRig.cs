@@ -9,11 +9,17 @@ namespace Rainbow.Screen05
     /// RideCamera.desired) expressed with Cinemachine 3:
     ///  * followTarget ("CamTarget", a child of Benny) is placed every frame on the water at Benny's s, laterally on the
     ///    tunnel axis while Benny is near it and easing toward him as he swings wide (Gaussian dead zone, latFollow 0.85);
-    ///  * CinemachineFollow (world-space binding) keeps the camera at that point + (0, up 3.6, -back 6.4);
+    ///  * CinemachineFollow (world-space binding) keeps the camera at that point + (0, up, -back);
     ///  * CinemachineHardLookAt aims at lookTarget ("CamLookAhead", a look-ahead point down the route) placed so the view is
-    ///    pitched atan2(up - lookUp, ahead + back) = 12.75 deg below the tunnel axis and yawed 2.96 deg left (vanishing
-    ///    point right of centre, as in the approved picture), level (no roll), vertical FOV 62.
-    /// Forward damping is 0 so the approved framing holds while swimming (the Three.js lerp lagged ~1.6 u behind at speed).
+    ///    pitched pitchDeg below the tunnel axis and yawed yawLeftDeg left (vanishing point right of centre, as in the
+    ///    approved picture), level (no roll), vertical FOV 62.
+    /// Frame round 2026-11-23 (fitted to references/05_flow_into_the_current.png at 864x1536, s = 14): the approved
+    /// vanishing point (river, rings and walls converge in the small bright point) sits at (496, 478). The old rig
+    /// (STAGE_CAM back 6.4 / up 3.6 / lookUp -1.92 = 12.75 deg) reached the hold at (-0.06, 3.32, 7.44) / 12.0 deg because the
+    /// 0.35 s vertical damping lagged 0.29 m below its target at swim speed: vanishing point (500, 496), 18 px low. Now the
+    /// vertical / forward damping is 0 (the camera is exactly where these numbers say at every speed), the view is pitched
+    /// 12.78 deg / yawed 2.78 deg (vanishing point (496, 478)) and the camera sits 0.09 m higher / 0.04 m closer, so Benny
+    /// keeps his approved place and size on screen (body centre ~(420, 1010), 7.0 m from the camera).
     /// BennyController calls Apply() every Update after moving Benny, and Snap() after a teleport.
     /// </summary>
     public class Screen05CameraRig : MonoBehaviour
@@ -23,23 +29,33 @@ namespace Rainbow.Screen05
         public Transform lookTarget;
         public CinemachineCamera vcam;
 
-        [Header("STAGE_CAM['05'] (cameraRig.ts)")]
-        public float back = 6.4f;
-        public float up = 3.6f;
+        [Header("Approved Screen 05 framing (frame round 2026-11-23)")]
+        [Tooltip("camera distance behind Benny's s (m)")]
+        public float back = 6.52f;
+        [Tooltip("camera height above the water (m)")]
+        public float up = 3.40f;
+        [Tooltip("look-ahead distance in front of the camera (only the direction matters)")]
         public float ahead = 18f;
-        public float lookUp = -1.92f;
+        [Tooltip("degrees the view is pitched DOWN from the tunnel axis (approved vanishing point y 478 of 1536)")]
+        public float pitchDeg = 12.78f;
         public float verticalFov = 62f;
-        [Tooltip("degrees the view is turned LEFT of the tunnel axis")]
-        public float yawLeftDeg = 2.96f;
+        [Tooltip("degrees the view is turned LEFT of the tunnel axis (approved vanishing point x 496 of 864)")]
+        public float yawLeftDeg = 2.78f;
         public float latFollow = 0.85f;
         public float deadZone = 1.0f;
 
         [Header("Unity additions")]
         [Tooltip("share of Benny's jump height the camera follows (0 = horizon stays still)")]
         public float jumpFollow = 0.3f;
-        public Vector3 positionDamping = new Vector3(0.6f, 0.35f, 0f);
+        [Tooltip("seconds the camera's jump share eases in / out (replaces the old vertical Cinemachine damping)")]
+        public float jumpSmoothTime = 0.12f;
+        [Tooltip("x = lateral ease while Benny steers; y / z stay 0 so the approved framing holds at every swim speed")]
+        public Vector3 positionDamping = new Vector3(0.6f, 0f, 0f);
         public float nearClip = 0.1f;
+        [Tooltip("far clip (m): the tunnel's far rings / throat reach s ~ 470")]
         public float farClip = 300f;
+
+        float jumpShare, jumpShareVel;
 
         void Awake()
         {
@@ -76,7 +92,11 @@ namespace Rainbow.Screen05
             float off = lateralX; // tunnel axis is x = 0, so Benny's lateral offset from it is his world X
             float follow = latFollow * (1f - Mathf.Exp(-(off * off) / Mathf.Max(1e-3f, deadZone * deadZone)));
             float camX = off * follow;
-            float y = RiverPath.WaterY + jumpFollow * Mathf.Max(0f, jumpHeight);
+            float jumpTarget = jumpFollow * Mathf.Max(0f, jumpHeight);
+            float dt = Application.isPlaying ? Time.deltaTime : 0f;
+            if (dt > 0f) jumpShare = Mathf.SmoothDamp(jumpShare, jumpTarget, ref jumpShareVel, Mathf.Max(1e-3f, jumpSmoothTime), Mathf.Infinity, dt);
+            else if (!Application.isPlaying) { jumpShare = jumpTarget; jumpShareVel = 0f; }
+            float y = RiverPath.WaterY + jumpShare;
             Vector3 anchor = new Vector3(camX, y, s);
             if (followTarget != null) followTarget.position = anchor;
             if (lookTarget != null) lookTarget.position = LookPoint(anchor);
@@ -86,7 +106,7 @@ namespace Rainbow.Screen05
         public Vector3 LookPoint(Vector3 anchor)
         {
             Vector3 cam = anchor + new Vector3(0f, up, -back);
-            float pitch = Mathf.Atan2(up - lookUp, ahead + back);
+            float pitch = pitchDeg * Mathf.Deg2Rad;
             float yaw = yawLeftDeg * Mathf.Deg2Rad;
             Vector3 look = new Vector3(-Mathf.Cos(pitch) * Mathf.Sin(yaw), -Mathf.Sin(pitch), Mathf.Cos(pitch) * Mathf.Cos(yaw));
             return cam + look * (ahead + back);
@@ -95,6 +115,14 @@ namespace Rainbow.Screen05
         /// <summary>Next camera update jumps straight to the targets (no damping).</summary>
         public void Snap()
         {
+            jumpShare = 0f; jumpShareVel = 0f;   // teleports always put Benny on the water
+            if (followTarget != null && lookTarget != null)
+            {
+                Vector3 a = followTarget.position;
+                a.y = RiverPath.WaterY;
+                followTarget.position = a;
+                lookTarget.position = LookPoint(a);
+            }
             if (vcam != null) vcam.PreviousStateIsValid = false;
         }
     }
