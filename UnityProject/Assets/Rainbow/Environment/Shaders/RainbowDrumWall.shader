@@ -18,7 +18,7 @@ Shader "Rainbow/Screen05/DrumWall"
         _StripIntensity ("Strip light intensity", Float) = 4.4
         _StripParams ("Strips (count, half width rad, -, alt)", Vector) = (28, 0.017, 0, 0.8)
         _MidTint ("Mid-tunnel tint", Color) = (0.541, 0.188, 0.824, 1)
-        _MidRange ("Mid tint (near, far, amount, -)", Vector) = (8, 50, 0.45, 0)
+        _MidRange ("Mid tint (near, far, amount, deep violet glow)", Vector) = (8, 50, 0.45, 0)
         _FarGlowColor ("Far glow colour", Color) = (1.0, 0.612, 0.353, 1)
         _FarGlowRange ("Far glow (near, far, strength, -)", Vector) = (80, 260, 1.6, 0)
         _SlotPitch ("Slot pitch (arc m, tube m, row offset, stagger)", Vector) = (0.7461, 1.4, 0, 0)

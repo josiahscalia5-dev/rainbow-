@@ -99,6 +99,9 @@ void RainbowDrumWall_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float3 spec = env * F * (1.0 - 0.9 * hole);
 
     float3 emission = _EmissionColor.rgb * _EmissionStrength * sol * (1.0 - mt * 0.5);
+    // light round: with the far reflection dimmed the deep walls went dark plum (~(120,39,100)); the approved deep walls
+    // are bright violet (~(150,50,200)): the violet mid tint also glows there (_MidRange.w = strength, deep walls only)
+    emission += _MidTint.rgb * mt * _MidRange.w * farK * sol;
     emission += _FarGlowColor.rgb * fg * lerp(0.35, 1.0, sol);
     emission += _RimColor.rgb * lipLight * _SlotSize.w;
     emission += sheetCol * 0.35 * sheet;

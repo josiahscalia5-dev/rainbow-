@@ -32,7 +32,7 @@ Material:
     m_Floats:
     - _EnvBlur: 1
     - _EnvIntensity: 0.5
-    - _Exposure: 0.82
+    - _Exposure: 0.95
     - _Gold: 2
     - _GoldMode: 2
     - _LightInfluence: 0
@@ -44,7 +44,7 @@ Material:
     - _FarGlowColor: {r: 1, g: 0.6117647, b: 0.3529412, a: 1}
     - _FarGlowRange: {r: 95, g: 330, b: 1.5, a: 0}
     - _FrameParams: {r: 0.3, g: 0.06, b: 0, a: 0}
-    - _GoldTone: {r: 1, g: 1, b: 1, a: 0}
+    - _GoldTone: {r: 1.15, g: 1.3, b: 1.3, a: 1}
     - _MidRange: {r: 8, g: 50, b: 0, a: 0}
     - _MidTint: {r: 0.5411765, g: 0.1882353, b: 0.8235294, a: 1}
     - _PaddleParams: {r: 0.55, g: 0.12, b: 1, a: 0}

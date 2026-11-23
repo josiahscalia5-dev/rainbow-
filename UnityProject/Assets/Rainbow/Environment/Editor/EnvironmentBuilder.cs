@@ -164,7 +164,8 @@ namespace Rainbow.Screen05.EditorTools
             SetFloat(m, "_StripIntensity", 2.8f);                                // was 4.4
             SetVec(m, "_StripParams", new Vector4(28f, 0.017f, 0f, 0.8f));
             SetHex(m, "_MidTint", "#8a30d2");
-            SetVec(m, "_MidRange", new Vector4(8f, 50f, 0.6f, 0f));              // was 0.45 mid-tint mix
+            // was 0.45 mid-tint mix; w = violet self-glow of the deep walls (light round 2026-11-23, RainbowDrumWall.hlsl)
+            SetVec(m, "_MidRange", new Vector4(8f, 50f, 0.6f, 0.9f));
             SetGlow(m);
             // slots: arc pitch 0.50 m, row pitch 0.70 m (was 2*PI*R/64 = 0.746 and Bay/10 = 1.4), half sizes 0.19 x 0.08 m,
             // mean coverage 0.158 (= stadium area / cell area), lip glow 1.0 (was 0.5). DrumLayout05 constants stay as they
