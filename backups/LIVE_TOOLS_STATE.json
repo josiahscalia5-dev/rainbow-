@@ -1,6 +1,6 @@
 {
- "time_utc": "2026-11-23T00:46:33+00:00",
- "lead_branch": "claude/rainbow-screens-05-06-10w5xd",
+ "time_utc": "2026-11-23T03:45:12+00:00",
+ "lead_branch": "ccr-6deca498-03lhkc",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
   "animation-and-gameplay-engineer": "c48094c3ed3d22e7",
@@ -49,30 +49,27 @@
    }
   }
  },
- "plugins_installed_locally": [
-  "worldlabs@worldlabs"
- ],
- "plugins_enabled_user_settings": [
-  "worldlabs@worldlabs"
- ],
+ "plugins_installed_locally": [],
+ "plugins_enabled_user_settings": [],
  "plugins_synced_from_claude_account": [
-  "Upstash Context7 MCP server for up-to-date documentation lookup. Connects to Context7's ho",
-  "Frontend design skill for UI/UX implementation",
   "Accelerate design workflows \u2014 critique, design system management, UX writing, accessibilit",
-  "Automated code review for pull requests using multiple specialized agents with confidence-",
-  "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven te"
+  "TypeScript/JavaScript language server for Claude Code that runs TypeScript 7's native LSP ",
+  "Create new skills, improve existing skills, and measure skill performance. Use when users ",
+  "Three.js/GLSL debugging for Claude Code \u2014 correlates scene graph, console, GL state, and p",
+  "Semantic code analysis MCP server providing intelligent code understanding, refactoring su",
+  "Browser automation and end-to-end testing MCP server by Microsoft. Enables Claude to inter",
+  "Analyze codebases and recommend tailored Claude Code automations such as hooks, skills, MC"
  ],
  "plugins_synced_from_claude_account_names": [
-  "code-review",
-  "context7",
+  "claude-code-setup",
   "design",
-  "frontend-design",
-  "superpowers"
+  "parallax-threejs",
+  "playwright",
+  "serena",
+  "skill-creator",
+  "typescript-native-lsp"
  ],
- "mcp_servers_configured": [
-  "spectorjs",
-  "worldlabs"
- ],
+ "mcp_servers_configured": [],
  "hooks_project": [
   "PreCompact",
   "SessionEnd",
