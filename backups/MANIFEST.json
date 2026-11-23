@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28920,
-   "sha256": "95abe860edaaaf43497721c30888a83d4b03f26b886398d1d76161763920967c"
+   "sha256": "812666e1e417d763efbf8474678ce450442efad6875c6557ddd7951261253871"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2958,
-   "sha256": "83edcd7e1dfe12d331a085bfed1f299101854f9e02df88cda9cbeb12446ab42c"
+   "sha256": "c92d0c3cb32dd866345d039255f3fb96038b04a69434206df14fdfce6ff0cda5"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -23513,8 +23513,8 @@
   },
   {
    "path": "qa/kit46/README.md",
-   "bytes": 5741,
-   "sha256": "707bcf987309b338c2f4941b57ed8d8e3776fdcae8494f41e8ca9390d3f7ac19"
+   "bytes": 7655,
+   "sha256": "07f40cf6f91cdce54ab38d65c9131baf47d90e7dcbfd40754760505e3979783c"
   },
   {
    "path": "qa/kit46/Rainbow_r46_world_05_06_debug.apk",
@@ -23523,18 +23523,28 @@
   },
   {
    "path": "qa/kit46/evidence/frame0060_BEFORE_vs_NEW.jpg",
-   "bytes": 316441,
-   "sha256": "539c0e954c719c07a5dbb941fb377ff88780283d314f60b01187494efe8d3563"
+   "bytes": 314181,
+   "sha256": "7e26527e38ae04746f01688aca71f7ec354e9c0c1db71c1ec224dfe9500aba73"
   },
   {
    "path": "qa/kit46/evidence/frame0409_BEFORE_vs_NEW.jpg",
-   "bytes": 338951,
-   "sha256": "da95326625348a804bcb6cdd92926ad46956b92235549428001fcf00328770fe"
+   "bytes": 337415,
+   "sha256": "18361e5e57e978503b63bb9207130e477c9dce74b31882b9f0520ef9f4ab38f6"
   },
   {
    "path": "qa/kit46/evidence/frame0415_BEFORE_vs_NEW.jpg",
-   "bytes": 329501,
-   "sha256": "4d9326a8192719e8ab30da2600fab7dc91c111bac0c85dd1a417e6dfbb65f751"
+   "bytes": 330635,
+   "sha256": "a3943f7a68f26f02fb99ae762d12b51aecd9fb93440ed65f841f52609042aee2"
+  },
+  {
+   "path": "qa/kit46/evidence/frame1370_BEFORE_vs_NEW_green_hole.jpg",
+   "bytes": 336616,
+   "sha256": "f99033c53d2fcd211bbca4d7b55d00663d36dab685dfe3934250476a05b84109"
+  },
+  {
+   "path": "qa/kit46/evidence/frame1430_06to07_connector_sinking_fixed.jpg",
+   "bytes": 305026,
+   "sha256": "15728fd3aa4bbc30c2615cd533b6119b8fcc98f1c3840ae29fffb22e1be53225"
   },
   {
    "path": "qa/kit46/preview_now/APP_NOW_05_gameplay_frames.jpg",
@@ -23555,6 +23565,16 @@
    "path": "qa/kit46/run/GAMEPLAY_05_06_07_GRAY_geometry_real_touch_checks.json",
    "bytes": 2957,
    "sha256": "a5acfd36ed1a6443e7b2086e68af37d71c78dc6171ad6526644203dfc2d5adaf"
+  },
+  {
+   "path": "qa/kit46/run/GAMEPLAY_05_06_07_TEXTURED_real_touch.mp4",
+   "bytes": 30732319,
+   "sha256": "b2ce68a5c0406a0f88095d9ab1bcb5638baf5c28df9298959d8a6ac66e26e86c"
+  },
+  {
+   "path": "qa/kit46/run/GAMEPLAY_05_06_07_TEXTURED_real_touch_checks.json",
+   "bytes": 3430,
+   "sha256": "cabb429a99cf970112a4b00a38cd36634a1ff2d42680496e0f9736cb49ccd319"
   },
   {
    "path": "qa/kit46/run/coins_check.json",
