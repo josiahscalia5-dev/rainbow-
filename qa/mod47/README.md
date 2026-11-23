@@ -34,7 +34,8 @@ Size: ~780 k triangles, ~210 draw calls (the first try had 2.2 M; rings and foam
 * `C_STEERING_NEW.jpg` — NEW with Benny steered into the left / right lane at s = 5 and s = 11
 * `D_INMOTION_BEFORE_vs_NEW.jpg` — approved | BEFORE mid-river | NEW mid-river
 * `stills/` — every picture above as a separate full-size frame
-* `GAMEPLAY_*` — the whole section in one run with real touch swipes (see "Run" below)
+* `E_RUN_MOMENTS_real_touch.jpg` — six moments of the recorded run (lane changes, leap, dive); full frames in `stills/run_f*.png`
+* `GAMEPLAY_05_modular_TEXTURED_real_touch.mp4` (+ `_checks.json`) — the whole section in one uninterrupted run with real touch swipes
 Playable phone build (private): https://claude.ai/artifact/SqRksN3PVEvvYHpmkav7wa
 
 ## Measured (same checker as every earlier round: `.claude/skills/rainbow-screen-builder/scripts/compare_to_approved.py`, scenery mask from SAM 2)
@@ -42,7 +43,9 @@ Playable phone build (private): https://claude.ai/artifact/SqRksN3PVEvvYHpmkav7w
 |---|---|---|
 | start view: scenery pixels within 20 levels of the approved picture | 83.6 % (r46 README) | 10.4 % |
 | start view: colour look (hue / saturation histogram correlation) | — | 0.50 |
-| in motion: colour look, mean of 1 frame per second over the first 14 s of real-touch play | 0.36 (range 0.22–0.54) | see "Run" |
+| in motion: colour look, mean of 1 frame per second over the first 13 s of real-touch play (same checker, same mask, JPEG q95 for both) | 0.37 (range 0.22–0.54) | **0.62** (range 0.51–0.77) |
+| (the same incl. the 14th second, where the NEW section ends in its white end-light by design) | 0.36 | 0.58 |
+| in motion: colour class shares water / pink / gold / purple / foam (approved 35 / 36 / 6 / 7 / 7 %) | 38 / 40 / 1 / 6 / 6 % | 27 / 31 / 8 / 5 / 14 % |
 | upper half (walls / rings): gold share / magenta share / mean brightness | approved: 14 % / 58 % / 114 | 34 % / 58 % / 143 |
 | lower half (water / foam): cyan share / pink share / mean brightness | approved: 57 % / 17 % / 146 | 53 % / 24 % / 133 |
 
@@ -66,3 +69,9 @@ painted places; its pixel score is low by design. The colour look and the colour
 8. Paddles: D-shaped gold shelves with simpler shading than the painted ones.
 9. Kept from the shared gameplay code: the wake ribbons and kick-foam puffs of `swimfx.js` (they appear as soft white shapes behind Benny).
 10. Not measured: real phone frame rate (this machine renders in software); the phone link lets the user check it.
+
+## Run (the whole section, one take, real CDP touch gestures, `tools/reflock/section_run.cjs` + `encode_run.py`)
+425 frames at 30 fps (14.2 s), Benny's path s 1.35 -> 30; 10 swipes, all acted (8 lane changes, 1 leap, 1 dive), lanes used -0.3 .. +0.3.
+Every frame checked: hole pixels (green sentinel background) 0 in 425 / 425 frames; Benny's whole body inside the frame 425 / 425; camera step
+<= 0.096 u per frame (expected <= 0.117), no camera turn; all 127 scenery meshes static (nothing follows the camera); no page errors.
+Coins 1,420 -> 1,490 (7 picked): the swipe plan was chosen to show steering, not to collect coins.

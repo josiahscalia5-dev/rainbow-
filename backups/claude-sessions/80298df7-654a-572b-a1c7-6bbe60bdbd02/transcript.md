@@ -2582,3 +2582,69 @@ The stop-hook save is running right now and will commit and push these same file
 > ↩︎ result: BEFORE r46 colour look mean 0.36 min 0.219 max 0.535 | sharpness mean 0.68 | class shares {'water_cyan': 0.378, 'pink_edge': 0.396, 'gold': 0.012, 'purple': 0.063, 'foam_white': 0.063} | approved {'water_cyan': 0.349, 'pink_edge': 0.355, 'gold': 0.061, 'purple': 0.072, 'foam_white': 0.072}
 > NEW r47 colour look mean 0.576 min -0.016 max 0.77 | sharpness mean 0.718 | class shares {'water_cyan': 0.274, 'pink_edge': 0.314, 'gold': 0.081, 'purple': 0.05, 'foam_white': 0.136} | approved {'water_cyan': 0.349, 'pink_edge': 0.355, 'gold': 0.061, 'purple': 0.072, 'foam_white': 0.072}
 
+### 🤖 Claude — 2026-11-23T04:35:02.784Z
+
+The new build scores a mean in-motion colour look of 0.58, against 0.36 for round 46. One NEW frame scored −0.02, though. Let me see which frame, before quoting the mean:
+
+### 🤖 Claude — 2026-11-23T04:35:05.988Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47; python3 -c \"\nimport json, statistics as st\nfor tag,f in (('r46','$S/cmp_r46run/r46_compare.json'),('r47','$S/cmp_r47run/r47_compare.json')):\n    fr=json.load(open(f))['frames']; ks=sorted(fr,key=int); v=[fr[k]['new']['colour_look_corr'] for k in ks]; print(tag, v, 'mean 0-12:', round(st.mean(v[:13]),3))\nL=json.load(open('$S/run47/run_log.json')); L=L if isinstance(L,list) else L.get('log',L.get('frames'))\nprint([ (L[i*30]['s']) for i in range(14)])\"", "description": "Per-frame colour lo …[+25 chars]`
+
+### 🧑 User — 2026-11-23T04:35:06.060Z
+
+> ↩︎ result: r46 [0.415, 0.219, 0.409, 0.409, 0.285, 0.415, 0.331, 0.368, 0.246, 0.287, 0.469, 0.369, 0.535, 0.284] mean 0-12: 0.366
+> r47 [0.502, 0.673, 0.662, 0.55, 0.77, 0.662, 0.541, 0.692, 0.731, 0.509, 0.767, 0.511, 0.508, -0.016] mean 0-12: 0.621
+> [1.35, 3.55, 5.75, 7.95, 10.15, 12.35, 14.55, 16.75, 18.95, 21.15, 23.35, 25.55, 27.75, 29.937]
+
+### 🤖 Claude — 2026-11-23T04:35:21.316Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47 && python3 - <<'EOF'\nimport json\nfrom PIL import Image, ImageDraw, ImageFont\nS='/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/'; Q='/home/user/rainbow-/qa/mod47/'\nL=json.load(open(S+'run47/run_log.json')); L=L if isinstance(L,list) else L.get('log',L.get('frames'))\nfont=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',17)\npicks=[(66,'after swipe RIGHT'),(120,'after 2x LEFT'),(196,'LEAP (swipe up)'),(250,'steering right'),(30 …[+1183 chars]`
+
+### 🧑 User — 2026-11-23T04:35:21.870Z
+
+> ↩︎ result: ok
+> qa/mod47:
+> A_START_APPROVED_BEFORE_NEW.jpg
+> B_SWIMMING_NEW.jpg
+> C_STEERING_NEW.jpg
+> D_INMOTION_BEFORE_vs_NEW.jpg
+> E_RUN_MOMENTS_real_touch.jpg
+> GAMEPLAY_05_modular_TEXTURED_real_touch.mp4
+> GAMEPLAY_05_modular_TEXTURED_real_touch_checks.json
+> README.md
+> numbers.json
+> stills
+> 
+> qa/mod47/stills:
+> 01_APPROVED_05_phone_frame.png
+> 02_BEFORE_r46_picture_baked_start.png
+> 03_NEW_r47_modular_start.png
+> 04_NEW_r47_swimming_s8.png
+> 05_NEW_r47_swimming_s16.png
+> 06_NEW_r47_steer_LEFT_s5.png
+> 07_NEW_r47_steer_RIGHT_s5.png
+> 08_NEW_r47_steer_LEFT_s11.png
+> 09_NEW_r47_steer_RIGHT_s11.png
+> run_f00066.png
+> run_f00120.png
+> run_f00196.png
+> run_f00250.png
+> run_f00300.png
+> run_f00340.png
+
+### 🤖 Claude — 2026-11-23T04:35:23.484Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/mod47/E_RUN_MOMENTS_real_touch.jpg"}`
+
+### 🧑 User — 2026-11-23T04:35:23.561Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-23T04:35:23.556Z
+
+[Image: original 2522x949, displayed at 2000x753. Multiply coordinates by 1.26 to map to original image.]
+
+### 🤖 Claude — 2026-11-23T04:35:35.219Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/mod47/README.md'; s=open(p).read()\ndef rep(a,b):\n    global s; assert s.count(a)==1, a[:60]; s=s.replace(a,b)\nrep(\"| in motion: colour look, mean of 1 frame per second over the first 14 s of real-touch play | 0.36 (range 0.22–0.54) | see \\\"Run\\\" |\",\n    \"| in motion: colour look, mean of 1 frame per second over the first 13 s of real-touch play (same checker, same mask, JPEG q95 for both) | 0.37 (range 0.22–0.54) | **0.62** (range 0.51–0.77) |\\n| (the same incl. the 14th second, where the NEW section ends in its white end-light by design) | 0.3 …[+1536 chars]`
+

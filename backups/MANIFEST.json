@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 29385,
-   "sha256": "d7f45a2b220d5003c8a2544a144fad0b6a1a794ac17f2d7bb2e720871b71b6a1"
+   "sha256": "c65593f067f09622c936b41728a9504ae9e89707dec5befd0359b06b7aa1871d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "3092efcd005f97d25a0bbc04eb264a5005655f8cb012c62c39ea33d1ed5eceb8"
+   "sha256": "024c5d249622afd8c19dc226d2e208d53b8428d4e0428e93a677f692997cebf1"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -36042,6 +36042,11 @@
    "sha256": "2a7bdbb4a65eda1c98b54bcc8ab8323ca3e98637aa4840039bf350a4f6a3680f"
   },
   {
+   "path": "qa/mod47/E_RUN_MOMENTS_real_touch.jpg",
+   "bytes": 906578,
+   "sha256": "09190522a4a0bf1c14ca956f3ffe2bccd71173cbae2cf6d8d9a3d578321611b4"
+  },
+  {
    "path": "qa/mod47/GAMEPLAY_05_modular_TEXTURED_real_touch.mp4",
    "bytes": 8412698,
    "sha256": "7b158887b52892734725f8cfbe0814e8818b1b926324503980a6e053038c9838"
@@ -36053,8 +36058,13 @@
   },
   {
    "path": "qa/mod47/README.md",
-   "bytes": 7134,
-   "sha256": "3eddc38961b5e5ee7dec3fec976b882028d75cd70b54edce1336e6b27e53b59d"
+   "bytes": 8271,
+   "sha256": "cdc024f96154fd5fbe05aa8043916a4c805390827deadbf3f27bcc45a389eb55"
+  },
+  {
+   "path": "qa/mod47/numbers.json",
+   "bytes": 12584,
+   "sha256": "841a16453f3dece77533e2e3278365009003293052432d640d7a2584cd6531de"
   },
   {
    "path": "qa/mod47/stills/01_APPROVED_05_phone_frame.png",
@@ -36100,6 +36110,36 @@
    "path": "qa/mod47/stills/09_NEW_r47_steer_RIGHT_s11.png",
    "bytes": 568891,
    "sha256": "7c3cf7d8ba7b5b103d86ff5559047c36fea7a9dffa7d237f9f62e745c867f542"
+  },
+  {
+   "path": "qa/mod47/stills/run_f00066.png",
+   "bytes": 580563,
+   "sha256": "9a9823c3ff76478e6d4f4f00fddaec663bab81d1cc08ddaf72a272db12a7db39"
+  },
+  {
+   "path": "qa/mod47/stills/run_f00120.png",
+   "bytes": 549156,
+   "sha256": "113b28d98cb877a4810758c31e38b061702521325ee26666c880c08c686bca6a"
+  },
+  {
+   "path": "qa/mod47/stills/run_f00196.png",
+   "bytes": 544109,
+   "sha256": "3a0fe986cddc216f5a70b66ec085cf87fafafe1644613eda301f024946111578"
+  },
+  {
+   "path": "qa/mod47/stills/run_f00250.png",
+   "bytes": 568878,
+   "sha256": "7e30e1257569587dd9d07dceffd4f1f0cf18ead3054754dfb3fd599cc025dad6"
+  },
+  {
+   "path": "qa/mod47/stills/run_f00300.png",
+   "bytes": 567678,
+   "sha256": "2742fa8b8e070c2aac0fe78a9e9ce165a941815d20f14322e345820081a7b9f9"
+  },
+  {
+   "path": "qa/mod47/stills/run_f00340.png",
+   "bytes": 556463,
+   "sha256": "b1aa58ac3498b625f30e7d3c23b450e2f49cea2e0734a028253b8efd03385ba0"
   },
   {
    "path": "qa/parallel_preview/04/1_APPROVED_04.png",

@@ -1,0 +1,821 @@
+{
+ "start_view": {
+  "r46_within20": 0.836,
+  "r47_within20": 0.104,
+  "r47_colour_look": 0.502,
+  "r47_ssim": 0.195
+ },
+ "in_motion_colour_look_1fps_first14s": {
+  "r46": {
+   "0": {
+    "new": {
+     "colour_look_corr": 0.415,
+     "sharpness_vs_approved": 0.782,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.482,
+       0.349
+      ],
+      "pink_edge": [
+       0.338,
+       0.355
+      ],
+      "gold": [
+       0.001,
+       0.061
+      ],
+      "purple": [
+       0.062,
+       0.072
+      ],
+      "foam_white": [
+       0.046,
+       0.072
+      ]
+     }
+    }
+   },
+   "1": {
+    "new": {
+     "colour_look_corr": 0.219,
+     "sharpness_vs_approved": 0.714,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.323,
+       0.349
+      ],
+      "pink_edge": [
+       0.381,
+       0.355
+      ],
+      "gold": [
+       0.003,
+       0.061
+      ],
+      "purple": [
+       0.164,
+       0.072
+      ],
+      "foam_white": [
+       0.048,
+       0.072
+      ]
+     }
+    }
+   },
+   "2": {
+    "new": {
+     "colour_look_corr": 0.409,
+     "sharpness_vs_approved": 0.732,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.373,
+       0.349
+      ],
+      "pink_edge": [
+       0.405,
+       0.355
+      ],
+      "gold": [
+       0.004,
+       0.061
+      ],
+      "purple": [
+       0.054,
+       0.072
+      ],
+      "foam_white": [
+       0.063,
+       0.072
+      ]
+     }
+    }
+   },
+   "3": {
+    "new": {
+     "colour_look_corr": 0.409,
+     "sharpness_vs_approved": 0.694,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.423,
+       0.349
+      ],
+      "pink_edge": [
+       0.395,
+       0.355
+      ],
+      "gold": [
+       0.01,
+       0.061
+      ],
+      "purple": [
+       0.039,
+       0.072
+      ],
+      "foam_white": [
+       0.048,
+       0.072
+      ]
+     }
+    }
+   },
+   "4": {
+    "new": {
+     "colour_look_corr": 0.285,
+     "sharpness_vs_approved": 0.724,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.446,
+       0.349
+      ],
+      "pink_edge": [
+       0.351,
+       0.355
+      ],
+      "gold": [
+       0.023,
+       0.061
+      ],
+      "purple": [
+       0.049,
+       0.072
+      ],
+      "foam_white": [
+       0.041,
+       0.072
+      ]
+     }
+    }
+   },
+   "5": {
+    "new": {
+     "colour_look_corr": 0.415,
+     "sharpness_vs_approved": 0.561,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.297,
+       0.349
+      ],
+      "pink_edge": [
+       0.443,
+       0.355
+      ],
+      "gold": [
+       0.037,
+       0.061
+      ],
+      "purple": [
+       0.092,
+       0.072
+      ],
+      "foam_white": [
+       0.041,
+       0.072
+      ]
+     }
+    }
+   },
+   "6": {
+    "new": {
+     "colour_look_corr": 0.331,
+     "sharpness_vs_approved": 0.541,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.346,
+       0.349
+      ],
+      "pink_edge": [
+       0.397,
+       0.355
+      ],
+      "gold": [
+       0.017,
+       0.061
+      ],
+      "purple": [
+       0.08,
+       0.072
+      ],
+      "foam_white": [
+       0.062,
+       0.072
+      ]
+     }
+    }
+   },
+   "7": {
+    "new": {
+     "colour_look_corr": 0.368,
+     "sharpness_vs_approved": 0.57,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.447,
+       0.349
+      ],
+      "pink_edge": [
+       0.346,
+       0.355
+      ],
+      "gold": [
+       0.023,
+       0.061
+      ],
+      "purple": [
+       0.049,
+       0.072
+      ],
+      "foam_white": [
+       0.053,
+       0.072
+      ]
+     }
+    }
+   },
+   "8": {
+    "new": {
+     "colour_look_corr": 0.246,
+     "sharpness_vs_approved": 0.672,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.325,
+       0.349
+      ],
+      "pink_edge": [
+       0.454,
+       0.355
+      ],
+      "gold": [
+       0.01,
+       0.061
+      ],
+      "purple": [
+       0.063,
+       0.072
+      ],
+      "foam_white": [
+       0.052,
+       0.072
+      ]
+     }
+    }
+   },
+   "9": {
+    "new": {
+     "colour_look_corr": 0.287,
+     "sharpness_vs_approved": 0.739,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.39,
+       0.349
+      ],
+      "pink_edge": [
+       0.4,
+       0.355
+      ],
+      "gold": [
+       0.003,
+       0.061
+      ],
+      "purple": [
+       0.04,
+       0.072
+      ],
+      "foam_white": [
+       0.071,
+       0.072
+      ]
+     }
+    }
+   },
+   "10": {
+    "new": {
+     "colour_look_corr": 0.469,
+     "sharpness_vs_approved": 0.66,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.407,
+       0.349
+      ],
+      "pink_edge": [
+       0.38,
+       0.355
+      ],
+      "gold": [
+       0.01,
+       0.061
+      ],
+      "purple": [
+       0.04,
+       0.072
+      ],
+      "foam_white": [
+       0.084,
+       0.072
+      ]
+     }
+    }
+   },
+   "11": {
+    "new": {
+     "colour_look_corr": 0.369,
+     "sharpness_vs_approved": 0.748,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.335,
+       0.349
+      ],
+      "pink_edge": [
+       0.424,
+       0.355
+      ],
+      "gold": [
+       0.008,
+       0.061
+      ],
+      "purple": [
+       0.049,
+       0.072
+      ],
+      "foam_white": [
+       0.092,
+       0.072
+      ]
+     }
+    }
+   },
+   "12": {
+    "new": {
+     "colour_look_corr": 0.535,
+     "sharpness_vs_approved": 0.664,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.397,
+       0.349
+      ],
+      "pink_edge": [
+       0.394,
+       0.355
+      ],
+      "gold": [
+       0.004,
+       0.061
+      ],
+      "purple": [
+       0.04,
+       0.072
+      ],
+      "foam_white": [
+       0.083,
+       0.072
+      ]
+     }
+    }
+   },
+   "13": {
+    "new": {
+     "colour_look_corr": 0.284,
+     "sharpness_vs_approved": 0.721,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.295,
+       0.349
+      ],
+      "pink_edge": [
+       0.442,
+       0.355
+      ],
+      "gold": [
+       0.01,
+       0.061
+      ],
+      "purple": [
+       0.057,
+       0.072
+      ],
+      "foam_white": [
+       0.092,
+       0.072
+      ]
+     }
+    }
+   }
+  },
+  "r47": {
+   "0": {
+    "new": {
+     "colour_look_corr": 0.502,
+     "sharpness_vs_approved": 0.74,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.323,
+       0.349
+      ],
+      "pink_edge": [
+       0.352,
+       0.355
+      ],
+      "gold": [
+       0.074,
+       0.061
+      ],
+      "purple": [
+       0.041,
+       0.072
+      ],
+      "foam_white": [
+       0.078,
+       0.072
+      ]
+     }
+    }
+   },
+   "1": {
+    "new": {
+     "colour_look_corr": 0.673,
+     "sharpness_vs_approved": 0.784,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.301,
+       0.349
+      ],
+      "pink_edge": [
+       0.326,
+       0.355
+      ],
+      "gold": [
+       0.085,
+       0.061
+      ],
+      "purple": [
+       0.064,
+       0.072
+      ],
+      "foam_white": [
+       0.086,
+       0.072
+      ]
+     }
+    }
+   },
+   "2": {
+    "new": {
+     "colour_look_corr": 0.662,
+     "sharpness_vs_approved": 0.793,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.314,
+       0.349
+      ],
+      "pink_edge": [
+       0.302,
+       0.355
+      ],
+      "gold": [
+       0.102,
+       0.061
+      ],
+      "purple": [
+       0.063,
+       0.072
+      ],
+      "foam_white": [
+       0.082,
+       0.072
+      ]
+     }
+    }
+   },
+   "3": {
+    "new": {
+     "colour_look_corr": 0.55,
+     "sharpness_vs_approved": 0.804,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.261,
+       0.349
+      ],
+      "pink_edge": [
+       0.31,
+       0.355
+      ],
+      "gold": [
+       0.086,
+       0.061
+      ],
+      "purple": [
+       0.095,
+       0.072
+      ],
+      "foam_white": [
+       0.11,
+       0.072
+      ]
+     }
+    }
+   },
+   "4": {
+    "new": {
+     "colour_look_corr": 0.77,
+     "sharpness_vs_approved": 0.789,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.363,
+       0.349
+      ],
+      "pink_edge": [
+       0.278,
+       0.355
+      ],
+      "gold": [
+       0.101,
+       0.061
+      ],
+      "purple": [
+       0.043,
+       0.072
+      ],
+      "foam_white": [
+       0.076,
+       0.072
+      ]
+     }
+    }
+   },
+   "5": {
+    "new": {
+     "colour_look_corr": 0.662,
+     "sharpness_vs_approved": 0.758,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.292,
+       0.349
+      ],
+      "pink_edge": [
+       0.364,
+       0.355
+      ],
+      "gold": [
+       0.089,
+       0.061
+      ],
+      "purple": [
+       0.024,
+       0.072
+      ],
+      "foam_white": [
+       0.091,
+       0.072
+      ]
+     }
+    }
+   },
+   "6": {
+    "new": {
+     "colour_look_corr": 0.541,
+     "sharpness_vs_approved": 0.747,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.304,
+       0.349
+      ],
+      "pink_edge": [
+       0.335,
+       0.355
+      ],
+      "gold": [
+       0.08,
+       0.061
+      ],
+      "purple": [
+       0.07,
+       0.072
+      ],
+      "foam_white": [
+       0.081,
+       0.072
+      ]
+     }
+    }
+   },
+   "7": {
+    "new": {
+     "colour_look_corr": 0.692,
+     "sharpness_vs_approved": 0.808,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.3,
+       0.349
+      ],
+      "pink_edge": [
+       0.329,
+       0.355
+      ],
+      "gold": [
+       0.094,
+       0.061
+      ],
+      "purple": [
+       0.039,
+       0.072
+      ],
+      "foam_white": [
+       0.094,
+       0.072
+      ]
+     }
+    }
+   },
+   "8": {
+    "new": {
+     "colour_look_corr": 0.731,
+     "sharpness_vs_approved": 0.743,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.26,
+       0.349
+      ],
+      "pink_edge": [
+       0.364,
+       0.355
+      ],
+      "gold": [
+       0.082,
+       0.061
+      ],
+      "purple": [
+       0.056,
+       0.072
+      ],
+      "foam_white": [
+       0.097,
+       0.072
+      ]
+     }
+    }
+   },
+   "9": {
+    "new": {
+     "colour_look_corr": 0.509,
+     "sharpness_vs_approved": 0.732,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.296,
+       0.349
+      ],
+      "pink_edge": [
+       0.333,
+       0.355
+      ],
+      "gold": [
+       0.08,
+       0.061
+      ],
+      "purple": [
+       0.071,
+       0.072
+      ],
+      "foam_white": [
+       0.081,
+       0.072
+      ]
+     }
+    }
+   },
+   "10": {
+    "new": {
+     "colour_look_corr": 0.767,
+     "sharpness_vs_approved": 0.796,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.34,
+       0.349
+      ],
+      "pink_edge": [
+       0.305,
+       0.355
+      ],
+      "gold": [
+       0.092,
+       0.061
+      ],
+      "purple": [
+       0.035,
+       0.072
+      ],
+      "foam_white": [
+       0.095,
+       0.072
+      ]
+     }
+    }
+   },
+   "11": {
+    "new": {
+     "colour_look_corr": 0.511,
+     "sharpness_vs_approved": 0.762,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.257,
+       0.349
+      ],
+      "pink_edge": [
+       0.397,
+       0.355
+      ],
+      "gold": [
+       0.079,
+       0.061
+      ],
+      "purple": [
+       0.052,
+       0.072
+      ],
+      "foam_white": [
+       0.081,
+       0.072
+      ]
+     }
+    }
+   },
+   "12": {
+    "new": {
+     "colour_look_corr": 0.508,
+     "sharpness_vs_approved": 0.791,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.221,
+       0.349
+      ],
+      "pink_edge": [
+       0.407,
+       0.355
+      ],
+      "gold": [
+       0.086,
+       0.061
+      ],
+      "purple": [
+       0.041,
+       0.072
+      ],
+      "foam_white": [
+       0.105,
+       0.072
+      ]
+     }
+    }
+   },
+   "13": {
+    "new": {
+     "colour_look_corr": -0.016,
+     "sharpness_vs_approved": 0.008,
+     "class_balance_vs_approved": {
+      "water_cyan": [
+       0.0,
+       0.349
+      ],
+      "pink_edge": [
+       0.0,
+       0.355
+      ],
+      "gold": [
+       0.0,
+       0.061
+      ],
+      "purple": [
+       0.0,
+       0.072
+      ],
+      "foam_white": [
+       0.75,
+       0.072
+      ]
+     }
+    }
+   }
+  }
+ },
+ "run_checks": {
+  "frames": 425,
+  "errors": [],
+  "benny_offscreen_frames": 0,
+  "benny_offscreen_list": [],
+  "camera_max_step_u": 0.096,
+  "camera_max_step_expected_u": 0.1173,
+  "camera_max_turn_deg_per_frame": 0,
+  "static_world_meshes": 127,
+  "scenery_meshes_moved": [],
+  "hole_pixels_max": null,
+  "hole_frames": 0,
+  "holes_checked_frames": 0,
+  "swipes_sent": 10,
+  "input_mode": "real CDP touch gestures",
+  "coins_end": 1490,
+  "socks_end": 0,
+  "s_end": 30,
+  "lat_range": [
+   -0.3,
+   0.3
+  ]
+ }
+}
