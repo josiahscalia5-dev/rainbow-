@@ -1,0 +1,213 @@
+{
+ "frames": 1440,
+ "errors": [],
+ "benny_offscreen_frames": 0,
+ "benny_offscreen_list": [],
+ "camera_max_step_u": 0.1,
+ "camera_max_step_expected_u": 0.1173,
+ "camera_max_turn_deg_per_frame": 0.995,
+ "static_world_meshes": 436,
+ "scenery_meshes_moved": [],
+ "hole_pixels_max": 0,
+ "hole_frames": 0,
+ "holes_checked_frames": 0,
+ "frame_qa": {
+  "camera_clearance_min_u": 0.069,
+  "water_gap_abs_max_u": 0.02,
+  "frames_without_water_under_benny": 0,
+  "immersion_min": -0.529,
+  "immersion_max": 0.37,
+  "benny_tilt_vs_surface_max_deg": 61.15,
+  "bank_max_deg": 71.6,
+  "benny_height_px_min": 274.20000000000005,
+  "benny_height_px_max": 315.8,
+  "benny_lean_max_deg": 41.75,
+  "benny_lean_max_step_deg_per_frame": 3.92,
+  "camera_roll_max_deg": 9.05,
+  "camera_roll_max_step_deg_per_frame": 0.31
+ },
+ "edge_guard": {
+  "max_optical_shift_px": 35.2,
+  "last_optical_corrections": 311
+ },
+ "swipes_sent": 28,
+ "input_mode": "real CDP touch gestures",
+ "input_log": [
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 1.2,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 3,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 3.267,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 5.5,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 5.767,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 8,
+   "result": "lane"
+  },
+  {
+   "dir": "up",
+   "src": "touch",
+   "clock": 10,
+   "result": "leap"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 12,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 14,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 14.267,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 16.5,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 16.767,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 19,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 21,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 23,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 23.267,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 25.5,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 25.767,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 28,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 30,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 32,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 32.267,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 34.5,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 34.767,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 37,
+   "result": "lane"
+  },
+  {
+   "dir": "up",
+   "src": "touch",
+   "clock": 39,
+   "result": "leap"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 41,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 43,
+   "result": "lane"
+  }
+ ],
+ "coins_end": 1490,
+ "socks_end": 0,
+ "s_end": 193.527,
+ "lat_range": [
+  -0.3,
+  0.3
+ ],
+ "hole_frames_checked": 1440
+}

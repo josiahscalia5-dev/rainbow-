@@ -17,7 +17,8 @@ BEFORE = the exact round-45b world, rebuilt from commit `94d5fc7` with the same 
 | `run/GAMEPLAY_05_06_07_TEXTURED_real_touch.mp4` (+ `_checks.json`) | one uninterrupted textured run 05 -> 06 -> into 07, real CDP touch gestures, every frame checked |
 | `run/GAMEPLAY_05_06_07_GRAY_geometry_real_touch.mp4` (+ `_checks.json`) | the same run with plain gray 3D materials (geometry test, green background = any hole) |
 | `run/coins_check.json` | every coin passed, whether Benny collected it, his lane / height there |
-| `evidence/` | the old faults side by side with the same frame now (frames 409-415 clipping + foam block, 60 seam, 1370 green hole) |
+| `evidence/` | the old faults side by side with the same frame now (409 / 415 clipping + foam block, 60 seam, 1370 green hole, 1430 connector sinking) |
+| `preview_now/` | the app's screens right now: beginning, picture area, middle, bend, end of 05; crest, descent, rainbow pool, end of 06, into 07 |
 | `Rainbow_r46_world_05_06_debug.apk` | Android debug APK (see "APK" below) |
 
 ## Measured: before -> after (scenery pixels within 20 levels of the approved picture; style = 70 % colour histogram + 30 % detail vs the same surface in the approved picture)
@@ -45,7 +46,21 @@ What the numbers say honestly:
   stretch seen from just before the picture camera, and the hazy area hidden behind the painted Benny (see "still different").
 
 ## Whole-run checks (same 28-touch plan as round 45b, `qa/kit45/run/swipe_plan_05_06.json`, start s 88, 48 s = 1,440 frames > r45b 1,380)
-WHOLE_RUN_TABLE
+| check (every one of the frames) | r45b textured (1,380 frames) | **r46 textured (1,440 frames)** | **r46 gray geometry (1,440)** |
+|---|---|---|---|
+| Benny (whole body incl. paddling arms, hat, pompom) outside the screen | 12 frames (409-420; rest-pose box) | **0** (now the real animated silhouette) | **0** |
+| hole pixels (green background) | 19 frames, max 381 px | **0** | **0** |
+| touch gestures (real CDP touch) sent / detected / applied | 28 / 28 / 28 | **28 / 28 / 28** (26 lane changes, 2 jumps) | **28 / 28 / 28** |
+| scenery that moved with the camera | none | **none** (436 meshes checked) | **none** |
+| camera step per frame (limit 0.117 u) / turn per frame | 0.100 u / 0.999 deg | **0.100 u / 0.995 deg** | **0.100 u / 0.995 deg** |
+| camera roll on the 06 bank: max / max change per frame | - | **9.1 deg / 0.31 deg** | - |
+| Benny's lean on the 06 bank (bank 71.6 deg): max / max change per frame | - | **41.8 deg / 3.9 deg** (the lean into each swipe, +-9 deg over 4-5 frames) | - |
+| water under Benny: frames without / max gap | 0 / 0.049 u | **0 / 0.020 u** (06 -> 07 connector fixed) | - |
+| immersion of his body (share under water) | -0.53 .. 0.37 | -0.53 .. 0.37 (unchanged; negative = jumps) | - |
+| closest camera to scenery | 0.069 u (06, s 164) | 0.069 u (same place, unchanged) | - |
+| lens-shift safety (soft, only near an edge) | - | used on 311 frames, max 35 px | same |
+| coins: in Benny's swimming path collected | - | **15 / 15** (the 16th lies under the planned jump at s 175 - jumped over, correct) - `run/coins_check.json` | - |
+| run | 05 -> 06 (s 88 -> 189) | **05 -> 06 -> into 07 (s 88 -> 193.5)** | same |
 
 ## Still different from the approved pictures (not hidden)
 * The picture camera match stays ~84-85 % (goal 90-95 %): fine wall / ring detail at the top of the frame and the far tunnel differ most.
@@ -56,6 +71,7 @@ WHOLE_RUN_TABLE
 * The repeated wall pattern still has some flat pink patches (where tray pixels were removed) and 06's far wall segments near the 06 -> 07 connector
   carry a few pale painted fragments (baked from far away, magnified when close).
 * Two thin straight pink lines run along 06's river after the crest (the channel body edges), as in round 45b.
+* The camera passes 0.069 u from scenery once in 06 (s 164, after a lane change) - the same as round 45b.
 * Screen 07 (not reworked this round, as asked): its own wall template still has orange smears; just past the connector (s ~194.8) its pool lies
   7 cm above Benny's route for a moment.
 
