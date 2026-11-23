@@ -1,10 +1,62 @@
 # Rainbow Unity — handoff (latest verified state)
 
-Last verified: **2026-11-23 ~14:00 UTC**, Claude session on the user's laptop (second Claude account).
-(Sections below "CURRENT STATE" are the earlier history; where they disagree, CURRENT STATE wins.)
+Last verified: **2026-11-23 18:25 UTC** (13:25 New York time), Claude session on the user's laptop (after switching accounts).
 Read this first in any new Claude account or session. **This is an existing project — never start over.**
+Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
-## ✅ CURRENT STATE (2026-11-23 ~14:00 UTC) — Unity is installed, licensed and connected
+<!-- NEXT-TASK:START -->
+**Next unfinished task: finish the short playable Screen 05 test (original approved reference only).**
+1. Open the Unity Editor if it is closed: `unity open C:\RainbowUnity\UnityProject --until-ready`, then check
+   `unity status --project-path C:\RainbowUnity\UnityProject` (state must be ready).
+2. Finish the 3 unfinished specialists from their saved briefs, KEEPING the files they already wrote
+   (a staging folder without README.md is unfinished). At most 2 at a time on this laptop:
+   * Agent 2 environment (purple washer tunnel, gold rings, copper-gold paddles, far glow): 16 files in `staging/agent2-environment`
+   * Agent 3 water, foam, bubbles, lighting: 12 files in `staging/agent3-water-vfx`
+   * Agent 4 Benny, swim/steer/jump, camera, coins, HUD: 19 files in `staging/agent4-benny-gameplay`
+   Prompt: "Read COMMON and AGENTn in C:\RainbowUnity\staging\shared\specialists.workflow.js and follow them. Continue from
+   the files already in your staging folder; do not rewrite finished files; write README.md when done."
+3. Coordinator only: copy the finished outputs into `UnityProject/Assets/Rainbow`, run menu Rainbow → Build Screen 05 Scene
+   (`UnityProject/AgentScripts/screen05_build_scene.cs`), fix compile errors.
+4. Play-test about 10 s, then evidence with the test tools: approved vs Unity Game view at 864×1536 side by side, a continuous
+   gameplay recording, a moving-view series, and an explicit list of remaining differences (no likeness % without measurements).
+5. Update this handoff (keep these NEXT-TASK markers). Autosave pushes to GitHub every 5 minutes.
+<!-- NEXT-TASK:END -->
+
+## ✅ CURRENT STATE (2026-11-23 18:25 UTC)
+* **Git**: branch `unity/screen05-dev`, newest commits are on GitHub (checked with `git ls-remote`). Working tree saved.
+* **Five-minute autosave = Windows Task Scheduler task "Rainbow Unity Autosave"** (created 2026-11-23 13:18 local, every
+  5 min, hidden, runs as the user while signed in). It runs `tools/autosave.ps1` (one pass: commit + push only when
+  something changed or a push is pending; never force-push/merge/reset/delete; leaves out likely secrets and >50 MB non-LFS
+  files). Verified: first run 13:19 committed `4fc8139` and pushed it (push exit 0). Log `.git/autosave.log`, last pass
+  `.git/autosave.status`. It needs no Claude session, so it survives account switches and restarts.
+  Repair (safe to re-run, never duplicates): `tools/setup-resume-system.ps1`.
+* Why it was broken: the old autosave was a loop in the previous Claude session's background shell; it died with that
+  session (last autosave 12:46 local, commit `42af05a`).
+* **Unity**: 6000.3.29f1 installed + Unity Personal active; project `C:\RainbowUnity\UnityProject` (URP 17.3.0, Input System
+  1.20.1, Cinemachine 3.1.7, Pipeline 1.0.1, glTFast 6.21.0, Splines 2.9.2). The Editor is **closed** right now
+  (`unity status` → exit 12, no Editor). It was open earlier today.
+* **Specialists**: Agent 1 (setup runbook + 15 test-tool files) **finished**; tools copied into `UnityProject/Assets/Rainbow/Testing`
+  + `UnityProject/AgentScripts` and compiled with no errors (commit `610a16e`); not yet used in Play mode (no scene yet).
+  Agents 2, 3, 4 **unfinished**: they stopped at 17:40 UTC when the previous account hit its 5-hour limit (HTTP 429). All files
+  they had written are committed (autosaves up to `42af05a`).
+* Screen 05 scene: **not built yet** (only `Assets/Scenes/SampleScene.unity` exists). Coordinator files: `Assets/Rainbow/Shared/RiverPath.cs`,
+  `Assets/Rainbow/Editor/Screen05SceneBuilder.cs`.
+* **Resume helpers** (already in place, all read-only): `CLAUDE.md`; `.claude/settings.json` SessionStart hook →
+  `tools/session-start.ps1` (prints a status block); `/resume-rainbow` skill; desktop shortcut "Resume Rainbow"; a short pointer
+  in `%USERPROFILE%\.claude\CLAUDE.md`.
+* Laptop: C: 10.2 GB free, RAM ~1.8 GB free.
+* Errors today: 5-hour usage limit on the previous account (17:39 UTC); autosave loop died with that session; Unity Editor closed.
+
+## Switching Claude accounts (what the user does)
+1. Wait until the newest autosave is pushed (or ask Claude "save now"). Everything is in `C:\RainbowUnity` and on GitHub.
+2. In the Claude app: click your name/initials at the bottom left → **Log out** → sign in with the other account.
+3. Click **Code** → start a new session → choose the folder **`C:\RainbowUnity`** → type **Resume Rainbow** → Enter.
+   (If the "Unity" plugin is missing in that account, it is optional: + → Add plugins → search "Unity" → Install.)
+
+---
+# History (older notes; the sections above win where they disagree)
+
+## CURRENT STATE (2026-11-23 ~14:00 UTC) — Unity is installed, licensed and connected
 * Windows restarted 2026-11-23 07:54 local → C: free went 8.2 → 16.6 GB.
 * **Unity 6000.3.29f1 installed** (official installer, silent, user approved the Windows prompt) at
   `C:\Program Files\Unity\Hub\Editor\6000.3.29f1`; default Editor in the Unity CLI. Lowest free space during install: 2.2 GB.
@@ -17,27 +69,13 @@ Read this first in any new Claude account or session. **This is an existing proj
   (PowerShell 5.1 mangles inline quotes → always pass code with `--file`). Pipeline asset in use: `PC_RPAsset`, GPU "Intel(R) Graphics".
 * Coordinator files in the project: `Assets/Rainbow/Shared/RiverPath.cs`, `Assets/Rainbow/Editor/Screen05SceneBuilder.cs`
   (menu **Rainbow → Build Screen 05 Scene**, finds the specialists' builders by reflection).
-* **Specialists running** since 08:40 local as 4 parallel background agents (the Workflow runner only allows 2 at a time on
-  this 4-core laptop, so it was stopped before anything was written). Briefs: constants COMMON + AGENT1..4 in
-  `staging/shared/specialists.workflow.js`; outputs land in `staging/agent1..4` (each writes a README.md when done).
-  If they were interrupted: start new agents with "read COMMON + AGENTn in that file and follow them" (see git history).
-* **2026-11-23 ~09:00 local: usage limit reached (resets 12:10 EST).** Agents 2, 3, 4 stopped while still reading sources —
-  they wrote NO files yet. Next session: relaunch them (same short prompts: "read COMMON + AGENTn in
-  staging/shared/specialists.workflow.js"), check `staging/agent1-unity-setup` for Agent 1's output.
+* Specialists were launched as parallel background agents (the Workflow runner only allows 2 at a time on this 4-core laptop).
+  Briefs: constants COMMON + AGENT1..4 in `staging/shared/specialists.workflow.js`; outputs land in `staging/agent1..4`
+  (each writes a README.md when done).
 * Evidence tool: `tools/make-side-by-side.ps1` (APPROVED vs UNITY image, no percentage claims).
 * **Git**: portable Git 2.56.1 + git-lfs 3.8.1 at `C:\Users\josia\PortableGit` (user approved; SHA-256 verified). Local repo in
   `C:\RainbowUnity`, branch **`unity/screen05-dev`** (orphan, nothing from the 22 GB repo downloaded), remote `origin` =
-  the Rainbow repo. Neutral commit author "Rainbow Unity" (no personal email). **Push needs the user's one-time GitHub sign-in**
-  (Git Credential Manager window on the laptop).
-* Remote Control is on for this session; keep-awake is held while working (laptop lid must stay open).
-
-### Resume checklist (new session / new account)
-1. `unity status --project-path C:\RainbowUnity\UnityProject` — if no Editor: `unity open C:\RainbowUnity\UnityProject --until-ready`.
-2. Check `staging/agent1..4/README.md` exist (specialists finished); integrate them into `UnityProject/Assets/Rainbow/...`
-   (coordinator only), then menu Rainbow → Build Screen 05 Scene, fix compile errors, play-test.
-3. Visual tests (user's mandatory list): approved vs Game view at 864×1536, continuous gameplay recording, moving-view series,
-   explicit list of differences. Never claim a likeness % without measurements.
-4. Commit + push `unity/screen05-dev` (`C:\Users\josia\PortableGit\cmd\git.exe`), verify on GitHub, update this file.
+  the Rainbow repo. Neutral commit author "Rainbow Unity" (no personal email). GitHub sign-in stored by Git Credential Manager.
 
 ## User's binding rules
 * Target = the ORIGINAL approved Screen 05 **"Flow Into the Current"**: `references/05_flow_into_the_current.png`
@@ -53,52 +91,25 @@ Read this first in any new Claude account or session. **This is an existing proj
 
 ## Machine (user's laptop)
 * HP 14", Windows 11 Home, Intel N150, 8 GB RAM, Intel integrated GPU, **one drive C:** (~118 GB).
-* C: free **8.3 GB**. `pagefile.sys` had expanded to 14.8 GB (base allocation 10.6 GB) → a Windows **restart** is pending to
-  shrink it (~4 GB back). Hibernation already off (previous session). Free RAM was only 0.8 GB (last boot 2026-11-19).
 * Unity CLI **1.0.1**: `C:\Users\josia\AppData\Local\Unity\bin\unity.exe`. Unity Hub app: **not installed**.
-* Git for Windows / git-lfs / gh: **not installed**.
-
-## Unity status
-* Editor **6000.3.29f1 (6.3 LTS): NOT installed.** Official installer downloaded + verified (Authenticode *Valid*, signer
-  "Unity Technologies SF"): `C:\Users\josia\AppData\Roaming\UnityHub\downloads\UnitySetup64-6000.3.29f1.exe` (4.2 GB).
-* Why the first install failed: `unity install` copied the installer to a temp folder and ran it; C: fell to ~1 GB at 50 %,
-  the install aborted and rolled back. (The 7-Zip "extract" workaround was never used; 7-Zip cannot open this installer.)
-* Plan: after the restart run the official installer directly (no temp copy), user approves the Windows prompt:
-  `Start-Process 'C:\Users\josia\AppData\Roaming\UnityHub\downloads\UnitySetup64-6000.3.29f1.exe' -ArgumentList '/S /D=C:\Program Files\Unity\Hub\Editor\6000.3.29f1' -Verb RunAs -Wait`
-  then (with the user's OK) delete the 4.2 GB download, sign in (`unity auth login`) and activate the free Personal license
-  (`unity license activate --personal --accept-eula`).
-* Android Build Support: **deferred** (needs ~9.7 GB more disk). Personal license: **not activated yet**.
-* Leftover from September: `C:\Program Files\Unity\Hub\Editor\6000.6.0f1` (2 metadata files only).
+* Android Build Support: **deferred** (needs ~7–10 GB more disk).
 
 ## Files on the laptop
-* `C:\Users\josia\claude yes\Rainbow_Screen05_Source\` — 111 files (30 MB) the previous session downloaded from GitHub branch
+* `C:\Users\josia\claude yes\Rainbow_Screen05_Source\` — 111 files (30 MB) downloaded from GitHub branch
   `ccr-6deca498-03lhkc`: reference + hi-res reference, Three.js source (`src/`), models `benny31.glb`, `benny.glb`, `lids05.glb`
   (all three SHA-256-verified identical to the GitHub LFS objects on 2026-11-23), textures (`tunnel05`, `water05`, `benny05`,
   `benny31`, `paint`), docs.
-* `C:\Users\josia\claude yes\RainbowUnity_Prep\` — **empty**: the previous session's 4 helper agents hit the usage limit and
-  saved no deliverables (only analysis in their transcripts + small helper scripts).
-* `C:\RainbowUnity\` — the Unity work folder (will become the git working tree of the Unity branch):
+* `C:\RainbowUnity\` — the Unity work folder and git working tree of the Unity branch:
   * `references/05_flow_into_the_current.png` — verified copy of the approved reference.
   * `staging/shared/CONTRACT.md` + `staging/shared/Assets/Rainbow/Shared/RiverPath.cs` — integration contract and the shared
     course API (port of `course.ts` S05 / `meander05`).
-  * `staging/shared/specialists.workflow.js` — the saved briefs for the 4 specialists (Unity setup runbook, environment,
-    water/VFX/lighting, Benny/gameplay/HUD), ready to run with the Workflow tool.
-  * `staging/agent1-unity-setup`, `agent2-environment`, `agent3-water-vfx`, `agent4-benny-gameplay` — specialist outputs
-    (empty: agents not started yet; they start right after the restart).
-  * `UnityProject/` — the Unity URP project (not created yet).
+  * `staging/shared/specialists.workflow.js` — the saved briefs for the 4 specialists.
+  * `staging/agent1-unity-setup`, `agent2-environment`, `agent3-water-vfx`, `agent4-benny-gameplay` — specialist outputs.
+  * `UnityProject/` — the Unity URP project.
 
 ## GitHub
 * Repo `https://github.com/josiahscalia5-dev/rainbow-` (public, ~22 GB — never clone it whole on this laptop).
 * Source branch `ccr-6deca498-03lhkc` @ `856ef9d` (autosave 2026-11-23 11:03 UTC); the user's checkpoint `544bc51` is an
-  ancestor (13 commits behind) — nothing lost. `CLAUDE.md` and `docs/briefs/2026-11-23-r48/UNITY_EVAL_R48.md` exist there.
-* Unity branch: **not created yet.** Plan: orphan branch `unity/screen05-dev` pushed from `C:\RainbowUnity`
-  (git init + remote + orphan branch, no 22 GB clone), Git LFS for `*.glb *.fbx *.psd *.exr *.mp4 *.apk` like the repo's
-  `.gitattributes`; approved reference PNG stays in plain git (byte-identical).
-
-## Next steps (in order)
-1. User restarts Windows (Start → Power → **Restart**).
-2. Launch the 4 specialists (setup runbook, environment, water/VFX, Benny/gameplay) into their staging folders.
-3. Install the Editor (command above), user approves; sign in + activate Personal license.
-4. Create the URP project `C:\RainbowUnity\UnityProject`, add glTFast + Input System, integrate staging (coordinator only),
-   build the scene with `Screen05SceneBuilder`, play a ~10 s section, capture 864×1536, compare with the reference.
-5. Install Git (per-user), create + push `unity/screen05-dev`, verify the branch and LFS objects on GitHub.
+  ancestor — nothing lost. `CLAUDE.md` and `docs/briefs/2026-11-23-r48/UNITY_EVAL_R48.md` exist there.
+* Unity branch `unity/screen05-dev` (orphan) pushed from `C:\RainbowUnity`; Git LFS for `*.glb *.fbx *.psd *.exr *.mp4 *.apk` etc.
+  like the repo's `.gitattributes`; the approved reference PNG stays in plain git (byte-identical).

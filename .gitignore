@@ -29,8 +29,24 @@ UnityProject/crashlytics-build.properties
 *.ulf
 *.alf
 .env
+.env.*
 *.pem
 *.key
+*.pfx
+*.p12
+*.ppk
+*.keystore
+*.jks
+credentials.json
+.credentials.json
+id_rsa*
+id_ed25519*
+id_ecdsa*
+
+# ---- personal Claude Code files (never commit; the shared .claude/settings.json and skills ARE committed) ----
+.claude/settings.local.json
+CLAUDE.local.md
+.claude.json
 
 # ---- OS clutter ----
 Thumbs.db

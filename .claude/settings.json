@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:/RainbowUnity/tools/session-start.ps1\"",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}
