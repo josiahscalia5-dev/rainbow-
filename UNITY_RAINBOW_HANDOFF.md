@@ -21,6 +21,9 @@ Read this first in any new Claude account or session. **This is an existing proj
   this 4-core laptop, so it was stopped before anything was written). Briefs: constants COMMON + AGENT1..4 in
   `staging/shared/specialists.workflow.js`; outputs land in `staging/agent1..4` (each writes a README.md when done).
   If they were interrupted: start new agents with "read COMMON + AGENTn in that file and follow them" (see git history).
+* **2026-11-23 ~09:00 local: usage limit reached (resets 12:10 EST).** Agents 2, 3, 4 stopped while still reading sources —
+  they wrote NO files yet. Next session: relaunch them (same short prompts: "read COMMON + AGENTn in
+  staging/shared/specialists.workflow.js"), check `staging/agent1-unity-setup` for Agent 1's output.
 * Evidence tool: `tools/make-side-by-side.ps1` (APPROVED vs UNITY image, no percentage claims).
 * **Git**: portable Git 2.56.1 + git-lfs 3.8.1 at `C:\Users\josia\PortableGit` (user approved; SHA-256 verified). Local repo in
   `C:\RainbowUnity`, branch **`unity/screen05-dev`** (orphan, nothing from the 22 GB repo downloaded), remote `origin` =
