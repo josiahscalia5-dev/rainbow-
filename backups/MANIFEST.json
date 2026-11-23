@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28923,
-   "sha256": "8c8104177ac10e223e2cefc17eff8f96f48d92aa0675c3e915ad86cbac32b8ad"
+   "sha256": "6a5862da62d71bb097685131cb56ae00db1cd83754a922c15ac0e1ce0bd6b42b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2961,
-   "sha256": "4412bc6ef42fb40594531dc1c3a322a4c07a283ab8835353cfaed1aa468f42f1"
+   "sha256": "b9ad693d6ddd9362db8b06542230511f0f137d15b088c670bd12ce8bd0fe92f5"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -23835,6 +23835,11 @@
    "path": "qa/kit46/screen06/06_numbers.json",
    "bytes": 774,
    "sha256": "93bc5c5e3072975fb766d51685272978113906d59a073812dd0800d4f991aafd"
+  },
+  {
+   "path": "qa/kit47/README.md",
+   "bytes": 6113,
+   "sha256": "0b4dce5e8a9ec0dc8c4d46955a2e4231fab30cbcffa98a284456a68f4b20e21c"
   },
   {
    "path": "qa/kit47/run/SECTION_05_TEXTURED_normal_speed_real_touch.mp4",
