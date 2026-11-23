@@ -7,6 +7,8 @@
 //   { scriptPath: "C:\\RainbowUnity\\staging\\shared\\round2-fixes.workflow.js", args: { skip: ["water", "scenery"] } }
 // listing in "skip" every area that evidence/screen05/round2_progress/NOTES.md (or the handoff) says is already finished.
 // Skipped areas are not re-run; later agents are told to read NOTES.md instead.
+// Optional args.notes = { <area>: "text" } is appended to that area's brief (e.g. what an interrupted earlier attempt left
+// in the files), so a resumed agent continues from the saved work instead of starting over.
 export const meta = {
   name: 'screen05-round2-fixes',
   description: 'Screen 05 round 2: fix water bands, foam banks, bubbles, Benny splash/contact and scenery/lighting in Unity, then verify',
@@ -18,6 +20,7 @@ export const meta = {
 }
 
 const SKIP = (args && Array.isArray(args.skip)) ? args.skip : []
+const NOTES = (args && args.notes && typeof args.notes === 'object') ? args.notes : {}
 
 const COMMON = `
 You are a subagent improving the user's EXISTING Unity port of their Rainbow game, Screen 05 "Flow Into the Current" (Unity
@@ -226,7 +229,7 @@ function prior(list) {
 }
 
 function implPrompt(key, extra) {
-  return COMMON + '\n' + AREAS[key] + (extra || '')
+  return COMMON + '\n' + AREAS[key] + (extra || '') + (NOTES[key] ? '\n\n' + NOTES[key] : '')
 }
 
 function fix(key, extra) {
