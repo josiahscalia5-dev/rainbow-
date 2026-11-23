@@ -1,0 +1,21 @@
+{
+ "_doc": "Round 47 MODULAR Screen 05 layout (tools/mod05). World: water surface y = 0, the drum's axis runs along -z, x = right. Every module below is ONE shape reused along the section. Camera / drum / Benny / coin sizes = the measured fit of the approved picture (tools/screenkit/screens/05/fit05.py, round 46 values). The layout (gentle S, one paddle per side per section, foam clusters along both banks) follows the user's round-47 preview.",
+ "screen": "05", "number": "05", "title": "FLOW INTO THE CURRENT", "coins_start": 1420,
+ "camera": { "fov": 64.0, "pos": [0.0, 0.734, 0.0], "yaw": 0.0537570624503019, "pitch": -0.23479579055800356,
+             "follow_route": 0.9, "follow_lane": 0.65, "max_off": 0.85, "knee": 0.25 },
+ "drum": { "axis_x": -0.2046106, "axis_y": 0.4546903, "r": 1.3640708, "z_start": 4.0 },
+ "benny": { "water": [-0.0647618, 0.0, -1.1640408], "height": 0.453118, "bsize": 1.19, "lift": 0.03, "ahead": 0.15 },
+ "coin_radius": 0.1080686,
+ "lane": 0.3, "speed": 2.2,
+ "section": { "spacing": 2.6, "first_ring_z": -3.9917158, "count": 18, "_note": "one module = one wall piece (2.6 u) + one gold ring + two paddles" },
+ "level": { "length": 30.0, "_note": "the short playable section: ~14 s at speed 2.2; the tunnel continues to the bright end so the view is never cut" },
+ "route": { "amp": 0.3, "wavelength": 10.4, "ease_in": 2.6, "centre_ease": 6.0, "first_swing": 1, "_note": "ONE gentle S: centre x(z) = axis + amp sin(2 pi d / wavelength), d = distance from Benny's start, eased in" },
+ "river": { "half_width": 0.6, "flow_speed": 1.0 },
+ "ring": { "band": 0.32, "depth": 0.13 },
+ "paddle": { "length": 0.62, "reach": 0.30, "thick": 0.075, "tilt_deg": 50, "at": 0.42,
+             "left_deg": [150, 158], "right_deg": [20, 13], "_note": "D-shaped gold slab, straight edge on the wall, tilted toward the tunnel centre; angles alternate per section" },
+ "foam": { "bank_step": 0.3, "bank_gap": 0.06, "wall_step": 0.42, "size": [0.15, 0.27], "prefabs": 4 },
+ "bubbles": { "count": 120 },
+ "fog": { "color": [255, 222, 228], "near": 9.0, "far": 44.0 },
+ "glow": { "color": [255, 246, 214] }
+}

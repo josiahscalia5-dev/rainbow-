@@ -566,3 +566,176 @@ Let me zoom into the wall, ring and paddle detail of the approved picture so the
 
 > ↩︎ result: Task #5 created successfully: Report: compromises, handoff, autosave verify
 
+### 🤖 Claude — 2026-11-23T03:50:06.729Z
+
+> 🔧 **Bash** `{"command": "mkdir -p docs/briefs/2026-11-23-r47 tools/mod05 && cp /root/.claude/uploads/80298df7-654a-572b-a1c7-6bbe60bdbd02/d404ead6-image.png docs/briefs/2026-11-23-r47/USER_PREVIEW_R47_05_layout.png && cat > docs/briefs/2026-11-23-r47/USER_R47.md <<'EOF'\n# Round 47 (2026-11-23) — user's order, verbatim (binding)\n\nAttached: a new Screen 05 preview (`USER_PREVIEW_R47_05_layout.png`, 941 x 1672) — a LAYOUT GUIDE only, not a new approved picture.\n\n> Keep the visual design of my original approved Screen 05. Use this new preview to guide a small layout adjustment.\n>\n> Preserve the origina …[+1429 chars]`
+
+### 🧑 User — 2026-11-23T03:50:06.787Z
+
+> ↩︎ result: USER_PREVIEW_R47_05_layout.png
+> USER_R47.md
+
+### 🤖 Claude — 2026-11-23T03:50:08.029Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed"}`
+
+### 🧑 User — 2026-11-23T03:50:08.040Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-23T03:50:08.378Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-23T03:50:08.392Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-23T03:50:12.117Z
+
+Now the palette. I'll measure the wall (violet/magenta) and gold colours straight from the approved picture, so the repeating textures and gold use your colours rather than guesses.
+
+### 🤖 Claude — 2026-11-23T03:50:20.036Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nimport colorsys\nim = np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(np.float32)/255\nH, W, _ = im.shape\nmx = im.max(2); mn = im.min(2); sat = (mx-mn)/np.maximum(mx,1e-4)\nr,g,b = im[...,0],im[...,1],im[...,2]\n# hue\nhsv = np.zeros_like(im)\nimport matplotlib  # noqa\nEOF\npython3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nim = np.asarray(Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB')).astype(np.float32)\nr,g,b = im[... …[+1086 chars]`
+
+### 🧑 User — 2026-11-23T03:50:20.646Z
+
+> ↩︎ result: Traceback (most recent call last):
+>   File "<stdin>", line 10, in <module>
+> ModuleNotFoundError: No module named 'matplotlib'
+> WALL violet/magenta 175614 {3: [72, 0, 42], 10: [127, 6, 119], 25: [170, 30, 126], 50: [205, 44, 156], 75: [213, 63, 255], 90: [255, 93, 255], 97: [255, 144, 255]} mean [181, 53, 177]
+> WALL slots (dark) 50186 {3: [35, 0, 34], 10: [69, 0, 44], 25: [113, 2, 81], 50: [136, 18, 130], 75: [170, 23, 140], 90: [146, 33, 177], 97: [144, 37, 169]} mean [120, 18, 110]
+> GOLD rings 36318 {3: [193, 63, 5], 10: [223, 86, 34], 25: [239, 111, 50], 50: [251, 136, 91], 75: [246, 176, 80], 90: [240, 214, 75], 97: [255, 228, 137]} mean [242, 142, 72]
+
+### 🤖 Claude — 2026-11-23T03:50:32.002Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nim = np.asarray(Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB')).astype(np.float32)\nr,g,b = im[...,0],im[...,1],im[...,2]\nmx = im.max(2); mn = im.min(2); d = mx-mn\nh = np.zeros_like(mx); m = d>1e-3\nrr = (mx==r)&m; gg=(mx==g)&m&~rr; bb=m&~rr&~gg\nh[rr] = ((g-b)[rr]/d[rr])%6; h[gg]=((b-r)[gg]/d[gg])+2; h[bb]=((r-g)[bb]/d[bb])+4\nh*=60; s = d/np.maximum(mx,1); L = 0.2126*r+0.7152*g+0.0722*b\nyy,xx = np.mgrid[0:im.shape[0],0:im.shape[1]]\nwallzone = ((yy>200)&(yy<640)) & ~((xx …[+673 chars]`
+
+### 🧑 User — 2026-11-23T03:50:32.413Z
+
+> ↩︎ result: hue 255-285: share 0.17 median [152, 51, 209] bright90 [188, 81, 250]
+> hue 285-300: share 0.25 median [172, 48, 192] bright90 [243, 106, 252]
+> hue 300-315: share 0.35 median [214, 50, 191] bright90 [255, 122, 249]
+> hue 315-335: share 0.24 median [196, 39, 141] bright90 [248, 65, 186]
+> near-white streaks share of wall zone 0.075 [255, 238, 250]
+
+### 🤖 Claude — 2026-11-23T03:51:29.327Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/mod05/make_tiles.py", "content": "\"\"\"Round 47 (2026-11-23) - MODULAR Screen 05: the repeating surface textures, drawn (not cut) in the approved picture's own measured colours.\n  python3 -I tools/mod05/make_tiles.py <out dir>\nWrites (sRGB PNG, every tile seamless in both directions so it can repeat around and along the tunnel):\n  wall_tile.png  1024 x 2048   one tile = 1/16 of the drum circumference (u) x half a ring spacing (v, along the tunnel)\n                               stadium slots in staggered rows running AROUND the tunnel, brushed shee …[+8829 chars]`
+
+### 🧑 User — 2026-11-23T03:51:29.403Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/mod05/make_tiles.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-23T03:51:33.504Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47 && time python3 -I tools/mod05/make_tiles.py $S/tiles && ls -la $S/tiles && python3 -c \"\nfrom PIL import Image\nS='$S/'\nw=Image.open(S+'tiles/wall_tile.png'); r=Image.open(S+'tiles/ring_tile.png')\n# 2x2 repeat preview to check seams, scaled\nc=Image.new('RGB',(1024,2048)); \nfor i in range(2):\n  for j in range(2): c.paste(w.resize((512,1024)),(i*512,j*1024))\nc=c.resize((512,1024)); c.save(S+'wall_rep.png')\nr.resize((1024,256)).save(S+'ring_prev.png')\n\"", "description": "Generate tiles  …[+30 chars]`
+
+### 🧑 User — 2026-11-23T03:52:04.380Z
+
+> ↩︎ result: tiles written to /tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/tiles
+> 
+> real	0m30.639s
+> user	0m22.218s
+> sys	0m8.607s
+> total 876
+> drwxr-xr-x 2 root root   4096 Nov 23 03:52 .
+> drwxr-xr-x 4 root root   4096 Nov 23 03:51 ..
+> -rw-r--r-- 1 root root   1131 Nov 23 03:52 palette.json
+> -rw-r--r-- 1 root root  55377 Nov 23 03:52 ring_tile.png
+> -rw-r--r-- 1 root root 824311 Nov 23 03:52 wall_tile.png
+
+### 🤖 Claude — 2026-11-23T03:52:06.031Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/wall_rep.png"}`
+
+### 🧑 User — 2026-11-23T03:52:06.052Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T03:52:06.644Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/80298df7-654a-572b-a1c7-6bbe60bdbd02/scratchpad/r47/ring_prev.png"}`
+
+### 🧑 User — 2026-11-23T03:52:06.671Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-23T03:53:39.070Z
+
+> 🔧 **Bash** `{"command": "sed -n '1,40p' tools/reflock/section_run.cjs; grep -n \"goto\\|\\.html\\|evaluate(\" tools/reflock/section_run.cjs | head -30", "description": "Inspect the recording harness page contract"}`
+
+### 🧑 User — 2026-11-23T03:53:39.105Z
+
+> ↩︎ result: // Round 40 QA harness for the reference-locked section (tools/reflock/section.html), 412x915 Android portrait emulation, SwiftShader WebGL.
+> //   node section_run.cjs <game folder> <out> stills <s list> [lane=0] [query]      -> s<ss>_l<lane>.png + stills.json
+> //   node section_run.cjs <game folder> <out> run <seconds|end> [plan] [query]       -> f_00000.png ... + run_log.json + checks.json
+> // plan = JSON [[t, 'left'|'right'|'up'|'down'], ...] (default: steering left / right repeatedly through the whole section)
+> // Swipes go through window.input.swipe (the same request path as a touch swipe in controls.js). Every frame is checked:
+> //   * Benny's whole model box inside the frame (no character leaving the screen)
+> //   * camera jump: position step and view-angle step between consecutive frames
+> //   * with ?sentinel=1: pure-green background pixels = holes in the world (missing geometry) are counted in each frame
+> //   * the static world: every scenery mesh's world matrix at the end equals the one at the start (nothing follows the camera)
+> // Env RENDER_EVERY=n renders / saves every n-th frame only (logic still stepped every frame).
+> const { chromium } = require('playwright'); const { spawn …[+5951 chars]
+
+### 🤖 Claude — 2026-11-23T03:53:46.167Z
+
+> 🔧 **Bash** `{"command": "grep -n \"CAMS\\b\\|const CAMS\\|rotation.set\\|\\.yaw\\|\\.pitch\" tools/screenkit/screen.html | head -8; grep -n \"def json\\|def set\\|yaw\\|pitch\" tools/screenkit/fitlib.py | head -20; grep -n \"window.input\\b\\|window.input =\" tools/kit05/controls.js | head -3; ls -la assets/models/benny31.glb assets/textures/benny31/bake.png assets/textures/paint/05_coin.png tools/marble05/viewer/splash.png tools/marble05/viewer/bubble.png tools/marble05/viewer/glint.png", "description": "Check camera rotation convention and shared asset paths"}`
+
+### 🧑 User — 2026-11-23T03:53:46.213Z
+
+> ↩︎ result: 174:const CAMS = LAY.cams.map((c) => { const k = new THREE.PerspectiveCamera(c.fov ?? LAY.fov, c.img[0] / c.img[1], 0.05, 300); k.rotation.order = 'YXZ'; k.position.copy(V3(c.pos)); k.rotation.set(c.pitch, c.yaw, 0);
+> 176:window.REFCAM = CAMS; window.kitDebug = { THREE, scene, world, MESH, CAMS, renderer, camera, frameAt, at };
+> 187:  ({ BAKE_STATS, BAKE_DATA, TPL } = await bakeAll({ THREE, renderer, scene, world, MESH, CAMS, LAY, q, loadRaw, bbox }));
+> 218:else if ((q.get('foampic') ?? (LAY.foam_from_picture ? '1' : '0')) === '1') FOAM.push(...await foamFromPicture({ THREE, LAY, CAMS, MESH }));   // r43b: off for 06
+> 311:const C0 = CAMS[0], P0 = at(S_REF, new THREE.Vector3()), M0 = camFrame(S_REF, new THREE.Matrix4()), M0i = M0.clone().invert();
+> 391:  const pos = CAMS[0].position.clone().add(new THREE.Vector3(0, 0, -k * sp)); if (DRUM && pos.z < DRUM.z1 + 6) return null; return { pos, quat: CAMS[0].quaternion.clone() }; } });
+> 5:Camera rotation = three.js Euler YXZ (yaw about +y = turn left, pitch about +x = look up); columns of R = camera axes in world."""
+> 18:        self.R = np.eye(3); self.C = np.zeros(3); self.yaw = 0.0; self.pitch = 0.0
+> 20:    def set(self, yaw, pitch, C):
+> 21:     …[+1056 chars]
+
+### 🤖 Claude — 2026-11-23T03:53:52.445Z
+
+> 🔧 **Bash** `{"command": "sed -n '1,30p' tools/screenkit/compare_screen.py; grep -n \"resize\\|crop\" tools/screenkit/compare_screen.py | head", "description": "Check how screens are compared to the approved picture"}`
+
+### 🧑 User — 2026-11-23T03:53:52.478Z
+
+> ↩︎ result: """Rainbow screen kit - measure a game frame of a screen against its approved picture with the skill's compare_to_approved.py (the same
+> formulas as every earlier round, incl. the Bubble Dash 90.7 %): scenery = the picture minus what the game draws itself (= the bake mask
+> from segment.py: HUD, title, Benny + his splash ring, coins, loose bubbles), mapped into the 412x915 phone frame exactly like the picture.
+>   python3 -I tools/screenkit/compare_screen.py <NN> <NEW frame> <mask.png> <out dir> [--before <frame>] [--tag NAME]
+> Prints and writes <out>/<tag>_summary.json. Thresholds are the skill's own (20 levels); never changed to report higher numbers."""
+> import sys, os, json, subprocess, argparse
+> from PIL import Image, ImageOps
+> HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.abspath(os.path.join(HERE, '..', '..'))
+> ap = argparse.ArgumentParser(); ap.add_argument('nn'); ap.add_argument('frame'); ap.add_argument('mask'); ap.add_argument('out'); ap.add_argument('--before'); ap.add_argument('--tag', default='new')
+> a = ap.parse_args(); os.makedirs(a.out, exist_ok=True)
+> ref = json.load(open(os.path.join(REPO, '.claude/skills/rainbow-screen-builder/screens.json')))['screens'] …[+1458 chars]
+
+### 🤖 Claude — 2026-11-23T03:53:55.996Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🧑 User — 2026-11-23T03:53:56.008Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-23T03:53:56.316Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-23T03:53:56.333Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-23T03:54:06.346Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/mod05/mod05.json", "content": "{\n \"_doc\": \"Round 47 MODULAR Screen 05 layout (tools/mod05). World: water surface y = 0, the drum's axis runs along -z, x = right. Every module below is ONE shape reused along the section. Camera / drum / Benny / coin sizes = the measured fit of the approved picture (tools/screenkit/screens/05/fit05.py, round 46 values). The layout (gentle S, one paddle per side per section, foam clusters along both banks) follows the user's round-47 preview.\",\n \"screen\": \"05\", \"number\": \"05\", \"title\": \"FLOW INTO THE CURRE …[+1778 chars]`
+
+### 🧑 User — 2026-11-23T03:54:06.418Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/mod05/mod05.json (file state is current in your context — no need to Read it back)
+

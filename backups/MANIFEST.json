@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 29384,
-   "sha256": "1ad991f2445795ca0f02ac43aa336ce92972ef5d36f3857cc861b0c6618b13a3"
+   "sha256": "e6ba14c7425bd08bfad10962e3ebb8059a7e3836b41338929b908e6c9f7ebfde"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "e9cef212e206f1774030bb4e689fe642e5677c92cd59a6fd8215ef6a1bd38e14"
+   "sha256": "7e674a48c7849bb60e72673b52462f6527d4d5c577d6c83e99d551d5d1cbc7e1"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -11750,6 +11750,16 @@
    "path": "docs/briefs/2026-11-22-r46/RESUME_R46.md",
    "bytes": 4061,
    "sha256": "7f56a376973b85c2c296a0fcfbd3c979699a580dba032eb5fe4c1c3d0bcfedbe"
+  },
+  {
+   "path": "docs/briefs/2026-11-23-r47/USER_PREVIEW_R47_05_layout.png",
+   "bytes": 2684925,
+   "sha256": "c9b2f3e90e4959ef04d8929001ab0c8e4266572ce135acf29757718e4ebd8484"
+  },
+  {
+   "path": "docs/briefs/2026-11-23-r47/USER_R47.md",
+   "bytes": 1657,
+   "sha256": "0a429365dc16f31ced053079a9b4d6f33656b7933ec94aa9c4513b4385ef3d3f"
   },
   {
    "path": "docs/characters/benny.md",
@@ -49555,6 +49565,16 @@
    "path": "tools/match08/solve08.mjs",
    "bytes": 5572,
    "sha256": "8f9bee468e9096a9a5f8744c256384587b6d6712bb7ba070e0da2602fa369cec"
+  },
+  {
+   "path": "tools/mod05/make_tiles.py",
+   "bytes": 9206,
+   "sha256": "3310faec1792fcfdadd6734efd71e7574e6c769e13e0bea50f0be9543c83307c"
+  },
+  {
+   "path": "tools/mod05/mod05.json",
+   "bytes": 2123,
+   "sha256": "da089c5b4f65b3c1bcec0b1ccd979f34552be07565517dcf4ad29313efe5cd98"
   },
   {
    "path": "tools/model-lab.html",
