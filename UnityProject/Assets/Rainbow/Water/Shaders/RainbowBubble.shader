@@ -45,6 +45,9 @@ Shader "Rainbow/Water/Bubble"
                 float _MaxPxSmall;
             CBUFFER_END
 
+            // shared animation clock (Rainbow.Screen05.Screen05Clock; game time, reset by the test hold)
+            float _RainbowTime;
+
             #include "Assets/Rainbow/Water/Shaders/RainbowBubble.hlsl"
 
             struct Attributes

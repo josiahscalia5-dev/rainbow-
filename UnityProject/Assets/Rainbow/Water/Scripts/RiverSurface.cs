@@ -90,12 +90,12 @@ namespace Rainbow.Screen05
                                    + 0.4f * Mathf.Sin(sm * 0.41f + time * 1.5f - uc * 2.3f));
         }
 
-        /// <summary>World height of the water surface at (x, s) and shader time (use Time.timeSinceLevelLoad = _Time.y).</summary>
+        /// <summary>World height of the water surface at (x, s) and shader time (use Screen05Clock.Time = _RainbowTime).</summary>
         public static float HeightAt(float x, float s, float time) =>
             RiverPath.WaterY + BaseHeight(x, s) + WaveHeight(x, s, time);
 
         /// <summary>Height at the current frame's shader time.</summary>
-        public static float HeightAt(float x, float s) => HeightAt(x, s, Time.timeSinceLevelLoad);
+        public static float HeightAt(float x, float s) => HeightAt(x, s, Screen05Clock.Time);
 
         /// <summary>True when (x, s) is on the open stream (not on the foam shelf).</summary>
         public static bool OnStream(float x, float s, float margin = 0f) =>

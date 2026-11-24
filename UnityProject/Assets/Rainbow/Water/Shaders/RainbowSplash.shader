@@ -53,6 +53,9 @@ Shader "Rainbow/Water/Splash"
                 float _FootprintBack;
             CBUFFER_END
 
+            // shared animation clock (Rainbow.Screen05.Screen05Clock; game time, reset by the test hold)
+            float _RainbowTime;
+
             // per frame from SplashWake (MaterialPropertyBlock)
             float4 _SplashState;   // x = waterline radius uR, y = strength 0..1, z = unused, w = unused
             float4 _SplashRiver;   // x = stream centre x at Benny, y = stream half width, z = master-s offset, w = swell amplitude

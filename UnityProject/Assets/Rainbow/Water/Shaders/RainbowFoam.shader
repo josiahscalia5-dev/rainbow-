@@ -28,6 +28,9 @@ Shader "Rainbow/Water/Foam"
             float _WaveAmp;
         CBUFFER_END
 
+        // shared animation clock (Rainbow.Screen05.Screen05Clock; game time, reset by the test hold)
+        float _RainbowTime;
+
         // global written every frame by Rainbow.Screen05.SplashWake (zero = no Benny)
         float4 _RainbowBenny;     // x = s (world z), y = world x, z = wake strength, w = waterline radius
 

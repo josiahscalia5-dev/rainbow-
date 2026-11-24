@@ -46,6 +46,9 @@ Shader "Rainbow/Screen05/FarRiver"
             float _Exposure;
         CBUFFER_END
 
+        // shared animation clock (Rainbow.Screen05.Screen05Clock; game time, reset by the test hold)
+        float _RainbowTime;
+
         TEXTURE2D(_EnvPano);
         SAMPLER(sampler_EnvPano);
         ENDHLSL

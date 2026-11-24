@@ -309,7 +309,7 @@ namespace Rainbow.Screen05
             float ay = Mathf.Clamp((vyW - lastVy) / Mathf.Max(dt, 1e-3f), -80f, 80f);
             lastY = y; lastVy = vyW;
             const float k = 120f, c = 9f;
-            float targetX = -ay * 0.004f + Mathf.Sin(Time.time * 11f) * 0.03f * Mathf.Min(1f, speed / 12f);
+            float targetX = -ay * 0.004f + Mathf.Sin(Screen05Clock.Time * 11f) * 0.03f * Mathf.Min(1f, speed / 12f);
             float targetZ = visSteer * 0.28f * 0.9f;
             pomVelX += (k * (targetX - pomAngX) - c * pomVelX) * dt;
             pomAngX += pomVelX * dt;

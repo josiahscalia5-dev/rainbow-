@@ -388,7 +388,7 @@ namespace Rainbow.Screen05
                 }
             }
 
-            float t = Time.time;
+            float t = Screen05Clock.Time;
             Matrix4x4 toLocal = transform.worldToLocalMatrix;
             for (int i = 0; i < bubbles.Length; i++)
             {

@@ -20,6 +20,9 @@ Shader "Rainbow/Screen05/ThroatGlow"
             float _ThroatIntensity;
             float4 _ThroatParams;
         CBUFFER_END
+
+        // shared animation clock (Rainbow.Screen05.Screen05Clock; game time, reset by the test hold)
+        float _RainbowTime;
         ENDHLSL
 
         Pass

@@ -107,13 +107,13 @@ namespace Rainbow.Screen05
                 popT[i] = -1f;
                 if (slots[i].coin != null) slots[i].coin.gameObject.SetActive(!collected[i]);
             }
-            PlaceAll(Time.time);
+            PlaceAll(Screen05Clock.Time);
         }
 
         void Update()
         {
             if (collected == null || collected.Length != slots.Count) Cache();
-            float time = Time.time;
+            float time = Screen05Clock.Time;
             BennyController b = BennyController.Instance;
             if (b != null)
             {
