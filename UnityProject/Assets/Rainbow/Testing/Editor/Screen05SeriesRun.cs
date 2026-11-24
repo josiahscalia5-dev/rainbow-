@@ -18,6 +18,18 @@ namespace Rainbow.Screen05.EditorTools
     {
         public static Screen05SeriesRun Active { get; private set; }
 
+        // Faster Play Mode ("Reload Scene only", no domain reload): the domain reload used to drop a series left over
+        // from an earlier Play session. Finish() normally clears it when Play mode exits; this is only the safety net.
+        [InitializeOnEnterPlayMode]
+        static void ResetStaticsOnEnterPlayMode()
+        {
+            Screen05SeriesRun stale = Active;
+            Active = null;
+            if (stale == null) return;
+            EditorApplication.update -= stale.Tick;
+            EditorApplication.playModeStateChanged -= stale.OnPlayModeChanged;
+        }
+
         public const int SettleFrames = 10;
         public const int CaptureFramerate = 30;
         const double StallSeconds = 60.0;

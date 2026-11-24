@@ -20,6 +20,16 @@ namespace Rainbow.Screen05.EditorTools
     {
         public static Screen05GameplayRecorder Active { get; private set; }
 
+        // Faster Play Mode ("Reload Scene only", no domain reload): the domain reload used to drop a recorder left over
+        // from an earlier Play session. Finish() normally clears it when Play mode exits; this is only the safety net.
+        [InitializeOnEnterPlayMode]
+        static void ResetStaticsOnEnterPlayMode()
+        {
+            Screen05GameplayRecorder stale = Active;
+            Active = null;
+            if (stale != null) stale.Cleanup();
+        }
+
         const double StallSeconds = 60.0;
 
         readonly string m_Mp4Path;

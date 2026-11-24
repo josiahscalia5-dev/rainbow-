@@ -35,6 +35,15 @@ namespace Rainbow.Screen05.EditorTools
         /// <summary>Absolute path of the last file written (still PNG, series index.json or recording .mp4).</summary>
         public static string LastOutput { get; internal set; } = "";
 
+        // Faster Play Mode ("Reload Scene only", no domain reload): reset both at every Play mode entry, exactly as the
+        // domain reload used to (tools poll them while a series or recording runs).
+        [InitializeOnEnterPlayMode]
+        static void ResetStaticsOnEnterPlayMode()
+        {
+            Status = "idle";
+            LastOutput = "";
+        }
+
         // ---- stills -----------------------------------------------------------------------------------
 
         /// <summary>

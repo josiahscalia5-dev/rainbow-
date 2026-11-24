@@ -15,6 +15,11 @@ namespace Rainbow.Screen05
         /// <summary>Raised from LateUpdate with Time.frameCount.</summary>
         public static event Action<int> LateFrame;
 
+        // Faster Play Mode ("Reload Scene only", no domain reload): drop handlers left over from an earlier Play
+        // session at the start of every Play session, exactly as the domain reload used to.
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetStatics() { LateFrame = null; }
+
         void LateUpdate()
         {
             Action<int> handler = LateFrame;
