@@ -334,16 +334,16 @@ namespace Rainbow.Screen05
             var rng = new Rng(seed);
             for (int side = -1; side <= 1; side += 2)
             {
-                for (float b = 0.75f; b < 2.3f; b += 0.085f)
+                for (float b = 0.6f; b < 2.3f; b += 0.07f)
                 {
                     float grow = SS(0.7f, 1.5f, b), taper = 1f - 0.55f * SS(1.7f, 2.3f, b);
-                    int n = rng.Next() < 0.6f ? 5 : 4;
+                    int n = 9;
                     float cl = ClusterNoise(b * 4f + 3f * side, side);
                     for (int k = 0; k < n; k++)
                     {
-                        float r = (k < 2 ? rng.Range(0.035f, 0.09f) * (0.55f + 0.75f * cl) : rng.Range(0.014f, 0.04f)) * (0.5f + 0.5f * grow) * taper;
-                        float dl = 0.44f + 0.5f * b + rng.Range(-0.13f, 0.12f) * (0.5f + 0.5f * grow);
-                        AddWake(list, rng, side, dl, b + rng.Range(-0.05f, 0.05f), k < 2 ? -0.35f * r : 0.0f + 0.04f * grow * rng.Next(), r, rng.Range(0.86f, 1f));
+                        float r = (k < 2 ? rng.Range(0.045f, 0.1f) * (0.6f + 0.7f * cl) : rng.Range(0.012f, 0.04f)) * (0.5f + 0.5f * grow) * taper;
+                        float dl = 0.6f + 0.52f * b + (rng.Next() + rng.Next() - 1f) * 0.22f * (0.5f + 0.5f * grow);
+                        AddWake(list, rng, side, dl, b + rng.Range(-0.05f, 0.05f), k < 2 ? -0.3f * r : 0.0f + 0.04f * grow * rng.Next(), r, rng.Range(0.86f, 1f));
                     }
                 }
             }
