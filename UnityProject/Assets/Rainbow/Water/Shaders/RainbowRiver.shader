@@ -18,6 +18,7 @@ Shader "Rainbow/Water/River"
         _EnvLod ("Reflection blur (mip)", Range(0, 6)) = 1
         _W4Look ("Lane gain, core gain, broad streak, fine streak", Vector) = (0.75, 0.3, 0.55, 0.5)
         _W4Edge ("Streaky band edges", Float) = 1
+        _W4Band ("Band edge scale, outer strip violet, grade highlight protection, -", Vector) = (0.87, 0.5, 0.8, 0)
         _RiverGrade ("Cyan water grade (rgb multiplier on the cyan/blue water, a = strength; 0 = off)", Vector) = (1, 1, 1, 0)
     }
 
@@ -41,6 +42,7 @@ Shader "Rainbow/Water/River"
             float4 _RiverGrade;
             float4 _W4Look;
             float _W4Edge;
+            float4 _W4Band;
         CBUFFER_END
         #define RBW_HAS_LOOK
 
@@ -132,7 +134,7 @@ Shader "Rainbow/Water/River"
                 // coordinator round 3 (2026-11-23): the approved water is a deeper AZURE blue (near water ~(60,162,235),
                 // median luminance ~125) than the aqua Unity water (~(90,196,244), ~160). Grade only the cyan/blue water
                 // (green and blue both well above red), never the pink currents, white foam lines or glints.
-                float cyanK = saturate((min(outCol.g, outCol.b) - outCol.r) * 3.0) * saturate(1.5 - max(outCol.r, 0.0) * 1.5);
+                float cyanK = saturate((min(outCol.g, outCol.b) - outCol.r) * 3.0) * saturate(1.5 - max(outCol.r, 0.0) * 1.5) * (1.0 - _W4Band.z * smoothstep(0.62, 0.95, outCol.g));
                 outCol = lerp(outCol, outCol * _RiverGrade.rgb, cyanK * _RiverGrade.a);
                 outCol = MixFog(outCol, i.fogFactor);
                 return half4(outCol, 1.0);

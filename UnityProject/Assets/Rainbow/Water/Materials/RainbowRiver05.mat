@@ -35,11 +35,12 @@ Material:
     - _EnvYaw: 5.04
     - _FlowSpeed: 14.3
     - _SOffset: 116.7
-    - _W4Edge: 1
+    - _W4Edge: 0.6
     - _WaveAmp: 0.1
     m_Colors:
     - _RiverGrade: {r: 0.55, g: 0.7, b: 0.93, a: 1}
     - _RiverLightDir: {r: 0.26387972, g: 0.879599, b: -0.39581954, a: 0}
-    - _W4Look: {r: 0.75, g: 0.3, b: 0.55, a: 0.5}
+    - _W4Band: {r: 0.87, g: 0.5, b: 0.8, a: 0}
+    - _W4Look: {r: 0.9, g: 0.3, b: 0.6, a: 0.6}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

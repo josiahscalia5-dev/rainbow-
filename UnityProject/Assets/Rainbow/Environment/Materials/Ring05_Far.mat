@@ -35,7 +35,7 @@ Material:
     - _Exposure: 1
     - _Gold: 0
     - _GoldMode: 0
-    - _LightInfluence: 0.25
+    - _LightInfluence: 0.05
     - _StripIntensity: 1.4
     m_Colors:
     - _BandF: {r: 44, g: 110, b: 0, a: 0}
@@ -43,7 +43,7 @@ Material:
     - _BandS: {r: 20, g: 0.075, b: 1.5, a: 0}
     - _FarGlowColor: {r: 1, g: 0.6117647, b: 0.3529412, a: 1}
     - _FarGlowRange: {r: 150, g: 330, b: 1.2, a: 0}
-    - _FrameLook: {r: 1, g: 1, b: 1.08, a: 0}
+    - _FrameLook: {r: 1, g: 240, b: 130, a: 0}
     - _FrameParams: {r: 0.3, g: 0.06, b: 0, a: 0}
     - _GoldTone: {r: 1.3, g: 1.6, b: 1.5, a: 0}
     - _MidRange: {r: 8, g: 50, b: 0, a: 0}

@@ -40,6 +40,7 @@ Shader "Rainbow/Screen05/ThroatGlow"
             #pragma vertex ThroatVert
             #pragma fragment ThroatFrag
             #pragma multi_compile_instancing
+            #include "RainbowPolish05.hlsl"
             #include "RainbowThroatGlow.hlsl"
 
             struct Attributes

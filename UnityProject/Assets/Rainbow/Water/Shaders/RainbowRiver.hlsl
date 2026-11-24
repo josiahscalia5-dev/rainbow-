@@ -31,6 +31,7 @@ float4 _W4Tune2;
 float4 _W4LookD;   // live deltas on _W4Look (material property, RainbowRiver.shader)
 #ifndef RBW_HAS_LOOK
 #define _W4Edge 1.0
+#define _W4Band float4(0.87, 0.5, 0.0, 0.0)
 #define _W4Look float4(0.75, 0.3, 0.55, 0.5)
 #endif
 float4 _W4Dbg;   // x = brush / ripple streak cores, y = ripple normal, z = specular glint, w = env reflection (gain deltas)
@@ -146,7 +147,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     tb = lerp(tb, tW5, sweep);
     hB = lerp(hB, wW, sweep);
     tb += ((n1 - 0.5) * 0.45 * a1 + (n2 - 0.5) * 0.5 * a2 + (n3 - 0.5) * 0.25 * a3) * _W4Edge;   // streaky satin edges
-    float at = abs(tb);
+    float at = abs(tb) * _W4Band.x;                // < 1 = broader pink inside the traced edges
 
     // ---- electric cyan ----
     float coreK = saturate(1.0 - q * q * 0.8);
@@ -172,16 +173,16 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     cy = lerp(cy, nb, inW);
 
     // between a band and its bank: cyan water a touch bluer than the core
-    float3 ow = lerp(lerp(cy, RBW_OBLUE, 0.35), RBW_VOUT, 0.45);
+    float3 ow = lerp(cy, RBW_VIN, _W4Band.y);
 
     // ---- hot-pink satin ----
     float hp = saturate(0.45 + lane * 1.1);
     float3 pk = lerp(RBW_PDEEP, RBW_PBODY, smoothstep(0.1, 0.5, hp));
-    pk = lerp(pk, RBW_PLIGHT, saturate(smoothstep(0.5, 0.9, hp) * 0.75 + stA * 0.75));
+    pk = lerp(pk, RBW_PLIGHT, saturate(smoothstep(0.5, 0.9, hp) * 0.7 + stA * 0.6));
     float hlq = (tb - 0.35) / 0.22;
     pk = lerp(pk, RBW_PLIGHT, exp(-hlq * hlq) * 0.3);
     pk = lerp(pk, RBW_PPALE, saturate(stB * 0.8 + silk * 0.5));
-    pk = lerp(pk, RBW_PWHITE, saturate(stA * stB * 0.8));
+    pk = lerp(pk, RBW_PWHITE, saturate(stA * stB * 0.4));
 
     // hue ramp across each band edge (pink -> violet -> periwinkle -> blue -> cyan)
     float3 cIn = lerp(pk, RBW_VIN, smoothstep(0.62, 0.95, at));

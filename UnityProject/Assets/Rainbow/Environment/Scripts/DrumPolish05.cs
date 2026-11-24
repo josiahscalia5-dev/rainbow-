@@ -148,7 +148,7 @@ namespace Rainbow.Screen05
         {
             const float w = 0.2f;
             float[] ts = { -0.12f, 0f, 0.1f, 0.17f, 0.205f, 0.25f, 0.3f, 0.46f, 0.6f, 0.65f, 0.7f, 0.8f, 0.89f, 0.95f, 1f, 1f, 0f };
-            float[] zs = { -w, -w, -w * 0.9f, -w * 0.7f, -w * 0.3f, -w * 0.8f, -w, -w * 0.7f, -w * 0.5f, -w * 0.55f, 0f, 0.05f, 0.1f, 0.12f, w, 0.45f, 0.45f };
+            float[] zs = { -w, -w, -w * 0.9f, -w * 0.7f, -w * 0.3f, -w * 0.8f, -w, -w * 0.7f, -w * 0.5f, -w * 0.55f, 0f, 0.05f, 0.1f, 0.12f, 0.14f, 0.16f, 0.16f };
             var md = new Md { twoComp = true };
             int ring = segments + 1, np = ts.Length;
             for (int i = 0; i < np; i++)

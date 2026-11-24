@@ -62,7 +62,12 @@ void RainbowThroatGlow_float(float2 UV, float Time, out float3 Color)
     }
     float rays = pow(saturate(0.5 + 0.5 * sin(ang * _ThroatParams.y + 1.3 * sin(ang * 3.0 + Time * _ThroatParams.z))), 6.0);
     c += PALE * rays * _ThroatParams.x * smoothstep(0.15, 0.35, r) * (1.0 - smoothstep(0.55, 0.95, r));
-    Color = c * _ThroatIntensity;
+    // round 4b: one seamless golden glow (display palette of RainbowPolish05.hlsl): white core, pale gold, gold, orange rim
+    float3 g = lerp(float3(255, 222, 130), float3(255, 178, 84), smoothstep(0.35, 0.7, r));
+    g = lerp(g, float3(247, 138, 80), smoothstep(0.7, 1.0, r));
+    g = lerp(g, float3(255, 190, 96), exp(-pow((r - 0.78) / 0.05, 2.0)) * 0.7);
+    g = lerp(g, float3(255, 250, 224), 1.0 - smoothstep(0.12, 0.42, r));
+    Color = RbDisp(g) * (1.0 + 0.9 * (1.0 - smoothstep(0.1, 0.5, r))) * _ThroatIntensity;
 }
 
 void RainbowThroatGlow_half(half2 UV, half Time, out half3 Color)

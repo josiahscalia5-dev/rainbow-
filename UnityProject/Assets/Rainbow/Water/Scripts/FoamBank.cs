@@ -235,7 +235,7 @@ namespace Rainbow.Screen05
                 }
             }
             // separate low clumps drifting on the open water beside the route (approved: px x 0-130 / y 1010-1120)
-            Clump(list, rng, -1, 14.45f, -2.95f, 0.62f, 0.42f, 34);
+            Clump(list, rng, -1, 14.2f, -2.85f, 0.7f, 0.42f, 60);
             for (int k = 0; k < 6; k++)
             {
                 int sd = (k & 1) == 0 ? 1 : -1;
@@ -302,12 +302,12 @@ namespace Rainbow.Screen05
             {
                 for (float b = 0.8f; b < 2.25f; b += 0.07f)                                    // rope
                 {
-                    float grow = SS(0.7f, 1.2f, b);
+                    float grow = SS(0.7f, 1.2f, b) + 0.35f * SS(1.5f, 2.1f, b);
                     for (int k = 0; k < 4; k++)
                     {
                         float r = rng.Range(0.03f, 0.085f) * (0.55f + 0.45f * grow);
                         float dl = 0.58f + 0.45f * b + rng.Range(-0.09f, 0.11f) * (0.6f + 0.6f * grow);
-                        AddWake(list, rng, side, dl, b + rng.Range(-0.05f, 0.05f), rng.Range(0.1f, 0.9f) * r + 0.05f * grow * rng.Next(), r, rng.Range(0.68f, 0.94f));
+                        AddWake(list, rng, side, dl, b + rng.Range(-0.05f, 0.05f), rng.Range(0.1f, 0.9f) * r + 0.05f * grow * rng.Next(), r, rng.Range(0.8f, 1f));
                     }
                 }
                 for (int k = 0; k < 150; k++)                                                   // suds beside his flanks
