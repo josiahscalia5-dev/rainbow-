@@ -27,6 +27,9 @@ Shader "Rainbow/Water/River"
         [NoScaleOffset] _RiverSheen ("Broad sheen (q, log distance)", 2D) = "gray" {}
         [NoScaleOffset] _WakeSheen ("Standing wake (dl, back)", 2D) = "black" {}
         [NoScaleOffset] _LaceTex ("Foam lace", 2D) = "black" {}
+        [NoScaleOffset] _StrandTex ("Splash strands", 2D) = "white" {}
+        _StrandLook ("Wake lather: thread half width, softness, tiles round him, tiles along", Vector) = (0.5, 0.12, 1.0, 0.75)
+        _SweepLook ("Pink wake sweeps: width, softness, light, lather on the pink", Vector) = (1, 1, 1, 0.7)
         _SheenLook ("Sheen strength, streak detail, wake streak detail, vignette compensation", Vector) = (0.85, 0.75, 0.5, 1)
         _LatherLook ("Wake lather: amount, web threshold at 0, at 1, opacity", Vector) = (1.1, 0.8, 0.1, 2.6)
     }
@@ -56,6 +59,7 @@ Shader "Rainbow/Water/River"
             float4 _GlintLook;
             float4 _SheenLook;
             float4 _LatherLook;
+            float4 _StrandLook, _SweepLook;
         CBUFFER_END
         #define RBW_HAS_LOOK
 

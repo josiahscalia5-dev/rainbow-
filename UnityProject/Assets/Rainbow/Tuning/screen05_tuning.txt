@@ -60,9 +60,6 @@ mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Len:f|1.3
 mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Shape:v0|0.3
 mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Shape:v1|1.9
 mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Shape:v2|0.95
-mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Web:v0|0.3
-mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Web:v1|0.64
-mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Web:v3|0.45
 
 # 2026-11-24 14:58 local, session da8aeec6: second fitter run of round 8 (83.9 / 70.1 -> 84.5 / 70.9)
 mat:Assets/Rainbow/Benny/Materials/Benny_Fluff.mat:_FurTint:v0|0.87846

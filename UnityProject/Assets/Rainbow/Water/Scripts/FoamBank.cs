@@ -337,13 +337,13 @@ namespace Rainbow.Screen05
                 for (float b = 0.6f; b < 2.3f; b += 0.07f)
                 {
                     float grow = SS(0.7f, 1.5f, b), taper = 1f - 0.55f * SS(1.7f, 2.3f, b);
-                    int n = 9;
+                    int n = 7;                                  // round 9 wake: soft overlapping clumps with a few small bubbles
                     float cl = ClusterNoise(b * 4f + 3f * side, side);
                     for (int k = 0; k < n; k++)
                     {
-                        float r = (k < 2 ? rng.Range(0.022f, 0.052f) * (0.6f + 0.6f * cl) : rng.Range(0.008f, 0.024f)) * (0.5f + 0.5f * grow) * taper;
+                        float r = (k < 2 ? rng.Range(0.034f, 0.075f) * (0.55f + 0.65f * cl) : rng.Range(0.010f, 0.026f)) * (0.5f + 0.5f * grow) * taper;
                         float dl = 0.6f + 0.48f * b + (rng.Next() + rng.Next() - 1f) * 0.22f * (0.5f + 0.5f * grow);
-                        AddWake(list, rng, side, dl, b + rng.Range(-0.05f, 0.05f), k < 2 ? -0.3f * r : 0.0f + 0.04f * grow * rng.Next(), r, rng.Range(0.86f, 1f));
+                        AddWake(list, rng, side, dl, b + rng.Range(-0.05f, 0.05f), k < 2 ? -0.45f * r : 0.0f + 0.04f * grow * rng.Next(), r, rng.Range(0.86f, 1f));
                     }
                 }
             }

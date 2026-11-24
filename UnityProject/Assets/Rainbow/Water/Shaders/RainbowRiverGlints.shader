@@ -126,9 +126,12 @@ Shader "Rainbow/Water/RiverGlints"
                 else
                 {
                     float ay = saturate(1.0 - y), ax = saturate(1.0 - x);
-                    float arm1 = saturate(1.2 - x / (0.14 * ay * ay + 0.004)) * step(y, 0.999);          // the long sliver along the flow
+                    // round 9: fuller slivers; never thinner than a pixel (fading instead), so the tips do not break into dots
+                    float wx = max(fwidth(i.uvk.x), 1e-4), wy = max(fwidth(i.uvk.y), 1e-4);
                     float ax2 = saturate(1.0 - x / 0.6);
-                    float arm2 = 0.6 * saturate(1.1 - y / (0.05 * ax2 * ax2 + 0.003)) * step(x, 0.6);   // a short faint cross
+                    float t1 = 0.21 * ay * ay + 0.002, t2 = 0.075 * ax2 * ax2 + 0.002;
+                    float arm1 = saturate(1.2 - x / max(t1, 0.8 * wx)) * saturate(t1 / (0.8 * wx)) * step(y, 0.999);       // the long sliver along the flow
+                    float arm2 = 0.6 * saturate(1.1 - y / max(t2, 0.8 * wy)) * saturate(t2 / (0.8 * wy)) * step(x, 0.6);   // a short faint cross
                     float r2 = x * x * 0.4 + y * y;
                     a = saturate(max(arm1, arm2) + exp(-r2 * 46.0) + 0.22 * exp(-r2 * 7.0) * ax * ay);
                 }
