@@ -148,9 +148,18 @@ namespace Rainbow.Screen05.EditorTools
             // rim so it no longer blooms into a white halo round Benny (shader defaults 0.35 / (1, 0.82, 0.93)).
             if (m.HasProperty("_FuzzStrength")) m.SetFloat("_FuzzStrength", 0.15f);
             if (m.HasProperty("_FuzzColor")) m.SetColor("_FuzzColor", new Color(1f, 0.62f, 0.86f, 1f));
+            // (splash6 2026-11-24) approved: his fur darkens to deep magenta where he sits in the water (y 1168-1200 was
+            // 30-90 luma too bright), with no hard edge (SplashWake writes the water height as _RainbowBennyWater)
+            if (m.HasProperty("_UnderShade")) m.SetFloat("_UnderShade", UnderShade);
+            if (m.HasProperty("_UnderHeight")) m.SetFloat("_UnderHeight", 0.28f);
+            if (m.HasProperty("_UnderColor")) m.SetColor("_UnderColor", new Color(0.62f, 0.36f, 0.78f, 1f));
+            if (m.HasProperty("_WaterBand")) m.SetFloat("_WaterBand", WaterBand);
             EditorUtility.SetDirty(m);
             return m;
         }
+
+        /// <summary>(splash6) underside / waterline shade strengths on Benny_Fluff (0 = off).</summary>
+        public const float UnderShade = 0.8f, WaterBand = 0.35f;
 
         static Material FlatFluff(string name, Color c)
         {

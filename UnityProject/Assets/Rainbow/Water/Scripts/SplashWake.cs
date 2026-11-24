@@ -42,7 +42,7 @@ namespace Rainbow.Screen05
 
         [Header("Fans (riderSplash.ts createRiderSplash05, high quality)")]
         [Tooltip("Splash strands per side (riderSplash.ts high = 44 thin ropes; the approved shows fewer, splashier strands)")]
-        [Range(0, 64)] public int ropesPerSide = 22;
+        [Range(0, 64)] public int ropesPerSide = 28;   // (splash6: 22 -> 28, the approved starburst is a dense web of streams)
         [Tooltip("Crown droplet jets per side (water4 2026-11-24: 40 -> 24, the dense crown read as solid white wings on his flanks)")]
         [Range(0, 64)] public int jetsPerSide = 24;
         [Tooltip("Bubbly suds pads per side on his flanks (riderSplash.ts high = 16 froth pads; fewer, bigger ones read as soap bubbles; water4: 11 -> 8)")]
@@ -71,6 +71,7 @@ namespace Rainbow.Screen05
 
         static readonly int BennyId = Shader.PropertyToID("_RainbowBenny");
         static readonly int SplashId = Shader.PropertyToID("_RainbowSplash");
+        static readonly int BennyWaterId = Shader.PropertyToID("_RainbowBennyWater");
         static readonly int StateId = Shader.PropertyToID("_SplashState");
         static readonly int RiverId = Shader.PropertyToID("_SplashRiver");
         static readonly int River2Id = Shader.PropertyToID("_SplashRiver2");
@@ -132,6 +133,7 @@ namespace Rainbow.Screen05
         {
             Shader.SetGlobalVector(BennyId, Vector4.zero);
             Shader.SetGlobalVector(SplashId, Vector4.zero);
+            Shader.SetGlobalVector(BennyWaterId, Vector4.zero);
             dropCount = 0;
             splashAge = 99f;
         }
@@ -188,6 +190,8 @@ namespace Rainbow.Screen05
             // w = waterline radius (> 0 = Benny present: the river keeps its near-Benny band layout even while he is
             // airborne), z = wake strength (fades the contact line / foam rim)
             Shader.SetGlobalVector(BennyId, new Vector4(c.z, c.x, wake, rw));
+            // (splash6) water height under him for his fur's underside / waterline shade (Rainbow/Benny/Fluff); w = present
+            Shader.SetGlobalVector(BennyWaterId, new Vector4(c.y, contact, 0f, 1f));
             Shader.SetGlobalVector(SplashId, splashAge < SplashLife
                 ? new Vector4(splashPos.x, splashPos.y, splashAge, splashStrength)
                 : Vector4.zero);

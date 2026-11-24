@@ -35,6 +35,7 @@ float4 _W4LookD;   // live deltas on _W4Look (material property, RainbowRiver.sh
 #define _W4Look float4(0.75, 0.3, 0.55, 0.5)
 #endif
 float4 _W4Dbg;
+float4 _S6Arc;    // (splash6) live deltas (0 in the game): x broad-band mix, y band half width (periods)
 float4 _R5Arc;    // (river5) live deltas: x arc period, y arc glow gain, z arc line gain, w arc phase (m)
 float4 _R5Sw;     // (river5) live deltas: x wake sweep lighten, y every pink band lighten
 float4 _R5Tune;   // (river5) live deltas of AgentScripts/screen05_river_tune.cs (0 in the game): x sweep offset, y sweep width, z near base revert, w near lift   // x = brush / ripple streak cores, y = ripple normal, z = specular glint, w = env reflection (gain deltas)
@@ -173,6 +174,12 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float ca = frac(pha + 0.5) - 0.5;
     float segN = smoothstep(0.1, 0.5, RBW_VNoise(float2(dlW * 3.1 + 9.0, floor(pha + 0.5) * 3.7)));
     float glowA = ca > 0.0 ? exp(-ca * 4.2) : exp(ca * 12.0);
+    // (splash6 2026-11-24) approved: BROAD luminous cyan bands bowed over his track, full of vertical satin streaks along
+    // the flow (not thin lines on dark azure): a wide soft band per period, broken by streaks stretched along the current
+    float bwA = max(0.17 + _S6Arc.y, 0.04);
+    float satA = smoothstep(0.3, 0.75, RBW_VNoise(float2(dlW * 11.0 + 3.0, bk * 0.9 + floor(pha + 0.5) * 1.7)));
+    float broadA = exp(-ca * ca / (bwA * bwA)) * (0.65 + 0.55 * satA);
+    glowA = lerp(glowA, broadA, saturate(0.7 + _S6Arc.x));
     float lineA = exp(-ca * ca * 170.0) * (0.35 + 0.65 * segN);
     float ampA = smoothstep(1.2, 1.55, bk);
     // (river5 variants: the brighter azure base CMID..CBRIGHT scored 0.3 lower, kept the deep base; _R5Tune.z = live mix)

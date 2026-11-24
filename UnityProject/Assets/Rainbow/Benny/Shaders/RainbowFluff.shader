@@ -14,6 +14,10 @@ Shader "Rainbow/Benny/Fluff"
         _FuzzStrength ("Fuzz Rim Strength", Range(0, 2)) = 0.35
         _NoiseScale ("Fur Noise Scale", Float) = 70
         _NoiseStrength ("Fur Noise Strength", Range(0, 0.5)) = 0.07
+        _UnderShade ("Underside shade where he sits in the water (splash6, 0 = off)", Range(0, 1)) = 0
+        _UnderHeight ("Underside shade height above the water (units)", Float) = 0.28
+        _UnderColor ("Underside shade multiply colour", Color) = (0.62, 0.36, 0.78, 1)
+        _WaterBand ("See-through azure waterline band (0 = off)", Range(0, 1)) = 0
     }
 
     SubShader
@@ -37,7 +41,13 @@ Shader "Rainbow/Benny/Fluff"
             half _FuzzStrength;
             float _NoiseScale;
             half _NoiseStrength;
+            half _UnderShade;
+            float _UnderHeight;
+            half4 _UnderColor;
+            half _WaterBand;
         CBUFFER_END
+        // (splash6) set by SplashWake every frame: x = water height under Benny, y = contact 0..1, w = 1 when present
+        float4 _RainbowBennyWater;
         ENDHLSL
 
         Pass
@@ -106,6 +116,14 @@ Shader "Rainbow/Benny/Fluff"
                 RainbowFluff_float(tex.rgb, _BakeGain, N, V, mainLight.direction, mainLight.color,
                     mainLight.shadowAttenuation * mainLight.distanceAttenuation, ambient, _LightInfluence, _Wrap,
                     _FuzzColor.rgb, _FuzzPower, _FuzzStrength, i.positionOS * _NoiseScale, _NoiseStrength, col);
+                // (splash6) he sits IN the water: the fur darkens toward the waterline (soft, no hard edge) and a thin
+                // see-through azure band right at the water
+                float wOn = _RainbowBennyWater.w * saturate(_RainbowBennyWater.y);
+                float hW = i.positionWS.y - _RainbowBennyWater.x;
+                float under = (1.0 - smoothstep(-0.02, max(_UnderHeight, 0.01), hW)) * wOn;
+                col = lerp(col, col * _UnderColor.rgb, under * _UnderShade);
+                float band = (1.0 - smoothstep(0.0, 0.06, abs(hW - 0.015))) * wOn;
+                col = lerp(col, float3(0.08, 0.42, 0.82), band * _WaterBand);
                 col = MixFog(col, i.fogFactor);
                 return half4(col, 1.0);
             }

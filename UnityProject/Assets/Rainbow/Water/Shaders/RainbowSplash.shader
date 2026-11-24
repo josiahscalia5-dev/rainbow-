@@ -25,6 +25,10 @@ Shader "Rainbow/Water/Splash"
         _JetAlpha ("Crown droplet opacity (river5)", Float) = 1.0
         _StrandBack ("Extra turn of the strand roots toward his back only (river5, rad)", Float) = 0.0
         _RootBack ("Roots moved round toward straight back (rad, water4: the approved spray pours off his lower back, not his flanks)", Float) = 0.0
+        _Radial ("Starburst strand layout (splash6: 0 = old flank V, 1 = rooted along the contact line, radiating)", Range(0, 1)) = 0.0
+        _RayFan ("Starburst: outward turn per rad of root angle", Float) = 0.6
+        _RayLong ("Starburst: extra length of the long thin rays", Float) = 0.35
+        _RayRoot ("Starburst: root radius scale (1 = just outside the footprint)", Float) = 0.97
     }
 
     SubShader
@@ -61,6 +65,10 @@ Shader "Rainbow/Water/Splash"
                 float _RootBack;
                 float _JetAlpha;
                 float _StrandBack;
+                float _Radial;
+                float _RayFan;
+                float _RayLong;
+                float _RayRoot;
             CBUFFER_END
 
             // shared animation clock (Rainbow.Screen05.Screen05Clock; game time, reset by the test hold)
@@ -113,7 +121,17 @@ Shader "Rainbow/Water/Splash"
                 float phi = lerp(0.3, 0.04, a) + (SPL_Hs(seed * 5.7) - 0.5) * 0.16 + 0.22 * u * u
                           + (SPL_Hs(seed * 6.1) - 0.5) * 0.4 * u                   // each strand curls its own way
                           + _Spread * (0.6 + 0.8 * u * u) * (0.7 + 0.6 * SPL_Hs(seed * 8.3));   // (water4) wider fan
-                float2 root = float2(sin(thR), cos(thR)) * SPL_RootR(thR, R) * (1.03 + 0.08 * SPL_Hs(seed * 2.3));
+                // (splash6 2026-11-24) STARBURST: the approved strands are rooted ALONG his bottom contact line (lower-left /
+                // lower-right quarters of the footprint) and radiate down-outward like spokes (outer roots turn out most,
+                // the inner ones run almost straight back), with a few long thin rays out toward the bottom corners
+                float thN = lerp(1.2, 0.12, a) + (SPL_Hs(seed * 3.1) - 0.5) * 0.14;
+                float lrN = step(0.7, SPL_Hs(seed * 4.9));
+                float phiN = thN * (_RayFan + 0.25 * lrN) + (SPL_Hs(seed * 5.7) - 0.5) * 0.1 + 0.1 * u * u
+                           + (SPL_Hs(seed * 6.1) - 0.5) * 0.25 * u;
+                thR = lerp(thR, thN, _Radial);
+                phi = lerp(phi, phiN, _Radial);
+                float2 root = float2(sin(thR), cos(thR)) * SPL_RootR(thR, R)
+                            * (lerp(1.03, _RayRoot, _Radial) + 0.08 * SPL_Hs(seed * 2.3));
                 float2 q = root + float2(sin(phi), cos(phi)) * u * len
                          + float2(cos(phi), -sin(phi)) * (0.03 * u * sin(u * 8.0 + seed * 40.0));   // and wavers a little
                 float y = 0.03 + 0.05 * SPL_Hs(seed * 9.1) * sin(3.14159 * min(u * 1.6, 1.0)) * (1.0 - u);
@@ -161,10 +179,12 @@ Shader "Rainbow/Water/Splash"
                     // fragment shader. Outer strands (a = 0) are the longest; the inner ones end ~1.9 u behind him.
                     len = _Len * lerp(1.1, 0.85, a) * (0.65 + 0.35 * SPL_Hs(seed * 7.3)) * (0.92 + 0.08 * sin(t * 2.3 + seed * 20.0))
                         * (0.6 + 0.4 * str);
+                    float lrV = step(0.7, SPL_Hs(seed * 4.9)) * _Radial;   // (splash6) long thin rays
+                    len *= 1.0 + _RayLong * lrV;
                     p = SPL_Rope(u, side, a, seed, len, R);
                     tg = SPL_Rope(min(u + 0.04, 1.0), side, a, seed, len, R) - SPL_Rope(max(u - 0.04, 0.0), side, a, seed, len, R);
                     // wide enough to hold the blobs and the droplets beside them (the visible strand is carved by noise)
-                    w = lerp(0.065, 0.022, pow(u, 0.6)) * (0.6 + 0.6 * SPL_Hs(seed * 19.1)) * _RopeWidth;
+                    w = lerp(0.065, 0.022, pow(u, 0.6)) * (0.6 + 0.6 * SPL_Hs(seed * 19.1)) * _RopeWidth * (1.0 - 0.35 * lrV);
                 }
                 else if (type < 1.5)
                 {
