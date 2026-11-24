@@ -68,8 +68,8 @@ Material:
     - _RiverLightDir: {r: 0.26387972, g: 0.879599, b: -0.39581954, a: 0}
     - _SheenLook: {r: 1.15, g: 0.64, b: 0.66131, a: 0.77411}
     - _SilkLook: {r: 0.06, g: 0.12, b: 0.35, a: 0.175}
-    - _StrandLook: {r: 0.5, g: 0.12, b: 1, a: 0.75}
-    - _SweepLook: {r: 1, g: 1, b: 1, a: 0.7}
+    - _StrandLook: {r: 0.3, g: 0.1, b: 2, a: 1.5}
+    - _SweepLook: {r: 1, g: 1, b: 1, a: 0.96}
     - _W4Band: {r: 0.95, g: 0.65, b: 0.5, a: 0.35}
     - _W4Look: {r: 0.9, g: 0.5, b: 0.5, a: 0.5}
   m_BuildTextureStacks: []

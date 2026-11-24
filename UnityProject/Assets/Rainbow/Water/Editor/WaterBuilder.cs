@@ -123,8 +123,8 @@ namespace Rainbow.Screen05.EditorTools
             mat.SetVector("_LatherLook", new Vector4(1.1f, 0.8f, 0.1f, 2.6f));
             mat.SetTexture("_LaceTex", AssetDatabase.LoadAssetAtPath<Texture2D>(WaterTextureFactory.LacePath));
             mat.SetTexture("_StrandTex", AssetDatabase.LoadAssetAtPath<Texture2D>(WaterTextureFactory.StrandPath));
-            mat.SetVector("_StrandLook", new Vector4(0.5f, 0.12f, 1.0f, 0.75f));
-            mat.SetVector("_SweepLook", new Vector4(1f, 1f, 1f, 0.7f));
+            mat.SetVector("_StrandLook", new Vector4(0.3f, 0.1f, 2f, 1.5f));
+            mat.SetVector("_SweepLook", new Vector4(1f, 1f, 1f, 0.96f));
             mat.SetVector("_W4Look", RiverLook); mat.SetFloat("_W4Edge", 0.6f); mat.SetVector("_W4Band", new Vector4(0.95f, 0.65f, 0.5f, 0.35f));
             EditorUtility.SetDirty(mat);
 
@@ -275,9 +275,9 @@ namespace Rainbow.Screen05.EditorTools
             lace.SetFloat("_Alpha", 1f);
             lace.SetFloat("_Bright", 1f);
             lace.SetVector("_Shape", new Vector4(0.3f, 1.9f, 0.95f, 0.1f));
-            lace.SetVector("_Thread", new Vector4(0.46f, 0.13f, 0.12f, 0.16f));
-            lace.SetVector("_Reach", new Vector4(1.15f, 0.5f, 0.56f, 1f));
-            lace.SetVector("_Tile", new Vector4(2.1f, 1.25f, 2.4f, 1f));
+            lace.SetVector("_Thread", new Vector4(0.30f, 0.085f, 0.1f, 0.12f));
+            lace.SetVector("_Reach", new Vector4(1.15f, 0.45f, 0.56f, 1f));
+            lace.SetVector("_Tile", new Vector4(2.7f, 1.5f, 2.4f, 1f));
             EditorUtility.SetDirty(lace);
 
             // (splash round 2026-11-23) make sure the fan shader is imported before it is looked up by name
