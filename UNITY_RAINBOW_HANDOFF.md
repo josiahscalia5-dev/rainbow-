@@ -1,18 +1,20 @@
 # Rainbow Unity — handoff (latest verified state)
 
-Last verified: **2026-11-24 10:55 UTC** (05:55 local), Claude session ded4464c on the user's laptop. Unity is OPEN; Round 4 stage G1 is running.
+Last verified: **2026-11-24 11:50 UTC** (06:50 local), Claude session d7b2bd77 (new account) on the user's laptop. Unity is OPEN; Round 4 stage R4 is running.
 Read this first in any new Claude account or session. **This is an existing project — never start over.**
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
 ## NOW - read this first (concise; rewritten after every finished step; the DETAILED LOG below is history)
-Updated 2026-11-24 05:55 local (session ded4464c). Cross-account rules: CLAUDE.md "PERMANENT RULE: cross-account continuation".
-- RUNNING (since 06:02 local): ROUND 4 = ONE strong round (user 05:30: visual ~58 -> toward 75). Workflow run `wf_3142dea6-d2c`
-  = stage R2 TUNNEL (rings, paddles, near frame, walls) | RIVER (S-curve, bands), then stage R3 BENNY (water contact). Exact args:
-  `staging/shared/round3-visual-R2R3-args.json`. Journal:
-  `%USERPROFILE%\.claude\projects\C--Users-josia--unity\ded4464c-608a-4332-9b1b-b33e5222d645\subagents\workflows\wf_3142dea6-d2c\journal.jsonl`
-- DONE 06:00: stage G1 (run `wf_625572df-94a`): left foam carpet -> narrow rope of big puffs, ~50 iridescent bubbles; combined
-  still `work/20261124_055442_bubbles_final*` = 57.8 / 36.3 (flat vs 58.0, kept for the visibly closer foam + bubbles; experimental).
+Updated 2026-11-24 06:50 local (session d7b2bd77, new account). Cross-account rules: CLAUDE.md "PERMANENT RULE: cross-account continuation".
+- RUNNING (since 06:48 local): ROUND 4 relaunch with exactly TWO specialist agents (user: "at most two specialist agents"; visual
+  ~58 -> toward 75). Workflow run `wf_ab41a260-945`, stage R4 = TUNNEL (gold rings, paddles as rounded D-trays, near frame, reflective
+  purple walls) | WATER4 (S-shaped river incl. the far river, then Benny's water contact / splash). Script
+  `staging/shared/round3-visual.workflow.js` (stage R4), exact args `staging/shared/round4-relaunch-args.json`. Journal:
+  `%USERPROFILE%\.claude\projects\C--Users-josia--unity\d7b2bd77-428c-4357-b79e-8c8b988a8580\subagents\workflows\wf_ab41a260-945\journal.jsonl`
+- The first R4 run `wf_3142dea6-d2c` (06:07-06:16) died at the old account's limit BEFORE any project edit (measuring only; its helper
+  tools are in `staging/round4-recovery/`). Unity was reopened at 06:26 (scene clean, not dirty).
+- Baseline of this round: stage G1's still `work/20261124_055442_bubbles_final*` = 57.8 / 36.3 (experimental; foam rope + bubbles).
 - VALIDATED VERSIONS (safe fallbacks; every autosave commit after the newest one may hold EXPERIMENTAL work):
   | git tag | commit | visual / layout | what | evidence |
   |---|---|---|---|---|
@@ -21,17 +23,28 @@ Updated 2026-11-24 05:55 local (session ded4464c). Cross-account rules: CLAUDE.m
 - EXPERIMENTAL NOW: G1's kept edits (FoamBank / RainbowFoamBank / DrumLayout05 / DrumMeshes05 / BubbleField / RainbowBubble) and the
   R2 / R3 lanes' edits in progress - none validated until the ROUND4_FINAL coordinator cycle.
   Lane backups of every file they edited: `UnityProject/Recordings/Screen05/work/backup_round3v/<area>/`.
-- NEXT STEP: when run `wf_3142dea6-d2c` ends: coordinator integration `-Tag ROUND4_FINAL -Areas all -Series` +
+- NEXT STEP: when run `wf_ab41a260-945` ends: coordinator integration `-Tag ROUND4_FINAL -Areas all -Series` +
   `AgentScripts/screen05_playtest_check.cs` + a 12 s recording; if visual > 58.0 and the picture is closer, tag validated/r4-final-<visual>;
   send the user ONE side-by-side + both scores. No Screen 06 until the user approves Screen 05.
-- IF THE RUN DIED (account switch): read its journal; lanes with a "result" go into `skip`; write `notes.<lane>` for the interrupted lane
-  (its newest files + work stills); relaunch with `staging/shared/round3-visual-R2R3-args.json` (+ skip / notes; if R2 finished,
-  `stages: ["R3"]` and paste R2's results into `context`).
-- WAITING ON THE USER: (a) permission rules v2 in `tools/claude-permissions/` - the user applies them (strict, or strict + test runners);
-  (b) the GitHub repo is PUBLIC although the user called it private - only the user can change that on GitHub.
+- IF THE RUN DIED (account switch): read its journal; a lane with a "result" goes into `skip`; write `notes.<lane>` for the interrupted
+  lane (its newest files, work stills, backups in `work/backup_round3v/<area>/`); relaunch the same script with
+  `staging/shared/round4-relaunch-args.json` (+ skip / notes).
+- BLENDER (user question, 06:40 local): NOT installed - only leftover Blender 5.2 settings from October in `%APPDATA%\Blender Foundation`,
+  no blender.exe anywhere. C: 7.1 GB free, RAM ~0.7 GB free with Unity open. Nothing was installed. Recommendation to the user: not now
+  (the tunnel lane rebuilds the paddles as rounded D-trays in Unity code this round); reconsider only if the paddle shape is still the
+  weak spot after Round 4, and only with the user's approval.
+- WAITING ON THE USER: (a) Blender yes / no (above); (b) permission rules v2 in `tools/claude-permissions/` - the user applies them
+  (strict, or strict + test runners); (c) the GitHub repo is PUBLIC although the user called it private - only the user can change that.
 <!-- NEXT-TASK:END -->
 
 ## DETAILED LOG (older entries, newest first; the NOW block above wins where they disagree)
+
+**UPDATE 2026-11-24 06:50 local (moved from NOW):** DONE 06:00: stage G1 (run `wf_625572df-94a`): left foam carpet -> narrow rope of
+big puffs, ~50 iridescent bubbles; combined still `work/20261124_055442_bubbles_final*` = 57.8 / 36.3 (flat vs 58.0, kept for the visibly
+closer foam + bubbles; experimental). Then run `wf_3142dea6-d2c` (stages R2 TUNNEL | RIVER -> R3 BENNY, args
+`staging/shared/round3-visual-R2R3-args.json`, session ded4464c) started 06:07 and died 06:16 at the old account's 5-hour limit; both lanes
+had only measured (no project edits). The new account (session d7b2bd77) reopened Unity (06:26; the CLI first reported the "Recovering
+Scene Backups" dialog, then the Editor came up ready with Screen05 loaded, not dirty) and relaunched Round 4 as stage R4 with two lanes.
 
 **UPDATE 2026-11-24 10:20 UTC (05:20 local) - ROUND 3 STAGE G1 IS RUNNING (Workflow run `wf_625572df-94a`, session
 `ded4464c-608a-4332-9b1b-b33e5222d645`, at most 2 agents):** GEOMETRY (lower tunnel walls meet narrow, tall foam banks; ring

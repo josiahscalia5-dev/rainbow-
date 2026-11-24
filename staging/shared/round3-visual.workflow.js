@@ -14,6 +14,9 @@
 // newest files + work stills in args.notes.<lane>, and relaunch the same stage. Exact args used: staging/shared/round3-visual-args.json
 // 2026-11-24 (coordinator): + stage 'G1' = GEOMETRY (lower tunnel walls meet narrow tall foam banks) | BUBBLES, and stage
 // 'G2' = BENNY (water contact / splash) | WATER (natural S flow; foam banks now belong to the geometry lane's result).
+// 2026-11-24 06:45 local (new account after a credit limit; user: "use at most two specialist agents"): + stage 'R4' = the ROUND 4
+// relaunch with exactly TWO agents: TUNNEL (rings / paddles / reflective walls) | WATER4 (S-shaped river + Benny's water contact; one lane
+// owns all of RainbowRiver.hlsl). Exact args: staging/shared/round4-relaunch-args.json.
 export const meta = {
   name: 'screen05-round3-visual',
   description: 'Screen 05 visual stages: A tunnel|water, B benny|bubbles, G1 lower-wall geometry + foam|bubbles, G2 benny|S-water',
@@ -24,12 +27,13 @@ export const meta = {
     { title: 'Stage G2', detail: 'BENNY (natural contact with the water) | WATER (natural S-shaped flow on the new geometry)' },
     { title: 'Stage R2', detail: 'ROUND 4: TUNNEL (rings, paddles, reflective purple walls) | RIVER (stronger S-curve, river shape)' },
     { title: 'Stage R3', detail: 'ROUND 4: BENNY (natural contact with the water)' },
+    { title: 'Stage R4', detail: 'ROUND 4 relaunch (2 agents): TUNNEL (rings, paddles, reflective purple walls) | WATER4 (S-shaped river + Benny water contact)' },
   ],
 }
 
 // args.stages = ['R2', 'R3'] runs several stages one after the other in ONE run (each stage's lanes in parallel, max 2).
-const STAGES = (args && Array.isArray(args.stages)) ? args.stages.filter(s => ['A', 'B', 'G1', 'G2', 'R2', 'R3'].includes(s)) : null
-const STAGE = (args && ['A', 'B', 'G1', 'G2', 'R2', 'R3'].includes(args.stage)) ? args.stage : 'A'
+const STAGES = (args && Array.isArray(args.stages)) ? args.stages.filter(s => ['A', 'B', 'G1', 'G2', 'R2', 'R3', 'R4'].includes(s)) : null
+const STAGE = (args && ['A', 'B', 'G1', 'G2', 'R2', 'R3', 'R4'].includes(args.stage)) ? args.stage : 'A'
 const SKIP = (args && Array.isArray(args.skip)) ? args.skip : []
 const NOTES = (args && args.notes && typeof args.notes === 'object') ? args.notes : {}
 const BASE = (args && args.baseline) || {}
@@ -292,6 +296,36 @@ bright specular highlight and a small secondary glint, faint reflections. None o
 bubbles. Measure the approved bubble positions and sizes (zoomed crops of both sides) and match count, size distribution, placement and look.
 They must stay stable and natural while Benny swims, steers and jumps (s = 10 / 20 stills and -EvalAtHold AgentScripts/screen05_bubbles_steerjump.cs;
 compare only S = 14.00 stills).`,
+
+  water4: `
+YOUR AREA (ROUND 4 relaunch: ONE lane for the whole water surface, because the user allows at most two specialist agents):
+(A) THE RIVER - a STRONG S-CURVE and the right river shape, then (B) BENNY'S NATURAL CONTACT WITH THE WATER + SPLASH, built on (A).
+Tag prefix: water4. Cycle areas: water,splash. Do (A) first (the bigger area of the picture), then (B). You may use up to ~8 cycles in
+total (test many looks per cycle with -EvalAtHold live variants).
+Owns: (A) Shared/RiverPath.cs (Meander / course - keep steering ClampLateral, coins (CoinTrail places them at 0.63 x the meander) and
+bubbles working), Water/Scripts/RiverSurface.cs (keep HeightAt identical to the shader's vertex wave), RiverMeshGenerator.cs,
+Water/Shaders/RainbowRiver.hlsl (the WHOLE file, including the "Benny's wake at the waterline" section), RainbowWaterCommon.hlsl,
+RainbowRiver.shader, WaterBuilder.BuildRiver. The FOAM BANKS were reworked by the stage-G1 GEOMETRY lane: build on its result; if the S
+needs the bank waterlines to follow, change FoamBank.BankEdges AND RBW_BankEdges (RainbowFoamBank.hlsl) line-by-line identically and keep
+the foam look. (B) Benny's ride numbers (Benny/Scripts/BennyController.cs BodyRadius / RootRide / rideLift / ridePitchRad - swim / steer /
+jump must keep working exactly), the splash (Water/Scripts/SplashWake.cs, Water/Shaders/RainbowSplash.shader, RainbowSpray.*,
+WaterBuilder.PrepareSprayMaterial).
+Do NOT touch the camera, walls, rings, paddles, the near frame, bubbles, the coins' look, HUD (the TUNNEL lane works in parallel on the
+environment files). Benny's own look (round pink fluffy body, purple-and-white striped knitted beanie, purple pompom, yellow star) stays
+exactly as it is; Benny's position at s = 14 and the camera must not change.
+(A) What to deliver: approved = the open water is a narrowing ribbon that winds in a clear, strong S from Benny to the vanishing point
+(bends at mid distance swing left and right by roughly a third of the visible floor width), with broad glossy pink / magenta satin bands
+that follow the bends and cross the stream, thin white flow lines and sparkles along the current, the coins sitting on the curve (target
+coin centres in the target sheet). Unity = a wide, fairly straight river whose bands mostly run along the edges. Measure the approved
+river centreline and both waterlines row by row (y 480-1100), project Unity's (RiverPath / BankEdges with the hold camera), and reshape
+the course / bands to land on them.
+(B) What to deliver: Benny must look naturally supported by the water. Approved: his round fluffy bottom sits IN the water - the surface
+meets the fur in a soft waterline with a slight bulge / ripple ring and a soft see-into-the-water tint of the submerged part (no black
+shadow); bright white spray droplets and bubbly foam fan backwards from both sides of his lower body toward the bottom corners (thin
+streams of droplets, not solid straight streaks); small bubbles around him; a soft V wake behind. Unity now: a dark navy patch under /
+behind him, two straight white streak fans and a flat-cut bottom. Splash mapping for the current camera: water points 0 / 0.6 / 1.0 / 1.5 /
+2.0 m behind Benny's centre project to y 1104 / 1160 / 1203 / 1265 / 1339. Check steering and jumping (-EvalAtHold
+AgentScripts/screen05_splash_steerjump.cs): the contact follows him, fades while airborne and makes a landing splash.`,
 }
 
 const IMPL_SCHEMA = {
@@ -318,8 +352,8 @@ const IMPL_SCHEMA = {
   required: ['area', 'status', 'scores_before', 'scores_after', 'files_changed', 'changes', 'final_cycle_exit', 'final_still', 'final_sbs', 'gameplay_check', 'improved', 'still_different', 'notes_for_next_agents'],
 }
 
-const PAIRS = { A: ['tunnel', 'water'], B: ['benny', 'bubbles'], G1: ['geometry', 'bubbles'], G2: ['benny', 'water'], R2: ['tunnel', 'river'], R3: ['benny'] }
-const WHAT = { geometry: 'GEOMETRY (lower walls / foam banks / wall chord)', tunnel: 'TUNNEL (walls / gold rings / paddles / throat)', water: 'WATER (river bands / mesh; in stage G2 NOT the foam banks)', river: 'RIVER (S-curve course, band layout, coins on the curve)', benny: "BENNY (water contact / splash)", bubbles: 'BUBBLES (floating iridescent bubbles)' }
+const PAIRS = { A: ['tunnel', 'water'], B: ['benny', 'bubbles'], G1: ['geometry', 'bubbles'], G2: ['benny', 'water'], R2: ['tunnel', 'river'], R3: ['benny'], R4: ['tunnel', 'water4'] }
+const WHAT = { geometry: 'GEOMETRY (lower walls / foam banks / wall chord)', tunnel: 'TUNNEL (walls / gold rings / paddles / throat)', water: 'WATER (river bands / mesh; in stage G2 NOT the foam banks)', river: 'RIVER (S-curve course, band layout, coins on the curve)', benny: "BENNY (water contact / splash)", bubbles: 'BUBBLES (floating iridescent bubbles)', water4: "WATER4 (S-shaped river course + bands, then Benny's water contact / splash)" }
 
 function lane(key, other, phaseName) {
   if (SKIP.includes(key)) {
