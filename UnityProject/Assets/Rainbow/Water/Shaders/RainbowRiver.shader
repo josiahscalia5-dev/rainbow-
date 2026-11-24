@@ -24,6 +24,9 @@ Shader "Rainbow/Water/River"
         [NoScaleOffset] _RiverRamp ("Colour ramp (q, silk value)", 2D) = "white" {}
         _SilkLook ("Edge streakiness, edge drift, ripple normal, ripple emboss", Vector) = (0.3, 0.25, 0.35, 0.3)
         _GlintLook ("Glint mix, glint glow, -, -", Vector) = (0.75, 0.9, 0, 0)
+        [NoScaleOffset] _RiverSheen ("Broad sheen (q, log distance)", 2D) = "gray" {}
+        [NoScaleOffset] _WakeSheen ("Standing wake (dl, back)", 2D) = "black" {}
+        _SheenLook ("Sheen strength, streak detail, wake streak detail, vignette compensation", Vector) = (0.85, 0.75, 0.5, 1)
     }
 
     SubShader
@@ -49,6 +52,7 @@ Shader "Rainbow/Water/River"
             float4 _W4Band;
             float4 _SilkLook;
             float4 _GlintLook;
+            float4 _SheenLook;
         CBUFFER_END
         #define RBW_HAS_LOOK
 
@@ -142,6 +146,10 @@ Shader "Rainbow/Water/River"
                 // (green and blue both well above red), never the pink currents, white foam lines or glints.
                 float cyanK = saturate((min(outCol.g, outCol.b) - outCol.r) * 3.0) * saturate(1.5 - max(outCol.r, 0.0) * 1.5) * (1.0 - _W4Band.z * smoothstep(0.62, 0.95, outCol.g));
                 outCol = lerp(outCol, outCol * _RiverGrade.rgb, cyanK * _RiverGrade.a);
+                // round 8: the scene vignette would dim the measured water colours (the approved water is as bright at the edges)
+                float2 vd = abs(i.positionCS.xy / _ScaledScreenParams.xy - 0.5) * 0.57;
+                float vf = saturate(1.0 - dot(vd, vd));
+                outCol /= lerp(1.0, max(vf * vf, 0.6), _SheenLook.w);
                 outCol = MixFog(outCol, i.fogFactor);
                 return half4(outCol, 1.0);
             }

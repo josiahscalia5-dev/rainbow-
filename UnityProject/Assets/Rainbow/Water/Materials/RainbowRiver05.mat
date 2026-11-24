@@ -31,8 +31,16 @@ Material:
         m_Texture: {fileID: 2800000, guid: abc835ef3b2de1c468c2f1a5642a3b0c, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RiverSheen:
+        m_Texture: {fileID: 2800000, guid: 72b2d33192cd04d4688bda47ee9139f8, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SilkTex:
         m_Texture: {fileID: 2800000, guid: dc8bb9543a75f764085b95c5b40b8d47, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WakeSheen:
+        m_Texture: {fileID: 2800000, guid: c4ebd4c7abf5561469744a8487adeac4, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -46,9 +54,10 @@ Material:
     - _W4Edge: 0.6
     - _WaveAmp: 0.1
     m_Colors:
-    - _GlintLook: {r: 0.7, g: 0.35, b: 0.1, a: 0}
+    - _GlintLook: {r: 0.7, g: 0.35, b: 0, a: 0}
     - _RiverGrade: {r: 1.12754, g: 0.72131, b: 0.95675, a: 0}
     - _RiverLightDir: {r: 0.26387972, g: 0.879599, b: -0.39581954, a: 0}
+    - _SheenLook: {r: 0.85, g: 0.75, b: 0.5, a: 1}
     - _SilkLook: {r: 0.16, g: 0.12, b: 0.35, a: 0.2}
     - _W4Band: {r: 0.95, g: 0.65, b: 0.5, a: 0.35}
     - _W4Look: {r: 0.9, g: 0.5, b: 0.5, a: 0.5}

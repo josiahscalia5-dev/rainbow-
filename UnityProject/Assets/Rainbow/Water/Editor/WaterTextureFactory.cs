@@ -186,6 +186,8 @@ namespace Rainbow.Screen05.EditorTools
         }
 
         const int RW = 96, RZ = 16;
+        /// <summary>Display colours of the last ramp made (columns q, rows), for WaterSheenFactory.</summary>
+        public static Vector3[,] LastDisplayRamp;
 
         /// <summary>Colour statistics of the approved water: for every q column the colours at 16 quantiles of brightness, two depth zones.</summary>
         public static string MakeRamp(string approvedPath)
@@ -289,6 +291,7 @@ namespace Rainbow.Screen05.EditorTools
                     for (int k = -3; k <= 3; k++) { float w = Mathf.Exp(-k * k / 4.5f); acc += w * outp[Mathf.Clamp(i + k, 0, RW - 1), r]; ws += w; }
                     sm[i, r] = acc / ws;
                 }
+            LastDisplayRamp = sm;
             var tex = new Texture2D(RW, RZ * 2, TextureFormat.RGBAHalf, false, true) { name = "RiverRamp05", wrapMode = TextureWrapMode.Clamp, filterMode = FilterMode.Bilinear };
             var px = new Color[RW * RZ * 2];
             for (int r = 0; r < RZ * 2; r++)

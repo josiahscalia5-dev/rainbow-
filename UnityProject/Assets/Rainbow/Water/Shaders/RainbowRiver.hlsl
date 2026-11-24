@@ -65,9 +65,12 @@ static const float3 RBW_FOAMLAV = float3(0.863, 0.761, 1.0);     // PALETTE.foam
 // ---- round 8: silk texture + measured colour ramp (WaterTextureFactory.cs) ----
 TEXTURE2D(_SilkTex); SAMPLER(sampler_SilkTex);
 TEXTURE2D(_RiverRamp); SAMPLER(sampler_RiverRamp);
+TEXTURE2D(_RiverSheen); SAMPLER(sampler_RiverSheen);
+TEXTURE2D(_WakeSheen); SAMPLER(sampler_WakeSheen);
 #ifndef RBW_HAS_LOOK
 #define _SilkLook float4(0.3, 0.25, 0.35, 0.3)
 #define _GlintLook float4(0.75, 0.9, 0.0, 0.0)
+#define _SheenLook float4(0.85, 0.75, 0.5, 1.0)
 #endif
 
 // p = (X across in m, v along the flow in m); tile 13.2 x 26 m at 9 m view distance, doubling with it (cross-faded octaves)
@@ -84,13 +87,18 @@ float4 RBW_Silk(float2 p, float dist, float2 offs)
 }
 
 // scene-linear water colour at streamline coordinate q and silk value t (a brightness quantile), zone 0 near .. 1 mid / far
-float3 RBW_Ramp(float q, float t, float zone)
+float3 RBW_RampY(float q, float row, float zone)
 {
-    float y = clamp(1.0 - sqrt(saturate(1.0 - t)), 0.5 / 16.0, 15.5 / 16.0) * 0.5;
+    float y = clamp(row, 0.5 / 16.0, 15.5 / 16.0) * 0.5;
     float u = clamp((q + 3.0) / 6.0, 0.006, 0.994);
     float3 a = SAMPLE_TEXTURE2D_LOD(_RiverRamp, sampler_RiverRamp, float2(u, y), 0).rgb;
     float3 b = SAMPLE_TEXTURE2D_LOD(_RiverRamp, sampler_RiverRamp, float2(u, y + 0.5), 0).rgb;
     return lerp(a, b, zone);
+}
+
+float3 RBW_Ramp(float q, float t, float zone)
+{
+    return RBW_RampY(q, 1.0 - sqrt(saturate(1.0 - t)), zone);
 }
 
 // vertex swell (waterRibbon.ts VERT, AMP 05 = 0.1), stream only (no swell on the foam shelf)
@@ -178,27 +186,28 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float tW5 = (abs(dlW) - cW) / max(wW, 1e-3);   // -1 inner edge .. 0 middle .. +1 outer edge
     float wakeZ = bOn * wk * smoothstep(0.75, 1.2, back) * (1.0 - smoothstep(3.2, 4.2, back));
     float inW = wakeZ * (1.0 - smoothstep(-0.12, 0.08, abs(dlW) - (cW - wW)));                           // his smooth wake water
-    float sweepW = wW > 0.004 ? wakeZ * (1.0 - smoothstep(1.0, 1.7, abs(tW5))) : 0.0;
 
     // streaky, smoothly blending band edges: the silk itself pushes the colour boundary to and fro
     float qe = q + (T - 0.5) * _SilkLook.x + sheen * _SilkLook.y;
     float zone = smoothstep(9.0, 14.5, distV);
-    float qw = 1.45 + 0.6 * clamp(tW5, -1.4, 1.2) - 0.14;                                                // sweep: violet edge - pink - violet edge
-    qe = lerp(qe, (T - 0.5) * 0.3, inW);
-    qe = lerp(qe, qw + (T - 0.5) * 0.3, sweepW);
 
-    // his wake water: broad luminous cyan arcs bowed over his track (standing waves in his frame), streaks running through them
-    float bk = back - 0.8 * dlW * dlW + 0.012 * sin(time * 2.2 + dlW * 5.0);
-    float pha = (bk - 1.42 - _R5Arc.w) / (0.52 + _R5Arc.x);
-    float ca = frac(pha + 0.5) - 0.5;
-    float segN = smoothstep(0.1, 0.5, RBW_VNoise(float2(dlW * 3.1 + 9.0, floor(pha + 0.5) * 3.7)));
-    float arcB = exp(-ca * ca / (0.19 * 0.19)) * smoothstep(1.2, 1.55, bk);
-    float arcL = exp(-ca * ca * 210.0) * (0.3 + 0.7 * segN) * smoothstep(1.2, 1.55, bk);
-    float Tw = 0.12 + 0.36 * T + arcB * (0.30 + 0.28 * T) + arcL * 0.42;
-    T = lerp(T, saturate(Tw), inW);
-    T = lerp(T, saturate(T * 0.8 + 0.08), sweepW * 0.6);
+    // broad sheen (large soft reflections; they stay with the view distance while the ripples run through them) + streak detail
+    float row = 1.0 - sqrt(saturate(1.0 - T));
+    float bt = time - 1.5;
+    float2 shv = float2((q + 3.0) / 6.0, log2(distV / 3.5) / 5.5) + float2(0.012 * sin(bt * 0.62 + q * 1.7), 0.01 * sin(bt * 0.47 + distV * 0.2));
+    float broad = SAMPLE_TEXTURE2D_LOD(_RiverSheen, sampler_RiverSheen, shv, 0).r;
+    float Y = lerp(0.333, broad, _SheenLook.x) + (row - 0.333) * _SheenLook.y;
 
-    float3 c5 = RBW_Ramp(qe, T, zone);
+    // Benny's wake: the standing wake in his frame (broad luminous arcs bowed over his track, two pink sweeps), streaks run through it
+    float bk = back + 0.02 * sin(bt * 2.2 + dlW * 4.0 - back * 1.5) + 0.012 * sin(bt * 3.7 + back * 5.0);
+    float2 wuv = float2((dlW + 0.012 * sin(bt * 2.9 + back * 6.0) + 2.2) / 4.4, (bk - 0.2) / 3.6);
+    float3 wm = SAMPLE_TEXTURE2D_LOD(_WakeSheen, sampler_WakeSheen, wuv, 0).rgb;
+    float wakeA = bOn * wk * smoothstep(0.8, 1.2, back) * (1.0 - smoothstep(3.2, 3.7, back)) * (1.0 - smoothstep(1.75, 2.1, abs(dlW))) * saturate(wm.b * 1.4);
+    float qw = wm.g < 0.5 ? lerp(0.12, 1.0, wm.g * 2.0) : lerp(1.0, 1.55, wm.g * 2.0 - 1.0);
+    qe = lerp(qe, qw + (T - 0.5) * 0.3, wakeA);
+    Y = lerp(Y, wm.r + (row - 0.333) * _SheenLook.z, wakeA);
+
+    float3 c5 = RBW_RampY(qe, Y, zone);
 
     // ---- surface: ripples catch the light (emboss), slivers of light burn a little, gloss from the swell normal ----
     float3 N0 = normalize(NormalWS);
@@ -207,7 +216,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float emboss = dot(rip, float2(0.35, 1.0));
     c5 *= 1.0 + emboss * _SilkLook.w;
     float tw = 0.72 + 0.28 * sin(time * 3.3 + X * 5.0 + v5 * 1.7);
-    float gl = saturate((glint - 0.34) * 1.7) * tw * (1.0 - 0.5 * inW);
+    float gl = saturate((glint - 0.34) * 1.7) * tw * (1.0 - 0.5 * wakeA);
     c5 = lerp(c5, float3(1.0, 1.03, 1.05), gl * _GlintLook.x);
     c5 *= 1.0 + gl * gl * _GlintLook.y;
     float pk5 = smoothstep(0.95, 1.35, abs(qe)) * (1.0 - smoothstep(2.1, 2.6, abs(qe)));   // pink weight (tints the reflections)

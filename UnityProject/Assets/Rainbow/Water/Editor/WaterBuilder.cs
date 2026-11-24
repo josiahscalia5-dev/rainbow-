@@ -88,7 +88,7 @@ namespace Rainbow.Screen05.EditorTools
         /// <summary>Cyan water grade (rgb multiplier, strength) for RainbowRiver.shader _RiverGrade.</summary>
         public static readonly Vector4 RiverGrade = new Vector4(0.55f, 0.70f, 0.93f, 0f);   // round 8: off (the colour ramp is measured)
         /// <summary>Round 8 water (RainbowRiver.hlsl): edge streakiness, edge drift, ripple normal, ripple emboss; glint mix, glow.</summary>
-        public static readonly Vector4 SilkLook = new Vector4(0.16f, 0.12f, 0.35f, 0.2f), GlintLook = new Vector4(0.7f, 0.35f, 0.1f, 0f);
+        public static readonly Vector4 SilkLook = new Vector4(0.16f, 0.12f, 0.35f, 0.2f), GlintLook = new Vector4(0.7f, 0.35f, 0f, 0f), SheenLook = new Vector4(0.85f, 0.75f, 0.5f, 1f);
 
         public const float GlintStreak = 1f, GlintFlare = 1f;
         /// <summary>River lanes (RainbowRiver.hlsl): lane gain, core gain, broad streaks, fine streaks.</summary>
@@ -117,6 +117,9 @@ namespace Rainbow.Screen05.EditorTools
             mat.SetTexture("_RiverRamp", ramp);
             mat.SetVector("_SilkLook", SilkLook);
             mat.SetVector("_GlintLook", GlintLook);
+            mat.SetTexture("_RiverSheen", AssetDatabase.LoadAssetAtPath<Texture2D>(WaterSheenFactory.SheenPath));
+            mat.SetTexture("_WakeSheen", AssetDatabase.LoadAssetAtPath<Texture2D>(WaterSheenFactory.WakePath));
+            mat.SetVector("_SheenLook", SheenLook);
             mat.SetVector("_W4Look", RiverLook); mat.SetFloat("_W4Edge", 0.6f); mat.SetVector("_W4Band", new Vector4(0.95f, 0.65f, 0.5f, 0.35f));
             EditorUtility.SetDirty(mat);
 
