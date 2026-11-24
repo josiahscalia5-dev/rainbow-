@@ -85,6 +85,8 @@ namespace Rainbow.Screen05
             public Vector3 pos, vel;
             public float r, seed, phase, age, life;
             public float rise;                       // newborn: extra upward speed out of the foam (decays; 0 = floating)
+            public float scripted;                   // round 4: seconds it still belongs to the start composition (placement rules off)
+            public float delay;                      // round 4: seconds until this slot joins in (start composition only)
             public bool big, wake, dead;
         }
 
@@ -209,7 +211,7 @@ namespace Rainbow.Screen05
         static float FoamTop(float dist) => 1.05f * Mathf.Lerp(0.62f, 1.45f, SS(5f, 30f, dist));
 
         /// <summary>World x of the coin line / cyan core (CoinTrail: latK 0.7 * CORE_SWING 0.9 * meander from the route centre).</summary>
-        static float CoinLineX(float s) => 1.63f * RiverPath.Meander(s);
+        static float CoinLineX(float s) => CoinTrail.LineX(s);
 
         void SetView(Camera cam)
         {
@@ -279,8 +281,63 @@ namespace Rainbow.Screen05
             return 1;
         }
 
+        // ---- round 4 (2026-11-24): START COMPOSITION. The run starts at the approved view (RiverPath.StartS), so the first fill puts
+        // the bubbles where the approved image has them: (px, py, diameter px) measured on the 864x1536 image, unprojected with the
+        // camera of that view to a point in the air between the camera and the water. They live and drift like every other bubble
+        // (same current, same life); when the fill happens while Benny is still on his way to the start view (teleport before it), they start
+        // that much further up the current, so they float into this composition as he arrives.
+        static readonly Vector3[] StartBig =
+        {
+            new Vector3(50f, 706f, 53f), new Vector3(95f, 613f, 43f), new Vector3(179f, 572f, 35f), new Vector3(183f, 673f, 33f),
+            new Vector3(265f, 543f, 21f), new Vector3(84f, 912f, 64f), new Vector3(134f, 988f, 31f), new Vector3(96f, 1251f, 65f),
+            new Vector3(149f, 1164f, 23f), new Vector3(736f, 575f, 29f), new Vector3(659f, 562f, 24f), new Vector3(805f, 619f, 25f),
+            new Vector3(822f, 700f, 38f), new Vector3(695f, 830f, 25f), new Vector3(795f, 861f, 62f), new Vector3(723f, 1051f, 33f),
+            new Vector3(720f, 1207f, 67f), new Vector3(802f, 1247f, 27f), new Vector3(657f, 1364f, 27f),
+        };
+        static readonly Vector3[] StartSmall =
+        {
+            new Vector3(102f, 676f, 14f), new Vector3(131f, 670f, 12f), new Vector3(318f, 523f, 12f), new Vector3(338f, 517f, 13f),
+            new Vector3(363f, 512f, 13f), new Vector3(397f, 510f, 10f), new Vector3(424f, 502f, 9f), new Vector3(55f, 1016f, 11f),
+            new Vector3(107f, 1198f, 13f), new Vector3(186f, 1098f, 13f), new Vector3(601f, 554f, 15f), new Vector3(822f, 890f, 13f),
+            new Vector3(657f, 1132f, 18f), new Vector3(143f, 1205f, 11f), new Vector3(631f, 1099f, 13f), new Vector3(172f, 1101f, 9f),
+        };
+        const float StartWindow = 20f;               // a teleport up to this far before the start view still builds the composition
+
+        /// <summary>One bubble of the start composition; false = this slot waits (delay) until the view is under way.</summary>
+        void StartSpawn(ref Bubble b, int slot, float s)
+        {
+            float lead = Mathf.Max(0f, RiverPath.StartS - s) / Mathf.Max(0.1f, stageSpeed);   // seconds until Benny reaches the view
+            Vector3[] table = b.big ? StartBig : StartSmall;
+            b.phase = Rand() * 6.2832f;
+            b.seed = Rand();
+            b.rise = 0f;
+            if (b.wake || slot >= table.Length)
+            {
+                b.dead = true;
+                b.delay = lead + Range(0.35f, 1.4f);
+                return;
+            }
+            Vector3 e = table[slot];
+            Quaternion q = Quaternion.Euler(12.78f, -2.80f, 0f);
+            Vector3 cp = new Vector3(-0.06f, 3.40f, 7.48f);
+            Vector3 ray = q * new Vector3((e.x - 432f) / 1278.2f, (768f - e.y) / 1278.2f, 1f);
+            float dw = ray.y < -1e-3f ? (RiverPath.WaterY + 0.1f - cp.y) / ray.y : 60f;
+            float d = Mathf.Clamp(dw * 0.62f, 3.6f, 20f);
+            Vector3 p = cp + ray * d;
+            b.r = e.z * d / (2f * 1278.2f);
+            b.vel = RiverPath.Forward(Mathf.Clamp(p.z, RiverPath.TunnelStart, RiverPath.TunnelLength))
+                  * (stageSpeed * Range(sideCarry.x, Mathf.Max(sideCarry.x, sideCarry.y))) + Vector3.up * Range(0.04f, 0.1f);
+            b.pos = p - b.vel * lead;
+            b.age = Range(1.2f, 4f);
+            b.life = b.age + lead + Range(6f, 14f);
+            b.dead = false;
+            b.delay = 0f;
+            b.scripted = lead + 0.35f;
+        }
+
         void Spawn(ref Bubble b, bool initial)
         {
+            b.scripted = 0f; b.delay = 0f;
             b.phase = Rand() * 6.2832f;
             b.seed = Rand();
             // initial fill (run start / teleport): already floating at full size; respawn: born now (inflates)
@@ -436,9 +493,16 @@ namespace Rainbow.Screen05
             {
                 rng = (seed ^ (uint)Mathf.RoundToInt(Mathf.Abs(s) * 16f)) | 1u;
                 bennySpeed = stageSpeed;
+                bool startView = s > RiverPath.StartS - StartWindow && s < RiverPath.StartS + 0.8f;
+                int nBig = 0, nSmall = 0;
                 for (int i = 0; i < bubbles.Length; i++)
                 {
-                    if (bubbles[i].wake) SpawnWake(ref bubbles[i], true, bennyDepth, stageSpeed, (i & 1) == 0 ? -1f : 1f);
+                    if (startView)
+                    {
+                        int slot = bubbles[i].wake ? 999 : (bubbles[i].big ? nBig++ : nSmall++);
+                        StartSpawn(ref bubbles[i], slot, s);
+                    }
+                    else if (bubbles[i].wake) SpawnWake(ref bubbles[i], true, bennyDepth, stageSpeed, (i & 1) == 0 ? -1f : 1f);
                     else Spawn(ref bubbles[i], true);
                 }
             }
@@ -448,6 +512,18 @@ namespace Rainbow.Screen05
             for (int i = 0; i < bubbles.Length; i++)
             {
                 Bubble b = bubbles[i];
+                if (b.delay > 0f)
+                {
+                    b.delay -= dt;
+                    if (b.delay <= 0f) { if (b.wake) b.dead = true; else Spawn(ref b, false); }
+                    else
+                    {
+                        bubbles[i] = b;
+                        for (int k = 0; k < 4; k++) { uvs[i * 4 + k].z = 0f; cols[i * 4 + k].a = 0; }
+                        continue;
+                    }
+                }
+                b.scripted -= dt;
                 b.age += dt;
                 b.pos += b.vel * dt;
                 b.pos += new Vector3(Mathf.Sin(t * 1.3f + b.phase), Mathf.Cos(t * 1.1f + b.phase * 1.7f), Mathf.Sin(t * 0.9f + b.phase * 0.6f)) * (0.12f * dt);
@@ -457,7 +533,7 @@ namespace Rainbow.Screen05
                     b.pos.y += b.rise * dt;
                     b.rise *= Mathf.Exp(-2.2f * dt);
                 }
-                int a = b.dead ? -1 : Allowed(b.pos, b.big ? b.r : 0f);
+                int a = b.dead ? -1 : (b.scripted > 0f ? 1 : Allowed(b.pos, b.big ? b.r : 0f));
                 if (a < 0 || b.age > b.life || b.pos.z > RiverPath.TunnelLength - 1f)
                 {
                     if (!b.wake) Spawn(ref b, false);

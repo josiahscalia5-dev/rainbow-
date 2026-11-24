@@ -26,7 +26,35 @@ namespace Rainbow.Screen05
         {
             public Transform coin;
             public float s;
-            public float lateral; // offset from the route centre line along the route's right vector
+            public float lateral; // world x of the coin (round 4; before: offset from the route centre line)
+            public float height;  // coin centre above the water (m)
+            public float scale;   // mesh scale (visible diameter = 0.906 x scale)
+        }
+
+        /// <summary>
+        /// Round 4 (2026-11-24): the approved coin trail. Coin centres and widths measured on the approved image - (474,729) 96 px,
+        /// (549,661) 72, (482,612) 57, (431,576) 43, (465,545) 30, (496,533) 22, (518,523) 17, (533,517) 16, (538,509) 12, (540,502) 10,
+        /// (533,496) 9, (522,491) 8, (510,488) 7 - unprojected with the gameplay camera of the approved view at playable distances.
+        /// x = s, y = world x, z = height of the coin centre above the water, w = visible diameter (m). The first seven are
+        /// collectable (s &lt; FinishS), the rest lead into the throat.
+        /// </summary>
+        static readonly Vector4[] ApprovedCoins =
+        {
+            new Vector4(21.5f, -0.28f, 0.67f, 1.07f), new Vector4(26.8f, 0.77f, 0.69f, 1.09f), new Vector4(33.0f, -0.31f, 0.80f, 1.13f),
+            new Vector4(41.0f, -1.66f, 0.92f, 1.12f), new Vector4(51.5f, -1.09f, 1.18f, 1.02f), new Vector4(60.5f, -0.03f, 1.21f, 0.90f),
+            new Vector4(67.0f, 0.97f, 1.40f, 0.80f), new Vector4(78.0f, 1.97f, 1.35f, 0.87f), new Vector4(86.0f, 2.50f, 1.59f, 0.72f),
+            new Vector4(94.0f, 2.88f, 1.86f, 0.66f), new Vector4(102.0f, 2.63f, 2.14f, 0.65f), new Vector4(110.0f, 2.00f, 2.40f, 0.63f),
+            new Vector4(118.0f, 1.14f, 2.60f, 0.60f),
+        };
+
+        /// <summary>World x of the coin line at s (piecewise linear through the trail).</summary>
+        public static float LineX(float s)
+        {
+            var c = ApprovedCoins;
+            if (s <= c[0].x) return Mathf.Lerp(RiverPath.Meander(s), c[0].y, Mathf.Clamp01((s - (c[0].x - 7f)) / 7f));
+            for (int i = 0; i + 1 < c.Length; i++)
+                if (s <= c[i + 1].x) return Mathf.Lerp(c[i].y, c[i + 1].y, (s - c[i].x) / (c[i + 1].x - c[i].x));
+            return c[c.Length - 1].y;
         }
 
         public SwimRoute route;
@@ -53,32 +81,25 @@ namespace Rainbow.Screen05
         void OnEnable() { if (Instance == null) Instance = this; }
         void OnDisable() { if (Instance == this) Instance = null; }
 
-        /// <summary>The C05 trail: x = s, y = lateral offset from the route centre line.</summary>
-        public static void ComputeLayout(List<Vector2> outSl)
+        /// <summary>The coin trail: x = s, y = world x, z = height above the water, w = visible diameter (round 4, approved coins).</summary>
+        public static void ComputeLayout(List<Vector4> outSl)
         {
             outSl.Clear();
-            float crest = SwimRoute.ApprovedCrestS();
-            int k = 0;
-            for (float s = crest + First; s < RiverPath.StageLength - 3f; k++)
-            {
-                outSl.Add(new Vector2(s, LatK * CoreSwing * RiverPath.Meander(s)));
-                s += Mathf.Min(GapMax, Gap0 + k * GapGrow);
-            }
-            for (float s = RiverPath.StageLength + 5f; s < RiverPath.TunnelLength - 14f; s += FarGap)
-                outSl.Add(new Vector2(s, 0f));
+            foreach (Vector4 c in ApprovedCoins) if (c.x < RiverPath.TunnelLength - 1f) outSl.Add(c);
         }
 
         /// <summary>Rest position / orientation of a coin (also used by the editor builder).</summary>
-        public static void RestPose(SwimRoute r, float s, float lateral, out Vector3 pos, out Quaternion rot)
+        public static void RestPose(SwimRoute r, float s, float worldX, float height, out Vector3 pos, out Quaternion rot)
         {
             Vector3 p, fwd, right;
             if (r != null) r.SampleAtS(s, out p, out fwd, out right);
             else { p = RiverPath.CorePoint(s); fwd = RiverPath.Forward(s); right = RiverPath.Right(s); }
-            pos = p + right * lateral + Vector3.up * CoinHeight;
-            // face toward the camera behind Benny (mesh face normal is -Z), leaning back by CoinTilt (top away from the camera)
+            pos = new Vector3(worldX, RiverPath.WaterY + height, s);
+            // face toward the camera behind Benny (mesh face normal is -Z), leaning back by CoinTilt (top away from the camera);
+            // round 4: facing straight down the river (the approved coins face the rider, not the local bend)
+            fwd = Vector3.Slerp(fwd, Vector3.forward, 0.8f).normalized;
             rot = Quaternion.LookRotation(fwd, Vector3.up);
         }
-
         void Cache()
         {
             int n = slots.Count;
@@ -89,7 +110,7 @@ namespace Rainbow.Screen05
             PlayableCount = 0;
             for (int i = 0; i < n; i++)
             {
-                RestPose(route, slots[i].s, slots[i].lateral, out basePos[i], out baseRot[i]);
+                RestPose(route, slots[i].s, slots[i].lateral, slots[i].height, out basePos[i], out baseRot[i]);
                 popT[i] = -1f;
                 if (slots[i].s < RiverPath.FinishS) PlayableCount++;
             }
@@ -165,7 +186,7 @@ namespace Rainbow.Screen05
             {
                 Transform t = slots[i].coin;
                 if (t == null) continue;
-                float scale = CoinScale;
+                float scale = slots[i].scale > 0.01f ? slots[i].scale : CoinScale;
                 Vector3 pos = basePos[i];
                 if (collected[i])
                 {
@@ -193,9 +214,9 @@ namespace Rainbow.Screen05
             {
                 if (slots[i].coin == null) continue;
                 Vector3 p; Quaternion r;
-                RestPose(route, slots[i].s, slots[i].lateral, out p, out r);
+                RestPose(route, slots[i].s, slots[i].lateral, slots[i].height, out p, out r);
                 slots[i].coin.SetPositionAndRotation(p, r * Quaternion.Euler(CoinTilt * Mathf.Rad2Deg, 0f, 0f));
-                slots[i].coin.localScale = new Vector3(CoinScale, CoinScale, CoinScale);
+                slots[i].coin.localScale = Vector3.one * (slots[i].scale > 0.01f ? slots[i].scale : CoinScale);
             }
         }
     }

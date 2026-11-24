@@ -197,7 +197,7 @@ namespace Rainbow.Screen05.EditorTools
 
             Mesh mesh = CoinMesh();
             Material mat = CoinMaterial();
-            List<Vector2> layout = new List<Vector2>();
+            List<Vector4> layout = new List<Vector4>();   // round 4: (s, world x, height, visible diameter)
             CoinTrail.ComputeLayout(layout);
             for (int i = 0; i < layout.Count; i++)
             {
@@ -214,6 +214,8 @@ namespace Rainbow.Screen05.EditorTools
                 slot.coin = c.transform;
                 slot.s = layout[i].x;
                 slot.lateral = layout[i].y;
+                slot.height = layout[i].z;
+                slot.scale = layout[i].w / 0.906f;
                 trail.slots.Add(slot);
             }
             trail.sparkles = BuildSparkles(coinsGo.transform);
