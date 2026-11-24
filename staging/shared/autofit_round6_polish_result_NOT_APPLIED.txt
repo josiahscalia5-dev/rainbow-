@@ -1,0 +1,16 @@
+mat:Assets/Rainbow/Benny/Materials/Benny_Fluff.mat:_UnderHeight:f|0.14975
+mat:Assets/Rainbow/Benny/Materials/Benny_Fluff.mat:_UnderShade:f|1.088
+mat:Assets/Rainbow/Environment/Materials/DrumWall05.mat:_BaseColor:c1|0.27
+mat:Assets/Rainbow/Environment/Materials/DrumWall05.mat:_BaseColor:c2|0.97
+mat:Assets/Rainbow/Environment/Materials/DrumWall05.mat:_EmissionStrength:f|0.274
+mat:Assets/Rainbow/Environment/Materials/DrumWall05.mat:_EnvIntensity:f|0.66579
+mat:Assets/Rainbow/Environment/Materials/Throat05.mat:_ThroatIntensity:f|1.188
+mat:Assets/Rainbow/Water/Materials/RainbowBubble05.mat:_Intensity:f|1.2222
+mat:Assets/Rainbow/Water/Materials/RainbowFoam05.mat:_Brightness:f|0.88955
+mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_RiverGrade:v0|1.16754
+mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_RiverGrade:v1|0.73131
+mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_RiverGrade:v2|0.97675
+mat:Assets/Rainbow/Water/Materials/RainbowRiverGlints05.mat:_Streak:f|0.786
+mat:Assets/Rainbow/Water/Resources/RainbowSplash05.mat:_Intensity:f|0.83325
+mat:Assets/Rainbow/Water/Resources/RainbowSplash05.mat:_RopeAlpha:f|0.97188
+mat:Assets/Rainbow/Water/Resources/RainbowWakeFoam05.mat:_Brightness:f|0.92177
