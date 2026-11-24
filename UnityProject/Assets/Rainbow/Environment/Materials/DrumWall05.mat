@@ -31,14 +31,14 @@ Material:
     m_Floats:
     - _EmissionStrength: 0.16
     - _EnvBlur: 0.6
-    - _EnvIntensity: 0.9
-    - _Exposure: 1
+    - _EnvIntensity: 0.75
+    - _Exposure: 0.85
     - _LightInfluence: 1
     - _Metallic: 0.92
     - _Roughness: 0.07
-    - _StripIntensity: 2.8
+    - _StripIntensity: 2.2
     m_Colors:
-    - _BaseColor: {r: 0.62, g: 0.45, b: 1, a: 1}
+    - _BaseColor: {r: 0.7, g: 0.28, b: 0.92, a: 1}
     - _EmissionColor: {r: 0.23529412, g: 0.03137255, b: 0.28235295, a: 1}
     - _FarGlowColor: {r: 1, g: 0.6117647, b: 0.3529412, a: 1}
     - _FarGlowRange: {r: 250, g: 480, b: 0.85, a: 0}
@@ -52,11 +52,11 @@ Material:
     - _SlotArc: {r: 60, g: 0.5, b: 0.36, a: 6.8}
     - _SlotPitch: {r: 0.9710378, g: 0.7, b: 0, a: 0.5}
     - _SlotShape: {r: 0.24, g: 1.6, b: 0.25, a: 1.5}
-    - _SlotSize: {r: 0.26, g: 0.08, b: 0.22, a: 1.4}
+    - _SlotSize: {r: 0.26, g: 0.08, b: 0.22, a: 0.8}
     - _SlotWarp: {r: 7.48, g: 0.6, b: 0.036, a: 0.15}
     - _StripColor: {r: 1, g: 0.7, b: 0.97, a: 1}
     - _StripParams: {r: 28, g: 0.017, b: 0, a: 0.8}
     - _WallFar: {r: 25, g: 80, b: 0.08, a: 0.5}
-    - _WallGlow: {r: 0.22, g: 0.03, b: 0.55, a: 0.45}
+    - _WallGlow: {r: 0.4, g: 0.03, b: 0.5, a: 0.45}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

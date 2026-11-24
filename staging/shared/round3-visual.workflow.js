@@ -12,16 +12,20 @@
 //                      notes: { <lane>: "<what an interrupted attempt left>" }, skip: [<lanes with a result>] } })
 // If interrupted: read the run's journal.jsonl, put lanes that returned a result into args.skip, describe the interrupted lane's
 // newest files + work stills in args.notes.<lane>, and relaunch the same stage. Exact args used: staging/shared/round3-visual-args.json
+// 2026-11-24 (coordinator): + stage 'G1' = GEOMETRY (lower tunnel walls meet narrow tall foam banks) | BUBBLES, and stage
+// 'G2' = BENNY (water contact / splash) | WATER (natural S flow; foam banks now belong to the geometry lane's result).
 export const meta = {
   name: 'screen05-round3-visual',
-  description: 'Screen 05 visual stages: tunnel/gold/walls | S-water/foam (stage A), then Benny water contact | iridescent bubbles (stage B)',
+  description: 'Screen 05 visual stages: A tunnel|water, B benny|bubbles, G1 lower-wall geometry + foam|bubbles, G2 benny|S-water',
   phases: [
     { title: 'Stage A', detail: 'TUNNEL (geometry, metallic gold rings + paddles, deeper purple reflective walls) | WATER (natural S flow, softer foam)' },
     { title: 'Stage B', detail: "BENNY (natural contact with the water) | BUBBLES (floating iridescent bubbles)" },
+    { title: 'Stage G1', detail: 'GEOMETRY (lower walls meet narrow, tall foam banks; ring framing kept) | BUBBLES (floating iridescent bubbles)' },
+    { title: 'Stage G2', detail: 'BENNY (natural contact with the water) | WATER (natural S-shaped flow on the new geometry)' },
   ],
 }
 
-const STAGE = (args && args.stage === 'B') ? 'B' : 'A'
+const STAGE = (args && ['A', 'B', 'G1', 'G2'].includes(args.stage)) ? args.stage : 'A'
 const SKIP = (args && Array.isArray(args.skip)) ? args.skip : []
 const NOTES = (args && args.notes && typeof args.notes === 'object') ? args.notes : {}
 const BASE = (args && args.baseline) || {}
@@ -75,6 +79,21 @@ NEW SINCE THE LAST ROUND (coordinator, 21:20 local):
 - After editing any file run a NORMAL cycle (its recompile step imports edited shaders); -NoRebuild only re-captures the same build (e.g.
   with another -EvalAtHold). Live material tuning: an -EvalAtHold AgentScripts/<x>.cs file can set material / shader-global values while
   paused at the hold; copy the winning values into the builder afterwards.
+
+NEW SINCE 2026-11-24 (coordinator):
+- LIVE VARIANTS = the cheap way to decide looks: AgentScripts/screen05_coord_tune.cs (read its header). Write variant lines
+  "name|target|prop|x,y,z,w[|color|float]" (target wall | ring | pad | river | foam | padtilt) into
+  Recordings/Screen05/work/coord_variants.txt and a one-word tag into coord_tag.txt (other lane active? copy the script to
+  AgentScripts/screen05_<area>_tune.cs with its own file names so the two lanes never share variant files), run ONE cycle with
+  -EvalAtHold, then measure all stills in one call: screen05-measure.ps1 -Json <out.json> <still1> <still2> ... One cycle tests ~10 looks.
+  Last night this found +5.9 visual in two cycles; the old one-value-per-cycle lanes made things WORSE in 26 minutes.
+- ALREADY DONE by the coordinator (measured, keep unless you measure better): walls darker saturated violet-magenta
+  (EnvironmentBuilder WallBase / WallGlow / _EnvIntensity 0.75 / _StripIntensity 2.2 / WallLipGlow 0.8 / _Exposure 0.85), paddle dish tilt
+  PaddleFaceTiltDeg -15 (the +32 "horns" are gone), deeper azure water (_RiverGrade in RainbowRiver.shader, WaterBuilder.RiverGrade),
+  darker HUD bar. Foam: FoamBank.FoamRimCap / RBW_FOAM_CAP (RainbowFoamBank.hlsl, keep equal) caps the foam band in front of the wall,
+  plus a taller rope (GeneratePuffs hW) - see the coordinator notes for whether it was kept.
+- Saved diagnostics: C:\\RainbowUnity\\tools\\diag\\ (colorgrid.ps1 = deltaE grid + box colours vs the approved; cropstack.ps1 =
+  approved|Unity crop of the same box; measure-compact.ps1 = one score line per still). Use them freely (read-only).
 
 MEASURING (read-only; the cycle tool already prints it after every cycle):
   powershell -NoProfile -ExecutionPolicy Bypass -File C:\\RainbowUnity\\tools\\screen05-measure.ps1 -Overlay <work>\\<name>_overlay.jpg <still.png>
@@ -139,6 +158,33 @@ result honestly: scores before/after, what visibly improved, what still differs,
 ${CONTEXT ? '\nNOTES FROM THE COORDINATOR:\n' + CONTEXT + '\n' : ''}`
 
 const AREAS = {
+  geometry: `
+YOUR AREA: LOWER TUNNEL GEOMETRY + NARROW TALL FOAM BANKS (user priorities 1, 2 and 4: tunnel geometry / perspective / depth; narrow,
+TALLER foam banks). Tag prefix: geometry. Cycle areas: foam,water (look at the whole side-by-side too).
+Owns: the drum cross-section BELOW the axis and where the wall meets the water (Environment/Scripts/DrumLayout05.cs cross-section
+functions such as WaterChord / CentreY / FloorExtra, Environment/Scripts/DrumMeshes05.cs wall + ring meshes, the wall UV mapping in
+Environment/Shaders/RainbowDrumWall.hlsl if the profile changes), the foam banks (Water/Scripts/FoamBank.cs, Water/Shaders/RainbowFoamBank.hlsl
+- RBW_BankEdges must stay line-by-line identical to FoamBank.BankEdges -, RainbowFoam.hlsl / .shader, WaterBuilder.BuildFoam), the wall chord
+the river mesh carries (RiverMeshGenerator UV1.w) and the shelf rise (RiverSurface.BaseHeight). Do NOT touch: the camera, the ring s list,
+the ring / paddle / wall LOOK values the coordinator just tuned, the river band colours / flow lines, Benny, splash, bubbles, coins, HUD.
+THE PROBLEM (biggest composition gap): approved = the purple slotted wall comes right down behind NARROW, TALL, puffy white soap-foam
+rims that hug the open river on both sides (a rope of big rounded puffs, white with soft lavender / blue shading, ~40-60 px high in the
+middle distance), so the river + foam + wall read as a narrow winding channel inside a round drum. Unity = a WIDE FLAT carpet of small
+lavender beads (or bare floor) between the river and the wall, especially left at y 560-800 and right at y 620-1000, and the wall base
+sits too far out. Target sheet: wall / foam junction left (330, 540), (220, 600), (120, 700), (30, 760); right (690, 600), (~800, 650),
+(850, 700), (>=864, 760); foam rims at y 600 left 198-250 / right 650-690, at y 700 left 138-290 / right foam only at x > 846; open
+river at y 600 x ~250-650.
+HOW: (1) project the real geometry (AgentScripts/screen05_frame_probe.cs as -EvalAtHold, or your own read-only probe) and find where
+Unity's wall base, foam waterline and foam outer edge land on screen vs the targets, side by side, row by row (y 540-1000). (2) Fix the
+ROOT cause: if the wall base is too far out, bring the LOWER wall inward toward the foam (e.g. a non-circular lower profile that blends
+from the circle above the axis into a narrower chord at the water, or an inner lower skirt with the same wall material and continuous
+slot rows) WITHOUT moving the ring crowns / vanishing point / upper framing; rings must still look continuous where they meet the foam
+(follow the same lower profile or disappear behind the foam rope). If the foam waterline is wrong, refit BankEdges / the rims to the
+target rows. (3) Make the foam a soft, puffy, TALL rope (bigger rounded puffs, soft lavender shading and AO between puffs, a lacy edge
+toward the water) instead of a flat bead carpet; keep coins on open water (>= 1.25 m from the foam waterline), Benny's steering range,
+the bubbles' foam queries (FoamBank.InChannel) and the mobile budget (watch the puff count). Check s = 10 / 20 stills: the walls and
+foam must stay consistent while Benny moves.`,
+
   tunnel: `
 YOUR AREA: TUNNEL GEOMETRY + REALISTIC METALLIC GOLD RINGS AND PADDLES + DEEPER PURPLE REFLECTIVE WALLS (user priorities 1-3).
 Tag prefix: tunnel. Cycle areas: light (crops walls + throat) - look at the whole side-by-side too.
@@ -232,8 +278,8 @@ const IMPL_SCHEMA = {
   required: ['area', 'status', 'scores_before', 'scores_after', 'files_changed', 'changes', 'final_cycle_exit', 'final_still', 'final_sbs', 'gameplay_check', 'improved', 'still_different', 'notes_for_next_agents'],
 }
 
-const PAIRS = { A: ['tunnel', 'water'], B: ['benny', 'bubbles'] }
-const WHAT = { tunnel: 'TUNNEL (walls / gold rings / paddles / throat)', water: 'WATER (river bands / mesh / foam banks)', benny: "BENNY (water contact / splash)", bubbles: 'BUBBLES (floating iridescent bubbles)' }
+const PAIRS = { A: ['tunnel', 'water'], B: ['benny', 'bubbles'], G1: ['geometry', 'bubbles'], G2: ['benny', 'water'] }
+const WHAT = { geometry: 'GEOMETRY (lower walls / foam banks / wall chord)', tunnel: 'TUNNEL (walls / gold rings / paddles / throat)', water: 'WATER (river bands / mesh; in stage G2 NOT the foam banks)', benny: "BENNY (water contact / splash)", bubbles: 'BUBBLES (floating iridescent bubbles)' }
 
 function lane(key, other, phaseName) {
   if (SKIP.includes(key)) {

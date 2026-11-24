@@ -65,8 +65,10 @@ float2 RBW_BandLimits(float d, float hw, float W, float sm)
 // incl. RBW_BandFitM), sm = Three.js master arc length (s + 116.7), W = half chord of the drum wall at the water (river
 // mesh UV1.w / DrumLayout05.WaterChord). Returns the waterlines of the left / right foam bank RELATIVE to d (x < 0 < y):
 // the open water lies between them, the foam from there to the wall.
-// coordinator round 3: maximum foam width in front of the drum wall (m); keep equal to FoamBank.FoamRimCap (C#)
-static const float RBW_FOAM_CAP = 1.3;
+// coordinator round 3: maximum foam width in front of the drum wall (m); keep equal to FoamBank.FoamRimCap (C#).
+// 99 = OFF. Tested 1.3 on 2026-11-24 (cycle coord_e3): it only widened the open water toward the walls (foam_left 49.5 -> 46.0,
+// foam_right 47.6 -> 43.9, water_mid 60.5 -> 57.7) - the real gap is the lower wall position, not the foam width.
+static const float RBW_FOAM_CAP = 99.0;
 
 float2 RBW_BankEdges(float d, float hw, float Mb, float sm, float W)
 {
