@@ -86,7 +86,9 @@ namespace Rainbow.Screen05.EditorTools
 
         // ------------------------------------------------------------------ river
         /// <summary>Cyan water grade (rgb multiplier, strength) for RainbowRiver.shader _RiverGrade.</summary>
-        public static readonly Vector4 RiverGrade = new Vector4(0.55f, 0.70f, 0.93f, 1f);
+        public static readonly Vector4 RiverGrade = new Vector4(0.55f, 0.70f, 0.93f, 0f);   // round 8: off (the colour ramp is measured)
+        /// <summary>Round 8 water (RainbowRiver.hlsl): edge streakiness, edge drift, ripple normal, ripple emboss; glint mix, glow.</summary>
+        public static readonly Vector4 SilkLook = new Vector4(0.3f, 0.25f, 0.35f, 0.3f), GlintLook = new Vector4(0.75f, 0.9f, 0f, 0f);
 
         public const float GlintStreak = 1f, GlintFlare = 1f;
         /// <summary>River lanes (RainbowRiver.hlsl): lane gain, core gain, broad streaks, fine streaks.</summary>
@@ -109,6 +111,12 @@ namespace Rainbow.Screen05.EditorTools
             // water only; RainbowRiver.shader). (0.55, 0.70, 0.93) beat (0.70, 0.80, 0.96) and (0.45, 0.62, 0.92):
             // water_near 48.0 -> 56.7, bubbles 48.4 / 39.3 -> 59.0 / 48.2, splash 60.4 -> 67.9.
             mat.SetVector("_RiverGrade", RiverGrade);
+            Texture2D silk = AssetDatabase.LoadAssetAtPath<Texture2D>(WaterTextureFactory.SilkPath), ramp = AssetDatabase.LoadAssetAtPath<Texture2D>(WaterTextureFactory.RampPath);
+            if (silk == null || ramp == null) Debug.LogError(Tag + "water textures missing: run AgentScripts/screen05_make_water_textures.cs");
+            mat.SetTexture("_SilkTex", silk);
+            mat.SetTexture("_RiverRamp", ramp);
+            mat.SetVector("_SilkLook", SilkLook);
+            mat.SetVector("_GlintLook", GlintLook);
             mat.SetVector("_W4Look", RiverLook); mat.SetFloat("_W4Edge", 0.6f); mat.SetVector("_W4Band", new Vector4(0.95f, 0.65f, 0.5f, 0.35f));
             EditorUtility.SetDirty(mat);
 
@@ -130,7 +138,7 @@ namespace Rainbow.Screen05.EditorTools
             gm.SetTexture("_RiverLut", oldLut);
             gm.SetVector("_LutRange", new Vector4(RiverLayout05.S0, RiverLayout05.S1, 0f, 0f));
             gm.SetFloat("_HoldTime", 1.5f);
-            gm.SetFloat("_Drift", 7.5f);
+            gm.SetFloat("_Drift", RiverSurface.FlowSpeed);
             gm.SetFloat("_Streak", GlintStreak);
             gm.SetFloat("_Flare", GlintFlare);
             EditorUtility.SetDirty(gm);

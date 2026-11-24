@@ -62,6 +62,37 @@ static const float3 RBW_ODEEP   = float3(0.161, 0.316, 0.700);   // deep blue ou
 static const float3 RBW_FOAM    = float3(1.0, 1.0, 1.0);         // PALETTE.foam
 static const float3 RBW_FOAMLAV = float3(0.863, 0.761, 1.0);     // PALETTE.foamLav #efe2ff (linear)
 
+// ---- round 8: silk texture + measured colour ramp (WaterTextureFactory.cs) ----
+TEXTURE2D(_SilkTex); SAMPLER(sampler_SilkTex);
+TEXTURE2D(_RiverRamp); SAMPLER(sampler_RiverRamp);
+#ifndef RBW_HAS_LOOK
+#define _SilkLook float4(0.3, 0.25, 0.35, 0.3)
+#define _GlintLook float4(0.75, 0.9, 0.0, 0.0)
+#endif
+
+// p = (X across in m, v along the flow in m); tile 13.2 x 26 m at 9 m view distance, doubling with it (cross-faded octaves)
+float4 RBW_Silk(float2 p, float dist, float2 offs)
+{
+    float l = clamp(log2(dist / 9.0), -1.0, 4.0);
+    float k0 = min(floor(l), 3.0);
+    float f = smoothstep(0.15, 0.85, l - k0);
+    float2 dx = ddx(p), dy = ddy(p);
+    float2 ka = float2(exp2(-k0) / 13.2, exp2(-1.25 * k0) / 26.0), kb = ka * float2(0.5, 0.4204);
+    float4 a = SAMPLE_TEXTURE2D_GRAD(_SilkTex, sampler_SilkTex, p * ka + offs + k0 * float2(0.37, 0.61), dx * ka, dy * ka);
+    float4 b = SAMPLE_TEXTURE2D_GRAD(_SilkTex, sampler_SilkTex, p * kb + offs + (k0 + 1.0) * float2(0.37, 0.61), dx * kb, dy * kb);
+    return lerp(a, b, f);
+}
+
+// scene-linear water colour at streamline coordinate q and silk value t (a brightness quantile), zone 0 near .. 1 mid / far
+float3 RBW_Ramp(float q, float t, float zone)
+{
+    float y = clamp(1.0 - sqrt(saturate(1.0 - t)), 0.5 / 16.0, 15.5 / 16.0) * 0.5;
+    float u = clamp((q + 3.0) / 6.0, 0.006, 0.994);
+    float3 a = SAMPLE_TEXTURE2D_LOD(_RiverRamp, sampler_RiverRamp, float2(u, y), 0).rgb;
+    float3 b = SAMPLE_TEXTURE2D_LOD(_RiverRamp, sampler_RiverRamp, float2(u, y + 0.5), 0).rgb;
+    return lerp(a, b, zone);
+}
+
 // vertex swell (waterRibbon.ts VERT, AMP 05 = 0.1), stream only (no swell on the foam shelf)
 float RBW_RiverWave(float x, float s, float d, float hw, float sOffset, float amp, float time)
 {
@@ -128,112 +159,60 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float nearW = bOn * RBW_SS(2.0, -0.8, db);     // beside / behind Benny the lanes fan out from his track
     nearW *= 1.0 - smoothstep(0.4, 1.1, abs(dlW) - (0.2 + 0.44 * back));
     float X = lerp(q * 2.2, dlW * 4.2 / (1.0 + 0.55 * back), nearW);
-    X += 0.12 * sin(v5 * 0.21 + X * 1.1);
-    float fwX = fwidth(X) * pxK;
+    X += 0.12 * sin(v5 * 0.21 + X * 1.1) + 0.05 * sin(v5 * 0.53 - X * 2.3 + time * 0.7);
 
-    // ---- long satin lanes along the current ----
-    float a1 = 1.0 - smoothstep(0.15, 0.45, fwX * 2.9);
-    float a2 = 1.0 - smoothstep(0.15, 0.45, fwX * 7.0);
-    float n0 = RBW_VNoise(float2(X * 0.75 + 2.3, v5 * 0.05 + 3.0));
-    float n1 = RBW_VNoise(float2(X * 2.3 + 7.1 + 0.6 * n0, v5 * 0.085));
-    float n2 = RBW_VNoise(float2(X * 5.6 + 1.7 + 0.8 * n0, v5 * 0.14 + 9.0));
-    float a3 = 1.0 - smoothstep(0.15, 0.45, fwX * 13.0);
-    float n3 = RBW_VNoise(float2(X * 11.5 + 4.3 + 1.1 * n0, v5 * 0.11 + 5.0));
-    float a4 = 1.0 - smoothstep(0.15, 0.4, fwX * 30.0);
-    float n4 = RBW_VNoise(float2(X * 27.0 + 8.7 + 2.5 * n0, v5 * 0.16 + 1.0));
-    // fine silky hairlines in bundles along the current (approved: the satin is full of them)
-    float silk = (smoothstep(0.5, 0.85, n3) * a3 * 0.6 + smoothstep(0.52, 0.82, n4) * a4) * smoothstep(0.34, 0.58, n2 * 0.5 + n1 * 0.5);
-    float lane = (n0 - 0.5) * 0.75 + (n1 - 0.5) * 0.5 * a1 + (n2 - 0.5) * 0.36 * a2 + (n3 - 0.5) * 0.22 * a3;
-    float stA = smoothstep(0.52, 0.85, n1 * 0.75 + n2 * 0.35) * a1;                   // broad light streaks
-    float stB = smoothstep(0.62, 0.9, n2) * smoothstep(0.3, 0.65, n1) * a2;           // fine glossy streaks
+    // ---- flowing silk (round 8, master direction 2026-11-24): tileable streak / glint / ripple texture stretched along the current,
+    // advected with it; the octave is chosen by the view distance (cross-faded), so the streaks stay fine and crisp at every distance ----
+    float distV = max(length(_WorldSpaceCameraPos - PositionWS), 1.0);
+    float4 sk = RBW_Silk(float2(X, v5), distV, float2(0.0, 0.0));
+    float4 sk2 = RBW_Silk(float2(X * 1.37 + 3.1, v5 * 1.21 - time * 1.3), distV, float2(0.31, 0.17));   // second layer, other speed: ripples cross
+    float2 rip = (sk.ba - 0.5) * 1.15 + (sk2.ba - 0.5) * 0.85;                                          // ripple slope (across, along)
+    float sheen = RBW_VNoise(float2(X * 0.42 + 3.1, v5 * 0.045 + 0.03 * time)) - 0.5;                     // slow changes of reflection intensity
+    float T = sk.r + (sk2.r - 0.5) * 0.22 + sheen * 0.2;
+    T = saturate(T + dot(rip, float2(0.05, 0.1)));
+    float glint = max(sk.g, sk2.g * 0.55);
 
     // ---- diagonal pink wake sweeps behind Benny ----
-    // (river5) approved: the sweeps start ~0.11 m further out and splay a little wider (rowclass y 1240-1360: Unity ~25 px
-    // inside on each side, ~15 % narrower)
     float cW = 0.21 + _R5Tune.x + 0.5 * back;
     float wW = (0.16 + _R5Tune.y + 0.06 * back) * smoothstep(0.8, 1.3, back) * wk * (1.0 - smoothstep(2.15, 2.7, back));
-    float tW5 = (cW - abs(dlW)) / max(wW, 1e-3);
-    float sweep = (wW > 0.001 && abs(tW5) < abs(tb)) ? 1.0 : 0.0;
-    tb = lerp(tb, tW5, sweep);
-    hB = lerp(hB, wW, sweep);
-    tb += ((n1 - 0.5) * 0.45 * a1 + (n2 - 0.5) * 0.5 * a2 + (n3 - 0.5) * 0.25 * a3) * _W4Edge;   // streaky satin edges
-    float at = abs(tb) * _W4Band.x * (tb < 0.0 ? lerp(0.82, 1.0, sweep) : 1.0);                // < 1 = broader pink inside the traced edges
+    float tW5 = (abs(dlW) - cW) / max(wW, 1e-3);   // -1 inner edge .. 0 middle .. +1 outer edge
+    float wakeZ = bOn * wk * smoothstep(0.75, 1.2, back) * (1.0 - smoothstep(3.2, 4.2, back));
+    float inW = wakeZ * (1.0 - smoothstep(-0.12, 0.08, abs(dlW) - (cW - wW)));                           // his smooth wake water
+    float sweepW = wW > 0.004 ? wakeZ * (1.0 - smoothstep(1.0, 1.7, abs(tW5))) : 0.0;
 
-    // ---- electric cyan ----
-    float coreK = saturate(1.0 - q * q * 0.8);
-    float h5 = saturate(0.47 + lane * _W4Look.x + (coreK - 0.5) * _W4Look.y);
-    float3 cy = lerp(RBW_CDEEP2, RBW_CMID, smoothstep(0.05, 0.42, h5));
-    cy = lerp(cy, RBW_CBRIGHT, smoothstep(0.42, 0.75, h5));
-    cy = lerp(cy, RBW_CAQUA, saturate(stA * _W4Look.z + smoothstep(0.75, 1.0, h5) * 0.3));
-    cy = lerp(cy, RBW_CAQUAW, saturate(stB * _W4Look.w + silk * _W4Band.w));
+    // streaky, smoothly blending band edges: the silk itself pushes the colour boundary to and fro
+    float qe = q + (T - 0.5) * _SilkLook.x + sheen * _SilkLook.y;
+    float zone = smoothstep(9.0, 14.5, distV);
+    float qw = 1.45 + 0.6 * clamp(tW5, -1.4, 1.2) - 0.14;                                                // sweep: violet edge - pink - violet edge
+    qe = lerp(qe, (T - 0.5) * 0.3, inW);
+    qe = lerp(qe, qw + (T - 0.5) * 0.3, sweepW);
 
-    // Benny's wake water: smooth azure with broad cyan arcs bowed over his track (standing waves in his frame)
-    float inW = bOn * wk * smoothstep(0.75, 1.15, back) * (1.0 - smoothstep(-0.12, 0.08, abs(dlW) - (cW - wW)))
-              * (1.0 - smoothstep(3.2, 4.2, back));
+    // his wake water: broad luminous cyan arcs bowed over his track (standing waves in his frame), streaks running through them
     float bk = back - 0.8 * dlW * dlW + 0.012 * sin(time * 2.2 + dlW * 5.0);
     float pha = (bk - 1.42 - _R5Arc.w) / (0.52 + _R5Arc.x);
     float ca = frac(pha + 0.5) - 0.5;
     float segN = smoothstep(0.1, 0.5, RBW_VNoise(float2(dlW * 3.1 + 9.0, floor(pha + 0.5) * 3.7)));
-    float glowA = ca > 0.0 ? exp(-ca * 4.2) : exp(ca * 12.0);
-    // (splash6 2026-11-24) approved: BROAD luminous cyan bands bowed over his track, full of vertical satin streaks along
-    // the flow (not thin lines on dark azure): a wide soft band per period, broken by streaks stretched along the current
-    float bwA = max(0.17 + _S6Arc.y, 0.04);
-    float satA = smoothstep(0.3, 0.75, RBW_VNoise(float2(dlW * 11.0 + 3.0, bk * 0.9 + floor(pha + 0.5) * 1.7)));
-    float broadA = exp(-ca * ca / (bwA * bwA)) * (0.65 + 0.55 * satA);
-    glowA = lerp(glowA, broadA, saturate(0.7 + _S6Arc.x));
-    float lineA = exp(-ca * ca * 170.0) * (0.35 + 0.65 * segN);
-    float ampA = smoothstep(1.2, 1.55, bk);
-    // (river5 variants: the brighter azure base CMID..CBRIGHT scored 0.3 lower, kept the deep base; _R5Tune.z = live mix)
-    float3 nb = lerp(lerp(lerp(RBW_CDEEP2, RBW_CMID, 0.55), lerp(RBW_CMID, RBW_CBRIGHT, 0.35), saturate(0.8 + _R5Tune.z)), RBW_CBRIGHT, saturate(glowA * (0.9 + _R5Arc.y) * ampA + lane * 0.25));
-    nb = lerp(nb, RBW_CAQUA, saturate(glowA * glowA * (0.75 + 0.8 * _R5Arc.y) * ampA));
-    nb = lerp(nb, RBW_CAQUAW, saturate(lineA * ampA * (1.4 + _R5Arc.z)));   // (splash6_t6: 0.9 -> 1.4)
-    // (splash6) dense vertical satin: fine bright / dark hairlines along the flow (vertical on screen) all over his wake
-    // water, brightest inside the luminous bands (approved near water y 1250-1536 is full of them; Unity was smooth)
-    float fwS = fwidth(dlW) * pxK;
-    float aS = 1.0 - smoothstep(0.004, 0.008, fwS);    // fine hairlines only where they span >= ~3 px
-    float sn1 = RBW_VNoise(float2(dlW * 26.0 + 0.4 * sin(bk * 2.0), bk * 1.6 + 7.0));
-    float sn2 = RBW_VNoise(float2(dlW * 61.0 + 3.3, bk * 2.4 + 1.0));
-    float satS = (sn1 - 0.5) * 0.7 + (sn2 - 0.5) * 0.5 * aS;
-    float gS = saturate(0.55 + _S6Arc.z);
-    nb *= 1.0 + satS * gS * (0.5 + 0.6 * glowA * ampA);
-    nb = lerp(nb, RBW_CAQUAW, saturate(smoothstep(0.62, 0.9, sn1 * 0.6 + sn2 * 0.4) * glowA * ampA * gS * 0.9));
-    cy = lerp(cy, nb, inW);
-    // (river5) the open water beside the sweeps near Benny is as bright (approved ~#2EA9F2 at y 1340-1440 vs Unity #1D93E5)
-    float nearL = bOn * smoothstep(0.6, 1.4, back) * (1.0 - smoothstep(4.0, 6.0, back)) * (1.0 - inW);
-    cy = lerp(cy, max(cy, lerp(RBW_CMID, RBW_CBRIGHT, 0.3)), saturate(_R5Tune.w) * nearL);
+    float arcB = exp(-ca * ca / (0.19 * 0.19)) * smoothstep(1.2, 1.55, bk);
+    float arcL = exp(-ca * ca * 210.0) * (0.3 + 0.7 * segN) * smoothstep(1.2, 1.55, bk);
+    float Tw = 0.12 + 0.36 * T + arcB * (0.30 + 0.28 * T) + arcL * 0.42;
+    T = lerp(T, saturate(Tw), inW);
+    T = lerp(T, saturate(T * 0.8 + 0.08), sweepW * 0.6);
 
-    // between a band and its bank: cyan water a touch bluer than the core
-    float3 ow = lerp(cy, float3(0.15, 0.17, 0.8), _W4Band.y);
+    float3 c5 = RBW_Ramp(qe, T, zone);
 
-    // ---- hot-pink satin ----
-    float hp = saturate(0.45 + lane * 1.1);
-    float3 pk = lerp(RBW_PDEEP, RBW_PBODY, smoothstep(0.1, 0.5, hp));
-    pk = lerp(pk, RBW_PLIGHT, saturate(smoothstep(0.5, 0.9, hp) * 0.7 + stA * 0.6));
-    float hlq = (tb - 0.35) / 0.22;
-    pk = lerp(pk, RBW_PLIGHT, exp(-hlq * hlq) * 0.3);
-    pk = lerp(pk, RBW_PPALE, saturate(stB * 0.7 + silk * _W4Band.w));
-    pk = lerp(pk, RBW_PWHITE, saturate(stA * stB * 0.4)) * float3(1.12, 1.0, 1.05);
-    // (river5) the wake sweeps are lighter glossy pink-lavender in the approved (luma +15..+25 vs the hot pink of the banks)
-    pk = lerp(pk, lerp(RBW_PLIGHT, RBW_PPALE, 0.35), saturate((0.55 + _R5Sw.x) * sweep + 0.25 + _R5Sw.y));   // river5 variants: sweep 0 / 0.4 / 0.7 = 81.9 / 82.2 / 82.2; every band +0.25 = 82.3 / 67.9
-
-    // hue ramp across each band edge (pink -> violet -> periwinkle -> blue -> cyan)
-    float3 cIn = lerp(pk, RBW_VIN, smoothstep(0.62, 0.95, at));
-    cIn = lerp(cIn, RBW_VPERI, smoothstep(0.9, 1.1, at));
-    cIn = lerp(cIn, lerp(RBW_VPERI, cy, 0.55), smoothstep(1.02, 1.22, at));
-    cIn = lerp(cIn, cy, smoothstep(1.14, 1.42, at));
-    float3 cOut = lerp(pk, RBW_VOUT, smoothstep(0.7, 0.98, at));
-    cOut = lerp(cOut, lerp(lerp(RBW_VPERI, ow, 0.4), RBW_VBLUE, sweep), smoothstep(0.92, 1.1, at));
-    cOut = lerp(cOut, lerp(ow, cy, sweep), smoothstep(1.02, 1.2, at));
-    float3 c5 = tb >= 0.0 ? cIn : cOut;
-    float pk5 = 1.0 - smoothstep(0.85, 1.3, at);   // pink weight (tints the highlights)
-
-    // ---- gloss from the swell normal ----
+    // ---- surface: ripples catch the light (emboss), slivers of light burn a little, gloss from the swell normal ----
     float3 N0 = normalize(NormalWS);
     float3 V = normalize(ViewDirWS);
-    float3 N5 = normalize(N0 + float3(lane * 0.1, 0.0, 0.0));
+    float3 N5 = normalize(N0 + float3(rip.x * _SilkLook.z, 0.0, rip.y * _SilkLook.z));
+    float emboss = dot(rip, float2(0.35, 1.0));
+    c5 *= 1.0 + emboss * _SilkLook.w;
+    float tw = 0.72 + 0.28 * sin(time * 3.3 + X * 5.0 + v5 * 1.7);
+    float gl = saturate((glint - 0.28) * 1.6) * tw * (1.0 - 0.5 * inW);
+    c5 = lerp(c5, float3(1.25, 1.28, 1.3), gl * _GlintLook.x);
+    c5 *= 1.0 + gl * gl * _GlintLook.y;
+    float pk5 = smoothstep(0.95, 1.35, abs(qe)) * (1.0 - smoothstep(2.1, 2.6, abs(qe)));   // pink weight (tints the reflections)
     float fr = 1.0 - saturate(dot(N5, V));
     float3 R5 = reflect(-V, N5);
-    c5 = lerp(c5, lerp(RBW_CBRIGHT, RBW_PLIGHT, pk5), fr * fr * fr * 0.06);
 
     float3 col = c5;
     float foamK = 0.0;

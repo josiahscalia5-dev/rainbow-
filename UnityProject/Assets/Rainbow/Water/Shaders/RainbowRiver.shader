@@ -20,6 +20,10 @@ Shader "Rainbow/Water/River"
         _W4Edge ("Streaky band edges", Float) = 1
         _W4Band ("Band edge scale, outer strip violet, grade highlight protection, -", Vector) = (0.87, 0.5, 0.8, 0)
         _RiverGrade ("Cyan water grade (rgb multiplier on the cyan/blue water, a = strength; 0 = off)", Vector) = (1, 1, 1, 0)
+        [NoScaleOffset] _SilkTex ("Silk (R value, G glints, BA ripple normal)", 2D) = "gray" {}
+        [NoScaleOffset] _RiverRamp ("Colour ramp (q, silk value)", 2D) = "white" {}
+        _SilkLook ("Edge streakiness, edge drift, ripple normal, ripple emboss", Vector) = (0.3, 0.25, 0.35, 0.3)
+        _GlintLook ("Glint mix, glint glow, -, -", Vector) = (0.75, 0.9, 0, 0)
     }
 
     SubShader
@@ -43,6 +47,8 @@ Shader "Rainbow/Water/River"
             float4 _W4Look;
             float _W4Edge;
             float4 _W4Band;
+            float4 _SilkLook;
+            float4 _GlintLook;
         CBUFFER_END
         #define RBW_HAS_LOOK
 

@@ -20,7 +20,7 @@ namespace Rainbow.Screen05
         /// <summary>Swell amplitude of stage 05 (AMP['05']).</summary>
         public const float WaveAmp = 0.1f;
         /// <summary>Advection speed of the river pattern: stage speed 11 x FLOW05 1.3.</summary>
-        public const float FlowSpeed = 14.3f;
+        public const float FlowSpeed = 6.5f;   // master direction 2026-11-24: he swims (11 u/s) through a current of 6.5 u/s; 14.3 made the pattern run away from him
         /// <summary>Gentle rise of the foam shelf between the stream edge and the wall.</summary>
         public const float ShelfRise = 0f;
         /// <summary>How far the water / foam shelf mesh reaches sideways (hidden inside the wall beyond the chord).</summary>
