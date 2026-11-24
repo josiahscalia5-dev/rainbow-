@@ -166,7 +166,14 @@ float3 RainbowFrameCorner4b(float u, float vpx, float side)
     c = lerp(c, float3(255, 246, 224), 1.0 - smoothstep(1.5, 4.5, v));
     // cut end: bright orange edge, then the grey-violet end face
     c = lerp(c, float3(255, 178, 80), RbLine(u, 0.94, 0.007) * 0.9);
-    c = lerp(c, lerp(float3(138, 104, 118), float3(84, 60, 92), smoothstep(10.0, 110.0, v)), smoothstep(0.945, 0.952, u));
+    // round 8: the end is a polished bevel that mirrors the water (approved: copper -> rose grey -> azure toward the stream), not a dark plate
+    float te = saturate((u - 0.946) / 0.054);
+    float3 endC = lerp(float3(238, 152, 92), float3(188, 124, 112), smoothstep(0.0, 0.4, te));
+    endC = lerp(endC, float3(112, 116, 168), smoothstep(0.35, 0.75, te));
+    endC = lerp(endC, float3(44, 128, 214), smoothstep(0.72, 1.0, te));
+    endC *= lerp(1.06, 0.82, smoothstep(10.0, 130.0, v));
+    endC = lerp(endC, float3(255, 226, 190), RbLine(te, 0.12, 0.07) * 0.5);
+    c = lerp(c, endC, smoothstep(0.945, 0.952, u));
     float hot = g1 * smoothstep(0.45, 1.0, g) * (1.0 - RbStep(v, 71.5, 2.0)) + 0.5 * saturate(g * 1.3 - 0.4) * RbStep(v, 98.0, 2.0) * (1.0 - smoothstep(120.0, 150.0, v));
     return RbDisp(c) * 1.2 * (1.0 + float3(2.4, 1.9, 0.8) * saturate(hot));
 }
@@ -180,8 +187,8 @@ float3 RainbowFrameLip4b(float u, float v)
     float3 body = lerp(float3(236, 128, 84), float3(238, 122, 56), ends);
     float3 c = lerp(body, float3(255, 204, 92), gw * 0.9);
     c = lerp(c, float3(255, 252, 226), smoothstep(0.25, 0.95, g));
-    c = lerp(float3(206, 176, 196), c, RbStep(v, 12.5, 1.0));
-    c = lerp(c, float3(255, 250, 250), 1.0 - smoothstep(3.0, 6.0, v));
+    c = lerp(lerp(float3(250, 198, 168), float3(226, 150, 128), smoothstep(3.0, 11.0, v)), c, RbStep(v, 11.0, 1.0));   // round 8: a warm rolled edge, only a thin white line
+    c = lerp(c, float3(255, 244, 236), 1.0 - smoothstep(1.2, 3.2, v));
     c = lerp(c, lerp(float3(186, 78, 26), float3(255, 176, 60), g), RbLine(v, 13.0, 1.8));
     float3 dk = lerp(float3(150, 54, 22), float3(236, 140, 40), g * 0.6);
     c = lerp(c, dk, RbStep(v, 45.5, 1.0));

@@ -1,10 +1,57 @@
 # Rainbow Unity — handoff (latest verified state)
 
-Last verified: **2026-11-24 15:56 UTC** (10:56 local), Claude session 018893e6 (new account) on the user's laptop. Unity is OPEN; Round 7 (coordinator only) is DONE (83.3 / 68.8, tagged validated/r7-final-83.3); nothing is running.
+Last verified: **2026-11-24 20:30 UTC** (15:30 local), Claude session da8aeec6 (new account) on the user's laptop. Round 8 done (83.8 / 70.3, long continuous course, natural swimming). Unity is OPEN.
 Read this first in any new Claude account or session. **This is an existing project — never start over.**
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
+## NOW - read this first (concise; rewritten after every finished step; the DETAILED LOG below is history)
+Updated 2026-11-24 ~15:30 local (session da8aeec6, new account). Cross-account rules: CLAUDE.md "PERMANENT RULE" (two of them).
+- **USER MASTER DIRECTION (13:28 local, BINDING):** `references/correction-guides-2026-11-24b/README.md` + 3 full-resolution images (a guide 03 was announced but never
+  arrived: ask). Water first, natural swimming, continuous 3D world, smooth camera, wake, foam; gameplay judged separately (user target >= 9/10); one unedited 30-60 s
+  recording; 90-95 visual + layout where achievable; conserve credits (max 2 specialists, none used in round 8); no Screen 06 without approval. The older guides
+  `references/correction-guides-2026-11-24/` stay binding too.
+- **CURRENT BEST = ROUND 8 (coordinator only): R8_final = visual 83.8 / layout 70.3** (protected before: r7 83.3 / 68.8), full rebuild, console clean; evidence
+  `evidence/screen05/round8/`. Gameplay check passed (steer L -3.22 / R 1.19, jump 1.47 + landing, coins, hearts 5/5, Swimming).
+- **WHAT ROUND 8 CHANGED**
+  1. LONG CONTINUOUS COURSE: swim s 14 -> 466 (~41 s; was 5 s). `Course05Extension` (run time) builds river / foam / walls / rings / paddles beyond the baked stretch from the same
+     generators; extra rings / paddles / coins grow in far away so the approved view is unchanged; the tunnel bends gently after s 262 (`RiverPath.Bend`).
+  2. SWIMMING: `BennyController` rewritten (river-bank limits from `SwimLine05.Limits` so he never swims on foam or floor, heading toward real travel, buoyancy spring on the
+     animated water, ballistic jump, soft plunge landing); `BennySwimAnimator` (one continuous stroke phase, arms, two hidden feet); camera yaw follows the current (`Screen05CameraRig`).
+  3. WATER: `RainbowRiver.hlsl` round 8 = silk texture (`RainbowSilk05.png`, flow-aligned, distance octaves) + measured colour ramp (`RiverRamp05`) + broad sheen (`RiverSheen05`) +
+     wake map (`WakeSheen05`: light, pink, foam amount in Benny's frame) + lace texture (`RainbowLace05.png`). Factories: `WaterTextureFactory`, `WaterSheenFactory`;
+     scripts `AgentScripts/screen05_make_water_textures.cs`, `_make_water_sheen.cs`, `_make_lace.cs`, `_sheen_calibrate.cs` (loop: `tools/screen05-sheenloop.ps1`).
+     NOTE: make_water_sheen resets the calibration: run the sheen loop (2 steps) afterwards. Grade constants in WaterTextureFactory + RBW_Disp must follow the tuning file.
+  4. SPLASH: real 3D lace sheets (`RainbowSplashLace.shader`, `SplashWake.BuildLaceMesh`; steer / burst reactive) + lather on the water from the measured foam amount; old ropes off.
+  5. FOAM: soft white-blue soap lumps with small blue holes (`RainbowFoam.hlsl`), no beads on the crest, wake balls removed. 6. Coins, Benny's fur colour, HUD bar / heart / digits.
+  7. `Screen05RenderScale` (adaptive resolution in real time only; captures always full size): ~26-30 fps at 1080x1920 in the Editor on this laptop (GPU-bound).
+- **NEXT (cheapest first):** (1) user feedback on the recording; (2) loss map `tools/diag/errormap.ps1 -Still <R8_final> -Oracle`: near water 78.5, foam right 78.4, bubbles right 79.4, foam left
+  79.9, splash 80.8 are the weakest areas; (3) right bank foam narrower (covers the wall at (830,740)); left pink band near x 0-150; (4) wake sweeps more glossy; (5) far river path at the throat
+  (approved winds right then left); (6) HUD: pause ring, coin icon rim, text shadows; (7) fitter again after every look change (2 min, free): params example
+  `UnityProject/Recordings/Screen05/work/autofit_params.txt`, merge with `perl tools/diag/tuning-merge.pl "note"`; keep constraints (foam >= 0.94, lace visible) - unconstrained it
+  greys the foam and hides the spray for points.
+- VALIDATED VERSIONS (safe fallbacks; every autosave commit after the newest one may hold EXPERIMENTAL work):
+  | git tag | visual / layout | what | evidence |
+  |---|---|---|---|
+  | validated/r8-final-83.8 | 83.8 / 70.3 | Round 8: long course, natural swimming, flowing silk water, lace splash, soft foam | evidence/screen05/round8/ |
+  | validated/r7-final-83.3 (0bf3a2c) | 83.3 / 68.8 | Round 7: ring N fitted, raised glossy heart | evidence/screen05/round7/ |
+  | validated/r6-final-83.1 (dc0221a) | 83.1 / 68.5 | Round 6 | evidence/screen05/round6/ |
+  | validated/r5-final-82.5 (a84495d) | 82.5 / 68.1 | Round 5 | evidence/screen05/round5/ |
+  | validated/r4b-final-80.5 (a3f7d54) | 80.5 / 66.6 | Round 4b | evidence/screen05/round4/ |
+- TOOLS ADDED: `tools/screen05-quick.ps1` (short cycle), `screen05-eval.ps1`, `screen05-recompile.ps1`, `screen05-record.ps1` (40 s recording), `screen05-sheenloop.ps1`,
+  `tools/diag/patches.ps1`, `AgentScripts/screen05_motion_strip.cs` (motion numbers + contact sheet), `screen05_fps.cs`, `screen05_benny_views.cs`.
+- INCIDENT 13:51 local: a helper function named `Rd` ran the PowerShell alias (Remove-Item) and deleted 4 source files; restored at once from the autosave commit, nothing lost
+  (rule in CLAUDE.md). Nothing else was deleted.
+- UNITY NOTES: a Claude session's end can kill the Editor; on reopen the "Recovering Scene Backups" question appears - answer Yes (keeps a copy in `Assets/_Recovery`, harmless; ask before
+  deleting). Never commit while the recorder runs. BLENDER 5.3.0 portable is installed (no mesh job needed yet). GIT BASH / permissions: see CLAUDE.md. DISK: C: ~5 GB free.
+- WAITING ON THE USER: (a) their judgement of the recording + side-by-side; (b) guide 03; (c) permission rules v2 in `tools/claude-permissions/` (the user applies them);
+  (d) the GitHub repo is PUBLIC although the user called it private.
+<!-- NEXT-TASK:END -->
+
+## DETAILED LOG (older entries, newest first; the NOW block above wins where they disagree)
+
+**MOVED FROM NOW (blocks of sessions 018893e6 10:56 and da8aeec6 13:21 local, superseded 15:30 local):**
+
 ## RESUMED 2026-11-24 13:21 local (session da8aeec6, new account) - IN PROGRESS, read before the older NOW block below
 - New BINDING user direction (13:28 local): `references/correction-guides-2026-11-24b/README.md` (water first, natural swimming, continuous world,
   wake, foam, 30-60 s recording, gameplay rated separately; a guide 03 was announced but never arrived).
@@ -61,9 +108,7 @@ Updated 2026-11-24 10:56 local (session 018893e6, new account; the previous acco
   Windows Security blocked a Burst DLL in Library (the game does not need Burst).
 - WAITING ON THE USER: (a) next step (cheap coordinator items vs a specialist round); (b) permission rules v2 in `tools/claude-permissions/` - the user applies them;
   (c) the GitHub repo is PUBLIC although the user called it private.
-<!-- NEXT-TASK:END -->
 
-## DETAILED LOG (older entries, newest first; the NOW block above wins where they disagree)
 
 **MOVED FROM NOW (08:05 local block of session b41bab30, superseded 08:55 local):** Round 4b launched 08:00 as run `wf_54c15c25-7a2` (TUNNEL | RIVER; script
 `staging/shared/round4b-visual.workflow.js`, baseline still `20261124_075315_R4_barrel` 67.0 / 47.5; journal under session b41bab30-da85-4ac4-a946-62f3f4cd4aef).

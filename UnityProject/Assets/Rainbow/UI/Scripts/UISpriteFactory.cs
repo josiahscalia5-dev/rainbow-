@@ -129,7 +129,7 @@ namespace Rainbow.Screen05
             Texture2D t = NewTex(size, size, name);
             Color[] px = new Color[size * size];
             float c0 = size * 0.5f, r = size * 0.5f - 1.5f;
-            float ring = size * 0.048f;
+            float ring = size * 0.034f;
             Color fill = new Color(74 / 255f, 2 / 255f, 120 / 255f, 0.96f), white = new Color(0.98f, 0.93f, 1f, 0.97f);   // round 4: dark like the approved
             float barW = size * 0.14f, barH = size * 0.45f, gap = size * 0.12f;
             for (int y = 0; y < size; y++)
@@ -142,6 +142,9 @@ namespace Rainbow.Screen05
                     Color c = Color.Lerp(fill, new Color(96 / 255f, 10 / 255f, 138 / 255f, 0.96f), Mathf.Clamp01(dy / r * 0.5f + 0.5f));
                     float rd = Mathf.Abs(d + ring * 0.5f) - ring * 0.5f;
                     c = Over(c, white, Mathf.Clamp01(0.5f - rd));
+                    // round 8: glassy inner line and a soft light on the lower left of the rim
+                    float rd2 = Mathf.Abs(d + ring * 2.7f) - ring * 0.28f;
+                    c = Over(c, new Color(0.82f, 0.62f, 0.96f, 0.55f), Mathf.Clamp01(0.5f - rd2));
                     float b1 = RoundedRectSdf(dx + gap * 0.5f + barW * 0.5f, dy, barW * 0.5f, barH * 0.5f, barW * 0.5f);
                     float b2 = RoundedRectSdf(dx - gap * 0.5f - barW * 0.5f, dy, barW * 0.5f, barH * 0.5f, barW * 0.5f);
                     c = Over(c, white, Mathf.Clamp01(0.5f - Mathf.Min(b1, b2)));
@@ -158,7 +161,7 @@ namespace Rainbow.Screen05
         {
             Texture2D t = NewTex(size, size, name);
             Color[] px = new Color[size * size];
-            Color top = Hex("#ff5cb0"), bottom = Hex("#f01a74"), rim = Hex("#d01058");   // round 4: approved heart (251,113,200) .. (238,24,120)
+            Color top = Hex("#ff58a0"), bottom = Hex("#ee1562"), rim = Hex("#c80a4c");   // round 4: approved heart (251,113,200) .. (238,24,120)
             for (int y = 0; y < size; y++)
                 for (int x = 0; x < size; x++)
                 {
@@ -179,19 +182,20 @@ namespace Rainbow.Screen05
                     Color c = Color.Lerp(rim, Color.Lerp(bottom, top, hk), coverInner);
                     // round 7 (user guide #7 "raised heart"): the edge band darkens toward the outline so the heart reads as a rounded,
                     // raised gem (approved heart luminance p10 68 / p90 176, Unity was 86 / 128)
-                    Color edge = new Color(c.r * 0.78f, c.g * 0.7f, c.b * 0.78f, 1f);
+                    Color edge = new Color(c.r * 0.9f, c.g * 0.55f, c.b * 0.72f, 1f);
                     c = Color.Lerp(edge, c, Mathf.SmoothStep(0f, 1f, depth));   // smooth rounding, no outline ring
                     // glossy sheen, upper left (round 7: broader 0.18 -> 0.24, softer) + a small crisp white specular spot
                     float hx = x / (float)size - 0.33f, hy = y / (float)size - 0.68f;
                     float hl = Mathf.Clamp01(1f - Mathf.Sqrt(hx * hx * 3.2f + hy * hy * 7f) / 0.24f);
-                    c = Over(c, Color.white, hl * 0.45f * coverInner);
+                    c = Over(c, new Color(1f, 0.86f, 0.93f), hl * 0.5f * coverInner);
                     float qx = x / (float)size - 0.31f, qy = y / (float)size - 0.70f;
-                    float spec = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(1.4f * (1f - Mathf.Sqrt(qx * qx * 3f + qy * qy * 6f) / 0.16f)));   // ~12 x 8 px like the approved
+                    float qr = qx * 0.82f + qy * 0.57f, qs = -qx * 0.57f + qy * 0.82f;                   // round 8: a bigger slanted window highlight on the left lobe
+                    float spec = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(1.5f * (1f - Mathf.Sqrt(qr * qr * 2.2f + qs * qs * 7f) / 0.2f)));
                     c = Over(c, Color.white, spec * 0.95f * coverInner);
                     // round 8: a thin bright glassy rim round the raised heart, strongest at the lower left (approved: pink-white edge light)
                     float rimL = Mathf.Clamp01((1f - depth) * 1.25f) * (1f - Mathf.SmoothStep(0.15f, 0.55f, depth));
                     float rimDir = Mathf.Clamp01(0.55f + 0.5f * (0.5f - vy) + 0.35f * (0.5f - x / (float)size));
-                    c = Over(c, new Color(1f, 0.72f, 0.86f), rimL * rimDir * 0.7f);
+                    c = Over(c, new Color(1f, 0.66f, 0.78f), rimL * rimDir * 0.85f);
                     c.a = cover;
                     px[y * size + x] = c;
                 }
@@ -283,7 +287,7 @@ namespace Rainbow.Screen05
                     c = Over(c, glyph, DollarCover(q, 31f));
                     c = Over(c, bevel, DollarCover(q + new Vector2(3f, 4f), 13f));
                     // round 8: the HUD icon is drawn without the scene light: the approved icon is a brighter yellow gold
-                    if (hudGold) c = new Color(Mathf.Min(1f, c.r * 1.06f), Mathf.Min(1f, c.g * 1.34f), Mathf.Min(1f, c.b * 1.25f), c.a);
+                    if (hudGold) c = new Color(Mathf.Min(1f, c.r * 1.05f), Mathf.Min(1f, c.g * 1.12f), Mathf.Min(1f, c.b * 0.95f), c.a);
                     c.a = shape;
                     px[y * size + x] = c;
                 }

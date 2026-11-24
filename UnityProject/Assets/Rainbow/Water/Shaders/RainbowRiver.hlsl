@@ -212,7 +212,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float bow = back - 0.8 * dlW * dlW + 0.014 * sin(bt * 2.2 + dlW * 5.0) + 0.01 * sin(bt * 3.7 + dlW * 9.0);
     float wakeA = bOn * wk * smoothstep(0.8, 1.25, back) * (1.0 - smoothstep(3.3, 4.0, back)) * (1.0 - smoothstep(1.7, 2.15, abs(dlW)));
     float dlS = dlW - 0.03;
-    float tS = (abs(dlS) - (0.21 + 0.5 * back) - 0.03 * sin(v5 * 1.3 + dlS * 3.0)) / (0.16 + 0.05 * back);
+    float tS = (abs(dlS) - (0.21 + 0.5 * back) - 0.03 * sin(v5 * 1.3 + dlS * 3.0)) / (0.20 + 0.07 * back);
     float sw = exp(-tS * tS * 0.95) * smoothstep(1.0, 1.55, back) * (1.0 - smoothstep(2.15, 2.75, back));
     float gk = saturate(sw * (0.6 + 0.8 * T));
     float mid = 1.0 - smoothstep(-1.4, -0.5, tS);                               // 1 between the two sweeps
@@ -223,14 +223,14 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float arcB = exp(-ca * ca / (0.17 * 0.17)) * arcOn, arcL = exp(-ca * ca * 230.0) * aSeg * arcOn;
     float Yc = 0.09 + (row - 0.333) * _SheenLook.z * 1.1 + arcB * (0.14 + 0.16 * aSeg) + arcL * 0.4;
     float Yw = lerp(0.22 + (row - 0.333) * 0.75, Yc, mid);
-    Yw = lerp(Yw, 0.37 + (row - 0.333) * 1.1, smoothstep(0.1, 0.7, gk));
+    Yw = lerp(Yw, 0.42 + (row - 0.333) * 1.25, smoothstep(0.1, 0.7, gk));
     // the approved standing pattern (broad light only) between and on the sweeps; it breathes with the bow wobble
     float backS = -db;                                                         // signed: < 0 beside and ahead of him
     float2 wuv = float2((dlW + 0.012 * sin(bt * 2.9 + backS * 6.0) + 2.2) / 4.4, (backS + (bow - back + 0.8 * dlW * dlW) * 1.2 + 0.7) / 4.5);
     float4 wm = SAMPLE_TEXTURE2D_LOD(_WakeSheen, sampler_WakeSheen, wuv, 0);
     float wakeFoam = wm.a * bOn * wk * smoothstep(-0.7, -0.45, backS) * (1.0 - smoothstep(3.2, 3.7, backS)) * (1.0 - smoothstep(1.8, 2.15, abs(dlW)));
     wakeFoam *= (1.0 - smoothstep(0.0, 0.3, abs(dlW) - (1.0 + 0.6 * max(backS, 0.0)))) * (1.0 - smoothstep(1.5, 1.9, abs(dlW))) * (1.0 - smoothstep(1.9, 2.6, backS));
-    Yw = lerp(Yw, clamp(wm.r, 0.06, 0.6) + (row - 0.333) * 0.34 + arcL * 0.1, 0.8 * saturate(wm.b * 1.3 - 0.2) * max(mid, smoothstep(0.1, 0.6, gk)));
+    Yw = lerp(Yw, clamp(wm.r, 0.06, 0.6) + (row - 0.333) * 0.34 + (arcL * 0.3 + arcB * (0.05 + 0.07 * aSeg)) * mid, 0.8 * saturate(wm.b * 1.3 - 0.2) * max(mid, smoothstep(0.1, 0.6, gk)));
     Y = lerp(Y, Yw, wakeA);
     float qw = lerp(0.1, 1.5, smoothstep(0.06, 0.85, gk));
     qe = lerp(qe, qw + (T - 0.5) * 0.3, wakeA * max(smoothstep(0.04, 0.3, gk), mid));

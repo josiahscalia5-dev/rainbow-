@@ -11,7 +11,7 @@ namespace Rainbow.Screen05
     public sealed class HudGlyphText : MaskableGraphic
     {
         /// <summary>Round 8: the approved counters are a medium weight (stroke ~0.18 of the capital height), lighter than the banner.</summary>
-        const float Thin = 0.022f;
+        const float Thin = 0.006f;
 
         const string Chars = "0123456789,/+";
         const int CellW = 72, CellH = 96, CapPx = 60, PadX = 8, PadY = 18;

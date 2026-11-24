@@ -101,7 +101,7 @@ Shader "Rainbow/Water/RiverGlints"
                     float2 a = pv2.xy / max(-pv2.z, 0.1) - pv.xy / max(-pv.z, 0.1);
                     a *= 1.0 / max(length(a), 1e-6);
                     a = normalize(a + float2(1e-5, 0.0));
-                    float fs = (cls > 2.5 ? 1.1 : 0.85) + (cls < 0.5 || cls > 2.5 ? _R5Glint.x : _R5Glint.y);
+                    float fs = (cls > 2.5 ? 1.3 : 0.9) + (cls < 0.5 || cls > 2.5 ? _R5Glint.x : _R5Glint.y);
                     pv.xy += (a * (v.uv0.y * len) + float2(-a.y, a.x) * (v.uv0.x * wid)) * fs;
                 }
                 // same pixel, a little nearer (the swell never hides the glints)
@@ -132,8 +132,12 @@ Shader "Rainbow/Water/RiverGlints"
                     float r2 = x * x * 0.4 + y * y;
                     a = saturate(max(arm1, arm2) + exp(-r2 * 46.0) + 0.22 * exp(-r2 * 7.0) * ax * ay);
                 }
-                a = saturate(a * i.col.a);
-                return half4(i.col.rgb * a, a);
+                // round 8: a soft cyan halo round the white sliver (approved glints glow)
+                float core = saturate(a * i.col.a);
+                float halo = i.uvk.z < 0.5 ? 0.0 : exp(-(x * x * 1.6 + y * y * 1.0) * 5.5) * saturate(1.0 - x) * saturate(1.0 - y) * 0.42 * i.col.a;
+                a = saturate(core + halo * (1.0 - core));
+                float3 rgb = lerp(float3(0.12, 0.78, 1.0), i.col.rgb, i.uvk.z < 0.5 ? 1.0 : saturate(core * 1.4));
+                return half4(rgb * a, a);
             }
             ENDHLSL
         }
