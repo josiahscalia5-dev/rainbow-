@@ -34,8 +34,8 @@ namespace Rainbow.Screen05
         [Tooltip("Large soap bubbles (bubbles.ts RIDE.high.big = 19; bubbles round 3: 22 = the approved ~5 big + ~13 medium " +
                  "at the sides, the rest far / leaving the frame).")]
         public int bigCount = 22;
-        [Tooltip("Small ring bubbles near the banks (bubbles.ts RIDE.high.small05 = 22; round 3: 26, approved ~20 small ones).")]
-        public int smallCount = 22;
+        [Tooltip("Small ring bubbles near the banks (bubbles.ts RIDE.high.small05 = 22; round 3: 18 + 12 wake, approved ~20 small).")]
+        public int smallCount = 18;
         [Tooltip("Stage speed (course.ts 05 = 11): bubbles drift with the current.")]
         public float stageSpeed = 11f;
         [Tooltip("Wanted on-screen DIAMETER at spawn, big bubbles, at the BOTTOM of the side band (px of the 864x1536 frame; " +

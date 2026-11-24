@@ -121,7 +121,7 @@ void RainbowBubble_half(half2 P, half Seed, half Px, half Fade, half Time, out h
     float3 c;
     float a;
     RainbowBubble_float((float2)P, (float)Seed, (float)Px, (float)Fade, (float)Time,
-                        float4(1.0, 1.0, 0.68, 0.45), float4(1.0, 0.5, 2.2, 0.76), c, a);
+                        float4(1.3, 1.2, 0.62, 0.45), float4(1.0, 0.5, 2.2, 0.76), c, a);
     Color = (half3)c;
     Alpha = (half)a;
 }

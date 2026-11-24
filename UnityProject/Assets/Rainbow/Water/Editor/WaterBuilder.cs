@@ -169,7 +169,7 @@ namespace Rainbow.Screen05.EditorTools
         /// <summary>Bubble look (RainbowBubble.hlsl), bubbles round 3 vs zoomed crops of the approved 05 bubbles:
         /// big = (rim gain, blob gain, lens alpha, film mix), (cyan spot gain, glint gain, rim half width px, blob ring radius);
         /// small = (ring gain, dot gain, body alpha, glint gain).</summary>
-        public static readonly Vector4 BubbleLook0 = new Vector4(1f, 1f, 0.68f, 0.45f);
+        public static readonly Vector4 BubbleLook0 = new Vector4(1.3f, 1.2f, 0.62f, 0.45f);
         public static readonly Vector4 BubbleLook1 = new Vector4(1f, 0.5f, 2.2f, 0.76f);
         public static readonly Vector4 BubbleLookS = new Vector4(1f, 1f, 0.3f, 0.6f);
 
@@ -186,8 +186,9 @@ namespace Rainbow.Screen05.EditorTools
             // bubbles.ts uNear was 3.2 / intensity 1.
             mat.SetFloat("_NearFade", 1.5f);
             mat.SetFloat("_SoftDepth", 0.3f);
-            // (bubbles round 3) 1.4 -> 1.2: with the opaque blue lens the bubbles read too bright / white-cyan
-            mat.SetFloat("_Intensity", 1.2f);
+            // (bubbles round 3) 1.4 -> 1.1: with the opaque blue lens the bubbles read too bright / white-cyan (live variants
+            // b3: 1.0 / 1.2 / 1.4 = visual 57.9 / 57.8 / 57.7)
+            mat.SetFloat("_Intensity", 1.1f);
             // (bubbles round 2026-11-23) bubbles.ts on-screen caps: MAX_PX_RIDE 66 / MAX_PX_SMALL 22 px diameters (864x1536);
             // round 3: 68 px (approved big edge bubbles 52-65 px)
             mat.SetFloat("_MaxPx", 34f);

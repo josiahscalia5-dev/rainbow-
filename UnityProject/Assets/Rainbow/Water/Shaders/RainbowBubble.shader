@@ -12,7 +12,7 @@ Shader "Rainbow/Water/Bubble"
         _Intensity ("Intensity", Range(0.2, 2)) = 1.0
         _MaxPx ("Max on-screen radius, big bubbles (px of the 864x1536 frame)", Float) = 33
         _MaxPxSmall ("Max on-screen radius, small bubbles (px of the 864x1536 frame)", Float) = 11
-        _Look0 ("Big: rim gain, blob gain, lens alpha, film mix", Vector) = (1, 1, 0.68, 0.45)
+        _Look0 ("Big: rim gain, blob gain, lens alpha, film mix", Vector) = (1.3, 1.2, 0.62, 0.45)
         _Look1 ("Big: cyan / pink spot gain, glint gain, rim half width (ref px), blob ring radius", Vector) = (1, 0.5, 2.2, 0.76)
         _LookS ("Small: ring gain, dot gain, body alpha, glint gain", Vector) = (1, 1, 0.3, 0.6)
     }
