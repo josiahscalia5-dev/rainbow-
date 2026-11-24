@@ -169,9 +169,9 @@ namespace Rainbow.Screen05.EditorTools
         /// <summary>Bubble look (RainbowBubble.hlsl), bubbles round 3 vs zoomed crops of the approved 05 bubbles:
         /// big = (rim gain, blob gain, lens alpha, film mix), (cyan spot gain, glint gain, rim half width px, blob ring radius);
         /// small = (ring gain, dot gain, body alpha, glint gain).</summary>
-        public static readonly Vector4 BubbleLook0 = new Vector4(1f, 1f, 0.3f, 0.5f);
-        public static readonly Vector4 BubbleLook1 = new Vector4(1f, 0.6f, 2.2f, 0.76f);
-        public static readonly Vector4 BubbleLookS = new Vector4(1f, 1f, 0.22f, 0.6f);
+        public static readonly Vector4 BubbleLook0 = new Vector4(1f, 1f, 0.68f, 0.45f);
+        public static readonly Vector4 BubbleLook1 = new Vector4(1f, 0.5f, 2.2f, 0.76f);
+        public static readonly Vector4 BubbleLookS = new Vector4(1f, 1f, 0.3f, 0.6f);
 
         static void BuildBubbles(Transform root)
         {

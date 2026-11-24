@@ -38,24 +38,30 @@ namespace Rainbow.Screen05
         public int smallCount = 26;
         [Tooltip("Stage speed (course.ts 05 = 11): bubbles drift with the current.")]
         public float stageSpeed = 11f;
-        [Tooltip("Wanted on-screen DIAMETER at spawn, big bubbles (px of the 864x1536 frame). bubbles.ts BIG_PX 25-65; round 3 " +
-                 "18-56: the side bubbles now ride the current and grow ~1.3-2x in perspective before they leave the frame.")]
-        public Vector2 bigPx = new Vector2(18f, 56f);
-        [Tooltip("Wanted on-screen DIAMETER at spawn, small bubbles (bubbles.ts 6 + 14 * rand^1.4).")]
-        public Vector2 smallPx = new Vector2(6f, 17f);
+        [Tooltip("Wanted on-screen DIAMETER at spawn, big bubbles, at the BOTTOM of the side band (px of the 864x1536 frame; " +
+                 "bubbles.ts BIG_PX 25-65). Round 3: the size now follows the screen row (bigPxFar at the top of the band).")]
+        public Vector2 bigPx = new Vector2(28f, 62f);
+        [Tooltip("Wanted on-screen DIAMETER at spawn, big bubbles, at the TOP (far end) of the side band.")]
+        public Vector2 bigPxFar = new Vector2(14f, 40f);
+        [Tooltip("Wanted on-screen DIAMETER at spawn, small bubbles, bottom of the band (bubbles.ts 6 + 14 * rand^1.4).")]
+        public Vector2 smallPx = new Vector2(7f, 18f);
+        [Tooltip("Wanted on-screen DIAMETER at spawn, small bubbles, top (far end) of the band.")]
+        public Vector2 smallPxFar = new Vector2(5f, 13f);
         [Tooltip("Bubbles round 3: the side bubbles RIDE the current at this share of the stage speed (min, max). bubbles.ts " +
                  "drifted at 0.1x (big) / 0.2x (small), so with the camera at 11 u/s every bubble crossed the frame in ~0.5-1 s, " +
                  "still inflating: the frame only ever held a few small, faint ones. Riding at ~0.8x they float beside Benny for " +
                  "seconds, slowly growing and drifting out toward the frame edges (the approved big edge bubbles).")]
         public Vector2 sideCarry = new Vector2(0.74f, 0.88f);
         [Tooltip("Screen rows (px of the 864x1536 frame) where side bubbles are placed / born: top, bottom.")]
-        public Vector2 bandPx = new Vector2(515f, 1060f);
-        [Tooltip("Share of the side bubbles placed in the upper (far) part of the band, above farBottomPx (approved: ~3/4 of " +
-                 "the side bubbles float at y 500-720 along the far foam banks and walls).")]
-        [Range(0f, 1f)] public float farShare = 0.62f;
-        public float farBottomPx = 730f;
+        public Vector2 bandPx = new Vector2(515f, 1000f);
+        [Tooltip("Share of the side bubbles placed in the upper (far) band, bandPx.x..farBottomPx; the rest go to " +
+                 "farBottomPx..bandPx.y (approved: ~12 side bubbles at y 500-700, ~8 at 700-1000).")]
+        [Range(0f, 1f)] public float farShare = 0.55f;
+        public float farBottomPx = 700f;
         [Tooltip("Inner edge of the side band, |NDC x| of the portrait frame, big / small (bubbles.ts 0.55 / 0.5).")]
         public Vector2 innerXn = new Vector2(0.36f, 0.3f);
+        [Tooltip("Outer edge of the side band, |NDC x| (bubbles.ts 0.97; approved: no bubble centre beyond ~0.9).")]
+        public float outerXn = 0.9f;
         [Tooltip("Half width (NDC x) of the bubble-free stream corridor: lower frame (y > 691 px) / upper frame.")]
         public Vector2 corridorXn = new Vector2(0.47f, 0.26f);
         [Tooltip("Life of a side bubble (s), min / max (bubbles.ts 7-15).")]
@@ -74,7 +80,7 @@ namespace Rainbow.Screen05
         {
             public Vector3 pos, vel;
             public float r, seed, phase, age, life;
-            public float ty, rise;                   // emerging: float up to height ty at rise u/s (0 = already floating)
+            public float rise;                       // newborn: extra upward speed out of the foam (decays; 0 = floating)
             public bool big, wake, dead;
         }
 
@@ -281,37 +287,43 @@ namespace Rainbow.Screen05
             float r = 0.1f, floorY = RiverPath.WaterY;
             for (int attempt = 0; attempt < 6; attempt++)
             {
-                // a side point of the portrait frame. Bubbles round 3: initial fill and respawns use the SAME band (they ride
-                // the current now, so the frame keeps the composition it starts with): mostly the upper (far) part along the
-                // far foam banks and walls, the rest down to the near water beside Benny
-                float yPx = Rand() < farShare ? Range(bandPx.x, farBottomPx) : Range(bandPx.x, bandPx.y);
+                // a side point of the portrait frame. Bubbles round 3: initial fill and respawns use the SAME bands (they ride
+                // the current now, so the frame keeps the composition it starts with): farShare of them in the upper (far)
+                // band along the far foam banks and walls, the rest in the lower band down to the near water beside Benny
+                // (approved: ~12 in y 500-700, ~8 in 700-1000, the bottom ones come from the wake set)
+                float yPx = Rand() < farShare ? Range(bandPx.x, farBottomPx) : Range(farBottomPx, bandPx.y);
                 float yn = 1f - 2f * yPx / RefH;
-                float xn = side * Range(b.big ? innerXn.x : innerXn.y, 0.97f);
+                float xn = side * Range(b.big ? innerXn.x : innerXn.y, outerXn);
                 Vector3 ray = camFwd + camRight * (xn * tanH) + camUp * (yn * tanV);
                 // distance (along the view axis) to the water plane, then somewhere between the camera and that point
                 float dw = ray.y < -1e-3f ? (RiverPath.WaterY - camPos.y) / ray.y : 40f;
                 dw = Mathf.Clamp(dw, 3f, 40f);
                 float d = Mathf.Max(3.9f, dw * Range(b.big ? 0.55f : 0.6f, 0.92f));
-                // keep inside the tube: shorten the ray while the point is beyond the wall
-                for (int k = 0; k < 4; k++)
+                // wanted on-screen diameter: smaller up in the far band, bigger down near the camera (approved: 15-42 px
+                // along the far banks, 30-62 px at the frame edges lower down)
+                float rowK = Mathf.Clamp01((yPx - bandPx.x) / Mathf.Max(1f, bandPx.y - bandPx.x));
+                float pxLo = b.big ? Mathf.Lerp(bigPxFar.x, bigPx.x, rowK) : Mathf.Lerp(smallPxFar.x, smallPx.x, rowK);
+                float pxHi = b.big ? Mathf.Lerp(bigPxFar.y, bigPx.y, rowK) : Mathf.Lerp(smallPxFar.y, smallPx.y, rowK);
+                float px = pxLo + (pxHi - pxLo) * Mathf.Pow(Rand(), b.big ? 1.25f : 1.4f);
+                // keep inside the tube and above the water / bank foam heap: slide toward the camera along the view ray, so
+                // the bubble keeps its screen spot (raising it moved the lower-band bubbles up into the far band)
+                bool ok = false;
+                for (int k = 0; k < 8; k++)
                 {
                     p = camPos + ray * d;
-                    if (Mathf.Abs(p.x) <= WallHalfWidth(p.y) - 0.45f) break;
-                    d *= 0.85f;
+                    float depthK = Mathf.Max(2.5f, Vector3.Dot(p - camPos, camFwd));
+                    r = px * depthK / (2f * focalRef);
+                    r = b.big ? Mathf.Clamp(r, 0.05f, 0.5f) : Mathf.Clamp(r, 0.01f, 0.15f);
+                    float sk = Mathf.Clamp(p.z, RiverPath.TunnelStart + 1f, RiverPath.TunnelLength - 1f);
+                    floorY = RiverSurface.HeightAt(p.x, sk)
+                           + (FoamBank.InChannel(p.x, sk, -r) ? 0.15f + 0.5f * r : 0.85f * FoamTop(Vector3.Distance(p, camPos)) + 0.4f * r);
+                    if (Mathf.Abs(p.x) <= WallHalfWidth(p.y) - r - 0.25f && p.y >= floorY) { ok = true; break; }
+                    if (d * 0.88f < 3.2f) break;
+                    d *= 0.88f;
                 }
                 // that side of the frame is all near wall (hard left / right): try the other side instead of clamping
                 // every respawn onto the same strip of wall (they piled up in one clump)
-                if (Mathf.Abs(p.x) > WallHalfWidth(p.y) - 0.45f) { side = -side; continue; }
-                float depth = Mathf.Max(2.5f, Vector3.Dot(p - camPos, camFwd));
-                // world radius from the wanted on-screen diameter at this depth
-                float px = b.big ? bigPx.x + (bigPx.y - bigPx.x) * Mathf.Pow(Rand(), 1.25f)
-                                 : smallPx.x + (smallPx.y - smallPx.x) * Mathf.Pow(Rand(), 1.4f);
-                r = px * depth / (2f * focalRef);
-                r = b.big ? Mathf.Clamp(r, 0.05f, 0.5f) : Mathf.Clamp(r, 0.01f, 0.15f);
-                // never under the water or buried in the bank foam heap
-                float s = Mathf.Clamp(p.z, RiverPath.TunnelStart + 1f, RiverPath.TunnelLength - 1f);
-                floorY = RiverSurface.HeightAt(p.x, s)
-                       + (FoamBank.InChannel(p.x, s, -r) ? 0.15f + 0.5f * r : 0.85f * FoamTop(Vector3.Distance(p, camPos)) + 0.4f * r);
+                if (!ok && Mathf.Abs(p.x) > WallHalfWidth(p.y) - 0.45f) { side = -side; continue; }
                 if (p.y < floorY) p.y = floorY;
                 float wall = WallHalfWidth(p.y) - r - 0.25f;
                 p.x = Mathf.Clamp(p.x, -wall, wall);

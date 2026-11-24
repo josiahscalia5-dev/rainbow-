@@ -116,6 +116,19 @@ namespace Rainbow.Screen05
             return md.ToMesh(name);
         }
 
+        /// <summary>
+        /// Point of the tunnel wall at angle phi (0 = top, + = rider's right) and s: the drum circle, with the right wall
+        /// foot moved toward the axis by DrumLayout05.FootDent (geometry round 2026-11-24).
+        /// </summary>
+        public static Vector3 WallPoint(float phi, float s)
+        {
+            float R = DrumLayout05.Radius;
+            float x = R * Mathf.Sin(phi);
+            float y = DrumLayout05.CentreY(s) + R * Mathf.Cos(phi);
+            float dent = Mathf.Min(DrumLayout05.FootDent(s, x > 0f ? 1 : -1, y), 0.5f * Mathf.Abs(x));   // no fold at the bottom
+            return new Vector3(DrumLayout05.AxisX + x - Mathf.Sign(x) * dent, y, s);
+        }
+
         // ------------------------------------------------------------------ gold ring band
         struct ProfilePoint
         {

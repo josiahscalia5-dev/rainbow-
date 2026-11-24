@@ -108,12 +108,13 @@ float2 RBW_BankEdges(float d, float hw, float Mb, float sm, float W)
     // (water round 3v 2026-11-23: rims refitted to the approved foam waterlines traced row by row and mapped onto the
     //  water: left 1.4 -> 3.0 m at s 20-27, down to a 0.4 m rim by s 33 (the old 1.9-2.3 m at s 30-33 was the big left
     //  heap over the left band); right at least 2.0 -> 1.5 m at s 23-25, 0.6 m at s 27-34, widening to 1.5 m by s 41)
-    // (geometry round 2026-11-24: the near-left rim at s 21-26 narrowed 0.6-0.9 m - approved foam waterline traced at
-    //  x 50-175 / y 720-790 = rims 1.0 / 1.1 / 1.2 / 1.7 / 2.1 / 2.7 m at s 21.2 / 22.8 / 24.5 / 25.3 / 26.6 / 27.1)
-    float rimL = 0.35 + 0.6 * RBW_FB_SS(136.9, 137.9, sm) + 0.2 * RBW_FB_SS(137.9, 140.0, sm)
-               + 0.9 * RBW_FB_SS(140.5, 143.0, sm) + 0.9 * RBW_FB_SS(142.5, 144.5, sm) - 0.4 * RBW_FB_SS(143.5, 146.5, sm)
-               - 0.6 * RBW_FB_SS(146.0, 148.0, sm) - 1.35 * RBW_FB_SS(148.0, 149.5, sm)
-               - 0.25 * RBW_FB_SS(149.5, 151.5, sm);
+    // (geometry round 2026-11-24: the near-left bank is a narrow ROPE along the wall foot, the water reaching it - the
+    //  approved foam waterline traced at x 50-175 / y 720-790 = rims ~1.0 / 1.1 / 1.2 m at s 21 / 23 / 24.5; the old
+    //  2.4-2.95 m shelf at s 24-31 read as a wide flat lather carpet: now 1.0 -> 1.25 -> 1.85 -> 1.7 -> 0.35 m at
+    //  s 21.2 / 24.3 / 26.8 / 30.3 / 34.8)
+    float rimL = 0.35 + 0.65 * RBW_FB_SS(136.9, 137.9, sm) + 0.25 * RBW_FB_SS(137.9, 141.0, sm)
+               + 0.6 * RBW_FB_SS(141.0, 143.5, sm) - 0.15 * RBW_FB_SS(144.0, 147.0, sm)
+               - 0.5 * RBW_FB_SS(147.0, 149.0, sm) - 0.85 * RBW_FB_SS(149.0, 151.5, sm);
     float rimLmin = lerp(rimL, 0.35, RBW_FB_SS(152.0, 154.0, sm));
     float rimRn = 0.62 + 0.9 * (1.0 - RBW_FB_SS(141.2, 143.2, sm)) + 0.5 * (1.0 - RBW_FB_SS(139.5, 141.0, sm))
                 + 0.35 * RBW_FB_SS(151.5, 154.0, sm) + 0.5 * RBW_FB_SS(154.5, 157.5, sm);

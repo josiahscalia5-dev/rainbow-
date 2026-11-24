@@ -30,36 +30,41 @@ void RainbowBubble_float(float2 P, float Seed, float Px, float Fade, float Time,
     float3 film = RBW_Iridescent(0.02 + 0.5 * (0.5 + 0.5 * sin(6.28318 * hue)));
     film = float3(film.r, film.g * 0.55 + 0.1, min(1.0, film.b * 1.1 + 0.1));
 
-    // 1. lens: milky blue glass with bright cyan refraction spots (top and bottom centre), also in front of the magenta
-    //    water and the violet walls (approved: the bubbles' insides always read blue-cyan, never just see-through)
-    float2 c1 = P - float2(0.04, -0.42);
-    float2 c2 = P - float2(-0.05, 0.42);
-    float spots = saturate((exp(-dot(c1, c1) * 6.0) + 0.75 * exp(-dot(c2, c2) * 8.0)) * L1.x);
-    float3 col = lerp(float3(0.14, 0.34, 0.95), float3(0.45, 0.93, 1.0), spots);
-    float a = L0.z * (0.85 + 0.45 * spots);
+    // 1. lens: deep blue glass (approved, sampled: the centres read (15-25, 120-130, 240-250) also in front of the magenta
+    //    water and the violet walls - never see-through), a bright cyan refraction glow in the lower half and a pink-white
+    //    haze in the upper half
+    float2 c1 = (P - float2(0.03, -0.5)) * float2(1.0, 1.35);
+    float2 c2 = (P - float2(-0.03, 0.5)) * float2(1.0, 1.4);
+    float cyanS = saturate(exp(-dot(c1, c1) * 5.5) * L1.x);
+    float pinkS = saturate(exp(-dot(c2, c2) * 6.5) * L1.x * 0.85);
+    float3 col = float3(0.03, 0.3, 1.0);
+    col = lerp(col, float3(0.25, 0.97, 1.0) * 1.15, cyanS);
+    col = lerp(col, float3(0.95, 0.74, 1.0) * 1.1, pinkS);
+    float a = L0.z + (0.95 - L0.z) * max(cyanS, pinkS) * 0.8;
 
-    // 2. thin-film tint toward the silhouette (a soft pink / violet / cyan halo inside the rim)
-    float filmK = smoothstep(0.42, 0.96, d) * L0.w;
-    col = lerp(col, film * 0.95 + 0.12, filmK);
-    a = lerp(a, max(a, 0.5), filmK);
+    // 2. thin-film tint toward the silhouette (approved: violet-blue / pink halo inside the rim)
+    float filmK = smoothstep(0.38, 0.92, d) * L0.w;
+    col = lerp(col, lerp(film, float3(0.42, 0.36, 1.0), 0.35), filmK);
+    a = lerp(a, max(a, 0.75), filmK);
 
     // 3. ring of soft pink-white lamp reflections just inside the rim (approved: ~9 rounded spots, whiter on top, pinker
     //    below); on tiny bubbles they merge into the rim
     float ang = atan2(P.y, P.x + 1e-6);
-    float dr = (d - L1.w) / 0.1;
-    float lobe = pow(saturate(0.5 + 0.5 * cos(9.0 * ang + Seed * 31.0)), 1.6);
+    float dr = (d - L1.w) / 0.12;
+    float lobe = pow(saturate(0.5 + 0.5 * cos(9.0 * ang + Seed * 31.0)), 1.2);
     float tiny = 1.0 - smoothstep(9.0, 18.0, pxR);
     float blob = saturate(lobe * exp(-dr * dr) * (0.78 + 0.3 * P.y) * L0.y * (1.0 - 0.6 * tiny));
     float3 blobCol = lerp(float3(1.0, 0.6, 0.97), float3(1.0, 0.94, 1.0), saturate(0.55 + 0.6 * P.y));
     col = lerp(col, blobCol * 1.3, blob);
     a = max(a, blob * 0.92);
 
-    // 4. crisp bright rim: white-lavender outline about 2-3 reference px wide, brighter up-left
+    // 4. crisp bright iridescent rim: white with a magenta / pink / cyan film tint (approved rim samples: (244, 86, 243),
+    //    (244, 154, 246), (211, 243, 251), (247, 253, 250)), about 2-3 reference px wide, brighter up-left
     float rimW = clamp(L1.z / pxR, 0.035, 0.3);             // half width in quad units
     float rq = (d - (1.0 - rimW)) / rimW;
     float rimLit = 0.78 + 0.32 * dot(P / max(d, 1e-3), float2(-0.6, 0.8));
     float rim = saturate(exp(-rq * rq) * L0.x * rimLit);
-    col = lerp(col, float3(1.0, 0.93, 1.0) * 1.35, rim);
+    col = lerp(col, lerp(float3(1.0, 0.95, 1.0), film, 0.4) * 1.35, rim);
     a = max(a, rim * 0.95);
 
     // 5. specular glint up-left + a small secondary glint down-right
@@ -95,7 +100,7 @@ void RainbowBubbleSmall_float(float2 P, float Seed, float Px, float Fade, float4
     float dots = saturate(pow(saturate(0.5 + 0.5 * cos(5.0 * ang + Seed * 23.0)), 3.0) * exp(-dq * dq)
                * smoothstep(4.0, 8.0, pxR) * LS.y);
     float hl = saturate(RBW_SS(0.15, 0.0, length(c - float2(-0.16, -0.17))) * LS.w);
-    float3 col = float3(0.3, 0.62, 1.0);                    // clear blue-tinted body
+    float3 col = float3(0.12, 0.5, 1.0);                    // clear blue-tinted body
     float a = LS.z;
     col = lerp(col, float3(1.0, 0.95, 1.0) * 1.2, dots);
     a = max(a, dots * 0.85);
@@ -114,7 +119,7 @@ void RainbowBubble_half(half2 P, half Seed, half Px, half Fade, half Time, out h
     float3 c;
     float a;
     RainbowBubble_float((float2)P, (float)Seed, (float)Px, (float)Fade, (float)Time,
-                        float4(1.0, 1.0, 0.3, 0.5), float4(1.0, 0.6, 2.2, 0.76), c, a);
+                        float4(1.0, 1.0, 0.68, 0.45), float4(1.0, 0.5, 2.2, 0.76), c, a);
     Color = (half3)c;
     Alpha = (half)a;
 }

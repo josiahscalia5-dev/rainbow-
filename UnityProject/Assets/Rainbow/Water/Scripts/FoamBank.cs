@@ -164,10 +164,9 @@ namespace Rainbow.Screen05
             float kW = SS(136.2f, 136.9f, sm) * (W >= 1f ? 1f : 0f);
             float wallL = -(W + d);
             float wallR = W - d;
-            float rimL = 0.35f + 0.6f * SS(136.9f, 137.9f, sm) + 0.2f * SS(137.9f, 140.0f, sm)
-                       + 0.9f * SS(140.5f, 143.0f, sm) + 0.9f * SS(142.5f, 144.5f, sm) - 0.4f * SS(143.5f, 146.5f, sm)
-                       - 0.6f * SS(146.0f, 148.0f, sm) - 1.35f * SS(148.0f, 149.5f, sm)
-                       - 0.25f * SS(149.5f, 151.5f, sm);
+            float rimL = 0.35f + 0.65f * SS(136.9f, 137.9f, sm) + 0.25f * SS(137.9f, 141.0f, sm)
+                       + 0.6f * SS(141.0f, 143.5f, sm) - 0.15f * SS(144.0f, 147.0f, sm)
+                       - 0.5f * SS(147.0f, 149.0f, sm) - 0.85f * SS(149.0f, 151.5f, sm);
             float rimLmin = Mathf.Lerp(rimL, 0.35f, SS(152.0f, 154.0f, sm));
             float rimRn = 0.62f + 0.9f * (1f - SS(141.2f, 143.2f, sm)) + 0.5f * (1f - SS(139.5f, 141.0f, sm))
                         + 0.35f * SS(151.5f, 154.0f, sm) + 0.5f * SS(154.5f, 157.5f, sm);
@@ -292,7 +291,7 @@ namespace Rainbow.Screen05
                 {
                     float step = rng.Range(0.19f, 0.27f);
                     float edge = WaterlineX(s, side);                               // the foam waterline (world x)
-                    float shelfW = Mathf.Max(0f, side * (side * WallAt(s) - edge));  // waterline -> drum wall (+ tuck)
+                    float shelfW = Mathf.Max(0f, side * (side * WallAt(s, side) - edge));  // waterline -> drum wall (+ tuck)
                     float cl = ClusterNoise(s, side);                               // 0 low stretch .. 1 big mound
                     float ropeW = Mathf.Min(Mathf.Max(shelfW, 0.4f), 0.95f + 0.45f * cl);
                     float crest = 0.3f + 0.17f * cl;
@@ -315,10 +314,10 @@ namespace Rainbow.Screen05
                         float x = edge + side * t * ropeW;
                         float z = s + rng.Range(-0.5f, 0.5f) * step;
                         float lump = Lump(x, z, side);
-                        float r = rng.Range(0.14f, 0.22f + 0.08f * cl) * (0.85f + 0.35f * lump);
+                        float r = rng.Range(0.13f, 0.2f + 0.07f * cl) * (0.85f + 0.35f * lump);
                         float surf = RopeSurface(t, crest) * (0.78f + 0.44f * lump);
                         float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + Mathf.Max(surf - 0.72f * r, -0.35f * r);
-                        AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.88f, 1f));
+                        AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.8f, 0.96f));
                     }
 
                     // 3) medium puffs filling the rope between the big ones (bluer: deeper in the pile)
@@ -332,7 +331,7 @@ namespace Rainbow.Screen05
                         float r = rng.Range(0.07f, 0.14f);
                         float surf = RopeSurface(t, crest) * (0.78f + 0.44f * lump);
                         float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + surf * 0.8f - 0.6f * r;
-                        AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.74f, 0.9f));
+                        AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.68f, 0.84f));
                     }
 
                     // 4) crest sprinkle: small bubbles resting on the rope (the fine suds texture of the approved puffs)
@@ -509,10 +508,13 @@ namespace Rainbow.Screen05
         /// <summary>|x| up to which foam puffs are placed at s: the drum wall at the water plus a little tuck under it.</summary>
         static float WallAt(float s) => Mathf.Min(WallX, WallChord(s) + 0.2f);
 
+        /// <summary>Geometry round 2026-11-24: the same for one side, honouring the dented right wall foot (DrumLayout05.FootDent).</summary>
+        static float WallAt(float s, int side) =>
+            Mathf.Min(WallX, WallChord(s) + 0.2f - DrumLayout05.FootDent(s, side, RiverPath.WaterY));
+
         static float ClampToWall(float x, float s)
         {
-            float w = WallAt(s);
-            return Mathf.Clamp(x, -w, w);
+            return x > 0f ? Mathf.Min(x, WallAt(s, 1)) : Mathf.Max(x, -WallAt(s, -1));
         }
 
         /// <summary>A smaller bubble piled on top of (and a little outward from) another one.</summary>
