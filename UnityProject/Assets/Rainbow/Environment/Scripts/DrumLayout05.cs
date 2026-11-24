@@ -79,12 +79,21 @@ namespace Rainbow.Screen05
         public struct BandProfile
         {
             public float height, width, lipHeight, lipWidth, groove;
+            /// <summary>Tunnel round 3: optional middle strand (0 width = none) and the groove floor above the wall.</summary>
+            public float midHeight, midWidth, baseHeight;
             public BandProfile(float height, float width, float lipHeight, float lipWidth, float groove)
             {
                 this.height = height; this.width = width; this.lipHeight = lipHeight; this.lipWidth = lipWidth; this.groove = groove;
+                midHeight = 0f; midWidth = 0f; baseHeight = 0f;
             }
-            /// <summary>Half the total axial width (band + groove + lip).</summary>
-            public float HalfWidth => (width + groove + lipWidth) * 0.5f;
+            public BandProfile(float height, float width, float midHeight, float midWidth, float lipHeight, float lipWidth,
+                float groove, float baseHeight)
+            {
+                this.height = height; this.width = width; this.lipHeight = lipHeight; this.lipWidth = lipWidth; this.groove = groove;
+                this.midHeight = midHeight; this.midWidth = midWidth; this.baseHeight = baseHeight;
+            }
+            /// <summary>Half the total axial width (main strand + grooves + middle strand + lip).</summary>
+            public float HalfWidth => (width + groove + lipWidth + (midWidth > 0f ? midWidth + groove : 0f)) * 0.5f;
             /// <summary>Shader vector _BandG: (main band centre z, main half width, lip centre z, lip half width) in metres.</summary>
             public Vector4 ShaderBandG
             {
@@ -101,9 +110,12 @@ namespace Rainbow.Screen05
         /// px thick (~0.15-0.17 of the radius, Unity ~24 / 14 px), but 0.17 / far 0.13 (cycles frame_t5 / t6) turned the
         /// throat into a thick orange target (throat 67.9 -> 64.1) and was REJECTED: thickness stays a gold-look task.
         /// </summary>
-        public static readonly BandProfile NearBand = new BandProfile(0.13f, 0.8f, 0.065f, 0.32f, 0.1f);
-        /// <summary>environment.ts band05 (the thinner far rings).</summary>
-        public static readonly BandProfile FarBand = new BandProfile(0.095f, 0.78f, 0.045f, 0.26f, 0.07f);
+        // Tunnel round 3 (2026-11-23): the approved rings are bundles of rounded polished strands (a fat main strand, a
+        // middle strand and a thin lip, narrow dark grooves between them): main 0.135 r / 0.6 m, middle 0.105 r / 0.36 m,
+        // lip 0.075 r / 0.26 m, grooves 0.05 m sitting 0.035 r above the wall (was one band 0.13 r / 0.8 m + lip).
+        public static readonly BandProfile NearBand = new BandProfile(0.135f, 0.6f, 0.105f, 0.36f, 0.075f, 0.26f, 0.05f, 0.035f);
+        /// <summary>environment.ts band05 (the thinner far rings); tunnel round 3: three strands like the near rings.</summary>
+        public static readonly BandProfile FarBand = new BandProfile(0.1f, 0.58f, 0.08f, 0.3f, 0.06f, 0.22f, 0.04f, 0.025f);
         /// <summary>Rings with s above this use FarBand.</summary>
         public const float FarBandFromS = 80f;
 
@@ -112,7 +124,9 @@ namespace Rainbow.Screen05
         // deep ones were missing or hidden in the glow disc), plus the near ring whose left crown runs down the left frame
         // edge (~(10, 480)) and stands on the foam at ~(90, 700) (in the 1 m near-floor drop, i.e. centred on the
         // vanishing-point height). 5.6 only shows for camera s < 5. Replaces the light round's eye + [59 .. 272] set.
-        static readonly float[] ApprovedRingS = { 5.6f, 24.3f, 45.5f, 66.4f, 106.5f, 163.6f, 230.1f, 333.0f, 450.4f };
+        // Tunnel round 3: + a ring at s 283 (r ~37 px): the approved deep throat is a DENSE stack of rings (r 63, 44, 37, 30,
+        // 22 px measured on a 4x crop; the two smaller ones at r ~15 / 9 px are painted on the throat cap).
+        static readonly float[] ApprovedRingS = { 5.6f, 24.3f, 45.5f, 66.4f, 106.5f, 163.6f, 230.1f, 283.0f, 333.0f, 450.4f };
 
         /// <summary>One wall paddle: s of the tray centre, wall side (-1 left, +1 right), height of its wall mount (m).</summary>
         public struct PaddleSlot

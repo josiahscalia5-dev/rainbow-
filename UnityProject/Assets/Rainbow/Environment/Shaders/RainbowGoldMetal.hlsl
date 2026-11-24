@@ -19,6 +19,8 @@
 //   float4 _PaddleParams;  (env highlight strength, strip streak strength, contour darkness, -)
 //   float4 _FrameParams;   (moving glint strength, glint frequency, -, -)
 //   float4 _GoldTone;      ring band tone curve (exponents r, g, b, amount 0..1)
+//   float4 _RingLook;      polished ring metal (key highlight, highlight sharpness, reflection, cavity darkness);
+//                          x <= 0 = the old stylised band palette (RainbowBandShade)
 //   float  _Exposure;
 #ifndef RAINBOW_GOLD_METAL_INCLUDED
 #define RAINBOW_GOLD_METAL_INCLUDED
@@ -107,14 +109,80 @@ float3 RainbowApplyFarGlow(float3 c, float dist)
     return lerp(c, _FarGlowColor.rgb * 0.9, min(1.0, fg * 0.55)) + _FarGlowColor.rgb * fg * 0.25;
 }
 
-void RainbowGoldRing_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS, float3 PositionOS, float3 AxisWS, out float3 Color)
+// Tunnel round 3 (2026-11-23): REALISTIC polished copper-gold for the ring bands. The approved rings are chunky bundles of
+// rounded strands: a saturated orange-gold body that darkens to deep red-brown in the grooves and toward grazing angles,
+// ONE crisp warm-white specular line along every strand, the purple walls / gold rings reflected in the metal, and small
+// warm marquee bulbs on the main strand. The mesh (DrumMeshes05.BuildRing) carries per-vertex strand data:
+// vertex colour r = cavity (1 crest .. 0.25 groove), g = crest (1 on the strand top), b = strand (0 main, 0.5 middle,
+// 1 lip). _RingLook = (key highlight strength, highlight sharpness, reflection strength, cavity darkness).
+float3 RainbowRingMetal(float deep, float3 N, float3 V, float3 P, float3 axisWS, float4 vc, out float topArcOut)
+{
+    float nv = dot(N, V);
+    float3 Nf = N * sign(nv + 1e-4);
+    float ndv = saturate(abs(nv));
+    float cav = vc.r;
+    float crest = vc.g;
+    float mainStrand = 1.0 - smoothstep(0.2, 0.3, vc.b);
+    float phi = atan2(P.y, P.x);
+    float topArc = (1.0 - smoothstep(0.52, 0.96, abs(phi - 1.5707963))) * (1.0 - deep);
+    topArcOut = topArc;
+    float3 inward = -normalize(float3(P.x, P.y, 0.0) + 1e-5);   // rings are placed unrotated: object = world directions
+
+    // body: saturated orange-gold facing the camera, red-brown toward the silhouettes, rose-salmon over the top arc
+    float3 edge = float3(0.30, 0.055, 0.03);
+    float3 body = lerp(lerp(BC_ORANGE, BC_GOLD, 0.45), BC_CROWN, topArc * 0.55);
+    body = lerp(body, lerp(BC_ORANGE, BC_GOLD, 0.6), deep * 0.5);
+    float3 c = lerp(edge, BC_GROOVE, smoothstep(0.02, 0.22, ndv));
+    c = lerp(c, body, smoothstep(0.18, 0.6, ndv));
+    c *= lerp(1.0 - _RingLook.w, 1.0, cav);
+
+    // mirror reflection of the tunnel (purple walls, gold rings) tinted by the gold
+    float3 R = reflect(-V, Nf);
+    float3 env = RainbowSamplePano(R, _EnvBlur);
+    float envL = dot(env, float3(0.3, 0.55, 0.15));
+    float3 F0 = float3(1.0, 0.62, 0.30);
+    c = lerp(c, c * 0.55 + env * F0 * 0.9, _RingLook.z * _EnvIntensity * (0.55 + 0.45 * cav));
+    c += F0 * smoothstep(0.45, 1.0, envL) * 0.35 * _RingLook.z * cav;
+    c += RainbowTubeStripRadiance(V, Nf, 0.05) * F0 * 0.45 * cav;
+
+    // key highlight: a soft light just above / behind the camera -> one crisp warm-white line along every strand
+    float3 L = normalize(V + inward * 0.35);
+    float3 H = normalize(L + V);
+    float sp = pow(saturate(dot(Nf, H)), _RingLook.y);
+    float spWide = pow(saturate(dot(Nf, H)), _RingLook.y * 0.15);
+    c += BC_PEAK * spWide * 0.35 * _RingLook.x * cav;
+    c += float3(1.25, 1.05, 0.75) * sp * _RingLook.x * cav * (1.0 - 0.5 * deep);
+
+    // marquee bulbs on the main strand crest (12 o'clock = a bulb): radial lines of spots into the vanishing point
+    float t = (phi - 1.5707963) * _BandS.x / RB_TWO_PI;
+    float ft = min(fwidth(t), fwidth(frac(t + 0.5)));
+    float d = frac(t + 0.5) - 0.5;
+    float sw = _BandS.y + ft * 0.7;
+    float hw = _BandS.y * 2.2 + ft * 0.7;
+    float spot = exp(-d * d / (sw * sw)) * lerp(1.0, _BandS.y / sw, 0.6);
+    float halo = exp(-d * d / (hw * hw));
+    float across = mainStrand * smoothstep(0.35, 0.85, crest) * smoothstep(0.2, 0.45, ndv);
+    c = lerp(c, BC_HALO, halo * across * 0.5);
+    c += BC_SPOT * spot * across * _BandS.z;
+    return c;
+}
+
+void RainbowGoldRing_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS, float3 PositionOS, float3 AxisWS, float4 VertexColor, out float3 Color)
 {
     float3 N = normalize(NormalWS);
     float3 V = normalize(ViewDirWS);
     float dist = length(_WorldSpaceCameraPos.xyz - PositionWS);
     float deep = smoothstep(_BandF.x, _BandF.y, dist);
     float topArc;
-    float3 raw = RainbowBandShade(deep, N, V, PositionOS, AxisWS, topArc);
+    float3 raw;
+    if (_RingLook.x > 0.0)
+    {
+        raw = RainbowRingMetal(deep, N, V, PositionOS, AxisWS, VertexColor, topArc);
+    }
+    else
+    {
+        raw = RainbowBandShade(deep, N, V, PositionOS, AxisWS, topArc);
+    }
     // tunnel round 2026-11-23: the approved ring crowns over the top are ROSE-SALMON (~(213, 92, 96) at ring A, measured
     // straight up from the vanishing point) and only the sides orange-gold (~(250, 150, 75)); the tone curve turned the
     // crown palette (222, 98, 88) deep red (190, 40, 30) in the scene grade, so the top arc keeps its plain palette
@@ -140,6 +208,13 @@ void RainbowGoldPaddle_float(float3 PositionWS, float3 NormalWS, float3 ViewDirW
     float3 tint = lerp(base, float3(1.0, 0.86, 0.6), 0.45);
     col += tint * smoothstep(0.3, 1.0, envL) * polish * _PaddleParams.x;                        // reflected ring lights
     col += RainbowTubeStripRadiance(V, N, 0.15) * polish * _PaddleParams.y * lerp(base, float3(1.0, 1.0, 1.0), 0.5); // streaks
+    // tunnel round 3: polished rim -> one crisp warm-white highlight line along the rounded rim and a broad soft sheen
+    // (approved trays: thick rounded copper-gold rim with a bright line, the dish face a smooth rose-copper mirror)
+    float3 L = normalize(V + float3(0.0, 0.5, 0.0));
+    float3 H = normalize(L + V);
+    float nh = saturate(dot(N, H));
+    col += float3(1.25, 1.05, 0.75) * pow(nh, 60.0) * _PaddleParams.w * polish;
+    col += BC_PEAK * pow(nh, 8.0) * 0.25 * _PaddleParams.w * polish;
     Color = RainbowApplyFarGlow(RainbowGoldToneCurve(col), dist) * _Exposure;
 }
 
@@ -182,17 +257,17 @@ void RainbowGoldMetal_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS
     float4 VertexColor, float4 UV, out float3 Color)
 {
     float3 ring, paddle, frame;
-    RainbowGoldRing_float(PositionWS, NormalWS, ViewDirWS, PositionOS, AxisWS, ring);
+    RainbowGoldRing_float(PositionWS, NormalWS, ViewDirWS, PositionOS, AxisWS, VertexColor, ring);
     RainbowGoldPaddle_float(PositionWS, NormalWS, ViewDirWS, VertexColor, paddle);
     RainbowGoldFrame_float(NormalWS, ViewDirWS, UV.xy, UV.z, frame);
     Color = _GoldMode < 0.5 ? ring : (_GoldMode < 1.5 ? paddle : frame);
 }
 
 // ---- half variants (Shader Graph half precision) ----
-void RainbowGoldRing_half(half3 PositionWS, half3 NormalWS, half3 ViewDirWS, half3 PositionOS, half3 AxisWS, out half3 Color)
+void RainbowGoldRing_half(half3 PositionWS, half3 NormalWS, half3 ViewDirWS, half3 PositionOS, half3 AxisWS, half4 VertexColor, out half3 Color)
 {
     float3 c;
-    RainbowGoldRing_float((float3)PositionWS, (float3)NormalWS, (float3)ViewDirWS, (float3)PositionOS, (float3)AxisWS, c);
+    RainbowGoldRing_float((float3)PositionWS, (float3)NormalWS, (float3)ViewDirWS, (float3)PositionOS, (float3)AxisWS, (float4)VertexColor, c);
     Color = (half3)c;
 }
 

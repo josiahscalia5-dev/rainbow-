@@ -135,6 +135,16 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     wR = RBW_SMin(wR, max(roomR, 0.6 * wR), 0.5);
     offL = RBW_SMin(offL, Mb + lim.x - wL, 1.2);
     offR = RBW_SMin(offR, lim.y - wR - Mb, 1.2);
+    // (water round 3v 2026-11-23) VISIBLE pink of the bands, traced row by row on the approved image and mapped onto the
+    // water: ~1.0-1.2 m wide ribbons from Benny to s ~30 (left band) and everywhere (right band). The layout width above
+    // (which also places the foam waterlines, RBW_BankEdges) drew them 1.6-2x too broad, so the S read as wide pink sheets.
+    // The approved right band also runs ~1.2-1.45 m further left at s 15-20 (X 1.1-1.5 just right of Benny's track,
+    // Unity hid it under the right bank there); shader only, the bank layout keeps its waterline.
+    float kWL = 1.0 - 0.4 * RBW_SS(136.7, 138.7, sm) * (1.0 - RBW_SS(146.7, 149.7, sm));
+    float kWR = 1.0 - 0.42 * RBW_SS(129.0, 131.5, sm);
+    offR -= 1.45 * RBW_SS(128.0, 131.0, sm) * (1.0 - RBW_SS(134.9, 138.4, sm));
+    float wLv = max(wL * kWL, 0.2);
+    float wRv = max(wR * kWR, 0.2);
     float sdL = xb + offL + pert;
     float sdR = xb - offR + pert;
 
@@ -178,8 +188,8 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float wW = (0.12 + 0.12 * back) * smoothstep(0.6, 1.3, back) * wk * (1.0 - smoothstep(1.9, 3.0, back));
 
     // ---- band coordinate of the nearer band: -1 bank-side edge .. +1 core-side edge ----
-    float tL5 = sdL / max(wL, 1e-3);
-    float tR5 = -sdR / max(wR, 1e-3);
+    float tL5 = sdL / wLv;
+    float tR5 = -sdR / wRv;
     float tb = abs(tL5) < abs(tR5) ? tL5 : tR5;
     float tW5 = (cW - abs(dlB)) / max(wW, 1e-3);
     float sweep = (wW > 0.001 && abs(tW5) < abs(tb)) ? 1.0 : 0.0;
@@ -223,7 +233,11 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float3 pk = lerp(RBW_PDEEP, RBW_PBODY, smoothstep(0.1, 0.45, hp));
     float hlq = (tb - 0.45) / 0.18;
     float hl = exp(-hlq * hlq);
-    pk = lerp(pk, RBW_PLIGHT, saturate(bglow * 0.6 + hl * 0.3));
+    // (water round 3v) glossier satin ribbons: a second, broader sheen along the bank-side half (approved: bright pink-white
+    // satin streaks run along each band, the edges stay deep magenta)
+    float hlq2 = (tb + 0.25) / 0.3;
+    float hl2 = exp(-hlq2 * hlq2) * (0.55 + 0.45 * B5.y);
+    pk = lerp(pk, RBW_PLIGHT, saturate(bglow * 0.7 + hl * 0.45 + hl2 * 0.35));
     float pc = saturate(bcore + sweep * B5.z * 0.5);
     pk = lerp(pk, RBW_PPALE, pc * 0.75);
     pk = lerp(pk, RBW_PWHITE, pc * pc * 0.85);
@@ -270,7 +284,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float kS5 = mid5 * (1.0 - smoothstep(0.3, 0.8, fwsR));
     float sat5 = max(RBW_Satin(Xw, v5, 7.0, 1.3, pxK, 1.0), RBW_Satin(Xw, v5, 11.0, 6.1, pxK, 1.0) * 0.75);
     float3 satC = lerp(lerp(RBW_CBRIGHT, RBW_CAQUAW, 0.55), lerp(RBW_PPALE, RBW_PWHITE, 0.3), pk5);
-    c5 = lerp(c5, satC, sat5 * kS5 * 0.55);
+    c5 = lerp(c5, satC, sat5 * kS5 * 0.38);   // (water round 3v: 0.55 -> 0.38, fewer white hairlines in the cyan)
     // sparse short glossy dashes (approved: bright white-aqua / white-pink speed streaks scattered through the satin)
     float2 sS5 = RBW_SilkStreak(Xw, v5 * 6.0, 3.1, 2.7, 0.3, pxK) * kS5 * (1.0 - smoothstep(0.12, 0.3, fwsR))
                * smoothstep(0.014, 0.04, fwsR);           // no long crisp lines close to the camera (gameplay view)
@@ -280,7 +294,9 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     // water streams out toward the bottom corners like the approved; stronger on the pink wake sweeps (satin plumes)
     float kN5 = near5 * bOn * smoothstep(0.3, 1.2, back);
     float fan5 = RBW_Satin(X, v5 * 0.5, 9.0, 3.7, pxK, 0.0) * kN5;
-    c5 = lerp(c5, lerp(RBW_CAQUAW, RBW_PWHITE, pk5), fan5 * (0.35 + 0.45 * sweep * pk5));
+    // (water round 3v: 0.35 -> 0.16 on the cyan: the approved near water is broad glossy swells + star flares, the dense
+    //  fanning hairlines read as wood grain)
+    c5 = lerp(c5, lerp(RBW_CAQUAW, RBW_PWHITE, pk5), fan5 * (0.16 + 0.5 * sweep * pk5));
     c5 = lerp(c5, lerp(c5, RBW_PLIGHT, 0.35), sweep * pk5 * near5);
 
     // flares carried by the current (mid: along the flow) + near: crisp 4-point flares lying ALONG the ∩ swell arcs (one

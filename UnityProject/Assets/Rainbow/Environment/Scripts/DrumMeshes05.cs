@@ -114,30 +114,64 @@ namespace Rainbow.Screen05
         /// </summary>
         public static Mesh BuildRing(DrumLayout05.BandProfile b, float radius, int segments, string name)
         {
+            // Tunnel round 3 (2026-11-23): a bundle of rounded strands like the approved rings (a fat main strand on the far
+            // side, a middle strand, a thin lip on the camera side), separated by narrow dark grooves that sit ABOVE the
+            // wall (b.baseHeight). Vertex colour per profile point: r = cavity (1 crest .. 0.3 groove), g = crest line,
+            // b = strand (0 main, 0.5 middle, 1 lip): RainbowGoldMetal.hlsl RainbowRingMetal shades from it.
             float w = b.HalfWidth;
-            float yc = w - b.width * 0.5f, a = b.width * 0.5f;
-            float yl = -w + b.lipWidth * 0.5f, al = b.lipWidth * 0.5f;
+            var strands = new List<Vector3>();   // (half width m, crest height as a fraction of the radius, centre z)
+            float zCursor = w;
+            strands.Add(new Vector3(b.width * 0.5f, b.height, zCursor - b.width * 0.5f));
+            zCursor -= b.width + b.groove;
+            if (b.midWidth > 0f)
+            {
+                strands.Add(new Vector3(b.midWidth * 0.5f, b.midHeight, zCursor - b.midWidth * 0.5f));
+                zCursor -= b.midWidth + b.groove;
+            }
+            strands.Add(new Vector3(b.lipWidth * 0.5f, b.lipHeight, zCursor - b.lipWidth * 0.5f));
+
             var prof = new List<ProfilePoint>();
             var dupFirst = new List<bool>();   // true for the first copy of a duplicated (crisp) corner
-            void P(float r, float z) { prof.Add(new ProfilePoint(r, z)); dupFirst.Add(false); }
-            void Dup(float r, float z) { prof.Add(new ProfilePoint(r, z)); dupFirst.Add(true); prof.Add(new ProfilePoint(r, z)); dupFirst.Add(false); }
-            P(1.03f, w);
-            Dup(1.0f, w);
-            for (int i = 1; i < 12; i++)
+            var pcol = new List<Color>();
+            void P(float r, float z, Color c) { prof.Add(new ProfilePoint(r, z)); dupFirst.Add(false); pcol.Add(c); }
+            void Dup(float r, float z, Color c)
             {
-                float f = i / 12f * Mathf.PI;
-                P(1f - b.height * Mathf.Sin(f), yc + a * Mathf.Cos(f));
+                prof.Add(new ProfilePoint(r, z)); dupFirst.Add(true); pcol.Add(c);
+                prof.Add(new ProfilePoint(r, z)); dupFirst.Add(false); pcol.Add(c);
             }
-            Dup(1.0f, yc - a);
-            P(1.0f - b.height * 0.04f, yc - a - b.groove * 0.5f);
-            Dup(1.0f, yl + al);
-            for (int i = 1; i < 7; i++)
+            var wallCol = new Color(0.3f, 0f, 0f, 1f);
+            P(1.03f, w, wallCol);
+            Dup(1.0f, w, wallCol);
+            int ns = strands.Count;
+            for (int j = 0; j < ns; j++)
             {
-                float f = i / 7f * Mathf.PI;
-                P(1f - b.lipHeight * Mathf.Sin(f), yl + al * Mathf.Cos(f));
+                float a = strands[j].x, h = strands[j].y, zc = strands[j].z;
+                float sid = ns > 1 ? j / (float)(ns - 1) : 0f;
+                float hFar = j == 0 ? 0f : b.baseHeight;           // the outer strand ends sit on the wall
+                float hNear = j == ns - 1 ? 0f : b.baseHeight;
+                int steps = j == 0 ? 14 : 10;
+                for (int i = 1; i < steps; i++)
+                {
+                    float f = i / (float)steps * Mathf.PI;
+                    float sn = Mathf.Sin(f);
+                    float hb = Mathf.Lerp(hFar, hNear, i / (float)steps);
+                    var c = new Color(Mathf.Lerp(0.3f, 1f, Mathf.Pow(sn, 0.7f)), Mathf.Pow(sn, 5f), sid, 1f);
+                    P(1f - (hb + (h - hb) * sn), zc + a * Mathf.Cos(f), c);
+                }
+                float zEnd = zc - a;
+                if (j < ns - 1)
+                {
+                    var gc = new Color(0.25f, 0f, sid, 1f);
+                    Dup(1f - b.baseHeight, zEnd, gc);
+                    P(1f - b.baseHeight * 0.6f, zEnd - b.groove * 0.5f, gc);
+                    Dup(1f - b.baseHeight, zEnd - b.groove, gc);
+                }
+                else
+                {
+                    Dup(1.0f, -w, wallCol);
+                }
             }
-            Dup(1.0f, -w);
-            P(1.03f, -w);
+            P(1.03f, -w, wallCol);
 
             int n = prof.Count;
             var n2 = new Vector2[n];   // (radial, axial) normal in metres, pointing into the tunnel
@@ -156,7 +190,7 @@ namespace Rainbow.Screen05
                 n2[i] = acc.sqrMagnitude > 1e-12f ? acc.normalized : new Vector2(-1f, 0f);
             }
 
-            var md = new MeshData();
+            var md = new MeshData { hasColor = true };
             int ring = segments + 1;
             for (int i = 0; i < n; i++)
             {
@@ -165,8 +199,9 @@ namespace Rainbow.Screen05
                     float ang = 2f * Mathf.PI * k / segments;
                     float c = Mathf.Cos(ang), s = Mathf.Sin(ang);
                     float r = prof[i].rho * radius;
-                    md.Add(new Vector3(r * c, r * s, prof[i].z), new Vector3(n2[i].x * c, n2[i].x * s, n2[i].y),
+                    int v = md.Add(new Vector3(r * c, r * s, prof[i].z), new Vector3(n2[i].x * c, n2[i].x * s, n2[i].y),
                         new Vector2(k / (float)segments, i / (float)(n - 1)));
+                    md.col[v] = pcol[i];
                 }
             }
             for (int i = 0; i < n - 1; i++)

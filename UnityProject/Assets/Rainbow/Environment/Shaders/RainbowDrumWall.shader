@@ -32,6 +32,8 @@ Shader "Rainbow/Screen05/DrumWall"
         _WallFar ("Far wall (fade start m, fade end m, strips kept, reflection kept)", Vector) = (30, 100, 0.35, 0.8)
         _SlotWarp ("Slot rows (s0, pitch at s0, pitch growth /m, hole half length / pitch)", Vector) = (0, 0, 0, 0.2)
         _WallGlow ("Land glow (linear rgb, strength)", Vector) = (0, 0, 0, 0)
+        _SlotArc ("Slot arc (holes round, ceiling density boost, hole half length / arc pitch, radius m)", Vector) = (0, 0, 0.3, 6.8)
+        _SlotShape ("Slot shape (half width / pitch at the waterline, lip px, brushed strength, brushed lines / m)", Vector) = (0, 1.5, 0, 2)
     }
 
     SubShader
@@ -69,6 +71,8 @@ Shader "Rainbow/Screen05/DrumWall"
             float4 _WallFar;
             float4 _SlotWarp;
             float4 _WallGlow;
+            float4 _SlotArc;
+            float4 _SlotShape;
         CBUFFER_END
 
         // shared animation clock (Rainbow.Screen05.Screen05Clock; game time, reset by the test hold)

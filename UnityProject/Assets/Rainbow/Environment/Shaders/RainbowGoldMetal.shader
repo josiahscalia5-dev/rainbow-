@@ -25,6 +25,7 @@ Shader "Rainbow/Screen05/GoldMetal"
         _Exposure ("Exposure", Float) = 1
         _LightInfluence ("Direct light influence", Float) = 0.25
         _GoldTone ("Ring tone curve (exponents r, g, b, amount)", Vector) = (1, 1, 1, 0)
+        _RingLook ("Polished ring (key highlight, sharpness, reflection, cavity dark)", Vector) = (0, 40, 0.5, 0.6)
     }
 
     SubShader
@@ -55,6 +56,7 @@ Shader "Rainbow/Screen05/GoldMetal"
             float _Exposure;
             float _LightInfluence;
             float4 _GoldTone;
+            float4 _RingLook;
         CBUFFER_END
 
         TEXTURE2D(_EnvPano);
@@ -132,7 +134,7 @@ Shader "Rainbow/Screen05/GoldMetal"
             #elif defined(_GOLD_FRAME)
                 RainbowGoldFrame_float(N, V, input.uv.xy, input.uv.z, color);
             #else
-                RainbowGoldRing_float(input.positionWS, N, V, input.positionOS, input.axisWS, color);
+                RainbowGoldRing_float(input.positionWS, N, V, input.positionOS, input.axisWS, input.color, color);
             #endif
             #if !defined(_GOLD_FRAME)
                 // a little live specular from the scene's lights (the stylised palette carries the look)

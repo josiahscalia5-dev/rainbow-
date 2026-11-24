@@ -79,7 +79,9 @@ void RBW_FoamVertex(float3 centreWS, float4 uv0, float4 uv1, float sOffset, floa
     // approved: 30-60 px bubbles in the low clumps beside Benny, 20-40 px bubbles in the tall far banks): bubbles and
     // their pile heights scale smoothly about the river floor (WaterY = 0) with the distance to the camera
     float base = RBW_FoamBaseHeight(c.x, uv1.z, uv1.w);
-    float k = lerp(0.62, 1.45, smoothstep(5.0, 30.0, distance(_WorldSpaceCameraPos, c)));
+    // (water round 3v 2026-11-23: 0.62 .. 1.45 -> 0.85 .. 1.0 - the approved suds keep their true size, ~6-15 px far away:
+    //  growing them 1.45x turned the far rims into rows of 30-60 px cotton balls)
+    float k = lerp(0.85, 1.0, smoothstep(6.0, 25.0, distance(_WorldSpaceCameraPos, c)));
     c.y = base + (c.y - base) * k;
     r *= k;
     // the puffs float on the stream: they ride the same swell as the water (RBW_RiverWave)
@@ -160,20 +162,23 @@ float3 RBW_FoamColor(float3 Nv, float px, float seed, float ao, float tint, floa
     float tl = dot(Nv, normalize(float3(-0.4, 0.85, 0.35)));
     // (median of the approved bank foam is a light periwinkle #ABB8FA, only the top 10-30 % is white: a little lower
     //  than foam.ts, with deeper blue-violet crevices round each bubble)
-    float t = 0.47 + 0.62 * tl - pow(1.0 - z, 1.3) * (0.32 + 0.4 * saturate(0.5 - q.y * 0.7)) - (1.0 - ao) * 0.4
+    // (water round 3v 2026-11-23: SOFT suds - the upper rim no longer darkens (approved: soft bright silhouettes against
+    //  the wall, lavender-blue only underneath and in the creases), a gentler tone curve, smaller and fainter open
+    //  bubbles (the big dark holes read as faces on the old cotton balls), a pearly rim light on the lit side)
+    float t = 0.5 + 0.55 * tl - pow(1.0 - z, 1.6) * (0.1 + 0.5 * saturate(0.45 - q.y * 0.8)) - (1.0 - ao) * 0.42
             + 0.04 * big;
     // fine open bubbles: dense on the lower half and the flanks, sparse on the lit top
-    float2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(px / 8.0, 1.2, 12.0) + seed * 37.0;
-    float dens = clamp(0.25 + 0.9 * RBW_SS(0.35, -0.6, q.y) + 0.35 * (1.0 - z) - 0.2 * big, 0.0, 0.95);
+    float2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(px / 5.5, 1.5, 14.0) + seed * 37.0;
+    float dens = clamp(0.2 + 0.8 * RBW_SS(0.35, -0.6, q.y) + 0.3 * (1.0 - z) - 0.2 * big, 0.0, 0.9);
     float4 mf = RBW_MicroFoam(mp, dens);
     float kf = 1.0 - smoothstep(0.5, 0.9, fwidth(mp.x) + fwidth(mp.y));
-    // tone S-curve: few grey mid-tones, a broad white-lavender lit area and clearly blue shading
-    // (foam round: the S-curve sits a little lower than foam.ts so the lit caps reach pearly white)
-    t = 0.12 + 0.95 * smoothstep(0.34, 1.0, t - 0.06 * big);
-    t += (mf.z - 0.6) * 0.2 * dens * kf - mf.x * 0.55 * kf + mf.y * 0.3 * kf;
+    // tone curve: a broad white-lavender lit area, soft lavender-blue shading (no hard terminator)
+    t = 0.16 + 0.88 * smoothstep(0.22, 1.05, t - 0.04 * big);
+    t += (mf.z - 0.6) * 0.14 * dens * kf - mf.x * 0.32 * kf + mf.y * 0.2 * kf;
     float3 col = RBW_Soap05(t + 0.04 * tint);
-    col = lerp(col, float3(1.0, 0.97, 1.07), smoothstep(0.75, 1.0, t) * 0.3);
-    col += mf.w * 0.45 * kf;
+    col = lerp(col, float3(1.0, 0.97, 1.07), smoothstep(0.72, 1.0, t) * 0.32);
+    col = lerp(col, float3(0.97, 0.93, 1.05), pow(1.0 - z, 2.0) * saturate(q.y * 1.2 + 0.25) * 0.45);
+    col += mf.w * 0.35 * kf;
     // glossy highlight of the key light
     float3 Lv = TransformWorldToViewDir(lightDirWS, true);
     float rl = max(dot(reflect(float3(0.0, 0.0, -1.0), Nv), Lv), 0.0);

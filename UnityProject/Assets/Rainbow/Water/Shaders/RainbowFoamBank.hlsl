@@ -27,9 +27,12 @@ float RBW_FB_SMin(float a, float b, float k)
 // the bands at s 33-48, where the approved river opens up between the walls.
 float RBW_BandFL(float sm)
 {
+    // (water round 3v 2026-11-23: - the s 20-24 term: the approved left band runs ~0.45 m further right there, traced
+    //  row by row at y 755-800 = centre X -3.1 .. -3.8; it also brings the near-left foam waterline in like the approved)
     return -0.5 * RBW_FB_SS(143.0, 147.0, sm) * (1.0 - RBW_FB_SS(151.0, 155.0, sm))
          + 1.0 * RBW_FB_SS(154.0, 158.0, sm) * (1.0 - RBW_FB_SS(168.0, 176.0, sm))
-         + 1.5 * RBW_FB_SS(147.5, 151.5, sm) * (1.0 - RBW_FB_SS(158.0, 166.0, sm));
+         + 1.5 * RBW_FB_SS(147.5, 151.5, sm) * (1.0 - RBW_FB_SS(158.0, 166.0, sm))
+         - 0.45 * RBW_FB_SS(135.5, 137.5, sm) * (1.0 - RBW_FB_SS(140.0, 142.0, sm));
 }
 
 float RBW_BandFR(float sm)
@@ -97,16 +100,23 @@ float2 RBW_BankEdges(float d, float hw, float Mb, float sm, float W)
     float kW = RBW_FB_SS(136.2, 136.9, sm) * step(1.0, W);
     float wallL = -(W + d);                          // drum walls relative to d
     float wallR = W - d;
-    float rimL = 0.35 + 0.8 * RBW_FB_SS(136.9, 137.9, sm) + 0.35 * RBW_FB_SS(138.0, 140.5, sm)
-               + 1.25 * RBW_FB_SS(140.5, 143.5, sm) - 0.7 * RBW_FB_SS(145.0, 148.0, sm)
-               - 0.9 * RBW_FB_SS(148.0, 151.0, sm) - 0.35 * RBW_FB_SS(151.5, 153.5, sm);
+    // (water round 3v 2026-11-23: rims refitted to the approved foam waterlines traced row by row and mapped onto the
+    //  water: left 1.4 -> 3.0 m at s 20-27, down to a 0.4 m rim by s 33 (the old 1.9-2.3 m at s 30-33 was the big left
+    //  heap over the left band); right at least 2.0 -> 1.5 m at s 23-25, 0.6 m at s 27-34, widening to 1.5 m by s 41)
+    float rimL = 0.35 + 1.2 * RBW_FB_SS(136.9, 137.9, sm) + 0.5 * RBW_FB_SS(137.9, 140.0, sm)
+               + 0.9 * RBW_FB_SS(139.5, 142.5, sm) - 0.4 * RBW_FB_SS(143.5, 146.5, sm)
+               - 0.6 * RBW_FB_SS(146.0, 148.0, sm) - 1.35 * RBW_FB_SS(148.0, 149.5, sm)
+               - 0.25 * RBW_FB_SS(149.5, 151.5, sm);
     float rimLmin = lerp(rimL, 0.35, RBW_FB_SS(152.0, 154.0, sm));
+    float rimRn = 0.62 + 0.9 * (1.0 - RBW_FB_SS(141.2, 143.2, sm)) + 0.5 * (1.0 - RBW_FB_SS(139.5, 141.0, sm))
+                + 0.35 * RBW_FB_SS(151.5, 154.0, sm) + 0.5 * RBW_FB_SS(154.5, 157.5, sm);
     float rimR = 0.45 + 0.75 * (1.0 - RBW_FB_SS(141.5, 144.0, sm)) + 3.0 * (1.0 - RBW_FB_SS(140.0, 141.5, sm))
                + 1.15 * RBW_FB_SS(157.7, 160.7, sm) + 0.7 * RBW_FB_SS(160.7, 164.3, sm)
                + 0.5 * RBW_FB_SS(164.3, 168.3, sm) + 0.7 * RBW_FB_SS(168.3, 173.2, sm)
                + 0.4 * RBW_FB_SS(173.2, 179.3, sm) - 1.8 * RBW_FB_SS(179.3, 186.7, sm)
                - 1.5 * RBW_FB_SS(186.7, 196.7, sm);
-    float rimRmin = lerp(0.35, rimR, RBW_FB_SS(156.5, 158.5, sm) * (1.0 - RBW_FB_SS(185.0, 189.0, sm)));
+    rimR = max(rimR, rimRn);
+    float rimRmin = lerp(rimRn, rimR, RBW_FB_SS(156.5, 158.5, sm) * (1.0 - RBW_FB_SS(185.0, 189.0, sm)));
     eL = lerp(eL, clamp(eL, wallL + rimLmin, wallL + rimL), kW);
     eR = lerp(eR, clamp(eR, wallR - rimR, wallR - rimRmin), kW);
     // ---- approved Screen 05 around the checkpoint view (stationary in master s, Benny at s 14 = sm 130.7) ----
@@ -135,10 +145,12 @@ static const float3 RBW_SOAP_CREV = float3(0.23, 0.22, 0.66);
 float3 RBW_Soap05(float t)
 {
     t = saturate(t) * 5.0;
-    float3 c = lerp(RBW_SOAP_CREV, float3(0.26, 0.38, 0.84), saturate(t));
-    c = lerp(c, float3(0.38, 0.54, 0.97), saturate(t - 1.0));
-    c = lerp(c, float3(0.56, 0.63, 0.96), saturate(t - 2.0));
-    c = lerp(c, float3(0.78, 0.79, 0.98), saturate(t - 3.0));
+    // (water round 3v: mid tones a little more lavender, less green - approved bank foam p40 #B6C0F9 / p60 #D8D4FA vs
+    //  Unity #A1C1FD / #D4DBFD)
+    float3 c = lerp(RBW_SOAP_CREV, float3(0.30, 0.36, 0.84), saturate(t));
+    c = lerp(c, float3(0.44, 0.50, 0.96), saturate(t - 1.0));
+    c = lerp(c, float3(0.63, 0.61, 0.95), saturate(t - 2.0));
+    c = lerp(c, float3(0.85, 0.80, 0.97), saturate(t - 3.0));
     return lerp(c, float3(1.05, 1.03, 1.08), saturate(t - 4.0));
 }
 
