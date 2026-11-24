@@ -200,24 +200,26 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     broad = clamp(broad, 0.1, 0.5);
     float Y = lerp(0.333, broad, _SheenLook.x) + (row - 0.333) * _SheenLook.y;
 
-    // Benny's wake: the standing wake in his frame (broad luminous arcs bowed over his track, two pink sweeps), streaks run through it
-    float bk = back + 0.02 * sin(bt * 2.2 + dlW * 4.0 - back * 1.5) + 0.012 * sin(bt * 3.7 + back * 5.0);
-    float2 wuv = float2((dlW + 0.012 * sin(bt * 2.9 + back * 6.0) + 2.2) / 4.4, (bk - 0.2) / 3.6);
-    float3 wm = SAMPLE_TEXTURE2D_LOD(_WakeSheen, sampler_WakeSheen, wuv, 0).rgb;
-    float wakeA = bOn * wk * smoothstep(0.8, 1.2, back) * (1.0 - smoothstep(3.2, 3.7, back)) * (1.0 - smoothstep(1.75, 2.1, abs(dlW))) * saturate(wm.b * 1.4);
-    // the two pink sweeps (measured: middle at 0.07 + 0.44 x back from an axis 0.06 m right of him, half width ~0.2 m): soft, streaky, feathered
+    // the wake behind him (standing waves in his frame): broad luminous cyan arcs bowed over his track with a bright broken line on each crest,
+    // two soft pink sweeps (measured on the approved picture: middle at 0.07 + 0.44 x back from an axis 0.06 m right of him, half width ~0.2 m)
+    float bow = back - 0.8 * dlW * dlW + 0.014 * sin(bt * 2.2 + dlW * 5.0) + 0.01 * sin(bt * 3.7 + dlW * 9.0);
+    float wakeA = bOn * wk * smoothstep(0.8, 1.25, back) * (1.0 - smoothstep(3.3, 4.0, back)) * (1.0 - smoothstep(1.7, 2.15, abs(dlW)));
     float dlS = dlW - 0.06;
-    float tS = (abs(dlS) - (0.07 + 0.44 * back) - 0.03 * sin(v5 * 1.3 + dlS * 3.0)) / (0.15 + 0.045 * back);
-    float sw = exp(-tS * tS * 1.05) * smoothstep(1.05, 1.5, back) * (1.0 - smoothstep(2.9, 3.5, back));
-    float gk = saturate(sw * (0.62 + 0.75 * T));
-    float qw = lerp(0.1, 1.5, smoothstep(0.1, 0.72, gk));
-    qe = lerp(qe, qw + (T - 0.5) * 0.3, wakeA);
-    float arcP = frac((bk - 0.8 * dlW * dlW - 1.42) / 0.52 + 0.5) - 0.5;
-    float arcN = smoothstep(0.1, 0.5, RBW_VNoise(float2(dlW * 3.1 + 9.0, floor((bk - 0.8 * dlW * dlW - 1.42) / 0.52 + 0.5) * 3.7)));
-    float arcLine = exp(-arcP * arcP * 160.0) * (0.25 + 0.75 * arcN) * smoothstep(1.2, 1.55, bk) * (1.0 - gk);
-    float Yw = 0.3 + (clamp(wm.r, 0.08, 0.62) - 0.3) * 1.15 + (row - 0.333) * _SheenLook.z + arcLine * 0.22;
-    Yw = lerp(Yw, 0.24 + (row - 0.333) * 0.95, smoothstep(0.12, 0.6, gk));
+    float tS = (abs(dlS) - (0.07 + 0.44 * back) - 0.03 * sin(v5 * 1.3 + dlS * 3.0)) / (0.16 + 0.05 * back);
+    float sw = exp(-tS * tS * 0.95) * smoothstep(1.0, 1.6, back) * (1.0 - smoothstep(2.4, 3.2, back));
+    float gk = saturate(sw * (0.6 + 0.8 * T));
+    float mid = 1.0 - smoothstep(-1.4, -0.5, tS);                               // 1 between the two sweeps
+    float ph5 = (bow - 1.42) / 0.52;
+    float ca = frac(ph5 + 0.5) - 0.5, cid = floor(ph5 + 0.5);
+    float aSeg = smoothstep(0.12, 0.55, RBW_VNoise(float2(dlW * 2.6 + 9.0 + cid * 1.3, cid * 3.7 + bt * 0.15)));
+    float arcOn = smoothstep(1.15, 1.6, bow);
+    float arcB = exp(-ca * ca / (0.17 * 0.17)) * arcOn, arcL = exp(-ca * ca * 230.0) * aSeg * arcOn;
+    float Yc = 0.13 + (row - 0.333) * _SheenLook.z * 1.1 + arcB * (0.14 + 0.16 * aSeg) + arcL * 0.4;
+    float Yw = lerp(0.22 + (row - 0.333) * 0.75, Yc, mid);
+    Yw = lerp(Yw, 0.27 + (row - 0.333) * 1.15, smoothstep(0.1, 0.7, gk));
     Y = lerp(Y, Yw, wakeA);
+    float qw = lerp(0.1, 1.5, smoothstep(0.06, 0.85, gk));
+    qe = lerp(qe, qw + (T - 0.5) * 0.3, wakeA * max(smoothstep(0.04, 0.3, gk), mid));
 
     float3 c5 = RBW_RampY(qe, Y, zone);
     c5 = max(c5 - _GlintLook.w, 0.0);                  // the bloom veil of the bright scene would grey the deep saturated colours
@@ -229,7 +231,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     {
         float4 lc = SAMPLE_TEXTURE2D_LOD(_LaceTex, sampler_LaceTex, float2(lat * 0.55, (latherW > latherB ? s : v5) * 0.4), clamp(log2(distV / 6.0), 0.0, 5.0));
         float lh = max(lc.r, lc.g * 0.9);
-        float lk = max(latherW * 0.8, latherB * 0.62) * (0.55 + 0.8 * lc.b);
+        float lk = max(latherW * 0.52, latherB * 0.6) * (0.55 + 0.8 * lc.b);
         float la = smoothstep(1.02 - lk * 0.75, 1.2 - lk * 0.75, lh + 0.25);
         c5 = lerp(c5, lerp(float3(0.5, 0.72, 1.0), float3(0.95, 0.96, 1.02), la), saturate(la * saturate(lk * 1.6)));
     }
@@ -325,8 +327,8 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
         float wakeF = saturate(foamW) * wk;
         float3 foamCol = lerp(float3(0.78, 0.86, 1.0), float3(1.25, 1.28, 1.32), saturate(bubbly * 1.2));
         col = lerp(col, lerp(col, RBW_CAQUAW, 0.6), fanZ * wk * 0.35);
-        col += float3(0.25, 0.5, 0.55) * glow * wk * 0.4;
-        col = lerp(col, foamCol, wakeF);
+        col += float3(0.15, 0.4, 0.5) * glow * wk * 0.16;
+        col = lerp(col, foamCol, wakeF * 0.45);
         wakeK = max(max(wakeF, shadeK * 0.8 * wk), max(fanZ * 0.45, glow * 0.5) * wk);
     }
     // landing splash: an expanding broken ring of fine bubbly foam (starts at his footprint, not under the fur).
