@@ -162,7 +162,7 @@ namespace Rainbow.Screen05.EditorTools
             imp.mipmapFilter = TextureImporterMipFilter.KaiserFilter;
             imp.wrapMode = TextureWrapMode.Repeat;
             imp.filterMode = FilterMode.Trilinear;
-            imp.anisoLevel = 8;
+            imp.anisoLevel = 5;
             imp.maxTextureSize = 2048;
             imp.textureCompression = TextureImporterCompression.CompressedHQ;
             imp.SaveAndReimport();

@@ -133,7 +133,7 @@ namespace Rainbow.Screen05.EditorTools
         /// approved view never shows them; they kick in the water and dangle while he jumps. Mesh space (scale 2.308, model turned 180 deg).</summary>
         static void BuildFeet(Rig rig)
         {
-            Material m = FlatFluff("Benny_Feet", new Color(0.97f, 0.40f, 0.68f, 1f));
+            Material m = FlatFluff("Benny_Feet", new Color(0.93f, 0.53f, 0.80f, 1f));
             if (m.HasProperty("_FurTint")) m.SetVector("_FurTint", new Vector4(1f, 1f, 1f, 0f));
             GameObject tmp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             Mesh sphere = tmp.GetComponent<MeshFilter>().sharedMesh;

@@ -214,28 +214,29 @@ float2 RbRowSplit(float row, float s, float dist)
     float p = dsx / max(dr, 1e-6);                               // metres between two rows
     float lv = max(log(max(p / (0.125 * max(dist, 5.0)), 1e-3)) / 1.0986, 0.0);
     float n = min(floor(lv), 3.0);
-    return float2(pow(3.0, n), smoothstep(0.2, 0.8, lv - n));
+    return float2(pow(3.0, n), smoothstep(0.32, 0.72, lv - n));
 }
 
-float3 RainbowWall5Row(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 look, float4 look5);
+float3 RainbowWall5Row(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 look, float4 look5, float fwPhiIn, float fwRowIn);
 float3 RainbowWall5(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 look, float4 look5)
 {
     float2 sp = RbRowSplit(Uv1.y, Uv0.y, dist);
     float4 a = Uv1, b = Uv1;
     a.y = (Uv1.y - 0.5) * sp.x + 0.5;
     b.y = (Uv1.y - 0.5) * sp.x * 3.0 + 0.5;
-    float3 ca = RainbowWall5Row(posWS, Uv0, a, dist, look, look5);
-    if (sp.y > 0.002) ca = lerp(ca, RainbowWall5Row(posWS, Uv0, b, dist, look, look5), sp.y);
+    float fwPhi = fwidth(Uv0.x) / 6.8, fwRow = fwidth(Uv1.y);
+    float3 ca = RainbowWall5Row(posWS, Uv0, a, dist, look, look5, fwPhi, fwRow * sp.x);
+    [branch] if (sp.y > 0.004) ca = lerp(ca, RainbowWall5Row(posWS, Uv0, b, dist, look, look5, fwPhi, fwRow * sp.x * 3.0), sp.y);
     return ca;
 }
 
-float3 RainbowWall5Row(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 look, float4 look5)
+float3 RainbowWall5Row(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 look, float4 look5, float fwPhiIn, float fwRowIn)
 {
     float s = Uv0.y;
     float phi = Uv0.x / 6.8;
     float ap = abs(phi) * 57.2958;
     float d = abs(frac(Uv1.x + 0.5) - 0.5) * Uv1.z * 57.2958;           // degrees from the nearest light line
-    float fwp = fwidth(phi) * 57.2958;
+    float fwp = fwPhiIn * 57.2958;
     float st = Uv1.w * look.x;
     float row = Uv1.y;
     float fy = frac(row) - 0.5;
@@ -262,7 +263,7 @@ float3 RainbowWall5Row(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 
     c = lerp(c, float3(253, 108, 234), saturate(halo2 * 0.85));
     c = lerp(c, float3(255, 226, 252), saturate(core * 1.15));
     // thin seam along every slot row
-    float fwy = fwidth(row);
+    float fwy = fwRowIn;
     float rowFade = 1.0 - smoothstep(0.25, 0.6, fwy);
     c *= 1.0 - 0.28 * exp(-pow(fy / (0.06 + fwy * 0.6), 2.0)) * rowFade;
     // round 5: recessed groove along the slot row + narrow lit lathe streaks on its edges (brighter near the light lines)
@@ -287,7 +288,7 @@ float3 RainbowWall5Row(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 
     float2 q = float2(fx, fy) / h;
     q *= q; q *= q;
     float sd = pow(q.x + q.y, 0.25) - 1.0;
-    float ad = max(fwidth(gx0) / h.x, fwy / h.y) * 0.55;
+    float ad = max(fwPhiIn * 44.0 / RB_TWO_PI / h.x, fwy / h.y) * 0.55;
     float hole = 1.0 - smoothstep(-ad, ad, sd);
     float lost = smoothstep(0.7, 2.0, ad);
     hole = lerp(hole, 0.13, lost) * look.z;

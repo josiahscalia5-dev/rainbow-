@@ -197,7 +197,7 @@ namespace Rainbow.Screen05
             if (s <= 118f) return near;
             // beyond the traced picture the foam fills the gap between the waterline and the drum wall (no dry floor strip)
             float gap = side < 0 ? X(WL, s) - DrumLayout05.WallXAt(s, -1) : DrumLayout05.WallXAt(s, 1) - X(WR, s);
-            var far = new Vector3(Mathf.Clamp(gap + 0.25f, 0.6f, 2.6f), 0.42f + 0.06f * Mathf.Clamp01(gap), 0.92f);
+            var far = new Vector3(Mathf.Clamp(gap + 0.2f, 0.55f, 1.45f), 0.4f + 0.04f * Mathf.Clamp01(gap), 0.78f);
             return Vector3.Lerp(near, far, SS(118f, 136f, s));
         }
 

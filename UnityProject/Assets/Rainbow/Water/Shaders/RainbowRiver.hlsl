@@ -76,12 +76,11 @@ TEXTURE2D(_LaceTex); SAMPLER(sampler_LaceTex);
 #endif
 
 // p = (X across in m, v along the flow in m); tile 13.2 x 26 m at 9 m view distance, doubling with it (cross-faded octaves)
-float4 RBW_Silk(float2 p, float dist, float2 offs)
+float4 RBW_Silk(float2 p, float2 dx, float2 dy, float dist, float2 offs)
 {
     float l = clamp(log2(dist / 9.0), -1.0, 4.0);
     float k0 = min(floor(l), 3.0);
     float f = smoothstep(0.15, 0.85, l - k0);
-    float2 dx = ddx(p), dy = ddy(p);
     float2 ka = float2(exp2(-k0) / 13.2, exp2(-1.25 * k0) / 26.0), kb = ka * float2(0.5, 0.4204);
     float4 a = SAMPLE_TEXTURE2D_GRAD(_SilkTex, sampler_SilkTex, p * ka + offs + k0 * float2(0.37, 0.61), dx * ka, dy * ka);
     float4 b = SAMPLE_TEXTURE2D_GRAD(_SilkTex, sampler_SilkTex, p * kb + offs + (k0 + 1.0) * float2(0.37, 0.61), dx * kb, dy * kb);
@@ -174,8 +173,14 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     // ---- flowing silk (round 8, master direction 2026-11-24): tileable streak / glint / ripple texture stretched along the current,
     // advected with it; the octave is chosen by the view distance (cross-faded), so the streaks stay fine and crisp at every distance ----
     float distV = max(length(_WorldSpaceCameraPos - PositionWS), 1.0);
-    float4 sk = RBW_Silk(float2(X, v5), distV, float2(0.0, 0.0));
-    float4 sk2 = RBW_Silk(float2(X * 1.37 + 3.1, v5 * 1.21 - time * 1.3), distV, float2(0.31, 0.17));   // second layer, other speed: ripples cross
+    float2 pS = float2(X, v5), dxS = ddx(pS), dyS = ddy(pS);
+    float4 sk = RBW_Silk(pS, dxS, dyS, distV, float2(0.0, 0.0));
+    float4 sk2 = float4(0.5, 0.0, 0.5, 0.5);
+    [branch] if (distV < 34.0)                                                                         // second layer, other speed: ripples cross (near only)
+    {
+        float2 k2 = float2(1.37, 1.21);
+        sk2 = lerp(RBW_Silk(float2(X * 1.37 + 3.1, v5 * 1.21 - time * 1.3), dxS * k2, dyS * k2, distV, float2(0.31, 0.17)), sk2, smoothstep(22.0, 34.0, distV));
+    }
     float2 rip = (sk.ba - 0.5) * 1.15 + (sk2.ba - 0.5) * 0.85;                                          // ripple slope (across, along)
     float sheen = RBW_VNoise(float2(X * 0.42 + 3.1, v5 * 0.045 + 0.03 * time)) - 0.5;                     // slow changes of reflection intensity
     float T = sk.r + (sk2.r - 0.5) * 0.16 + sheen * 0.16 - _GlintLook.z;
@@ -223,7 +228,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float2 wuv = float2((dlW + 0.012 * sin(bt * 2.9 + backS * 6.0) + 2.2) / 4.4, (backS + (bow - back + 0.8 * dlW * dlW) * 1.2 + 0.7) / 4.5);
     float4 wm = SAMPLE_TEXTURE2D_LOD(_WakeSheen, sampler_WakeSheen, wuv, 0);
     float wakeFoam = wm.a * bOn * wk * smoothstep(-0.7, -0.45, backS) * (1.0 - smoothstep(3.2, 3.7, backS)) * (1.0 - smoothstep(1.8, 2.15, abs(dlW)));
-    wakeFoam *= 1.0 - smoothstep(0.0, 0.3, abs(dlW) - (1.0 + 0.6 * max(backS, 0.0)));
+    wakeFoam *= (1.0 - smoothstep(0.0, 0.3, abs(dlW) - (1.0 + 0.6 * max(backS, 0.0)))) * (1.0 - smoothstep(1.5, 1.9, abs(dlW))) * (1.0 - smoothstep(1.9, 2.6, backS));
     Yw = lerp(Yw, clamp(wm.r, 0.06, 0.6) + (row - 0.333) * 0.34 + arcL * 0.1, 0.8 * saturate(wm.b * 1.3 - 0.2) * max(mid, smoothstep(0.1, 0.6, gk)));
     Y = lerp(Y, Yw, wakeA);
     float qw = lerp(0.1, 1.5, smoothstep(0.06, 0.85, gk));

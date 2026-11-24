@@ -88,6 +88,7 @@ namespace Rainbow.Screen05.EditorTools
             flow.finishS = RiverPath.FinishS;
             // the long continuous course beyond the baked stretch (built at the start of Play)
             root.AddComponent<Course05Extension>();
+            root.AddComponent<Screen05RenderScale>();      // smooth frame rate on weak GPUs (never during captures)
             BuildEventSystem(root.transform);
 
             AssetDatabase.SaveAssets();
