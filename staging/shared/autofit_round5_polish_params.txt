@@ -1,0 +1,27 @@
+# Round 5 polish (coordinator, 2026-11-24 ~09:50 local): material values of the lanes' areas, after both lanes finished.
+# Glint flare size may only stay or SHRINK (user guide #4: subtle glints, not big stars).
+# key | min | max | step
+mat:Assets/Rainbow/Environment/Materials/DrumWall05.mat:_Exposure:f | 0.7 | 1.4 | 0.06
+mat:Assets/Rainbow/Environment/Materials/DrumWall05.mat:_EnvIntensity:f | 0.3 | 1.4 | 0.08
+mat:Assets/Rainbow/Environment/Materials/DrumWall05.mat:_StripIntensity:f | 0.8 | 3.5 | 0.25
+mat:Assets/Rainbow/Environment/Materials/DrumWall05.mat:_EmissionStrength:f | 0 | 0.5 | 0.04
+mat:Assets/Rainbow/Environment/Materials/DrumWall05.mat:_BaseColor:c0 | 0.45 | 0.95 | 0.05
+mat:Assets/Rainbow/Environment/Materials/DrumWall05.mat:_BaseColor:c1 | 0.1 | 0.5 | 0.04
+mat:Assets/Rainbow/Environment/Materials/DrumWall05.mat:_BaseColor:c2 | 0.65 | 1.15 | 0.05
+mat:Assets/Rainbow/Environment/Materials/Ring05_Near.mat:_Exposure:f | 0.7 | 1.4 | 0.06
+mat:Assets/Rainbow/Environment/Materials/Ring05_Near.mat:_EnvIntensity:f | 0.2 | 1.2 | 0.08
+mat:Assets/Rainbow/Environment/Materials/Ring05_Far.mat:_Exposure:f | 0.7 | 1.4 | 0.06
+mat:Assets/Rainbow/Environment/Materials/Paddle05.mat:_Exposure:f | 0.7 | 1.4 | 0.06
+mat:Assets/Rainbow/Environment/Materials/NearFrame05.mat:_Exposure:f | 0.7 | 1.4 | 0.06
+mat:Assets/Rainbow/Environment/Materials/Throat05.mat:_ThroatIntensity:f | 0.5 | 1.6 | 0.08
+mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_RiverGrade:v0 | 0.3 | 1.2 | 0.04
+mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_RiverGrade:v1 | 0.3 | 1.2 | 0.04
+mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_RiverGrade:v2 | 0.4 | 1.3 | 0.04
+mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_EnvStrength:f | 0.3 | 1.5 | 0.08
+mat:Assets/Rainbow/Water/Materials/RainbowFoam05.mat:_Brightness:f | 0.7 | 1.3 | 0.04
+mat:Assets/Rainbow/Water/Resources/RainbowWakeFoam05.mat:_Brightness:f | 0.6 | 1.3 | 0.05
+mat:Assets/Rainbow/Water/Materials/RainbowBubble05.mat:_Intensity:f | 0.6 | 1.8 | 0.08
+mat:Assets/Rainbow/Water/Materials/RainbowRiverGlints05.mat:_Flare:f | 0.5 | 1.0 | 0.08
+mat:Assets/Rainbow/Water/Materials/RainbowRiverGlints05.mat:_Streak:f | 0.4 | 1.3 | 0.08
+mat:Assets/Rainbow/Water/Resources/RainbowSplash05.mat:_Intensity:f | 0.5 | 1.5 | 0.08
+mat:Assets/Rainbow/Water/Resources/RainbowSplash05.mat:_RopeAlpha:f | 0.4 | 1 | 0.05
