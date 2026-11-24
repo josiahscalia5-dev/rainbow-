@@ -5,6 +5,14 @@ Read this first in any new Claude account or session. **This is an existing proj
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
+## RESUMED 2026-11-24 13:21 local (session da8aeec6, new account) - IN PROGRESS, read before the older NOW block below
+- New BINDING user direction (13:28 local): `references/correction-guides-2026-11-24b/README.md` (water first, natural swimming, continuous world,
+  wake, foam, 30-60 s recording, gameplay rated separately; a guide 03 was announced but never arrived).
+- Work order of this session (coordinator only, no specialists): (1) long continuous route (the old playable route was only ~5 s: s 14 -> 68)
+  (2) swimming / camera / bank limits (3) new water shading with flow-aligned tiling textures (4) splash + wake (5) foam (6) walls / rings / frame / HUD
+  (7) motion checks + scores + 30-60 s recording.
+- Safe fallback: tag validated/r7-final-83.3. Autosave commits after 05b0b82 = experimental until a new validated/* tag.
+
 ## NOW - read this first (concise; rewritten after every finished step; the DETAILED LOG below is history)
 Updated 2026-11-24 10:56 local (session 018893e6, new account; the previous account ran out of credits at 08:28 local). Cross-account rules: CLAUDE.md "PERMANENT RULE".
 - **USER (2026-11-24, binding):** continue Screen 05 toward 90/100 using the three correction guides; at most TWO specialists at a time; CONSERVE CREDITS (cheap
