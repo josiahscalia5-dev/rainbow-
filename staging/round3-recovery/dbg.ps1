@@ -1,0 +1,2 @@
+﻿. "C:\Users\josia\AppData\Local\Temp\claude\fce4210eb4ca4b51\df1b2c26-91e9-4240-8bd4-29c06e5960e0\scratchpad\river_layout_preview.ps1" -Out "C:\Users\josia\AppData\Local\Temp\claude\fce4210eb4ca4b51\df1b2c26-91e9-4240-8bd4-29c06e5960e0\scratchpad\tmp.jpg" -New 1 | Out-Null
+foreach ($s in 56,58,60,62,62.6,64,66,68) { $L = [RL]::Layout($s); $d = [RL]::Meander($s); "s={0,5} d={1,6:0.00} cs={2,6:0.00} foamL {3,6:0.00} bandL {4,6:0.00} bandR {5,6:0.00} foamR {6,6:0.00}" -f $s, $d, [RL]::CoreShift($s), $L[0], $L[1], $L[2], $L[3] }
