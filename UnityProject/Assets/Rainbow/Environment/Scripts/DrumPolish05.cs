@@ -39,7 +39,7 @@ namespace Rainbow.Screen05
             return new List<WallBay>
             {
                 new WallBay(DrumLayout05.TunnelStart, 5.6f, Mathf.Max(3f, Mathf.Round((5.6f - DrumLayout05.TunnelStart) / 1.7f)), NA0, NA0, NAk),
-                new WallBay(5.6f, 25.6f, 11f, NA0, NA0, NAk),
+                new WallBay(5.6f, 25.6f, 18f, NA0, NA0, NAk),
                 new WallBay(25.6f, 46f, 6f, NA0, NA1, NAk),
                 new WallBay(46f, 82f, 6f, AB0, AB1, ABk),
                 new WallBay(82f, 105.8f, 8f, BC0, BC1, BCk),
@@ -49,9 +49,9 @@ namespace Rainbow.Screen05
             };
         }
 
-        static readonly float[] LampN = { -127, -101, -75, -52.5f, -30, -8, 14, 32, 50, 69, 96, 118 };
-        static readonly float[] LampA = { -116, -92, -60.8f, -38, -15, 4, 23.6f, 45.4f, 73, 102, 124 };
-        static readonly float[] LampB = { -122, -95, -67, -40, -12.5f, 23, 50, 79.5f, 108, 128 };
+        static readonly float[] LampN = { -122, -97, -71.5f, -49.3f, -28, -8, 13, 30, 47.2f, 66, 92, 114 };
+        static readonly float[] LampA = { -113, -89.5f, -58.4f, -36.5f, -13.7f, 5, 23.3f, 44, 71, 100, 122 };
+        static readonly float[] LampB = { -120, -93.3f, -65.5f, -39, -11.7f, 23.3f, 49.4f, 78, 106.5f, 127 };
         static readonly float[] LampC = { -125, -97, -68, -38.5f, -9, 24, 53.5f, 83, 107, 128 };
         static readonly float[] LampD = { -126, -100, -69, -38.5f, -9, 23.5f, 54, 85.5f, 107, 128 };
 
@@ -142,9 +142,20 @@ namespace Rainbow.Screen05
             return md.ToMesh(name);
         }
 
+        /// <summary>The approved bands are slightly wavy (measured fraction of the band height): the near ring sits further in on the
+        /// left and further out on the right, rings A / B bulge inward at the upper left.</summary>
+        static float Wave(float s, float deg)
+        {
+            float G(float c, float w) => Mathf.Exp(-(deg - c) * (deg - c) / (w * w));
+            if (s < 30f) return -0.22f * Mathf.Sin(deg * Mathf.Deg2Rad);
+            if (s < 60f) return 0.2f * G(-28f, 26f) - 0.06f * G(45f, 25f) + 0.05f * G(75f, 18f);
+            if (s < 95f) return 0.1f * G(-38f, 28f);
+            return 0f;
+        }
+
         /// <summary>Polished ring band (fraction t 0 wall .. 1 crest over band.height, facing the rider): UV0 = (k, t),
         /// UV1 = (lamp coordinate, lamp pitch rad). Centred on the ring centre, lathe round local Z.</summary>
-        public static Mesh BuildRing(DrumLayout05.BandProfile b, float radius, int segments, float[] lamps, string name)
+        public static Mesh BuildRing(DrumLayout05.BandProfile b, float radius, int segments, float[] lamps, string name, float s = 1000f)
         {
             const float w = 0.2f;
             float[] ts = { -0.12f, 0f, 0.1f, 0.17f, 0.205f, 0.25f, 0.3f, 0.46f, 0.6f, 0.65f, 0.7f, 0.8f, 0.89f, 0.95f, 1f, 1f, 0f };
@@ -161,7 +172,7 @@ namespace Rainbow.Screen05
                 {
                     float deg = -180f + 360f * k / segments, ph = deg * Mathf.Deg2Rad;
                     float sn = Mathf.Sin(ph), cs = Mathf.Cos(ph);
-                    float r = radius * (1f - b.height * ts[i]);
+                    float r = radius * (1f - b.height * (ts[i] + Wave(s, deg)));
                     LineCoord(lamps, deg, out float u, out float pitch, null, out _);
                     md.Add(new Vector3(r * sn, r * cs, zs[i]), new Vector3(n2.x * sn, n2.x * cs, n2.y), new Vector2(k / (float)segments, ts[i]), new Vector4(u, pitch, 0f, 0f));
                 }

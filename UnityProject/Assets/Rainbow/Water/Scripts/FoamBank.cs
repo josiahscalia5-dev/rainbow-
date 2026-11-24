@@ -187,13 +187,13 @@ namespace Rainbow.Screen05
                     float slope = Mathf.Abs(WaterlineX(s + 0.25f, side) - WaterlineX(s - 0.25f, side)) / 0.5f;
                     float dens = Mathf.Min(1f + 0.5f * slope, 2f);
 
-                    int nLace = Mathf.RoundToInt((2 + rng.Next() * 2f) * dens);
+                    int nLace = Mathf.RoundToInt((4 + rng.Next() * 2f) * dens);
                     for (int k = 0; k < nLace; k++)
                     {
                         float u = rng.Next();
                         float r = 0.03f + 0.055f * u * u;
                         float z = s + rng.Range(-0.5f, 0.5f) * step;
-                        Add(list, rng, side, WaterlineX(z, side) + side * rng.Range(-0.12f, 0.1f), z, r, rng.Range(0.3f, 0.5f), rng.Range(0.85f, 1f));
+                        Add(list, rng, side, WaterlineX(z, side) + side * rng.Range(-0.14f, 0.16f), z, r, rng.Range(0.3f, 0.5f), rng.Range(0.5f, 0.95f));
                     }
                     int nBig = 1 + (rng.Next() < 0.45f * dens + 0.3f * cl ? 1 : 0);
                     for (int k = 0; k < nBig; k++)
@@ -377,7 +377,7 @@ namespace Rainbow.Screen05
                 maxR = Mathf.Max(maxR, p.radius);
                 float d = RiverPath.Meander(p.centre.z);
                 float hw = RiverSurface.StreamHalfWidth(p.centre.z);
-                for (int k = 0; k < 6; k++)
+                for (int k = 0; k < 4; k++)
                 {
                     float cx = (k == 1 || k == 2) ? 1f : -1f;
                     float cy = k >= 2 ? 1f : -1f;

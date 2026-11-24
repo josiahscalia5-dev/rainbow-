@@ -29,10 +29,10 @@ Material:
     - _Intensity: 1
     - _Len: 1.5
     - _RootBack: 0.3
-    - _RopeAlpha: 1.1
+    - _RopeAlpha: 0.85
     - _RopeWidth: 1.5
     - _SoftDepth: 0.05
-    - _Spread: 0.15
+    - _Spread: 0.2
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

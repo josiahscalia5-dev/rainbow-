@@ -49,7 +49,7 @@ static const float3 RBW_PLIGHT  = float3(0.779, 0.204, 0.769);   // #FB57F9
 static const float3 RBW_PPALE   = float3(0.835, 0.534, 0.872);   // #F0AFF7
 static const float3 RBW_PWHITE  = float3(0.945, 0.767, 0.974);   // #F8D7FD
 static const float3 RBW_VIN     = float3(0.372, 0.170, 0.625);   // violet, core side
-static const float3 RBW_VPERI   = float3(0.311, 0.252, 0.740);   // periwinkle
+static const float3 RBW_VPERI   = float3(0.24, 0.19, 0.800);   // periwinkle
 static const float3 RBW_VBLUE   = float3(0.07, 0.40, 0.82);      // W12 blue into the cyan core
 static const float3 RBW_VOUT    = float3(0.381, 0.185, 0.674);   // violet, bank side
 static const float3 RBW_OBLUE   = float3(0.211, 0.256, 0.715);   // blue-violet outer water
@@ -137,7 +137,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float a4 = 1.0 - smoothstep(0.15, 0.4, fwX * 30.0);
     float n4 = RBW_VNoise(float2(X * 27.0 + 8.7 + 2.5 * n0, v5 * 0.16 + 1.0));
     // fine silky hairlines in bundles along the current (approved: the satin is full of them)
-    float silk = (smoothstep(0.55, 0.92, n3) * a3 * 0.7 + smoothstep(0.6, 0.92, n4) * a4) * smoothstep(0.35, 0.7, n2 * 0.5 + n1 * 0.5);
+    float silk = (smoothstep(0.5, 0.85, n3) * a3 * 0.6 + smoothstep(0.52, 0.82, n4) * a4) * smoothstep(0.34, 0.58, n2 * 0.5 + n1 * 0.5);
     float lane = (n0 - 0.5) * 0.75 + (n1 - 0.5) * 0.5 * a1 + (n2 - 0.5) * 0.36 * a2 + (n3 - 0.5) * 0.22 * a3;
     float stA = smoothstep(0.52, 0.85, n1 * 0.75 + n2 * 0.35) * a1;                   // broad light streaks
     float stB = smoothstep(0.62, 0.9, n2) * smoothstep(0.3, 0.65, n1) * a2;           // fine glossy streaks
@@ -150,7 +150,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     tb = lerp(tb, tW5, sweep);
     hB = lerp(hB, wW, sweep);
     tb += ((n1 - 0.5) * 0.45 * a1 + (n2 - 0.5) * 0.5 * a2 + (n3 - 0.5) * 0.25 * a3) * _W4Edge;   // streaky satin edges
-    float at = abs(tb) * _W4Band.x;                // < 1 = broader pink inside the traced edges
+    float at = abs(tb) * _W4Band.x * (tb < 0.0 ? lerp(0.82, 1.0, sweep) : 1.0);                // < 1 = broader pink inside the traced edges
 
     // ---- electric cyan ----
     float coreK = saturate(1.0 - q * q * 0.8);
@@ -176,7 +176,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     cy = lerp(cy, nb, inW);
 
     // between a band and its bank: cyan water a touch bluer than the core
-    float3 ow = lerp(cy, RBW_VIN, _W4Band.y);
+    float3 ow = lerp(cy, float3(0.15, 0.17, 0.8), _W4Band.y);
 
     // ---- hot-pink satin ----
     float hp = saturate(0.45 + lane * 1.1);

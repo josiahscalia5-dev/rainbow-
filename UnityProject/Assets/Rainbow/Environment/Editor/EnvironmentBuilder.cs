@@ -102,7 +102,7 @@ namespace Rainbow.Screen05.EditorTools
             {
                 bool far = s > DrumLayout05.FarBandFromS;
                 string rn = "Ring05_s" + Mathf.RoundToInt(s);
-                Mesh rm = SaveMesh(DrumPolish05.BuildRing(DrumLayout05.BandFor(s), ringRadius, s < 100f ? 144 : 96, DrumPolish05.LampsFor(s), rn), rn);
+                Mesh rm = SaveMesh(DrumPolish05.BuildRing(DrumLayout05.BandFor(s), ringRadius, s < 100f ? 144 : 96, DrumPolish05.LampsFor(s), rn, s), rn);
                 GameObject r = MakeRenderer(rings, "Ring_" + F(s), rm, far ? ringFarMat : ringNearMat);
                 r.transform.localPosition = DrumLayout05.Centre(s);
                 r.transform.localScale = Vector3.one * (DrumLayout05.RadiusAt(s) / DrumLayout05.Radius);   // round 4 barrel fit
