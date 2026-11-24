@@ -186,7 +186,7 @@ namespace Rainbow.Screen05.EditorTools
 
         float LateralAt(int i)
         {
-            if (m_X == null || i >= m_X.Length || float.IsNaN(m_X[i])) return RiverPath.Meander(m_S[i]);
+            if (m_X == null || i >= m_X.Length || float.IsNaN(m_X[i])) return SwimLine05.X(m_S[i]);
             return m_X[i];
         }
 

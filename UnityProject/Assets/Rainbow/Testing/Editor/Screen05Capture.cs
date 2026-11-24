@@ -111,7 +111,7 @@ namespace Rainbow.Screen05.EditorTools
             foreach (float sv in new[] { 10f, 14f, 20f, 28f, 40f, 55f, 66f })
             {
                 s.Add(sv);
-                x.Add(RiverPath.Meander(sv));
+                x.Add(SwimLine05.X(sv));
                 l.Add(Mathf.Approximately(sv, RiverPath.StartS)
                     ? "s14_coinline_APPROVED_VIEW"
                     : "s" + Screen05CaptureUtil.F(sv) + "_coinline");

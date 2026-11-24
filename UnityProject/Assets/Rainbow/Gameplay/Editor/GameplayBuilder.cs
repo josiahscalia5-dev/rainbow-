@@ -53,7 +53,7 @@ namespace Rainbow.Screen05.EditorTools
             float s0 = RiverPath.StartS;
             Vector3 p0, f0, r0;
             route.SampleAtS(s0, out p0, out f0, out r0);
-            float x0 = RiverPath.ClampLateral(p0.x, BennyController.BodyRadius, 1.0f);
+            float x0 = p0.x;
             rig.root.transform.SetPositionAndRotation(
                 new Vector3(x0, RiverPath.WaterY + BennyController.RootRide, p0.z),
                 Quaternion.LookRotation(f0, Vector3.up));
@@ -65,6 +65,7 @@ namespace Rainbow.Screen05.EditorTools
             benny.startS = s0;
             benny.visual = rig.visual;
             benny.animator = rig.animator;
+            benny.swimAnimator = rig.swimAnimator;
             benny.pom = rig.pom;
             benny.input = input;
             benny.wake = wake;
@@ -85,6 +86,8 @@ namespace Rainbow.Screen05.EditorTools
             flow.coins = coins;
             flow.hud = hud;
             flow.finishS = RiverPath.FinishS;
+            // the long continuous course beyond the baked stretch (built at the start of Play)
+            root.AddComponent<Course05Extension>();
             BuildEventSystem(root.transform);
 
             AssetDatabase.SaveAssets();

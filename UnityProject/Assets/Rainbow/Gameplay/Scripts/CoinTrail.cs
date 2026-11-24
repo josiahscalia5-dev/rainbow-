@@ -47,8 +47,11 @@ namespace Rainbow.Screen05
             new Vector4(118.0f, 1.14f, 2.60f, 0.60f),
         };
 
-        /// <summary>World x of the coin line at s (piecewise linear through the trail).</summary>
-        public static float LineX(float s)
+        /// <summary>World x of the coin line at s (the approved trail, then the swim line of the long course).</summary>
+        public static float LineX(float s) => s < 112f ? ApprovedLineX(s) : Mathf.Lerp(ApprovedLineX(s), SwimLine05.X(s), Mathf.Clamp01((s - 112f) / 10f));
+
+        /// <summary>World x of the approved coin trail (piecewise linear).</summary>
+        public static float ApprovedLineX(float s)
         {
             var c = ApprovedCoins;
             if (s <= c[0].x) return Mathf.Lerp(RiverPath.Meander(s), c[0].y, Mathf.Clamp01((s - (c[0].x - 7f)) / 7f));
@@ -60,7 +63,7 @@ namespace Rainbow.Screen05
         public SwimRoute route;
         public List<Slot> slots = new List<Slot>();
         public ParticleSystem sparkles;
-        public float pickupAlong = 1.0f, pickupSide = 1.25f, pickupVertical = 1.7f;
+        public float pickupAlong = 1.0f, pickupSide = 1.3f, pickupVertical = 1.45f;
 
         public int CollectedCount { get; private set; }
         /// <summary>Coins Benny can reach in the playable section (s below RiverPath.FinishS).</summary>
@@ -86,6 +89,41 @@ namespace Rainbow.Screen05
         {
             outSl.Clear();
             foreach (Vector4 c in ApprovedCoins) if (c.x < RiverPath.TunnelLength - 1f) outSl.Add(c);
+            AddCourseCoins(outSl);
+        }
+
+        /// <summary>Coins of the long course (master direction 2026-11-24): groups along the current - straight, weaving across it, and arcs that
+        /// reward a jump - always inside the swimmable channel. One coin group roughly every two seconds.</summary>
+        static void AddCourseCoins(List<Vector4> o)
+        {
+            float s = 132f;
+            int g = 0;
+            while (s < RiverPath.FinishS - 12f)
+            {
+                int kind = g % 4;
+                int n = kind == 3 ? 5 : 6;
+                float gap = kind == 3 ? 2.1f : 4.3f, sign = (g & 1) == 0 ? 1f : -1f;
+                for (int i = 0; i < n && s < RiverPath.FinishS - 12f; i++)
+                {
+                    float u = n > 1 ? i / (float)(n - 1) : 0f;
+                    float off = kind == 1 ? sign * 1.35f * Mathf.Sin(u * 2f * Mathf.PI) : kind == 2 ? sign * 1.5f * Mathf.Sin(u * Mathf.PI) : 0f;
+                    float h = kind == 3 ? 0.85f + 1.05f * Mathf.Sin(u * Mathf.PI) : 0.85f;
+                    Vector2 lim = SwimLine05.Limits(s);
+                    float x = Mathf.Clamp(SwimLine05.X(s) + off, lim.x + 0.35f, lim.y - 0.35f);
+                    o.Add(new Vector4(s, x, h, 1.0f));
+                    s += gap;
+                }
+                s += kind == 3 ? 13f : 9f;
+                g++;
+            }
+        }
+
+        /// <summary>The far approved coins hang higher and higher above the water (the picture's forced perspective); as the rider comes
+        /// near they sink gently to a height he can reach, long before they are big on screen.</summary>
+        static float PlayHeight(float approved, float s, float bennyS)
+        {
+            float far = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(20f, 58f, s - bennyS));
+            return Mathf.Lerp(Mathf.Min(approved, 1.1f), approved, far);
         }
 
         /// <summary>Rest position / orientation of a coin (also used by the editor builder).</summary>
@@ -145,6 +183,7 @@ namespace Rainbow.Screen05
                     float ds = slots[i].s - bs;
                     if (ds < -2f || ds > 2f) continue;
                     Vector3 cp = basePos[i];
+                    if (slots[i].s < 125f) cp.y = RiverPath.WaterY + PlayHeight(slots[i].height, slots[i].s, bs);
                     if (Mathf.Abs(ds) < pickupAlong && Mathf.Abs(cp.x - bx) < pickupSide && Mathf.Abs(cp.y - by) < pickupVertical)
                         Collect(i, time);
                 }
@@ -157,7 +196,8 @@ namespace Rainbow.Screen05
             collected[i] = true;
             popT[i] = time;
             CollectedCount++;
-            Vector3 p = basePos[i];
+            Vector3 p = slots[i].coin != null ? slots[i].coin.position : basePos[i];
+            basePos[i].y = p.y;
             EmitSparkles(p);
             Screen05Events.RaiseCoinCollected(p);
         }
@@ -188,6 +228,7 @@ namespace Rainbow.Screen05
                 if (t == null) continue;
                 float scale = slots[i].scale > 0.01f ? slots[i].scale : CoinScale;
                 Vector3 pos = basePos[i];
+                if (!collected[i] && slots[i].s < 125f) pos.y = RiverPath.WaterY + PlayHeight(slots[i].height, slots[i].s, Screen05Events.BennyS);
                 if (collected[i])
                 {
                     if (popT[i] < 0f) { if (t.gameObject.activeSelf) t.gameObject.SetActive(false); continue; }

@@ -31,7 +31,7 @@ namespace Rainbow.Screen05
         [Header("Program (keyed to course distance s = Benny's world Z)")]
         public Screen05AutopilotSegment[] program = DefaultProgram();
         [Tooltip("Request a jump when Benny crosses each of these s values.")]
-        public float[] jumpAtS = { 26f, 44f };
+        public float[] jumpAtS = { 55f, 92f, 143f, 186f, 212f, 254f, 300f, 338f, 376f, 430f };
         [Tooltip("After this s the autopilot only steers straight (Steer 0), still overriding input. 0 = never.")]
         public float straightAfterS = RiverPath.FinishS + 2f;
 
@@ -52,15 +52,26 @@ namespace Rainbow.Screen05
         /// <summary>Default ~12 s program from StartS (14) to FinishS (68).</summary>
         public static Screen05AutopilotSegment[] DefaultProgram()
         {
+            // master direction 2026-11-24: the whole long course (s 14 .. 466): coin line, hard left / right excursions
             return new[]
             {
                 new Screen05AutopilotSegment(0f, Screen05AutopilotMode.CoinLine),
-                new Screen05AutopilotSegment(18f, Screen05AutopilotMode.HardLeft),
-                new Screen05AutopilotSegment(23f, Screen05AutopilotMode.CoinLine),
-                new Screen05AutopilotSegment(30f, Screen05AutopilotMode.HardRight),
-                new Screen05AutopilotSegment(35.5f, Screen05AutopilotMode.CoinLine),
-                new Screen05AutopilotSegment(51f, Screen05AutopilotMode.HardLeft),
-                new Screen05AutopilotSegment(55f, Screen05AutopilotMode.CoinLine),
+                new Screen05AutopilotSegment(36f, Screen05AutopilotMode.HardLeft),
+                new Screen05AutopilotSegment(42f, Screen05AutopilotMode.CoinLine),
+                new Screen05AutopilotSegment(70f, Screen05AutopilotMode.HardRight),
+                new Screen05AutopilotSegment(76f, Screen05AutopilotMode.CoinLine),
+                new Screen05AutopilotSegment(121f, Screen05AutopilotMode.HardRight),
+                new Screen05AutopilotSegment(127f, Screen05AutopilotMode.CoinLine),
+                new Screen05AutopilotSegment(164f, Screen05AutopilotMode.HardLeft),
+                new Screen05AutopilotSegment(170f, Screen05AutopilotMode.CoinLine),
+                new Screen05AutopilotSegment(226f, Screen05AutopilotMode.HardRight),
+                new Screen05AutopilotSegment(233f, Screen05AutopilotMode.CoinLine),
+                new Screen05AutopilotSegment(287f, Screen05AutopilotMode.HardLeft),
+                new Screen05AutopilotSegment(294f, Screen05AutopilotMode.CoinLine),
+                new Screen05AutopilotSegment(352f, Screen05AutopilotMode.HardRight),
+                new Screen05AutopilotSegment(359f, Screen05AutopilotMode.CoinLine),
+                new Screen05AutopilotSegment(412f, Screen05AutopilotMode.HardLeft),
+                new Screen05AutopilotSegment(418f, Screen05AutopilotMode.CoinLine),
             };
         }
 
@@ -151,7 +162,7 @@ namespace Rainbow.Screen05
                         Stats.hardRightFrames++;
                         break;
                     default:
-                        float target = RiverPath.Meander(s + lookAhead);
+                        float target = CoinTrail.LineX(s + lookAhead);
                         steer = Mathf.Clamp((target - x) * steerGain - vx * steerDamping, -1f, 1f);
                         break;
                 }

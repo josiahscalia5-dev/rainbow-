@@ -229,8 +229,9 @@ namespace Rainbow.Screen05
 
         void UpdateBasis(float s)
         {
-            fwd = RiverPath.Forward(s);
-            right = RiverPath.Right(s);
+            BennyController bc = BennyController.Instance;
+            fwd = bc != null ? bc.TravelDirection : RiverPath.Forward(s);
+            right = Vector3.Cross(Vector3.up, fwd).normalized;
         }
 
         float Rand()

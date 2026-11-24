@@ -205,7 +205,31 @@ float3 RainbowWall4b(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 lo
 {
     return RainbowWall5(posWS, Uv0, Uv1, dist, look, float4(0.0, 0.0, 1.0, 0.55));
 }
+// (master direction 2026-11-24) while Benny swims on, the rows of the far bays (forced perspective: 6 - 23 m apart) come near: every row
+// splits into three (the middle one keeps its place) whenever the rows are more than ~0.2 x the distance apart, cross-faded. At the
+// approved view nothing splits (rows / distance <= 0.16). x = split level, y = blend to the next level.
+float2 RbRowSplit(float row, float s, float dist)
+{
+    float dr = length(float2(ddx(row), ddy(row))), dsx = length(float2(ddx(s), ddy(s)));
+    float p = dsx / max(dr, 1e-6);                               // metres between two rows
+    float lv = max(log(max(p / (0.2 * max(dist, 4.0)), 1e-3)) / 1.0986, 0.0);
+    float n = min(floor(lv), 3.0);
+    return float2(pow(3.0, n), smoothstep(0.2, 0.8, lv - n));
+}
+
+float3 RainbowWall5Row(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 look, float4 look5);
 float3 RainbowWall5(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 look, float4 look5)
+{
+    float2 sp = RbRowSplit(Uv1.y, Uv0.y, dist);
+    float4 a = Uv1, b = Uv1;
+    a.y = (Uv1.y - 0.5) * sp.x + 0.5;
+    b.y = (Uv1.y - 0.5) * sp.x * 3.0 + 0.5;
+    float3 ca = RainbowWall5Row(posWS, Uv0, a, dist, look, look5);
+    if (sp.y > 0.002) ca = lerp(ca, RainbowWall5Row(posWS, Uv0, b, dist, look, look5), sp.y);
+    return ca;
+}
+
+float3 RainbowWall5Row(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 look, float4 look5)
 {
     float s = Uv0.y;
     float phi = Uv0.x / 6.8;
@@ -215,7 +239,8 @@ float3 RainbowWall5(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 loo
     float st = Uv1.w * look.x;
     float row = Uv1.y;
     float fy = frac(row) - 0.5;
-    float bayNA = 1.0 - smoothstep(45.0, 47.0, s);
+    // (master direction 2026-11-24) near the camera the metal is hot magenta wherever he swims (the approved near bay), violet in the depth
+    float bayNA = max(1.0 - smoothstep(45.0, 47.0, s), 1.0 - smoothstep(16.0, 38.5, dist));
     // base metal: violet, hot magenta on the upper walls of the near bay
     float3 violet = float3(128, 27, 178);
     float pink = bayNA * max(1.0 - smoothstep(62.0, 104.0, ap), 0.3) * look.y * lerp(0.6, 1.0, smoothstep(-0.7, 0.7, phi));

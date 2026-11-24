@@ -57,7 +57,8 @@ namespace Rainbow.Screen05.EditorTools
         public class Rig
         {
             public GameObject root;
-            public Transform visual, lean, bob, model, squash, armL, armR, pom;
+            public Transform visual, lean, bob, model, squash, armL, armR, pom, footL, footR;
+            public BennySwimAnimator swimAnimator;
             public Animator animator;
             public string source;
         }
@@ -84,6 +85,7 @@ namespace Rainbow.Screen05.EditorTools
             // round 4: the approved arms are small round nubs (~50 px); the bones scale them about the shoulder (bind pose keeps scale 1)
             rig.armL.localScale = rig.armR.localScale = Vector3.one * ArmScale;
             rig.pom = GameplayAssetUtil.Child("Pom", rig.squash, PomPivot - SquashPivot).transform;
+            BuildFeet(rig);
 
             Material mat = BennyMaterial();
             Mesh skinned = null;
@@ -114,6 +116,9 @@ namespace Rainbow.Screen05.EditorTools
                 rig.source = "procedural fallback";
             }
 
+            rig.swimAnimator = rig.visual.gameObject.AddComponent<BennySwimAnimator>();
+            rig.swimAnimator.lean = rig.lean; rig.swimAnimator.bob = rig.bob; rig.swimAnimator.squash = rig.squash;
+            rig.swimAnimator.armL = rig.armL; rig.swimAnimator.armR = rig.armR; rig.swimAnimator.footL = rig.footL; rig.swimAnimator.footR = rig.footR;
             rig.animator = rig.visual.gameObject.AddComponent<Animator>();
             rig.animator.applyRootMotion = false;
             rig.animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
@@ -122,6 +127,28 @@ namespace Rainbow.Screen05.EditorTools
             catch (Exception e) { Debug.LogWarning("[Rainbow Agent4] Animator controller build failed: " + e.Message); }
             Debug.Log("[Rainbow Agent4] Benny built from " + rig.source);
             return rig;
+        }
+
+        /// <summary>Two small round pink feet under the body (master direction 2026-11-24: feet paddle too). They hang below the waterline, so the
+        /// approved view never shows them; they kick in the water and dangle while he jumps. Mesh space (scale 2.308, model turned 180 deg).</summary>
+        static void BuildFeet(Rig rig)
+        {
+            Material m = FlatFluff("Benny_Feet", new Color(0.92f, 0.36f, 0.62f, 1f));
+            GameObject tmp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            Mesh sphere = tmp.GetComponent<MeshFilter>().sharedMesh;
+            UnityEngine.Object.DestroyImmediate(tmp);
+            foreach (float side in new[] { -1f, 1f })
+            {
+                Transform hip = GameplayAssetUtil.Child(side > 0f ? "FootL" : "FootR", rig.squash, new Vector3(0.15f * side, 0.05f, 0.1f)).transform;
+                GameObject f = GameplayAssetUtil.Child("Nub", hip, new Vector3(0f, -0.1f, 0.02f));
+                f.transform.localScale = new Vector3(0.15f, 0.13f, 0.19f);
+                f.AddComponent<MeshFilter>().sharedMesh = sphere;
+                MeshRenderer mr = f.AddComponent<MeshRenderer>();
+                mr.sharedMaterial = m;
+                mr.shadowCastingMode = ShadowCastingMode.Off;
+                mr.receiveShadows = false;
+                if (side > 0f) rig.footL = hip; else rig.footR = hip;
+            }
         }
 
         // ---- material ------------------------------------------------------------------------------------------------

@@ -55,6 +55,18 @@ namespace Rainbow.Screen05
         [Tooltip("far clip (m): the tunnel's far rings / throat reach s 470 (DrumLayout05.ThroatS)")]
         public float farClip = 520f;
 
+        [Header("Follow the current (master direction 2026-11-24)")]
+        [Tooltip("share of the course direction ahead that the view turns into (0 = fixed heading)")]
+        public float yawFollow = 0.55f;
+        [Tooltip("stretch of the course (m ahead of Benny) whose direction the view follows")]
+        public Vector2 yawLook = new Vector2(2f, 20f);
+        public float maxYawDeg = 8f;
+        public float yawSmoothTime = 0.55f;
+        [Tooltip("how far the camera stays inside the drum wall (m)")]
+        public float wallGap = 1.6f;
+
+        float yawNow, yawVel;
+
         float jumpShare, jumpShareVel;
 
         void Awake()
@@ -89,11 +101,17 @@ namespace Rainbow.Screen05
         /// <summary>Place the follow and look targets for Benny at (s, lateralX) with his current jump height.</summary>
         public void Apply(float s, float lateralX, float jumpHeight)
         {
-            float off = lateralX; // tunnel axis is x = 0, so Benny's lateral offset from it is his world X
+            float bend = RiverPath.Bend(s - 3f);
+            float off = lateralX - RiverPath.Bend(s); // Benny's offset from the tunnel axis (0 bend in the approved stretch)
             float follow = latFollow * (1f - Mathf.Exp(-(off * off) / Mathf.Max(1e-3f, deadZone * deadZone)));
-            float camX = off * follow;
+            float camX = bend + off * follow;
+            float wall = DrumLayout05.WaterChord(s - back) - wallGap;
+            camX = Mathf.Clamp(camX, bend + DrumLayout05.AxisXAt(s) - RiverPath.Bend(s) - wall, bend + DrumLayout05.AxisXAt(s) - RiverPath.Bend(s) + wall);
             float jumpTarget = jumpFollow * Mathf.Max(0f, jumpHeight);
             float dt = Application.isPlaying ? Time.deltaTime : 0f;
+            float yawWant = YawTarget(s);
+            if (dt > 0f) yawNow = Mathf.SmoothDamp(yawNow, yawWant, ref yawVel, yawSmoothTime, 40f, dt);
+            else if (!Application.isPlaying) { yawNow = yawWant; yawVel = 0f; }
             if (dt > 0f) jumpShare = Mathf.SmoothDamp(jumpShare, jumpTarget, ref jumpShareVel, Mathf.Max(1e-3f, jumpSmoothTime), Mathf.Infinity, dt);
             else if (!Application.isPlaying) { jumpShare = jumpTarget; jumpShareVel = 0f; }
             float y = RiverPath.WaterY + jumpShare;
@@ -102,12 +120,22 @@ namespace Rainbow.Screen05
             if (lookTarget != null) lookTarget.position = LookPoint(anchor);
         }
 
+        /// <summary>View turn (deg, + = right) into the direction the current takes ahead; exactly 0 at the approved view (s = StartS).</summary>
+        float YawTarget(float s)
+        {
+            float a = Mathf.Atan(SwimLine05.SlopeAhead(s, yawLook.x, yawLook.y)) * Mathf.Rad2Deg;
+            float a0 = Mathf.Atan(SwimLine05.SlopeAhead(RiverPath.StartS, yawLook.x, yawLook.y)) * Mathf.Rad2Deg;
+            float k = Mathf.Clamp01((s - RiverPath.StartS - 1f) / 24f);
+            k = k * k * (3f - 2f * k);
+            return Mathf.Clamp(yawFollow * (a - a0 * (1f - k)) * Mathf.Max(k, 0.0f), -maxYawDeg, maxYawDeg);
+        }
+
         /// <summary>Look-ahead point for a follow anchor: ideal camera + approved view direction * (ahead + back).</summary>
         public Vector3 LookPoint(Vector3 anchor)
         {
             Vector3 cam = anchor + new Vector3(0f, up, -back);
             float pitch = pitchDeg * Mathf.Deg2Rad;
-            float yaw = yawLeftDeg * Mathf.Deg2Rad;
+            float yaw = (yawLeftDeg - yawNow) * Mathf.Deg2Rad;
             Vector3 look = new Vector3(-Mathf.Cos(pitch) * Mathf.Sin(yaw), -Mathf.Sin(pitch), Mathf.Cos(pitch) * Mathf.Cos(yaw));
             return cam + look * (ahead + back);
         }
@@ -116,6 +144,7 @@ namespace Rainbow.Screen05
         public void Snap()
         {
             jumpShare = 0f; jumpShareVel = 0f;   // teleports always put Benny on the water
+            if (followTarget != null) { yawNow = YawTarget(followTarget.position.z); yawVel = 0f; }
             if (followTarget != null && lookTarget != null)
             {
                 Vector3 a = followTarget.position;

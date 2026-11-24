@@ -16,7 +16,7 @@ namespace Rainbow.Screen05
     public class SwimRoute : MonoBehaviour
     {
         public const float KnotStep = 2f;
-        const int LutSize = 1025;
+        const int LutSize = 2049;
 
         public static SwimRoute Instance { get; private set; }
 
@@ -49,9 +49,9 @@ namespace Rainbow.Screen05
             Spline spline = c.Spline;
             spline.Clear();
             spline.Closed = false;
-            for (float s = RiverPath.TunnelStart; s <= RiverPath.StageLength + 1e-3f; s += KnotStep)
+            for (float s = RiverPath.TunnelStart; s <= RiverPath.FinishS + 60f; s += KnotStep)
             {
-                Vector3 p = RiverPath.CorePoint(s);
+                Vector3 p = SwimLine05.Point(s);
                 spline.Add(new float3(p.x, p.y, p.z), TangentMode.AutoSmooth);
             }
         }
@@ -116,9 +116,9 @@ namespace Rainbow.Screen05
             if (d <= 0f || d >= length)
             {
                 float s = SAtDistance(d);
-                pos = RiverPath.CorePoint(s);
-                forward = RiverPath.Forward(s);
-                right = RiverPath.Right(s);
+                pos = SwimLine05.Point(s);
+                forward = new Vector3(SwimLine05.SlopeAhead(s, -0.1f, 0.1f), 0f, 1f).normalized;
+                right = Vector3.Cross(Vector3.up, forward).normalized;
                 return;
             }
             float t = d / length;
