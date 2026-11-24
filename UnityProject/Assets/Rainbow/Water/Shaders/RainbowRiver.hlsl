@@ -203,6 +203,9 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float2 wuv = float2((dlW + 0.012 * sin(bt * 2.9 + back * 6.0) + 2.2) / 4.4, (bk - 0.2) / 3.6);
     float3 wm = SAMPLE_TEXTURE2D_LOD(_WakeSheen, sampler_WakeSheen, wuv, 0).rgb;
     float wakeA = bOn * wk * smoothstep(0.8, 1.2, back) * (1.0 - smoothstep(3.2, 3.7, back)) * (1.0 - smoothstep(1.75, 2.1, abs(dlW))) * saturate(wm.b * 1.4);
+    // the sweeps run up to his flanks and have streaky satin edges
+    float upK = smoothstep(0.85, 1.25, back) * (1.0 - smoothstep(1.35, 1.75, back)) * (1.0 - smoothstep(0.4, 1.15, abs(tW5)));
+    wm.g = saturate(max(wm.g, upK * 0.9) + (T - 0.5) * 0.55 * smoothstep(0.04, 0.3, wm.g));
     float qw = wm.g < 0.5 ? lerp(0.12, 1.0, wm.g * 2.0) : lerp(1.0, 1.55, wm.g * 2.0 - 1.0);
     qe = lerp(qe, qw + (T - 0.5) * 0.3, wakeA);
     Y = lerp(Y, wm.r + (row - 0.333) * _SheenLook.z, wakeA);

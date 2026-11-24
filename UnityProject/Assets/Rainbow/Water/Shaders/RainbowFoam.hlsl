@@ -168,7 +168,7 @@ float3 RBW_FoamColor(float3 Nv, float px, float seed, float ao, float tint, floa
     float up = dot(Ns, upV);
     float lit = saturate(0.52 + 0.5 * up - 0.07 * Ns.x);
     float big = smoothstep(14.0, 34.0, px);
-    float t = 0.16 + 0.96 * smoothstep(0.08, 0.98, lit) - (1.0 - ao) * 0.62;
+    float t = -0.04 + 0.94 * smoothstep(0.12, 1.04, lit) - (1.0 - ao) * 0.6;
     t -= pow(1.0 - z, 2.0) * 0.28 * saturate(0.35 - q.y);                       // soft crease shade under the lump only
     // fine open bubbles: many small blue holes on the lower half and at the flanks, few on the lit cap
     float2 mp = q * (1.0 + 0.5 * (1.0 - z)) * clamp(px / 6.5, 1.4, 11.0) + seed * 37.0;
@@ -177,10 +177,10 @@ float3 RBW_FoamColor(float3 Nv, float px, float seed, float ao, float tint, floa
     float kf = (1.0 - smoothstep(0.5, 0.9, fwidth(mp.x) + fwidth(mp.y))) * smoothstep(9.0, 18.0, px);
     t += (mf.z - 0.6) * 0.1 * dens * kf + mf.y * 0.2 * kf;
     float3 col = RBW_Soap05(t + 0.03 * tint);
-    col = lerp(col, RBW_Disp(float3(74, 132, 238)), mf.x * kf * 0.62 * (1.0 - 0.6 * lit));
+    col = lerp(col, RBW_Disp(float3(74, 132, 238)), mf.x * kf * 0.85 * (1.0 - 0.5 * lit));
     // thin-film / subsurface: bright soft silhouettes on the lit side, a breath of pink and aqua
     float fres = pow(1.0 - z, 2.4);
-    col = lerp(col, RBW_Disp(float3(252, 248, 255)), fres * saturate(up * 0.9 + 0.35) * 0.6);
+    col = lerp(col, RBW_Disp(float3(252, 248, 255)), fres * saturate(up * 0.9 + 0.3) * 0.38);
     col += (RBW_Iridescent(fres * 1.2 + seed * 0.7 + 0.15) - 0.35) * fres * 0.1;
     col = lerp(col, col * float3(1.03, 0.96, 1.03), 0.5 + 0.5 * tint);
     // glossy wet highlight
