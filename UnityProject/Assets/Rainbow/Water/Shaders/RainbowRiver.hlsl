@@ -36,6 +36,7 @@ float4 _W4LookD;   // live deltas on _W4Look (material property, RainbowRiver.sh
 #endif
 float4 _W4Dbg;
 float4 _S6Arc;    // (splash6) live deltas (0 in the game): x broad-band mix, y band half width (periods), z satin gain
+float4 _R7Floor;  // (coordinator round 7) live deltas of the purple floor beyond the foam rope (0 = builder look): x base lift, y slot lightening, z near-rope lightening, w pink shift
 float4 _R5Arc;    // (river5) live deltas: x arc period, y arc glow gain, z arc line gain, w arc phase (m)
 float4 _R5Sw;     // (river5) live deltas: x wake sweep lighten, y every pink band lighten
 float4 _R5Tune;   // (river5) live deltas of AgentScripts/screen05_river_tune.cs (0 in the game): x sweep offset, y sweep width, z near base revert, w near lift   // x = brush / ripple streak cores, y = ripple normal, z = specular glint, w = env reflection (gain deltas)
@@ -258,9 +259,11 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
             float fgw = max(fwidth(g.x), fwidth(g.y));
             float slot = (1.0 - smoothstep(0.75, 1.1, length(gf / float2(0.2, 0.34)))) * (1.0 - smoothstep(0.25, 0.7, fgw));
             float sheen = pow(saturate(0.5 + 0.5 * sin(s * 0.45 + 1.3 + ox * 0.4)), 5.0);
-            float3 pf = lerp(float3(0.3, 0.06, 0.5), float3(0.68, 0.2, 0.8), saturate(sheen * 0.8 + 0.12 * ox));
-            pf = lerp(pf, float3(0.04, 0.008, 0.1), slot * 0.85);
-            pf *= lerp(0.55, 1.0, smoothstep(0.0, 0.6, ox));
+            float3 pfA = float3(0.3, 0.06, 0.5) + _R7Floor.x * float3(0.25, 0.06, 0.18) + _R7Floor.w * float3(0.2, 0.04, 0.0);
+            float3 pfB = float3(0.68, 0.2, 0.8) + _R7Floor.w * float3(0.15, 0.03, 0.0);
+            float3 pf = lerp(pfA, pfB, saturate(sheen * 0.8 + 0.12 * ox));
+            pf = lerp(pf, float3(0.04, 0.008, 0.1), slot * saturate(0.85 - _R7Floor.y));
+            pf *= lerp(saturate(0.55 + _R7Floor.z), 1.0, smoothstep(0.0, 0.6, ox));
             fo = lerp(fo, pf, fl);
         }
         col = lerp(col, fo, shelf);
