@@ -1,1 +1,14 @@
 # fitted look values, applied by Screen05Tuning at the end of every scene build (see Screen05AutoFit)
+
+# 2026-11-24 09:06 local, coordinator (session 018893e6): automatic fitter, GLOBAL look (post-processing + light intensities), at the hold; ROUND4_FINAL 80.5 / 66.6 -> R5_prefit 81.7 / 67.2
+light:CameraFill05:intensity|26.39187
+light:KeySun05:intensity|1.70382
+light:ThroatWarm05:intensity|0.34375
+vol:Bloom:intensity|1.965
+vol:Bloom:scatter|0.56159
+vol:Bloom:threshold|1.29938
+vol:ColorAdjustments:contrast|20.35
+vol:ColorAdjustments:hueShift|-1.10563
+vol:ColorAdjustments:postExposure|-0.2337
+vol:ColorAdjustments:saturation|41.84375
+vol:Vignette:intensity|0.19

@@ -20,7 +20,11 @@ Updated 2026-11-24 08:55 local (session 018893e6, new account; the previous acco
   (+ errormap heat), 12 s recording `UnityProject/Recordings/Screen05/gameplay_20261124_084559.mp4`.
 - ERROR MAP of ROUND4_FINAL (`tools/diag/errormap.ps1 -Oracle`): biggest remaining gap = near water / Benny's splash y 1100-1536 (+4.5 visual / +8.1 layout if
   perfect), then upper walls + rings (+2.4), HUD (+2.3), mid river (+2.3), Benny box (+2.1), water right / left (+1.8 / +1.6), left wall + foam (+1.4).
-- NEXT (in order): (1) coordinator FITTER, GLOBAL look only (bloom, exposure, contrast, saturation, hue, vignette, light intensities): params
+- **RUNNING since 09:10 local: ROUND 5 = run `wf_a52c9b0c-d31`** (exactly two lanes RIVER | TUNNEL+BUBBLES; script `staging/shared/round5-visual.workflow.js`, exact args +
+  journal path + relaunch recipe in `staging/shared/round5-args.json`). Baseline = `work/20261124_090507_R5_prefit` **81.7 / 67.2** (step 1 below DONE: the fitter's
+  11 global values are in `Assets/Rainbow/Tuning/screen05_tuning.txt`, a full rebuild reproduced them; a Benny-fur fitter pass (+0.1, it switched his fur rim off) was NOT
+  applied). The 12 s recording needed an unpause: `screen05_playtest_check.cs` leaves Play mode PAUSED, so unpause before `screen05_record_gameplay.cs`.
+- NEXT (in order; 1 is done): (1) coordinator FITTER, GLOBAL look only (bloom, exposure, contrast, saturation, hue, vignette, light intensities): params
   `staging/shared/autofit_round5_global_params.txt` (= `Recordings/Screen05/work/autofit_params.txt`, budget `autofit_seconds.txt` 240), run
   `screen05-cycle.ps1 -Tag R5_prefit -Areas all -NoRebuild -EvalAtHold AgentScripts/screen05_autofit.cs`; winners (`work/autofit_result.txt`) -> append to
   `Assets/Rainbow/Tuning/screen05_tuning.txt`; confirm with a full cycle; keep only if the score rises. (2) ROUND 5 = `staging/shared/round5-visual.workflow.js`:

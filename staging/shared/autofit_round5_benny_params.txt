@@ -1,0 +1,12 @@
+# Round 5 pre-fit pass 2 (coordinator, 2026-11-24 ~09:08 local): Benny's fur material only (coordinator-owned; the lanes never touch Benny).
+# key | min | max | step
+mat:Assets/Rainbow/Benny/Materials/Benny_Fluff.mat:_BakeGain:f | 2 | 7 | 0.4
+mat:Assets/Rainbow/Benny/Materials/Benny_Fluff.mat:_FuzzStrength:f | 0 | 0.5 | 0.04
+mat:Assets/Rainbow/Benny/Materials/Benny_Fluff.mat:_Wrap:f | 0.1 | 1 | 0.08
+mat:Assets/Rainbow/Benny/Materials/Benny_Fluff.mat:_LightInfluence:f | 0 | 0.9 | 0.06
+mat:Assets/Rainbow/Benny/Materials/Benny_Fluff.mat:_FuzzColor:c0 | 0.5 | 1.2 | 0.05
+mat:Assets/Rainbow/Benny/Materials/Benny_Fluff.mat:_FuzzColor:c1 | 0.3 | 1 | 0.05
+mat:Assets/Rainbow/Benny/Materials/Benny_Fluff.mat:_FuzzColor:c2 | 0.5 | 1.2 | 0.05
+mat:Assets/Rainbow/Benny/Materials/Benny_Fluff.mat:_BaseColor:c0 | 0.7 | 1.3 | 0.05
+mat:Assets/Rainbow/Benny/Materials/Benny_Fluff.mat:_BaseColor:c1 | 0.7 | 1.3 | 0.05
+mat:Assets/Rainbow/Benny/Materials/Benny_Fluff.mat:_BaseColor:c2 | 0.7 | 1.3 | 0.05

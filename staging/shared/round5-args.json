@@ -1,0 +1,12 @@
+{
+  "launched": "2026-11-24 09:10 local, session 018893e6-6516-483e-909b-f1a354ffd072, run wf_a52c9b0c-d31",
+  "journal": "%USERPROFILE%\\.claude\\projects\\C--Users-josia--unity\\018893e6-6516-483e-909b-f1a354ffd072\\subagents\\workflows\\wf_a52c9b0c-d31\\journal.jsonl",
+  "relaunch": "Workflow({ scriptPath: 'C:\\\\RainbowUnity\\\\staging\\\\shared\\\\round5-visual.workflow.js', args: <this baseline> + skip (lanes with a result) + notes.<lane> (its newest files, work stills river5_t*/tunnel5_t*, backups in work/backup_round5/<lane>) })",
+  "args": {
+    "baseline": {
+      "still": "C:\\RainbowUnity\\UnityProject\\Recordings\\Screen05\\work\\20261124_090507_R5_prefit.png",
+      "sbs": "C:\\RainbowUnity\\UnityProject\\Recordings\\Screen05\\work\\20261124_090507_R5_prefit_sbs.jpg",
+      "scores": "visual 81.7 / layout 67.2 (= ROUND4_FINAL 80.5 / 66.6, git tag validated/r4b-final-80.5, plus the coordinator's fitted global look in Assets/Rainbow/Tuning/screen05_tuning.txt)"
+    }
+  }
+}
