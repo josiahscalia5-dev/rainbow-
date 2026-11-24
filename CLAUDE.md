@@ -145,4 +145,6 @@ Update `UNITY_RAINBOW_HANDOFF.md`: CURRENT STATE, errors, branch + newest commit
 - Relaunch an unfinished specialist with: "Read COMMON and AGENTn in C:\RainbowUnity\staging\shared\specialists.workflow.js
   and follow them. Continue from the files already in your staging folder; do not rewrite finished files; write README.md
   when done." At most 2 at a time on this laptop.
+- A lane of a RUNNING Workflow cannot be messaged: SendMessage to its agent id starts a SECOND copy of that specialist (happened 2026-11-24 08:27, the
+  copies were stopped after ~70 s, they had only read files). New user wishes for running lanes go into `references/` + the handoff and into the next stage's brief.
 - Only the coordinator (the main session) copies staging outputs into `UnityProject/Assets/Rainbow` and builds the scene.

@@ -237,7 +237,7 @@ Shader "Rainbow/Water/Splash"
                     g += 0.35 * (float2(RBW_VNoise(g * 0.7), RBW_VNoise(g * 0.7 + 5.1)) - 0.5);
                     float c1 = RBW_Cells(g);
                     float c2 = RBW_Cells(g * 2.1 + 4.7);
-                    float web = smoothstep(0.42 + 0.14 * uv.x, 0.62 + 0.14 * uv.x, c1);
+                    float web = smoothstep(0.36 + 0.16 * uv.x, 0.56 + 0.16 * uv.x, c1);
                     float solid = (1.0 - smoothstep(0.0, 0.22, uv.x)) * smoothstep(0.3, 0.6, c1) * 0.7;
                     float edge = 1.0 - smoothstep(0.45, 0.95, ac + (RBW_VNoise(float2(g.x * 0.6, seed * 13.0)) - 0.5) * 0.7 + 0.35 * uv.x);
                     float dots = 1.0 - smoothstep(0.16, 0.24, c2);

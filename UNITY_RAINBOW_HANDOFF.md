@@ -16,7 +16,7 @@ Updated 2026-11-24 08:05 local (session b41bab30, new account). Cross-account ru
   camera / controls / animations. Report the honest score + real Game View after the round. No Screen 06 without approval.
 - **USER'S CORRECTION GUIDES (2026-11-24 ~08:25 local, binding):** three annotated images + their text in `references/correction-guides-2026-11-24/` (README.md = the
   instructions per area). Every specialist / Blender / Unity job reads them first; target 90/100; keep what is improved; no extra agents, tests or restarts because of
-  them. Sent to both running lanes at 08:28 (SendMessage); the coordinator applies the HUD (raised heart / coin, glossy glass, thin bright rim) and bubble (clear, transparent) parts.
+  them. The running lanes could not be messaged (see CLAUDE.md, Specialists), so every point goes into the follow-up work right after they finish: the coordinator (and the next stage's brief) checks the pictures against the README.md table; HUD (raised heart / coin, glossy glass, thin bright rim) and bubbles (clear, transparent) are the coordinator's.
 - RUNNING (since 08:00 local): ROUND 4b, Workflow run `wf_54c15c25-7a2`, exactly two specialists: TUNNEL (paddles, rings, walls, near frame, lighting) |
   RIVER (data-driven S-river + foam, then near water / Benny contact / splash). Script `staging/shared/round4b-visual.workflow.js` (args: baseline = still
   20261124_075315_R4_barrel 67.0 / 47.5). Journal `%USERPROFILE%\.claude\projects\C--Users-josia--unity\b41bab30-da85-4ac4-a946-62f3f4cd4aef\subagents\workflows\wf_54c15c25-7a2\journal.jsonl`

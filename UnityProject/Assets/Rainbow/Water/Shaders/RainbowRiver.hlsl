@@ -144,7 +144,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
 
     // ---- diagonal pink wake sweeps behind Benny ----
     float cW = 0.1 + 0.5 * back;
-    float wW = (0.16 + 0.06 * back) * smoothstep(0.75, 1.25, back) * wk * (1.0 - smoothstep(2.1, 2.6, back));
+    float wW = (0.14 + 0.05 * back) * smoothstep(0.75, 1.25, back) * wk * (1.0 - smoothstep(2.1, 2.6, back));
     float tW5 = (cW - abs(dlW)) / max(wW, 1e-3);
     float sweep = (wW > 0.001 && abs(tW5) < abs(tb)) ? 1.0 : 0.0;
     tb = lerp(tb, tW5, sweep);
