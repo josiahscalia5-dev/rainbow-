@@ -17,9 +17,17 @@
 // (water4 2026-11-24) continues the playable river's far S: RiverPath.FarSwing bends the course right beyond the stage
 // (stream centre +1.0 m at s 108+, so the river's band pair sits at ~+1.7 m where it ends at s 120); the approved river
 // keeps bending right just before the throat and then runs back toward the middle into the vanishing point.
+float RainbowFarRiverSwing(float s)
+{
+    return smoothstep(118.0, 150.0, s) * (1.0 - smoothstep(185.0, 250.0, s));
+}
+
 float RainbowFarRiverCoreX(float s)
 {
-    return 0.6 + 0.3 * smoothstep(120.0, 170.0, s) - 0.7 * smoothstep(190.0, 380.0, s);   // river 4b: RiverLayout05 at s 120
+    // shape round 6 (2026-11-24, guide #4): the approved far river keeps WINDING under the coin trail: it swings ~3 m right
+    // at s 130-185 (approved core x ~527 px at y 505-512, Unity's straight ramp sat at ~497) and back to the middle before
+    // the throat (approved ~497 px at y 495).
+    return 0.6 + 0.3 * smoothstep(120.0, 170.0, s) - 0.7 * smoothstep(190.0, 380.0, s) + 2.8 * RainbowFarRiverSwing(s);   // river 4b: RiverLayout05 at s 120
 }
 
 // RiverUV = (lateral x metres from the tunnel line, s metres along the tunnel).
@@ -31,7 +39,7 @@ void RainbowFarRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float dx = x - RainbowFarRiverCoreX(s);
     // (water4 2026-11-24) the band pair a little closer and broader, so both bands stay clear of the foam lips with the
     // core bent right (approved: two clear pink bands either side of the coins right up to the throat)
-    float bandOff = 2.35 - 0.5 * smoothstep(120.0, 200.0, s);
+    float bandOff = (2.35 - 0.5 * smoothstep(120.0, 200.0, s)) * (1.0 - 0.3 * RainbowFarRiverSwing(s));   // shape 6: narrower in the swing
     float bw = 0.72;
     float fw = fwidth(x) + 1e-3;
     float dL = abs(dx + bandOff);

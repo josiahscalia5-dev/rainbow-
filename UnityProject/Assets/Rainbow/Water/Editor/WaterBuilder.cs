@@ -228,8 +228,8 @@ namespace Rainbow.Screen05.EditorTools
 
         /// <summary>(water4 2026-11-24) splash strand look on Rainbow/Water/Splash: width scale, opacity, extra fan angle (rad),
         /// roots moved round toward his back (rad). Live variants t1: (0.75, 0.8, 0.2) splash 69.7 vs the old (1, 1, 0) 68.8.</summary>
-        public const float SplashRopeWidth = 1.2f /* splash6_t4: 1.5 -> 1.2 */, SplashRopeAlpha = 0.85f, SplashSpread = 0.2f, SplashRootBack = 0.3f, SplashJetAlpha = 0.6f, SplashStrandBack = 0f,
-                           SplashLen = 1.5f;   // (t3 variants: 1.55 splash 72.0 > 1.35 71.6 > 1.15 71.2)
+        public const float SplashRopeWidth = 1.0f /* splash6_t4/t5: 1.5 -> 1.2 -> 1.0 */, SplashRopeAlpha = 0.85f, SplashSpread = 0.2f, SplashRootBack = 0.3f, SplashJetAlpha = 0.4f /* splash6_t5 */, SplashStrandBack = 0f,
+                           SplashLen = 1.3f;   // (splash6_t5: 1.5 -> 1.3 splash +0.2) (t3 variants: 1.55 splash 72.0 > 1.35 71.6 > 1.15 71.2)
         /// <summary>(splash6 2026-11-24) starburst strand layout on Rainbow/Water/Splash (_Radial 0 = the old flank V).
         /// splash6_t1 variants: _Radial 1 = splash 73.9 vs 0 = 77.1 (kept 0 until a better starburst fit wins).</summary>
         public const float SplashRadial = 0f, SplashRayFan = 0.6f, SplashRayLong = 0.35f, SplashRayRoot = 0.97f,

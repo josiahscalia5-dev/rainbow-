@@ -151,7 +151,7 @@ namespace Rainbow.Screen05.EditorTools
             // (splash6 2026-11-24) approved: his fur darkens to deep magenta where he sits in the water (y 1168-1200 was
             // 30-90 luma too bright), with no hard edge (SplashWake writes the water height as _RainbowBennyWater)
             if (m.HasProperty("_UnderShade")) m.SetFloat("_UnderShade", UnderShade);
-            if (m.HasProperty("_UnderHeight")) m.SetFloat("_UnderHeight", 0.28f);
+            if (m.HasProperty("_UnderHeight")) m.SetFloat("_UnderHeight", UnderHeight);
             if (m.HasProperty("_UnderColor")) m.SetColor("_UnderColor", new Color(0.62f, 0.36f, 0.78f, 1f));
             if (m.HasProperty("_WaterBand")) m.SetFloat("_WaterBand", WaterBand);
             EditorUtility.SetDirty(m);
@@ -160,7 +160,8 @@ namespace Rainbow.Screen05.EditorTools
 
         /// <summary>(splash6) underside / waterline shade strengths on Benny_Fluff (0 = off).</summary>
         // splash6_t2 variants: band 0.35 -> 0 splash 77.1 -> 77.7; shade 0.8 -> 1.0 (height 0.42) 77.1 -> 76.7.
-        public const float UnderShade = 0.8f, WaterBand = 0f;
+        // splash6_t6: shade 0.9 over 0.2 u = benny +0.2
+        public const float UnderShade = 0.9f, UnderHeight = 0.2f, WaterBand = 0f;
 
         static Material FlatFluff(string name, Color c)
         {

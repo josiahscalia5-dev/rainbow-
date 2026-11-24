@@ -35,8 +35,8 @@ Material:
     - _LightInfluence: 0.35
     - _NoiseScale: 70
     - _NoiseStrength: 0.07
-    - _UnderHeight: 0.28
-    - _UnderShade: 0.8
+    - _UnderHeight: 0.2
+    - _UnderShade: 0.9
     - _WaterBand: 0
     - _Wrap: 0.58000004
     m_Colors:

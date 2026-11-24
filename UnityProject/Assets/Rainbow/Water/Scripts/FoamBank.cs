@@ -207,7 +207,7 @@ namespace Rainbow.Screen05
                         if (rng.Next() < 0.18f && t > 0.35f) r *= 1.3f;   // shape round 6: mixed sizes, an odd big puff behind the rim
                         float surf = RopeSurface(t * tk, crest) * (0.75f + 0.5f * lump);
                         float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + Mathf.Max(surf - 0.75f * r, -0.3f * r);
-                        AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.82f, 0.98f));
+                        AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.82f, 0.98f) * Valley(z, t, side));
                     }
                     int nMed = Mathf.RoundToInt((1.6f + rng.Next()) * dens * Mathf.Max(1f, 1f / Mathf.Max(rs, 0.5f)));   // finer ropes: more puffs
                     for (int k = 0; k < nMed; k++)
@@ -219,7 +219,7 @@ namespace Rainbow.Screen05
                         float r = rng.Range(0.08f, 0.14f) * (0.7f + 0.3f * rs);
                         float surf = RopeSurface(t * tk, crest) * (0.75f + 0.5f * lump);
                         float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + surf * 0.8f - 0.6f * r;
-                        AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.7f, 0.86f));
+                        AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.7f, 0.86f) * Valley(z, t, side));
                     }
                     int nCrest = Mathf.FloorToInt(0.4f + 0.9f * cl + rng.Next());
                     for (int k = 0; k < nCrest; k++)
@@ -246,6 +246,15 @@ namespace Rainbow.Screen05
                 Clump(list, rng, sd, cs, cx, rng.Range(0.35f, 0.6f), rng.Range(0.5f, 0.9f), 16);
             }
             return list;
+        }
+
+        /// <summary>Shape round 6: AO factor of the left bay (s 29-37): the middle of the rope is shaded bluer (approved: bluish
+        /// valley at (200-240, 640-680) between the waterline puffs and the bright rim at the wall).</summary>
+        static float Valley(float s, float t, int side)
+        {
+            if (side > 0) return 1f;
+            float v = SS(28.5f, 30f, s) * (1f - SS(35f, 38f, s)) * SS(0.2f, 0.4f, t) * (1f - SS(0.75f, 0.95f, t));
+            return 1f - 0.3f * v;
         }
 
         static void Clump(List<Puff> list, Rng rng, int side, float cs, float cx, float rx, float rz, int n)

@@ -183,9 +183,9 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float lineA = exp(-ca * ca * 170.0) * (0.35 + 0.65 * segN);
     float ampA = smoothstep(1.2, 1.55, bk);
     // (river5 variants: the brighter azure base CMID..CBRIGHT scored 0.3 lower, kept the deep base; _R5Tune.z = live mix)
-    float3 nb = lerp(lerp(lerp(RBW_CDEEP2, RBW_CMID, 0.55), lerp(RBW_CMID, RBW_CBRIGHT, 0.35), saturate(0.5 + _R5Tune.z)), RBW_CBRIGHT, saturate(glowA * (0.9 + _R5Arc.y) * ampA + lane * 0.25));
+    float3 nb = lerp(lerp(lerp(RBW_CDEEP2, RBW_CMID, 0.55), lerp(RBW_CMID, RBW_CBRIGHT, 0.35), saturate(0.8 + _R5Tune.z)), RBW_CBRIGHT, saturate(glowA * (0.9 + _R5Arc.y) * ampA + lane * 0.25));
     nb = lerp(nb, RBW_CAQUA, saturate(glowA * glowA * (0.75 + 0.8 * _R5Arc.y) * ampA));
-    nb = lerp(nb, RBW_CAQUAW, saturate(lineA * ampA * (0.9 + _R5Arc.z)));
+    nb = lerp(nb, RBW_CAQUAW, saturate(lineA * ampA * (1.4 + _R5Arc.z)));   // (splash6_t6: 0.9 -> 1.4)
     // (splash6) dense vertical satin: fine bright / dark hairlines along the flow (vertical on screen) all over his wake
     // water, brightest inside the luminous bands (approved near water y 1250-1536 is full of them; Unity was smooth)
     float fwS = fwidth(dlW) * pxK;
