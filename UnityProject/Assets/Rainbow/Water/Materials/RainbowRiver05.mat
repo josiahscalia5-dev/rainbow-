@@ -38,7 +38,7 @@ Material:
     - _W4Edge: 0.6
     - _WaveAmp: 0.1
     m_Colors:
-    - _RiverGrade: {r: 1.12754, g: 0.72131, b: 0.95675, a: 1}
+    - _RiverGrade: {r: 0.55, g: 0.7, b: 0.93, a: 1}
     - _RiverLightDir: {r: 0.26387972, g: 0.879599, b: -0.39581954, a: 0}
     - _W4Band: {r: 0.95, g: 0.65, b: 0.5, a: 0.35}
     - _W4Look: {r: 0.9, g: 0.5, b: 0.5, a: 0.5}

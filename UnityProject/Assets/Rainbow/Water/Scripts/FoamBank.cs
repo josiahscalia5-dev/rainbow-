@@ -199,12 +199,12 @@ namespace Rainbow.Screen05
                     int nBig = 1 + (rng.Next() < 0.45f * dens + 0.3f * cl ? 1 : 0);
                     for (int k = 0; k < nBig; k++)
                     {
-                        float t = rng.Range(0.1f, 0.85f);
+                        float t = rng.Range(0.18f, 0.85f);            // shape round 6: 0.1 -> 0.18 (big puffs bulged over the water)
                         float z = s + rng.Range(-0.5f, 0.5f) * step;
                         float x = WaterlineX(z, side) + side * t * ropeW;
                         float lump = Lump(x, z, side);
                         float r = rng.Range(0.13f, 0.23f) * (0.8f + 0.5f * lump) * rs;
-                        if (rng.Next() < 0.18f) r *= 1.3f;            // shape round 6: mixed sizes, an odd big puff
+                        if (rng.Next() < 0.18f && t > 0.35f) r *= 1.3f;   // shape round 6: mixed sizes, an odd big puff behind the rim
                         float surf = RopeSurface(t * tk, crest) * (0.75f + 0.5f * lump);
                         float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + Mathf.Max(surf - 0.75f * r, -0.3f * r);
                         AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.82f, 0.98f));

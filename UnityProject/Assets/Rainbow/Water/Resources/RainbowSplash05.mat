@@ -27,7 +27,7 @@ Material:
     m_Floats:
     - _FanOpen: 0
     - _FootprintBack: 0.14
-    - _Intensity: 0.91325
+    - _Intensity: 1
     - _JetAlpha: 0.6
     - _Len: 1.5
     - _Radial: 0
@@ -35,8 +35,8 @@ Material:
     - _RayLong: 0.35
     - _RayRoot: 0.97
     - _RootBack: 0.3
-    - _RopeAlpha: 0.85438
-    - _RopeWidth: 1.5
+    - _RopeAlpha: 0.85
+    - _RopeWidth: 1.2
     - _SoftDepth: 0.05
     - _Spread: 0.2
     - _StrandBack: 0
