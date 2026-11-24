@@ -231,9 +231,22 @@ float3 RainbowWall5(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 loo
     float4 a = Uv1, b = Uv1;
     a.y = (Uv1.y - 0.5) * sp.x + 0.5;
     b.y = (Uv1.y - 0.5) * sp.x * 3.0 + 0.5;
-    float fwPhi = fwidth(Uv0.x) / 6.8, fwRow = fwidth(Uv1.y);
-    float3 ca = RainbowWall5Row(posWS, Uv0, a, dist, look, look5, fwPhi, fwRow * sp.x);
-    [branch] if (sp.y > 0.004) ca = lerp(ca, RainbowWall5Row(posWS, Uv0, b, dist, look, look5, fwPhi, fwRow * sp.x * 3.0), sp.y);
+    float fwPhi = fwidth(Uv0.x) / 6.8, fwRow = fwidth(Uv1.y), fwS = fwidth(Uv0.y);
+    float fa = fwRow * sp.x, fb = fwRow * sp.x * 3.0, wb = sp.y;
+    // uniform rows on the long course (s > 106): 2 m apart near him, 6 m further on (every third one stays), the picture's forced-perspective rows only
+    // far away (> 60-90 m, where the approved view sees these bays), cross-faded: the slots keep one size and place while he swims past
+    if (Uv0.y > 106.0)
+    {
+        float fine = (Uv0.y - 105.8) / 2.0 + 0.5, coarse = (Uv0.y - 105.8) / 6.0 + 0.5;
+        bool nearB = dist < 46.0;
+        a.y = nearB ? fine : coarse;
+        b.y = nearB ? coarse : Uv1.y;
+        fa = nearB ? fwS * 0.5 : fwS / 6.0;
+        fb = nearB ? fwS / 6.0 : fwRow;
+        wb = nearB ? smoothstep(17.0, 30.0, dist) : smoothstep(62.0, 92.0, dist);
+    }
+    float3 ca = RainbowWall5Row(posWS, Uv0, a, dist, look, look5, fwPhi, fa);
+    [branch] if (wb > 0.004) ca = lerp(ca, RainbowWall5Row(posWS, Uv0, b, dist, look, look5, fwPhi, fb), wb);
     return ca;
 }
 
