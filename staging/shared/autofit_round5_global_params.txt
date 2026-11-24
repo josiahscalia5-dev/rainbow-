@@ -1,0 +1,14 @@
+# Round 5 pre-fit (coordinator, 2026-11-24 ~08:55 local): GLOBAL look only (post-processing + light intensities).
+# The lanes own shapes / shader patterns; the fitter owns these global values (written to Assets/Rainbow/Tuning/screen05_tuning.txt).
+# key | min | max | step
+vol:Bloom:intensity | 0.5 | 6 | 0.4
+vol:Bloom:threshold | 0.7 | 2.2 | 0.15
+vol:Bloom:scatter | 0.3 | 0.9 | 0.08
+vol:ColorAdjustments:postExposure | -0.9 | 0.5 | 0.08
+vol:ColorAdjustments:contrast | -15 | 45 | 4
+vol:ColorAdjustments:saturation | -10 | 80 | 5
+vol:ColorAdjustments:hueShift | -12 | 12 | 2
+vol:Vignette:intensity | 0 | 0.4 | 0.04
+light:KeySun05:intensity | 0.1 | 2.5 | 0.12
+light:ThroatWarm05:intensity | 0 | 1.5 | 0.1
+light:CameraFill05:intensity | 2 | 60 | 3
