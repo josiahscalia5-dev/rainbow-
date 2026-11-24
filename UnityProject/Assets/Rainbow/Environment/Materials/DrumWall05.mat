@@ -41,7 +41,7 @@ Material:
     - _BaseColor: {r: 0.8, g: 0.6, b: 0.98, a: 1}
     - _EmissionColor: {r: 0.23529412, g: 0.03137255, b: 0.28235295, a: 1}
     - _FarGlowColor: {r: 1, g: 0.6117647, b: 0.3529412, a: 1}
-    - _FarGlowRange: {r: 95, g: 330, b: 1.5, a: 0}
+    - _FarGlowRange: {r: 200, g: 420, b: 1.2, a: 0}
     - _FloorColorA: {r: 0.78431374, g: 0.12156863, b: 0.6117647, a: 1}
     - _FloorColorB: {r: 1, g: 0.30980393, b: 0.7529412, a: 1}
     - _FloorSheet: {r: 0.06, g: 0.35, b: 5.4, a: 1}
@@ -49,10 +49,12 @@ Material:
     - _MidRange: {r: 8, g: 50, b: 0.6, a: 0.9}
     - _MidTint: {r: 0.5411765, g: 0.1882353, b: 0.8235294, a: 1}
     - _RimColor: {r: 1, g: 0.54901963, b: 0.92156863, a: 1}
-    - _SlotPitch: {r: 0.5, g: 0.7, b: 0, a: 0}
-    - _SlotSize: {r: 0.19, g: 0.08, b: 0.158, a: 1}
+    - _SlotPitch: {r: 0.9710378, g: 0.7, b: 0, a: 0.5}
+    - _SlotSize: {r: 0.26, g: 0.08, b: 0.16, a: 1}
+    - _SlotWarp: {r: 7.48, g: 0.8, b: 0.033, a: 0.18}
     - _StripColor: {r: 1, g: 0.7, b: 0.97, a: 1}
     - _StripParams: {r: 28, g: 0.017, b: 0, a: 0.8}
     - _WallFar: {r: 25, g: 80, b: 0.08, a: 0.5}
+    - _WallGlow: {r: 0.55, g: 0.06, b: 0.42, a: 0.6}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
