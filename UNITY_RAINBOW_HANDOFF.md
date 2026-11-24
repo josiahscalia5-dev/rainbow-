@@ -5,6 +5,22 @@ Read this first in any new Claude account or session. **This is an existing proj
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
+## RESUMED 2026-11-24 16:43 local (session 50cf5060, next account; the previous account died 15:52 local mid-"round 9") - IN PROGRESS
+- **User request 16:43 local (binding):** finish Screen 05 toward 90-95 (water reflections, flowing streaks, realistic foam, natural water
+  contact, lighting, Benny's wake); FAST-PACED natural swimming that follows the water as it curves / rises / drops / turns; keep Benny's round
+  compact SITTING / FLOATING pose (never flat on his stomach, no feet sticking out behind); camera behind + slightly above following direction
+  AND elevation; then side-by-side + both scores + one uninterrupted gameplay recording; keep this handoff + GitHub current. Max 2 specialists.
+  New rule text: CLAUDE.md "PERMANENT RULE: gameplay quality".
+- **Level 1 future direction saved:** `references/level1-future-direction-2026-11-24/README.md` (13 sections, one continuous route;
+  DO NOT BUILD before the user approves Screen 05). The user's new screen designs + 4 gameplay guides did NOT arrive: ask for them.
+- **Guide 03 found** in Downloads and saved: `references/correction-guides-2026-11-24b/03_tunnel_layout_and_visual_polish.png`.
+- **Tag `validated/r8-final-83.8` created + pushed** (commit 663b75d = code of the R8_final cycle; the previous account listed it but never tagged).
+- **Round 9 (previous account, 15:30-15:52 local, EXPERIMENTAL, after the R8 tag):** splash "strands" (`RainbowStrands05.png`,
+  `RainbowSplashLace.shader` rewrite, `tools/diag/round9-*.pl`, `AgentScripts/screen05_matset.cs` live material tuning), HUD sprite polish,
+  frame / drum polish. Last cycle r9c (15:50) = 84.4 / 70.3, never gameplay-checked or rebuilt-confirmed.
+- **Disk:** C: was 0.5 GB free; the user approved deleting 1,322 old test stills (before 13:00, git-ignored) -> 2.1 GB free. The user also
+  allowed deleting Claude's OWN new test stills in `Recordings/Screen05/work` when free space < 1 GB (never project files / recordings / evidence).
+
 ## NOW - read this first (concise; rewritten after every finished step; the DETAILED LOG below is history)
 Updated 2026-11-24 ~15:30 local (session da8aeec6, new account). Cross-account rules: CLAUDE.md "PERMANENT RULE" (two of them).
 - **USER MASTER DIRECTION (13:28 local, BINDING):** `references/correction-guides-2026-11-24b/README.md` + 3 full-resolution images (a guide 03 was announced but never

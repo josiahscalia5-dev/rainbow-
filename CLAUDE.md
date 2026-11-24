@@ -31,6 +31,10 @@ The user switches Claude accounts whenever credits run out. Any account must con
 
 ## PERMANENT RULE: gameplay quality + master direction (user, 2026-11-24 13:28 local)
 - `references/correction-guides-2026-11-24b/README.md` is binding: water first, natural swimming, continuous 3D world, smooth camera, wake, foam, 30-60 s recording.
+- User 2026-11-24 16:43 local (binding for Screen 05): FAST-PACED, genuinely playable; Benny travels quickly and follows the water as it
+  curves, rises, drops and turns; keep his approved round, compact SITTING / FLOATING pose (striped beanie + gold star) - never lying flat on
+  his stomach, never feet sticking out behind him; camera behind + slightly above, following the water's direction AND elevation; no
+  teleports, clipping through foam / walls, sudden camera turns, floating above the water, static backgrounds or fake movement.
 - Gameplay is judged SEPARATELY from the still scores. Before any "done" claim run the motion check and look at several positions, not only s = 14:
   `powershell -NoProfile -ExecutionPolicy Bypass -File C:\RainbowUnity\tools\screen05-eval.ps1 -File AgentScripts/screen05_motion_strip.cs -Play -Timeout 580`
   (parameters in `UnityProject/Recordings/Screen05/work/strip_params.txt`; prints per-frame steps / second differences of Benny and the camera + a contact sheet).
@@ -97,7 +101,8 @@ The user switches Claude accounts whenever credits run out. Any account must con
 | State + next task | `UNITY_RAINBOW_HANDOFF.md` |
 | Approved reference | `references/05_flow_into_the_current.png` |
 | USER'S CORRECTION GUIDES (binding visual direction, 2026-11-24): rings, paddles, walls, frame, river, foam, bubbles, Benny, HUD | `references/correction-guides-2026-11-24/` (README.md + 3 images) |
-| USER'S REFINEMENT GUIDES 2 + MASTER DIRECTION (BINDING, 2026-11-24 13:28 local: water, natural swimming, camera, wake, foam, 30-60 s recording) | `references/correction-guides-2026-11-24b/` (README.md + 3 full-resolution images; read FIRST) |
+| USER'S REFINEMENT GUIDES 2 + MASTER DIRECTION (BINDING, 2026-11-24 13:28 local: water, natural swimming, camera, wake, foam, 30-60 s recording) | `references/correction-guides-2026-11-24b/` (README.md + 4 full-resolution images 01-04; read FIRST) |
+| LEVEL 1 FUTURE DIRECTION (user 2026-11-24 16:43 local; planning only - DO NOT BUILD before the user approves Screen 05) | `references/level1-future-direction-2026-11-24/README.md` (13-section continuous route; images still pending) |
 | Unity project (URP 17.3, Input System, Cinemachine, Splines, glTFast, Pipeline bridge) | `UnityProject/` |
 | Scene builder | `UnityProject/Assets/Rainbow/Editor/Screen05SceneBuilder.cs` (menu Rainbow -> Build Screen 05 Scene) |
 | Shared course API + contract | `UnityProject/Assets/Rainbow/Shared/RiverPath.cs`, `staging/shared/CONTRACT.md` |

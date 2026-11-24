@@ -1,8 +1,10 @@
 # User's refinement guides 2 + master direction (2026-11-24 ~13:28 local, BINDING; adds to correction-guides-2026-11-24)
 
 Images (full resolution, user's own): `01_final_scenery_correction_map.png` (markers 1-8), `02_water_foam_and_wake.png`,
-`04_natural_swimming_and_camera_blueprint.png`. The user wrote "four guides", but only 01, 02 and 04 arrived (chat + Downloads);
-a 03 was never received - ask the user for it. Guides are for looking and measuring only, never part of the game.
+`03_tunnel_layout_and_visual_polish.png`, `04_natural_swimming_and_camera_blueprint.png`. Guide 03 ("Tunnel, layout and visual polish":
+metallic tunnel + gold rings, half-moon paddles, river composition + coins, HUD + near copper frame) had been in the user's Downloads since
+13:29 local (`Screen05_refinement_03_tunnel_layout.png`) and was copied here 2026-11-24 16:50 local. Guides are for looking and measuring
+only, never part of the game.
 
 Goal: 90-95 visual AND layout where technically achievable + natural, glitch-free gameplay (user target >= 9/10, judged by the user).
 Protect `validated/r7-final-83.3`. Do not rebuild what already matches. No Screen 06 without approval.
