@@ -25,9 +25,9 @@ namespace Rainbow.Screen05
     ///    (850, 700) right) while the ring centres sit only ~0.12 r above the vanishing point (axis ~0.85 m above the camera):
     ///    with Benny's fixed size that is a tube of r ~6.3-6.8 m. 7.6 m put the walls at x = +-6.27 (+-7.24 near the camera)
     ///    = the wide flat foam fields; now x = +-5.31 at the water / +-5.67 at the foam top (+-6.2 near the camera).
-    ///  * near floor 2 -> 0.7 m: the approved near ring (left crown ~(10, 480), foot on the foam ~(90, 700)) is centred on
-    ///    the vanishing-point height, i.e. the near axis is ~level with the camera (3.55 m); 2 m put it 67 px below and
-    ///    widened the near floor to +-7.24 m.
+    ///  * near floor 2 -> 1 m: the approved near ring (left crown ~(10, 480), foot on the foam ~(90, 700)) is centred on
+    ///    the vanishing-point height, i.e. the near axis is ~level with the camera (3.25 m); 2 m put it 67 px below and
+    ///    widened the near floor to +-7.24 m (0.7 m was tried in frame_t6: no gain).
     ///  * rings: real rings at the depths whose crowns match the approved crowns measured straight up from the vanishing
     ///    point (y 210, 308, 378, 415, 434, 448, 456 = r 268, 170, 100, 63, 44, 30, 22 px) + the near ring: see
     ///    RingPositions(). The approved deep rings are spaced ever wider (forced perspective), so the tunnel now runs to
@@ -38,7 +38,7 @@ namespace Rainbow.Screen05
     {
         public const float Radius = 6.8f;
         public const float FloorDepth = 2.55f;
-        public const float NearFloorExtra = 0.7f;
+        public const float NearFloorExtra = 1.0f;
         /// <summary>
         /// World x of the tunnel axis. The approved drum is slightly asymmetric about the vanishing point (ring crowns
         /// left / right at x 219 / 712, 338 / 632, 402 / 580); a -0.6 m shift was tried in the frame round (cycle frame_t5)
@@ -97,13 +97,13 @@ namespace Rainbow.Screen05
         }
 
         /// <summary>
-        /// environment.ts band05near (the thick near rings). Frame round 2026-11-23: radial height 0.13 -> 0.17 (lip 0.065 ->
-        /// 0.085): the approved ring bands measured straight up from the vanishing point are ~40 px thick at r 268 (ring A)
-        /// and ~22 px at r 170 (ring B) = ~0.15-0.17 of the radius; Unity's were ~24 px / 14 px.
+        /// environment.ts band05near (the thick near rings). Frame round 2026-11-23: the approved ring A / B bands are ~40 / 22
+        /// px thick (~0.15-0.17 of the radius, Unity ~24 / 14 px), but 0.17 / far 0.13 (cycles frame_t5 / t6) turned the
+        /// throat into a thick orange target (throat 67.9 -> 64.1) and was REJECTED: thickness stays a gold-look task.
         /// </summary>
-        public static readonly BandProfile NearBand = new BandProfile(0.17f, 0.8f, 0.085f, 0.32f, 0.1f);
-        /// <summary>environment.ts band05 (the thinner far rings; frame round: 0.095 -> 0.13, lip 0.045 -> 0.06).</summary>
-        public static readonly BandProfile FarBand = new BandProfile(0.13f, 0.78f, 0.06f, 0.26f, 0.07f);
+        public static readonly BandProfile NearBand = new BandProfile(0.13f, 0.8f, 0.065f, 0.32f, 0.1f);
+        /// <summary>environment.ts band05 (the thinner far rings).</summary>
+        public static readonly BandProfile FarBand = new BandProfile(0.095f, 0.78f, 0.045f, 0.26f, 0.07f);
         /// <summary>Rings with s above this use FarBand.</summary>
         public const float FarBandFromS = 80f;
 
@@ -112,7 +112,7 @@ namespace Rainbow.Screen05
         // deep ones were missing or hidden in the glow disc), plus the near ring whose left crown runs down the left frame
         // edge (~(10, 480)) and stands on the foam at ~(90, 700) (in the 1 m near-floor drop, i.e. centred on the
         // vanishing-point height). 5.6 only shows for camera s < 5. Replaces the light round's eye + [59 .. 272] set.
-        static readonly float[] ApprovedRingS = { 5.6f, 24.0f, 45.5f, 66.4f, 106.5f, 163.6f, 230.1f, 333.0f, 450.4f };
+        static readonly float[] ApprovedRingS = { 5.6f, 24.3f, 45.5f, 66.4f, 106.5f, 163.6f, 230.1f, 333.0f, 450.4f };
 
         /// <summary>One wall paddle: s of the tray centre, wall side (-1 left, +1 right), height of its wall mount (m).</summary>
         public struct PaddleSlot
@@ -123,14 +123,17 @@ namespace Rainbow.Screen05
 
         // Frame round 2026-11-23: trays placed on the approved ones. Tray centres measured on the approved image (big
         // (150, 425) / (790, 460), mid (290, 445) / (665, 425), small (385, 462) / (600, 450), tiny (438, 466) / (553, 457))
-        // and solved for (s, wall-mount height) with the gameplay camera and this drum (tray centroid = mount + 0.45 size
-        // along the tray's local +X; the tray keeps the lid05 tilt 8 - 34 deg whatever the mount height).
+        // and placed with the gameplay camera on this drum; checked in the real Game view (cycle frame_t3: big trays at
+        // ~(80-260, 390-450) / (720-860, 410-490), mid ones at (250-330, 430-480) / (640-700, 400-440) = on the approved
+        // ones). The tray is tilted from its mount angle like lid05 (angle + droop -34 deg). A lower-mount refit (frame_t5
+        // / t6) showed the trays as steep slabs instead of trays seen from below and was REJECTED.
         static readonly PaddleSlot[] ApprovedPaddles =
         {
-            new PaddleSlot(28.5f, -1, 3.8f), new PaddleSlot(33.5f, 1, 3.3f),
-            new PaddleSlot(43.0f, -1, 3.8f), new PaddleSlot(53.0f, 1, 4.8f),
-            new PaddleSlot(73.5f, -1, 3.7f), new PaddleSlot(81.0f, 1, 4.5f),
-            new PaddleSlot(134.5f, -1, 4.1f), new PaddleSlot(140.5f, 1, 5.1f),
+            new PaddleSlot(29.5f, -1, 5.2f), new PaddleSlot(34f, 1, 4.7f),
+            new PaddleSlot(44f, -1, 5.2f), new PaddleSlot(55f, 1, 6.0f),
+            new PaddleSlot(75f, -1, 5.1f), new PaddleSlot(82f, 1, 5.8f),
+            new PaddleSlot(125f, -1, 5.3f), new PaddleSlot(118f, 1, 5.5f),
+            new PaddleSlot(190f, -1, 5.3f), new PaddleSlot(180f, 1, 5.5f),
         };
 
         static float Smooth(float e0, float e1, float x)
@@ -223,8 +226,8 @@ namespace Rainbow.Screen05
         public static void PaddlePose(float s, int side, out Vector3 position, out Quaternion rotation, float mountY = -1f)
         {
             float ang = PaddleAngleDeg * Mathf.Deg2Rad;
-            float tilt = ang + PaddleDroopDeg * Mathf.Deg2Rad;   // the tray's own tilt stays lid05's (approved look)
             if (mountY > 0f) ang = Mathf.Asin(Mathf.Clamp((mountY - CentreY(s)) / Radius, -0.9f, 0.9f));
+            float tilt = ang + PaddleDroopDeg * Mathf.Deg2Rad;
             Vector3 right = Vector3.right, up = Vector3.up;
             Vector3 dir = (right * (Mathf.Cos(ang) * side) + up * Mathf.Sin(ang)).normalized;
             Vector3 X = (right * (-Mathf.Cos(tilt) * side) + up * (-Mathf.Sin(tilt))).normalized;
