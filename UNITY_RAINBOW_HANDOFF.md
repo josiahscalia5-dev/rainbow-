@@ -29,10 +29,16 @@ Updated 2026-11-24 06:33 local (session d7b2bd77, new account). Cross-account ru
 - IF THE RUN DIED (account switch): read its journal; a lane with a "result" goes into `skip`; write `notes.<lane>` for the interrupted
   lane (its newest files, work stills, backups in `work/backup_round3v/<area>/`); relaunch the same script with
   `staging/shared/round4-relaunch-args.json` (+ skip / notes).
-- BLENDER (user question, ~06:28 local): NOT installed - only leftover Blender 5.2 settings from October in `%APPDATA%\Blender Foundation`,
-  no blender.exe anywhere. C: 7.1 GB free, RAM ~0.7 GB free with Unity open. Nothing was installed. Recommendation to the user: not now
-  (the tunnel lane rebuilds the paddles as rounded D-trays in Unity code this round); reconsider only if the paddle shape is still the
-  weak spot after Round 4, and only with the user's approval.
+- BLENDER (user ~06:28 + ~06:40 local: use Claude + Blender + Unity together PERMANENTLY; Blender = asset tool for accurate meshes,
+  Unity stays the engine; install ONLY after storage / memory are confirmed AND the user approves). NOT installed (leftover Blender 5.2
+  settings from October in `%APPDATA%\Blender Foundation` prove 5.x ran on this laptop). Checked ~06:45: newest stable 5.3.0 (winget
+  BlenderFoundation.Blender, 2026-11-10); official `download.blender.org/release/Blender5.3/blender-5.3.0-windows-x64.zip` 406 MB (portable,
+  ~1.2 GB unpacked) or `.msi` 366 MB. C: 7.08 GB free -> ~5.9 GB after. RAM 7.7 GB with ~1.0 GB free while Unity + 2 agents run (Windows
+  already compresses ~1.3 GB) -> run Blender HEADLESS only (`blender -b -P <script>`, short jobs) between Unity cycles, its window only
+  while Unity is closed, never during a running round. Claude's Blender connector (Blender Lab MCP 1.0.1) is already installed (live mode
+  needs its add-on; headless needs none). blender.org pages show a bot check to automated readers: never bypass it. PROPOSED, awaiting the
+  user's yes: after Round 4, portable zip -> `C:\Users\josia\Blender`; scripts `tools/blender/`; FBX -> `Assets/Rainbow/Environment/Models`;
+  first assets = paddles (rounded D-tray rim) + near frame, validated with the normal cycle tool in the playable scene.
 - WAITING ON THE USER: (a) Blender yes / no (above); (b) permission rules v2 in `tools/claude-permissions/` - the user applies them
   (strict, or strict + test runners); (c) the GitHub repo is PUBLIC although the user called it private - only the user can change that.
 <!-- NEXT-TASK:END -->
