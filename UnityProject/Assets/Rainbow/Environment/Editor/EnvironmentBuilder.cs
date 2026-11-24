@@ -74,24 +74,12 @@ namespace Rainbow.Screen05.EditorTools
             SetupFarRiver(farRiverMat, pano, riverHalf);
 
             // ---------------- meshes ----------------
-            const int radial = 128;
-            const float nearUntil = 180f;  // round 4 geometry fit: the drum axis bends up to s ~160 (DrumLayout05.AxisS)
-            var wallMeshes = new List<Mesh>
-            {
-                SaveMesh(DrumMeshes05.BuildWall(DrumLayout05.TunnelStart, 20f, radial, 1f, 6f, nearUntil, "DrumWall05_A"), "DrumWall05_A"),
-                SaveMesh(DrumMeshes05.BuildWall(20f, 52f, radial, 1f, 6f, nearUntil, "DrumWall05_B"), "DrumWall05_B"),
-                SaveMesh(DrumMeshes05.BuildWall(52f, 120f, radial, 2f, 6f, nearUntil, "DrumWall05_C"), "DrumWall05_C"),
-                SaveMesh(DrumMeshes05.BuildWall(120f, DrumLayout05.ThroatS, radial, 4f, 8f, nearUntil, "DrumWall05_D"), "DrumWall05_D"),
-            };
+            // round 4b: wall bays ring to ring (light lines + slot rows baked as coordinates), one mesh per ring (own lamps),
+            // one mesh per half-moon paddle (DrumPolish05)
+            var bays = DrumPolish05.Bays();
+            var wallMeshes = new List<Mesh>();
+            for (int i = 0; i < bays.Count; i++) wallMeshes.Add(SaveMesh(DrumPolish05.BuildWallBay(bays[i], 128, "DrumWall05_Bay" + i), "DrumWall05_Bay" + i));
             float ringRadius = DrumLayout05.Radius - DrumLayout05.RingInset;
-            Mesh ringNear = SaveMesh(DrumMeshes05.BuildRing(DrumLayout05.NearBand, ringRadius, 96, "Ring05_Near"), "Ring05_Near");
-            Mesh ringFar = SaveMesh(DrumMeshes05.BuildRing(DrumLayout05.FarBand, ringRadius, 72, "Ring05_Far"), "Ring05_Far");
-            // tunnel round 4: the near ring (s 24.3) and the start ring (5.6) are thin bands (DrumLayout05.NearestBand)
-            Mesh ringNearest = SaveMesh(DrumMeshes05.BuildRing(DrumLayout05.NearestBand, ringRadius, 128, "Ring05_Nearest"), "Ring05_Nearest");
-            float paddleSize = DrumLayout05.PaddleScaledSize;
-            // tunnel round 4: D-shaped copper shelves seen from below (DrumMeshes05.BuildPaddleShelf; was BuildPaddleTray)
-            Mesh paddle = SaveMesh(DrumMeshes05.BuildPaddleShelf(paddleSize, DrumLayout05.ShelfStretch, 32, "Paddle05_Tray",
-                DrumLayout05.ShelfInward, DrumLayout05.ShelfThick), "Paddle05_Tray");
             Mesh frameL = SaveMesh(DrumMeshes05.BuildFrameCornerLeft(), "NearFrame05_CornerL");
             Mesh frameR = SaveMesh(DrumMeshes05.BuildFrameCornerRight(), "NearFrame05_CornerR");
             Mesh frameLip = SaveMesh(DrumMeshes05.BuildFrameLip(), "NearFrame05_Lip");
@@ -106,16 +94,16 @@ namespace Rainbow.Screen05.EditorTools
             var marker = root.AddComponent<Environment05Root>();
 
             Transform walls = Child(root.transform, "DrumWall");
-            string[] wallNames = { "Wall_A_start", "Wall_B_nearFloor", "Wall_C_mid", "Wall_D_far" };
-            for (int i = 0; i < wallMeshes.Count; i++) MakeRenderer(walls, wallNames[i], wallMeshes[i], wallMat);
+            for (int i = 0; i < wallMeshes.Count; i++) MakeRenderer(walls, "Wall_Bay" + i, wallMeshes[i], wallMat);
 
             Transform rings = Child(root.transform, "Rings");
             List<float> ringS = DrumLayout05.RingPositions();
             foreach (float s in ringS)
             {
                 bool far = s > DrumLayout05.FarBandFromS;
-                bool nearest = s < DrumLayout05.NearestBandBelowS;
-                GameObject r = MakeRenderer(rings, "Ring_" + F(s), far ? ringFar : (nearest ? ringNearest : ringNear), far ? ringFarMat : ringNearMat);
+                string rn = "Ring05_s" + Mathf.RoundToInt(s);
+                Mesh rm = SaveMesh(DrumPolish05.BuildRing(DrumLayout05.BandFor(s), ringRadius, s < 100f ? 144 : 96, DrumPolish05.LampsFor(s), rn), rn);
+                GameObject r = MakeRenderer(rings, "Ring_" + F(s), rm, far ? ringFarMat : ringNearMat);
                 r.transform.localPosition = DrumLayout05.Centre(s);
                 r.transform.localScale = Vector3.one * (DrumLayout05.RadiusAt(s) / DrumLayout05.Radius);   // round 4 barrel fit
             }
@@ -123,13 +111,11 @@ namespace Rainbow.Screen05.EditorTools
             Transform paddles = Child(root.transform, "Paddles");
             List<float> padS = DrumLayout05.PaddlePositions();
             List<DrumLayout05.PaddleSlot> padSlots = DrumLayout05.PaddleSlots();
-            foreach (DrumLayout05.PaddleSlot ps in padSlots)
+            foreach (DrumPolish05.PaddleOutline po in DrumPolish05.Paddles())
             {
-                // frame round 2026-11-23: each tray on its approved place (side and mount height per paddle)
-                Quaternion q = PaddleRotation(ps, PaddleFaceTiltDeg, 0f, out Vector3 p);
-                GameObject pd = MakeRenderer(paddles, (ps.side < 0 ? "Paddle_L_" : "Paddle_R_") + F(ps.s), paddle, paddleMat);
-                pd.transform.localPosition = p;
-                pd.transform.localRotation = q;
+                string pn = po.name.Replace("Paddle_", "Paddle05_");
+                Mesh pm = SaveMesh(DrumPolish05.BuildPaddle(po, pn, out Vector3 pivot), pn);
+                MakeRenderer(paddles, po.name, pm, paddleMat).transform.localPosition = pivot;
             }
 
             Transform throat = Child(root.transform, "FarThroat");
@@ -211,8 +197,9 @@ namespace Rainbow.Screen05.EditorTools
             // coordinator round 3: 0.85 (was 1); tunnel round 4: 0.75 together with the bright spokes (_WallSpokes): deeper
             // violet lands with headroom for the pink-white light lines (cycle tunnel_t5 variant D1: walls 59.4 -> 60.7,
             // hud 51.4 -> 52.1; the magenta lands sat at the clip, so the spokes / lips could not show)
-            SetFloat(m, "_Exposure", WallExposure);
-            SetFloat(m, "_LightInfluence", 1f);
+            SetFloat(m, "_Exposure", 1f);
+            SetFloat(m, "_LightInfluence", 0.1f);
+            SetVec(m, "_Wall4b", Wall4b);
             // light round 2026-11-23: strips / reflection fade with view distance (strips 8 %, panorama 50 % beyond 80 m)
             // so the deep walls stay violet instead of pink-white radial spokes converging on the throat
             SetVec(m, "_WallFar", new Vector4(25f, 80f, 0.08f, 0.5f));
@@ -249,10 +236,12 @@ namespace Rainbow.Screen05.EditorTools
         static readonly Vector4 RingBulbs = new Vector4(20f, 0.075f, 1.5f, 0f);
         /// <summary>Wall spokes (count round the drum = ring bulbs, half width rad, intensity, kept far away).</summary>
         static readonly Vector4 WallSpokes = new Vector4(20f, 0.025f, 1.0f, 0.35f);
+        /// <summary>Round 4b wall: (light line strength, pink amount of the near bay, slot strength, hot core bloom).</summary>
+        static readonly Vector4 Wall4b = new Vector4(1f, 0.85f, 1f, 0.9f);
         /// <summary>Wall exposure (coordinator round 3: 0.85).</summary>
         const float WallExposure = 0.75f;
         /// <summary>Near frame corners: (palette 1 = copper bands, glare, vignette compensation, -).</summary>
-        static readonly Vector4 FrameLook = new Vector4(1f, 1f, 1.08f, 0f);
+        static readonly Vector4 FrameLook = new Vector4(1f, 240f, 130f, 0f);   // round 4b: y / z = band widths in px (corner / lip)
         /// <summary>Exposure of the pre-solved copper rings and shelves (the frame keeps 0.95).</summary>
         const float GoldExposure = 1.0f;
         /// <summary>Throat cap: (warm gaps, pale-yellow radius, white core radius, -) in cap radii.</summary>
@@ -322,9 +311,9 @@ namespace Rainbow.Screen05.EditorTools
             SetGlow(m);
             // 0.95 for rings, paddles and frame (light round: the tone curve above darkens the mid-tones, this keeps the
             // approved brightness); tunnel round 4: 1.0 for the pre-solved copper rings and shelves
-            SetFloat(m, "_Exposure", mode == 2 ? 0.95f : GoldExposure);
+            SetFloat(m, "_Exposure", 1f);   // round 4b palettes are display-exact (RainbowPolish05.hlsl)
             if (mode == 0) SetVec(m, "_BandS", RingBulbs);
-            SetFloat(m, "_LightInfluence", mode == 2 ? 0f : 0.25f);
+            SetFloat(m, "_LightInfluence", mode == 2 ? 0f : 0.05f);
             EditorUtility.SetDirty(m);
         }
 

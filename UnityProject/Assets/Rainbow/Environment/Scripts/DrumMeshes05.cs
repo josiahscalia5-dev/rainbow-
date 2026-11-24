@@ -500,12 +500,12 @@ namespace Rainbow.Screen05
         /// (30, 1252), (60, 1294), (156, 1385) where the cut face starts): circle centre (521.5, 928) r 588, band 190 px
         /// outward, theta -158 .. -128.4 (was centre (432, 1060) r 457, theta -163 .. -122: ~60-90 px too low on screen).
         /// </summary>
-        public static Mesh BuildFrameCornerLeft() => BuildFrameStrip(0, 521.5f, 928f, 588f, 190f, 1, -158f, -128.4f, 40f, 36, 12, "NearFrame05_CornerL", -1f);
+        public static Mesh BuildFrameCornerLeft() => BuildFrameStrip(0, 521.5f, 928f, 588f, 240f, 1, -158f, -127.2f, 40f, 48, 16, "NearFrame05_CornerL", -1f);
         /// <summary>Right bottom corner (approved: screen edge y 1194, (840, 1233), (810, 1276), cut face from (690, 1395)):
         /// centre (342.5, 920) r 588, theta -22 .. -54.</summary>
-        public static Mesh BuildFrameCornerRight() => BuildFrameStrip(0, 342.5f, 920f, 588f, 190f, 1, -22f, -54f, 40f, 36, 12, "NearFrame05_CornerR", 1f);
+        public static Mesh BuildFrameCornerRight() => BuildFrameStrip(0, 342.5f, 920f, 588f, 240f, 1, -22f, -55.4f, 40f, 48, 16, "NearFrame05_CornerR", 1f);
         /// <summary>Bottom lip (circle centre (432,2121), top edge radius 655, band 130 px inward, theta 122..58).</summary>
-        public static Mesh BuildFrameLip() => BuildFrameStrip(1, 432f, 2121f, 655f, 130f, -1, 122f, 58f, 0f, 48, 10, "NearFrame05_Lip");
+        public static Mesh BuildFrameLip() => BuildFrameStrip(1, 435f, 2156f, 700f, 130f, -1, 122f, 58f, 0f, 64, 10, "NearFrame05_Lip");
 
         // ------------------------------------------------------------------ far throat
         /// <summary>Opaque end cap of the tunnel, local XY disc (radius in metres) facing -Z; UV0 = position in tube radii.</summary>

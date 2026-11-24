@@ -174,7 +174,7 @@ namespace Rainbow.Screen05
             }
             float bank = SS(44f, 50f, s) * (1f - SS(74f, 84f, s));
             float near = 1f - SS(19f, 23f, s);
-            return new Vector3(0.85f - 0.2f * near + 0.75f * bank, 0.45f - 0.1f * near + 0.12f * bank, 0.95f - 0.2f * near);
+            return new Vector3(0.85f - 0.38f * near + 0.75f * bank, 0.45f - 0.1f * near + 0.12f * bank, 0.95f - 0.12f * near);
         }
 
         /// <summary>LUT for shaders: s (S0 .. S1) along u, row 0 = (WL, LO, LI, RI), row 1 = (RO, WR, 0, 0).</summary>

@@ -19,7 +19,7 @@
 // keeps bending right just before the throat and then runs back toward the middle into the vanishing point.
 float RainbowFarRiverCoreX(float s)
 {
-    return 1.85 + 0.3 * smoothstep(120.0, 170.0, s) - 1.7 * smoothstep(210.0, 400.0, s);
+    return 0.6 + 0.3 * smoothstep(120.0, 170.0, s) - 0.7 * smoothstep(190.0, 380.0, s);   // river 4b: RiverLayout05 at s 120
 }
 
 // RiverUV = (lateral x metres from the tunnel line, s metres along the tunnel).
@@ -31,8 +31,8 @@ void RainbowFarRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float dx = x - RainbowFarRiverCoreX(s);
     // (water4 2026-11-24) the band pair a little closer and broader, so both bands stay clear of the foam lips with the
     // core bent right (approved: two clear pink bands either side of the coins right up to the throat)
-    float bandOff = hw * _RiverParams.z * 0.75;
-    float bw = hw * _RiverParams.w * 1.2;
+    float bandOff = 2.35 - 0.5 * smoothstep(120.0, 200.0, s);
+    float bw = 0.72;
     float fw = fwidth(x) + 1e-3;
     float dL = abs(dx + bandOff);
     float dR = abs(dx - bandOff);

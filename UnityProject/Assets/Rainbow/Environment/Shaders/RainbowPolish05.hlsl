@@ -35,37 +35,37 @@ float3 RainbowRing4b(float3 P, float T, float2 Lamp, float dist)
     float3 dark   = lerp(float3(120, 28, 60), float3(196, 70, 20), side);
     float3 edge   = lerp(float3(108, 22, 78), float3(150, 34, 90), side);
     // far rings are broad and soft (measured B / C / D)
-    float far = smoothstep(55.0, 90.0, dist);
-    flange = lerp(flange, float3(205, 84, 92), far);
-    body = lerp(body, float3(230, 128, 112), far);
-    inner = lerp(inner, float3(216, 116, 116), far * 0.8);
-    dark = lerp(dark, float3(190, 74, 84), far);
-    edge = lerp(edge, float3(172, 62, 120), far);
+    float farK = smoothstep(55.0, 90.0, dist);
+    flange = lerp(flange, float3(205, 84, 92), farK);
+    body = lerp(body, float3(230, 128, 112), farK);
+    inner = lerp(inner, float3(216, 116, 116), farK * 0.8);
+    dark = lerp(dark, float3(190, 74, 84), farK);
+    edge = lerp(edge, float3(172, 62, 120), farK);
     float glow = smoothstep(150.0, 300.0, dist);                        // throat light
     body = lerp(body, float3(255, 172, 92), glow);
     flange = lerp(flange, float3(232, 110, 62), glow);
     inner = lerp(inner, float3(250, 160, 84), glow);
     dark = lerp(dark, float3(214, 84, 48), glow);
     edge = lerp(edge, float3(214, 90, 70), glow);
-    // main band: slightly rounded metal (brighter centre)
-    float3 main = body * (0.94 + 0.1 * RbLine(T, 0.46, 0.14));
+    // mainC band: slightly rounded metal (brighter centre)
+    float3 mainC = body * (0.94 + 0.1 * RbLine(T, 0.46, 0.14));
     // lamps: broad orange glow, yellow, white core
     float g1 = exp(-pow(d / (4.6 + fwd * 0.5), 2.0));
     float g2 = exp(-pow(d / (2.9 + fwd * 0.5), 2.0));
     float g3 = exp(-pow(d / (1.55 + fwd * 0.5), 2.0));
     float wide = exp(-d / 6.0);
-    main = lerp(main, float3(250, 138, 72), saturate(wide * 0.75));
-    main = lerp(main, float3(252, 172, 84), g1);
-    main = lerp(main, float3(255, 222, 140), g2);
-    main = lerp(main, float3(255, 250, 232), g3);
+    mainC = lerp(mainC, float3(250, 138, 72), saturate(wide * 0.75));
+    mainC = lerp(mainC, float3(252, 172, 84), g1);
+    mainC = lerp(mainC, float3(255, 222, 140), g2);
+    mainC = lerp(mainC, float3(255, 250, 232), g3);
     float3 fl = lerp(flange, float3(252, 190, 148), saturate(g2 * 0.95 + g1 * 0.25));
     float3 inn = lerp(inner, float3(252, 178, 140), saturate(g2 * 0.95 + g1 * 0.25));
     float3 c = fl;
     c = lerp(c, dark, RbLine(T, 0.205, 0.045 + fwT) * (1.0 - 0.6 * g2));
-    c = lerp(c, main, RbStep(T, 0.265, 0.02 + fwT));
-    c = lerp(c, float3(255, 176, 104), RbLine(T, 0.29, 0.016 + fwT * 0.6) * 0.65 * (1.0 - far * 0.7));
+    c = lerp(c, mainC, RbStep(T, 0.265, 0.02 + fwT));
+    c = lerp(c, float3(255, 176, 104), RbLine(T, 0.29, 0.016 + fwT * 0.6) * 0.65 * (1.0 - farK * 0.7));
     c = lerp(c, inn, RbStep(T, 0.655, 0.02 + fwT));
-    c = lerp(c, lerp(float3(250, 160, 100), float3(255, 182, 80), side), RbLine(T, 0.655, 0.026 + fwT * 0.6) * 0.95 * (1.0 - far * 0.6));
+    c = lerp(c, lerp(float3(250, 160, 100), float3(255, 182, 80), side), RbLine(T, 0.655, 0.026 + fwT * 0.6) * 0.95 * (1.0 - farK * 0.6));
     c = lerp(c, dark, RbLine(T, 0.70, 0.02 + fwT * 0.5) * 0.35 * (1.0 - g2));
     c = lerp(c, edge, RbStep(T, 0.885, 0.025 + fwT) * (1.0 - 0.6 * g1));
     c = lerp(c, dark * 0.75, RbLine(T, 0.0, 0.03 + fwT) * 0.8 * (1.0 - g1));
@@ -78,7 +78,7 @@ float3 RainbowRing4b(float3 P, float T, float2 Lamp, float dist)
 // Region 0 band, 1 underside, 2 top / back. camShift slides the polished highlights while the rider swims past.
 float3 RainbowPaddle4b(float2 UV, float Region, float dist)
 {
-    float far = smoothstep(40.0, 90.0, dist);
+    float farK = smoothstep(40.0, 90.0, dist);
     float sh = clamp((_WorldSpaceCameraPos.z - 7.48) * 0.012, -0.12, 0.16);
     float u = UV.x - sh, v = UV.y;
     float3 c;
@@ -116,8 +116,8 @@ float3 RainbowPaddle4b(float2 UV, float Region, float dist)
     {
         c = float3(188, 84, 66);
     }
-    c = lerp(c, float3(206, 104, 100), far * 0.2);
-    return RbDisp(c) * (1.0 + hot * (1.0 - 0.6 * far));
+    c = lerp(c, float3(206, 104, 100), farK * 0.2);
+    return RbDisp(c) * (1.0 + hot * (1.0 - 0.6 * farK));
 }
 
 // ------------------------------------------------------------------ near frame

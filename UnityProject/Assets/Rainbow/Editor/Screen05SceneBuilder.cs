@@ -46,6 +46,10 @@ namespace Rainbow.Screen05.EditorTools
                 }
             }
 
+            // fitted look values (round 4): Assets/Rainbow/Tuning/screen05_tuning.txt
+            try { report.AppendLine("Screen05Tuning: " + Screen05Tuning.Apply()); }
+            catch (Exception e) { report.AppendLine("Screen05Tuning: skipped (" + e.Message + ")"); }
+
             System.IO.Directory.CreateDirectory("Assets/Rainbow/Scenes");
             EditorSceneManager.SaveScene(scene, ScenePath);
             EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(ScenePath, true) };

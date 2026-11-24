@@ -23,6 +23,11 @@ Updated 2026-11-24 08:05 local (session b41bab30, new account). Cross-account ru
   all visible rings within 0.5-2.6 px) + HUD rebuilt from measurements (rounded glyphs in code: HudGlyphs.cs, HudGlyphText.cs) = **67.0 / 47.5** (hud 52 -> 74, walls 60.7
   -> 66.3, throat 69.3 -> 75.4). River targets traced + unprojected: `staging/round4-river/river_targets.csv` (`tools/diag/unproject-river.ps1`).
   New diagnostics: `tools/diag/errormap.ps1` (where the points are lost), `gridshapes.ps1` (pixel grid + outlines); the cycle tool now waits for the domain reload.
+- DONE by the coordinator while the lanes run (08:00-08:10): coins on the approved coin centres (CoinTrail.ApprovedCoins = s, world x, height, diameter; 7 collectable; orange-gold
+  art), start composition of the bubbles (BubbleField.StartBig / StartSmall), Benny's arms / pose phase / 5.5 cm visual nudge (BennyRigBuilder SwimPhase / ArmPhase / ArmScale / ArmRest,
+  BennyController.VisualShiftX), HUD glyphs. NEW automatic look fitter: `Assets/Rainbow/Testing/Editor/Screen05AutoFit.cs` + `AgentScripts/screen05_autofit.cs` (pattern search over material /
+  light / post / transform values at the hold, no tokens) and `Assets/Rainbow/Editor/Screen05Tuning.cs` + `Assets/Rainbow/Tuning/screen05_tuning.txt` (fitted values applied at the end of every
+  scene build). Plan: after both lanes finish, run the fitter on their material values, append the winners to the tuning file, rebuild, confirm with a normal cycle.
 - VALIDATED VERSIONS (safe fallbacks; every autosave commit after the newest one may hold EXPERIMENTAL work):
   | git tag | commit | visual / layout | what | evidence |
   |---|---|---|---|---|

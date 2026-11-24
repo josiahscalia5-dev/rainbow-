@@ -81,6 +81,8 @@ namespace Rainbow.Screen05.EditorTools
             rig.squash = GameplayAssetUtil.Child("Squash", rig.model, SquashPivot).transform;
             rig.armL = GameplayAssetUtil.Child("ArmL", rig.squash, ArmLPivot - SquashPivot).transform;
             rig.armR = GameplayAssetUtil.Child("ArmR", rig.squash, ArmRPivot - SquashPivot).transform;
+            // round 4: the approved arms are small round nubs (~50 px); the bones scale them about the shoulder (bind pose keeps scale 1)
+            rig.armL.localScale = rig.armR.localScale = Vector3.one * ArmScale;
             rig.pom = GameplayAssetUtil.Child("Pom", rig.squash, PomPivot - SquashPivot).transform;
 
             Material mat = BennyMaterial();
@@ -439,15 +441,18 @@ namespace Rainbow.Screen05.EditorTools
             return Quaternion.Euler(xRad * Mathf.Rad2Deg, yRad * Mathf.Rad2Deg, zRad * Mathf.Rad2Deg);
         }
 
+        /// <summary>Round 4: arm nub size and rest raise (rad), measured on the approved Benny (nub centres y 1043, 50 px across).</summary>
+        const float ArmScale = 0.8f, ArmRest = 0.30f;
+
         /// <summary>benny31.ts doggy-paddle stroke expressed in Unity mesh space (X mirrored => Y / Z angles negate).</summary>
         static Quaternion ArmStroke(bool hisRight, float ph, float weight)
         {
             float side = hisRight ? 1f : -1f;            // glTF side sign
             float phase = ph + (hisRight ? 0f : Mathf.PI);
             // round 4 (2026-11-24): 0.42 / 0.5 -> 0.30 / 0.36 (approved: two short level arm nubs; a full stroke threw one arm out)
-            float z = -side * weight * 0.30f * Mathf.Sin(phase);
+            float z = -side * weight * 0.24f * Mathf.Sin(phase);
             float y = -side * weight * 0.10f * Mathf.Cos(phase);
-            return Quaternion.AngleAxis(y * Mathf.Rad2Deg, Vector3.up) * Quaternion.AngleAxis(z * Mathf.Rad2Deg, Vector3.forward);
+            return ArmRaise(hisRight, ArmRest) * Quaternion.AngleAxis(y * Mathf.Rad2Deg, Vector3.up) * Quaternion.AngleAxis(z * Mathf.Rad2Deg, Vector3.forward);
         }
 
         /// <summary>Arms raised (+) or dropped (-) sideways, radians; his right arm is on mesh -X.</summary>

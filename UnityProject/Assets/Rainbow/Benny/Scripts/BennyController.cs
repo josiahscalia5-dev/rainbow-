@@ -24,6 +24,9 @@ namespace Rainbow.Screen05
         public const float BodyRadius = 0.8f;
         /// <summary>Root height above the water (Game.ts bennyPose: radius * 0.55).</summary>
         public const float RootRide = BodyRadius * 0.55f;
+        /// <summary>Round 4: sideways nudge of the visible body (m, rider's right): his approved place (body centre px 424, star 517) was 11 px right of
+        /// where the route centre put him; physics, pickup and steering are unchanged.</summary>
+        public const float VisualShiftX = 0.055f;
 
         public static BennyController Instance { get; private set; }
 
@@ -293,7 +296,7 @@ namespace Rainbow.Screen05
                 Quaternion.LookRotation(fwd, Vector3.up));
             if (visual != null)
             {
-                visual.localPosition = new Vector3(0f, lift, 0f);
+                visual.localPosition = new Vector3(VisualShiftX, lift, 0f);
                 visual.localRotation = Quaternion.Euler(pitch * Mathf.Rad2Deg, 0f, 0f);
             }
         }

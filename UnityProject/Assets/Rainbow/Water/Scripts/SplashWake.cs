@@ -42,11 +42,11 @@ namespace Rainbow.Screen05
 
         [Header("Fans (riderSplash.ts createRiderSplash05, high quality)")]
         [Tooltip("Splash strands per side (riderSplash.ts high = 44 thin ropes; the approved shows fewer, splashier strands)")]
-        [Range(0, 64)] public int ropesPerSide = 24;
+        [Range(0, 64)] public int ropesPerSide = 22;
         [Tooltip("Crown droplet jets per side (water4 2026-11-24: 40 -> 24, the dense crown read as solid white wings on his flanks)")]
         [Range(0, 64)] public int jetsPerSide = 24;
         [Tooltip("Bubbly suds pads per side on his flanks (riderSplash.ts high = 16 froth pads; fewer, bigger ones read as soap bubbles; water4: 11 -> 8)")]
-        [Range(0, 32)] public int frothPerSide = 8;
+        [Range(0, 32)] public int frothPerSide = 0;
 
         [Header("Spray droplets (spray.ts / index.ts wake())")]
         [Tooltip("Droplets per second at full strength (150 x (1 + 1.4) inside 05).")]
@@ -82,6 +82,9 @@ namespace Rainbow.Screen05
         Vector4[] uv0;
         Vector4[] uv1;
         Mesh fanMesh;
+        Mesh wakeFoamMesh;                 // river round 4b: soap foam he drags along (FoamBank.BuildWakeMesh)
+        Material wakeFoamMaterial;
+        bool wakeFoamTried;
         MaterialPropertyBlock fanProps;
         Material ownMaterial, ownFanMaterial;
         bool materialTried, fanMaterialTried;
@@ -137,6 +140,8 @@ namespace Rainbow.Screen05
         {
             Release(mesh);
             Release(fanMesh);
+            Release(wakeFoamMesh);
+            wakeFoamMesh = null;
             Release(ownMaterial);
             Release(ownFanMaterial);
             mesh = null;
@@ -197,6 +202,7 @@ namespace Rainbow.Screen05
             }
             Simulate(dt);
             DrawFans(c, rw, wake);
+            DrawWakeFoam(c, wake);
             Draw(c);
         }
 
@@ -417,6 +423,31 @@ namespace Rainbow.Screen05
                 matProps = fanProps,
             };
             Graphics.RenderMesh(rp, fanMesh, 0, Matrix4x4.TRS(c, Quaternion.LookRotation(fwd, Vector3.up), Vector3.one));
+        }
+
+        // the soap foam in his wake (round puffs, the bank foam's impostor shader; shrinks with the wake strength)
+        void DrawWakeFoam(Vector3 c, float strength)
+        {
+            if (strength < 0.02f) return;
+            if (!wakeFoamTried)
+            {
+                wakeFoamTried = true;
+                wakeFoamMaterial = Resources.Load<Material>("RainbowWakeFoam05");
+            }
+            if (wakeFoamMaterial == null) return;
+            if (wakeFoamMesh == null)
+            {
+                wakeFoamMesh = FoamBank.BuildWakeMesh();
+                wakeFoamMesh.hideFlags = HideFlags.DontSave;
+            }
+            var rp = new RenderParams(wakeFoamMaterial)
+            {
+                layer = gameObject.layer,
+                shadowCastingMode = ShadowCastingMode.Off,
+                receiveShadows = false,
+                worldBounds = new Bounds(c, new Vector3(8f, 4f, 8f)),
+            };
+            Graphics.RenderMesh(rp, wakeFoamMesh, 0, Matrix4x4.Translate(c));
         }
 
         Material ResolveFanMaterial()

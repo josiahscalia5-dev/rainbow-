@@ -230,27 +230,22 @@ Shader "Rainbow/Water/Splash"
                     // units along / across the strand (~0.045 u blobs, ~0.035 u droplet cells), streaming back along it.
                     // A continuous white streak with a ragged, wandering width runs along most of the strand, lumps of
                     // foam cling to it (bubbly near the root), and a few droplets fly beside it and off its tail.
+// (river round 4b) lacy stream: a web of white water between see-through cells, thick near the fur, breaking
+                    // into strings of droplets toward its tail
                     float wv = max(i.d2.x, 1e-3);
-                    float2 g = float2(uv.x * len * i.d2.y, uv.y * wv) * 22.0 + float2(-t * 3.0 + seed * 31.0, seed * 7.0);
+                    float2 g = float2(uv.x * len * i.d2.y, uv.y * wv) * 17.0 + float2(-t * 2.6 + seed * 31.0, seed * 7.0);
+                    g += 0.35 * (float2(RBW_VNoise(g * 0.7), RBW_VNoise(g * 0.7 + 5.1)) - 0.5);
                     float c1 = RBW_Cells(g);
-                    float c2 = RBW_Cells(g * 1.3 + 4.7);
-                    float wid = (0.2 + 0.32 * RBW_VNoise(float2(g.x * 0.35, seed * 13.0))) * (1.0 - 0.4 * uv.x);
-                    float edgeN = ac + (c1 - 0.45) * 0.3;
-                    float streak = (1.0 - smoothstep(wid - 0.06, wid + 0.05, edgeN)) * (1.0 - smoothstep(0.62, 0.95, uv.x));
-                    float solid = 1.0 - smoothstep(0.0, 0.45, uv.x);              // near the root the lumps merge
-                    float lump = 1.0 - smoothstep(0.34, 0.48, c1 + ac * 0.75 - solid * 0.18);
-                    float drops = (1.0 - smoothstep(0.13, 0.21, c2)) * smoothstep(0.35, 0.65, ac + uv.x * 0.35)
-                                * (1.0 - smoothstep(0.85, 1.0, ac));
-                    float holes = (1.0 - smoothstep(0.13, 0.23, c2)) * max(streak, lump) * (1.0 - smoothstep(0.1, 0.55, uv.x));
-                    float tail = (1.0 - smoothstep(0.8, 1.0, uv.x)) * smoothstep(0.0, 0.04, uv.x);
-                    float bodyA = max(streak * lerp(0.95, 0.7, uv.x), lump * lerp(0.9, 0.55, uv.x));
-                    alpha = max(bodyA, drops * 0.85) * tail * _RopeAlpha;
-                    col = lerp(cyan, white, saturate(1.35 - uv.x * 0.6 - ac * 0.5));
-                    col = lerp(col, float3(0.74, 0.78, 1.0), saturate(edgeN / max(wid + 0.05, 0.05)) * 0.4);   // shaded sides
-                    col = lerp(col, white, drops * 0.5);
-                    col = lerp(col, float3(0.5, 0.6, 1.0), holes * 0.6);         // lavender-blue bubble holes (lace)
-                }
-                else if (type < 1.5)
+                    float c2 = RBW_Cells(g * 2.1 + 4.7);
+                    float web = smoothstep(0.4 + 0.2 * uv.x, 0.62 + 0.18 * uv.x, c1);
+                    float solid = (1.0 - smoothstep(0.0, 0.3, uv.x)) * smoothstep(0.2, 0.5, c1);
+                    float edge = 1.0 - smoothstep(0.45, 0.95, ac + (RBW_VNoise(float2(g.x * 0.6, seed * 13.0)) - 0.5) * 0.7 + 0.35 * uv.x);
+                    float dots = 1.0 - smoothstep(0.16, 0.24, c2);
+                    float bodyA = max(web, solid) * edge;
+                    float tail = (1.0 - smoothstep(0.6, 1.0, uv.x)) * smoothstep(0.0, 0.04, uv.x);
+                    alpha = max(bodyA * tail, dots * 0.85 * (1.0 - smoothstep(0.75, 1.0, uv.x + ac * 0.25)) * smoothstep(0.25, 0.6, uv.x)) * _RopeAlpha;
+                    col = lerp(float3(0.62, 0.86, 1.05), white, saturate(0.35 + 0.8 * smoothstep(0.5, 0.8, c1) + dots * 0.5 - uv.x * 0.2));
+                }                else if (type < 1.5)
                 {
                     // crown droplets: small translucent water beads (cyan body, bright rim), fading in off the water and out
                     // as they fall back

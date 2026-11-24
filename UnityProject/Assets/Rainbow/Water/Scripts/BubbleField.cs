@@ -327,7 +327,7 @@ namespace Rainbow.Screen05
             b.r = e.z * d / (2f * 1278.2f);
             b.vel = RiverPath.Forward(Mathf.Clamp(p.z, RiverPath.TunnelStart, RiverPath.TunnelLength))
                   * (stageSpeed * Range(sideCarry.x, Mathf.Max(sideCarry.x, sideCarry.y))) + Vector3.up * Range(0.04f, 0.1f);
-            b.pos = p - b.vel * lead;
+            b.pos = p - b.vel * (lead + Mathf.Min(Time.deltaTime, 0.05f));   // this frame is integrated too
             b.age = Range(1.2f, 4f);
             b.life = b.age + lead + Range(6f, 14f);
             b.dead = false;
@@ -526,7 +526,7 @@ namespace Rainbow.Screen05
                 b.scripted -= dt;
                 b.age += dt;
                 b.pos += b.vel * dt;
-                b.pos += new Vector3(Mathf.Sin(t * 1.3f + b.phase), Mathf.Cos(t * 1.1f + b.phase * 1.7f), Mathf.Sin(t * 0.9f + b.phase * 0.6f)) * (0.12f * dt);
+                if (b.scripted <= 0f) b.pos += new Vector3(Mathf.Sin(t * 1.3f + b.phase), Mathf.Cos(t * 1.1f + b.phase * 1.7f), Mathf.Sin(t * 0.9f + b.phase * 0.6f)) * (0.12f * dt);
                 if (b.rise > 1e-3f)
                 {
                     // newborn side bubble rising out of the foam / water (decaying lift)

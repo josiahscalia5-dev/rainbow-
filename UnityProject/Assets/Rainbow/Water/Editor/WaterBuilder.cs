@@ -88,6 +88,10 @@ namespace Rainbow.Screen05.EditorTools
         /// <summary>Cyan water grade (rgb multiplier, strength) for RainbowRiver.shader _RiverGrade.</summary>
         public static readonly Vector4 RiverGrade = new Vector4(0.55f, 0.70f, 0.93f, 1f);
 
+        public const float GlintStreak = 1f, GlintFlare = 1f;
+        /// <summary>River lanes (RainbowRiver.hlsl): lane gain, core gain, broad streaks, fine streaks.</summary>
+        public static readonly Vector4 RiverLook = new Vector4(0.9f, 0.3f, 0.6f, 0.6f);
+
         static int BuildRiver(Transform root, Texture2D pano)
         {
             Mesh mesh = SaveMesh(RiverMeshGenerator.Build(), GenDir + "/RiverSurface05.asset");
@@ -105,6 +109,7 @@ namespace Rainbow.Screen05.EditorTools
             // water only; RainbowRiver.shader). (0.55, 0.70, 0.93) beat (0.70, 0.80, 0.96) and (0.45, 0.62, 0.92):
             // water_near 48.0 -> 56.7, bubbles 48.4 / 39.3 -> 59.0 / 48.2, splash 60.4 -> 67.9.
             mat.SetVector("_RiverGrade", RiverGrade);
+            mat.SetVector("_W4Look", RiverLook); mat.SetFloat("_W4Edge", 1f);
             EditorUtility.SetDirty(mat);
 
             var go = new GameObject("River05");
@@ -113,6 +118,23 @@ namespace Rainbow.Screen05.EditorTools
             MeshRenderer mr = go.AddComponent<MeshRenderer>();
             mr.sharedMaterial = mat;
             NoShadowsNoProbes(mr);
+
+            // river round 4b: light streaks / star flares on the water (RiverGlints.cs)
+            AssetDatabase.ImportAsset(Dir + "/Shaders/RainbowRiverGlints.shader", ImportAssetOptions.ForceSynchronousImport);
+            Texture2D lut = RiverLayout05.BuildLut();
+            string lutPath = GenDir + "/RiverLut05.asset";
+            var oldLut = AssetDatabase.LoadAssetAtPath<Texture2D>(lutPath);
+            if (oldLut == null) { AssetDatabase.CreateAsset(lut, lutPath); oldLut = lut; }
+            else { EditorUtility.CopySerialized(lut, oldLut); Object.DestroyImmediate(lut); EditorUtility.SetDirty(oldLut); }
+            Material gm = GetOrCreateMaterial(MatDir + "/RainbowRiverGlints05.mat", "Rainbow/Water/RiverGlints");
+            gm.SetTexture("_RiverLut", oldLut);
+            gm.SetVector("_LutRange", new Vector4(RiverLayout05.S0, RiverLayout05.S1, 0f, 0f));
+            gm.SetFloat("_HoldTime", 1.5f);
+            gm.SetFloat("_Drift", 7.5f);
+            gm.SetFloat("_Streak", GlintStreak);
+            gm.SetFloat("_Flare", GlintFlare);
+            EditorUtility.SetDirty(gm);
+            MakeRenderer(root, "RiverGlints05", SaveMesh(RiverGlints.Build(), GenDir + "/RiverGlints05.asset"), gm);
             return mesh.triangles.Length / 3;
         }
 
@@ -206,8 +228,8 @@ namespace Rainbow.Screen05.EditorTools
 
         /// <summary>(water4 2026-11-24) splash strand look on Rainbow/Water/Splash: width scale, opacity, extra fan angle (rad),
         /// roots moved round toward his back (rad). Live variants t1: (0.75, 0.8, 0.2) splash 69.7 vs the old (1, 1, 0) 68.8.</summary>
-        public const float SplashRopeWidth = 0.65f, SplashRopeAlpha = 0.65f, SplashSpread = 0.3f, SplashRootBack = 0.3f,
-                           SplashLen = 1.55f;   // (t3 variants: 1.55 splash 72.0 > 1.35 71.6 > 1.15 71.2)
+        public const float SplashRopeWidth = 1.5f, SplashRopeAlpha = 1.1f, SplashSpread = 0.15f, SplashRootBack = 0.3f,
+                           SplashLen = 1.5f;   // (t3 variants: 1.55 splash 72.0 > 1.35 71.6 > 1.15 71.2)
 
         static void PrepareSprayMaterial()
         {
@@ -217,6 +239,12 @@ namespace Rainbow.Screen05.EditorTools
             mat.SetFloat("_SoftDepth", 0.12f);
             mat.SetFloat("_Intensity", 1f);
             EditorUtility.SetDirty(mat);
+
+            // river round 4b: Benny's wake foam (SplashWake draws FoamBank.BuildWakeMesh with it)
+            Material wf = GetOrCreateMaterial(ResDir + "/RainbowWakeFoam05.mat", "Rainbow/Water/Foam");
+            wf.SetVector("_FoamLightDir", new Vector4(ToSun.x, ToSun.y, ToSun.z, 0f));
+            wf.SetFloat("_Brightness", 1f);
+            EditorUtility.SetDirty(wf);
 
             // (splash round 2026-11-23) make sure the fan shader is imported before it is looked up by name
             AssetDatabase.ImportAsset(Dir + "/Shaders/RainbowSplash.shader", ImportAssetOptions.ForceSynchronousImport);

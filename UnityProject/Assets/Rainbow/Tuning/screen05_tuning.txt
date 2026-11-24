@@ -1,0 +1,1 @@
+# fitted look values, applied by Screen05Tuning at the end of every scene build (see Screen05AutoFit)

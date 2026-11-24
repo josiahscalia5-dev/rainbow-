@@ -16,6 +16,8 @@ Shader "Rainbow/Water/River"
         _EnvStrength ("Reflection strength", Range(0, 2)) = 0.9
         _EnvYaw ("Reflection yaw (degrees)", Float) = 0
         _EnvLod ("Reflection blur (mip)", Range(0, 6)) = 1
+        _W4Look ("Lane gain, core gain, broad streak, fine streak", Vector) = (0.75, 0.3, 0.55, 0.5)
+        _W4Edge ("Streaky band edges", Float) = 1
         _RiverGrade ("Cyan water grade (rgb multiplier on the cyan/blue water, a = strength; 0 = off)", Vector) = (1, 1, 1, 0)
     }
 
@@ -37,7 +39,10 @@ Shader "Rainbow/Water/River"
             float _EnvYaw;
             float _EnvLod;
             float4 _RiverGrade;
+            float4 _W4Look;
+            float _W4Edge;
         CBUFFER_END
+        #define RBW_HAS_LOOK
 
         // shared animation clock (Rainbow.Screen05.Screen05Clock; game time, reset by the test hold)
         float _RainbowTime;
@@ -53,6 +58,8 @@ Shader "Rainbow/Water/River"
             float4 positionOS : POSITION;
             float3 normalOS   : NORMAL;
             float4 uv1        : TEXCOORD1;
+            float4 uv2        : TEXCOORD2;
+            float4 uv3        : TEXCOORD3;
             UNITY_VERTEX_INPUT_INSTANCE_ID
         };
 
@@ -88,6 +95,8 @@ Shader "Rainbow/Water/River"
                 float3 normalWS   : TEXCOORD1;
                 float4 stream     : TEXCOORD2;
                 float  fogFactor  : TEXCOORD3;
+                float4 edgeA      : TEXCOORD4;
+                float4 edgeB      : TEXCOORD5;
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
@@ -101,6 +110,8 @@ Shader "Rainbow/Water/River"
                 o.positionCS = TransformWorldToHClip(pw);
                 o.normalWS = TransformObjectToWorldNormal(v.normalOS);
                 o.stream = v.uv1;
+                o.edgeA = v.uv2;
+                o.edgeB = v.uv3;
                 o.fogFactor = ComputeFogFactor(o.positionCS.z);
                 return o;
             }
@@ -111,7 +122,7 @@ Shader "Rainbow/Water/River"
                 float3 viewDir = GetWorldSpaceNormalizeViewDir(i.positionWS);
                 float3 col, reflDir, reflTint;
                 float reflW;
-                RainbowRiver_float(i.positionWS, i.normalWS, viewDir, i.stream, _RainbowBenny, _RainbowSplash,
+                RainbowRiver_float(i.positionWS, i.normalWS, viewDir, i.stream, i.edgeA, i.edgeB, _RainbowBenny, _RainbowSplash,
                                    float4(_SOffset, _CoreSwing, _FlowSpeed, _RainbowTime), _RiverLightDir.xyz,
                                    col, reflDir, reflTint, reflW);
                 float2 puv = RBW_PanoUV(RBW_RotateY(reflDir, _EnvYaw));
