@@ -215,7 +215,7 @@ namespace Rainbow.Screen05
                         float z = s + rng.Range(-0.5f, 0.5f) * step;
                         float x = WaterlineX(z, side) + side * t * ropeW;
                         float lump = Lump(x, z, side);
-                        float r = rng.Range(0.14f, 0.27f) * (0.8f + 0.5f * lump) * rs;
+                        float r = (rng.Next() < 0.4f ? rng.Range(0.18f, 0.28f) : rng.Range(0.09f, 0.18f)) * (0.8f + 0.5f * lump) * rs;
                         if (rng.Next() < 0.18f && t > 0.35f) r *= 1.3f;   // shape round 6: mixed sizes, an odd big puff behind the rim
                         float surf = RopeSurface(t * tk, crest) * (0.75f + 0.5f * lump);
                         float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + Mathf.Max(surf - 0.82f * r, -0.35f * r);

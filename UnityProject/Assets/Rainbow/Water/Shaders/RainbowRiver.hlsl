@@ -204,7 +204,8 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float2 shv = float2((q + 3.0) / 6.0, log2(distV / 3.5) / 5.5) + float2(0.012 * sin(bt * 0.62 + q * 1.7), 0.01 * sin(bt * 0.47 + distV * 0.2));
     float broad = SAMPLE_TEXTURE2D_LOD(_RiverSheen, sampler_RiverSheen, shv, 0).r;
     broad = clamp(broad, 0.1, 0.5);
-    float Y = lerp(0.333, broad, _SheenLook.x) + (row - 0.333) * _SheenLook.y;
+    float pkD = smoothstep(0.85, 1.25, abs(qe)) * (1.0 - smoothstep(2.0, 2.4, abs(qe)));      // the pink satin shows more streaks than the cyan core
+    float Y = lerp(0.333, broad, _SheenLook.x) + (row - 0.333) * (_SheenLook.y + 0.4 * pkD);
 
     // the wake behind him (standing waves in his frame): broad luminous cyan arcs bowed over his track with a bright broken line on each crest,
     // two soft pink sweeps (measured on the approved picture: middle at 0.07 + 0.44 x back from an axis 0.06 m right of him, half width ~0.2 m)
@@ -237,7 +238,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float3 c5 = RBW_RampY(qe, Y, zone);
     c5 = max(c5 - _GlintLook.w, 0.0);                  // the bloom veil of the bright scene would grey the deep saturated colours
     float pkF = smoothstep(0.95, 1.3, abs(qe)) * (1.0 - smoothstep(1.95, 2.35, abs(qe)));
-    c5 *= lerp(float3(1.0, 1.0, 1.0), float3(1.1, 0.98, 0.86), pkF);   // hot pink, not violet-pink (measured: approved (247,84,234), was (227,84,241))
+    c5 *= lerp(float3(1.0, 1.0, 1.0), float3(1.07, 0.99, 0.93), pkF);   // hot pink, not violet-pink (measured: approved (247,84,234), was (227,84,241))
 
     // soap lace lying on the water: a broken rope outside each wake sweep and a thin web along the foam waterlines
     float latherW = wakeFoam;

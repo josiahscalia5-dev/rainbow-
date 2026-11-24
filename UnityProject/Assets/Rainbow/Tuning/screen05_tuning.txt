@@ -4,13 +4,13 @@
 light:CameraFill05:intensity|26.39187
 light:KeySun05:intensity|1.70382
 light:ThroatWarm05:intensity|0.34375
-vol:Bloom:intensity|1.89397
+vol:Bloom:intensity|1.79397
 vol:Bloom:scatter|0.62
-vol:Bloom:threshold|1.18809
-vol:ColorAdjustments:contrast|24.285
+vol:Bloom:threshold|1.28209
+vol:ColorAdjustments:contrast|25.085
 vol:ColorAdjustments:hueShift|-1.10563
-vol:ColorAdjustments:postExposure|-0.22292
-vol:ColorAdjustments:saturation|41.52547
+vol:ColorAdjustments:postExposure|-0.21692
+vol:ColorAdjustments:saturation|39.17547
 vol:Vignette:intensity|0.19063
 
 # 2026-11-24 09:47 local, coordinator (session 018893e6): automatic fitter, Round 5 POLISH of the lanes' material values (glint flare could only shrink), after Round 5 lanes; river5_final 82.3 / 67.8 -> R5_fit3 82.5 / 68.1
@@ -26,7 +26,7 @@ mat:Assets/Rainbow/Environment/Materials/Ring05_Far.mat:_Exposure:f|1.08708
 mat:Assets/Rainbow/Environment/Materials/Ring05_Near.mat:_EnvIntensity:f|0.66977
 mat:Assets/Rainbow/Environment/Materials/Ring05_Near.mat:_Exposure:f|0.95479
 mat:Assets/Rainbow/Water/Materials/RainbowBubble05.mat:_Intensity:f|0.93826
-mat:Assets/Rainbow/Water/Materials/RainbowFoam05.mat:_Brightness:f|0.95
+mat:Assets/Rainbow/Water/Materials/RainbowFoam05.mat:_Brightness:f|0.94
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_RiverGrade:v0|1.12754
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_RiverGrade:v1|0.72131
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_RiverGrade:v2|0.95675
@@ -45,10 +45,10 @@ tf:Screen05/Environment05/Rings/Ring_25.6:s|1.01338
 # 2026-11-24 14:50 local, session da8aeec6: fitter after the round 8 water / lace / foam (81.9 / 68.3 -> 83.55 / 69.40)
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_GlintLook:v0|0.5405
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_GlintLook:v1|0.1
-mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_GlintLook:v2|0.1
-mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_GlintLook:v3|0.04445
+mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_GlintLook:v2|0.11
+mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_GlintLook:v3|0.04045
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_SheenLook:v0|1.15
-mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_SheenLook:v1|0.66
+mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_SheenLook:v1|0.64
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_SheenLook:v2|0.66131
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_SheenLook:v3|0.77411
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_SilkLook:v0|0.06
@@ -71,7 +71,7 @@ mat:Assets/Rainbow/Benny/Materials/Benny_Fluff.mat:_FurTint:v2|0.73453
 mat:Assets/Rainbow/Gameplay/Materials/Coin05.mat:_FaceTint:v0|1.10629
 mat:Assets/Rainbow/Gameplay/Materials/Coin05.mat:_FaceTint:v1|1.58774
 mat:Assets/Rainbow/Gameplay/Materials/Coin05.mat:_FaceTint:v2|1.575
-mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_LatherLook:v0|1.81035
-mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_LatherLook:v1|0.56688
-mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_LatherLook:v2|0.24869
+mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_LatherLook:v0|1.71035
+mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_LatherLook:v1|0.58688
+mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_LatherLook:v2|0.24119
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_LatherLook:v3|2.94318
