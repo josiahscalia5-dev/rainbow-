@@ -173,14 +173,14 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float glowA = ca > 0.0 ? exp(-ca * 4.2) : exp(ca * 12.0);
     float lineA = exp(-ca * ca * 170.0) * (0.35 + 0.65 * segN);
     float ampA = smoothstep(1.2, 1.55, bk);
-    // (river5) the approved near water is open luminous azure-cyan (~#05B5F7 between the arcs, measured y 1250-1440), not deep blue
-    float3 nb = lerp(lerp(lerp(RBW_CMID, RBW_CBRIGHT, 0.35), lerp(RBW_CDEEP2, RBW_CMID, 0.55), saturate(_R5Tune.z)), RBW_CBRIGHT, saturate(glowA * 0.9 * ampA + lane * 0.25));
+    // (river5 variants: the brighter azure base CMID..CBRIGHT scored 0.3 lower, kept the deep base; _R5Tune.z = live mix)
+    float3 nb = lerp(lerp(lerp(RBW_CDEEP2, RBW_CMID, 0.55), lerp(RBW_CMID, RBW_CBRIGHT, 0.35), saturate(_R5Tune.z)), RBW_CBRIGHT, saturate(glowA * 0.9 * ampA + lane * 0.25));
     nb = lerp(nb, RBW_CAQUA, saturate(glowA * glowA * 0.75 * ampA));
     nb = lerp(nb, RBW_CAQUAW, saturate(lineA * ampA * 0.9));
     cy = lerp(cy, nb, inW);
     // (river5) the open water beside the sweeps near Benny is as bright (approved ~#2EA9F2 at y 1340-1440 vs Unity #1D93E5)
     float nearL = bOn * smoothstep(0.6, 1.4, back) * (1.0 - smoothstep(4.0, 6.0, back)) * (1.0 - inW);
-    cy = lerp(cy, max(cy, lerp(RBW_CMID, RBW_CBRIGHT, 0.3)), saturate(0.6 + _R5Tune.w) * nearL);
+    cy = lerp(cy, max(cy, lerp(RBW_CMID, RBW_CBRIGHT, 0.3)), saturate(_R5Tune.w) * nearL);
 
     // between a band and its bank: cyan water a touch bluer than the core
     float3 ow = lerp(cy, float3(0.15, 0.17, 0.8), _W4Band.y);

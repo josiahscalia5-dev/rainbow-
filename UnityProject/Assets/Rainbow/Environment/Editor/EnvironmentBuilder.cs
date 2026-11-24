@@ -241,7 +241,9 @@ namespace Rainbow.Screen05.EditorTools
         static readonly Vector4 Wall4b = new Vector4(1f, 0.85f, 1f, 0.9f);
         /// <summary>Round 5 wall (user guide #3): (recessed groove depth on every slot row, lit lathe streaks on the groove
         /// edges, near-bay light-line width scale, light-line strength kept on a slot row). RainbowPolish05.hlsl RainbowWall5.</summary>
-        static readonly Vector4 Wall5 = new Vector4(0.35f, 0.8f, 0.75f, 1.0f);
+        /// Cycle tunnel5_t2 / t3 variants (walls area): D (0.2, 0.5, 0.85, 0.8) 87.1 > none 86.9 > (0.35, 0.8, 0.75, 1) 86.7 >
+        /// (0.5, 1, 0.6, 1) 86.1; less pink (Wall4b.y 0.5-0.6) and a brighter wall (_Exposure 1.1-1.22) both scored lower.
+        static readonly Vector4 Wall5 = new Vector4(0.2f, 0.5f, 0.85f, 0.8f);
         /// <summary>Wall exposure (coordinator round 3: 0.85).</summary>
         const float WallExposure = 0.75f;
         /// <summary>Near frame corners: (palette 1 = copper bands, glare, vignette compensation, -).</summary>

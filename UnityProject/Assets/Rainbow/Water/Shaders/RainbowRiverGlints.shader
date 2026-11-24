@@ -36,6 +36,7 @@ Shader "Rainbow/Water/RiverGlints"
             CBUFFER_END
             float _RainbowTime;
             float4 _RainbowBenny;
+            float4 _R5Glint;   // (river5) live flare size deltas (0 in the game): x near / wake, y mid / far
 
             struct A { float4 positionOS : POSITION; float4 uv0 : TEXCOORD0; float4 uv1 : TEXCOORD1; float4 uv2 : TEXCOORD2; float4 uv3 : TEXCOORD3; };
             struct V { float4 positionCS : SV_POSITION; float3 uvk : TEXCOORD0; float4 col : TEXCOORD1; };
@@ -100,7 +101,8 @@ Shader "Rainbow/Water/RiverGlints"
                     float2 a = pv2.xy / max(-pv2.z, 0.1) - pv.xy / max(-pv.z, 0.1);
                     a *= 1.0 / max(length(a), 1e-6);
                     a = normalize(a + float2(1e-5, 0.0));
-                    pv.xy += a * (v.uv0.y * len) + float2(-a.y, a.x) * (v.uv0.x * wid);
+                    float fs = 1.0 + (cls < 0.5 || cls > 2.5 ? _R5Glint.x : _R5Glint.y);
+                    pv.xy += (a * (v.uv0.y * len) + float2(-a.y, a.x) * (v.uv0.x * wid)) * fs;
                 }
                 // same pixel, a little nearer (the swell never hides the glints)
                 o.positionCS = TransformWViewToHClip(pv);

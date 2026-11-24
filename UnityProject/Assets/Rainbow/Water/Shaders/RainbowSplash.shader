@@ -22,6 +22,8 @@ Shader "Rainbow/Water/Splash"
         _FootprintBack ("Extra root radius toward the camera (his lean bulges the fur back)", Float) = 0.14
         _RopeAlpha ("Strand opacity (water4: the approved strands are see-through droplet streams)", Range(0, 1.5)) = 1.0
         _Spread ("Extra outward fan angle of the strands (rad, water4: fanning toward the bottom corners)", Float) = 0.0
+        _JetAlpha ("Crown droplet opacity (river5)", Float) = 1.0
+        _StrandBack ("Extra turn of the strand roots toward his back only (river5, rad)", Float) = 0.0
         _RootBack ("Roots moved round toward straight back (rad, water4: the approved spray pours off his lower back, not his flanks)", Float) = 0.0
     }
 
@@ -57,6 +59,8 @@ Shader "Rainbow/Water/Splash"
                 float _RopeAlpha;
                 float _Spread;
                 float _RootBack;
+                float _JetAlpha;
+                float _StrandBack;
             CBUFFER_END
 
             // shared animation clock (Rainbow.Screen05.Screen05Clock; game time, reset by the test hold)
@@ -104,7 +108,7 @@ Shader "Rainbow/Water/Splash"
             // lat 0.45 and 1.25 on each side)
             float3 SPL_Rope(float u, float side, float a, float seed, float len, float R)
             {
-                float thR = lerp(1.35, 0.42, a) * (1.0 - 0.35 * saturate(_RootBack)) - 0.2 * _RootBack
+                float thR = lerp(1.35, 0.42, a) * (1.0 - 0.35 * saturate(_RootBack)) - 0.2 * _RootBack - _StrandBack
                           + (SPL_Hs(seed * 3.1) - 0.5) * 0.16;
                 float phi = lerp(0.3, 0.04, a) + (SPL_Hs(seed * 5.7) - 0.5) * 0.16 + 0.22 * u * u
                           + (SPL_Hs(seed * 6.1) - 0.5) * 0.4 * u                   // each strand curls its own way
@@ -253,7 +257,7 @@ Shader "Rainbow/Water/Splash"
                     float bd = length(bq);
                     float bead = 1.0 - smoothstep(0.6, 0.9, bd);
                     float life = smoothstep(0.0, 0.12, tau) * (1.0 - smoothstep(0.75, 1.0, tau));
-                    alpha = bead * life * (0.45 + 0.45 * smoothstep(0.3, 0.8, bd));
+                    alpha = bead * life * (0.45 + 0.45 * smoothstep(0.3, 0.8, bd)) * _JetAlpha;
                     col = lerp(cyan, white, 0.35 + 0.6 * smoothstep(0.35, 0.8, bd));
                 }
                 else

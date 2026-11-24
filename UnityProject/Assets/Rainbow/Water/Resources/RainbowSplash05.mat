@@ -27,12 +27,14 @@ Material:
     m_Floats:
     - _FootprintBack: 0.14
     - _Intensity: 1
+    - _JetAlpha: 1
     - _Len: 1.5
-    - _RootBack: 0.6
+    - _RootBack: 0.3
     - _RopeAlpha: 0.85
     - _RopeWidth: 1.5
     - _SoftDepth: 0.05
     - _Spread: 0.2
+    - _StrandBack: 0
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

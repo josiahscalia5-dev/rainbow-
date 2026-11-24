@@ -57,7 +57,7 @@ Material:
     - _StripColor: {r: 1, g: 0.7, b: 0.97, a: 1}
     - _StripParams: {r: 28, g: 0.017, b: 0, a: 0.8}
     - _Wall4b: {r: 1, g: 0.85, b: 1, a: 0.9}
-    - _Wall5: {r: 0.35, g: 0.8, b: 0.75, a: 1}
+    - _Wall5: {r: 0.2, g: 0.5, b: 0.85, a: 0.8}
     - _WallFar: {r: 25, g: 80, b: 0.08, a: 0.5}
     - _WallGlow: {r: 0.4, g: 0.03, b: 0.5, a: 0.45}
     - _WallSpokes: {r: 20, g: 0.025, b: 1, a: 0.35}
