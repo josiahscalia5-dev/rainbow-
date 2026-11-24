@@ -125,7 +125,7 @@ namespace Rainbow.Screen05
         /// down the left edge and over the top-left corner. Inner crest at r ~6.28 m = 0.074 r.
         /// </summary>
         // (round 4 geometry fit: with the ring on the approved circle its band is 0.134 r - the thin 0.074 band only compensated the wrong place)
-        public static readonly BandProfile NearestBand = new BandProfile(0.126f, 0.6f, 0.106f, 0.36f, 0.076f, 0.26f, 0.05f, 0.035f);
+        public static readonly BandProfile NearestBand = new BandProfile(0.130f, 0.6f, 0.106f, 0.36f, 0.076f, 0.26f, 0.05f, 0.035f);
         /// <summary>Rings with s below this use NearestBand.</summary>
         public const float NearestBandBelowS = 30f;
 

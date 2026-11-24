@@ -53,8 +53,9 @@ float3 RainbowRing4b(float3 P, float T, float2 Lamp, float dist)
     inner = lerp(inner, float3(216, 116, 116), farK * 0.8);
     dark = lerp(dark, float3(190, 74, 84), farK);
     edge = lerp(edge, float3(172, 62, 120), farK);
-    float glow = smoothstep(150.0, 300.0, dist);                        // throat light
-    body = lerp(body, lerp(float3(255, 166, 88), float3(255, 220, 124), smoothstep(230.0, 440.0, dist)), glow);
+    float glow = smoothstep(125.0, 270.0, dist);                        // throat light
+    T -= 0.09 * nearK * (1.0 - T);
+    body = lerp(body, lerp(float3(246, 138, 88), float3(255, 204, 108), smoothstep(230.0, 440.0, dist)), glow);
     flange = lerp(flange, float3(232, 110, 62), glow);
     inner = lerp(inner, float3(250, 160, 84), glow);
     dark = lerp(dark, float3(214, 84, 48), glow);
@@ -82,7 +83,7 @@ float3 RainbowRing4b(float3 P, float T, float2 Lamp, float dist)
     c = lerp(c, edge, RbStep(T, 0.885, 0.025 + fwT) * (1.0 - 0.6 * g1));
     c = lerp(c, dark * 0.75, RbLine(T, 0.0, 0.03 + fwT) * 0.8 * (1.0 - g1));
     float hot = (g3 + 0.35 * g2) * RbStep(T, 0.25, 0.03) * (1.0 - RbStep(T, 0.68, 0.04));
-    return RbDisp(c) * (1.0 + float3(2.2, 1.7, 0.8) * hot + 0.35 * glow);
+    return RbDisp(c) * (1.0 + float3(2.2, 1.7, 0.8) * hot + 0.2 * glow) * lerp(1.0, 1.08, nearK);
 }
 
 // ------------------------------------------------------------------ half-moon paddles
@@ -141,7 +142,7 @@ float3 RainbowFrameCorner4b(float u, float vpx, float side)
     float du = (u - gu) / 0.125;
     float g = exp(-du * du);
     float gw = exp(-abs(u - gu) / 0.17);
-    float3 band1 = lerp(float3(234, 120, 44), float3(220, 112, 70), smoothstep(0.75, 0.95, u));
+    float3 band1 = lerp(float3(238, 116, 40), float3(228, 112, 70), smoothstep(0.75, 0.95, u));
     float3 band2 = lerp(float3(210, 86, 22), float3(202, 88, 34), smoothstep(0.6, 0.95, u));
     float3 outer = lerp(float3(200, 84, 26), float3(160, 60, 30), smoothstep(110.0, 200.0, v));
     float3 amber = float3(255, 200, 66), white = float3(255, 252, 214);
@@ -167,13 +168,13 @@ float3 RainbowFrameCorner4b(float u, float vpx, float side)
     c = lerp(c, float3(255, 178, 80), RbLine(u, 0.94, 0.007) * 0.9);
     c = lerp(c, lerp(float3(138, 104, 118), float3(84, 60, 92), smoothstep(10.0, 110.0, v)), smoothstep(0.945, 0.952, u));
     float hot = g1 * smoothstep(0.45, 1.0, g) * (1.0 - RbStep(v, 71.5, 2.0)) + 0.5 * saturate(g * 1.3 - 0.4) * RbStep(v, 98.0, 2.0) * (1.0 - smoothstep(120.0, 150.0, v));
-    return RbDisp(c) * 1.1 * (1.0 + float3(2.4, 1.9, 0.8) * saturate(hot));
+    return RbDisp(c) * 1.2 * (1.0 + float3(2.4, 1.9, 0.8) * saturate(hot));
 }
 
 float3 RainbowFrameLip4b(float u, float v)
 {
     float g = exp(-pow((u - 0.392) / 0.028, 2.0)) + exp(-pow((u - 0.6625) / 0.021, 2.0));
-    float gw = exp(-abs(u - 0.392) / 0.07) + exp(-abs(u - 0.6625) / 0.055);
+    float gw = exp(-abs(u - 0.392) / 0.12) + exp(-abs(u - 0.6625) / 0.09);
     g = saturate(g); gw = saturate(gw);
     float ends = smoothstep(0.16, 0.36, abs(u - 0.5));
     float3 body = lerp(float3(236, 128, 84), float3(238, 122, 56), ends);
@@ -189,7 +190,7 @@ float3 RainbowFrameLip4b(float u, float v)
     c = lerp(c, rose, RbStep(v, 57.0, 1.2));
     c = lerp(c, float3(250, 160, 150), RbLine(v, 74.0, 1.6) * 0.8);
     float hot = smoothstep(0.4, 1.0, g) * RbStep(v, 14.0, 1.0) * (1.0 - RbStep(v, 44.0, 1.0));
-    return RbDisp(c) * 1.08 * (1.0 + float3(1.8, 1.4, 0.6) * hot);
+    return RbDisp(c) * 1.16 * (1.0 + float3(1.8, 1.4, 0.6) * hot);
 }
 
 // ------------------------------------------------------------------ reflective purple drum wall
@@ -211,7 +212,7 @@ float3 RainbowWall4b(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 lo
     float pink = bayNA * max(1.0 - smoothstep(62.0, 104.0, ap), 0.3) * look.y * lerp(0.6, 1.0, smoothstep(-0.7, 0.7, phi));
     float n = sin(phi * 11.0 + s * 0.35) * sin(phi * 5.0 - s * 0.11 + 1.7);
     float3 c = lerp(violet, float3(112, 30, 170), saturate(n * 0.8));
-    c = lerp(c, lerp(float3(234, 44, 188), float3(152, 16, 118), 1.0 - smoothstep(24.0, 27.0, s)), pink);
+    c = lerp(c, lerp(float3(240, 48, 192), float3(152, 16, 118), 1.0 - smoothstep(24.0, 27.0, s)), pink);
     c = lerp(c, float3(160, 50, 226), saturate(-n) * 0.4 * (1.0 - pink));
     c = lerp(c, float3(154, 46, 160), smoothstep(90.0, 140.0, dist) * 0.8);
     // polished panels between the slot rows
@@ -245,10 +246,10 @@ float3 RainbowWall4b(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 lo
     c = lerp(c, float3(236, 92, 220), lip * 0.4);
     c = lerp(c, float3(44, 4, 44), hole * 0.93);
     // throat light on the deep walls
-    float glow = smoothstep(165.0, 320.0, dist);
-    c = lerp(c, lerp(float3(240, 118, 78), float3(255, 190, 92), smoothstep(230.0, 440.0, dist)), glow * 0.9);
+    float glow = smoothstep(120.0, 270.0, dist);
+    c = lerp(c, lerp(float3(216, 88, 84), float3(252, 160, 84), smoothstep(200.0, 430.0, dist)), glow * 0.9);
     float hot = saturate(core - 0.3) * (1.0 - hole);
-    return RbDisp(c) * (1.0 + look.w * hot);
+    return RbDisp(c) * (1.0 + look.w * hot) * lerp(1.0, 1.07, bayNA);
 }
 
 #endif // RAINBOW_POLISH05_INCLUDED

@@ -83,6 +83,7 @@ The user switches Claude accounts whenever credits run out. Any account must con
 |---|---|
 | State + next task | `UNITY_RAINBOW_HANDOFF.md` |
 | Approved reference | `references/05_flow_into_the_current.png` |
+| USER'S CORRECTION GUIDES (binding visual direction, 2026-11-24): rings, paddles, walls, frame, river, foam, bubbles, Benny, HUD | `references/correction-guides-2026-11-24/` (README.md + 3 images) |
 | Unity project (URP 17.3, Input System, Cinemachine, Splines, glTFast, Pipeline bridge) | `UnityProject/` |
 | Scene builder | `UnityProject/Assets/Rainbow/Editor/Screen05SceneBuilder.cs` (menu Rainbow -> Build Screen 05 Scene) |
 | Shared course API + contract | `UnityProject/Assets/Rainbow/Shared/RiverPath.cs`, `staging/shared/CONTRACT.md` |
@@ -119,6 +120,8 @@ The user switches Claude accounts whenever credits run out. Any account must con
 - Run Blender ONLY headless (background mode, factory settings, hard timeout) for short modelling jobs, one process at a time, never while a
   round's agents run Unity cycles: `powershell -NoProfile -ExecutionPolicy Bypass -File C:\RainbowUnity\tools\blender\run-blender.ps1 -Script C:\RainbowUnity\tools\blender\<x>.py`
   8 GB laptop: if it reports low RAM, close Unity safely first (`unity close --if-saved`), reopen afterwards (`unity open ... --until-ready`).
+- Form to model (user's guide 02): paddles = wide, shallow half-moon trays (a shallow, wide curved block, rounded rim, flat visible underside, each fitted
+  separately, no pointed / hanging wedges); rings = broad polished copper faces with defined bevels (not tubes); keep the measured ring centres.
 - In GitHub: scripts `tools/blender/*.py` + `*.ps1` (deterministic: same output every run; each names the approved-image targets it fits),
   exported meshes `UnityProject/Assets/Rainbow/Environment/Models/*.fbx` (Git LFS). Claude's Blender connector (Blender Lab MCP) is optional:
   its live mode needs the Blender window + add-on, so prefer the headless scripts on this laptop.

@@ -147,7 +147,7 @@ namespace Rainbow.Screen05
         static float Wave(float s, float deg)
         {
             float G(float c, float w) => Mathf.Exp(-(deg - c) * (deg - c) / (w * w));
-            if (s < 30f) return -0.22f * Mathf.Sin(deg * Mathf.Deg2Rad);
+            if (s < 30f) return deg < 0f ? 0.1f * G(-54f, 16f) - 0.06f * G(-95f, 22f) : -0.22f * Mathf.Sin(deg * Mathf.Deg2Rad);
             if (s < 60f) return 0.2f * G(-28f, 26f) - 0.06f * G(45f, 25f) + 0.05f * G(75f, 18f);
             if (s < 95f) return 0.1f * G(-38f, 28f);
             return 0f;
