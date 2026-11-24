@@ -25,8 +25,9 @@ namespace Rainbow.Screen05
     ///    (850, 700) right) while the ring centres sit only ~0.12 r above the vanishing point (axis ~0.85 m above the camera):
     ///    with Benny's fixed size that is a tube of r ~6.3-6.8 m. 7.6 m put the walls at x = +-6.27 (+-7.24 near the camera)
     ///    = the wide flat foam fields; now x = +-5.31 at the water / +-5.67 at the foam top (+-6.2 near the camera).
-    ///  * near floor 2 -> 1 m: the approved near ring (left crown ~(10, 480), foot on the foam ~(90, 700)) is centred on the
-    ///    vanishing-point height, i.e. the near axis is ~level with the camera (3.25 m); 2 m put it 67 px below.
+    ///  * near floor 2 -> 0.7 m: the approved near ring (left crown ~(10, 480), foot on the foam ~(90, 700)) is centred on
+    ///    the vanishing-point height, i.e. the near axis is ~level with the camera (3.55 m); 2 m put it 67 px below and
+    ///    widened the near floor to +-7.24 m.
     ///  * rings: real rings at the depths whose crowns match the approved crowns measured straight up from the vanishing
     ///    point (y 210, 308, 378, 415, 434, 448, 456 = r 268, 170, 100, 63, 44, 30, 22 px) + the near ring: see
     ///    RingPositions(). The approved deep rings are spaced ever wider (forced perspective), so the tunnel now runs to
@@ -39,12 +40,12 @@ namespace Rainbow.Screen05
         public const float FloorDepth = 2.55f;
         public const float NearFloorExtra = 0.7f;
         /// <summary>
-        /// World x of the tunnel axis (frame round 2026-11-23): 0.6 m LEFT of the course line x = 0, i.e. on the mean of the
-        /// visible river S (meander knots +0.37 / -0.23 / -1.14 / -0.79 between s 26 and 56). The approved drum is
-        /// asymmetric about the vanishing point: ring crowns left / right at x 219 / 712, 338 / 632, 402 / 580 and the
-        /// wall-foam junction at y 600 at x 220 / 690 (the left wall further out, the right wall close behind the foam).
+        /// World x of the tunnel axis. The approved drum is slightly asymmetric about the vanishing point (ring crowns
+        /// left / right at x 219 / 712, 338 / 632, 402 / 580); a -0.6 m shift was tried in the frame round (cycle frame_t5)
+        /// and REJECTED: it widened the left foam field again and cut the right foam bank with the near ring (OVERALL
+        /// 52.9 -> 51.7). Kept as a parameter (walls, rings, paddles, throat and BubbleField.WallHalfWidth honour it).
         /// </summary>
-        public const float AxisX = -0.6f;
+        public const float AxisX = 0f;
         /// <summary>Screen05CameraRig.back: the approved-view camera sits 6.52 m behind Benny's start.</summary>
         public const float EyeBack = 6.52f;
         /// <summary>s of the locked approved-view camera (sCam05).</summary>
@@ -111,7 +112,7 @@ namespace Rainbow.Screen05
         // deep ones were missing or hidden in the glow disc), plus the near ring whose left crown runs down the left frame
         // edge (~(10, 480)) and stands on the foam at ~(90, 700) (in the 1 m near-floor drop, i.e. centred on the
         // vanishing-point height). 5.6 only shows for camera s < 5. Replaces the light round's eye + [59 .. 272] set.
-        static readonly float[] ApprovedRingS = { 5.6f, 25.8f, 45.5f, 66.4f, 106.5f, 163.6f, 230.1f, 333.0f, 450.4f };
+        static readonly float[] ApprovedRingS = { 5.6f, 24.0f, 45.5f, 66.4f, 106.5f, 163.6f, 230.1f, 333.0f, 450.4f };
 
         /// <summary>One wall paddle: s of the tray centre, wall side (-1 left, +1 right), height of its wall mount (m).</summary>
         public struct PaddleSlot
@@ -123,13 +124,13 @@ namespace Rainbow.Screen05
         // Frame round 2026-11-23: trays placed on the approved ones. Tray centres measured on the approved image (big
         // (150, 425) / (790, 460), mid (290, 445) / (665, 425), small (385, 462) / (600, 450), tiny (438, 466) / (553, 457))
         // and solved for (s, wall-mount height) with the gameplay camera and this drum (tray centroid = mount + 0.45 size
-        // along the tray's local +X); the mount height (not the angle) is kept where the near floor drops.
+        // along the tray's local +X; the tray keeps the lid05 tilt 8 - 34 deg whatever the mount height).
         static readonly PaddleSlot[] ApprovedPaddles =
         {
-            new PaddleSlot(31.0f, -1, 3.8f), new PaddleSlot(31.5f, 1, 3.1f),
-            new PaddleSlot(47.5f, -1, 3.8f), new PaddleSlot(48.5f, 1, 4.5f),
-            new PaddleSlot(82.0f, -1, 3.6f), new PaddleSlot(74.0f, 1, 4.2f),
-            new PaddleSlot(150.0f, -1, 4.1f), new PaddleSlot(127.5f, 1, 4.8f),
+            new PaddleSlot(28.5f, -1, 3.8f), new PaddleSlot(33.5f, 1, 3.3f),
+            new PaddleSlot(43.0f, -1, 3.8f), new PaddleSlot(53.0f, 1, 4.8f),
+            new PaddleSlot(73.5f, -1, 3.7f), new PaddleSlot(81.0f, 1, 4.5f),
+            new PaddleSlot(134.5f, -1, 4.1f), new PaddleSlot(140.5f, 1, 5.1f),
         };
 
         static float Smooth(float e0, float e1, float x)
@@ -222,8 +223,8 @@ namespace Rainbow.Screen05
         public static void PaddlePose(float s, int side, out Vector3 position, out Quaternion rotation, float mountY = -1f)
         {
             float ang = PaddleAngleDeg * Mathf.Deg2Rad;
+            float tilt = ang + PaddleDroopDeg * Mathf.Deg2Rad;   // the tray's own tilt stays lid05's (approved look)
             if (mountY > 0f) ang = Mathf.Asin(Mathf.Clamp((mountY - CentreY(s)) / Radius, -0.9f, 0.9f));
-            float tilt = ang + PaddleDroopDeg * Mathf.Deg2Rad;
             Vector3 right = Vector3.right, up = Vector3.up;
             Vector3 dir = (right * (Mathf.Cos(ang) * side) + up * Mathf.Sin(ang)).normalized;
             Vector3 X = (right * (-Mathf.Cos(tilt) * side) + up * (-Mathf.Sin(tilt))).normalized;

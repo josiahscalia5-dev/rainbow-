@@ -30,6 +30,15 @@ and reviews the final evidence itself; relaunches use `round3-args.json` (`revie
 installed), old Unity AI Assistant relay in `~\.unity\relay`, empty `Hub\Editor\6000.6.0f1` stub. Proposed for after round 3 (free):
 approved-screen TARGET SHEET, solve-first FITTER (extend `screen05_frame_probe.cs`), live tuning while paused, numbers-first agents;
 needs the user's OK: cheaper Claude model for mechanical steps, connecting the CLI's `unity mcp` server.
+**User 19:20 local:** interested in the CLI's `unity mcp`, but only if it brings a real benefit (Unity's own unity-cli skill says:
+with a shell, use `unity command`, not MCP - the CLI reaches more). A read-only CLI-vs-MCP speed/token test (temporary `unity mcp`
+child process, nothing registered; takes the cycle lock) runs at the Frame->Shape stage boundary; result goes here. Also found
+(read-only, for after round 3, each needs the user's OK where it changes settings): Enter Play Mode is set to RELOAD the domain
+(`EditorSettings m_EnterPlayModeOptions: 0`) - ~30 s of every ~65-100 s cycle is that reload ("Reload Scene only" + static resets
+would cut it); Pipeline `script.methodreload` (hot-reload `[MethodReload]` methods in Play mode); Splines `SplineExtrude` (round
+tube along a D-shaped spline = thick paddle rims); Cinemachine 3 `CinemachinePositionComposer` / `RotationComposer` (screen-space
+framing: Benny's screen spot, dead zones); unity:urp-postprocessing skill for bloom/tonemapping; craft-game-floors references
+(camera-rigs, scene-lighting, vfx). ProBuilder: little value for code-built meshes.
 
 **UPDATE 2026-11-23 23:05 UTC (USER PRIORITY = COMPOSITION):** the user wants the approved Screen 05 COMPOSITION recreated in
 the playable scene, in this order: (1) tunnel geometry, perspective, depth, camera framing; (2) narrow winding S-shaped river
