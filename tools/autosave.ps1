@@ -108,6 +108,37 @@ function Invoke-AutosavePass {
   }
 }
 
+# Local-only backup (2026-11-24, permanent cross-account rule) of Claude configuration that must NOT go to GitHub (the repo is
+# public): the user settings, the global CLAUDE.md pointer, the Rainbow memory notes and the workspace permission list. Copies
+# only new or changed files into %USERPROFILE%\RainbowUnity-local-backup\claude-config (outside the repo) plus one dated copy
+# per day under daily\<date>. Reads nothing else and never deletes anything.
+function Backup-LocalClaudeConfig {
+  $h = $env:USERPROFILE
+  $root = Join-Path $h 'RainbowUnity-local-backup\claude-config'
+  $day = Join-Path $root ('daily\' + (Get-Date -Format 'yyyy-MM-dd'))
+  $items = New-Object System.Collections.Generic.List[object]
+  $items.Add(@((Join-Path $h '.claude\settings.json'), 'user-settings.json'))
+  $items.Add(@((Join-Path $h '.claude\CLAUDE.md'), 'user-CLAUDE.md'))
+  $items.Add(@((Join-Path $h '.unity\.claude\settings.local.json'), 'workspace-settings.local.json'))
+  foreach ($m in 'C--Users-josia--unity', 'C--RainbowUnity') {
+    $md = Join-Path $h ".claude\projects\$m\memory"
+    if (Test-Path -LiteralPath $md) { foreach ($f in @(Get-ChildItem -LiteralPath $md -Filter *.md -File)) { $items.Add(@($f.FullName, "memory-$m-$($f.Name)")) } }
+  }
+  $copied = 0
+  foreach ($it in $items) {
+    if (-not (Test-Path -LiteralPath $it[0])) { continue }
+    $s = Get-Item -LiteralPath $it[0]
+    foreach ($dir in $root, $day) {
+      if (-not (Test-Path -LiteralPath $dir)) { New-Item -ItemType Directory -Force -Path $dir | Out-Null }
+      $dst = Join-Path $dir $it[1]
+      if (Test-Path -LiteralPath $dst) { $d = Get-Item -LiteralPath $dst; if ($d.LastWriteTimeUtc -ge $s.LastWriteTimeUtc -and $d.Length -eq $s.Length) { continue } }
+      Copy-Item -LiteralPath $it[0] -Destination $dst -Force
+      $copied++
+    }
+  }
+  if ($copied -gt 0) { Write-AutosaveLog "local config backup: $copied file(s) copied to $root" }
+}
+
 # Only one pass at a time (the scheduled task also uses "do not start a new instance").
 $mutex = New-Object System.Threading.Mutex($false, 'Local\RainbowUnityAutosave')
 $haveMutex = $false
@@ -115,7 +146,10 @@ try { $haveMutex = $mutex.WaitOne(0) } catch [System.Threading.AbandonedMutexExc
 if (-not $haveMutex) {
   Write-AutosaveLog 'skipped: another autosave pass is still running'
 } else {
-  try { Invoke-AutosavePass }
+  try {
+    Invoke-AutosavePass
+    try { Backup-LocalClaudeConfig } catch { Write-AutosaveLog "local config backup failed: $($_.Exception.Message)" }
+  }
   catch { Write-AutosaveLog "error: $($_.Exception.Message)"; Set-AutosaveStatus "ERROR: $($_.Exception.Message)" }
   finally { try { $mutex.ReleaseMutex() } catch { } }
 }

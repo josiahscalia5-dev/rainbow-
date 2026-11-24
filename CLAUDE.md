@@ -5,6 +5,30 @@ It is a continuing project: never start over, never make the user explain the se
 Everything needed to continue lives in this folder, on GitHub and in local Windows tools, so it works the same with
 every Claude account.
 
+## PERMANENT RULE: cross-account continuation (user, 2026-11-24)
+The user switches Claude accounts whenever credits run out. Any account must continue EXACTLY where the last one stopped.
+- "Resume Rainbow" (any account, any folder): BRIEF verification only = the RAINBOW STATUS block (or `tools/session-start.ps1 -Text`):
+  Git = GitHub, autosave OK, Unity state, disk. Then the handoff's NOW block, then continue its NEXT STEP in Unity right away.
+  Never repeat completed setup, installs, storage scans or passed tests; ask the user only for real decisions.
+- What lives in GitHub (branch `unity/screen05-dev` = C:\RainbowUnity, autosaved every 5 min by the Windows task): Unity scenes,
+  scripts, materials, shaders, ProjectSettings (Play Mode = "Reload Scene only"), assets (big binaries via Git LFS, `.gitattributes`),
+  test / measuring tools (`tools/`, `UnityProject/Assets/Rainbow/Testing`, `UnityProject/AgentScripts`), workflows and specialist
+  briefs (`staging/shared`), the resume skill (`.claude/skills`), the startup hook (`.claude/settings.json`), permission rules
+  (`tools/claude-permissions`), the approved reference (`references/`), comparisons and scores (`evidence/`, handoff).
+- Per account / per laptop, NOT in GitHub: Claude sign-in, claude.ai plugins and connectors (none required; the optional "Unity"
+  plugin is only know-how; never connect `unity mcp`), the Unity sign-in / license (re-activate with
+  `unity license activate --personal` only if `unity status` reports a licensing problem). The GitHub repo is PUBLIC: never upload
+  personal notes, Claude config or anything from `~/.claude`.
+- Local-only backups (never GitHub): `tools/autosave.ps1` copies `~/.claude/settings.json`, `~/.claude/CLAUDE.md`, the Rainbow memory
+  notes and the workspace `settings.local.json` to `%USERPROFILE%\RainbowUnity-local-backup\claude-config` (newest + one copy per day).
+- EXPERIMENTAL vs VALIDATED: every autosave commit may hold experimental work. VALIDATED = git tags `validated/*` (pushed) listed in
+  the NOW block's table. Tag only after an honest coordinator cycle that kept or raised the score with a passing gameplay check:
+  `& C:\Users\josia\PortableGit\cmd\git.exe -C C:\RainbowUnity tag -a validated/<name> <commit> -m "<scores>"`, then push that tag.
+  Restoring = copying single files from a validated tag (ask the user first); never reset.
+- Keep the handoff CONCISE: rewrite the NOW block (between the NEXT-TASK markers) after every finished step and before credits run
+  out; move superseded details into the DETAILED LOG below it; then run `tools/autosave.ps1` and confirm the push.
+- A Workflow run dies with its account: the next account reads its journal and relaunches the same stage with `skip` / `notes`.
+
 ## At the start of every session (before changing anything)
 1. Read the "RAINBOW STATUS" block that the SessionStart hook adds (`tools/session-start.ps1`, configured in
    `.claude/settings.json`). If it is missing, run it yourself (read-only):

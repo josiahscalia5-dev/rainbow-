@@ -1,10 +1,36 @@
 # Rainbow Unity — handoff (latest verified state)
 
-Last verified: **2026-11-24 02:35 UTC** (21:35 New York time), Claude session on the user's laptop. Unity is OPEN; round-3 visual stage A is running.
+Last verified: **2026-11-24 10:55 UTC** (05:55 local), Claude session ded4464c on the user's laptop. Unity is OPEN; Round 4 stage G1 is running.
 Read this first in any new Claude account or session. **This is an existing project — never start over.**
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
+## NOW - read this first (concise; rewritten after every finished step; the DETAILED LOG below is history)
+Updated 2026-11-24 05:55 local (session ded4464c). Cross-account rules: CLAUDE.md "PERMANENT RULE: cross-account continuation".
+- RUNNING: ROUND 4 = ONE strong round (user 05:30: visual ~58 -> toward 75, biggest differences first). Stage G1 = Workflow run
+  `wf_625572df-94a` (started 05:16): GEOMETRY (lower tunnel walls meet narrow tall foam) | BUBBLES (large iridescent edge bubbles).
+  Journal: `%USERPROFILE%\.claude\projects\C--Users-josia--unity\ded4464c-608a-4332-9b1b-b33e5222d645\subagents\workflows\wf_625572df-94a\journal.jsonl`
+- VALIDATED VERSIONS (safe fallbacks; every autosave commit after the newest one may hold EXPERIMENTAL work):
+  | git tag | commit | visual / layout | what | evidence |
+  |---|---|---|---|---|
+  | validated/r4-baseline-58.0 | aa2a2e1 | 58.0 / 36.8 | coordinator look tuning: walls, paddle tilt -15, azure water grade, darker HUD | evidence/screen05/round3/20261124_051325_G_BASELINE* |
+  | (reference, no tag) | ac9e1c5 | 54.8 / 36.2 | round-3 frame + lane edits | evidence/screen05/round3/stage2_start_r3_clock_D* |
+- EXPERIMENTAL NOW: the G1 lanes' edits (foam / lower-wall geometry / bubbles files) - not validated until the coordinator cycle after G1.
+  Lane backups of every file they edited: `UnityProject/Recordings/Screen05/work/backup_round3v/<area>/`.
+- NEXT STEP: (1) when G1 ends: coordinator cycle `-Tag G1_done -Areas all`; keep the lane results only if the picture is closer and
+  visual >= 58.0 (else restore that lane's files from its backup); if kept, tag validated/r4-g1-<visual>. (2) ONE run:
+  `Workflow({scriptPath: "C:\\RainbowUnity\\staging\\shared\\round3-visual.workflow.js", args: {stages: ["R2", "R3"], baseline: <G1_done still +
+  scores>, context: <G1 results>}})` = TUNNEL (rings, paddles, walls) | RIVER (S-curve), then BENNY (water contact). (3) Coordinator
+  integration `-Tag ROUND4_FINAL -Areas all -Series` + `AgentScripts/screen05_playtest_check.cs` + a 12 s recording; tag validated/... if
+  better; send the user ONE side-by-side + both scores. No Screen 06 until the user approves Screen 05.
+- IF THE RUN DIED (account switch): read its journal; lanes with a "result" go into `skip`; write `notes.<lane>` for the interrupted lane
+  (its newest files + work stills); relaunch the same stage with `staging/shared/round3-visual-G1-args.json` (+ skip / notes).
+- WAITING ON THE USER: (a) permission rules v2 in `tools/claude-permissions/` - the user applies them (strict, or strict + test runners);
+  (b) the GitHub repo is PUBLIC although the user called it private - only the user can change that on GitHub.
+<!-- NEXT-TASK:END -->
+
+## DETAILED LOG (older entries, newest first; the NOW block above wins where they disagree)
+
 **UPDATE 2026-11-24 10:20 UTC (05:20 local) - ROUND 3 STAGE G1 IS RUNNING (Workflow run `wf_625572df-94a`, session
 `ded4464c-608a-4332-9b1b-b33e5222d645`, at most 2 agents):** GEOMETRY (lower tunnel walls meet narrow, tall foam banks; ring
 framing kept) | BUBBLES (large iridescent bubbles). Script `staging/shared/round3-visual.workflow.js` (new stages G1 / G2 + notes
@@ -273,7 +299,7 @@ Original plan below (steps 1–3 are done):
 4. Play-test about 10 s, then evidence with the test tools: approved vs Unity Game view at 864×1536 side by side, a continuous
    gameplay recording, a moving-view series, and an explicit list of remaining differences (no likeness % without measurements).
 5. Update this handoff (keep these NEXT-TASK markers). Autosave pushes to GitHub every 5 minutes.
-<!-- NEXT-TASK:END -->
+
 
 ## ✅ CURRENT STATE (2026-11-23 21:55 UTC) — verified by the new Claude account
 **Newest (2026-11-24 01:45 UTC):** see the first two NEXT-TASK entries. Transfer verified. Round 3's Shape stage was
