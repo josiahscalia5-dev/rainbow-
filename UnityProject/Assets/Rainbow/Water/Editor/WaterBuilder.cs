@@ -232,7 +232,8 @@ namespace Rainbow.Screen05.EditorTools
                            SplashLen = 1.5f;   // (t3 variants: 1.55 splash 72.0 > 1.35 71.6 > 1.15 71.2)
         /// <summary>(splash6 2026-11-24) starburst strand layout on Rainbow/Water/Splash (_Radial 0 = the old flank V).
         /// splash6_t1 variants: _Radial 1 = splash 73.9 vs 0 = 77.1 (kept 0 until a better starburst fit wins).</summary>
-        public const float SplashRadial = 0f, SplashRayFan = 0.6f, SplashRayLong = 0.35f, SplashRayRoot = 0.97f;
+        public const float SplashRadial = 0f, SplashRayFan = 0.6f, SplashRayLong = 0.35f, SplashRayRoot = 0.97f,
+                           SplashFanOpen = 0f;
 
         static void PrepareSprayMaterial()
         {
@@ -269,6 +270,7 @@ namespace Rainbow.Screen05.EditorTools
             fan.SetFloat("_RayFan", SplashRayFan);
             fan.SetFloat("_RayLong", SplashRayLong);
             fan.SetFloat("_RayRoot", SplashRayRoot);
+            fan.SetFloat("_FanOpen", SplashFanOpen);
             EditorUtility.SetDirty(fan);
         }
 

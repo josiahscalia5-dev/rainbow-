@@ -29,6 +29,7 @@ Shader "Rainbow/Water/Splash"
         _RayFan ("Starburst: outward turn per rad of root angle", Float) = 0.6
         _RayLong ("Starburst: extra length of the long thin rays", Float) = 0.35
         _RayRoot ("Starburst: root radius scale (1 = just outside the footprint)", Float) = 0.97
+        _FanOpen ("Extra outward turn of the OUTER strands (rad, splash6: a wider fan)", Float) = 0.0
     }
 
     SubShader
@@ -69,6 +70,7 @@ Shader "Rainbow/Water/Splash"
                 float _RayFan;
                 float _RayLong;
                 float _RayRoot;
+                float _FanOpen;
             CBUFFER_END
 
             // shared animation clock (Rainbow.Screen05.Screen05Clock; game time, reset by the test hold)
@@ -120,7 +122,8 @@ Shader "Rainbow/Water/Splash"
                           + (SPL_Hs(seed * 3.1) - 0.5) * 0.16;
                 float phi = lerp(0.3, 0.04, a) + (SPL_Hs(seed * 5.7) - 0.5) * 0.16 + 0.22 * u * u
                           + (SPL_Hs(seed * 6.1) - 0.5) * 0.4 * u                   // each strand curls its own way
-                          + _Spread * (0.6 + 0.8 * u * u) * (0.7 + 0.6 * SPL_Hs(seed * 8.3));   // (water4) wider fan
+                          + _Spread * (0.6 + 0.8 * u * u) * (0.7 + 0.6 * SPL_Hs(seed * 8.3))    // (water4) wider fan
+                          + _FanOpen * (1.0 - a) * (0.5 + 0.5 * u);   // (splash6) the outer strands turn out further: a wider fan
                 // (splash6 2026-11-24) STARBURST: the approved strands are rooted ALONG his bottom contact line (lower-left /
                 // lower-right quarters of the footprint) and radiate down-outward like spokes (outer roots turn out most,
                 // the inner ones run almost straight back), with a few long thin rays out toward the bottom corners

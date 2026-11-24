@@ -159,7 +159,8 @@ namespace Rainbow.Screen05.EditorTools
         }
 
         /// <summary>(splash6) underside / waterline shade strengths on Benny_Fluff (0 = off).</summary>
-        public const float UnderShade = 0.8f, WaterBand = 0.35f;
+        // splash6_t2 variants: band 0.35 -> 0 splash 77.1 -> 77.7; shade 0.8 -> 1.0 (height 0.42) 77.1 -> 76.7.
+        public const float UnderShade = 0.8f, WaterBand = 0f;
 
         static Material FlatFluff(string name, Color c)
         {

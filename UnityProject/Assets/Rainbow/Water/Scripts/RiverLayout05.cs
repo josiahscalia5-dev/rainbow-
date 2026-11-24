@@ -177,7 +177,9 @@ namespace Rainbow.Screen05
                 float bar = SS(23.8f, 24.8f, s) * (1f - SS(27.6f, 29.2f, s));
                 float low = SS(16f, 18f, s) * (1f - SS(22.5f, 24.5f, s));
                 float far = SS(30f, 40f, s);
-                return new Vector3((1.0f + 0.75f * lobe + 2.2f * bar) * (1f - 0.2f * low),
+                float k = SS(18f, 20f, s) * (1f - SS(28f, 31f, s));   // = FoamBank.OuterAt: rope ends at x -6.05 here
+                float wLim = Mathf.Lerp(99f, Mathf.Max(0.3f, X(WL, s) + 6.05f), k);
+                return new Vector3(Mathf.Min((1.0f + 0.75f * lobe + 2.2f * bar) * (1f - 0.2f * low), wLim),
                                    (0.5f + 0.08f * SS(40f, 60f, s)) * (1f - 0.24f * low) * (1f - 0.22f * far) * (1f - 0.5f * bar),
                                    1.3f - 0.45f * SS(29f, 42f, s));
             }

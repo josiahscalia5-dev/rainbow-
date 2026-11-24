@@ -25,6 +25,7 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
+    - _FanOpen: 0
     - _FootprintBack: 0.14
     - _Intensity: 0.91325
     - _JetAlpha: 0.6

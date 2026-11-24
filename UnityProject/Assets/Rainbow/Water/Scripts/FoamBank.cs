@@ -179,10 +179,11 @@ namespace Rainbow.Screen05
                     float edge = WaterlineX(s, side);
                     Vector3 rope = RiverLayout05.Rope(s, side);
                     float cl = ClusterNoise(s, side);
-                    float room = Mathf.Max(0.25f, side * (WallAt(s, side) - edge));
+                    float room = Mathf.Max(0.25f, side * (OuterAt(s, side) - edge));
                     float ropeW = Mathf.Min(rope.x * (0.8f + 0.4f * cl), room);
                     float crest = rope.y * (0.72f + 0.5f * cl);
                     float rs = rope.z;
+                    float tk = ropeW / Mathf.Min(ropeW, 1.25f);   // shape round 6: the mound crest stays within ~1.25 m of the waterline
                     // the steps follow the bank's direction, so a steeply crossing waterline (far bends) stays closed
                     float slope = Mathf.Abs(WaterlineX(s + 0.25f, side) - WaterlineX(s - 0.25f, side)) / 0.5f;
                     float dens = Mathf.Min(1f + 0.5f * slope, 2f);
@@ -204,7 +205,7 @@ namespace Rainbow.Screen05
                         float lump = Lump(x, z, side);
                         float r = rng.Range(0.13f, 0.23f) * (0.8f + 0.5f * lump) * rs;
                         if (rng.Next() < 0.18f) r *= 1.3f;            // shape round 6: mixed sizes, an odd big puff
-                        float surf = RopeSurface(t, crest) * (0.75f + 0.5f * lump);
+                        float surf = RopeSurface(t * tk, crest) * (0.75f + 0.5f * lump);
                         float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + Mathf.Max(surf - 0.75f * r, -0.3f * r);
                         AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.82f, 0.98f));
                     }
@@ -216,7 +217,7 @@ namespace Rainbow.Screen05
                         float x = WaterlineX(z, side) + side * t * ropeW;
                         float lump = Lump(x, z, side);
                         float r = rng.Range(0.08f, 0.14f) * (0.7f + 0.3f * rs);
-                        float surf = RopeSurface(t, crest) * (0.75f + 0.5f * lump);
+                        float surf = RopeSurface(t * tk, crest) * (0.75f + 0.5f * lump);
                         float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + surf * 0.8f - 0.6f * r;
                         AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.7f, 0.86f));
                     }
@@ -228,7 +229,7 @@ namespace Rainbow.Screen05
                         float x = WaterlineX(z, side) + side * t * ropeW;
                         float lump = Lump(x, z, side);
                         float r = 0.03f + 0.045f * rng.Next();
-                        float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + RopeSurface(t, crest) * (0.75f + 0.5f * lump)
+                        float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + RopeSurface(t * tk, crest) * (0.75f + 0.5f * lump)
                                 + 0.05f + r * 0.2f;
                         AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.93f, 1f));
                     }
@@ -261,9 +262,17 @@ namespace Rainbow.Screen05
 
         /// <summary>World x up to which foam puffs are placed at s on one side: the drum wall at the water plus a little tuck.</summary>
         static float WallAt(float s, int side) => DrumLayout05.WallXAt(s, side) + side * 0.15f;
+        /// <summary>Shape round 6: outer limit of the puffs; the LEFT rope stops at x -6.05 for s 18-31 (approved: the wall stands
+        /// right behind the bar at (60-290, 690-740); Unity's drum wall there is at -6.8..-7.0, puffs up to it rose 20-80 px into it).</summary>
+        static float OuterAt(float s, int side)
+        {
+            float w = WallAt(s, side);
+            if (side < 0) { float k = SS(18f, 20f, s) * (1f - SS(28f, 31f, s)); w = Mathf.Max(w, Mathf.Lerp(w, -6.05f, k)); }
+            return w;
+        }
         static float ClampToWall(float x, float s)
         {
-            return x > 0f ? Mathf.Min(x, WallAt(s, 1)) : Mathf.Max(x, WallAt(s, -1));
+            return x > 0f ? Mathf.Min(x, OuterAt(s, 1)) : Mathf.Max(x, OuterAt(s, -1));
         }
 
         /// <summary>A smaller bubble piled on top of (and a little outward from) another one.</summary>
