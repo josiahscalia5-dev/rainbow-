@@ -72,6 +72,7 @@ TEXTURE2D(_LaceTex); SAMPLER(sampler_LaceTex);
 #define _SilkLook float4(0.3, 0.25, 0.35, 0.3)
 #define _GlintLook float4(0.75, 0.9, 0.0, 0.0)
 #define _SheenLook float4(0.85, 0.75, 0.5, 1.0)
+#define _LatherLook float4(1.1, 0.8, 0.1, 2.6)
 #endif
 
 // p = (X across in m, v along the flow in m); tile 13.2 x 26 m at 9 m view distance, doubling with it (cross-faded octaves)
@@ -238,13 +239,15 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     [branch] if (latherW + latherB > 0.02)
     {
         bool wl5 = latherW > latherB * 0.6;
-        float2 luv = wl5 ? float2(dlW * 0.75 + 0.1 * sin(backS * 2.0 + bt * 0.7), backS * 0.6 - bt * 0.55) : float2(lat * 0.55, v5 * 0.4);
+        // strands radiate from his body (polar web, long along the rays) and stream outward
+        float rB = length(float2(dlW - 0.03, backS - 0.1));
+        float2 luv = wl5 ? float2(atan2(dlW - 0.03, backS + 0.35) * 1.15 + 0.06 * sin(rB * 4.0 + bt * 0.8), rB * 0.42 - bt * 0.5) : float2(lat * 0.55, v5 * 0.4);
         float4 lc = SAMPLE_TEXTURE2D_LOD(_LaceTex, sampler_LaceTex, luv, clamp(log2(distV / 6.0), 0.0, 5.0));
         float4 lc2 = SAMPLE_TEXTURE2D_LOD(_LaceTex, sampler_LaceTex, luv * 2.3 + 0.31, clamp(log2(distV / 3.0), 0.0, 5.0));
         float lh = saturate(min(max(lc.r, lc2.g * 0.8), lc2.r * 1.5 + 0.2));
-        float lk = wl5 ? latherW * (0.75 + 0.5 * lc.b) : latherB * 0.6 * (0.55 + 0.8 * lc.b);
-        float thr = lerp(0.86, 0.05, saturate(lk));
-        float la = smoothstep(thr, thr + 0.22, lh) * saturate(lk * 2.6);
+        float lk = wl5 ? latherW * _LatherLook.x * (0.7 + 0.6 * lc.b) : latherB * 0.6 * (0.55 + 0.8 * lc.b);
+        float thr = lerp(_LatherLook.y, _LatherLook.z, saturate(lk));
+        float la = smoothstep(thr, thr + 0.2, lh) * saturate(lk * _LatherLook.w);
         c5 = lerp(c5, lerp(RBW_Disp(float3(150, 190, 250)), RBW_Disp(float3(244, 246, 255)), smoothstep(0.15, 0.8, la)), la);
     }
 

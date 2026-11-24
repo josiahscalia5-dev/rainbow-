@@ -120,6 +120,7 @@ namespace Rainbow.Screen05.EditorTools
             mat.SetTexture("_RiverSheen", AssetDatabase.LoadAssetAtPath<Texture2D>(WaterSheenFactory.SheenPath));
             mat.SetTexture("_WakeSheen", AssetDatabase.LoadAssetAtPath<Texture2D>(WaterSheenFactory.WakePath));
             mat.SetVector("_SheenLook", SheenLook);
+            mat.SetVector("_LatherLook", new Vector4(1.1f, 0.8f, 0.1f, 2.6f));
             mat.SetTexture("_LaceTex", AssetDatabase.LoadAssetAtPath<Texture2D>(WaterTextureFactory.LacePath));
             mat.SetVector("_W4Look", RiverLook); mat.SetFloat("_W4Edge", 0.6f); mat.SetVector("_W4Band", new Vector4(0.95f, 0.65f, 0.5f, 0.35f));
             EditorUtility.SetDirty(mat);
