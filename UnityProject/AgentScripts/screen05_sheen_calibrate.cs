@@ -70,6 +70,6 @@ string Apply(string path, float[] ac, float[] w)
     t.SetPixels(px); t.Apply(false, false); UnityEditor.EditorUtility.SetDirty(t);
     return System.IO.Path.GetFileNameWithoutExtension(path) + " max " + mx.ToString("0.00");
 }
-string r1 = Apply(Rainbow.Screen05.EditorTools.WaterSheenFactory.SheenPath, acc, wg), r2 = Apply(Rainbow.Screen05.EditorTools.WaterSheenFactory.WakePath, acw, ww);
+string r1 = Apply(Rainbow.Screen05.EditorTools.WaterSheenFactory.SheenPath, acc, wg), r2 = "wake map untouched";
 UnityEditor.AssetDatabase.SaveAssets();
 return r1 + " | " + r2 + " | mean row approved " + (sumA / cnt).ToString("0.000") + " unity " + (sumU / cnt).ToString("0.000") + " n " + cnt;

@@ -204,8 +204,8 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     // two soft pink sweeps (measured on the approved picture: middle at 0.07 + 0.44 x back from an axis 0.06 m right of him, half width ~0.2 m)
     float bow = back - 0.8 * dlW * dlW + 0.014 * sin(bt * 2.2 + dlW * 5.0) + 0.01 * sin(bt * 3.7 + dlW * 9.0);
     float wakeA = bOn * wk * smoothstep(0.8, 1.25, back) * (1.0 - smoothstep(3.3, 4.0, back)) * (1.0 - smoothstep(1.7, 2.15, abs(dlW)));
-    float dlS = dlW - 0.06;
-    float tS = (abs(dlS) - (0.03 + 0.475 * back) - 0.03 * sin(v5 * 1.3 + dlS * 3.0)) / (0.16 + 0.05 * back);
+    float dlS = dlW - 0.03;
+    float tS = (abs(dlS) - (0.21 + 0.5 * back) - 0.03 * sin(v5 * 1.3 + dlS * 3.0)) / (0.16 + 0.05 * back);
     float sw = exp(-tS * tS * 0.95) * smoothstep(1.0, 1.55, back) * (1.0 - smoothstep(2.15, 2.75, back));
     float gk = saturate(sw * (0.6 + 0.8 * T));
     float mid = 1.0 - smoothstep(-1.4, -0.5, tS);                               // 1 between the two sweeps
@@ -217,6 +217,10 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float Yc = 0.09 + (row - 0.333) * _SheenLook.z * 1.1 + arcB * (0.14 + 0.16 * aSeg) + arcL * 0.4;
     float Yw = lerp(0.22 + (row - 0.333) * 0.75, Yc, mid);
     Yw = lerp(Yw, 0.37 + (row - 0.333) * 1.1, smoothstep(0.1, 0.7, gk));
+    // the approved standing pattern (broad light only) between and on the sweeps; it breathes with the bow wobble
+    float2 wuv = float2((dlW + 0.012 * sin(bt * 2.9 + back * 6.0) + 2.2) / 4.4, (back + (bow - back + 0.8 * dlW * dlW) * 1.2 - 0.2) / 3.6);
+    float3 wm = SAMPLE_TEXTURE2D_LOD(_WakeSheen, sampler_WakeSheen, wuv, 0).rgb;
+    Yw = lerp(Yw, clamp(wm.r, 0.06, 0.6) + (row - 0.333) * 0.34 + arcL * 0.1, 0.8 * saturate(wm.b * 1.3 - 0.2) * max(mid, smoothstep(0.1, 0.6, gk)));
     Y = lerp(Y, Yw, wakeA);
     float qw = lerp(0.1, 1.5, smoothstep(0.06, 0.85, gk));
     qe = lerp(qe, qw + (T - 0.5) * 0.3, wakeA * max(smoothstep(0.04, 0.3, gk), mid));
@@ -276,11 +280,15 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
             float fgw = max(fwidth(g.x), fwidth(g.y));
             float slot = (1.0 - smoothstep(0.75, 1.1, length(gf / float2(0.2, 0.34)))) * (1.0 - smoothstep(0.25, 0.7, fgw));
             float sheen = pow(saturate(0.5 + 0.5 * sin(s * 0.45 + 1.3 + ox * 0.4)), 5.0);
-            float3 pfA = float3(0.3, 0.06, 0.5) + _R7Floor.x * float3(0.25, 0.06, 0.18) + _R7Floor.w * float3(0.2, 0.04, 0.0);
-            float3 pfB = float3(0.68, 0.2, 0.8) + _R7Floor.w * float3(0.15, 0.03, 0.0);
-            float3 pf = lerp(pfA, pfB, saturate(sheen * 0.8 + 0.12 * ox));
-            pf = lerp(pf, float3(0.04, 0.008, 0.1), slot * saturate(0.85 - _R7Floor.y));
-            pf *= lerp(saturate(0.55 + _R7Floor.z), 1.0, smoothstep(0.0, 0.6, ox));
+            // round 8: the same polished magenta-violet drum wall metal as the walls behind it: lengthwise pink light lines, dark slots with a lit lip
+            float3 pf = lerp(RBW_Disp(float3(112, 24, 160)), RBW_Disp(float3(176, 40, 200)), saturate(sheen * 0.9 + 0.1 * ox));
+            float ll = abs(frac(ox * 0.62 + 0.18) - 0.5) / 0.62;
+            pf = lerp(pf, RBW_Disp(float3(246, 84, 226)), exp(-pow((0.5 / 0.62 - ll) / 0.17, 2.0)) * 0.75);
+            pf = lerp(pf, RBW_Disp(float3(255, 214, 250)), exp(-pow((0.5 / 0.62 - ll) / 0.05, 2.0)) * 0.6);
+            float lipF = (1.0 - smoothstep(1.0, 1.5, length(gf / float2(0.2, 0.34)))) * (1.0 - slot) * (1.0 - smoothstep(0.25, 0.7, fgw));
+            pf = lerp(pf, RBW_Disp(float3(232, 96, 220)), lipF * 0.4);
+            pf = lerp(pf, RBW_Disp(float3(44, 6, 52)), slot * 0.9);
+            pf *= lerp(0.6, 1.0, smoothstep(0.0, 0.5, ox));
             fo = lerp(fo, pf, fl);
         }
         col = lerp(col, fo, shelf);

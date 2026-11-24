@@ -133,6 +133,10 @@ Shader "Rainbow/Benny/Fluff"
                     float lum = dot(col, float3(0.3, 0.5, 0.2));
                     col = lerp(col, float3(0.84, 0.21, 0.48) * (0.62 + 0.55 * lum), pale * armZone * 0.85);
                     col = lerp(col, float3(0.95, 0.33, 0.6) * (0.5 + 0.6 * lum), pale * bodyZone * (1.0 - armZone) * 0.6);
+                    // beanie and pompom: the pale blown silhouette becomes lilac wool (approved rims (166,101,232) / (194,71,245), Unity (223,190,243))
+                    float hatZone = smoothstep(0.70, 0.80, hB) * _RainbowBennyWater.w;
+                    float rimH = pow(1.0 - saturate(dot(N, V)), 1.3);
+                    col = lerp(col, float3(0.40, 0.17, 0.86) * (0.45 + 0.62 * lum), saturate(pale * rimH * 1.15) * hatZone * 0.75 * (1.0 - smoothstep(0.5, 0.9, (col.r - col.b) * 4.0)));
                 }
                 // (splash6) he sits IN the water: the fur darkens toward the waterline (soft, no hard edge) and a thin
                 // see-through azure band right at the water
