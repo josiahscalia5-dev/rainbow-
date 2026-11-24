@@ -18,6 +18,7 @@ public static class T05 {
   public const string Codes = "cpvwgd.";   // 0 water cyan/blue, 1 pink/magenta, 2 violet, 3 white/pearl, 4 gold/copper/yellow, 5 dark, 6 other
   const int CW = 0, CP = 1, CV = 2, CWH = 3, CG = 4, CD = 5, CO = 6;
   static bool approved;
+  static int[] FLab; static bool[] FBig; static long[] FArea;
   static List<Action<Graphics>> draw = new List<Action<Graphics>>();
 
   // ---------------- pixel classification (HSV) ----------------
@@ -381,8 +382,9 @@ public static class T05 {
     List<long[]> cst; var clab = Label(cm, out cst); var bigC = new bool[cst.Count + 1];
     for (int k = 0; k < cst.Count; k++) bigC[k + 1] = cst[k][0] >= 2500 && cst[k][4] - cst[k][2] >= 40;
     var fm = new bool[W * H]; for (int i = 0; i < W * H; i++) { int y = i / W, x = i % W; fm[i] = Sm[i] == CWH && y > vy && !(bx0[y] >= 0 && x >= bx0[y] - 2 && x <= bx1[y] + 2); }
-    List<long[]> fst; var flab = Label(fm, out fst); var bigF = new bool[fst.Count + 1];
-    for (int k = 0; k < fst.Count; k++) bigF[k + 1] = fst[k][0] >= 500 && fst[k][4] - fst[k][2] >= 10 && (fst[k][4] - fst[k][2] + 1) * 1.0 >= 0.12 * (fst[k][3] - fst[k][1] + 1);
+    List<long[]> fst; var flab = Label(fm, out fst); var bigF = new bool[fst.Count + 1]; var farea = new long[fst.Count + 1];
+    for (int k = 0; k < fst.Count; k++) { bigF[k + 1] = fst[k][0] >= 500 && fst[k][4] - fst[k][2] >= 10 && (fst[k][4] - fst[k][2] + 1) * 1.0 >= 0.12 * (fst[k][3] - fst[k][1] + 1); farea[k + 1] = fst[k][0]; }
+    FLab = flab; FBig = bigF; FArea = farea;
     Func<int, int, bool> isC = (x, y) => { int l = clab[y * W + x]; return l > 0 && bigC[l]; };
     Func<int, int, bool> isF = (x, y) => { int l = flab[y * W + x]; return l > 0 && bigF[l]; };
     Func<int, int, bool> wallish = (x, y) => { int c = S(x, y); return c == CP || c == CV || c == CD || c == CG || c == CO; };
@@ -401,9 +403,11 @@ public static class T05 {
         if (fin < 0 && flag == 0) { edge = side == 0 ? 0 : W - 1; flag = 1; }  // clipped at the frame edge
         if (fin >= 0) {
           int gap = 0; fout = fin; for (int xx = fin; xx >= 0 && xx < W; xx += dir) { if (isF(xx, y)) { fout = xx; gap = 0; } else { gap++; if (gap > 8) break; } }
-          bool atEdge = side == 0 ? fout <= 2 : fout >= W - 3; int wc = 0, tot = 0;
+          bool atEdge = side == 0 ? fout <= 2 : fout >= W - 3; int wc = 0, tot = 0, dk = 0, cy2 = 0;
           for (int k = 1; k <= 12; k++) { int xx = fout + dir * k; if (xx < 0 || xx >= W) break; tot++; if (wallish(xx, y)) wc++; }
-          double wall = (!atEdge && tot >= 8 && wc >= 0.7 * tot) ? fout + dir : double.NaN;
+          for (int k = 1; k <= 60; k++) { int xx = fout + dir * k; if (xx < 0 || xx >= W) break; int cc2 = S(xx, y); if (cc2 == CD) dk++; if (cc2 == CW && k <= 30) cy2++; }
+          // wall = wall-coloured right behind the foam, no water there, and the dark slots of the drum within 60 px
+          double wall = (!atEdge && tot >= 8 && wc >= 0.7 * tot && cy2 == 0 && (dk > 0 || y < vy + 120) && y < 1100) ? fout + dir : double.NaN;
           if (side == 0) { r[0] = fin + 1; r[2] = fout; r[3] = fin; r[6] = wall; } else { r[1] = fin - 1; r[4] = fin; r[5] = fout; r[7] = wall; }
         } else { if (side == 0) r[0] = edge; else r[1] = edge; }
         r[8 + side] = flag;
@@ -483,12 +487,13 @@ public static class T05 {
   static object Splash(int[] bx0, int[] bx1, int top, int bot) {
     if (top < 0) return new JO().A("found", false);
     int cx = 0, cn = 0; for (int y = bot - 120; y <= bot - 60; y++) if (bx0[y] >= 0) { cx += (bx0[y] + bx1[y]) / 2; cn++; } cx = cn > 0 ? cx / cn : 430;
-    int wy0 = bot - 130, wy1 = Math.Min(H - 1, bot + 90); var o = new JO(); var tips = new List<double[]>();
+    int wy0 = bot - 130, wy1 = Math.Min(H - 1, bot + 70); var o = new JO(); var tips = new List<double[]>();
     foreach (int side in new int[] { 0, 1 }) {
       int x0 = side == 0 ? Math.Max(0, cx - 280) : cx + 25, x1 = side == 0 ? cx - 25 : Math.Min(W - 1, cx + 280);
       int c = 8; int ex0 = W, ex1 = -1, ey0 = H, ey1 = -1;
       for (int y = wy0; y + c <= wy1; y += c) for (int x = x0; x + c <= x1; x += c) {
-        int wn = 0; for (int yy = y; yy < y + c; yy++) for (int xx = x; xx < x + c; xx++) { if (bx0[yy] >= 0 && xx >= bx0[yy] && xx <= bx1[yy] && yy < bot - 30) continue; if (Cl[yy * W + xx] == CWH) wn++; }
+        int wn = 0, fb = 0; for (int yy = y; yy < y + c; yy++) for (int xx = x; xx < x + c; xx++) { if (bx0[yy] >= 0 && xx >= bx0[yy] && xx <= bx1[yy] && yy < bot - 30) continue; if (Cl[yy * W + xx] == CWH) wn++; int l = FLab[yy * W + xx]; if (l > 0 && FBig[l] && FArea[l] > 6000) fb++; }
+        if (fb > 0.3 * c * c) continue;   // bank foam, not spray
         if (wn < 0.3 * c * c) continue; ex0 = Math.Min(ex0, x); ex1 = Math.Max(ex1, x + c - 1); ey0 = Math.Min(ey0, y); ey1 = Math.Max(ey1, y + c - 1);
       }
       if (ex1 < 0) { o.A(side == 0 ? "left_fan" : "right_fan", null); continue; }
@@ -547,7 +552,14 @@ public static class T05 {
     o.A("coin_icon", HudBox("coin", 360, 8, 475, 102, (i) => Cl[i] == CG && Hu[i] >= 25 && Hu[i] < 70, Color.Gold));
     o.A("score_text", HudBox("1,420", 480, 22, 650, 90, (i) => Cl[i] == CWH && Lu[i] >= 215, Color.White));
     o.A("pause_button", HudBox("pause", 715, 8, 845, 106, (i) => Cl[i] == CWH && Lu[i] >= 215, Color.White));
-    o.A("title_banner", HudBox("banner", 95, 104, 775, 196, (i) => (Cl[i] == CG && Hu[i] >= 25 && Hu[i] < 70 && Lu[i] > 140) || (Cl[i] == CWH && Lu[i] > 225), Color.Gold));
+    // title banner: its gold/light rounded outline, scanned in from the sides on the mid row and from top/bottom on the centre column
+    Func<int, bool> rim = i => (Cl[i] == CG && Lu[i] > 120) || (Cl[i] == CWH && Lu[i] > 200);
+    int bym = 147, bl = -1, br = -1, bt = -1, bb = -1; for (int x = 95; x < 300; x++) if (rim(bym * W + x)) { bl = x; break; } for (int x = 775; x > 560; x--) if (rim(bym * W + x)) { br = x; break; }
+    for (int y = 104; y < 140; y++) if (rim(y * W + 432) && rim(y * W + 433)) { bt = y; break; } for (int y = 196; y > 155; y--) if (rim(y * W + 432) && rim(y * W + 433)) { bb = y; break; }
+    var tb = (bl < 0 || br < 0 || bt < 0 || bb < 0) ? (object)null : new int[] { bl, bt, br, bb };
+    var txt = (bl < 0 || br < 0 || bt < 0 || bb < 0) ? null : HudBox("banner text", bl + 15, bt + 8, br - 15, bb - 8, (i) => (Cl[i] == CG && Hu[i] >= 25 && Hu[i] < 70 && Lu[i] > 140) || (Cl[i] == CWH && Lu[i] > 215), Color.Gold);
+    o.A("title_banner", new JO().A("box", tb).A("text", txt).A("note", "box from the banner outline on row 147 and column 432"));
+    if (tb != null) { int a1 = bl, a2 = bt, a3 = br, a4 = bb; draw.Add(g => { using (var p = new Pen(Color.Gold, 1)) g.DrawRectangle(p, a1, a2, a3 - a1, a4 - a2); }); }
     // top bar (the long rounded bar that holds heart .. pause): light border pixels along its mid row
     int ym = 57, xl = -1, xr = -1; for (int x = 5; x < 80; x++) if (Lu[ym * W + x] > 150 && Sa[ym * W + x] < 0.45) { xl = x; break; } for (int x = W - 6; x > W - 80; x--) if (Lu[ym * W + x] > 150 && Sa[ym * W + x] < 0.45) { xr = x; break; }
     o.A("top_bar", new JO().A("mid_row_y", ym).A("x_left", xl < 0 ? null : (object)xl).A("x_right", xr < 0 ? null : (object)xr).A("note", "the 'progress bar' = the long top bar holding heart, 5/5 +, coin, 1,420 and pause; edges found as the light rim on its mid row"));
