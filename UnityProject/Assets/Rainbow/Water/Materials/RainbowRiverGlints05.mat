@@ -32,7 +32,7 @@ Material:
     - _Drift: 6.5
     - _Flare: 1
     - _HoldTime: 1.5
-    - _Streak: 0.3
+    - _Streak: 1
     m_Colors:
     - _LutRange: {r: -12, g: 800, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -173,7 +173,7 @@ namespace Rainbow.Screen05.EditorTools
             if (m.HasProperty("_LightInfluence")) m.SetFloat("_LightInfluence", 0.35f);
             // Coordinator look tuning 2026-11-23 (screen05_tune_look.cs, saved in commit a78f508): a weaker, pinker fuzz
             // rim so it no longer blooms into a white halo round Benny (shader defaults 0.35 / (1, 0.82, 0.93)).
-            if (m.HasProperty("_FuzzStrength")) m.SetFloat("_FuzzStrength", 0.15f);
+            if (m.HasProperty("_FuzzStrength")) m.SetFloat("_FuzzStrength", 0.05f);
             if (m.HasProperty("_FuzzColor")) m.SetColor("_FuzzColor", new Color(1f, 0.62f, 0.86f, 1f));
             // (splash6 2026-11-24) approved: his fur darkens to deep magenta where he sits in the water (y 1168-1200 was
             // 30-90 luma too bright), with no hard edge (SplashWake writes the water height as _RainbowBennyWater)

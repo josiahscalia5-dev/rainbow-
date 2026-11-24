@@ -208,9 +208,10 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     wm.g = saturate(max(wm.g, upK * 0.9) + (T - 0.5) * 0.55 * smoothstep(0.04, 0.3, wm.g));
     float qw = wm.g < 0.5 ? lerp(0.12, 1.0, wm.g * 2.0) : lerp(1.0, 1.55, wm.g * 2.0 - 1.0);
     qe = lerp(qe, qw + (T - 0.5) * 0.3, wakeA);
-    Y = lerp(Y, wm.r + (row - 0.333) * _SheenLook.z, wakeA);
+    Y = lerp(Y, 0.3 + (wm.r - 0.3) * 1.2 + (row - 0.333) * _SheenLook.z, wakeA);
 
     float3 c5 = RBW_RampY(qe, Y, zone);
+    c5 = max(c5 - _GlintLook.w, 0.0);                  // the bloom veil of the bright scene would grey the deep saturated colours
 
     // ---- surface: ripples catch the light (emboss), slivers of light burn a little, gloss from the swell normal ----
     float3 N0 = normalize(NormalWS);
