@@ -110,7 +110,8 @@ namespace Rainbow.Screen05
             float R = DrumLayout05.Radius;
             bool log = bay.s0 > 20f;
             var md = new Md();
-            int steps = Mathf.Clamp(Mathf.CeilToInt((bay.s1 - bay.s0) / (bay.s1 < 60f ? 1f : (bay.s1 < 120f ? 1.6f : 4f))), 4, 48);
+            // the tunnel bends gently after s 262: short steps there, so the light lines stay smooth curves when he swims past
+            int steps = Mathf.Clamp(Mathf.CeilToInt((bay.s1 - bay.s0) / (bay.s1 < 60f ? 1f : (bay.s1 < 120f ? 1.6f : (bay.s1 < 262f ? 4f : 1.8f)))), 4, bay.s1 < 262f ? 48 : 110);
             int cols = radial + 1;
             for (int i = 0; i <= steps; i++)
             {

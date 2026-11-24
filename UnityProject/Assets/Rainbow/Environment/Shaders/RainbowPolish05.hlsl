@@ -219,12 +219,12 @@ float2 RbRowSplit(float row, float s, float dist)
 {
     float dr = length(float2(ddx(row), ddy(row))), dsx = length(float2(ddx(s), ddy(s)));
     float p = dsx / max(dr, 1e-6);                               // metres between two rows
-    float lv = max(log(max(p / (0.125 * max(dist, 5.0)), 1e-3)) / 1.0986, 0.0);
+    float lv = max(log(max(p / (0.16 * max(dist, 10.0)), 1e-3)) / 1.0986, 0.0);
     float n = min(floor(lv), 3.0);
     return float2(pow(3.0, n), smoothstep(0.32, 0.72, lv - n));
 }
 
-float3 RainbowWall5Row(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 look, float4 look5, float fwPhiIn, float fwRowIn);
+float3 RainbowWall5Row(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 look, float4 look5, float fwPhiIn, float fwRowIn, float brick);
 float3 RainbowWall5(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 look, float4 look5)
 {
     float2 sp = RbRowSplit(Uv1.y, Uv0.y, dist);
@@ -233,24 +233,28 @@ float3 RainbowWall5(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 loo
     b.y = (Uv1.y - 0.5) * sp.x * 3.0 + 0.5;
     float fwPhi = fwidth(Uv0.x) / 6.8, fwRow = fwidth(Uv1.y), fwS = fwidth(Uv0.y);
     float fa = fwRow * sp.x, fb = fwRow * sp.x * 3.0, wb = sp.y;
+    // third-brick offset of the slots: fixed in the world (never a function of the camera distance: that sheared the rows into ropes)
+    float brickA = 0.33 * (1.0 - smoothstep(45.0, 47.0, Uv0.y)), brickB = brickA;
     // uniform rows on the long course (s > 106): 2 m apart near him, 6 m further on (every third one stays), the picture's forced-perspective rows only
     // far away (> 60-90 m, where the approved view sees these bays), cross-faded: the slots keep one size and place while he swims past
     if (Uv0.y > 106.0)
     {
         float fine = (Uv0.y - 105.8) / 2.0 + 0.5, coarse = (Uv0.y - 105.8) / 6.0 + 0.5;
         bool nearB = dist < 46.0;
+        brickA = nearB ? 0.3333333 : 0.0;
+        brickB = 0.0;
         a.y = nearB ? fine : coarse;
         b.y = nearB ? coarse : Uv1.y;
         fa = nearB ? fwS * 0.5 : fwS / 6.0;
         fb = nearB ? fwS / 6.0 : fwRow;
         wb = nearB ? smoothstep(17.0, 30.0, dist) : smoothstep(62.0, 92.0, dist);
     }
-    float3 ca = RainbowWall5Row(posWS, Uv0, a, dist, look, look5, fwPhi, fa);
-    [branch] if (wb > 0.004) ca = lerp(ca, RainbowWall5Row(posWS, Uv0, b, dist, look, look5, fwPhi, fb), wb);
+    float3 ca = RainbowWall5Row(posWS, Uv0, a, dist, look, look5, fwPhi, fa, brickA);
+    [branch] if (wb > 0.004) ca = lerp(ca, RainbowWall5Row(posWS, Uv0, b, dist, look, look5, fwPhi, fb, brickB), wb);
     return ca;
 }
 
-float3 RainbowWall5Row(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 look, float4 look5, float fwPhiIn, float fwRowIn)
+float3 RainbowWall5Row(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 look, float4 look5, float fwPhiIn, float fwRowIn, float brick)
 {
     float s = Uv0.y;
     float phi = Uv0.x / 6.8;
@@ -302,7 +306,7 @@ float3 RainbowWall5Row(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 
     }
     // slots: rounded dashes along the arc, 44 round, third-brick offset in the near bay
     float gx0 = phi * 44.0 / RB_TWO_PI;
-    float gx = gx0 + floor(row) * 0.33 * bayNA;
+    float gx = gx0 + floor(row) * brick;
     float fx = frac(gx) - 0.5;
     float2 h = float2(lerp(0.28, 0.265, bayNA), lerp(0.125, 0.14, bayNA));
     float2 q = float2(fx, fy) / h;
