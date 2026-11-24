@@ -24,8 +24,8 @@
 
 // (water4 2026-11-24) live-tuning hook of AgentScripts/screen05_water4_tune.cs (global vector, never set in the game = 0 =
 // the baked look): x = contact shade strength delta, y = contact shade length delta, z = right band width delta (x),
-// w = right band near-field shift delta (m); _W4Tune2: x = near side-arc fade delta, y = pink sheen scale delta,
-// z = band edge raggedness delta
+// w = right band near-field shift delta (m); _W4Tune2: x = unused, y = pink sheen scale delta,
+// z = band edge raggedness delta, w = near satin hairline fade delta
 float4 _W4Tune;
 float4 _W4Tune2;
 
@@ -240,11 +240,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     nb = lerp(nb, RBW_CAQUA, saturate(0.7 * pow(sp, 4.0) * (0.4 + 0.6 * segN)));
     nb = lerp(nb, RBW_CAQUAW, saturate(pow(sp, 16.0) * segN) * 0.75);
     nb += float3(0.35, 0.55, 0.6) * pow(sp, 40.0) * segN * 0.4;                          // glossy arc line
-    // (water4 2026-11-24) beside / ahead of him the approved near water is broad glossy azure with along-flow light
-    // streaks and big star flares; the legs of the ∩ arcs ran into dense parallel 'wood-grain' lines there. The arcs only
-    // roll out behind him; at his sides the brushed satin of the mid field (along-flow lanes) shows instead.
-    float kSide = saturate(0.85 + _W4Tune2.x) * smoothstep(1.3, 2.3, abs(dlB)) * smoothstep(-0.6, 0.4, db) * bOn;
-    cy = lerp(cy, nb, near5 * (1.0 - kSide));
+    cy = lerp(cy, nb, near5);
 
     // water between a band and its bank: the approved shows a thin CYAN edge there (a touch bluer than the core,
     // with sparkles), not a deep blue-violet strip
@@ -311,7 +307,11 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float kS5 = mid5 * (1.0 - smoothstep(0.3, 0.8, fwsR));
     float sat5 = max(RBW_Satin(Xw, v5, 7.0, 1.3, pxK, 1.0), RBW_Satin(Xw, v5, 11.0, 6.1, pxK, 1.0) * 0.75);
     float3 satC = lerp(lerp(RBW_CBRIGHT, RBW_CAQUAW, 0.55), lerp(RBW_PPALE, RBW_PWHITE, 0.3), pk5);
-    c5 = lerp(c5, satC, sat5 * kS5 * 0.38);   // (water round 3v: 0.55 -> 0.38, fewer white hairlines in the cyan)
+    // (water4 2026-11-24) beside / just ahead of Benny (closer than ~16 m) the lanes are 8-12 px apart and drew dense
+    // parallel 'wood-grain' hairlines; the approved water there is broad glossy azure with a few bright speed streaks
+    float camD5 = distance(_WorldSpaceCameraPos, PositionWS);
+    float kSat5 = 1.0 - saturate(0.65 + _W4Tune2.w) * (1.0 - smoothstep(9.0, 17.0, camD5));
+    c5 = lerp(c5, satC, sat5 * kS5 * 0.38 * kSat5);   // (water round 3v: 0.55 -> 0.38, fewer white hairlines in the cyan)
     // sparse short glossy dashes (approved: bright white-aqua / white-pink speed streaks scattered through the satin)
     float2 sS5 = RBW_SilkStreak(Xw, v5 * 6.0, 3.1, 2.7, 0.3, pxK) * kS5 * (1.0 - smoothstep(0.12, 0.3, fwsR))
                * smoothstep(0.014, 0.04, fwsR);           // no long crisp lines close to the camera (gameplay view)
@@ -416,10 +416,10 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
         // palette, start it under the fur (no bright glossy line between fur and shade), gone ~0.35 u out (was 0.75)
         float latK = 1.0 - smoothstep(0.2 + 0.1 * max(e, 0.0), 0.46 + 0.15 * max(e, 0.0), abs(dlB));
         float shadeK = latK * smoothstep(-0.1, 0.35, cosB) * smoothstep(-0.4, -0.25, e)
-                     * (1.0 - smoothstep(0.02, max(0.5 + _W4Tune.y, 0.05), e));
+                     * (1.0 - smoothstep(0.02, max(0.6 + _W4Tune.y, 0.05), e));
         // his body blocks the reflected glare there too (no glossy arcs / flares inside the shadow)
         col = lerp(col, min(col, float3(0.1, 0.45, 0.85)), saturate(shadeK * wk * 1.5));
-        col = lerp(col, RBW_CDEEP * float3(0.6, 0.85, 1.05), saturate(shadeK * (0.95 + _W4Tune.x) * wk));
+        col = lerp(col, RBW_CDEEP * float3(0.6, 0.85, 1.05), saturate(shadeK * (1.05 + _W4Tune.x) * wk));
         // broken bubbly rim hugging the waterline on his flanks only
         float rim = smoothstep(-0.08, -0.01, e) * (1.0 - smoothstep(0.04, 0.13, e)) * flankK;
         float foamW = rim * smoothstep(0.3, 0.65, bubbly + rim * 0.15);

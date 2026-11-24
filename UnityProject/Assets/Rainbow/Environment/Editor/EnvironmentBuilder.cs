@@ -90,7 +90,8 @@ namespace Rainbow.Screen05.EditorTools
             Mesh ringNearest = SaveMesh(DrumMeshes05.BuildRing(DrumLayout05.NearestBand, ringRadius, 128, "Ring05_Nearest"), "Ring05_Nearest");
             float paddleSize = DrumLayout05.PaddleScaledSize;
             // tunnel round 4: D-shaped copper shelves seen from below (DrumMeshes05.BuildPaddleShelf; was BuildPaddleTray)
-            Mesh paddle = SaveMesh(DrumMeshes05.BuildPaddleShelf(paddleSize, DrumLayout05.PaddleStretch, 32, "Paddle05_Tray"), "Paddle05_Tray");
+            Mesh paddle = SaveMesh(DrumMeshes05.BuildPaddleShelf(paddleSize, DrumLayout05.ShelfStretch, 32, "Paddle05_Tray",
+                DrumLayout05.ShelfInward, DrumLayout05.ShelfThick), "Paddle05_Tray");
             Mesh frameL = SaveMesh(DrumMeshes05.BuildFrameCornerLeft(), "NearFrame05_CornerL");
             Mesh frameR = SaveMesh(DrumMeshes05.BuildFrameCornerRight(), "NearFrame05_CornerR");
             Mesh frameLip = SaveMesh(DrumMeshes05.BuildFrameLip(), "NearFrame05_Lip");
@@ -248,8 +249,9 @@ namespace Rainbow.Screen05.EditorTools
         /// <summary>Tilt of the paddle round its inward axis (deg, + = local +Y toward +Z, i.e. the BOTTOM plate of the
         /// round-4 shelf turns toward the camera). Coordinator round 3: -15 with the old tray (open dish at -Y): the trays
         /// showed their plum back over an orange log. Tunnel round 4: the shelf mesh (DrumMeshes05.BuildPaddleShelf) has its
-        /// bottom plate at -Y; +18 shows it at ~20-28 deg below the band like the approved half-moon shelves seen from below.</summary>
-        public const float PaddleFaceTiltDeg = 18f;
+        /// bottom plate at -Y; +12 shows it below the band like the approved half-moon shelves seen from below (cycle
+        /// tunnel_t2: 10-12 with the long shallow shelf; +18 / +26 tipped the far end down into a V-shaped point).</summary>
+        public const float PaddleFaceTiltDeg = 12f;
 
         /// <summary>
         /// Pose of one paddle: DrumLayout05.PaddlePose (wall mount at ps.mountY + mountDy, lid05 droop), then turned round

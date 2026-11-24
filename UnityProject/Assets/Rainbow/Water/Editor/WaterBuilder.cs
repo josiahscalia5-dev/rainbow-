@@ -206,7 +206,8 @@ namespace Rainbow.Screen05.EditorTools
 
         /// <summary>(water4 2026-11-24) splash strand look on Rainbow/Water/Splash: width scale, opacity, extra fan angle (rad),
         /// roots moved round toward his back (rad). Live variants t1: (0.75, 0.8, 0.2) splash 69.7 vs the old (1, 1, 0) 68.8.</summary>
-        public const float SplashRopeWidth = 0.75f, SplashRopeAlpha = 0.8f, SplashSpread = 0.2f, SplashRootBack = 0.3f;
+        public const float SplashRopeWidth = 0.65f, SplashRopeAlpha = 0.65f, SplashSpread = 0.3f, SplashRootBack = 0.3f,
+                           SplashLen = 1.35f;
 
         static void PrepareSprayMaterial()
         {
@@ -222,7 +223,7 @@ namespace Rainbow.Screen05.EditorTools
             Material fan = GetOrCreateMaterial(ResDir + "/RainbowSplash05.mat", "Rainbow/Water/Splash");
             fan.SetFloat("_SoftDepth", 0.05f);      // ropes ride 0.035-0.1 above the water: only their very ends fade
             fan.SetFloat("_Intensity", 1f);
-            fan.SetFloat("_Len", 1.55f);            // riderSplash.ts createRiderSplash05 uLen
+            fan.SetFloat("_Len", SplashLen);        // riderSplash.ts createRiderSplash05 uLen 1.55 (water4: shorter, splashier)
             // (water4 2026-11-24) approved spray = see-through streams of droplets fanning toward the bottom corners with the
             // water showing between them (splash box luminance p50 ~175), not a solid white comb (Unity p50 ~250)
             fan.SetFloat("_RopeWidth", SplashRopeWidth);

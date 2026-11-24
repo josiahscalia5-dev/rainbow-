@@ -363,7 +363,7 @@ namespace Rainbow.Screen05
         /// units of <paramref name="size"/>. Vertex colour rgb = linear colour pre-solved for the scene grade (exposure 0.86,
         /// contrast +15, saturation +36: RainbowGoldMetal.hlsl applies no tone curve to it), alpha = polish.
         /// </summary>
-        public static Mesh BuildPaddleShelf(float size, float stretch, int segments, string name)
+        public static Mesh BuildPaddleShelf(float size, float stretch, int segments, string name, float inward = 1f, float thick = 1f)
         {
             var pl = new List<Vector2>();
             var pcl = new List<Color>();
@@ -421,8 +421,9 @@ namespace Rainbow.Screen05
                 {
                     float phi = Mathf.PI * k / segments;     // half revolution: x >= 0
                     float sp = Mathf.Sin(phi), cp = Mathf.Cos(phi);
-                    var p = new Vector3(prof[i].x * sp * size, (prof[i].y + yOff) * size, prof[i].x * cp * size * stretch);
-                    var nn = new Vector3(n2[i].x * sp, n2[i].y, n2[i].x * cp / Mathf.Max(1e-3f, stretch)).normalized;
+                    var p = new Vector3(prof[i].x * sp * size * inward, (prof[i].y + yOff) * size * thick, prof[i].x * cp * size * stretch);
+                    var nn = new Vector3(n2[i].x * sp / Mathf.Max(1e-3f, inward), n2[i].y / Mathf.Max(1e-3f, thick),
+                        n2[i].x * cp / Mathf.Max(1e-3f, stretch)).normalized;
                     int v = md.Add(p, nn, new Vector2(k / (float)segments, i / (float)(n - 1)));
                     md.col[v] = pc[i];
                 }
@@ -439,8 +440,8 @@ namespace Rainbow.Screen05
             Color plate = new Color(0.30f, 0.09f, 0.10f, 0.3f);
             for (int i = 0; i < n - 1; i++)
             {
-                Vector3 a0 = new Vector3(0f, (prof[i].y + yOff) * size, prof[i].x * size * stretch);
-                Vector3 a1 = new Vector3(0f, (prof[i + 1].y + yOff) * size, prof[i + 1].x * size * stretch);
+                Vector3 a0 = new Vector3(0f, (prof[i].y + yOff) * size * thick, prof[i].x * size * stretch);
+                Vector3 a1 = new Vector3(0f, (prof[i + 1].y + yOff) * size * thick, prof[i + 1].x * size * stretch);
                 Vector3 b0 = new Vector3(a0.x, a0.y, -a0.z), b1 = new Vector3(a1.x, a1.y, -a1.z);
                 int ia0 = md.Add(a0, Vector3.left, new Vector2(1f, 1f));
                 int ia1 = md.Add(a1, Vector3.left, new Vector2(1f, 1f));

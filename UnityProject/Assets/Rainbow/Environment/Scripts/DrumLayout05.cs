@@ -150,14 +150,22 @@ namespace Rainbow.Screen05
         // ~(80-260, 390-450) / (720-860, 410-490), mid ones at (250-330, 430-480) / (640-700, 400-440) = on the approved
         // ones). The tray is tilted from its mount angle like lid05 (angle + droop -34 deg). A lower-mount refit (frame_t5
         // / t6) showed the trays as steep slabs instead of trays seen from below and was REJECTED.
+        // Tunnel round 4 (2026-11-24): the round-4 shelves (DrumMeshes05.BuildPaddleShelf, Shelf* proportions below) seen
+        // from below sit 1.5 m deeper and lower on the wall (left 0.3 m, right 0.8 m) than the round-3 trays: live variant
+        // pS3 of cycle tunnel_t2 (walls 57.0 -> 58.9, throat 67.2 -> 69.0; the big right tray at y ~400-490 like the
+        // approved 400-521 instead of 349-457). Was L 29.5 / 5.2, 44 / 5.2, 75 / 5.1, 125 / 5.3, 190 / 5.3;
+        // R 34 / 4.7, 55 / 6.0, 82 / 5.8, 118 / 5.5, 180 / 5.5.
         static readonly PaddleSlot[] ApprovedPaddles =
         {
-            new PaddleSlot(29.5f, -1, 5.2f), new PaddleSlot(34f, 1, 4.7f),
-            new PaddleSlot(44f, -1, 5.2f), new PaddleSlot(55f, 1, 6.0f),
-            new PaddleSlot(75f, -1, 5.1f), new PaddleSlot(82f, 1, 5.8f),
-            new PaddleSlot(125f, -1, 5.3f), new PaddleSlot(118f, 1, 5.5f),
-            new PaddleSlot(190f, -1, 5.3f), new PaddleSlot(180f, 1, 5.5f),
+            new PaddleSlot(31.0f, -1, 4.9f), new PaddleSlot(35.5f, 1, 3.9f),
+            new PaddleSlot(45.5f, -1, 4.9f), new PaddleSlot(56.5f, 1, 5.2f),
+            new PaddleSlot(76.5f, -1, 4.8f), new PaddleSlot(83.5f, 1, 5.0f),
+            new PaddleSlot(126.5f, -1, 5.0f), new PaddleSlot(119.5f, 1, 4.7f),
+            new PaddleSlot(191.5f, -1, 5.0f), new PaddleSlot(181.5f, 1, 4.7f),
         };
+        /// <summary>Round-4 shelf proportions: inward extent, thickness and length along the tunnel, as factors of
+        /// PaddleSize (approved trays: long shallow half-moons, ~1.4 x 0.6 of the round-3 half disc).</summary>
+        public const float ShelfInward = 0.6f, ShelfThick = 1.15f, ShelfStretch = 1.4f;
 
         static float Smooth(float e0, float e1, float x)
         {

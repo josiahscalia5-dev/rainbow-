@@ -125,9 +125,11 @@ float3 RainbowApplyFarGlow(float3 c, float dist)
 static const float3 RM_SIDE_EDGE = float3(0.487, 0.144, 0.087);   // (200,85,40)
 static const float3 RM_SIDE_BODY = float3(0.748, 0.256, 0.130);   // (248,120,40)
 static const float3 RM_SIDE_HI   = float3(0.845, 0.590, 0.274);   // (254,200,92)
-static const float3 RM_TOP_EDGE  = float3(0.442, 0.132, 0.168);   // (190,80,100)
-static const float3 RM_TOP_BODY  = float3(0.645, 0.219, 0.155);   // (230,110,75)
-static const float3 RM_TOP_CREST = float3(0.787, 0.344, 0.224);   // (252,145,95)
+// cycle tunnel_t2: the crowns still measured (226,137,103) p10 L 111 against the approved (220,111,94) p10 L 81: a
+// little redder body / crest and darker rose edges
+static const float3 RM_TOP_EDGE  = float3(0.314, 0.077, 0.121);   // (160,55,85)
+static const float3 RM_TOP_BODY  = float3(0.615, 0.190, 0.147);   // (225,100,75)
+static const float3 RM_TOP_CREST = float3(0.766, 0.290, 0.202);   // (250,130,90)
 static const float3 RM_SPEC      = float3(1.15, 0.92, 0.66);      // (255,225,175), blooms a little
 
 float3 RainbowRingCopper(float deep, float3 N, float3 V, float3 P, float4 vc, out float topArcOut)
@@ -147,7 +149,7 @@ float3 RainbowRingCopper(float deep, float3 N, float3 V, float3 P, float4 vc, ou
     float3 bodyC = lerp(RM_SIDE_BODY, RM_TOP_BODY, topArc);
     float3 hiC = lerp(RM_SIDE_HI, RM_TOP_CREST, topArc);
     // rounded strand: warm dark edges toward the silhouettes, saturated copper body facing the camera, a broad crest
-    float3 c = lerp(edgeC, bodyC, smoothstep(0.06, 0.5, ndv));
+    float3 c = lerp(edgeC, bodyC, smoothstep(0.1, 0.6, ndv));
     c = lerp(c, hiC, saturate(pow(saturate(crest), 0.6) * smoothstep(0.3, 0.75, ndv) * _RingLook2.x));
     c *= lerp(1.0 - _RingLook.w, 1.0, cav);
     // faint reflection of the violet walls and strip lights in the metal

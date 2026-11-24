@@ -64,8 +64,8 @@ if (padsT != null)
         var cs = cand.Split(',');
         var sc = new Vector3(float.Parse(cs[0], System.Globalization.CultureInfo.InvariantCulture), float.Parse(cs[1], System.Globalization.CultureInfo.InvariantCulture), float.Parse(cs[2], System.Globalization.CultureInfo.InvariantCulture));
         float ctilt = float.Parse(cs[3], System.Globalization.CultureInfo.InvariantCulture);
-        foreach (float ds in new float[] { 0f, 2f })
-            foreach (float dy in new float[] { -0.9f, -0.6f, -0.3f, 0f })
+        foreach (float ds in new float[] { -1.5f, 0f, 1.5f, 3f })
+            foreach (float dy in new float[] { -0.6f, -0.3f, 0f, 0.3f })
             {
                 var sl = new Rainbow.Screen05.DrumLayout05.PaddleSlot(slot.Value.s + ds, slot.Value.side, slot.Value.mountY);
                 Quaternion q = Rainbow.Screen05.EditorTools.EnvironmentBuilder.PaddleRotation(sl, ctilt, dy, out Vector3 p);
@@ -157,6 +157,20 @@ foreach (var name in order)
         if (p[1] == "padposeL") { Pose(f[0], f[1], -1, f[2]); continue; }
         if (p[1] == "padposeR") { Pose(f[0], f[1], 1, f[2]); continue; }
         if (p[1] == "padscale") { foreach (var t in padT) t.localScale = new Vector3(f[0], f[1], f[2]); continue; }
+        if (p[1] == "padone")
+        {
+            // prop = paddle object name, e.g. Paddle_L_31.0; x = tilt deg, y = mount height offset m, z = s offset m
+            for (int i = 0; i < padT.Count; i++)
+            {
+                if (padT[i].name != p[2]) continue;
+                var slot1 = SlotOf(padT[i]);
+                if (slot1 == null) continue;
+                var sl1 = new Rainbow.Screen05.DrumLayout05.PaddleSlot(slot1.Value.s + f[2], slot1.Value.side, slot1.Value.mountY);
+                Quaternion q1 = Rainbow.Screen05.EditorTools.EnvironmentBuilder.PaddleRotation(sl1, f[0], f[1], out Vector3 p1);
+                padT[i].localPosition = p1; padT[i].localRotation = q1;
+            }
+            continue;
+        }
         System.Action<Material> set = m =>
         {
             if (!m.HasProperty(p[2])) { log.AppendLine("no prop " + p[2] + " on " + m.name); return; }
