@@ -110,6 +110,19 @@ The user switches Claude accounts whenever credits run out. Any account must con
   `& C:\Users\josia\PortableGit\cmd\git.exe -C C:\RainbowUnity log -n 5`. Deleting, uninstalling, system settings, credentials and
   destructive Git still ask the user.
 
+## Blender = asset tool (user decision 2026-11-24: permanent Claude + Blender + Unity workflow)
+- Unity stays the game engine. Blender only makes more accurate, professional meshes (and baked maps) for the gold paddles, gold rings
+  and the washing-machine drum; an asset stays only after the normal cycle tool shows it closer to the approved image in the playable scene.
+- Portable Blender 5.3.0 (official zip, no installer, per laptop, NOT in GitHub): `C:\Users\josia\Blender\blender-5.3.0-windows-x64\blender.exe`.
+  One-time setup (user-approved, re-runnable, checks free disk >= 6.5 GB first - if short, tell the user - and the official SHA-256):
+  `powershell -NoProfile -ExecutionPolicy Bypass -File C:\RainbowUnity\tools\blender\setup-blender.ps1`
+- Run Blender ONLY headless (background mode, factory settings, hard timeout) for short modelling jobs, one process at a time, never while a
+  round's agents run Unity cycles: `powershell -NoProfile -ExecutionPolicy Bypass -File C:\RainbowUnity\tools\blender\run-blender.ps1 -Script C:\RainbowUnity\tools\blender\<x>.py`
+  8 GB laptop: if it reports low RAM, close Unity safely first (`unity close --if-saved`), reopen afterwards (`unity open ... --until-ready`).
+- In GitHub: scripts `tools/blender/*.py` + `*.ps1` (deterministic: same output every run; each names the approved-image targets it fits),
+  exported meshes `UnityProject/Assets/Rainbow/Environment/Models/*.fbx` (Git LFS). Claude's Blender connector (Blender Lab MCP) is optional:
+  its live mode needs the Blender window + add-on, so prefer the headless scripts on this laptop.
+
 ## Saving (automatic five-minute checkpoints)
 - The Windows Task Scheduler task "Rainbow Unity Autosave" runs `tools/autosave.ps1` every 5 minutes, hidden. It commits
   and pushes `unity/screen05-dev` only when something changed or a push is still pending. It never force-pushes, merges,

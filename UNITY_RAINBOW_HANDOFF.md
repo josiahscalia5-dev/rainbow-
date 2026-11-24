@@ -25,22 +25,25 @@ Updated 2026-11-24 06:33 local (session d7b2bd77, new account). Cross-account ru
   Lane backups of every file they edited: `UnityProject/Recordings/Screen05/work/backup_round3v/<area>/`.
 - NEXT STEP: when run `wf_ab41a260-945` ends: coordinator integration `-Tag ROUND4_FINAL -Areas all -Series` +
   `AgentScripts/screen05_playtest_check.cs` + a 12 s recording; if visual > 58.0 and the picture is closer, tag validated/r4-final-<visual>;
-  send the user ONE side-by-side + both scores. No Screen 06 until the user approves Screen 05.
+  send the user ONE side-by-side + both scores. Then the approved Blender setup (see BLENDER). No Screen 06 until the user approves Screen 05.
 - IF THE RUN DIED (account switch): read its journal; a lane with a "result" goes into `skip`; write `notes.<lane>` for the interrupted
   lane (its newest files, work stills, backups in `work/backup_round3v/<area>/`); relaunch the same script with
   `staging/shared/round4-relaunch-args.json` (+ skip / notes).
-- BLENDER (user ~06:28 + ~06:40 local: use Claude + Blender + Unity together PERMANENTLY; Blender = asset tool for accurate meshes,
-  Unity stays the engine; install ONLY after storage / memory are confirmed AND the user approves). NOT installed (leftover Blender 5.2
-  settings from October in `%APPDATA%\Blender Foundation` prove 5.x ran on this laptop). Checked ~06:45: newest stable 5.3.0 (winget
-  BlenderFoundation.Blender, 2026-11-10); official `download.blender.org/release/Blender5.3/blender-5.3.0-windows-x64.zip` 406 MB (portable,
-  ~1.2 GB unpacked) or `.msi` 366 MB. C: 7.08 GB free -> ~5.9 GB after. RAM 7.7 GB with ~1.0 GB free while Unity + 2 agents run (Windows
-  already compresses ~1.3 GB) -> run Blender HEADLESS only (`blender -b -P <script>`, short jobs) between Unity cycles, its window only
-  while Unity is closed, never during a running round. Claude's Blender connector (Blender Lab MCP 1.0.1) is already installed (live mode
-  needs its add-on; headless needs none). blender.org pages show a bot check to automated readers: never bypass it. PROPOSED, awaiting the
-  user's yes: after Round 4, portable zip -> `C:\Users\josia\Blender`; scripts `tools/blender/`; FBX -> `Assets/Rainbow/Environment/Models`;
-  first assets = paddles (rounded D-tray rim) + near frame, validated with the normal cycle tool in the playable scene.
-- WAITING ON THE USER: (a) Blender yes / no (above); (b) permission rules v2 in `tools/claude-permissions/` - the user applies them
-  (strict, or strict + test runners); (c) the GitHub repo is PUBLIC although the user called it private - only the user can change that.
+- BLENDER = APPROVED by the user (06:38 local): portable Blender 5.3 AFTER Round 4, only if enough disk remains (if not: tell the user
+  first); permanent Claude + Blender + Unity workflow, rules in CLAUDE.md "Blender = asset tool". Blender runs headless for short modelling
+  jobs (close Unity safely when RAM is needed) to improve the gold paddles, gold rings and washing-machine drum geometry; Unity stays the
+  engine; scripts + optimized FBX go to GitHub; never delete the user's assets or game files; keep installs / tests minimal.
+  Facts (~06:35): newest stable 5.3.0 (winget, 2026-11-10); official zip `download.blender.org/release/Blender5.3/blender-5.3.0-windows-x64.zip`
+  406 MB (~1.2 GB unpacked); C: 7.08 GB free; RAM ~1 GB free while Unity + 2 agents run; Blender 5.2 ran on this laptop in October;
+  blender.org pages show a bot check to automated readers (never bypass it; winget + download.blender.org work). PREPARED, syntax-checked,
+  NOT run yet: `tools/blender/setup-blender.ps1` (exit 2 if C: < 6.5 GB free; verifies the official SHA-256; unpacks to
+  `C:\Users\josia\Blender`; removes only its own zip; prints `--version`) and `tools/blender/run-blender.ps1` (headless runner: RAM check,
+  one process at a time, timeout, logs in `C:\Users\josia\Blender\logs`).
+  NEXT after the Round 4 integration + report to the user: run setup-blender.ps1; then the first Blender asset job on whichever of
+  paddles / rings / drum Round 4 left furthest from the approved image (FBX -> `Assets/Rainbow/Environment/Models`, builder loads it,
+  validated with the normal cycle tool).
+- WAITING ON THE USER: (a) permission rules v2 in `tools/claude-permissions/` - the user applies them (strict, or strict + test runners);
+  (b) the GitHub repo is PUBLIC although the user called it private - only the user can change that.
 <!-- NEXT-TASK:END -->
 
 ## DETAILED LOG (older entries, newest first; the NOW block above wins where they disagree)
