@@ -54,7 +54,7 @@ namespace Rainbow.Screen05
             if (sprites.bar == null) sprites.bar = UISpriteFactory.ToSprite(BarTexture());
             if (sprites.banner == null) sprites.banner = UISpriteFactory.ToSprite(BannerTexture());
             if (sprites.heart == null) sprites.heart = UISpriteFactory.ToSprite(UISpriteFactory.Heart("hud_heart", 128));
-            if (sprites.coin == null) sprites.coin = UISpriteFactory.ToSprite(UISpriteFactory.CoinFace("hud_coin", 128));
+            if (sprites.coin == null) sprites.coin = UISpriteFactory.ToSprite(UISpriteFactory.CoinFace("hud_coin", 128, true));
             if (sprites.pause == null) sprites.pause = UISpriteFactory.ToSprite(UISpriteFactory.PauseButton("hud_pause", 128));
             if (sprites.panel == null) sprites.panel = UISpriteFactory.ToSprite(PanelTexture());
             if (sprites.button == null) sprites.button = UISpriteFactory.ToSprite(ButtonTexture());
@@ -87,9 +87,11 @@ namespace Rainbow.Screen05
             // mean ~(160,56,147) with the icons); Unity's 0.80-alpha lavender bar let the walls through (median ~110)
             // round 4 (2026-11-24), sampled on the approved image: deep purple glass (97,3,131) top .. (92,2,128) bottom, thin lilac
             // rim (230,172,243) .. (198,91,237); the old 0.9 white gloss washed it out to lavender
-            return UISpriteFactory.Pill("hud_bar", 992, 109, 54f,
-                new Color(101 / 255f, 3 / 255f, 134 / 255f, 1f), new Color(91 / 255f, 2 / 255f, 127 / 255f, 1f),
-                3.2f, new Color(226 / 255f, 150 / 255f, 240 / 255f, 0.9f), 0.03f);
+            // round 8: glossy glass - a bright magenta reflection under the top rim (measured (165,12,190) at y 25, (150,16,155) at y 30), deep violet body
+            Color bt = new Color(101 / 255f, 3 / 255f, 134 / 255f, 1f), bb = new Color(91 / 255f, 2 / 255f, 127 / 255f, 1f);
+            return UISpriteFactory.GlassRows(UISpriteFactory.Pill("hud_bar", 992, 109, 54f, bt, bb, 3.2f, new Color(232 / 255f, 160 / 255f, 246 / 255f, 0.95f), 0f), bt, bb,
+                new Vector4(0f, 112f, 4f, 142f), new Vector4(0.12f, 96f, 3f, 131f), new Vector4(0.5f, 95f, 3f, 130f), new Vector4(0.7f, 112f, 6f, 141f),
+                new Vector4(0.83f, 148f, 13f, 162f), new Vector4(0.93f, 168f, 16f, 190f), new Vector4(1f, 176f, 40f, 196f));
         }
 
         /// <summary>Round 4: the left "hearts" pill inside the bar (outline only).</summary>

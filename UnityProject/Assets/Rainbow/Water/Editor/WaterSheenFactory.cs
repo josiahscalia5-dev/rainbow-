@@ -10,8 +10,8 @@ namespace Rainbow.Screen05.EditorTools
     /// the fine streaks, ripples and glints are procedural and flow with the current). Measured on the approved picture:
     ///  * RiverSheen05 (96 x 96): mean ramp row (0..1) by streamline coordinate q (x, -3..3) and log2 view distance (y, 3.5 m .. 158 m):
     ///    broad reflections belong to the view, so they stay with the camera distance while the ripples run through them.
-    ///  * WakeSheen05 (96 x 96): the standing wake behind Benny in HIS frame, x = dl (-2.2 .. 2.2 m), y = back (0.2 .. 3.8 m):
-    ///    R = ramp row, G = pink amount (the two pink sweeps), B = 1 where it was measured.
+    ///  * WakeSheen05 (96 x 96): the standing wake behind Benny in HIS frame, x = dl (-2.2 .. 2.2 m), y = back (-0.7 .. 3.8 m):
+    ///    R = ramp row, G = pink amount (the two pink sweeps), B = 1 where it was measured, A = foam amount (lacy splash water).
     /// Made by AgentScripts/screen05_make_water_sheen.cs after MakeRamp.
     /// </summary>
     public static class WaterSheenFactory
@@ -98,21 +98,36 @@ namespace Rainbow.Screen05.EditorTools
             Save(px, SheenPath, "RiverSheen05");
 
             // ---- wake sheen (Benny's frame): only clean water pixels (no foam, splash, frame, bubbles)
+            var fa = new float[N * N]; var fw = new float[N * N];
             var ra = new float[N * N]; var rw = new float[N * N]; var ga = new float[N * N]; var gw = new float[N * N];
-            for (int y = 1150; y < 1536; y++)
+            for (int y = 1062; y < 1536; y++)
                 for (int x = 0; x < 864; x++)
                 {
                     if (Circ(x, y) || Benny(x, y)) continue;
                     Color32 c = A[(1535 - y) * 864 + x];
                     float mx = Mathf.Max(c.r, Mathf.Max(c.g, c.b)), mn = Mathf.Min(c.r, Mathf.Min(c.g, c.b));
                     if (c.b < 150 || c.r > c.b + 25) continue;                                    // frame copper, gold
+                    {
+                        Vector3 d0 = R * new Vector3((x + 0.5f - 432f) / F, (768f - y - 0.5f) / F, 1f);
+                        Vector3 p0 = C + d0 * (-C.y / d0.y);
+                        float dl0 = p0.x + 0.45f - 0.1f, back0 = 14f - p0.z;
+                        int iu0 = Mathf.RoundToInt((dl0 + 2.2f) / 4.4f * N - 0.5f), iv0 = Mathf.RoundToInt((back0 + 0.7f) / 4.5f * N - 0.5f);
+                        if (iu0 >= 0 && iv0 >= 0 && iu0 < N && iv0 < N)
+                        {
+                            // foam amount: white / pale pixels, but not the star glints and arc lines of the open wake water
+                            bool glintZone = back0 > 1.35f && Mathf.Abs(dl0 - 0.03f) < 0.2f + 0.36f * back0;
+                            float fo = glintZone ? 0f : Mathf.Clamp01((mn - 105f) / 110f);
+                            fa[iv0 * N + iu0] += fo; fw[iv0 * N + iu0] += 1f;
+                        }
+                    }
+                    if (y < 1150) continue;
                     bool white = mn > 170;
                     if (white && y < 1330) continue;                                              // foam / splash
                     if (mx - mn < 60 && y < 1420) continue;
                     Vector3 d = R * new Vector3((x + 0.5f - 432f) / F, (768f - y - 0.5f) / F, 1f);
                     Vector3 p = C + d * (-C.y / d.y);
                     float dl = p.x + 0.45f - 0.1f, back = 14f - p.z;
-                    float u = (dl + 2.2f) / 4.4f * N - 0.5f, v = (back - 0.2f) / 3.6f * N - 0.5f;
+                    float u = (dl + 2.2f) / 4.4f * N - 0.5f, v = (back + 0.7f) / 4.5f * N - 0.5f;
                     int iu = Mathf.RoundToInt(u), iv = Mathf.RoundToInt(v);
                     if (iu < 0 || iv < 0 || iu >= N || iv >= N) continue;
                     // pink amount from the hue: cyan / blue water has r << g; pink has g << r
@@ -121,8 +136,8 @@ namespace Rainbow.Screen05.EditorTools
                     ra[iv * N + iu] += row; rw[iv * N + iu] += 1f;
                     ga[iv * N + iu] += pink; gw[iv * N + iu] += 1f;
                 }
-            float[] wr = Fill(ra, rw, 0.7f, 0.3f), wg = Fill(ga, gw, 0.7f, 0f), wb = Fill(Mask(rw), One(), 1.2f, 0f);
-            for (int i = 0; i < N * N; i++) px[i] = new Color(wr[i], wg[i], wb[i], 1f);
+            float[] wr = Fill(ra, rw, 0.7f, 0.3f), wg = Fill(ga, gw, 0.7f, 0f), wb = Fill(Mask(rw), One(), 1.2f, 0f), wa = Fill(fa, fw, 0.8f, 0f);
+            for (int i = 0; i < N * N; i++) px[i] = new Color(wr[i], wg[i], wb[i], wa[i]);
             Save(px, WakePath, "WakeSheen05");
             return "sheen mean row " + mean.ToString("0.000") + " cells " + cnt;
         }

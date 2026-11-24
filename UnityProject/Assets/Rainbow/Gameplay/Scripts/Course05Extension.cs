@@ -110,27 +110,30 @@ namespace Rainbow.Screen05
                     grows.Add(new Grow { t = go.transform, s = s, d0 = 74f, d1 = Mathf.Min(s - 16f, 118f), home = home, outward = new Vector3(side * 3.4f, 1.2f, 0f), r = go.GetComponent<Renderer>() });
                 }
             }
-            // ---- foam (the same puffs; a little thinner)
-            if (foamR != null)
-            {
-                for (float a = RiverPath.TunnelLength; a < FoamEnd; a += 60f)
-                {
-                    float b = Mathf.Min(a + 60f, FoamEnd);
-                    List<FoamBank.Puff> puffs = FoamBank.GenerateRange(a, b, (uint)(0x0577u + (uint)a * 31u), 0.8f);
-                    foreach (FoamBank.Chunk c in FoamBank.BuildChunks(puffs, 20f))
-                    {
-                        var go = new GameObject("x" + c.name);
-                        go.transform.SetParent(root, false);
-                        Renderer r0 = AddChild(go.transform, "LOD0", c.lod0, foamR.sharedMaterial), r1 = AddChild(go.transform, "LOD1", c.lod1, foamR.sharedMaterial);
-                        LODGroup lg = go.AddComponent<LODGroup>();
-                        lg.SetLODs(new[] { new LOD(0.2f, new[] { r0 }), new LOD(0.004f, new[] { r1 }) });
-                        lg.RecalculateBounds();
-                    }
-                }
-            }
+            // ---- foam (the same puffs; a little thinner): built in small pieces over the first second, long before he gets there (no hitch)
+            if (foamR != null) StartCoroutine(BuildFoam(foamR.sharedMaterial));
             // ---- throat
             cap = FindPath(env, "FarThroat/ThroatCap");
             Tick(RiverPath.StartS - 6.52f);
+        }
+
+        System.Collections.IEnumerator BuildFoam(Material mat)
+        {
+            const float step = 20f;
+            for (float a = RiverPath.TunnelLength; a < FoamEnd; a += step)
+            {
+                yield return null;
+                List<FoamBank.Puff> puffs = FoamBank.GenerateRange(a, Mathf.Min(a + step, FoamEnd), (uint)(0x0577u + (uint)a * 31u), 0.8f);
+                foreach (FoamBank.Chunk c in FoamBank.BuildChunks(puffs, step))
+                {
+                    var go = new GameObject("x" + c.name);
+                    go.transform.SetParent(root, false);
+                    Renderer r0 = AddChild(go.transform, "LOD0", c.lod0, mat), r1 = AddChild(go.transform, "LOD1", c.lod1, mat);
+                    LODGroup lg = go.AddComponent<LODGroup>();
+                    lg.SetLODs(new[] { new LOD(0.2f, new[] { r0 }), new LOD(0.004f, new[] { r1 }) });
+                    lg.RecalculateBounds();
+                }
+            }
         }
 
         static Renderer Rend(Transform t) => t != null ? t.GetComponent<Renderer>() : null;

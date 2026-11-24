@@ -97,6 +97,32 @@ namespace Rainbow.Screen05
             return t;
         }
 
+        /// <summary>Round 8: recolours a pill by rows (glass gloss): stops = (v 0 bottom .. 1 top, r, g, b 0-255); alpha, rim and edges stay.</summary>
+        public static Texture2D GlassRows(Texture2D t, Color baseTop, Color baseBottom, params Vector4[] stops)
+        {
+            int w = t.width, h = t.height;
+            Color[] px = t.GetPixels();
+            for (int y = 0; y < h; y++)
+            {
+                float v = y / (float)(h - 1);
+                int i = 0;
+                while (i + 2 < stops.Length && v > stops[i + 1].x) i++;
+                float k = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(stops[i].x, stops[i + 1].x, v));
+                Vector4 s = Vector4.Lerp(stops[i], stops[i + 1], k);
+                Color want = new Color(s.y / 255f, s.z / 255f, s.w / 255f, 1f), was = Color.Lerp(baseBottom, baseTop, v);
+                for (int x = 0; x < w; x++)
+                {
+                    Color c = px[y * w + x];
+                    if (c.a <= 0f) continue;
+                    float isFill = 1f - Mathf.Clamp01((Mathf.Abs(c.r - was.r) + Mathf.Abs(c.g - was.g) + Mathf.Abs(c.b - was.b)) * 3f);
+                    px[y * w + x] = new Color(Mathf.Lerp(c.r, want.r, isFill), Mathf.Lerp(c.g, want.g, isFill), Mathf.Lerp(c.b, want.b, isFill), c.a);
+                }
+            }
+            t.SetPixels(px);
+            t.Apply(false, false);
+            return t;
+        }
+
         /// <summary>Round button: translucent dark fill, white ring, two rounded pause bars (hud.ts .pbtn).</summary>
         public static Texture2D PauseButton(string name, int size)
         {
@@ -162,6 +188,10 @@ namespace Rainbow.Screen05
                     float qx = x / (float)size - 0.31f, qy = y / (float)size - 0.70f;
                     float spec = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(1.4f * (1f - Mathf.Sqrt(qx * qx * 3f + qy * qy * 6f) / 0.16f)));   // ~12 x 8 px like the approved
                     c = Over(c, Color.white, spec * 0.95f * coverInner);
+                    // round 8: a thin bright glassy rim round the raised heart, strongest at the lower left (approved: pink-white edge light)
+                    float rimL = Mathf.Clamp01((1f - depth) * 1.25f) * (1f - Mathf.SmoothStep(0.15f, 0.55f, depth));
+                    float rimDir = Mathf.Clamp01(0.55f + 0.5f * (0.5f - vy) + 0.35f * (0.5f - x / (float)size));
+                    c = Over(c, new Color(1f, 0.72f, 0.86f), rimL * rimDir * 0.7f);
                     c.a = cover;
                     px[y * size + x] = c;
                 }
@@ -210,14 +240,14 @@ namespace Rainbow.Screen05
         {
             float dS = float.MaxValue;
             for (int i = 0; i + 1 < dollarPath.Count; i++) dS = Mathf.Min(dS, SegDist(p, dollarPath[i], dollarPath[i + 1]));
-            float dV = SegDist(p, new Vector2(128, 50), new Vector2(128, 206));
+            float dV = Mathf.Min(SegDist(p, new Vector2(128, 48), new Vector2(128, 74)), SegDist(p, new Vector2(128, 182), new Vector2(128, 208)));   // round 8: short stubs above and below the S like the approved
             float cS = Mathf.Clamp01(lw * 0.5f - dS + 0.5f);
             float cV = Mathf.Clamp01(lw * 0.62f * 0.5f - dV + 0.5f);
             return Mathf.Max(cS, cV);
         }
 
         /// <summary>Gold coin face with raised rim and embossed $ (alpha = round mask). Also the HUD coin icon.</summary>
-        public static Texture2D CoinFace(string name, int size)
+        public static Texture2D CoinFace(string name, int size, bool hudGold = false)
         {
             EnsureDollar();
             Texture2D t = NewTex(size, size, name);
@@ -252,6 +282,8 @@ namespace Rainbow.Screen05
                     c = Over(c, outline, DollarCover(q, 40f));
                     c = Over(c, glyph, DollarCover(q, 31f));
                     c = Over(c, bevel, DollarCover(q + new Vector2(3f, 4f), 13f));
+                    // round 8: the HUD icon is drawn without the scene light: the approved icon is a brighter yellow gold
+                    if (hudGold) c = new Color(Mathf.Min(1f, c.r * 1.06f), Mathf.Min(1f, c.g * 1.34f), Mathf.Min(1f, c.b * 1.25f), c.a);
                     c.a = shape;
                     px[y * size + x] = c;
                 }

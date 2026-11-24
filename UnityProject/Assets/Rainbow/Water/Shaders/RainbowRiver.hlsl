@@ -218,8 +218,10 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float Yw = lerp(0.22 + (row - 0.333) * 0.75, Yc, mid);
     Yw = lerp(Yw, 0.37 + (row - 0.333) * 1.1, smoothstep(0.1, 0.7, gk));
     // the approved standing pattern (broad light only) between and on the sweeps; it breathes with the bow wobble
-    float2 wuv = float2((dlW + 0.012 * sin(bt * 2.9 + back * 6.0) + 2.2) / 4.4, (back + (bow - back + 0.8 * dlW * dlW) * 1.2 - 0.2) / 3.6);
-    float3 wm = SAMPLE_TEXTURE2D_LOD(_WakeSheen, sampler_WakeSheen, wuv, 0).rgb;
+    float backS = -db;                                                         // signed: < 0 beside and ahead of him
+    float2 wuv = float2((dlW + 0.012 * sin(bt * 2.9 + backS * 6.0) + 2.2) / 4.4, (backS + (bow - back + 0.8 * dlW * dlW) * 1.2 + 0.7) / 4.5);
+    float4 wm = SAMPLE_TEXTURE2D_LOD(_WakeSheen, sampler_WakeSheen, wuv, 0);
+    float wakeFoam = wm.a * bOn * wk * smoothstep(-0.7, -0.45, backS) * (1.0 - smoothstep(3.2, 3.7, backS)) * (1.0 - smoothstep(1.8, 2.15, abs(dlW)));
     Yw = lerp(Yw, clamp(wm.r, 0.06, 0.6) + (row - 0.333) * 0.34 + arcL * 0.1, 0.8 * saturate(wm.b * 1.3 - 0.2) * max(mid, smoothstep(0.1, 0.6, gk)));
     Y = lerp(Y, Yw, wakeA);
     float qw = lerp(0.1, 1.5, smoothstep(0.06, 0.85, gk));
@@ -231,15 +233,19 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     c5 *= lerp(float3(1.0, 1.0, 1.0), float3(1.1, 0.98, 0.86), pkF);   // hot pink, not violet-pink (measured: approved (247,84,234), was (227,84,241))
 
     // soap lace lying on the water: a broken rope outside each wake sweep and a thin web along the foam waterlines
-    float latherW = exp(-(tS - 2.5) * (tS - 2.5) * 1.6) * wakeA * smoothstep(0.85, 1.2, back) * (1.0 - smoothstep(2.5, 3.1, back));
+    float latherW = wakeFoam;
     float latherB = exp(-(max(wl - lat, lat - wr) + 0.1) * (max(wl - lat, lat - wr) + 0.1) * 60.0) * (1.0 - smoothstep(22.0, 40.0, distV));
     [branch] if (latherW + latherB > 0.02)
     {
-        float4 lc = SAMPLE_TEXTURE2D_LOD(_LaceTex, sampler_LaceTex, float2(lat * 0.55, (latherW > latherB ? s : v5) * 0.4), clamp(log2(distV / 6.0), 0.0, 5.0));
-        float lh = max(lc.r, lc.g * 0.9);
-        float lk = max(latherW * 0.8, latherB * 0.6) * (0.55 + 0.8 * lc.b);
-        float la = smoothstep(1.02 - lk * 0.75, 1.2 - lk * 0.75, lh + 0.25);
-        c5 = lerp(c5, lerp(float3(0.5, 0.72, 1.0), float3(0.95, 0.96, 1.02), la), saturate(la * saturate(lk * 1.6)));
+        bool wl5 = latherW > latherB * 0.6;
+        float2 luv = wl5 ? float2(dlW * 0.75 + 0.1 * sin(backS * 2.0 + bt * 0.7), backS * 0.6 - bt * 0.55) : float2(lat * 0.55, v5 * 0.4);
+        float4 lc = SAMPLE_TEXTURE2D_LOD(_LaceTex, sampler_LaceTex, luv, clamp(log2(distV / 6.0), 0.0, 5.0));
+        float4 lc2 = SAMPLE_TEXTURE2D_LOD(_LaceTex, sampler_LaceTex, luv * 2.3 + 0.31, clamp(log2(distV / 3.0), 0.0, 5.0));
+        float lh = saturate(min(max(lc.r, lc2.g * 0.8), lc2.r * 1.5 + 0.2));
+        float lk = wl5 ? latherW * (0.75 + 0.5 * lc.b) : latherB * 0.6 * (0.55 + 0.8 * lc.b);
+        float thr = lerp(0.86, 0.05, saturate(lk));
+        float la = smoothstep(thr, thr + 0.22, lh) * saturate(lk * 2.6);
+        c5 = lerp(c5, lerp(RBW_Disp(float3(150, 190, 250)), RBW_Disp(float3(244, 246, 255)), smoothstep(0.15, 0.8, la)), la);
     }
 
     // ---- surface: ripples catch the light (emboss), slivers of light burn a little, gloss from the swell normal ----

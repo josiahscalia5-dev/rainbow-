@@ -10,6 +10,9 @@ namespace Rainbow.Screen05
     [RequireComponent(typeof(CanvasRenderer))]
     public sealed class HudGlyphText : MaskableGraphic
     {
+        /// <summary>Round 8: the approved counters are a medium weight (stroke ~0.18 of the capital height), lighter than the banner.</summary>
+        const float Thin = 0.022f;
+
         const string Chars = "0123456789,/+";
         const int CellW = 72, CellH = 96, CapPx = 60, PadX = 8, PadY = 18;
         static Texture2D atlas;
@@ -47,7 +50,7 @@ namespace Rainbow.Screen05
                     for (int x = 0; x < CellW; x++)
                     {
                         float gx = (x + 0.5f - PadX) / CapPx, gy = (y + 0.5f - PadY) / CapPx;
-                        float a = Mathf.Clamp01(0.5f - HudGlyphs.Sdf(g, gx / k, gy) * CapPx);
+                        float a = Mathf.Clamp01(0.5f - (HudGlyphs.Sdf(g, gx / k, gy) + Thin) * CapPx);
                         Color col = Color.Lerp(new Color(0.96f, 0.80f, 0.98f, 1f), Color.white, Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(gy * 1.8f)));
                         col.a = a;
                         px[y * w + c * CellW + x] = col;

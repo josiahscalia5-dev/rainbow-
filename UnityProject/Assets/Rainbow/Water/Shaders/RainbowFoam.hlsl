@@ -169,7 +169,7 @@ float3 RBW_FoamColor(float3 Nv, float px, float seed, float ao, float tint, floa
     float up = dot(Ns, upV);
     float lit = saturate(0.52 + 0.5 * up - 0.07 * Ns.x);
     float big = smoothstep(14.0, 34.0, px);
-    float t = -0.04 + 0.94 * smoothstep(0.12, 1.04, lit) - (1.0 - ao) * 0.6;
+    float t = -0.14 + 1.0 * smoothstep(0.16, 1.06, lit) - (1.0 - ao) * 0.6;
     t -= pow(1.0 - z, 2.0) * 0.28 * saturate(0.35 - q.y);                       // soft crease shade under the lump only
     // fine open bubbles: many small blue holes on the lower half and at the flanks, few on the lit cap
     float2 mp = q * (1.0 + 0.5 * (1.0 - z)) * clamp(px / 6.5, 1.4, 11.0) + seed * 37.0;

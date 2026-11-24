@@ -365,7 +365,7 @@ namespace Rainbow.Screen05.EditorTools
             s.bar = SaveSprite(Screen05Hud.BarTexture(), "Hud_Bar.png");
             s.banner = SaveSprite(Screen05Hud.BannerTexture(), "Hud_Banner.png");
             s.heart = SaveSprite(UISpriteFactory.Heart("Hud_Heart", 128), "Hud_Heart.png");
-            s.coin = SaveSprite(UISpriteFactory.CoinFace("Hud_Coin", 128), "Hud_Coin.png");
+            s.coin = SaveSprite(UISpriteFactory.CoinFace("Hud_Coin", 128, true), "Hud_Coin.png");
             s.pause = SaveSprite(UISpriteFactory.PauseButton("Hud_Pause", 128), "Hud_Pause.png");
             s.panel = SaveSprite(Screen05Hud.PanelTexture(), "Hud_Panel.png");
             s.button = SaveSprite(Screen05Hud.ButtonTexture(), "Hud_Button.png");

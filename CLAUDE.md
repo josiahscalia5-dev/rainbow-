@@ -29,6 +29,19 @@ The user switches Claude accounts whenever credits run out. Any account must con
   out; move superseded details into the DETAILED LOG below it; then run `tools/autosave.ps1` and confirm the push.
 - A Workflow run dies with its account: the next account reads its journal and relaunches the same stage with `skip` / `notes`.
 
+## PERMANENT RULE: gameplay quality + master direction (user, 2026-11-24 13:28 local)
+- `references/correction-guides-2026-11-24b/README.md` is binding: water first, natural swimming, continuous 3D world, smooth camera, wake, foam, 30-60 s recording.
+- Gameplay is judged SEPARATELY from the still scores. Before any "done" claim run the motion check and look at several positions, not only s = 14:
+  `powershell -NoProfile -ExecutionPolicy Bypass -File C:\RainbowUnity\tools\screen05-eval.ps1 -File AgentScripts/screen05_motion_strip.cs -Play -Timeout 580`
+  (parameters in `UnityProject/Recordings/Screen05/work/strip_params.txt`; prints per-frame steps / second differences of Benny and the camera + a contact sheet).
+- The course is LONG since 2026-11-24: swim s 14 -> 466 (~41 s). Baked: river / foam to s 120, walls / rings to s 470; `Course05Extension` builds the rest at the start of
+  Play from the same generators (nothing extra in the repository). `SwimLine05` = the line Benny follows + the swimmable width between the foam banks.
+  `BennySwimAnimator` (code-driven, one continuous stroke phase) replaced the Animator states. Keep the approved view at s = 14 unchanged by these.
+- Short helpers: `tools/screen05-quick.ps1 -Tag x [-NoRebuild] [-Refresh] [-Crop "x,y,w,h,scale"]` (cycle with short output), `tools/screen05-recompile.ps1`,
+  `tools/screen05-sheenloop.ps1` (broad water sheen calibration), `tools/diag/patches.ps1` (patch colours), `AgentScripts/screen05_water_measure_compact.cs`.
+- SCRIPT SAFETY (incident 2026-11-24 13:51 local): a helper function named `Rd` ran the PowerShell alias `rd` = Remove-Item and deleted four source files (restored at
+  once from the autosave commit, nothing lost). Never name functions like aliases (rd, rm, del, ri, sc, mv, cp, sl ...); use Verb-Noun names; patch files with perl / Edit.
+
 ## At the start of every session (before changing anything)
 1. Read the "RAINBOW STATUS" block that the SessionStart hook adds (`tools/session-start.ps1`, configured in
    `.claude/settings.json`). If it is missing, run it yourself (read-only):

@@ -1,0 +1,10 @@
+use strict; use warnings; local $/;
+my $root = '/c/RainbowUnity/UnityProject/Assets/Rainbow';
+sub slurp { my $p = shift; open(my $f, '<', $p) or die "$p: $!"; my $t = <$f>; close $f; $t =~ s/\r\n/\n/g; return $t; }
+sub spew { my ($p, $t) = @_; die "tiny file $p" if length($t) < 500; open(my $f, '>', $p) or die "$p: $!"; binmode $f; print $f $t; close $f; }
+my $c = slurp("$root/Gameplay/Scripts/Course05Extension.cs");
+unless ($c =~ /BuildFoam/) {
+  $c =~ s/            \/\/ ---- foam \(the same puffs; a little thinner\)\n            if \(foamR != null\)\n            \{.*?\n            \}\n            \/\/ ---- throat\n/            \/\/ ---- foam (the same puffs; a little thinner): built in small pieces over the first second, long before he gets there (no hitch)\n            if (foamR != null) StartCoroutine(BuildFoam(foamR.sharedMaterial));\n            \/\/ ---- throat\n/s or die 'foam';
+  $c =~ s/(        static Renderer Rend\(Transform t\))/        System.Collections.IEnumerator BuildFoam(Material mat)\n        {\n            const float step = 20f;\n            for (float a = RiverPath.TunnelLength; a < FoamEnd; a += step)\n            {\n                yield return null;\n                List<FoamBank.Puff> puffs = FoamBank.GenerateRange(a, Mathf.Min(a + step, FoamEnd), (uint)(0x0577u + (uint)a * 31u), 0.8f);\n                foreach (FoamBank.Chunk c in FoamBank.BuildChunks(puffs, step))\n                {\n                    var go = new GameObject("x" + c.name);\n                    go.transform.SetParent(root, false);\n                    Renderer r0 = AddChild(go.transform, "LOD0", c.lod0, mat), r1 = AddChild(go.transform, "LOD1", c.lod1, mat);\n                    LODGroup lg = go.AddComponent<LODGroup>();\n                    lg.SetLODs(new[] { new LOD(0.2f, new[] { r0 }), new LOD(0.004f, new[] { r1 }) });\n                    lg.RecalculateBounds();\n                }\n            }\n        }\n\n$1/ or die 'fn';
+  spew("$root/Gameplay/Scripts/Course05Extension.cs", $c); print "ok\n";
+}

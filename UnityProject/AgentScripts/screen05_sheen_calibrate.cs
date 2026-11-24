@@ -41,7 +41,7 @@ for (int y = 503; y < 1520; y++) for (int x = 0; x < 864; x++)
         if (White(a) || White(u)) continue;
         float dl = p.x + 0.45f - 0.1f, back = 14f - p.z;
         if (Mathf.Abs(dl) > 0.5f + 0.45f * back) continue;                          // foam ropes outside
-        int iu = Mathf.RoundToInt((dl + 2.2f) / 4.4f * N - 0.5f), iv = Mathf.RoundToInt((back - 0.2f) / 3.6f * N - 0.5f);
+        int iu = Mathf.RoundToInt((dl + 2.2f) / 4.4f * N - 0.5f), iv = Mathf.RoundToInt((back + 0.7f) / 4.5f * N - 0.5f);
         if (iu < 0 || iv < 0 || iu >= N || iv >= N) continue;
         bool pa = a.r > a.g + 55, pu = u.r > u.g + 55;
         if (pa != pu) continue;

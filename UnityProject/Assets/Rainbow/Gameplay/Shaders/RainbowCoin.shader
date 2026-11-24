@@ -13,6 +13,7 @@ Shader "Rainbow/Gameplay/Coin"
         _SpecPower ("Specular Power", Float) = 48
         _SpecStrength ("Specular Strength", Float) = 2.2
         _EnvStrength ("Reflection Strength", Float) = 0.9
+        _FaceTint ("Face colour match", Vector) = (1.0, 1.5, 1.2, 0)
     }
 
     SubShader
@@ -35,6 +36,7 @@ Shader "Rainbow/Gameplay/Coin"
             half _SpecPower;
             half _SpecStrength;
             half _EnvStrength;
+            float4 _FaceTint;
         CBUFFER_END
         ENDHLSL
 
@@ -96,7 +98,7 @@ Shader "Rainbow/Gameplay/Coin"
                 float3 faceArt = SAMPLE_TEXTURE2D(_FaceMap, sampler_FaceMap, TRANSFORM_TEX(i.uv, _FaceMap)).rgb;
                 float3 edgeArt;
                 RainbowCoinEdge_float(i.uv.x, _EdgeBright.rgb, _EdgeDark.rgb, _EdgeCount, edgeArt);
-                float3 art = lerp(edgeArt, faceArt, saturate(i.face));
+                float3 art = lerp(edgeArt, faceArt * _FaceTint.rgb, saturate(i.face));
 
                 float3 N = normalize(i.normalWS);
                 // raised face: a softly domed normal, so the key light is a moving spot (a flat face flashed all white at one angle)
