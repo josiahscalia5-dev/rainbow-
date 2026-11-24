@@ -76,8 +76,10 @@ namespace Rainbow.Screen05
         public static Texture2D BarTexture()
         {
             // .bar: linear-gradient(rgba(150,60,200,.72), rgba(92,22,150,.78)), border .22u rgba(255,220,255,.55), radius 2.8u
+            // coordinator round 3 (2026-11-23): the approved bar is a DARK magenta-purple glass (pill median luminance ~57,
+            // mean ~(160,56,147) with the icons); Unity's 0.80-alpha lavender bar let the walls through (median ~110)
             return UISpriteFactory.Pill("hud_bar", 992, 106, 53f,
-                new Color(150 / 255f, 60 / 255f, 200 / 255f, 0.80f), new Color(92 / 255f, 22 / 255f, 150 / 255f, 0.86f),
+                new Color(128 / 255f, 34 / 255f, 150 / 255f, 0.90f), new Color(80 / 255f, 14 / 255f, 112 / 255f, 0.93f),
                 4.5f, new Color(1f, 220 / 255f, 1f, 0.6f), 0.9f);
         }
 

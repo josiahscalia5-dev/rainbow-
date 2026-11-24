@@ -167,10 +167,13 @@ namespace Rainbow.Screen05.EditorTools
             SetFloat(m, "_Metallic", 0.92f);
             SetFloat(m, "_Roughness", 0.07f);
             SetTex(m, "_EnvPano", pano);
-            SetFloat(m, "_EnvIntensity", 0.9f);
+            // coordinator round 3 (2026-11-23, live variants coord_e1/e2): the walls were ~30 % too bright and pastel
+            // (approved wall band mean (194,85,150), median luminance 102; Unity (211,114,161), 134): less reflection,
+            // fewer strip highlights, a saturated violet-magenta F0, magenta-violet glow, softer slot lips, exposure 0.85
+            SetFloat(m, "_EnvIntensity", 0.75f);                                 // was 0.9
             SetFloat(m, "_EnvBlur", 0.6f);
             SetCol(m, "_StripColor", new Color(1f, 0.70f, 0.97f, 1f));           // was #ffd9f6
-            SetFloat(m, "_StripIntensity", 2.8f);                                // was 4.4
+            SetFloat(m, "_StripIntensity", 2.2f);                                // was 2.8 (4.4 before)
             SetVec(m, "_StripParams", new Vector4(28f, 0.017f, 0f, 0.8f));
             SetHex(m, "_MidTint", "#8a30d2");
             // was 0.45 mid-tint mix; w = violet self-glow of the deep walls (light round 2026-11-23, RainbowDrumWall.hlsl)
@@ -202,7 +205,7 @@ namespace Rainbow.Screen05.EditorTools
             SetVec(m, "_FloorSheet", new Vector4(RiverPath.WaterY + 0.06f, 0.35f, 5.4f, 1f));
             SetHex(m, "_FloorColorA", "#c81f9c");
             SetHex(m, "_FloorColorB", "#ff4fc0");
-            SetFloat(m, "_Exposure", 1f);
+            SetFloat(m, "_Exposure", 0.85f);                                     // coordinator round 3 (was 1)
             SetFloat(m, "_LightInfluence", 1f);
             // light round 2026-11-23: strips / reflection fade with view distance (strips 8 %, panorama 50 % beyond 80 m)
             // so the deep walls stay violet instead of pink-white radial spokes converging on the throat
@@ -211,23 +214,26 @@ namespace Rainbow.Screen05.EditorTools
         }
 
         // ---- tunnel round 3 (2026-11-23) look values, measured against references/05_flow_into_the_current.png ----
-        /// <summary>Wall metal F0 (sRGB): violet-lavender (was (0.80, 0.60, 0.98), which reflected the magenta pano hot pink).</summary>
-        static readonly Color WallBase = new Color(0.62f, 0.45f, 1.0f, 1f);
-        /// <summary>Violet land glow (linear rgb, strength).</summary>
-        static readonly Vector4 WallGlow = new Vector4(0.22f, 0.03f, 0.55f, 0.45f);
+        /// <summary>Wall metal F0 (sRGB): saturated violet-magenta (coordinator round 3; the tunnel lane's (0.62, 0.45, 1.0)
+        /// read pastel lavender, the older (0.80, 0.60, 0.98) reflected the magenta pano hot pink).</summary>
+        static readonly Color WallBase = new Color(0.70f, 0.28f, 0.92f, 1f);
+        /// <summary>Magenta-violet land glow (linear rgb, strength; coordinator round 3, was violet (0.22, 0.03, 0.55)).</summary>
+        static readonly Vector4 WallGlow = new Vector4(0.40f, 0.03f, 0.50f, 0.45f);
         /// <summary>Slot rows: pitch at the camera eye (m) and growth per metre of depth (forced perspective).</summary>
         const float WallRowPitch0 = 0.6f, WallRowGrowth = 0.036f;
         /// <summary>Slot arc cells: (holes round the drum, ceiling density boost, hole half length / arc cell, -).</summary>
         static readonly Vector3 WallSlotArc = new Vector3(60f, 0.5f, 0.36f);
         /// <summary>(hole half width / row pitch at the waterline, lit lip px, brushed strength, brushed lines per m).</summary>
         static readonly Vector4 WallSlotShape = new Vector4(0.24f, 1.6f, 0.25f, 1.5f);
-        const float WallSlotCoverage = 0.22f, WallLipGlow = 1.4f;
+        const float WallSlotCoverage = 0.22f, WallLipGlow = 0.8f;   // lip glow: coordinator round 3 (was 1.4)
         /// <summary>Polished ring metal (key highlight, sharpness, reflection, cavity darkness): RainbowGoldMetal.hlsl.</summary>
         static readonly Vector4 RingLook = new Vector4(1.0f, 40f, 0.55f, 0.6f);
         /// <summary>Paddle key highlight strength (RainbowGoldMetal.hlsl, _PaddleParams.w).</summary>
         const float PaddleHighlight = 1.0f;
-        /// <summary>Tilt of the paddle dish toward the camera round its inward axis (deg): approved trays show their dish.</summary>
-        public const float PaddleFaceTiltDeg = 32f;
+        /// <summary>Tilt of the paddle dish round its inward axis (deg, + = toward the camera). Coordinator round 3: -15
+        /// (dish turned slightly away, so the trays show their underside and thick rim like the approved half-moon shelves;
+        /// the tunnel lane's +32 showed the flat rose dish face as a horn: throat 60.3 -> 63.3, walls 50.0 -> 51.0).</summary>
+        public const float PaddleFaceTiltDeg = -15f;
 
         /// <summary>mode 0 = ring band, 1 = paddle, 2 = near frame.</summary>
         static void SetupGold(Material m, Texture2D pano, int mode)

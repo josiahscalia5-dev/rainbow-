@@ -85,6 +85,9 @@ namespace Rainbow.Screen05.EditorTools
         }
 
         // ------------------------------------------------------------------ river
+        /// <summary>Cyan water grade (rgb multiplier, strength) for RainbowRiver.shader _RiverGrade.</summary>
+        public static readonly Vector4 RiverGrade = new Vector4(0.55f, 0.70f, 0.93f, 1f);
+
         static int BuildRiver(Transform root, Texture2D pano)
         {
             Mesh mesh = SaveMesh(RiverMeshGenerator.Build(), GenDir + "/RiverSurface05.asset");
@@ -98,6 +101,10 @@ namespace Rainbow.Screen05.EditorTools
             mat.SetFloat("_EnvStrength", 0.9f);
             mat.SetFloat("_EnvYaw", PanoYawDeg);
             mat.SetFloat("_EnvLod", 1f);
+            // coordinator round 3 (2026-11-23, live variants coord_e1/e2): deeper AZURE water like the approved (cyan/blue
+            // water only; RainbowRiver.shader). (0.55, 0.70, 0.93) beat (0.70, 0.80, 0.96) and (0.45, 0.62, 0.92):
+            // water_near 48.0 -> 56.7, bubbles 48.4 / 39.3 -> 59.0 / 48.2, splash 60.4 -> 67.9.
+            mat.SetVector("_RiverGrade", RiverGrade);
             EditorUtility.SetDirty(mat);
 
             var go = new GameObject("River05");
