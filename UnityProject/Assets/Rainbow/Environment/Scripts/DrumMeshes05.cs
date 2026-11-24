@@ -86,7 +86,7 @@ namespace Rainbow.Screen05
                     float sx = Mathf.Sin(phi), cz = Mathf.Cos(phi);
                     // implicit wall x^2 + (y - c(s))^2 = R^2: outward gradient (x, y - c, -(y - c) c'), inward = minus
                     Vector3 outward = new Vector3(R * sx, R * cz, -(R * cz) * slope);
-                    md.Add(new Vector3(R * sx, cy + R * cz, si), -outward.normalized, new Vector2(R * phi, si));
+                    md.Add(new Vector3(DrumLayout05.AxisX + R * sx, cy + R * cz, si), -outward.normalized, new Vector2(R * phi, si));
                 }
             }
             for (int i = 0; i < rows.Count - 1; i++)

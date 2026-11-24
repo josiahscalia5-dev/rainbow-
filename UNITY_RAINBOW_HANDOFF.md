@@ -25,6 +25,11 @@ its scores (no extra tests just for previews); at the next safe checkpoint evalu
 tuning / stronger compatible Unity tools could speed things up (install nothing without approval); AVOID REDUNDANT AI REVIEWERS:
 the running run still has 2 critics after Integrate, so the coordinator stops it (TaskStop) right after the integration result
 and reviews the final evidence itself; relaunches use `round3-args.json` (`reviewers: 0`, supported by the script since 18:45).
+**User 19:05 local (read-only, nothing installed):** full tool inventory + speed-up options in `docs/tool-inventory-2026-11-23.md`
+(keep Unity; no engine switch). Not working but harmless: Playwright + TypeScript LSP plugins (need Node.js), Blender MCP (Blender not
+installed), old Unity AI Assistant relay in `~\.unity\relay`, empty `Hub\Editor\6000.6.0f1` stub. Proposed for after round 3 (free):
+approved-screen TARGET SHEET, solve-first FITTER (extend `screen05_frame_probe.cs`), live tuning while paused, numbers-first agents;
+needs the user's OK: cheaper Claude model for mechanical steps, connecting the CLI's `unity mcp` server.
 
 **UPDATE 2026-11-23 23:05 UTC (USER PRIORITY = COMPOSITION):** the user wants the approved Screen 05 COMPOSITION recreated in
 the playable scene, in this order: (1) tunnel geometry, perspective, depth, camera framing; (2) narrow winding S-shaped river

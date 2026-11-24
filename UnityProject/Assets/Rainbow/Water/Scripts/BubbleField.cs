@@ -158,8 +158,8 @@ namespace Rainbow.Screen05
 
         /// <summary>
         /// |x| of the tunnel wall at height y. Frame round 2026-11-23: the real drum (DrumLayout05, radius 6.8, axis 4.25
-        /// above the water, 1 m lower near the camera) instead of the contract circle (6.85 about 3.3); the narrower of
-        /// its near and far cross-sections, so a bubble never sinks into either wall.
+        /// above the water, 0.7 m lower near the camera, AxisX 0.6 m left) instead of the contract circle (6.85 about 3.3);
+        /// the narrower of its near and far cross-sections, so a bubble never sinks into either wall.
         /// </summary>
         static float WallHalfWidth(float y)
         {
@@ -167,7 +167,8 @@ namespace Rainbow.Screen05
             float dFar = DrumLayout05.CentreY(DrumLayout05.EyeS + 60f) - y;
             float dNear = DrumLayout05.CentreY(DrumLayout05.EyeS + 15f) - y;
             float dy = Mathf.Max(Mathf.Abs(dFar), Mathf.Abs(dNear));
-            return Mathf.Sqrt(Mathf.Max(rr * rr - dy * dy, 0f));
+            // the drum axis sits AxisX off the course line x = 0: |x| below this is inside the tube on both sides
+            return Mathf.Max(0f, Mathf.Sqrt(Mathf.Max(rr * rr - dy * dy, 0f)) - Mathf.Abs(DrumLayout05.AxisX));
         }
 
         /// <summary>Highest foam-bank top at camera distance dist (RainbowFoam.hlsl grows the heap 0.62..1.45x with distance).</summary>

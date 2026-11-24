@@ -37,7 +37,14 @@ namespace Rainbow.Screen05
     {
         public const float Radius = 6.8f;
         public const float FloorDepth = 2.55f;
-        public const float NearFloorExtra = 1.0f;
+        public const float NearFloorExtra = 0.7f;
+        /// <summary>
+        /// World x of the tunnel axis (frame round 2026-11-23): 0.6 m LEFT of the course line x = 0, i.e. on the mean of the
+        /// visible river S (meander knots +0.37 / -0.23 / -1.14 / -0.79 between s 26 and 56). The approved drum is
+        /// asymmetric about the vanishing point: ring crowns left / right at x 219 / 712, 338 / 632, 402 / 580 and the
+        /// wall-foam junction at y 600 at x 220 / 690 (the left wall further out, the right wall close behind the foam).
+        /// </summary>
+        public const float AxisX = -0.6f;
         /// <summary>Screen05CameraRig.back: the approved-view camera sits 6.52 m behind Benny's start.</summary>
         public const float EyeBack = 6.52f;
         /// <summary>s of the locked approved-view camera (sCam05).</summary>
@@ -88,10 +95,14 @@ namespace Rainbow.Screen05
             }
         }
 
-        /// <summary>environment.ts band05near (the thick near rings).</summary>
-        public static readonly BandProfile NearBand = new BandProfile(0.13f, 0.8f, 0.065f, 0.32f, 0.1f);
-        /// <summary>environment.ts band05 (the thinner far rings).</summary>
-        public static readonly BandProfile FarBand = new BandProfile(0.095f, 0.78f, 0.045f, 0.26f, 0.07f);
+        /// <summary>
+        /// environment.ts band05near (the thick near rings). Frame round 2026-11-23: radial height 0.13 -> 0.17 (lip 0.065 ->
+        /// 0.085): the approved ring bands measured straight up from the vanishing point are ~40 px thick at r 268 (ring A)
+        /// and ~22 px at r 170 (ring B) = ~0.15-0.17 of the radius; Unity's were ~24 px / 14 px.
+        /// </summary>
+        public static readonly BandProfile NearBand = new BandProfile(0.17f, 0.8f, 0.085f, 0.32f, 0.1f);
+        /// <summary>environment.ts band05 (the thinner far rings; frame round: 0.095 -> 0.13, lip 0.045 -> 0.06).</summary>
+        public static readonly BandProfile FarBand = new BandProfile(0.13f, 0.78f, 0.06f, 0.26f, 0.07f);
         /// <summary>Rings with s above this use FarBand.</summary>
         public const float FarBandFromS = 80f;
 
@@ -100,7 +111,7 @@ namespace Rainbow.Screen05
         // deep ones were missing or hidden in the glow disc), plus the near ring whose left crown runs down the left frame
         // edge (~(10, 480)) and stands on the foam at ~(90, 700) (in the 1 m near-floor drop, i.e. centred on the
         // vanishing-point height). 5.6 only shows for camera s < 5. Replaces the light round's eye + [59 .. 272] set.
-        static readonly float[] ApprovedRingS = { 5.6f, 24.3f, 45.5f, 66.4f, 106.5f, 163.6f, 230.1f, 333.0f, 450.4f };
+        static readonly float[] ApprovedRingS = { 5.6f, 25.8f, 45.5f, 66.4f, 106.5f, 163.6f, 230.1f, 333.0f, 450.4f };
 
         /// <summary>One wall paddle: s of the tray centre, wall side (-1 left, +1 right), height of its wall mount (m).</summary>
         public struct PaddleSlot
@@ -109,17 +120,16 @@ namespace Rainbow.Screen05
             public PaddleSlot(float s, int side, float mountY) { this.s = s; this.side = side; this.mountY = mountY; }
         }
 
-        // Frame round 2026-11-23: trays placed on the approved ones (screen centres measured on the approved image: big left
-        // (150, 425), big right (790, 460) - nearer on the left -, mid (290, 445) / (665, 425), small (385, 462) / (600, 450),
-        // tiny ones beside the throat), unprojected with the gameplay camera onto the wall; the mount height (not the angle)
-        // is kept, so the trays stay at the approved height where the near floor drops.
+        // Frame round 2026-11-23: trays placed on the approved ones. Tray centres measured on the approved image (big
+        // (150, 425) / (790, 460), mid (290, 445) / (665, 425), small (385, 462) / (600, 450), tiny (438, 466) / (553, 457))
+        // and solved for (s, wall-mount height) with the gameplay camera and this drum (tray centroid = mount + 0.45 size
+        // along the tray's local +X); the mount height (not the angle) is kept where the near floor drops.
         static readonly PaddleSlot[] ApprovedPaddles =
         {
-            new PaddleSlot(29.5f, -1, 5.2f), new PaddleSlot(34f, 1, 4.7f),
-            new PaddleSlot(44f, -1, 5.2f), new PaddleSlot(55f, 1, 6.0f),
-            new PaddleSlot(75f, -1, 5.1f), new PaddleSlot(82f, 1, 5.8f),
-            new PaddleSlot(125f, -1, 5.3f), new PaddleSlot(118f, 1, 5.5f),
-            new PaddleSlot(190f, -1, 5.3f), new PaddleSlot(180f, 1, 5.5f),
+            new PaddleSlot(31.0f, -1, 3.8f), new PaddleSlot(31.5f, 1, 3.1f),
+            new PaddleSlot(47.5f, -1, 3.8f), new PaddleSlot(48.5f, 1, 4.5f),
+            new PaddleSlot(82.0f, -1, 3.6f), new PaddleSlot(74.0f, 1, 4.2f),
+            new PaddleSlot(150.0f, -1, 4.1f), new PaddleSlot(127.5f, 1, 4.8f),
         };
 
         static float Smooth(float e0, float e1, float x)
@@ -153,7 +163,7 @@ namespace Rainbow.Screen05
             return (CentreY(s + e) - CentreY(s - e)) / (2f * e);
         }
 
-        public static Vector3 Centre(float s) => new Vector3(0f, CentreY(s), s);
+        public static Vector3 Centre(float s) => new Vector3(AxisX, CentreY(s), s);
 
         /// <summary>Half chord of the tube at the water plane (where the wall meets the water).</summary>
         public static float WaterChord(float s)

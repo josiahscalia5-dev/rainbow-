@@ -63,7 +63,9 @@ namespace Rainbow.Screen05.EditorTools
             // soft warm glow inside the last rings), gradient radius 1:1 with the cap (RainbowThroatGlow.hlsl palette)
             SetVec(throatMat, "_ThroatParams", new Vector4(0f, 9f, 0.15f, 1f));
             Material farRiverMat = MakeMaterial("FarRiver05", "Rainbow/Screen05/FarRiver");
-            float riverHalf = DrumLayout05.WaterChord(DrumLayout05.FarRiverStart) + 0.05f;
+            // centred on the course line x = 0 like the playable river it continues; reaches both walls of the drum, whose
+            // axis sits AxisX off that line (frame round 2026-11-23)
+            float riverHalf = DrumLayout05.WaterChord(DrumLayout05.FarRiverStart) + Mathf.Abs(DrumLayout05.AxisX) + 0.05f;
             SetupFarRiver(farRiverMat, pano, riverHalf);
 
             // ---------------- meshes ----------------
