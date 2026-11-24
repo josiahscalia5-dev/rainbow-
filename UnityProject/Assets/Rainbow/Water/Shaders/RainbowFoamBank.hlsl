@@ -20,28 +20,65 @@ float RBW_FB_SMin(float a, float b, float k)
     return min(a, b) - h * h * k * 0.25;
 }
 
-// d = stream centre (world x), hw = stream half width, Mb = cyan-core offset + band S relative to d (RainbowRiver: M + sbend),
-// sm = Three.js master arc length (s + 116.7). Returns the waterlines of the left / right foam bank RELATIVE to d
-// (x < 0 < y): the open water lies between them, the foam from there to the wall.
-float2 RBW_BankEdges(float d, float hw, float Mb, float sm)
+// ---- river round 2026-11-23: band layout fitted to the approved image with the current gameplay camera ----
+// (frame round camera: (x, 3.40, 7.48), pitch 12.78, yaw -2.8, vFOV 62; approved band / foam edges traced row by row
+//  and mapped onto the water plane). All terms are stationary in master s and zero for s < ~20 (Benny's near field).
+// Wave-7 channel shape (offsets of the left / right band from the band-pair centre) + the river round's wider spread of
+// the bands at s 33-48, where the approved river opens up between the walls.
+float RBW_BandFL(float sm)
+{
+    return -0.5 * RBW_FB_SS(143.0, 147.0, sm) * (1.0 - RBW_FB_SS(151.0, 155.0, sm))
+         + 1.0 * RBW_FB_SS(154.0, 158.0, sm) * (1.0 - RBW_FB_SS(168.0, 176.0, sm))
+         + 1.5 * RBW_FB_SS(147.5, 151.5, sm) * (1.0 - RBW_FB_SS(158.0, 166.0, sm));
+}
+
+float RBW_BandFR(float sm)
+{
+    return -0.3 * RBW_FB_SS(133.0, 136.0, sm) * (1.0 - RBW_FB_SS(139.5, 142.0, sm))
+         + 1.9 * RBW_FB_SS(146.5, 154.0, sm) * (1.0 - RBW_FB_SS(160.0, 168.0, sm))
+         - 0.9 * RBW_FB_SS(165.0, 170.0, sm) * (1.0 - RBW_FB_SS(174.0, 180.0, sm))
+         + 1.4 * RBW_FB_SS(152.0, 156.0, sm) * (1.0 - RBW_FB_SS(161.0, 168.0, sm));
+}
+
+// lateral shift of the whole band pair (added to the band S): the approved S swings right sooner (s 21-30) and further
+// left past the crest (s 50-66)
+float RBW_BandFitM(float sm)
+{
+    return 1.0 * RBW_FB_SS(137.2, 139.7, sm) * (1.0 - RBW_FB_SS(141.2, 147.2, sm))
+         - 0.35 * RBW_FB_SS(147.7, 150.7, sm) * (1.0 - RBW_FB_SS(153.7, 158.7, sm))
+         - 1.0 * RBW_FB_SS(166.7, 171.7, sm) * (1.0 - RBW_FB_SS(176.7, 182.7, sm));
+}
+
+// room of the band layout on each side, RELATIVE to d (both > 0): beyond Benny's near field the bands reach up to the
+// real drum wall W (half chord at the water, river mesh UV1.w) minus the foam rim, not just the RiverPath stream half
+// width (the approved bands run right beside the narrow foam rims under the walls)
+float2 RBW_BandLimits(float d, float hw, float W, float sm)
+{
+    float k = RBW_FB_SS(136.2, 140.2, sm) * step(1.0, W);
+    return float2(lerp(hw - 0.5, W + d - 0.6, k), lerp(hw - 0.5, W - d - 0.6, k));
+}
+
+// d = stream centre (world x), hw = stream half width, Mb = cyan-core offset + band S relative to d (RainbowRiver: M + sbend,
+// incl. RBW_BandFitM), sm = Three.js master arc length (s + 116.7), W = half chord of the drum wall at the water (river
+// mesh UV1.w / DrumLayout05.WaterChord). Returns the waterlines of the left / right foam bank RELATIVE to d (x < 0 < y):
+// the open water lies between them, the foam from there to the wall.
+float2 RBW_BankEdges(float d, float hw, float Mb, float sm, float W)
 {
     hw = max(hw, 0.5);
     // ---- the pink S-bands far from Benny (RainbowRiver.hlsl band layout, water round 2026-11-23) ----
-    float fR = -0.3 * RBW_FB_SS(133.0, 136.0, sm) * (1.0 - RBW_FB_SS(139.5, 142.0, sm))
-             + 1.9 * RBW_FB_SS(146.5, 154.0, sm) * (1.0 - RBW_FB_SS(160.0, 168.0, sm))
-             - 0.9 * RBW_FB_SS(165.0, 170.0, sm) * (1.0 - RBW_FB_SS(174.0, 180.0, sm));
-    float fL = -0.5 * RBW_FB_SS(143.0, 147.0, sm) * (1.0 - RBW_FB_SS(151.0, 155.0, sm))
-             + 1.0 * RBW_FB_SS(154.0, 158.0, sm) * (1.0 - RBW_FB_SS(168.0, 176.0, sm));
+    float fR = RBW_BandFR(sm);
+    float fL = RBW_BandFL(sm);
+    float2 lim = RBW_BandLimits(d, hw, W, sm);
     float offL = hw * (0.62 + 0.03 * sin(sm * 0.13 + 1.7)) + fL;
     float offR = hw * (0.62 + 0.03 * sin(sm * 0.11 + 4.2)) + fR;
     float wL = hw * 0.205 * (1.0 + 0.15 * sin(sm * 0.19 + 0.4));
     float wR = hw * 0.205 * (1.0 + 0.15 * sin(sm * 0.17 + 2.9));
-    float roomL = Mb + hw - 0.5 - offL;
-    float roomR = hw - 0.5 - Mb - offR;
+    float roomL = Mb + lim.x - offL;
+    float roomR = lim.y - Mb - offR;
     wL = RBW_FB_SMin(wL, max(roomL, 0.6 * wL), 0.5);
     wR = RBW_FB_SMin(wR, max(roomR, 0.6 * wR), 0.5);
-    offL = RBW_FB_SMin(offL, Mb + hw - wL - 0.5, 1.2);
-    offR = RBW_FB_SMin(offR, hw - wR - 0.5 - Mb, 1.2);
+    offL = RBW_FB_SMin(offL, Mb + lim.x - wL, 1.2);
+    offR = RBW_FB_SMin(offR, lim.y - wR - Mb, 1.2);
     float eL = Mb - offL - wL;
     float eR = Mb + offR + wR;
     // ---- thin cyan margin between band and foam (slowly varying) ----
@@ -52,6 +89,26 @@ float2 RBW_BankEdges(float d, float hw, float Mb, float sm)
     float pR = 0.6 * sin(sm * 0.191 + 3.7) + 0.4 * sin(sm * 0.443 + 0.9);
     eL += 0.8 * RBW_FB_SS(0.3, 0.95, pL);
     eR -= 0.8 * RBW_FB_SS(0.3, 0.95, pR);
+    // ---- river round 2026-11-23: NARROW foam rims hugging the drum walls (approved: the purple walls come down right
+    //      behind a narrow bubbly rim; the wide flat foam fields between river and wall are gone). Foam width from the
+    //      wall at the water, fitted row by row: left = the approved near-left bank (1.1 -> 2.8 -> 1.2 m at s 21-34),
+    //      then a rim of 0.35-0.8 m; right = a 0.45-1.2 m rim at s 25-41, the approved big right bank (1.6 -> 3.9 m) at
+    //      s 44-63, back to a rim beyond s 70. Off in Benny's near field (s < 20) ----
+    float kW = RBW_FB_SS(136.2, 136.9, sm) * step(1.0, W);
+    float wallL = -(W + d);                          // drum walls relative to d
+    float wallR = W - d;
+    float rimL = 0.35 + 0.8 * RBW_FB_SS(136.9, 137.9, sm) + 0.35 * RBW_FB_SS(138.0, 140.5, sm)
+               + 1.25 * RBW_FB_SS(140.5, 143.5, sm) - 0.7 * RBW_FB_SS(145.0, 148.0, sm)
+               - 0.9 * RBW_FB_SS(148.0, 151.0, sm) - 0.35 * RBW_FB_SS(151.5, 153.5, sm);
+    float rimLmin = lerp(rimL, 0.35, RBW_FB_SS(152.0, 154.0, sm));
+    float rimR = 0.45 + 0.75 * (1.0 - RBW_FB_SS(141.5, 144.0, sm)) + 3.0 * (1.0 - RBW_FB_SS(140.0, 141.5, sm))
+               + 1.15 * RBW_FB_SS(157.7, 160.7, sm) + 0.7 * RBW_FB_SS(160.7, 164.3, sm)
+               + 0.5 * RBW_FB_SS(164.3, 168.3, sm) + 0.7 * RBW_FB_SS(168.3, 173.2, sm)
+               + 0.4 * RBW_FB_SS(173.2, 179.3, sm) - 1.8 * RBW_FB_SS(179.3, 186.7, sm)
+               - 1.5 * RBW_FB_SS(186.7, 196.7, sm);
+    float rimRmin = lerp(0.35, rimR, RBW_FB_SS(156.5, 158.5, sm) * (1.0 - RBW_FB_SS(185.0, 189.0, sm)));
+    eL = lerp(eL, clamp(eL, wallL + rimLmin, wallL + rimL), kW);
+    eR = lerp(eR, clamp(eR, wallR - rimR, wallR - rimRmin), kW);
     // ---- approved Screen 05 around the checkpoint view (stationary in master s, Benny at s 14 = sm 130.7) ----
     // left: the clump beside Benny at the frame edge (ref x 0-130, y 1020-1110) and the lower-left clump behind him
     // (ref x 60-230, y 1220-1300); right: the bank right of the right band (ref x 700-860, y 760-950) and the
@@ -68,7 +125,7 @@ float2 RBW_BankEdges(float d, float hw, float Mb, float sm)
     float coin = 0.63 * d;
     eL = min(eL, coin - 1.25);
     eR = max(eR, coin + 1.25);
-    return float2(max(eL, -hw), min(eR, hw));
+    return float2(max(eL, lerp(-hw, wallL, kW)), min(eR, lerp(hw, wallR, kW)));
 }
 
 // foam.ts SOAP05_GLSL soap05(): approved soap colour ramp, t = 0 blue-violet crevice -> blue -> periwinkle ->

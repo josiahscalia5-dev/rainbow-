@@ -85,7 +85,8 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float latR = lat - d;                          // lateral in the stream frame (Three.js `lat`)
     float M = Params.y * d + Stream.z;             // cyan-core centre relative to the stream centre (coreLateral)
     float x = latR - M;
-    float sbend = RBW_SBend(sm);
+    // (river round 2026-11-23: + the band-pair shift fitted to the approved S, RainbowFoamBank.hlsl RBW_BandFitM)
+    float sbend = RBW_SBend(sm) + RBW_BandFitM(sm);
     float xb = x - sbend;                          // band frame
 
     // ---- screen derivatives, all in uniform control flow ----
@@ -117,24 +118,23 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     // (water round 2026-11-23: a little broader, approved bands are each ~20-25 % of the river width)
     float wL = hw * 0.205 * (1.0 + 0.15 * sin(sm * 0.19 + 0.4) + 0.08 * hwc * sin(tv * 0.6)) * gate;
     float wR = hw * 0.205 * (1.0 + 0.15 * sin(sm * 0.17 + 2.9) + 0.08 * hwc * sin(tv * 0.55 + 2.0)) * gate;
-    // wave-7 channel shape fitted to the approved image (stationary in master s)
-    float fR = -0.3 * smoothstep(133.0, 136.0, sm) * (1.0 - smoothstep(139.5, 142.0, sm))
-             + 1.9 * smoothstep(146.5, 154.0, sm) * (1.0 - smoothstep(160.0, 168.0, sm))
-             - 0.9 * smoothstep(165.0, 170.0, sm) * (1.0 - smoothstep(174.0, 180.0, sm));
-    float fL = -0.5 * smoothstep(143.0, 147.0, sm) * (1.0 - smoothstep(151.0, 155.0, sm))
-             + 1.0 * smoothstep(154.0, 158.0, sm) * (1.0 - smoothstep(168.0, 176.0, sm));
+    // wave-7 channel shape fitted to the approved image (stationary in master s; river round 2026-11-23: shared with
+    // RBW_BankEdges in RainbowFoamBank.hlsl, refitted to the frame round camera, room up to the real drum wall Stream.w)
+    float fR = RBW_BandFR(sm);
+    float fL = RBW_BandFL(sm);
+    float2 lim = RBW_BandLimits(d, hw, Stream.w, sm);
     offL += fL;
     offR += fR;
     // approaching Benny the two S-bands swing out to the banks (behind him only the wake sweeps carry pink)
     offL += bOn * 2.0 * RBW_SS(7.0, 2.5, db);
     offR += bOn * 1.6 * RBW_SS(2.6, 0.4, db);
     float Mb = M + sbend;
-    float roomL = Mb + hw - 0.5 - offL;
-    float roomR = hw - 0.5 - Mb - offR;
+    float roomL = Mb + lim.x - offL;
+    float roomR = lim.y - Mb - offR;
     wL = RBW_SMin(wL, max(roomL, 0.6 * wL), 0.5);
     wR = RBW_SMin(wR, max(roomR, 0.6 * wR), 0.5);
-    offL = RBW_SMin(offL, Mb + hw - wL - 0.5, 1.2);
-    offR = RBW_SMin(offR, hw - wR - 0.5 - Mb, 1.2);
+    offL = RBW_SMin(offL, Mb + lim.x - wL, 1.2);
+    offR = RBW_SMin(offR, lim.y - wR - Mb, 1.2);
     float sdL = xb + offL + pert;
     float sdR = xb - offR + pert;
 
@@ -306,7 +306,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     //      soap bubbles on this shelf), so the open river is narrower and winds with the S-bands. Flat lather under /
     //      between the bubbles in the approved soap ramp (lit cell tops lavender-white, periwinkle / blue-violet creases),
     //      a scalloped bubbly waterline, a soft blue contact shade on the water beside it; Benny parts it ----
-    float2 bkE = RBW_BankEdges(d, hw, M + sbend, sm);
+    float2 bkE = RBW_BankEdges(d, hw, M + sbend, sm, Stream.w);
     float eC = max(bkE.x - latR, latR - bkE.y);     // > 0 on the foam bank (units outward from its waterline)
     float sgn = latR >= 0.5 * (bkE.x + bkE.y) ? 1.0 : -1.0;
     float wl = (RBW_VNoise(float2(sm * 0.5, sgn * 7.0)) - 0.5) * 0.7;
