@@ -5,6 +5,30 @@ Read this first in any new Claude account or session. **This is an existing proj
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
+**UPDATE 2026-11-24 03:45 UTC (22:45 local) - SAFELY PAUSED FOR THE NIGHT (user request). Nothing running, Unity closed
+gracefully (`unity close --if-saved`), GitHub = laptop. When the user says "Resume Rainbow": continue at NEXT below.**
+- The old account's stage-A run `wf_1d23ecb6-d86` died at 21:53 local (limit). Its lane edits are saved (tunnel: 3-strand
+  rings, dense slot-row walls, new thick-rim paddle profile; water: low lumpy foam) but scored LOWER than the stage start
+  (water_t2 52.1 / 34.7 vs 54.8 / 36.2: pastel walls too bright, paddles turned into "horns"). It was NOT relaunched.
+- Coordinator live tuning (new `AgentScripts/screen05_coord_tune.cs`; variants `Recordings/Screen05/work/coord_variants.txt`,
+  tag in `coord_tag.txt`; run with `screen05-cycle.ps1 -EvalAtHold AgentScripts/screen05_coord_tune.cs`): best combination
+  `work/coord_var_e2_c1.png` = **visual 58.0 / layout 36.8** (from 52.1 / 34.7; water_near 48 -> 56.7, walls 50 -> 54.6,
+  throat 60.3 -> 65.8, splash 60.4 -> 67.9, bubbles 48.4 / 39.3 -> 59.0 / 48.2). BAKED into the builders, but NOT yet
+  confirmed by a rebuild cycle: walls (EnvironmentBuilder: WallBase 0.70,0.28,0.92; WallGlow 0.40,0.03,0.50,0.45;
+  _EnvIntensity 0.75; _StripIntensity 2.2; WallLipGlow 0.8; _Exposure 0.85), PaddleFaceTiltDeg -15 (was +32), deeper azure
+  water (new `_RiverGrade` in RainbowRiver.shader, set from WaterBuilder.RiverGrade = 0.55,0.70,0.93,1), darker HUD bar
+  (Screen05Hud.BarTexture; measured hud 46.5 -> 48.6).
+- WRITTEN BUT NEVER TESTED: narrow, taller foam banks = FoamBank.FoamRimCap 1.3 + RBW_FOAM_CAP 1.3 in RainbowFoamBank.hlsl
+  (keep equal; caps the foam to 1.3 m in front of the wall, the open water widens to meet it) + taller hW / bigger puffs in
+  FoamBank.GeneratePuffs.
+**NEXT (in order):** (1) `unity open C:\RainbowUnity\UnityProject --until-ready`. (2) ONE cycle `-Tag coord_e3 -Areas all`
+(if "No Pipeline instance found": wait 25 s, rerun). Expect about 58 / 36.8 from the baked look; it also tests the foam cap.
+If OVERALL or foam_left / foam_right drop, revert ONLY the foam-cap edits and rerun. (3) Send the user that side-by-side + both
+scores. (4) Root cause of the wide flat foam: Unity's drum is wider at the waterline than the approved (fitted left rim 2-3 m
+at s 20-31), so the next big step is narrowing the lower tunnel walls toward the foam (DrumMeshes05 / DrumLayout05, keep the
+ring framing), then the S-curve river, Benny's water contact and bubbles (round3-visual workflow stage B, at most 2 lanes,
+notes from this entry). No Screen 06 until the user approves Screen 05.
+
 **UPDATE 2026-11-24 02:35 UTC (21:35 local) - ROUND 3 VISUAL STAGE A IS RUNNING (Workflow run `wf_1d23ecb6-d86`):**
 **User, 21:25 local:** save the working configuration and stop optional setup / optimization. Spend the remaining credits on real
 Screen 05 development: tunnel geometry, realistic metallic gold rings and paddles, deeper purple reflective walls, natural S-shaped
