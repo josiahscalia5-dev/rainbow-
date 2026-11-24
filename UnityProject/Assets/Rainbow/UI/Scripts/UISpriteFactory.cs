@@ -136,7 +136,7 @@ namespace Rainbow.Screen05
             for (int y = 0; y < size; y++)
                 for (int x = 0; x < size; x++)
                 {
-                    float cover = 0f, coverInner = 0f, coverCore = 0f;
+                    float cover = 0f, coverInner = 0f, depth = 0f;
                     for (int sy = 0; sy < 3; sy++)
                         for (int sx = 0; sx < 3; sx++)
                         {
@@ -144,7 +144,7 @@ namespace Rainbow.Screen05
                             float v = ((y + (sy + 0.5f) / 3f) / size - 0.42f) * 2.6f;
                             if (HeartInside(u, v, 1f)) cover += 1f / 9f;
                             if (HeartInside(u, v, 0.94f)) coverInner += 1f / 9f;
-                            if (HeartInside(u, v, 0.80f)) coverCore += 1f / 9f;
+                            for (int k = 1; k <= 5; k++) if (HeartInside(u, v, 1f - 0.06f * k)) depth += 1f / 45f;   // 0 at the outline .. 1 inside 0.70
                         }
                     if (cover <= 0f) { px[y * size + x] = new Color(0f, 0f, 0f, 0f); continue; }
                     float vy = y / (float)size;
@@ -154,11 +154,14 @@ namespace Rainbow.Screen05
                     // round 7 (user guide #7 "raised heart"): the edge band darkens toward the outline so the heart reads as a rounded,
                     // raised gem (approved heart luminance p10 68 / p90 176, Unity was 86 / 128)
                     Color edge = new Color(c.r * 0.78f, c.g * 0.7f, c.b * 0.78f, 1f);
-                    c = Color.Lerp(edge, c, Mathf.Lerp(0.35f, 1f, coverCore));
-                    // glossy highlight blob, upper left (round 7: broader, 0.18 -> 0.24)
+                    c = Color.Lerp(edge, c, Mathf.SmoothStep(0f, 1f, depth));   // smooth rounding, no outline ring
+                    // glossy sheen, upper left (round 7: broader 0.18 -> 0.24, softer) + a small crisp white specular spot
                     float hx = x / (float)size - 0.33f, hy = y / (float)size - 0.68f;
                     float hl = Mathf.Clamp01(1f - Mathf.Sqrt(hx * hx * 3.2f + hy * hy * 7f) / 0.24f);
-                    c = Over(c, Color.white, hl * 0.85f * coverInner);
+                    c = Over(c, Color.white, hl * 0.45f * coverInner);
+                    float qx = x / (float)size - 0.31f, qy = y / (float)size - 0.70f;
+                    float spec = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(1.4f * (1f - Mathf.Sqrt(qx * qx * 3f + qy * qy * 6f) / 0.16f)));   // ~12 x 8 px like the approved
+                    c = Over(c, Color.white, spec * 0.95f * coverInner);
                     c.a = cover;
                     px[y * size + x] = c;
                 }
