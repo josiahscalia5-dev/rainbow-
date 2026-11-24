@@ -25,7 +25,7 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Intensity: 0.97138
+    - _Intensity: 1.1
     - _MaxPx: 34
     - _MaxPxSmall: 11
     - _NearFade: 1.5

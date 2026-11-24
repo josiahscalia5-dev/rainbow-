@@ -242,7 +242,7 @@ namespace Rainbow.Screen05.EditorTools
         }
 
         // ------------------------------------------------------------------ ramp
-        const float GradeSat = 1.4184f, GradeCon = 1.2035f, GradeExp = 0.85045f;
+        const float GradeSat = 1.4253f, GradeCon = 1.24285f, GradeExp = 0.8480f;   // = the tuning file (saturation 42.53, contrast 24.285, exposure -0.238)
 
         static float ToLin(float c) => c <= 0.04045f ? c / 12.92f : Mathf.Pow((c + 0.055f) / 1.055f, 2.4f);
 
