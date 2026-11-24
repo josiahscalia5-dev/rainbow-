@@ -207,7 +207,10 @@ namespace Rainbow.Screen05.EditorTools
             SetVec(m, "_FloorSheet", new Vector4(RiverPath.WaterY + 0.06f, 0.35f, 5.4f, 1f));
             SetHex(m, "_FloorColorA", "#c81f9c");
             SetHex(m, "_FloorColorB", "#ff4fc0");
-            SetFloat(m, "_Exposure", 0.85f);                                     // coordinator round 3 (was 1)
+            // coordinator round 3: 0.85 (was 1); tunnel round 4: 0.75 together with the bright spokes (_WallSpokes): deeper
+            // violet lands with headroom for the pink-white light lines (cycle tunnel_t5 variant D1: walls 59.4 -> 60.7,
+            // hud 51.4 -> 52.1; the magenta lands sat at the clip, so the spokes / lips could not show)
+            SetFloat(m, "_Exposure", WallExposure);
             SetFloat(m, "_LightInfluence", 1f);
             // light round 2026-11-23: strips / reflection fade with view distance (strips 8 %, panorama 50 % beyond 80 m)
             // so the deep walls stay violet instead of pink-white radial spokes converging on the throat
@@ -244,7 +247,9 @@ namespace Rainbow.Screen05.EditorTools
         /// ~16 px across every ~18 deg (half width ~0.08 of the pitch); round 3 drew 3 px dots.</summary>
         static readonly Vector4 RingBulbs = new Vector4(20f, 0.075f, 1.5f, 0f);
         /// <summary>Wall spokes (count round the drum = ring bulbs, half width rad, intensity, kept far away).</summary>
-        static readonly Vector4 WallSpokes = new Vector4(20f, 0.025f, 0.5f, 0.35f);
+        static readonly Vector4 WallSpokes = new Vector4(20f, 0.025f, 1.0f, 0.35f);
+        /// <summary>Wall exposure (coordinator round 3: 0.85).</summary>
+        const float WallExposure = 0.75f;
         /// <summary>Near frame corners: (palette 1 = copper bands, glare, vignette compensation, -).</summary>
         static readonly Vector4 FrameLook = new Vector4(1f, 1f, 1.08f, 0f);
         /// <summary>Exposure of the pre-solved copper rings and shelves (the frame keeps 0.95).</summary>

@@ -28,6 +28,7 @@
 // z = band edge raggedness delta, w = near satin hairline fade delta
 float4 _W4Tune;
 float4 _W4Tune2;
+float4 _W4Dbg;   // x = brush / ripple streak cores, y = ripple normal, z = specular glint, w = env reflection (gain deltas)
 
 // ---- W10/W12 palette (shader-linear values solved through exposure 0.86 -> Neutral -> sRGB -> grade sat 1.36 / con 1.15)
 static const float3 RBW_CDEEP   = float3(0.058, 0.197, 0.379);   // #0068AD
@@ -189,7 +190,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float4 B5 = RBW_Brush(X, v5, fwX5 * pxK, fwsR, time * 0.35);
     float br = lerp(B5.y, 0.5 + (B5.y - 0.5) * 0.3, near5);
     br = 0.5 + (br - 0.5) * 0.45;
-    float bcore = B5.z * 0.3 * (1.0 - 0.8 * near5);
+    float bcore = B5.z * 0.3 * (1.0 - 0.8 * near5) * (1.0 + _W4Dbg.x);
     float bglow = B5.w * (1.0 - 0.8 * near5);
     float lane5 = B5.x * (1.0 - 0.6 * near5);
     float tq = saturate(abs(x) / hw);
@@ -199,7 +200,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float silkHi = smoothstep(0.7, 0.96, rp.x) * (1.0 - 0.5 * near5);
     bglow = max(bglow, silkHi * 0.85);
     float rpA = smoothstep(0.66, 0.9, rp.x);
-    bcore = max(bcore, rpA * rpA * 0.22 * (1.0 - 0.7 * near5));
+    bcore = max(bcore, rpA * rpA * 0.22 * (1.0 - 0.7 * near5) * (1.0 + _W4Dbg.x));
 
     // ---- diagonal pink wake sweeps behind Benny ----
     // (water round 2026-11-23) curved sweeps: they bend out toward the bottom corners (centre grows with back^2, not as
@@ -287,7 +288,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float3 V = normalize(ViewDirWS);
     float3 T = float3(0.0, 0.0, 1.0);              // downstream (Three.js -Z)
     float3 Rw = normalize(cross(N0, T));            // rider's right (+X)
-    float3 N5 = normalize(N0 + (Rw * rp.y + T * (rp.z * 0.04)) * 0.38);
+    float3 N5 = normalize(N0 + (Rw * rp.y + T * (rp.z * 0.04)) * 0.38 * (1.0 + _W4Dbg.y));
     float3 L = normalize(LightDirWS);
     float3 Hv = normalize(L + V);
     float nv5 = saturate(dot(N5, V));
@@ -295,7 +296,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float3 R5 = reflect(-V, N5);
     float3 glintC = lerp(float3(0.08, 1.05, 1.35), float3(1.4, 0.55, 1.3), pk5);
     c5 = lerp(c5, lerp(RBW_CBRIGHT, RBW_PLIGHT, pk5), fr * fr * fr * 0.05);
-    c5 += glintC * pow(saturate(dot(N5, Hv)), 90.0) * 0.6;
+    c5 += glintC * pow(saturate(dot(N5, Hv)), 90.0) * 0.6 * (1.0 + _W4Dbg.z);
     float3 Lg = normalize(T + N0 * 0.1);            // the bright tunnel end, far downstream
     float gl5 = pow(saturate(dot(R5, Lg)), 90.0);
     float H5 = saturate(h5 * 0.7 + bcore * 0.3);
