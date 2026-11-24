@@ -5,7 +5,22 @@ Read this first in any new Claude account or session. **This is an existing proj
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
-**UPDATE 2026-11-24 03:45 UTC (22:45 local) - SAFELY PAUSED FOR THE NIGHT (user request). Nothing running, Unity closed
+**UPDATE 2026-11-24 10:20 UTC (05:20 local) - ROUND 3 STAGE G1 IS RUNNING (Workflow run `wf_625572df-94a`, session
+`ded4464c-608a-4332-9b1b-b33e5222d645`, at most 2 agents):** GEOMETRY (lower tunnel walls meet narrow, tall foam banks; ring
+framing kept) | BUBBLES (large iridescent bubbles). Script `staging/shared/round3-visual.workflow.js` (new stages G1 / G2 + notes
+on live variants), exact args `staging/shared/round3-visual-G1-args.json`, journal
+`%USERPROFILE%\.claude\projects\C--Users-josia--unity\ded4464c-608a-4332-9b1b-b33e5222d645\subagents\workflows\wf_625572df-94a\journal.jsonl`.
+- Done 05:04-05:15 local: confirm cycle `coord_e3` = 57.2 / 36.4 -> the foam width cap was REJECTED (it widened the open water
+  almost wall to wall; FoamRimCap / RBW_FOAM_CAP = 99 = off, foam values restored). Baseline `work/20261124_051325_G_BASELINE*` =
+  **visual 58.0 / layout 36.8** (exactly the e2_c1 variant, rebuilt from code, console clean) - sent to the user. Diagnostics now in
+  `tools/diag/` (colorgrid, cropstack, measure-compact).
+**NEXT:** (1) when G1 ends: coordinator cycle `-Tag G1_done -Areas all`, send the user the side-by-side + both scores. (2) Launch
+G2 (`stage: "G2"` = BENNY water contact | WATER S-flow) with that still as baseline + notes from G1. (3) Integration
+`-Tag ROUND3_FINAL -Areas all -Series`, `AgentScripts/screen05_playtest_check.cs`, a 12 s recording; send all to the user; update
+this handoff. If a run is interrupted: read its journal, put lanes with a result into `skip`, write `notes.<lane>` for the
+interrupted lane (its newest files + work stills), relaunch the same stage. No Screen 06 until the user approves Screen 05.
+
+**UPDATE 2026-11-24 03:33 UTC (22:33 local) - SAFELY PAUSED FOR THE NIGHT (user request). Nothing running, Unity closed
 gracefully (`unity close --if-saved`), GitHub = laptop. When the user says "Resume Rainbow": continue at NEXT below.**
 - The old account's stage-A run `wf_1d23ecb6-d86` died at 21:53 local (limit). Its lane edits are saved (tunnel: 3-strand
   rings, dense slot-row walls, new thick-rim paddle profile; water: low lumpy foam) but scored LOWER than the stage start
