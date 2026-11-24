@@ -16,13 +16,13 @@ namespace Rainbow.Screen05
         /// <summary>The cyan core swings CoreSwing x the course meander beyond it (waterRibbon.ts CORE_SWING).</summary>
         public const float CoreSwing = 0.9f;
         /// <summary>Raised stream edges (units at |u| = 1, cubic).</summary>
-        public const float EdgeLift = 0.28f;
+        public const float EdgeLift = 0.18f;   // river round 4b: 0.28 -> 0.18 (flat wide river; = RBW_FoamBaseHeight)
         /// <summary>Swell amplitude of stage 05 (AMP['05']).</summary>
         public const float WaveAmp = 0.1f;
         /// <summary>Advection speed of the river pattern: stage speed 11 x FLOW05 1.3.</summary>
         public const float FlowSpeed = 14.3f;
         /// <summary>Gentle rise of the foam shelf between the stream edge and the wall.</summary>
-        public const float ShelfRise = 0.12f;
+        public const float ShelfRise = 0f;
         /// <summary>How far the water / foam shelf mesh reaches sideways (hidden inside the wall beyond the chord).</summary>
         public const float MeshHalfWidth = 8.9f;   // round 4: the barrel drum is wider at s 40-100 (was 6.9)
 

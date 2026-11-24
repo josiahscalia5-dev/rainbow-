@@ -28,7 +28,9 @@ namespace Rainbow.Screen05
             var nor = new Vector3[n];
             var uv0 = new Vector2[n];
             var uv1 = new List<Vector4>(n);
-            for (int i = 0; i < n; i++) uv1.Add(Vector4.zero);
+            var uv2 = new List<Vector4>(n);
+            var uv3 = new List<Vector4>(n);
+            for (int i = 0; i < n; i++) { uv1.Add(Vector4.zero); uv2.Add(Vector4.zero); uv3.Add(Vector4.zero); }
 
             const float e = 0.05f;
             for (int i = 0; i < rows; i++)
@@ -38,6 +40,9 @@ namespace Rainbow.Screen05
                 float hw = RiverSurface.StreamHalfWidth(s);
                 float shift = RiverSurface.CoreShift(s);
                 float wall = FoamBank.WallChord(s);       // river round 2026-11-23: drum wall half chord (UV1.w)
+                // river round 4b: the layout table per row (RiverLayout05): UV2 = (WL, LO, LI, RI), UV3 = (RO, WR, rope width L, R)
+                var e2 = new Vector4(RiverLayout05.X(0, s), RiverLayout05.X(1, s), RiverLayout05.X(2, s), RiverLayout05.X(3, s));
+                var e3 = new Vector4(RiverLayout05.X(4, s), RiverLayout05.X(5, s), RiverLayout05.Rope(s, -1).x, RiverLayout05.Rope(s, 1).x);
                 for (int j = 0; j <= cols; j++)
                 {
                     float x = -hwMesh + 2f * hwMesh * j / cols;
@@ -49,6 +54,8 @@ namespace Rainbow.Screen05
                     nor[k] = new Vector3(-dydx, 1f, -dydz).normalized;
                     uv0[k] = new Vector2(x, s);
                     uv1[k] = new Vector4(d, hw, shift, wall);
+                    uv2[k] = e2;
+                    uv3[k] = e3;
                 }
             }
 
@@ -71,6 +78,8 @@ namespace Rainbow.Screen05
             mesh.normals = nor;
             mesh.uv = uv0;
             mesh.SetUVs(1, uv1);
+            mesh.SetUVs(2, uv2);
+            mesh.SetUVs(3, uv3);
             mesh.triangles = idx;
             mesh.RecalculateBounds();
             var bnd = mesh.bounds;

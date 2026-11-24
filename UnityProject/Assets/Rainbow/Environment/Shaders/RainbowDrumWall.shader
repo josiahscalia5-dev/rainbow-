@@ -35,6 +35,7 @@ Shader "Rainbow/Screen05/DrumWall"
         _SlotArc ("Slot arc (holes round, ceiling density boost, hole half length / arc pitch, radius m)", Vector) = (0, 0, 0.3, 6.8)
         _SlotShape ("Slot shape (half width / pitch at the waterline, lip px, brushed strength, brushed lines / m)", Vector) = (0, 1.5, 0, 2)
         _WallSpokes ("Round 4 spokes (count round the drum, half width rad, intensity, far kept)", Vector) = (20, 0.025, 0, 0.5)
+        _Wall4b ("Round 4b wall (line strength, pink amount, slot strength, hot core)", Vector) = (1, 0.85, 1, 1.0)
     }
 
     SubShader
@@ -75,6 +76,7 @@ Shader "Rainbow/Screen05/DrumWall"
             float4 _SlotArc;
             float4 _SlotShape;
             float4 _WallSpokes;
+            float4 _Wall4b;
         CBUFFER_END
 
         // shared animation clock (Rainbow.Screen05.Screen05Clock; game time, reset by the test hold)
@@ -102,6 +104,7 @@ Shader "Rainbow/Screen05/DrumWall"
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "RainbowDrumWall.hlsl"
+            #include "RainbowPolish05.hlsl"
             #include "RainbowEnvLighting.hlsl"
 
             struct Attributes
@@ -109,6 +112,7 @@ Shader "Rainbow/Screen05/DrumWall"
                 float4 positionOS : POSITION;
                 float3 normalOS : NORMAL;
                 float2 uv : TEXCOORD0;
+                float4 uv1 : TEXCOORD1;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
@@ -119,6 +123,7 @@ Shader "Rainbow/Screen05/DrumWall"
                 float3 normalWS : TEXCOORD1;
                 float2 uv : TEXCOORD2;
                 float fogFactor : TEXCOORD3;
+                float4 uv1 : TEXCOORD4;
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
@@ -132,6 +137,7 @@ Shader "Rainbow/Screen05/DrumWall"
                 o.positionWS = p.positionWS;
                 o.normalWS = TransformObjectToWorldNormal(input.normalOS);
                 o.uv = input.uv;
+                o.uv1 = input.uv1;
                 o.fogFactor = RainbowFogFactor(p.positionCS);
                 return o;
             }
@@ -140,11 +146,17 @@ Shader "Rainbow/Screen05/DrumWall"
             {
                 float3 N = normalize(input.normalWS);
                 float3 V = GetWorldSpaceNormalizeViewDir(input.positionWS);
-                float3 ambient = SampleSH(N);
-                float3 color, albedo, emission;
-                float metallic, smoothness;
-                RainbowDrumWall_float(input.positionWS, N, V, input.uv, _RainbowTime, ambient, color, albedo, metallic, smoothness, emission);
-                color += RainbowDirectLights(input.positionWS, input.positionCS, N, V, albedo, metallic, 1.0 - smoothness) * _LightInfluence * _Exposure;
+                float dist = length(_WorldSpaceCameraPos.xyz - input.positionWS);
+                float3 color = RainbowWall4b(input.positionWS, input.uv, input.uv1, dist, _Wall4b);
+                // below the water line: glossy magenta flow sheet lining the tube floor (round 1 look, kept)
+                float sheet = (1.0 - smoothstep(_FloorSheet.x - _FloorSheet.y, _FloorSheet.x, input.positionWS.y)) * _FloorSheet.w;
+                float flowZ = input.positionWS.z - _RainbowTime * _FloorSheet.z;
+                float sx = input.positionWS.x;
+                float3 sheetCol = lerp(_FloorColorA.rgb, _FloorColorB.rgb, 0.5 + 0.5 * sin(sx * 1.3 + flowZ * 0.15));
+                sheetCol += float3(1.0, 0.75, 0.94) * pow(saturate(0.5 + 0.5 * sin(sx * 7.0 + 2.0 * sin(flowZ * 0.45) + flowZ * 0.05)), 16.0) * 0.5;
+                color = lerp(color, sheetCol * 0.75, sheet) * _Exposure;
+                // a little live specular from the scene's lights
+                color += RainbowDirectLights(input.positionWS, input.positionCS, N, V, saturate(color), 0.9, 0.2) * _LightInfluence;
                 color = MixFog(color, input.fogFactor);
                 return half4(color, 1.0);
             }

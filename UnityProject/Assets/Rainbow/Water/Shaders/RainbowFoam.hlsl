@@ -63,7 +63,7 @@ float RBW_FoamBaseHeight(float x, float d, float hw)
     float u = min(lr / hw, 1.0);
     float sh = saturate((lr - hw) / 1.2);
     sh = sh * sh * (3.0 - 2.0 * sh);
-    return 0.28 * u * u * u + 0.12 * sh;
+    return 0.18 * u * u * u;   // = RiverSurface.EdgeLift (ShelfRise 0)
 }
 
 // Vertex: puff centre / radius after the river swell, the lather's breathing and Benny parting the foam, and the quad
@@ -75,6 +75,7 @@ void RBW_FoamVertex(float3 centreWS, float4 uv0, float4 uv1, float sOffset, floa
     float3 c = centreWS;
     float r = uv0.z;
     float seed = uv0.w;
+    float wakePuff = step(9.5, seed);                                 // Benny's wake foam (FoamBank.BuildWakeMesh)
     // perspective size compensation (foam.ts rafts: "bubbles grow with distance so their on-screen size stays ~10-45 px",
     // approved: 30-60 px bubbles in the low clumps beside Benny, 20-40 px bubbles in the tall far banks): bubbles and
     // their pile heights scale smoothly about the river floor (WaterY = 0) with the distance to the camera
@@ -82,19 +83,22 @@ void RBW_FoamVertex(float3 centreWS, float4 uv0, float4 uv1, float sOffset, floa
     // (water round 3v 2026-11-23: 0.62 .. 1.45 -> 0.85 .. 1.0 - the approved suds keep their true size, ~6-15 px far away:
     //  growing them 1.45x turned the far rims into rows of 30-60 px cotton balls)
     float k = lerp(0.85, 1.0, smoothstep(6.0, 25.0, distance(_WorldSpaceCameraPos, c)));
+    k = lerp(k, 1.0, wakePuff);
     c.y = base + (c.y - base) * k;
     r *= k;
     // the puffs float on the stream: they ride the same swell as the water (RBW_RiverWave)
-    c.y += RBW_FoamBob(c.x, c.z, uv1.z, uv1.w, sOffset, waveAmp, time);
+    c.y += (1.0 - wakePuff) * RBW_FoamBob(c.x, c.z, uv1.z, uv1.w, sOffset, waveAmp, time);
     // gentle breathing of the lather (foam.ts)
     r *= 1.0 + 0.03 * sin(time * 1.7 + seed * 40.0);
     // Benny ploughs through the bank: puffs close to him part and shrink (smoothly, no popping)
     float2 dB = float2(c.x - benny.y, c.z - benny.x);
     float dl = length(dB);
     float rb = max(benny.w, 0.5);
-    float part = step(0.001, benny.w) * (1.0 - smoothstep(rb * 1.1, rb * 2.4, dl));
+    float part = (1.0 - wakePuff) * step(0.001, benny.w) * (1.0 - smoothstep(rb * 1.1, rb * 2.4, dl));
     c.xz += dB / max(dl, 1e-3) * (part * rb * 0.45);
     r *= 1.0 - 0.8 * part;
+    r *= lerp(1.0, saturate(benny.z), wakePuff);                      // shrinks away while he is airborne
+    c.xz += wakePuff * 0.02 * sin(time * float2(3.1, 2.3) + seed * 70.0);
     float3 toCam = _WorldSpaceCameraPos - c;
     float D = max(length(toCam), 1e-3);
     float3 f = toCam / D;                                          // toward the camera

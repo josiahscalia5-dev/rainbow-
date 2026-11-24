@@ -88,7 +88,7 @@ namespace Rainbow.Screen05
             // round 4 (2026-11-24), sampled on the approved image: deep purple glass (97,3,131) top .. (92,2,128) bottom, thin lilac
             // rim (230,172,243) .. (198,91,237); the old 0.9 white gloss washed it out to lavender
             return UISpriteFactory.Pill("hud_bar", 992, 109, 54f,
-                new Color(101 / 255f, 3 / 255f, 134 / 255f, 0.97f), new Color(91 / 255f, 2 / 255f, 127 / 255f, 0.97f),
+                new Color(101 / 255f, 3 / 255f, 134 / 255f, 1f), new Color(91 / 255f, 2 / 255f, 127 / 255f, 1f),
                 3.2f, new Color(226 / 255f, 150 / 255f, 240 / 255f, 0.9f), 0.03f);
         }
 
@@ -110,8 +110,8 @@ namespace Rainbow.Screen05
         {
             // .banner: linear-gradient(#7a2bb0, #4f1489), border .22u #ffd36b, radius 2.1u
             // round 4: sampled on the approved image: fill (97,2,140), pale gold rim (229,170,110)
-            return UISpriteFactory.Pill("hud_banner", 784, 84, 42f, new Color(98 / 255f, 2 / 255f, 142 / 255f, 0.98f),
-                new Color(96 / 255f, 2 / 255f, 140 / 255f, 0.98f), 4.4f, UISpriteFactory.Hex("#f5b964"), 0.02f);
+            return UISpriteFactory.Pill("hud_banner", 784, 84, 42f, new Color(98 / 255f, 2 / 255f, 142 / 255f, 1f),
+                new Color(96 / 255f, 2 / 255f, 140 / 255f, 1f), 4.4f, UISpriteFactory.Hex("#f5b964"), 0.02f);
         }
 
         public static Texture2D PanelTexture()

@@ -86,6 +86,7 @@ Shader "Rainbow/Screen05/GoldMetal"
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "RainbowGoldMetal.hlsl"
+            #include "RainbowPolish05.hlsl"
             #include "RainbowEnvLighting.hlsl"
 
             struct Attributes
@@ -134,11 +135,11 @@ Shader "Rainbow/Screen05/GoldMetal"
                 float3 V = GetWorldSpaceNormalizeViewDir(input.positionWS);
                 float3 color;
             #if defined(_GOLD_PADDLE)
-                RainbowGoldPaddle_float(input.positionWS, N, V, input.color, color);
+                color = RainbowPaddle4b(input.uv.xy, input.uv.z, length(_WorldSpaceCameraPos.xyz - input.positionWS)) * _Exposure;
             #elif defined(_GOLD_FRAME)
-                RainbowGoldFrameSide(N, V, input.uv.xy, input.uv.z, input.uv.w, color);
+                color = (input.uv.z < 0.5 ? RainbowFrameCorner4b(input.uv.x, input.uv.y * _FrameLook.y, input.uv.w) : RainbowFrameLip4b(input.uv.x, input.uv.y * _FrameLook.z)) * _Exposure;
             #else
-                RainbowGoldRing_float(input.positionWS, N, V, input.positionOS, input.axisWS, input.color, color);
+                color = RainbowRing4b(input.positionOS, input.uv.y, input.uv.zw, length(_WorldSpaceCameraPos.xyz - input.positionWS)) * _Exposure;
             #endif
             #if !defined(_GOLD_FRAME)
                 // a little live specular from the scene's lights (the stylised palette carries the look)

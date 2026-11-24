@@ -29,14 +29,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _EdgeCount: 64
-    - _Emission: 1.15
-    - _EnvStrength: 0.9
+    - _EdgeCount: 44
+    - _Emission: 0.92
+    - _EnvStrength: 0.45
     - _SpecPower: 48
-    - _SpecStrength: 2.2
+    - _SpecStrength: 1.4
     m_Colors:
-    - _EdgeBright: {r: 1, g: 0.878, b: 0.43899998, a: 1}
-    - _EdgeDark: {r: 0.753, g: 0.5019999, b: 0, a: 1}
+    - _EdgeBright: {r: 0.96, g: 0.6, b: 0.14, a: 1}
+    - _EdgeDark: {r: 0.6, g: 0.27, b: 0.02, a: 1}
     - _MetalColor: {r: 0.47799987, g: 0.32199997, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

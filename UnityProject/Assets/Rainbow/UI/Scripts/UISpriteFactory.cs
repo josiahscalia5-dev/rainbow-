@@ -143,11 +143,13 @@ namespace Rainbow.Screen05
                             float u = ((x + (sx + 0.5f) / 3f) / size - 0.5f) * 2.6f;
                             float v = ((y + (sy + 0.5f) / 3f) / size - 0.42f) * 2.6f;
                             if (HeartInside(u, v, 1f)) cover += 1f / 9f;
-                            if (HeartInside(u, v, 0.86f)) coverInner += 1f / 9f;
+                            if (HeartInside(u, v, 0.94f)) coverInner += 1f / 9f;
                         }
                     if (cover <= 0f) { px[y * size + x] = new Color(0f, 0f, 0f, 0f); continue; }
                     float vy = y / (float)size;
-                    Color c = Color.Lerp(rim, Color.Lerp(bottom, top, Mathf.Clamp01(vy * 1.3f - 0.1f)), coverInner);
+                    // round 4: lit from the upper left like the approved heart (pink (251,113,200) -> hot red-pink (246,23,124))
+                    float hk = Mathf.Clamp01(vy * 0.75f - (x / (float)size - 0.5f) * 0.9f + 0.12f);
+                    Color c = Color.Lerp(rim, Color.Lerp(bottom, top, hk), coverInner);
                     // glossy highlight blob, upper left
                     float hx = x / (float)size - 0.33f, hy = y / (float)size - 0.68f;
                     float hl = Mathf.Clamp01(1f - Mathf.Sqrt(hx * hx * 3.2f + hy * hy * 7f) / 0.18f);
@@ -213,9 +215,12 @@ namespace Rainbow.Screen05
             Texture2D t = NewTex(size, size, name);
             Color[] px = new Color[size * size];
             float k = 256f / size;
-            Color g0 = Hex("#ffe680"), g1 = Hex("#ffcf2a"), g2 = Hex("#e89200");
-            Color groove = Hex("#c98200"), lip = Hex("#fff0a0");
-            Color shadow = Hex("#7a3c00"), outline = Hex("#b86400"), glyph = Hex("#ffe55a"), bevel = Hex("#fff8d0");
+            // round 4 (2026-11-24): the approved coins are ORANGE-gold (face (244,132,1) .. (249,155,16), $ (253,226,83)) with a lighter
+            // raised rim that carries cream tick marks and a fat embossed $; the old lemon palette bloomed to pale yellow
+            Color g0 = new Color(1f, 0.745f, 0.20f), g1 = new Color(0.985f, 0.61f, 0.07f), g2 = new Color(0.90f, 0.43f, 0.0f);
+            Color rimCol = new Color(1f, 0.70f, 0.16f), tick = new Color(1f, 0.93f, 0.70f);
+            Color groove = new Color(0.78f, 0.36f, 0.0f), lip = new Color(1f, 0.86f, 0.42f);
+            Color shadow = new Color(0.52f, 0.20f, 0.0f), outline = new Color(0.80f, 0.40f, 0.0f), glyph = new Color(1f, 0.84f, 0.30f), bevel = new Color(1f, 0.97f, 0.84f);
             for (int y = 0; y < size; y++)
                 for (int x = 0; x < size; x++)
                 {
@@ -226,14 +231,19 @@ namespace Rainbow.Screen05
                     if (shape <= 0f) { px[y * size + x] = new Color(0f, 0f, 0f, 0f); continue; }
                     float gt = Mathf.Clamp01((p - new Vector2(256f * 0.38f, 256f * 0.32f)).magnitude / (256f * 0.6f));
                     Color c = gt < 0.45f ? Color.Lerp(g0, g1, gt / 0.45f) : Color.Lerp(g1, g2, (gt - 0.45f) / 0.55f);
-                    float rg = Mathf.Abs((p - new Vector2(130f, 130f)).magnitude - 256f * 0.4f);
-                    c = Over(c, groove, Mathf.Clamp01(4.5f - rg + 0.5f));
+                    c = Over(c, rimCol, Mathf.Clamp01(dc - 101f));
+                    float ang = Mathf.Atan2(p.y - 128f, p.x - 128f) / (2f * Mathf.PI) * 16f;
+                    float ta = Mathf.Abs(ang - Mathf.Round(ang)) / 16f * 2f * Mathf.PI * dc;                 // px across a tick
+                    c = Over(c, tick, Mathf.Clamp01(3.2f - ta) * Mathf.Clamp01(dc - 107f) * Mathf.Clamp01(122f - dc) * 0.9f);
+                    float rg = Mathf.Abs((p - new Vector2(130f, 130f)).magnitude - 256f * 0.385f);
+                    c = Over(c, groove, Mathf.Clamp01(4.0f - rg + 0.5f));
                     float rl = Mathf.Abs((p - new Vector2(127f, 127f)).magnitude - 256f * 0.4f);
-                    c = Over(c, lip, Mathf.Clamp01(4.5f - rl + 0.5f) * 0.9f);
-                    c = Over(c, shadow, DollarCover(p - new Vector2(3f, 4f), 32f));
-                    c = Over(c, outline, DollarCover(p, 30f));
-                    c = Over(c, glyph, DollarCover(p, 18f));
-                    c = Over(c, bevel, DollarCover(p + new Vector2(3f, 3f), 6f));
+                    c = Over(c, lip, Mathf.Clamp01(3.0f - rl + 0.5f) * 0.9f);
+                    Vector2 q = new Vector2(128f, 128f) + (p - new Vector2(128f, 128f)) / 1.06f;             // the $ 6 % larger
+                    c = Over(c, shadow, DollarCover(q - new Vector2(4f, 6f), 42f) * 0.85f);
+                    c = Over(c, outline, DollarCover(q, 40f));
+                    c = Over(c, glyph, DollarCover(q, 31f));
+                    c = Over(c, bevel, DollarCover(q + new Vector2(3f, 4f), 13f));
                     c.a = shape;
                     px[y * size + x] = c;
                 }

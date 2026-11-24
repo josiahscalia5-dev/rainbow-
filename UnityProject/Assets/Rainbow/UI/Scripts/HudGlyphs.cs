@@ -10,7 +10,7 @@ namespace Rainbow.Screen05
     /// </summary>
     public static class HudGlyphs
     {
-        public const float Stroke = 0.27f;
+        public const float Stroke = 0.225f;
 
         public sealed class Glyph
         {

@@ -215,7 +215,7 @@ namespace Rainbow.Screen05.EditorTools
                 slot.s = layout[i].x;
                 slot.lateral = layout[i].y;
                 slot.height = layout[i].z;
-                slot.scale = layout[i].w / 0.906f;
+                slot.scale = layout[i].w;                         // measured: scale 1 = 1 m visible diameter
                 trail.slots.Add(slot);
             }
             trail.sparkles = BuildSparkles(coinsGo.transform);
@@ -293,6 +293,13 @@ namespace Rainbow.Screen05.EditorTools
             if (m.HasProperty("_FaceMap")) m.SetTexture("_FaceMap", face);
             if (m.HasProperty("_BaseMap")) m.SetTexture("_BaseMap", face);   // URP Unlit fallback
             if (m.HasProperty("_BaseColor")) m.SetColor("_BaseColor", Color.white);
+            // round 4: orange-brown milled rim and a calmer metal (the approved coins keep their orange-gold, no lemon bloom)
+            if (m.HasProperty("_EdgeBright")) m.SetColor("_EdgeBright", new Color(0.96f, 0.60f, 0.14f));
+            if (m.HasProperty("_EdgeDark")) m.SetColor("_EdgeDark", new Color(0.60f, 0.27f, 0.02f));
+            if (m.HasProperty("_EdgeCount")) m.SetFloat("_EdgeCount", 44f);
+            if (m.HasProperty("_Emission")) m.SetFloat("_Emission", 0.92f);
+            if (m.HasProperty("_EnvStrength")) m.SetFloat("_EnvStrength", 0.45f);
+            if (m.HasProperty("_SpecStrength")) m.SetFloat("_SpecStrength", 1.4f);
             EditorUtility.SetDirty(m);
             return m;
         }

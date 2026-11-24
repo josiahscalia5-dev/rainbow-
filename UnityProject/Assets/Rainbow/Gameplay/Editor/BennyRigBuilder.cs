@@ -446,7 +446,7 @@ namespace Rainbow.Screen05.EditorTools
             float phase = ph + (hisRight ? 0f : Mathf.PI);
             // round 4 (2026-11-24): 0.42 / 0.5 -> 0.30 / 0.36 (approved: two short level arm nubs; a full stroke threw one arm out)
             float z = -side * weight * 0.30f * Mathf.Sin(phase);
-            float y = -side * weight * 0.36f * Mathf.Cos(phase);
+            float y = -side * weight * 0.10f * Mathf.Cos(phase);
             return Quaternion.AngleAxis(y * Mathf.Rad2Deg, Vector3.up) * Quaternion.AngleAxis(z * Mathf.Rad2Deg, Vector3.forward);
         }
 
@@ -456,25 +456,26 @@ namespace Rainbow.Screen05.EditorTools
             return Quaternion.AngleAxis((hisRight ? -rad : rad) * Mathf.Rad2Deg, Vector3.forward);
         }
 
-        /// <summary>Round 4: phase of the swim cycle at clip start; he passes the approved view (1.5 s after a run-up) upright with level
-        /// arms like the approved Benny (phase 0: no roll, neutral bob and squash).</summary>
-        const float SwimPhase = 1.319f;
+        /// <summary>Round 4: phases of the swim cycle at clip start. He passes the approved view 1.533 s into the cycle (normalized 1.8303):
+        /// body phase 7 pi / 4 there (squash 0.97 = the approved height: pompom top y 770, waterline 1192), no roll, level arms.</summary>
+        const float SwimPhase = 0.281f, ArmPhase = 1.066f, RollZero = 5.498f;
 
         static void SwimBody(ClipWriter w, float leanSign)
         {
             float T = SwimCycle;
             float Ph(float t) => 2f * Mathf.PI * t / T + SwimPhase;
+            float ArmPh(float t) => 2f * Mathf.PI * t / T + ArmPhase;
             w.Rot(PathLean, t => Euler(0f, leanSign * LeanYawRad, -leanSign * LeanRollRad));
             w.Pos(PathBob, t => new Vector3(0f, Mathf.Abs(Mathf.Sin(Ph(t))) * 0.04f - 0.01f, 0f));
-            w.Rot(PathBob, t => { float ph = Ph(t); return Euler(Mathf.Sin(ph * 2f) * 0.03f, 0f, Mathf.Sin(ph) * 0.05f); });
+            w.Rot(PathBob, t => { float ph = Ph(t); return Euler(Mathf.Sin(ph * 2f) * 0.03f, 0f, Mathf.Sin(ph - RollZero) * 0.05f); });
             w.Scale(PathSquash, t =>
             {
                 float sq = 1f + 0.03f * Mathf.Sin(2f * Ph(t));
                 float xz = 1f / Mathf.Sqrt(sq);
                 return new Vector3(xz, sq, xz);
             });
-            w.Rot(PathArmR, t => ArmStroke(true, Ph(t), 1f));
-            w.Rot(PathArmL, t => ArmStroke(false, Ph(t), 1f));
+            w.Rot(PathArmR, t => ArmStroke(true, ArmPh(t), 1f));
+            w.Rot(PathArmL, t => ArmStroke(false, ArmPh(t), 1f));
         }
 
         static AnimatorController BuildController()

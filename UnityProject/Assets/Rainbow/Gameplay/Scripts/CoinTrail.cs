@@ -16,7 +16,7 @@ namespace Rainbow.Screen05
     public class CoinTrail : MonoBehaviour
     {
         public const float First = 5.7f, Gap0 = 5.0f, GapGrow = 1.5f, GapMax = 8f;
-        public const float CoinHeight = 1.2f, CoinScale = 0.9f, CoinTilt = 0.8f, LatK = 0.7f, CoreSwing = 0.9f;
+        public const float CoinHeight = 1.2f, CoinScale = 0.9f, CoinTilt = 0.88f, LatK = 0.7f, CoreSwing = 0.9f;
         public const float FarGap = 6.5f;
 
         public static CoinTrail Instance { get; private set; }
