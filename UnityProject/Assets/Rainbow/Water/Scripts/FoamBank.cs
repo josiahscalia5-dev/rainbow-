@@ -209,6 +209,22 @@ namespace Rainbow.Screen05
             return lr >= e.x + margin && lr <= e.y - margin;
         }
 
+        /// <summary>
+        /// Water round 3v: smooth 2-D value noise over the bank (world x, s), 0..1 - the rounded foam LUMPS (~0.5-0.8 m)
+        /// the small suds heap into (approved: cauliflower lumps along the banks, not an even carpet of beads).
+        /// </summary>
+        static float Lump(float x, float z, int side)
+        {
+            float px = x * 1.7f + (side > 0 ? 31.7f : 5.3f), pz = z * 1.25f;
+            float ix = Mathf.Floor(px), iz = Mathf.Floor(pz);
+            float fx = px - ix, fz = pz - iz;
+            fx = fx * fx * (3f - 2f * fx);
+            fz = fz * fz * (3f - 2f * fz);
+            float h00 = Hash(ix * 57.1f + iz * 113.3f), h10 = Hash((ix + 1f) * 57.1f + iz * 113.3f);
+            float h01 = Hash(ix * 57.1f + (iz + 1f) * 113.3f), h11 = Hash((ix + 1f) * 57.1f + (iz + 1f) * 113.3f);
+            return Mathf.Lerp(Mathf.Lerp(h00, h10, fx), Mathf.Lerp(h01, h11, fx), fz);
+        }
+
         /// <summary>Smooth 1-D value noise along s (mound density), 0..1.</summary>
         static float ClusterNoise(float s, int side)
         {
@@ -245,8 +261,9 @@ namespace Rainbow.Screen05
                     // wide foam fields where the narrower frame-round drum stands at +-5.3 m)
                     float shelfW = Mathf.Max(0f, side * (side * WallAt(s) - edge));
                     float cl = ClusterNoise(s, side);                               // 0 low stretch .. 1 big mound
-                    // bank profile: height above the water at f (0 waterline .. 1 wall) = hW * (0.25 + 0.75 f^1.3)
-                    float hW = (0.26f + 0.34f * cl) * Mathf.Clamp(0.45f + shelfW / 1.4f, 0.45f, 1.15f);
+                    // bank profile: LOW lumpy mounds (water_t1: a bank rising to ~1.1 m at the wall hid the purple wall
+                    // behind a flat carpet of beads; approved: rounded lumps along the waterline, the wall right behind)
+                    float hW = (0.17f + 0.22f * cl) * Mathf.Clamp(0.55f + shelfW / 2.0f, 0.55f, 1.0f);
 
                     // 1) lace: tiny bubbles straddling the waterline (the bubbly scalloped edge, soft toward the water)
                     int nLace = 4 + (rng.Next() < 0.5f ? 1 : 0);
@@ -258,19 +275,22 @@ namespace Rainbow.Screen05
                             r, rng.Range(0.3f, 0.5f), rng.Range(0.88f, 1f));
                     }
 
-                    // 2) the bank surface: many small puffs on a slope rising from the waterline to the wall
-                    float nS = (shelfW + hW) / 0.15f * (0.75f + 0.5f * cl) * (0.85f + 0.3f * rng.Next());
+                    // 2) the bank surface: many small puffs heaped into rounded LUMPS (2-D lump noise: lumps of bumps,
+                    //    bigger puffs on the lump crests, bluer puffs in the hollows between them)
+                    float nS = (shelfW + hW) / 0.17f * (0.75f + 0.5f * cl) * (0.85f + 0.3f * rng.Next());
                     int nSurf = Mathf.Max(2, Mathf.FloorToInt(nS) + (rng.Next() < nS - Mathf.Floor(nS) ? 1 : 0));
                     for (int k = 0; k < nSurf; k++)
                     {
                         float f = Mathf.Pow(rng.Next(), 0.85f);
                         float x = edge + side * (0.04f + f * Mathf.Max(shelfW - 0.04f, 0f));
                         float z = s + rng.Range(-0.5f, 0.5f) * step;
+                        float lump = Lump(x, z, side);
                         float u = rng.Next();
-                        float r = Mathf.Lerp(0.05f, 0.12f + 0.06f * cl, Mathf.Pow(u, 1.7f));
-                        float hs = hW * (0.25f + 0.75f * Mathf.Pow(f, 1.3f));
-                        float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + hs * rng.Range(0.7f, 1.05f) - r * 0.45f;
-                        AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, Mathf.Lerp(0.95f, 0.82f, rng.Next()));
+                        float r = Mathf.Lerp(0.05f, 0.1f + 0.08f * lump + 0.04f * cl, Mathf.Pow(u, 1.6f));
+                        float hs = hW * (0.65f + 0.35f * f) * (0.25f + 1.25f * lump * lump);
+                        float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + hs * rng.Range(0.75f, 1.05f) - r * 0.45f;
+                        float ao = Mathf.Lerp(0.68f, 0.97f, Mathf.Clamp01(hs / (hW * 1.1f)));
+                        AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, ao);
                     }
 
                     // 3) core: a few bigger, sunk puffs inside the bank fill the volume under the surface
@@ -280,23 +300,25 @@ namespace Rainbow.Screen05
                         float f = rng.Range(0.25f, 1f);
                         float x = edge + side * f * shelfW;
                         float z = s + rng.Range(-0.5f, 0.5f) * step;
-                        float r = rng.Range(0.11f, 0.17f + 0.04f * cl);
+                        float lump = Lump(x, z, side);
+                        float r = rng.Range(0.1f, 0.15f + 0.04f * cl) * (0.75f + 0.4f * lump);
                         float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z)
-                                + hW * (0.25f + 0.75f * Mathf.Pow(f, 1.3f)) * 0.55f - r * 0.5f;
-                        AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.72f, 0.84f));
+                                + hW * (0.65f + 0.35f * f) * (0.25f + 1.25f * lump * lump) * 0.5f - r * 0.5f;
+                        AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.7f, 0.82f));
                     }
 
-                    // 4) crest sprinkle: tiny bubbles resting on the surface (the fine suds texture)
+                    // 4) crest sprinkle: tiny bubbles resting on the lumps (the fine suds texture)
                     int nCrest = Mathf.FloorToInt(cl * 2.4f + 0.6f + rng.Next());
                     for (int k = 0; k < nCrest; k++)
                     {
                         float f = rng.Next();
                         float x = edge + side * f * shelfW;
                         float z = s + rng.Range(-0.5f, 0.5f) * step;
+                        float lump = Lump(x, z, side);
                         float r = 0.02f + 0.035f * rng.Next();
                         float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z)
-                                + hW * (0.25f + 0.75f * Mathf.Pow(f, 1.3f)) + r * 0.2f;
-                        AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.95f, 1f));
+                                + hW * (0.65f + 0.35f * f) * (0.25f + 1.25f * lump * lump) + r * 0.2f;
+                        AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.92f, 1f));
                     }
 
                     // 5) small packed clumps reaching onto the water where the mound noise is high (point bars, the low

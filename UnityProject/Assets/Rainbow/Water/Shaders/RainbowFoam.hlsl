@@ -165,7 +165,7 @@ float3 RBW_FoamColor(float3 Nv, float px, float seed, float ao, float tint, floa
     // (water round 3v 2026-11-23: SOFT suds - the upper rim no longer darkens (approved: soft bright silhouettes against
     //  the wall, lavender-blue only underneath and in the creases), a gentler tone curve, smaller and fainter open
     //  bubbles (the big dark holes read as faces on the old cotton balls), a pearly rim light on the lit side)
-    float t = 0.5 + 0.55 * tl - pow(1.0 - z, 1.6) * (0.1 + 0.5 * saturate(0.45 - q.y * 0.8)) - (1.0 - ao) * 0.42
+    float t = 0.5 + 0.55 * tl - pow(1.0 - z, 1.6) * (0.1 + 0.5 * saturate(0.45 - q.y * 0.8)) - (1.0 - ao) * 0.62
             + 0.04 * big;
     // fine open bubbles: dense on the lower half and the flanks, sparse on the lit top
     float2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(px / 5.5, 1.5, 14.0) + seed * 37.0;
