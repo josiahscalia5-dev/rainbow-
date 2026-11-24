@@ -35,14 +35,14 @@ namespace Rainbow.Screen05
                  "at the sides, the rest far / leaving the frame).")]
         public int bigCount = 22;
         [Tooltip("Small ring bubbles near the banks (bubbles.ts RIDE.high.small05 = 22; round 3: 26, approved ~20 small ones).")]
-        public int smallCount = 26;
+        public int smallCount = 22;
         [Tooltip("Stage speed (course.ts 05 = 11): bubbles drift with the current.")]
         public float stageSpeed = 11f;
         [Tooltip("Wanted on-screen DIAMETER at spawn, big bubbles, at the BOTTOM of the side band (px of the 864x1536 frame; " +
                  "bubbles.ts BIG_PX 25-65). Round 3: the size now follows the screen row (bigPxFar at the top of the band).")]
-        public Vector2 bigPx = new Vector2(28f, 62f);
+        public Vector2 bigPx = new Vector2(36f, 66f);
         [Tooltip("Wanted on-screen DIAMETER at spawn, big bubbles, at the TOP (far end) of the side band.")]
-        public Vector2 bigPxFar = new Vector2(14f, 40f);
+        public Vector2 bigPxFar = new Vector2(18f, 44f);
         [Tooltip("Wanted on-screen DIAMETER at spawn, small bubbles, bottom of the band (bubbles.ts 6 + 14 * rand^1.4).")]
         public Vector2 smallPx = new Vector2(7f, 18f);
         [Tooltip("Wanted on-screen DIAMETER at spawn, small bubbles, top (far end) of the band.")]
@@ -57,6 +57,9 @@ namespace Rainbow.Screen05
         [Tooltip("Share of the side bubbles placed in the upper (far) band, bandPx.x..farBottomPx; the rest go to " +
                  "farBottomPx..bandPx.y (approved: ~12 side bubbles at y 500-700, ~8 at 700-1000).")]
         [Range(0f, 1f)] public float farShare = 0.55f;
+        [Tooltip("The same share for the small ring bubbles (approved: most small ones float low, beside the splash and " +
+                 "the near banks, only a few tiny ones far up).")]
+        [Range(0f, 1f)] public float farShareSmall = 0.3f;
         public float farBottomPx = 700f;
         [Tooltip("Inner edge of the side band, |NDC x| of the portrait frame, big / small (bubbles.ts 0.55 / 0.5).")]
         public Vector2 innerXn = new Vector2(0.36f, 0.3f);
@@ -71,9 +74,10 @@ namespace Rainbow.Screen05
         [Tooltip("Wake bubbles thrown up beside Benny's splash that ride the current and slowly fall behind him (approved 05: " +
                  "two big ones at the bottom corners, small ones beside the splash fans). Big / small counts.")]
         public int wakeBigCount = 3;
-        public int wakeSmallCount = 9;
-        [Tooltip("Wake bubbles keep this share of Benny's speed (the rest = how fast they fall behind him).")]
-        public Vector2 wakeCarry = new Vector2(0.78f, 0.9f);
+        public int wakeSmallCount = 12;
+        [Tooltip("Wake bubbles keep this share of Benny's speed (the rest = how fast they fall behind him). Round 3: " +
+                 "0.78-0.9 -> 0.84-0.93, they swept out of the frame (approved: big ones still inside the bottom corners).")]
+        public Vector2 wakeCarry = new Vector2(0.84f, 0.93f);
         public uint seed = 0x0B0Bu;
 
         struct Bubble
@@ -291,7 +295,7 @@ namespace Rainbow.Screen05
                 // the current now, so the frame keeps the composition it starts with): farShare of them in the upper (far)
                 // band along the far foam banks and walls, the rest in the lower band down to the near water beside Benny
                 // (approved: ~12 in y 500-700, ~8 in 700-1000, the bottom ones come from the wake set)
-                float yPx = Rand() < farShare ? Range(bandPx.x, farBottomPx) : Range(farBottomPx, bandPx.y);
+                float yPx = Rand() < (b.big ? farShare : farShareSmall) ? Range(bandPx.x, farBottomPx) : Range(farBottomPx, bandPx.y);
                 float yn = 1f - 2f * yPx / RefH;
                 float xn = side * Range(b.big ? innerXn.x : innerXn.y, outerXn);
                 Vector3 ray = camFwd + camRight * (xn * tanH) + camUp * (yn * tanV);
@@ -381,11 +385,11 @@ namespace Rainbow.Screen05
             }
             float sv = Mathf.Clamp(b.pos.z, RiverPath.TunnelStart, RiverPath.TunnelLength);
             Vector3 fwd = RiverPath.Forward(sv);
-            b.vel = fwd * (speed * Range(wakeCarry.x, wakeCarry.y)) + Vector3.up * Range(0.12f, 0.35f) + camRight * (side * Range(0f, 0.25f));
+            b.vel = fwd * (speed * Range(wakeCarry.x, wakeCarry.y)) + Vector3.up * Range(0.12f, 0.35f) + camRight * (side * Range(0f, 0.14f));
             if (initial && !b.dead)
             {
                 // fill the trail at once: as if it had been thrown up tau seconds ago (camera and Benny moved on since)
-                float tau = Range(0f, 1.3f);
+                float tau = Range(0f, 1.1f);
                 b.pos += (b.vel - fwd * speed) * tau;
                 b.age = tau;
                 if (Allowed(b.pos, b.big ? b.r : b.r * 0.5f) <= 0) b.dead = true;

@@ -197,8 +197,12 @@ namespace Rainbow.Screen05
         /// filled the corner. Depth (m) the right wall foot moves toward the axis: full at / below the water, fading out 2.2 m
         /// above it (the ring crowns, paddles and upper framing are untouched), only for s 16-29. Kept at 1.3 m so Benny's
         /// widest steer (|x| 4.2 m, body radius 0.8 m) does not enter the wall. 0 = off.
+        /// TESTED 2026-11-24 (cycle geometry_t2, 1.3 m): the dented foot only reaches the screen edge at y 700-740 and
+        /// stays hidden behind the right foam rope - no visible gain; the approved spot needs the foot at ~3.6-4 m (2+ m
+        /// in), which Benny's steering range (RiverPath.ClampLateral, |x| 4.2 m) would clip into. OFF until that range
+        /// is narrowed beside the near bend.
         /// </summary>
-        public const float RightFootDent = 1.3f;
+        public static readonly float RightFootDent = 0f;
 
         /// <summary>Horizontal shift (m, toward the axis) of the wall at s, wall side (-1 / +1) and world height y.</summary>
         public static float FootDent(float s, int side, float y)

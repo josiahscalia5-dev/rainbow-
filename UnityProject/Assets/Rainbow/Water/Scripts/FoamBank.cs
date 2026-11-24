@@ -293,7 +293,7 @@ namespace Rainbow.Screen05
                     float edge = WaterlineX(s, side);                               // the foam waterline (world x)
                     float shelfW = Mathf.Max(0f, side * (side * WallAt(s, side) - edge));  // waterline -> drum wall (+ tuck)
                     float cl = ClusterNoise(s, side);                               // 0 low stretch .. 1 big mound
-                    float ropeW = Mathf.Min(Mathf.Max(shelfW, 0.4f), 0.95f + 0.45f * cl);
+                    float ropeW = Mathf.Min(Mathf.Max(shelfW, 0.4f), 0.8f + 0.4f * cl);
                     float crest = 0.3f + 0.17f * cl;
 
                     // 1) lace: tiny glossy bubbles straddling the waterline (the bubbly scalloped edge toward the water)

@@ -37,14 +37,16 @@ void RainbowBubble_float(float2 P, float Seed, float Px, float Fade, float Time,
     float2 c2 = (P - float2(-0.03, 0.5)) * float2(1.0, 1.4);
     float cyanS = saturate(exp(-dot(c1, c1) * 5.5) * L1.x);
     float pinkS = saturate(exp(-dot(c2, c2) * 6.5) * L1.x * 0.85);
-    float3 col = float3(0.03, 0.3, 1.0);
-    col = lerp(col, float3(0.25, 0.97, 1.0) * 1.15, cyanS);
-    col = lerp(col, float3(0.95, 0.74, 1.0) * 1.1, pinkS);
+    // (linear values chosen so the graded Game view lands on the approved samples: centre ~(25, 120, 245), cyan glow
+    // ~(70, 235, 252), pink haze ~(230, 180, 245))
+    float3 col = float3(0.035, 0.15, 0.95);
+    col = lerp(col, float3(0.1, 0.85, 1.0) * 1.05, cyanS);
+    col = lerp(col, float3(0.9, 0.5, 0.97), pinkS);
     float a = L0.z + (0.95 - L0.z) * max(cyanS, pinkS) * 0.8;
 
     // 2. thin-film tint toward the silhouette (approved: violet-blue / pink halo inside the rim)
     float filmK = smoothstep(0.38, 0.92, d) * L0.w;
-    col = lerp(col, lerp(film, float3(0.42, 0.36, 1.0), 0.35), filmK);
+    col = lerp(col, lerp(film, float3(0.45, 0.3, 1.0), 0.45), filmK);
     a = lerp(a, max(a, 0.75), filmK);
 
     // 3. ring of soft pink-white lamp reflections just inside the rim (approved: ~9 rounded spots, whiter on top, pinker
@@ -54,7 +56,7 @@ void RainbowBubble_float(float2 P, float Seed, float Px, float Fade, float Time,
     float lobe = pow(saturate(0.5 + 0.5 * cos(9.0 * ang + Seed * 31.0)), 1.2);
     float tiny = 1.0 - smoothstep(9.0, 18.0, pxR);
     float blob = saturate(lobe * exp(-dr * dr) * (0.78 + 0.3 * P.y) * L0.y * (1.0 - 0.6 * tiny));
-    float3 blobCol = lerp(float3(1.0, 0.6, 0.97), float3(1.0, 0.94, 1.0), saturate(0.55 + 0.6 * P.y));
+    float3 blobCol = lerp(float3(1.0, 0.55, 0.95), float3(1.0, 0.88, 1.0), saturate(0.55 + 0.6 * P.y));
     col = lerp(col, blobCol * 1.3, blob);
     a = max(a, blob * 0.92);
 
@@ -100,7 +102,7 @@ void RainbowBubbleSmall_float(float2 P, float Seed, float Px, float Fade, float4
     float dots = saturate(pow(saturate(0.5 + 0.5 * cos(5.0 * ang + Seed * 23.0)), 3.0) * exp(-dq * dq)
                * smoothstep(4.0, 8.0, pxR) * LS.y);
     float hl = saturate(RBW_SS(0.15, 0.0, length(c - float2(-0.16, -0.17))) * LS.w);
-    float3 col = float3(0.12, 0.5, 1.0);                    // clear blue-tinted body
+    float3 col = float3(0.06, 0.3, 1.0);                    // clear blue-tinted body
     float a = LS.z;
     col = lerp(col, float3(1.0, 0.95, 1.0) * 1.2, dots);
     a = max(a, dots * 0.85);

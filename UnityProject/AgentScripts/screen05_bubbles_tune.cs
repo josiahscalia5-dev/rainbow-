@@ -146,11 +146,13 @@ foreach (var name in order)
 {
     RestoreAll();
     bool hasFields = false;
+    float swimSecs = 0f;
     foreach (var l in lines)
     {
         var p = l.Split('|'); if (p.Length < 4 || p[0] != name || l.TrimStart().StartsWith("#")) continue;
         var vv = p[3].Split(','); var f = new float[4];
         for (int i = 0; i < 4; i++) f[i] = i < vv.Length ? float.Parse(vv[i], System.Globalization.CultureInfo.InvariantCulture) : 0f;
+        if (p[1] == "swim") { swimSecs = f[0]; continue; }   // steady state: swim on from the hold for x s before the still
         if (p[1] == "mat")
         {
             if (!mat.HasProperty(p[2])) { log.AppendLine("no prop " + p[2]); continue; }
@@ -174,6 +176,21 @@ foreach (var name in order)
     string held = "";
     if (hasFields || lastHadFields) { Reinit(); held = " | hold " + await Hold(); }
     lastHadFields = hasFields;
+    if (swimSecs > 0f)
+    {
+        // swim straight on (no teleport, no respawn of the field) and pause again: the bubbles' steady state
+        Time.captureFramerate = 30;
+        EditorApplication.isPaused = false;
+        int fs = Time.frameCount;
+        int nf = Mathf.RoundToInt(swimSecs * 30f);
+        await Wait.Until(() => Time.frameCount >= fs + nf, timeoutMs: 60000, because: "the Game view is not ticking");
+        EditorApplication.isPaused = true;
+        int fp = Time.frameCount;
+        await Wait.Until(() => Time.frameCount >= fp + 1 || EditorApplication.isPaused, timeoutMs: 10000, because: "pause");
+        Time.captureFramerate = 0;
+        held += " | swam " + swimSecs.ToString("0.0") + " s to S=" + benny.S.ToString("0.00");
+        lastHadFields = true;   // the next variant re-holds
+    }
     string png = Rainbow.Screen05.EditorTools.Screen05Capture.CaptureStill("Recordings/Screen05/work/bubbles_var_" + tag + "_" + name + ".png", 864, 1536);
     log.AppendLine(name + held + " | " + Stats(false) + " -> " + png);
 }

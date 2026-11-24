@@ -78,6 +78,13 @@ every Claude account.
     (Windows PowerShell 5.1 breaks inline quotes).
 - The "Unity" Claude plugin (Anthropic Directory) only adds Unity know-how; the CLI works without it.
 - Shell is Windows PowerShell 5.1: no `&&`, `||`, `?:` or `??`.
+- Permission rules (2026-11-24): `tools/claude-permissions/rainbow-permissions.json`, applied BY THE USER with
+  `tools/claude-permissions/apply-rainbow-permissions.ps1` into `~/.claude/settings.json` (Claude never applies or widens its own
+  permissions). To match them, write commands with literal paths and no variables, e.g.
+  `powershell -NoProfile -ExecutionPolicy Bypass -File C:\RainbowUnity\tools\screen05-cycle.ps1 -Tag x -Areas all`,
+  `& C:\Users\josia\AppData\Local\Unity\bin\unity.exe command script eval --project-path C:\RainbowUnity\UnityProject -- --file AgentScripts/x.cs`,
+  `& C:\Users\josia\PortableGit\cmd\git.exe -C C:\RainbowUnity log -n 5`. Deleting, uninstalling, system settings, credentials and
+  destructive Git still ask the user.
 
 ## Saving (automatic five-minute checkpoints)
 - The Windows Task Scheduler task "Rainbow Unity Autosave" runs `tools/autosave.ps1` every 5 minutes, hidden. It commits

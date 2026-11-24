@@ -111,7 +111,8 @@ float2 RBW_BankEdges(float d, float hw, float Mb, float sm, float W)
     // (geometry round 2026-11-24: the near-left bank is a narrow ROPE along the wall foot, the water reaching it - the
     //  approved foam waterline traced at x 50-175 / y 720-790 = rims ~1.0 / 1.1 / 1.2 m at s 21 / 23 / 24.5; the old
     //  2.4-2.95 m shelf at s 24-31 read as a wide flat lather carpet: now 1.0 -> 1.25 -> 1.85 -> 1.7 -> 0.35 m at
-    //  s 21.2 / 24.3 / 26.8 / 30.3 / 34.8)
+    //  s 21.2 / 24.3 / 26.8 / 30.3 / 34.8; a 1.0-1.3 m rope all along (cycle geometry_t3) left a wide cyan strip
+    //  between the rope and the left pink band, which in the approved image runs right beside the rope)
     float rimL = 0.35 + 0.65 * RBW_FB_SS(136.9, 137.9, sm) + 0.25 * RBW_FB_SS(137.9, 141.0, sm)
                + 0.6 * RBW_FB_SS(141.0, 143.5, sm) - 0.15 * RBW_FB_SS(144.0, 147.0, sm)
                - 0.5 * RBW_FB_SS(147.0, 149.0, sm) - 0.85 * RBW_FB_SS(149.0, 151.5, sm);

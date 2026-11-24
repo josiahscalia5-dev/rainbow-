@@ -186,9 +186,11 @@ namespace Rainbow.Screen05.EditorTools
             // bubbles.ts uNear was 3.2 / intensity 1.
             mat.SetFloat("_NearFade", 1.5f);
             mat.SetFloat("_SoftDepth", 0.3f);
-            mat.SetFloat("_Intensity", 1.4f);
-            // (bubbles round 2026-11-23) bubbles.ts on-screen caps: MAX_PX_RIDE 66 / MAX_PX_SMALL 22 px diameters (864x1536)
-            mat.SetFloat("_MaxPx", 33f);
+            // (bubbles round 3) 1.4 -> 1.2: with the opaque blue lens the bubbles read too bright / white-cyan
+            mat.SetFloat("_Intensity", 1.2f);
+            // (bubbles round 2026-11-23) bubbles.ts on-screen caps: MAX_PX_RIDE 66 / MAX_PX_SMALL 22 px diameters (864x1536);
+            // round 3: 68 px (approved big edge bubbles 52-65 px)
+            mat.SetFloat("_MaxPx", 34f);
             mat.SetFloat("_MaxPxSmall", 11f);
             EditorUtility.SetDirty(mat);
 

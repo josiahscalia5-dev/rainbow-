@@ -1,0 +1,45 @@
+{
+  "_about": "Rainbow Unity permission rules for Claude Code (prepared 2026-11-24 at the user's request; applied by the USER with apply-rainbow-permissions.ps1). Merged into %USERPROFILE%\\.claude\\settings.json, so they work in every folder and after account switches on this laptop. Everything NOT allowed here still asks: deleting files (Remove-Item etc.), uninstalling, system settings, credentials, destructive Git (reset, clean, checkout, restore, rebase, force push, branch -D, stash drop). The 'ask' rules below always ask even if an allow rule also matches.",
+  "additionalDirectories": [
+    "C:\\RainbowUnity",
+    "C:\\Users\\josia\\claude yes\\Rainbow_Screen05_Source"
+  ],
+  "allow": [
+    "Read(//c/RainbowUnity/**)",
+    "Edit(//c/RainbowUnity/**)",
+    "Read(//c/Users/josia/claude yes/Rainbow_Screen05_Source/**)",
+    "Read(//c/Users/josia/.claude/projects/**)",
+    "PowerShell(powershell -NoProfile -ExecutionPolicy Bypass -File C:\\RainbowUnity\\tools\\*)",
+    "PowerShell(powershell -NoProfile -File C:\\RainbowUnity\\tools\\*)",
+    "PowerShell(& C:\\Users\\josia\\AppData\\Local\\Unity\\bin\\unity.exe status *)",
+    "PowerShell(& C:\\Users\\josia\\AppData\\Local\\Unity\\bin\\unity.exe command *)",
+    "PowerShell(& C:\\Users\\josia\\AppData\\Local\\Unity\\bin\\unity.exe open *)",
+    "PowerShell(& C:\\Users\\josia\\AppData\\Local\\Unity\\bin\\unity.exe close *)",
+    "PowerShell(C:\\Users\\josia\\AppData\\Local\\Unity\\bin\\unity.exe status *)",
+    "PowerShell(C:\\Users\\josia\\AppData\\Local\\Unity\\bin\\unity.exe command *)",
+    "PowerShell(& C:\\Users\\josia\\PortableGit\\cmd\\git.exe -C C:\\RainbowUnity log *)",
+    "PowerShell(& C:\\Users\\josia\\PortableGit\\cmd\\git.exe -C C:\\RainbowUnity status *)",
+    "PowerShell(& C:\\Users\\josia\\PortableGit\\cmd\\git.exe -C C:\\RainbowUnity diff *)",
+    "PowerShell(& C:\\Users\\josia\\PortableGit\\cmd\\git.exe -C C:\\RainbowUnity show *)",
+    "PowerShell(& C:\\Users\\josia\\PortableGit\\cmd\\git.exe -C C:\\RainbowUnity ls-remote *)",
+    "PowerShell(& C:\\Users\\josia\\PortableGit\\cmd\\git.exe -C C:\\RainbowUnity rev-parse *)",
+    "PowerShell(Get-ChildItem C:\\RainbowUnity*)",
+    "PowerShell(Get-Content C:\\RainbowUnity*)",
+    "PowerShell(Select-String -Path C:\\RainbowUnity*)",
+    "PowerShell(Get-Process *)",
+    "PowerShell(Get-Date *)",
+    "PowerShell(Start-Sleep *)"
+  ],
+  "ask": [
+    "PowerShell(powershell -NoProfile -ExecutionPolicy Bypass -File C:\\RainbowUnity\\tools\\setup-resume-system.ps1*)",
+    "PowerShell(& C:\\Users\\josia\\AppData\\Local\\Unity\\bin\\unity.exe auth*)",
+    "PowerShell(& C:\\Users\\josia\\AppData\\Local\\Unity\\bin\\unity.exe license*)",
+    "PowerShell(& C:\\Users\\josia\\AppData\\Local\\Unity\\bin\\unity.exe install*)",
+    "PowerShell(& C:\\Users\\josia\\AppData\\Local\\Unity\\bin\\unity.exe uninstall*)",
+    "Edit(//c/RainbowUnity/.claude/**)",
+    "Edit(//c/RainbowUnity/.git/**)",
+    "Read(//c/Users/josia/.claude/.credentials.json)",
+    "Read(//c/**/*.ulf)",
+    "Read(//c/**/*.alf)"
+  ]
+}

@@ -14,6 +14,10 @@ on live variants), exact args `staging/shared/round3-visual-G1-args.json`, journ
   almost wall to wall; FoamRimCap / RBW_FOAM_CAP = 99 = off, foam values restored). Baseline `work/20261124_051325_G_BASELINE*` =
   **visual 58.0 / layout 36.8** (exactly the e2_c1 variant, rebuilt from code, console clean) - sent to the user. Diagnostics now in
   `tools/diag/` (colorgrid, cropstack, measure-compact).
+**USER, ~05:40 local - PERMISSIONS:** narrow allow rules for routine work were PREPARED (not applied by Claude):
+`tools/claude-permissions/` (rules JSON + apply script, dry-run tested on a copy). The user applies them once with
+`powershell -NoProfile -ExecutionPolicy Bypass -File C:\RainbowUnity\tools\claude-permissions\apply-rainbow-permissions.ps1`
+(merges into `~/.claude/settings.json`, backup first; works across folders and account switches). Use literal command paths (CLAUDE.md, Tools).
 **USER, ~05:30 local - STRATEGY CHANGE ("ROUND 4"):** ONE strong improvement round from visual ~58 toward 75 (not many tiny steps),
 biggest differences first: gold rings (thickness, spacing, size, placement), gold paddles (shape, size, angle, position), reflective
 purple metallic walls, stronger river S-curve, narrower natural foam, Benny's water contact, larger iridescent edge bubbles. Keep the
