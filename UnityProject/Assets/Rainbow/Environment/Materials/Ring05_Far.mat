@@ -39,15 +39,16 @@ Material:
     - _StripIntensity: 1.4
     m_Colors:
     - _BandF: {r: 44, g: 110, b: 0, a: 0}
-    - _BandG: {r: 0.16500002, g: 0.39, b: -0.425, a: 0.13}
+    - _BandG: {r: 0.29999998, g: 0.29, b: -0.47999996, a: 0.11}
     - _BandS: {r: 20, g: 0.045, b: 1, a: 0}
     - _FarGlowColor: {r: 1, g: 0.6117647, b: 0.3529412, a: 1}
-    - _FarGlowRange: {r: 200, g: 420, b: 1.2, a: 0}
+    - _FarGlowRange: {r: 250, g: 480, b: 0.85, a: 0}
     - _FrameParams: {r: 0.3, g: 0.06, b: 0, a: 0}
     - _GoldTone: {r: 1.3, g: 1.6, b: 1.5, a: 1}
     - _MidRange: {r: 8, g: 50, b: 0, a: 0}
     - _MidTint: {r: 0.5411765, g: 0.1882353, b: 0.8235294, a: 1}
-    - _PaddleParams: {r: 0.55, g: 0.12, b: 1, a: 0}
+    - _PaddleParams: {r: 0.55, g: 0.12, b: 1, a: 1}
+    - _RingLook: {r: 1, g: 40, b: 0.55, a: 0.6}
     - _StripColor: {r: 1, g: 0.9411765, b: 0.78431374, a: 1}
     - _StripParams: {r: 28, g: 0.022, b: 0, a: 0.65}
   m_BuildTextureStacks: []

@@ -62,6 +62,8 @@ namespace Rainbow.Screen05.EditorTools
             // light round 2026-11-23: no light rays (they bloomed into a white starburst; the approved vanishing point is a
             // soft warm glow inside the last rings), gradient radius 1:1 with the cap (RainbowThroatGlow.hlsl palette)
             SetVec(throatMat, "_ThroatParams", new Vector4(0f, 9f, 0.15f, 1f));
+            // tunnel round 3: two painted deep rings on the cap (r ~9.5 / ~15 px) + a small core (RainbowThroatGlow.hlsl)
+            SetVec(throatMat, "_ThroatRings", new Vector4(0.49f, 0.78f, 0.05f, 0.5f));
             Material farRiverMat = MakeMaterial("FarRiver05", "Rainbow/Screen05/FarRiver");
             // centred on the course line x = 0 like the playable river it continues; reaches both walls of the drum, whose
             // axis sits AxisX off that line (frame round 2026-11-23)
@@ -116,6 +118,12 @@ namespace Rainbow.Screen05.EditorTools
             {
                 // frame round 2026-11-23: each tray on its approved place (side and mount height per paddle)
                 DrumLayout05.PaddlePose(ps.s, ps.side, out Vector3 p, out Quaternion q, ps.mountY);
+                // tunnel round 3: turn the open dish toward the camera round the tray's inward axis (the approved trays
+                // show their rose-copper dish inside a thick rim; seen edge-on they read as flat orange slabs)
+                Vector3 tx = q * Vector3.right, ty = q * Vector3.up;
+                float tb = PaddleFaceTiltDeg * Mathf.Deg2Rad;
+                Vector3 ty2 = (ty * Mathf.Cos(tb) + Vector3.forward * Mathf.Sin(tb)).normalized;
+                q = Quaternion.LookRotation(Vector3.Cross(tx, ty2).normalized, ty2);
                 GameObject pd = MakeRenderer(paddles, (ps.side < 0 ? "Paddle_L_" : "Paddle_R_") + F(ps.s), paddle, paddleMat);
                 pd.transform.localPosition = p;
                 pd.transform.localRotation = q;
@@ -178,10 +186,18 @@ namespace Rainbow.Screen05.EditorTools
             // the mean coverage, so only the lengthwise strip reflections showed (radial spokes).
             // _SlotWarp = (s0 = approved eye, pitch at s0, growth per m, hole half length along the tube / pitch).
             SetVec(m, "_SlotPitch", new Vector4(2f * Mathf.PI * DrumLayout05.Radius / 44f, 0.70f, 0f, 0.5f));
-            SetVec(m, "_SlotSize", new Vector4(0.26f, 0.08f, 0.16f, 1.0f));
-            SetVec(m, "_SlotWarp", new Vector4(DrumLayout05.EyeS, 0.8f, 0.033f, 0.18f));
-            // magenta land glow (linear rgb, strength): the approved lands are bright magenta-pink, only the holes dark
-            SetVec(m, "_WallGlow", new Vector4(0.55f, 0.06f, 0.42f, 0.6f));
+            SetVec(m, "_SlotSize", new Vector4(0.26f, 0.08f, WallSlotCoverage, WallLipGlow));
+            // tunnel round 3 (2026-11-23): MANY small holes in tight rows like the approved (rows 0.6 m apart at the camera,
+            // was 0.8), the arc cells warped round the drum (WallSlotArc: 60 round, 1.5x denser over the ceiling than at the
+            // sides, holes 0.72 of the arc cell), thin dashes over the ceiling (0.30 of the row pitch) and fat ovals near the
+            // water (0.48), a crisp lit lip ~1.6 px and fine lathe-turned lines on the lands (WallSlotShape)
+            SetVec(m, "_SlotWarp", new Vector4(DrumLayout05.EyeS, WallRowPitch0, WallRowGrowth, 0.15f));
+            SetVec(m, "_SlotArc", new Vector4(WallSlotArc.x, WallSlotArc.y, WallSlotArc.z, DrumLayout05.Radius));
+            SetVec(m, "_SlotShape", WallSlotShape);
+            // tunnel round 3: deep VIOLET land glow (linear rgb, strength); the previous magenta glow (0.55, 0.06, 0.42)
+            // turned the whole drum hot magenta (approved: violet-purple metal, 40 % of the wall hue 275-295)
+            SetVec(m, "_WallGlow", WallGlow);
+            SetCol(m, "_BaseColor", WallBase);
             SetHex(m, "_RimColor", "#ff8ceb");
             SetVec(m, "_FloorSheet", new Vector4(RiverPath.WaterY + 0.06f, 0.35f, 5.4f, 1f));
             SetHex(m, "_FloorColorA", "#c81f9c");
@@ -193,6 +209,25 @@ namespace Rainbow.Screen05.EditorTools
             SetVec(m, "_WallFar", new Vector4(25f, 80f, 0.08f, 0.5f));
             EditorUtility.SetDirty(m);
         }
+
+        // ---- tunnel round 3 (2026-11-23) look values, measured against references/05_flow_into_the_current.png ----
+        /// <summary>Wall metal F0 (sRGB): violet-lavender (was (0.80, 0.60, 0.98), which reflected the magenta pano hot pink).</summary>
+        static readonly Color WallBase = new Color(0.62f, 0.45f, 1.0f, 1f);
+        /// <summary>Violet land glow (linear rgb, strength).</summary>
+        static readonly Vector4 WallGlow = new Vector4(0.22f, 0.03f, 0.55f, 0.45f);
+        /// <summary>Slot rows: pitch at the camera eye (m) and growth per metre of depth (forced perspective).</summary>
+        const float WallRowPitch0 = 0.6f, WallRowGrowth = 0.036f;
+        /// <summary>Slot arc cells: (holes round the drum, ceiling density boost, hole half length / arc cell, -).</summary>
+        static readonly Vector3 WallSlotArc = new Vector3(60f, 0.5f, 0.36f);
+        /// <summary>(hole half width / row pitch at the waterline, lit lip px, brushed strength, brushed lines per m).</summary>
+        static readonly Vector4 WallSlotShape = new Vector4(0.24f, 1.6f, 0.25f, 1.5f);
+        const float WallSlotCoverage = 0.22f, WallLipGlow = 1.4f;
+        /// <summary>Polished ring metal (key highlight, sharpness, reflection, cavity darkness): RainbowGoldMetal.hlsl.</summary>
+        static readonly Vector4 RingLook = new Vector4(1.0f, 40f, 0.55f, 0.6f);
+        /// <summary>Paddle key highlight strength (RainbowGoldMetal.hlsl, _PaddleParams.w).</summary>
+        const float PaddleHighlight = 1.0f;
+        /// <summary>Tilt of the paddle dish toward the camera round its inward axis (deg): approved trays show their dish.</summary>
+        public const float PaddleFaceTiltDeg = 32f;
 
         /// <summary>mode 0 = ring band, 1 = paddle, 2 = near frame.</summary>
         static void SetupGold(Material m, Texture2D pano, int mode)
@@ -214,7 +249,8 @@ namespace Rainbow.Screen05.EditorTools
             // yellow-cream G/R 0.67-0.95 where the approved corners are orange G/R ~0.5 with thin white-yellow lines).
             SetVec(m, "_GoldTone", mode == 2 ? new Vector4(1.15f, 1.3f, 1.3f, 1f) : new Vector4(1.3f, 1.6f, 1.5f, 1f));
             SetVec(m, "_BandF", new Vector4(44f, 110f, 0f, 0f));
-            SetVec(m, "_PaddleParams", new Vector4(0.55f, 0.12f, 1f, 0f));
+            SetVec(m, "_PaddleParams", new Vector4(0.55f, 0.12f, 1f, PaddleHighlight));
+            SetVec(m, "_RingLook", mode == 0 ? RingLook : new Vector4(0f, RingLook.y, RingLook.z, RingLook.w));
             SetVec(m, "_FrameParams", new Vector4(0.3f, 0.06f, 0f, 0f));
             SetTex(m, "_EnvPano", pano);
             // Coordinator look tuning 2026-11-23 (screen05_tune_look.cs, saved in commit a78f508): less white reflection
@@ -263,8 +299,12 @@ namespace Rainbow.Screen05.EditorTools
             // tunnel round 2026-11-23: with real rings at s 230 / 333 / 450 (frame round) the 95..330 m range painted every
             // wall beyond ~250 m pink-white (r 26-46 px round the vanishing point: (254, 150, 160)); the approved keeps
             // rose-purple walls between golden rings down to r ~34 px (D ~270 m) and is glow-orange only inside r ~32
-            SetVec(m, "_FarGlowRange", new Vector4(200f, 420f, 1.2f, 0f));
+            // tunnel round 3: starts later and weaker (the 200..420 m x 1.2 glow still melted the rings at 333 / 450 and the
+            // walls between them into one orange disc r ~30 px; approved: distinct gold rings down to r ~20 px)
+            SetVec(m, "_FarGlowRange", FarGlowRange);
         }
+
+        static readonly Vector4 FarGlowRange = new Vector4(250f, 480f, 0.85f, 0f);
 
         static Material MakeMaterial(string name, string shaderName)
         {

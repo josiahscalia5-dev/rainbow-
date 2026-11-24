@@ -232,24 +232,41 @@ namespace Rainbow.Screen05
         /// </summary>
         public static Mesh BuildPaddleTray(float size, float h, float stretch, int segments, string name)
         {
-            // profile (x = radius fraction, y = height in units of size) and region colours
-            Vector2[] prof =
+            // Tunnel round 3 (2026-11-23): the approved trays have a THICK ROUNDED polished rim (a half torus round the curved
+            // edge of the D, ~1/4 of the tray's height on screen) round a smooth rose-copper dish; the old thin flared lip
+            // read as a curled orange sheet. Profile (x = radius fraction, y = height in units of size, open side y = 0):
+            // floor -> fillet -> rim tube (centre (0.875, 0.125), radius 0.125) from its inner side round the bottom to the
+            // outside -> outer wall -> closed back at y = h.
+            var pl = new List<Vector2> { new Vector2(0f, 0.2f), new Vector2(0.45f, 0.2f), new Vector2(0.7f, 0.2f), new Vector2(0.735f, 0.188f) };
+            int rimStart = pl.Count;
+            const float rcx = 0.875f, rcy = 0.125f, rr = 0.125f;
+            for (int i = 0; i <= 8; i++)
             {
-                new Vector2(0f, 0.68f * h), new Vector2(0.78f, 0.68f * h), new Vector2(0.84f, 0.62f * h),     // floor, fillet
-                new Vector2(0.855f, 0.3f * h), new Vector2(0.865f, 0.06f * h), new Vector2(0.9f, 0f),          // inner rim face -> lip
-                new Vector2(0.965f, 0f), new Vector2(1.0f, 0.06f * h), new Vector2(1.025f, 0.4f * h),          // lip, outer bulge
-                new Vector2(1.0f, 0.85f * h), new Vector2(0.95f, h), new Vector2(0f, h),                       // closed back
-            };
-            // light round 2026-11-23: the open side the rider looks into (floor + inner rim face) read as a pale cream cut
-            // face / lavender board; the approved trays are copper-gold all over (peach-copper inner face, orange-gold rim,
-            // one pale highlight line), so floor = copper and the inner rim gold -> pale -> gold (white only from reflections)
-            Color copper = new Color(0.80f, 0.36f, 0.22f, 0.8f);        // (231,160,130)-ish peach copper
+                float th = (165f + 210f * i / 8f) * Mathf.Deg2Rad;   // 165 deg (inner, upper) .. 375 deg (outer, upper)
+                pl.Add(new Vector2(rcx + rr * Mathf.Cos(th), rcy + rr * Mathf.Sin(th)));
+            }
+            int rimEnd = pl.Count - 1;
+            pl.Add(new Vector2(0.985f, Mathf.Max(0.24f, 0.62f * h)));
+            pl.Add(new Vector2(0.93f, Mathf.Max(0.3f, 0.88f * h)));
+            pl.Add(new Vector2(0.82f, Mathf.Max(0.32f, h)));
+            pl.Add(new Vector2(0f, Mathf.Max(0.32f, h)));
+            Vector2[] prof = pl.ToArray();
+            // colours (linear rgb, a = polish): the dish is a smooth rose-copper mirror (it reflects the violet walls), the
+            // rim orange-gold with a pale crest, the outer wall orange, the back plum (against the drum, rarely seen)
+            Color dish = new Color(0.62f, 0.25f, 0.24f, 0.75f);         // (207,137,134) rose copper
+            Color dishEdge = new Color(0.72f, 0.30f, 0.2f, 0.85f);
             Color gold = new Color(0.8678f, 0.4731f, 0.2587f, 1f);      // (252,165,95)
             Color pale = new Color(0.9089f, 0.6835f, 0.3326f, 1f);      // (249,205,112)
             Color orange = new Color(0.7866f, 0.2857f, 0.1249f, 0.9f);  // (250,119,38)
-            Color peach = new Color(0.838f, 0.3415f, 0.2905f, 0.8f);    // (254,133,115)
             Color plum = new Color(0.298f, 0.0954f, 0.168f, 0.3f);      // (150,40,92)
-            Color[] pc = { copper, copper, gold, gold, pale, gold, gold, orange, gold, peach, plum, plum };
+            var pcl = new List<Color> { dish, dish, dishEdge, gold };
+            for (int i = rimStart; i <= rimEnd; i++)
+            {
+                float t = (i - rimStart) / (float)(rimEnd - rimStart);            // 0 inner .. 1 outer
+                pcl.Add(Color.Lerp(gold, pale, Mathf.Exp(-Mathf.Pow((t - 0.45f) / 0.18f, 2f))));
+            }
+            pcl.Add(orange); pcl.Add(orange); pcl.Add(plum); pcl.Add(plum);
+            Color[] pc = pcl.ToArray();
 
             int n = prof.Length;
             var n2 = new Vector2[n];

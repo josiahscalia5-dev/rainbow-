@@ -28,5 +28,6 @@ Material:
     - _ThroatIntensity: 1
     m_Colors:
     - _ThroatParams: {r: 0, g: 9, b: 0.15, a: 1}
+    - _ThroatRings: {r: 0.49, g: 0.78, b: 0.05, a: 0.5}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

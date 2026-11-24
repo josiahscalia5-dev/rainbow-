@@ -164,16 +164,20 @@ namespace Rainbow.Screen05
             float kW = SS(136.2f, 136.9f, sm) * (W >= 1f ? 1f : 0f);
             float wallL = -(W + d);
             float wallR = W - d;
-            float rimL = 0.35f + 0.8f * SS(136.9f, 137.9f, sm) + 0.35f * SS(138.0f, 140.5f, sm)
-                       + 1.25f * SS(140.5f, 143.5f, sm) - 0.7f * SS(145.0f, 148.0f, sm)
-                       - 0.9f * SS(148.0f, 151.0f, sm) - 0.35f * SS(151.5f, 153.5f, sm);
+            float rimL = 0.35f + 1.2f * SS(136.9f, 137.9f, sm) + 0.5f * SS(137.9f, 140.0f, sm)
+                       + 0.9f * SS(139.5f, 142.5f, sm) - 0.4f * SS(143.5f, 146.5f, sm)
+                       - 0.6f * SS(146.0f, 148.0f, sm) - 1.35f * SS(148.0f, 149.5f, sm)
+                       - 0.25f * SS(149.5f, 151.5f, sm);
             float rimLmin = Mathf.Lerp(rimL, 0.35f, SS(152.0f, 154.0f, sm));
+            float rimRn = 0.62f + 0.9f * (1f - SS(141.2f, 143.2f, sm)) + 0.5f * (1f - SS(139.5f, 141.0f, sm))
+                        + 0.35f * SS(151.5f, 154.0f, sm) + 0.5f * SS(154.5f, 157.5f, sm);
             float rimR = 0.45f + 0.75f * (1f - SS(141.5f, 144.0f, sm)) + 3.0f * (1f - SS(140.0f, 141.5f, sm))
                        + 1.15f * SS(157.7f, 160.7f, sm) + 0.7f * SS(160.7f, 164.3f, sm)
                        + 0.5f * SS(164.3f, 168.3f, sm) + 0.7f * SS(168.3f, 173.2f, sm)
                        + 0.4f * SS(173.2f, 179.3f, sm) - 1.8f * SS(179.3f, 186.7f, sm)
                        - 1.5f * SS(186.7f, 196.7f, sm);
-            float rimRmin = Mathf.Lerp(0.35f, rimR, SS(156.5f, 158.5f, sm) * (1f - SS(185.0f, 189.0f, sm)));
+            rimR = Mathf.Max(rimR, rimRn);
+            float rimRmin = Mathf.Lerp(rimRn, rimR, SS(156.5f, 158.5f, sm) * (1f - SS(185.0f, 189.0f, sm)));
             eL = Mathf.Lerp(eL, Mathf.Clamp(eL, wallL + rimLmin, wallL + rimL), kW);
             eR = Mathf.Lerp(eR, Mathf.Clamp(eR, wallR - rimR, wallR - rimRmin), kW);
             float kL1 = SS(126.6f, 127.6f, sm) * (1f - SS(129.0f, 129.8f, sm));

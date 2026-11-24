@@ -35,7 +35,7 @@ Material:
     - _StripIntensity: 0
     m_Colors:
     - _FarGlowColor: {r: 1, g: 0.6117647, b: 0.3529412, a: 1}
-    - _FarGlowRange: {r: 200, g: 420, b: 1.2, a: 0}
+    - _FarGlowRange: {r: 250, g: 480, b: 0.85, a: 0}
     - _MidRange: {r: 8, g: 50, b: 0, a: 0}
     - _MidTint: {r: 0.541, g: 0.18799996, b: 0.824, a: 1}
     - _RiverBand: {r: 0.75, g: 0.1, b: 0.66, a: 1}
