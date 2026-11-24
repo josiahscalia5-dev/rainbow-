@@ -100,7 +100,7 @@ Shader "Rainbow/Screen05/FarRiver"
             {
                 float3 V = GetWorldSpaceNormalizeViewDir(input.positionWS);
                 float3 color;
-                RainbowFarRiver_float(input.positionWS, input.normalWS, V, input.uv, _Time.y, color);
+                RainbowFarRiver_float(input.positionWS, input.normalWS, V, input.uv, _RainbowTime, color);
                 return half4(color, 1.0);
             }
             ENDHLSL

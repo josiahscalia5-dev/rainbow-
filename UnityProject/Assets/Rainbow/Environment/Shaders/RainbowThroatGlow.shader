@@ -65,7 +65,7 @@ Shader "Rainbow/Screen05/ThroatGlow"
             half4 ThroatFrag(Varyings input) : SV_Target
             {
                 float3 color;
-                RainbowThroatGlow_float(input.uv, _Time.y, color);
+                RainbowThroatGlow_float(input.uv, _RainbowTime, color);
                 return half4(color, 1.0);
             }
             ENDHLSL

@@ -22,7 +22,9 @@ await Wait.Until(() => Time.frameCount >= f0 + 3, timeoutMs: 30000, because: "th
 // Screen05CaptureFrameHook.LateFrame (runs once per frame AFTER every LateUpdate, Cinemachine's brain included) in the
 // very frame Benny reaches s = 14, so the still is one whole gameplay frame. (2) The start is chosen on the route so
 // that exactly settleFrames swim steps of swimSpeed / 30 end on s = 14.00 (no calibration pass). (3) Benny's clips
-// restart with the run (Animator rebind), so his pose at s = 14 is the same in every still.
+// restart with the run (Animator rebind), so his pose at s = 14 is the same in every still. (4) Since 2026-11-23 21:10 the
+// shared animation clock (Screen05Clock: water, foam, bubbles, splash, walls, coins) restarts with the run too, so the
+// still is identical from cycle to cycle (before, the animation phase alone moved water scores by up to 4 points).
 var cam = Camera.main;
 var route = benny.route;
 route.EnsureReady();
@@ -52,6 +54,7 @@ try
         if (hud != null) hud.ShowHint("", 0f);
         if (benny.animator != null) { benny.animator.Rebind(); benny.animator.Update(0f); }
         benny.TeleportTo(startS, Rainbow.Screen05.RiverPath.Meander(startS));
+        Rainbow.Screen05.Screen05Clock.Reset(0f);   // same animation phase (water, foam, bubbles, coins) in every still
         hit = false; armed = true;
         await Wait.Until(() => hit && EditorApplication.isPaused, timeoutMs: 30000, because: "Benny did not reach s = 14 (is the Game view ticking?)");
         armed = false;

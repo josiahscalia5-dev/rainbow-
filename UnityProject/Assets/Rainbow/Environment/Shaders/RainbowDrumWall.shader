@@ -137,7 +137,7 @@ Shader "Rainbow/Screen05/DrumWall"
                 float3 ambient = SampleSH(N);
                 float3 color, albedo, emission;
                 float metallic, smoothness;
-                RainbowDrumWall_float(input.positionWS, N, V, input.uv, _Time.y, ambient, color, albedo, metallic, smoothness, emission);
+                RainbowDrumWall_float(input.positionWS, N, V, input.uv, _RainbowTime, ambient, color, albedo, metallic, smoothness, emission);
                 color += RainbowDirectLights(input.positionWS, input.positionCS, N, V, albedo, metallic, 1.0 - smoothness) * _LightInfluence * _Exposure;
                 color = MixFog(color, input.fogFactor);
                 return half4(color, 1.0);

@@ -111,7 +111,7 @@ Shader "Rainbow/Water/Bubble"
                 if (i.quad.z >= 1.0)
                     RainbowBubbleSmall_float(P, seed, i.quad.w, i.misc.x * soft, col, a);
                 else
-                    RainbowBubble_float(P, seed, i.quad.w, i.misc.x * soft, _Time.y, col, a);
+                    RainbowBubble_float(P, seed, i.quad.w, i.misc.x * soft, _RainbowTime, col, a);
                 col *= _Intensity;
                 col = MixFog(col, i.misc.w);
                 return half4(col, a);

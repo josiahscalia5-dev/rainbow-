@@ -62,7 +62,7 @@ Shader "Rainbow/Water/Foam"
             float3 pw;
             float4 cr;
             RBW_FoamVertex(TransformObjectToWorld(v.positionOS.xyz), v.uv0, v.uv1, _SOffset, _WaveAmp, _RainbowBenny,
-                           _Time.y, pw, cr);
+                           _RainbowTime, pw, cr);
             o.positionWS = pw;
             o.centreRadius = cr;
             o.cornerSeed = float4(v.uv0.xy, v.uv0.w, v.uv1.x);

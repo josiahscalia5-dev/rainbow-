@@ -57,7 +57,7 @@ Shader "Rainbow/Water/River"
         float3 RiverWorldPosition(float3 positionOS, float4 stream)
         {
             float3 pw = TransformObjectToWorld(positionOS);
-            pw.y += RBW_RiverWave(pw.x, pw.z, stream.x, stream.y, _SOffset, _WaveAmp, _Time.y);
+            pw.y += RBW_RiverWave(pw.x, pw.z, stream.x, stream.y, _SOffset, _WaveAmp, _RainbowTime);
             return pw;
         }
         ENDHLSL
@@ -110,7 +110,7 @@ Shader "Rainbow/Water/River"
                 float3 col, reflDir, reflTint;
                 float reflW;
                 RainbowRiver_float(i.positionWS, i.normalWS, viewDir, i.stream, _RainbowBenny, _RainbowSplash,
-                                   float4(_SOffset, _CoreSwing, _FlowSpeed, _Time.y), _RiverLightDir.xyz,
+                                   float4(_SOffset, _CoreSwing, _FlowSpeed, _RainbowTime), _RiverLightDir.xyz,
                                    col, reflDir, reflTint, reflW);
                 float2 puv = RBW_PanoUV(RBW_RotateY(reflDir, _EnvYaw));
                 float3 env = SAMPLE_TEXTURE2D_LOD(_EnvPano, sampler_EnvPano, puv, _EnvLod).rgb;

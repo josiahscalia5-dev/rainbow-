@@ -125,7 +125,7 @@ Shader "Rainbow/Water/Splash"
             {
                 float u = saturate(abs(x - _SplashRiver.x) / max(_SplashRiver.y, 0.5));
                 return _SplashRiver2.x + _SplashRiver2.y * u * u * u
-                     + RBW_RiverWave(x, z, _SplashRiver.x, _SplashRiver.y, _SplashRiver.z, _SplashRiver.w, _Time.y);
+                     + RBW_RiverWave(x, z, _SplashRiver.x, _SplashRiver.y, _SplashRiver.z, _SplashRiver.w, _RainbowTime);
             }
 
             Varyings SplashVert(Attributes v)
@@ -135,7 +135,7 @@ Shader "Rainbow/Water/Splash"
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
                 float R = max(_SplashState.x, 0.5);
                 float str = saturate(_SplashState.y);
-                float t = _Time.y;
+                float t = _RainbowTime;
                 float side = v.uv1.x, a = v.uv1.y, seed = v.uv1.w;
                 float type = v.uv0.z;
                 float u = v.uv0.x;
@@ -208,7 +208,7 @@ Shader "Rainbow/Water/Splash"
                 float type = i.d0.w;
                 float len = i.d1.x;
                 float tau = i.d1.y;
-                float t = _Time.y;
+                float t = _RainbowTime;
                 float ac = abs(uv.y);
                 const float3 cyan = float3(0.45, 0.88, 1.0);
                 const float3 white = float3(1.1, 1.12, 1.16);
