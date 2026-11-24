@@ -1,55 +1,57 @@
 # Rainbow Unity — handoff (latest verified state)
 
-Last verified: **2026-11-24 13:05 UTC** (08:05 local), Claude session b41bab30 (new account) on the user's laptop. Unity is OPEN; Round 4b is running.
+Last verified: **2026-11-24 13:55 UTC** (08:55 local), Claude session 018893e6 (new account) on the user's laptop. Unity is OPEN; Round 4b is DONE (80.5 / 66.6, tagged); Round 5 is next.
 Read this first in any new Claude account or session. **This is an existing project — never start over.**
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
 ## NOW - read this first (concise; rewritten after every finished step; the DETAILED LOG below is history)
-Updated 2026-11-24 08:05 local (session b41bab30, new account). Cross-account rules: CLAUDE.md "PERMANENT RULE: cross-account continuation".
-- **USER'S VISUAL DIRECTION (2026-11-24 07:40 local, binding):** Screen 05 must reach at least 70/100, preferably 75+ (final target 90-95 %), through
-  SUBSTANTIAL visual improvements, not small adjustments. The approved Screen 05 image = master visual blueprint: compare projected outlines, sizes,
-  angles, spacing and positions of every major object with the real Game View (existing target sheet + geometry tools). Prioritise the whole environment
-  round Benny: gold rings, half-moon paddles, reflective purple tunnel walls, foreground copper frame, S-shaped river, foam, bubbles, cinematic
-  lighting. GEOMETRY first, MATERIALS second, LIGHTING third. Blender for accurate 3D shapes once installed, Unity = gameplay + rendering, Claude
-  coordinates. Reference overlays only for measuring, never in the game. At most two specialists, no extra ones, conserve paid credits, keep playable 3D /
-  camera / controls / animations. Report the honest score + real Game View after the round. No Screen 06 without approval.
-- **USER'S CORRECTION GUIDES (2026-11-24 ~08:25 local, binding):** three annotated images + their text in `references/correction-guides-2026-11-24/` (README.md = the
-  instructions per area). Every specialist / Blender / Unity job reads them first; target 90/100; keep what is improved; no extra agents, tests or restarts because of
-  them. The running lanes could not be messaged (see CLAUDE.md, Specialists), so every point goes into the follow-up work right after they finish: the coordinator (and the next stage's brief) checks the pictures against the README.md table; HUD (raised heart / coin, glossy glass, thin bright rim) and bubbles (clear, transparent) are the coordinator's.
-- RUNNING (since 08:00 local): ROUND 4b, Workflow run `wf_54c15c25-7a2`, exactly two specialists: TUNNEL (paddles, rings, walls, near frame, lighting) |
-  RIVER (data-driven S-river + foam, then near water / Benny contact / splash). Script `staging/shared/round4b-visual.workflow.js` (args: baseline = still
-  20261124_075315_R4_barrel 67.0 / 47.5). Journal `%USERPROFILE%\.claude\projects\C--Users-josia--unity\b41bab30-da85-4ac4-a946-62f3f4cd4aef\subagents\workflows\wf_54c15c25-7a2\journal.jsonl`
-  The coordinator does coins (CoinTrail), bubbles (BubbleField), Benny's arms, HUD polish, integration.
-- DONE this session: the old account's run `wf_ab41a260-945` died at 07:24 mid-test (its edits were kept; combined 62.7 / 41.2). Then coordinator: GEOMETRY FIT of
-  the drum with the real camera (`tools/diag/fit-rings.ps1`; DrumLayout05 AxisS / AxisXs / AxisYs / AxisRs = axis 0.8 m left near, barrel radius, rings 25.6 / 46 / 82 / 105.8 / 159.4:
-  all visible rings within 0.5-2.6 px) + HUD rebuilt from measurements (rounded glyphs in code: HudGlyphs.cs, HudGlyphText.cs) = **67.0 / 47.5** (hud 52 -> 74, walls 60.7
-  -> 66.3, throat 69.3 -> 75.4). River targets traced + unprojected: `staging/round4-river/river_targets.csv` (`tools/diag/unproject-river.ps1`).
-  New diagnostics: `tools/diag/errormap.ps1` (where the points are lost), `gridshapes.ps1` (pixel grid + outlines); the cycle tool now waits for the domain reload.
-- DONE by the coordinator while the lanes run (08:00-08:10): coins on the approved coin centres (CoinTrail.ApprovedCoins = s, world x, height, diameter; 7 collectable; orange-gold
-  art), start composition of the bubbles (BubbleField.StartBig / StartSmall), Benny's arms / pose phase / 5.5 cm visual nudge (BennyRigBuilder SwimPhase / ArmPhase / ArmScale / ArmRest,
-  BennyController.VisualShiftX), HUD glyphs. NEW automatic look fitter: `Assets/Rainbow/Testing/Editor/Screen05AutoFit.cs` + `AgentScripts/screen05_autofit.cs` (pattern search over material /
-  light / post / transform values at the hold, no tokens) and `Assets/Rainbow/Editor/Screen05Tuning.cs` + `Assets/Rainbow/Tuning/screen05_tuning.txt` (fitted values applied at the end of every
-  scene build). Plan: after both lanes finish, run the fitter on their material values, append the winners to the tuning file, rebuild, confirm with a normal cycle.
+Updated 2026-11-24 08:55 local (session 018893e6, new account; the previous account ran out of credits at 08:28 local). Cross-account rules: CLAUDE.md "PERMANENT RULE".
+- **USER (2026-11-24 ~08:33 local, binding):** resume Round 4 with at most TWO specialists, conserve credits, reuse the existing tools (cycle tool, automatic fitter
+  `Screen05AutoFit`, geometry tools, Blender tools) instead of building new ones; at least 70 now, preferably 75+, final goal 90-95 %; preserve the best version;
+  priority: reflective purple walls, copper-gold rings, half-moon paddles, foreground frame, S-river, natural foam, bubbles, realistic water reflections, Benny's
+  water contact. Show the real Game View beside the approved image with honest visual + layout scores. No Screen 06 without approval.
+- **USER'S CORRECTION GUIDES (binding):** `references/correction-guides-2026-11-24/` (README.md = per-area instructions + 3 images; full-resolution copies in
+  `full-resolution/`, added 08:50). Every specialist / Blender / Unity job reads them first. Their Unity side is an OLD mid-edit still (white walls): judge against the newest still.
+- **ROUND 4b RESULT (recovered by this account):** run `wf_54c15c25-7a2` (TUNNEL | RIVER) was cut at 08:28:41 when the credits ran out, AFTER both lanes' edits were
+  saved; the river lane's last cycle `river_final` (08:29) finished on its own. Coordinator integration `ROUND4_FINAL` (08:42, full rebuild from code) =
+  **visual 80.5 / layout 66.6** (from 67.0 / 47.5; measure tool unchanged since 11-23 18:04, the old baseline still re-measures 67.0 / 47.5). Gameplay check passed
+  (steer L -4.20 / R -0.24, jump 1.20 + landing, coins 1420 -> 1440, hearts 5/5, Swimming). Evidence `evidence/screen05/round4/20261124_084215_ROUND4_FINAL*`
+  (+ errormap heat), 12 s recording `UnityProject/Recordings/Screen05/gameplay_20261124_084559.mp4`.
+- ERROR MAP of ROUND4_FINAL (`tools/diag/errormap.ps1 -Oracle`): biggest remaining gap = near water / Benny's splash y 1100-1536 (+4.5 visual / +8.1 layout if
+  perfect), then upper walls + rings (+2.4), HUD (+2.3), mid river (+2.3), Benny box (+2.1), water right / left (+1.8 / +1.6), left wall + foam (+1.4).
+- NEXT (in order): (1) coordinator FITTER, GLOBAL look only (bloom, exposure, contrast, saturation, hue, vignette, light intensities): params
+  `staging/shared/autofit_round5_global_params.txt` (= `Recordings/Screen05/work/autofit_params.txt`, budget `autofit_seconds.txt` 240), run
+  `screen05-cycle.ps1 -Tag R5_prefit -Areas all -NoRebuild -EvalAtHold AgentScripts/screen05_autofit.cs`; winners (`work/autofit_result.txt`) -> append to
+  `Assets/Rainbow/Tuning/screen05_tuning.txt`; confirm with a full cycle; keep only if the score rises. (2) ROUND 5 = `staging/shared/round5-visual.workflow.js`:
+  two lanes RIVER (near water / contact / splash, then mid water, foam rims) | TUNNEL (upper walls, rings, corners, paddles, near frame + BUBBLES); args.baseline =
+  the newest confirmed still. If the run dies: journal -> `skip` + `notes`, relaunch the same script. (3) Integration cycle `-Tag ROUND5_FINAL -Areas all -Series` +
+  `screen05_playtest_check.cs`; tag `validated/r5-final-<visual>` if higher; side-by-side + both scores to the user. (4) Fitter again on the lanes' material values.
 - VALIDATED VERSIONS (safe fallbacks; every autosave commit after the newest one may hold EXPERIMENTAL work):
   | git tag | commit | visual / layout | what | evidence |
   |---|---|---|---|---|
+  | validated/r4b-final-80.5 | a3f7d54 | 80.5 / 66.6 | Round 4b: data-driven S-river, glints, foam ropes, copper tunnel, half-moon paddles, coins | evidence/screen05/round4/20261124_084215_ROUND4_FINAL* |
   | validated/r4-baseline-58.0 | aa2a2e1 | 58.0 / 36.8 | coordinator look tuning: walls, paddle tilt -15, azure water grade, darker HUD | evidence/screen05/round3/20261124_051325_G_BASELINE* |
-  | (reference, no tag) | ac9e1c5 | 54.8 / 36.2 | round-3 frame + lane edits | evidence/screen05/round3/stage2_start_r3_clock_D* |
-- NEXT STEP: when run `wf_54c15c25-7a2` ends: coordinator integration `-Tag ROUND4_FINAL -Areas all -Series` + `AgentScripts/screen05_playtest_check.cs` + a 12 s recording;
-  if the picture is closer and gameplay passes: tag validated/r4-final-<visual>, copy the stills to evidence/screen05/round4, send the user ONE side-by-side + both scores.
-  Then Blender (below).
-- IF THE RUN DIED (account switch): read its journal; a lane with a "result" goes into `skip`; write `notes.<lane>` for the interrupted lane (its newest files, work
-  stills, backups in `work/backup_round3v/<lane>_r4b/`); relaunch the same script with the same baseline.
-- BLENDER = APPROVED by the user (06:38 local): portable Blender 5.3 AFTER Round 4, only if enough disk remains (setup checks >= 6.5 GB free; C: was 7.0 GB at 07:30; if
-  short: tell the user first, e.g. the git-ignored `UnityProject/Recordings` work stills are 1.2 GB - ask before deleting anything). Rules: CLAUDE.md "Blender = asset tool".
-  Run `tools/blender/setup-blender.ps1` (verifies the official SHA-256, unpacks to `C:\Users\josia\Blender`), then first asset job = whichever of paddles / rings / drum is furthest
-  from the approved image (FBX -> `Assets/Rainbow/Environment/Models`, validated with the cycle tool). Unity stays the engine; never delete the user's assets.
-- WAITING ON THE USER: (a) permission rules v2 in `tools/claude-permissions/` - the user applies them (strict, or strict + test runners);
-  (b) the GitHub repo is PUBLIC although the user called it private - only the user can change that.
+- BLENDER: approved by the user (after Round 4, storage checks); NOT installed yet. C: 6.7 GB free at 08:34 (setup needs >= 6.5 GB, leaves ~5.3 GB). The biggest
+  measured gaps are water / splash / wall-pattern SHADER work where Blender does not help, so it is installed when a mesh job needs it (paddle / ring shape),
+  preferably after the user OKs freeing old regenerable work stills (git-ignored `UnityProject/Recordings/Screen05/work`, ~1.5 GB; ask before deleting).
+- UNITY NOTES: the previous session's end killed the Editor (no clean exit); on reopen Unity showed "Recovering Scene Backups" and saved
+  `Assets/_Recovery/0 (3).unity` (0..3 = harmless recovered copies; ask the user before deleting). Windows Security blocked a Burst DLL in Library (the game does not need Burst).
+- WAITING ON THE USER: (a) permission rules v2 in `tools/claude-permissions/` - the user applies them; (b) the GitHub repo is PUBLIC although the user called it private.
 <!-- NEXT-TASK:END -->
 
 ## DETAILED LOG (older entries, newest first; the NOW block above wins where they disagree)
+
+**MOVED FROM NOW (08:05 local block of session b41bab30, superseded 08:55 local):** Round 4b launched 08:00 as run `wf_54c15c25-7a2` (TUNNEL | RIVER; script
+`staging/shared/round4b-visual.workflow.js`, baseline still `20261124_075315_R4_barrel` 67.0 / 47.5; journal under session b41bab30-da85-4ac4-a946-62f3f4cd4aef).
+Before it (session b41bab30): the old account's run `wf_ab41a260-945` died at 07:24 (62.7 / 41.2); coordinator GEOMETRY FIT of the drum with the real camera
+(`tools/diag/fit-rings.ps1`; DrumLayout05 AxisS / AxisXs / AxisYs / AxisRs; rings 25.6 / 46 / 82 / 105.8 / 159.4, all visible rings within 0.5-2.6 px) + HUD rebuilt from
+measurements (HudGlyphs.cs, HudGlyphText.cs) = 67.0 / 47.5; river targets traced + unprojected (`staging/round4-river/river_targets.csv`, `tools/diag/unproject-river.ps1`);
+diagnostics `tools/diag/errormap.ps1`, `gridshapes.ps1`. 08:00-08:10 coordinator: coins on the approved centres (CoinTrail.ApprovedCoins), bubble start composition
+(BubbleField.StartBig / StartSmall), Benny's arms / pose (BennyRigBuilder SwimPhase / ArmPhase / ArmScale / ArmRest, BennyController.VisualShiftX), HUD glyphs; NEW
+automatic look fitter `Assets/Rainbow/Testing/Editor/Screen05AutoFit.cs` + `AgentScripts/screen05_autofit.cs` + `Assets/Rainbow/Editor/Screen05Tuning.cs` +
+`Assets/Rainbow/Tuning/screen05_tuning.txt` (never run before 08:55). The user's correction guides arrived ~08:25 and were saved to
+`references/correction-guides-2026-11-24/`; the running lanes read them at 08:27, then the account ran out of credits at 08:28:41.
 
 **MOVED FROM NOW (06:33 local block of session d7b2bd77, superseded 08:05 local):** run `wf_ab41a260-945` (stage R4, TUNNEL | WATER4) died at 07:24 local with the old account, mid-test; lane edits kept (62.7 / 41.2). Baseline before it: stage G1 57.8 / 36.3 (`work/20261124_055442_bubbles_final*`). The first R4 run `wf_3142dea6-d2c` died before any edit (helpers in `staging/round4-recovery/`).
 
