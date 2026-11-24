@@ -16,6 +16,7 @@ Shader "Rainbow/Water/River"
         _EnvStrength ("Reflection strength", Range(0, 2)) = 0.9
         _EnvYaw ("Reflection yaw (degrees)", Float) = 0
         _EnvLod ("Reflection blur (mip)", Range(0, 6)) = 1
+        _RiverGrade ("Cyan water grade (rgb multiplier on the cyan/blue water, a = strength; 0 = off)", Vector) = (1, 1, 1, 0)
     }
 
     SubShader
@@ -35,6 +36,7 @@ Shader "Rainbow/Water/River"
             float _EnvStrength;
             float _EnvYaw;
             float _EnvLod;
+            float4 _RiverGrade;
         CBUFFER_END
 
         // shared animation clock (Rainbow.Screen05.Screen05Clock; game time, reset by the test hold)
@@ -116,6 +118,11 @@ Shader "Rainbow/Water/River"
                 float3 env = SAMPLE_TEXTURE2D_LOD(_EnvPano, sampler_EnvPano, puv, _EnvLod).rgb;
                 float3 outCol;
                 RainbowRiverReflect_float(col, env, reflTint, reflW, _EnvStrength, outCol);
+                // coordinator round 3 (2026-11-23): the approved water is a deeper AZURE blue (near water ~(60,162,235),
+                // median luminance ~125) than the aqua Unity water (~(90,196,244), ~160). Grade only the cyan/blue water
+                // (green and blue both well above red), never the pink currents, white foam lines or glints.
+                float cyanK = saturate((min(outCol.g, outCol.b) - outCol.r) * 3.0) * saturate(1.5 - max(outCol.r, 0.0) * 1.5);
+                outCol = lerp(outCol, outCol * _RiverGrade.rgb, cyanK * _RiverGrade.a);
                 outCol = MixFog(outCol, i.fogFactor);
                 return half4(outCol, 1.0);
             }
