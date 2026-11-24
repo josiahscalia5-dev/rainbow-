@@ -183,7 +183,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float lineA = exp(-ca * ca * 170.0) * (0.35 + 0.65 * segN);
     float ampA = smoothstep(1.2, 1.55, bk);
     // (river5 variants: the brighter azure base CMID..CBRIGHT scored 0.3 lower, kept the deep base; _R5Tune.z = live mix)
-    float3 nb = lerp(lerp(lerp(RBW_CDEEP2, RBW_CMID, 0.55), lerp(RBW_CMID, RBW_CBRIGHT, 0.35), saturate(_R5Tune.z)), RBW_CBRIGHT, saturate(glowA * (0.9 + _R5Arc.y) * ampA + lane * 0.25));
+    float3 nb = lerp(lerp(lerp(RBW_CDEEP2, RBW_CMID, 0.55), lerp(RBW_CMID, RBW_CBRIGHT, 0.35), saturate(0.5 + _R5Tune.z)), RBW_CBRIGHT, saturate(glowA * (0.9 + _R5Arc.y) * ampA + lane * 0.25));
     nb = lerp(nb, RBW_CAQUA, saturate(glowA * glowA * (0.75 + 0.8 * _R5Arc.y) * ampA));
     nb = lerp(nb, RBW_CAQUAW, saturate(lineA * ampA * (0.9 + _R5Arc.z)));
     // (splash6) dense vertical satin: fine bright / dark hairlines along the flow (vertical on screen) all over his wake
@@ -294,7 +294,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
         // palette, start it under the fur (no bright glossy line between fur and shade), gone ~0.35 u out (was 0.75)
         float latK = 1.0 - smoothstep(0.2 + 0.1 * max(e, 0.0), 0.46 + 0.15 * max(e, 0.0), abs(dlB));
         float shadeK = latK * smoothstep(-0.1, 0.35, cosB) * smoothstep(-0.4, -0.25, e)
-                     * (1.0 - smoothstep(0.02, max(0.6 + _W4Tune.y, 0.05), e));
+                     * (1.0 - smoothstep(0.02, max(0.35 + _W4Tune.y, 0.05), e));   // (splash6 t4: 0.6 -> 0.35, approved y 1230-1270 is bright)
         // his body blocks the reflected glare there too (no glossy arcs / flares inside the shadow)
         col = lerp(col, min(col, float3(0.1, 0.45, 0.85)), saturate(shadeK * wk * 1.5));
         col = lerp(col, RBW_CDEEP * float3(0.6, 0.85, 1.05), saturate(shadeK * (1.05 + _W4Tune.x) * wk));

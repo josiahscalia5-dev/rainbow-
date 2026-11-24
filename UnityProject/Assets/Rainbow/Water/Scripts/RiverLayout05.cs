@@ -181,7 +181,7 @@ namespace Rainbow.Screen05
                 float wLim = Mathf.Lerp(99f, Mathf.Max(0.3f, X(WL, s) + 6.05f), k);
                 return new Vector3(Mathf.Min((1.0f + 0.75f * lobe + 2.2f * bar) * (1f - 0.2f * low), wLim),
                                    (0.5f + 0.08f * SS(40f, 60f, s)) * (1f - 0.24f * low) * (1f - 0.22f * far) * (1f - 0.5f * bar),
-                                   1.3f - 0.45f * SS(29f, 42f, s));
+                                   1.3f - 0.4f * SS(23.5f, 25.5f, s) - 0.05f * SS(30f, 42f, s));   // finer puffs from the bay on
             }
             float bank = SS(44f, 50f, s) * (1f - SS(74f, 84f, s));
             float near = 1f - SS(19f, 23f, s);

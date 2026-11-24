@@ -48,6 +48,9 @@ namespace Rainbow.Screen05
         [Tooltip("Bubbly suds pads per side on his flanks (riderSplash.ts high = 16 froth pads; fewer, bigger ones read as soap bubbles; water4: 11 -> 8)")]
         [Range(0, 32)] public int frothPerSide = 0;
 
+        [Tooltip("(splash6) keep every n-th small suds puff next to his waterline in the wake foam (1 = all)")]
+        [Range(1, 8)] public int sudsKeepEvery = 3;
+
         [Header("Spray droplets (spray.ts / index.ts wake())")]
         [Tooltip("Droplets per second at full strength (150 x (1 + 1.4) inside 05).")]
         public float sprayRate = 360f;
@@ -443,6 +446,7 @@ namespace Rainbow.Screen05
             {
                 wakeFoamMesh = FoamBank.BuildWakeMesh();
                 wakeFoamMesh.hideFlags = HideFlags.DontSave;
+                ThinFlankSuds(wakeFoamMesh, sudsKeepEvery);
             }
             var rp = new RenderParams(wakeFoamMaterial)
             {
@@ -452,6 +456,31 @@ namespace Rainbow.Screen05
                 worldBounds = new Bounds(c, new Vector3(8f, 4f, 8f)),
             };
             Graphics.RenderMesh(rp, wakeFoamMesh, 0, Matrix4x4.Translate(c));
+        }
+
+        // (splash6 2026-11-24) the approved flanks show lacy white water with a few soap clumps, not a cloud of lavender
+        // beads: keep only every n-th SMALL suds puff close to his waterline (the big puffs and the rope along the pink
+        // sweeps stay; splash6_t4 variants: no wake foam at all = splash box +1.6 but near water -1.3)
+        static void ThinFlankSuds(Mesh m, int keepEvery)
+        {
+            if (m == null || keepEvery <= 1) return;
+            Vector3[] pos = m.vertices;
+            var uv = new System.Collections.Generic.List<Vector4>();
+            m.GetUVs(0, uv);
+            int[] tri = m.triangles;
+            int n = pos.Length / 4;
+            if (uv.Count != pos.Length || tri.Length != n * 6) return;
+            var keep = new System.Collections.Generic.List<int>(tri.Length);
+            int small = 0;
+            for (int i = 0; i < n; i++)
+            {
+                Vector3 c = pos[i * 4];
+                float dl = Mathf.Abs(c.x - 0.06f), bk = -c.z;
+                bool flank = uv[i * 4].z < 0.037f && Mathf.Sqrt(dl * dl + bk * bk) < 1.3f;
+                if (flank && (small++ % keepEvery) != 0) continue;
+                for (int k = 0; k < 6; k++) keep.Add(tri[i * 6 + k]);
+            }
+            m.triangles = keep.ToArray();
         }
 
         Material ResolveFanMaterial()
