@@ -33,7 +33,12 @@ void RainbowThroatGlow_float(float2 UV, float Time, out float3 Color)
         // Tunnel round 3 (2026-11-23): the cap (r ~20 px at the approved camera, 1 px ~ 0.052 cap radii) continues the
         // approved DENSE stack of deep rings: two thin gold rings with warm bulbs at r ~9 / ~15 px, dark warm-rose gaps,
         // and only a SMALL white-yellow core (white to ~5 px, pale yellow to ~8 px) instead of one big orange disc.
-        const float3 GAP = float3(0.42, 0.1, 0.12);
+        // tunnel round 4 (2026-11-24): measured straight up from the approved vanishing point the deep throat glows
+        // warm orange BETWEEN its rings too ((237,98,63) .. (248,162,78) at r 13-28 px) and is pale gold-white inside
+        // r ~10-13 px ((249,212,120)); the dark warm-rose gaps read as a dark ring round a tiny core. _ThroatLook.x blends
+        // the gaps to glowing gold-orange, .y / .z = outer radius of the pale-yellow / white core (cap radii).
+        const float3 GAP0 = float3(0.42, 0.1, 0.12);
+        float3 GAP = lerp(GAP0, lerp(GOLD, WARM, smoothstep(0.35, 1.0, r)) * 0.9, saturate(_ThroatLook.x));
         float hw = _ThroatRings.z;
         float fw = fwidth(r) + 1e-4;
         c = lerp(GAP, RIM, smoothstep(0.86, 1.0, r) * 0.6);
@@ -43,8 +48,9 @@ void RainbowThroatGlow_float(float2 UV, float Time, out float3 Color)
         c = lerp(c, lerp(WARM, PALE, 0.35 * bulbs), ring2);
         c = lerp(c, lerp(GOLD, PALE, 0.5 * bulbs), ring1);
         c = lerp(c, lerp(GOLD, WARM, 0.4), (1.0 - smoothstep(_ThroatRings.x - hw * 3.0, _ThroatRings.x - hw, r)) * _ThroatRings.w);
-        c = lerp(c, PALE, 1.0 - smoothstep(0.2, 0.4, r));
-        c = lerp(c, CORE, 1.0 - smoothstep(0.08, 0.24, r));
+        float pr = max(_ThroatLook.y, 0.4), cr = max(_ThroatLook.z, 0.24);
+        c = lerp(c, PALE, 1.0 - smoothstep(pr * 0.5, pr, r));
+        c = lerp(c, CORE, 1.0 - smoothstep(cr * 0.33, cr, r));
     }
     else
     {

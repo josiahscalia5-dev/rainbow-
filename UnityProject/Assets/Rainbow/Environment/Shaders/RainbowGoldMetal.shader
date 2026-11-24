@@ -26,6 +26,8 @@ Shader "Rainbow/Screen05/GoldMetal"
         _LightInfluence ("Direct light influence", Float) = 0.25
         _GoldTone ("Ring tone curve (exponents r, g, b, amount)", Vector) = (1, 1, 1, 0)
         _RingLook ("Polished ring (key highlight, sharpness, reflection, cavity dark)", Vector) = (0, 40, 0.5, 0.6)
+        _RingLook2 ("Copper ring round 4 (crest strength, bulb halo, brightness, palette 0 old / 1 copper)", Vector) = (0.8, 0.5, 1, 0)
+        _FrameLook ("Near frame round 4 (palette 0 old / 1 copper bands, glare, vignette comp, -)", Vector) = (0, 1, 1.08, 0)
     }
 
     SubShader
@@ -57,6 +59,8 @@ Shader "Rainbow/Screen05/GoldMetal"
             float _LightInfluence;
             float4 _GoldTone;
             float4 _RingLook;
+            float4 _RingLook2;
+            float4 _FrameLook;
         CBUFFER_END
 
         TEXTURE2D(_EnvPano);
@@ -132,7 +136,7 @@ Shader "Rainbow/Screen05/GoldMetal"
             #if defined(_GOLD_PADDLE)
                 RainbowGoldPaddle_float(input.positionWS, N, V, input.color, color);
             #elif defined(_GOLD_FRAME)
-                RainbowGoldFrame_float(N, V, input.uv.xy, input.uv.z, color);
+                RainbowGoldFrameSide(N, V, input.uv.xy, input.uv.z, input.uv.w, color);
             #else
                 RainbowGoldRing_float(input.positionWS, N, V, input.positionOS, input.axisWS, input.color, color);
             #endif

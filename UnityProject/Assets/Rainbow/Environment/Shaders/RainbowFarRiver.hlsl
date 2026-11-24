@@ -13,11 +13,13 @@
 
 #include "RainbowEnvCommon.hlsl"
 
-// Lateral (+X) offset of the far cyan core: straight where Agent 3's river ends (RiverPath.Meander = 0 beyond 72 u),
-// then a gentle swing right and back left into the vanishing point (far05.ts FAR05_CORE: right swing, back left).
+// Lateral (+X) offset of the far band pair / cyan core.
+// (water4 2026-11-24) continues the playable river's far S: RiverPath.FarSwing bends the course right beyond the stage
+// (stream centre +1.0 m at s 108+, so the river's band pair sits at ~+1.7 m where it ends at s 120); the approved river
+// keeps bending right just before the throat and then runs back toward the middle into the vanishing point.
 float RainbowFarRiverCoreX(float s)
 {
-    return 2.2 * smoothstep(125.0, 175.0, s) * (1.0 - smoothstep(185.0, 245.0, s)) - 0.8 * smoothstep(215.0, 250.0, s);
+    return 1.7 + 0.3 * smoothstep(120.0, 170.0, s) - 1.6 * smoothstep(210.0, 400.0, s);
 }
 
 // RiverUV = (lateral x metres from the tunnel line, s metres along the tunnel).
@@ -27,8 +29,10 @@ void RainbowFarRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float s = RiverUV.y;
     float hw = _RiverParams.x;
     float dx = x - RainbowFarRiverCoreX(s);
-    float bandOff = hw * _RiverParams.z;
-    float bw = hw * _RiverParams.w;
+    // (water4 2026-11-24) the band pair a little closer and broader, so both bands stay clear of the foam lips with the
+    // core bent right (approved: two clear pink bands either side of the coins right up to the throat)
+    float bandOff = hw * _RiverParams.z * 0.75;
+    float bw = hw * _RiverParams.w * 1.2;
     float fw = fwidth(x) + 1e-3;
     float dL = abs(dx + bandOff);
     float dR = abs(dx - bandOff);
@@ -46,7 +50,9 @@ void RainbowFarRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float3 N = normalize(NormalWS);
     float ndv = saturate(dot(N, V));
     float fres = 0.04 + 0.96 * pow(1.0 - ndv, 5.0);
-    c += RainbowSamplePano(reflect(-V, N), _EnvBlur) * _EnvIntensity * fres * (1.0 - foam);
+    // (water4 2026-11-24) x0.35: at this grazing angle the full Fresnel mirror washed the far river out to a pale strip
+    // (approved: saturated cyan and pink right up to the throat glow)
+    c += RainbowSamplePano(reflect(-V, N), _EnvBlur) * _EnvIntensity * fres * (1.0 - foam) * 0.35;
     c = lerp(c, _RiverFoam.rgb, foam);
 
     float dist = length(_WorldSpaceCameraPos.xyz - PositionWS);

@@ -7,6 +7,7 @@ Shader "Rainbow/Screen05/ThroatGlow"
         _ThroatIntensity ("Intensity", Float) = 1
         _ThroatParams ("Rays (strength, count, speed, radius scale)", Vector) = (0.25, 9, 0.15, 0.8)
         _ThroatRings ("Deep rings (r1, r2, half width, inner glow)", Vector) = (0, 0, 0.04, 0.5)
+        _ThroatLook ("Round 4 (warm gaps 0..1, pale radius, core radius, -)", Vector) = (0, 0.4, 0.24, 0)
     }
 
     SubShader
@@ -21,6 +22,7 @@ Shader "Rainbow/Screen05/ThroatGlow"
             float _ThroatIntensity;
             float4 _ThroatParams;
             float4 _ThroatRings;
+            float4 _ThroatLook;
         CBUFFER_END
 
         // shared animation clock (Rainbow.Screen05.Screen05Clock; game time, reset by the test hold)

@@ -64,6 +64,9 @@ namespace Rainbow.Screen05.EditorTools
             SetVec(throatMat, "_ThroatParams", new Vector4(0f, 9f, 0.15f, 1f));
             // tunnel round 3: two painted deep rings on the cap (r ~9.5 / ~15 px) + a small core (RainbowThroatGlow.hlsl)
             SetVec(throatMat, "_ThroatRings", new Vector4(0.49f, 0.78f, 0.05f, 0.5f));
+            // tunnel round 4: warm glowing gaps and a larger pale-gold / white core (approved: (249,212,120) at r ~10 px,
+            // orange (237,98,63) .. (248,162,78) between the deep rings): RainbowThroatGlow.hlsl _ThroatLook
+            SetVec(throatMat, "_ThroatLook", ThroatLook);
             Material farRiverMat = MakeMaterial("FarRiver05", "Rainbow/Screen05/FarRiver");
             // centred on the course line x = 0 like the playable river it continues; reaches both walls of the drum, whose
             // axis sits AxisX off that line (frame round 2026-11-23)
@@ -83,8 +86,11 @@ namespace Rainbow.Screen05.EditorTools
             float ringRadius = DrumLayout05.Radius - DrumLayout05.RingInset;
             Mesh ringNear = SaveMesh(DrumMeshes05.BuildRing(DrumLayout05.NearBand, ringRadius, 96, "Ring05_Near"), "Ring05_Near");
             Mesh ringFar = SaveMesh(DrumMeshes05.BuildRing(DrumLayout05.FarBand, ringRadius, 72, "Ring05_Far"), "Ring05_Far");
+            // tunnel round 4: the near ring (s 24.3) and the start ring (5.6) are thin bands (DrumLayout05.NearestBand)
+            Mesh ringNearest = SaveMesh(DrumMeshes05.BuildRing(DrumLayout05.NearestBand, ringRadius, 128, "Ring05_Nearest"), "Ring05_Nearest");
             float paddleSize = DrumLayout05.PaddleScaledSize;
-            Mesh paddle = SaveMesh(DrumMeshes05.BuildPaddleTray(paddleSize, DrumLayout05.PaddleThickness, DrumLayout05.PaddleStretch, 28, "Paddle05_Tray"), "Paddle05_Tray");
+            // tunnel round 4: D-shaped copper shelves seen from below (DrumMeshes05.BuildPaddleShelf; was BuildPaddleTray)
+            Mesh paddle = SaveMesh(DrumMeshes05.BuildPaddleShelf(paddleSize, DrumLayout05.PaddleStretch, 32, "Paddle05_Tray"), "Paddle05_Tray");
             Mesh frameL = SaveMesh(DrumMeshes05.BuildFrameCornerLeft(), "NearFrame05_CornerL");
             Mesh frameR = SaveMesh(DrumMeshes05.BuildFrameCornerRight(), "NearFrame05_CornerR");
             Mesh frameLip = SaveMesh(DrumMeshes05.BuildFrameLip(), "NearFrame05_Lip");
@@ -107,7 +113,8 @@ namespace Rainbow.Screen05.EditorTools
             foreach (float s in ringS)
             {
                 bool far = s > DrumLayout05.FarBandFromS;
-                GameObject r = MakeRenderer(rings, "Ring_" + F(s), far ? ringFar : ringNear, far ? ringFarMat : ringNearMat);
+                bool nearest = s < DrumLayout05.NearestBandBelowS;
+                GameObject r = MakeRenderer(rings, "Ring_" + F(s), far ? ringFar : (nearest ? ringNearest : ringNear), far ? ringFarMat : ringNearMat);
                 r.transform.localPosition = DrumLayout05.Centre(s);
             }
 
@@ -117,13 +124,7 @@ namespace Rainbow.Screen05.EditorTools
             foreach (DrumLayout05.PaddleSlot ps in padSlots)
             {
                 // frame round 2026-11-23: each tray on its approved place (side and mount height per paddle)
-                DrumLayout05.PaddlePose(ps.s, ps.side, out Vector3 p, out Quaternion q, ps.mountY);
-                // tunnel round 3: turn the open dish toward the camera round the tray's inward axis (the approved trays
-                // show their rose-copper dish inside a thick rim; seen edge-on they read as flat orange slabs)
-                Vector3 tx = q * Vector3.right, ty = q * Vector3.up;
-                float tb = PaddleFaceTiltDeg * Mathf.Deg2Rad;
-                Vector3 ty2 = (ty * Mathf.Cos(tb) + Vector3.forward * Mathf.Sin(tb)).normalized;
-                q = Quaternion.LookRotation(Vector3.Cross(tx, ty2).normalized, ty2);
+                Quaternion q = PaddleRotation(ps, PaddleFaceTiltDeg, 0f, out Vector3 p);
                 GameObject pd = MakeRenderer(paddles, (ps.side < 0 ? "Paddle_L_" : "Paddle_R_") + F(ps.s), paddle, paddleMat);
                 pd.transform.localPosition = p;
                 pd.transform.localRotation = q;
@@ -230,10 +231,38 @@ namespace Rainbow.Screen05.EditorTools
         static readonly Vector4 RingLook = new Vector4(1.0f, 40f, 0.55f, 0.6f);
         /// <summary>Paddle key highlight strength (RainbowGoldMetal.hlsl, _PaddleParams.w).</summary>
         const float PaddleHighlight = 1.0f;
-        /// <summary>Tilt of the paddle dish round its inward axis (deg, + = toward the camera). Coordinator round 3: -15
-        /// (dish turned slightly away, so the trays show their underside and thick rim like the approved half-moon shelves;
-        /// the tunnel lane's +32 showed the flat rose dish face as a horn: throat 60.3 -> 63.3, walls 50.0 -> 51.0).</summary>
-        public const float PaddleFaceTiltDeg = -15f;
+        // ---- tunnel round 4 (2026-11-24) copper look, measured against references/05_flow_into_the_current.png ----
+        /// <summary>Copper rings: (key highlight, sharpness, reflection, cavity darkness). Round 3 (1.0, 40, 0.55, 0.6) put a
+        /// broad white highlight + reflections on every strand: ring A crown displayed (254,250,210), approved (252,145,95).</summary>
+        static readonly Vector4 RingLookCopper = new Vector4(0.55f, 90f, 0.35f, 0.45f);
+        /// <summary>(crest strength, bulb halo, brightness, palette 1 = copper RM_*): RainbowGoldMetal.hlsl RainbowRingCopper.</summary>
+        static readonly Vector4 RingLook2 = new Vector4(0.8f, 0.5f, 1.0f, 1f);
+        /// <summary>Marquee bulbs on the rings (per turn, half width, strength, -).</summary>
+        static readonly Vector4 RingBulbs = new Vector4(20f, 0.04f, 0.8f, 0f);
+        /// <summary>Near frame corners: (palette 1 = copper bands, glare, vignette compensation, -).</summary>
+        static readonly Vector4 FrameLook = new Vector4(1f, 1f, 1.08f, 0f);
+        /// <summary>Exposure of the pre-solved copper rings and shelves (the frame keeps 0.95).</summary>
+        const float GoldExposure = 1.0f;
+        /// <summary>Throat cap: (warm gaps, pale-yellow radius, white core radius, -) in cap radii.</summary>
+        static readonly Vector4 ThroatLook = new Vector4(0.85f, 0.65f, 0.34f, 0f);
+        /// <summary>Tilt of the paddle round its inward axis (deg, + = local +Y toward +Z, i.e. the BOTTOM plate of the
+        /// round-4 shelf turns toward the camera). Coordinator round 3: -15 with the old tray (open dish at -Y): the trays
+        /// showed their plum back over an orange log. Tunnel round 4: the shelf mesh (DrumMeshes05.BuildPaddleShelf) has its
+        /// bottom plate at -Y; +18 shows it at ~20-28 deg below the band like the approved half-moon shelves seen from below.</summary>
+        public const float PaddleFaceTiltDeg = 18f;
+
+        /// <summary>
+        /// Pose of one paddle: DrumLayout05.PaddlePose (wall mount at ps.mountY + mountDy, lid05 droop), then turned round
+        /// the tray's inward axis by tiltDeg (see PaddleFaceTiltDeg). Public for the live pose probes in AgentScripts.
+        /// </summary>
+        public static Quaternion PaddleRotation(DrumLayout05.PaddleSlot ps, float tiltDeg, float mountDy, out Vector3 position)
+        {
+            DrumLayout05.PaddlePose(ps.s, ps.side, out position, out Quaternion q, ps.mountY + mountDy);
+            Vector3 tx = q * Vector3.right, ty = q * Vector3.up;
+            float tb = tiltDeg * Mathf.Deg2Rad;
+            Vector3 ty2 = (ty * Mathf.Cos(tb) + Vector3.forward * Mathf.Sin(tb)).normalized;
+            return Quaternion.LookRotation(Vector3.Cross(tx, ty2).normalized, ty2);
+        }
 
         /// <summary>mode 0 = ring band, 1 = paddle, 2 = near frame.</summary>
         static void SetupGold(Material m, Texture2D pano, int mode)
@@ -258,6 +287,13 @@ namespace Rainbow.Screen05.EditorTools
             SetVec(m, "_PaddleParams", new Vector4(0.55f, 0.12f, 1f, PaddleHighlight));
             SetVec(m, "_RingLook", mode == 0 ? RingLook : new Vector4(0f, RingLook.y, RingLook.z, RingLook.w));
             SetVec(m, "_FrameParams", new Vector4(0.3f, 0.06f, 0f, 0f));
+            // tunnel round 4 (2026-11-24): copper rings / shelves / corners with palettes PRE-SOLVED for the scene grade
+            // (RainbowGoldMetal.hlsl RM_* / BuildPaddleShelf vertex colours / RainbowFrameCorner): no tone curve on them
+            // (the corner path ignores it; the bottom lip keeps the frame curve above)
+            SetVec(m, "_RingLook2", RingLook2);
+            SetVec(m, "_FrameLook", FrameLook);
+            if (mode == 0) SetVec(m, "_RingLook", RingLookCopper);
+            if (mode != 2) SetVec(m, "_GoldTone", new Vector4(1.3f, 1.6f, 1.5f, 0f));
             SetTex(m, "_EnvPano", pano);
             // Coordinator look tuning 2026-11-23 (screen05_tune_look.cs, saved in commit a78f508): less white reflection
             // so the orange gold palette shows. Rings + frame: env 0.5 / strips 1.4 (was 1.15 / 3.2); paddles: env 0.7 /
@@ -272,8 +308,9 @@ namespace Rainbow.Screen05.EditorTools
             SetVec(m, "_MidRange", new Vector4(8f, 50f, 0f, 0f));
             SetGlow(m);
             // 0.95 for rings, paddles and frame (light round: the tone curve above darkens the mid-tones, this keeps the
-            // approved brightness)
-            SetFloat(m, "_Exposure", 0.95f);
+            // approved brightness); tunnel round 4: 1.0 for the pre-solved copper rings and shelves
+            SetFloat(m, "_Exposure", mode == 2 ? 0.95f : GoldExposure);
+            if (mode == 0) SetVec(m, "_BandS", RingBulbs);
             SetFloat(m, "_LightInfluence", mode == 2 ? 0f : 0.25f);
             EditorUtility.SetDirty(m);
         }
@@ -288,7 +325,7 @@ namespace Rainbow.Screen05.EditorTools
             SetTex(m, "_EnvPano", pano);
             SetFloat(m, "_EnvIntensity", 0.6f);
             SetFloat(m, "_EnvBlur", 1.5f);
-            SetGlow(m);
+            SetGlow(m, true);
             SetFloat(m, "_Exposure", 1f);
             EditorUtility.SetDirty(m);
         }
@@ -299,7 +336,7 @@ namespace Rainbow.Screen05.EditorTools
         /// FarRingDepths) and the throat at ~283 m, so the original numbers apply 1:1 (the compressed 80 / 260 / 1.6 turned
         /// the walls orange from ~150 m, where the approved walls are still pink-violet).
         /// </summary>
-        static void SetGlow(Material m)
+        static void SetGlow(Material m, bool farRiver = false)
         {
             SetHex(m, "_FarGlowColor", "#ff9c5a");
             // tunnel round 2026-11-23: with real rings at s 230 / 333 / 450 (frame round) the 95..330 m range painted every
@@ -307,10 +344,15 @@ namespace Rainbow.Screen05.EditorTools
             // rose-purple walls between golden rings down to r ~34 px (D ~270 m) and is glow-orange only inside r ~32
             // tunnel round 3: starts later and weaker (the 200..420 m x 1.2 glow still melted the rings at 333 / 450 and the
             // walls between them into one orange disc r ~30 px; approved: distinct gold rings down to r ~20 px)
-            SetVec(m, "_FarGlowRange", FarGlowRange);
+            // tunnel round 4: measured straight up from the vanishing point the approved deep throat is warm copper-orange
+            // from r ~34 px inward ((208,86,70) .. (245,129,66), rings AND gaps), pale gold-white inside r ~13 px; Unity kept
+            // violet-pink gaps down to r ~22 px: the glow now starts at 150 m and is full by ~300 m (the far river, WATER
+            // lane, keeps the round-3 range)
+            SetVec(m, "_FarGlowRange", farRiver ? FarGlowRangeRiver : FarGlowRange);
         }
 
-        static readonly Vector4 FarGlowRange = new Vector4(250f, 480f, 0.85f, 0f);
+        static readonly Vector4 FarGlowRange = new Vector4(150f, 330f, 1.2f, 0f);
+        static readonly Vector4 FarGlowRangeRiver = new Vector4(250f, 480f, 0.85f, 0f);
 
         static Material MakeMaterial(string name, string shaderName)
         {

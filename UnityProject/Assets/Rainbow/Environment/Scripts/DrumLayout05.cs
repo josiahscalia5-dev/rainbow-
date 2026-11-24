@@ -118,6 +118,15 @@ namespace Rainbow.Screen05
         public static readonly BandProfile FarBand = new BandProfile(0.1f, 0.58f, 0.08f, 0.3f, 0.06f, 0.22f, 0.04f, 0.025f);
         /// <summary>Rings with s above this use FarBand.</summary>
         public const float FarBandFromS = 80f;
+        /// <summary>
+        /// Tunnel round 4 (2026-11-24): the NEAR ring (s 24.3; and the start ring 5.6) is a thin copper band hugging the
+        /// frame edge in the approved image (left side at y 470: copper only from x 0 to ~20, its inner edge on the
+        /// ~(10, 480) crown); with the ring-A profile (0.135 r) the Unity band reached x 58 as a 50-60 px wide bright bar
+        /// down the left edge and over the top-left corner. Inner crest at r ~6.28 m = 0.074 r.
+        /// </summary>
+        public static readonly BandProfile NearestBand = new BandProfile(0.074f, 0.6f, 0.058f, 0.36f, 0.042f, 0.26f, 0.05f, 0.02f);
+        /// <summary>Rings with s below this use NearestBand.</summary>
+        public const float NearestBandBelowS = 30f;
 
         // Frame round 2026-11-23: real rings at the depths whose crowns (0.94 r) project onto the approved crowns measured
         // straight up from the approved vanishing point (496, 478): y 210, 308, 378, 415, 434, 448, 456 (r 268 .. 22 px; the
@@ -233,7 +242,7 @@ namespace Rainbow.Screen05
             return list;
         }
 
-        public static BandProfile BandFor(float s) => s > FarBandFromS ? FarBand : NearBand;
+        public static BandProfile BandFor(float s) => s > FarBandFromS ? FarBand : (s < NearestBandBelowS ? NearestBand : NearBand);
 
         /// <summary>Paddle size in metres (frame round: no longer shrunk with the narrower tube - the approved trays are big).</summary>
         public static float PaddleScaledSize => PaddleSize;

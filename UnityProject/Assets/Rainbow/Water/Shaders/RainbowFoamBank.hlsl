@@ -45,11 +45,14 @@ float RBW_BandFR(float sm)
 
 // lateral shift of the whole band pair (added to the band S): the approved S swings right sooner (s 21-30) and further
 // left past the crest (s 50-66)
+// (water4 2026-11-24: + 0.8 m further left at s 56-74, approved bands traced at y 550-560 = 15-35 px left of Unity's,
+//  before the far S swings right again (RiverPath.FarSwing); KEEP EQUAL to FoamBank.BandFitM)
 float RBW_BandFitM(float sm)
 {
     return 1.0 * RBW_FB_SS(137.2, 139.7, sm) * (1.0 - RBW_FB_SS(141.2, 147.2, sm))
          - 0.35 * RBW_FB_SS(147.7, 150.7, sm) * (1.0 - RBW_FB_SS(153.7, 158.7, sm))
-         - 1.0 * RBW_FB_SS(166.7, 171.7, sm) * (1.0 - RBW_FB_SS(176.7, 182.7, sm));
+         - 1.0 * RBW_FB_SS(166.7, 171.7, sm) * (1.0 - RBW_FB_SS(176.7, 182.7, sm))
+         - 0.8 * RBW_FB_SS(172.7, 178.7, sm) * (1.0 - RBW_FB_SS(184.7, 190.7, sm));
 }
 
 // room of the band layout on each side, RELATIVE to d (both > 0): beyond Benny's near field the bands reach up to the

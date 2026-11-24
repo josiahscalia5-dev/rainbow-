@@ -124,9 +124,11 @@ namespace Rainbow.Screen05
         /// <summary>RBW_BandFitM (Shaders/RainbowFoamBank.hlsl): lateral shift of the band pair (added to the band S).</summary>
         public static float BandFitM(float sm)
         {
+            // (water4 2026-11-24: + 0.8 m further left at s 56-74, like RBW_BandFitM)
             return 1.0f * SS(137.2f, 139.7f, sm) * (1f - SS(141.2f, 147.2f, sm))
                  - 0.35f * SS(147.7f, 150.7f, sm) * (1f - SS(153.7f, 158.7f, sm))
-                 - 1.0f * SS(166.7f, 171.7f, sm) * (1f - SS(176.7f, 182.7f, sm));
+                 - 1.0f * SS(166.7f, 171.7f, sm) * (1f - SS(176.7f, 182.7f, sm))
+                 - 0.8f * SS(172.7f, 178.7f, sm) * (1f - SS(184.7f, 190.7f, sm));
         }
 
         /// <summary>RBW_BandLimits (Shaders/RainbowFoamBank.hlsl): room of the bands on each side relative to d.</summary>

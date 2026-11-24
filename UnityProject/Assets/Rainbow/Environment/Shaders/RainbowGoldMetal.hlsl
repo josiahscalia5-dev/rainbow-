@@ -21,6 +21,8 @@
 //   float4 _GoldTone;      ring band tone curve (exponents r, g, b, amount 0..1)
 //   float4 _RingLook;      polished ring metal (key highlight, highlight sharpness, reflection, cavity darkness);
 //                          x <= 0 = the old stylised band palette (RainbowBandShade)
+//   float4 _RingLook2;     tunnel round 4 copper rings (crest strength, bulb halo, brightness, palette 0 old / 1 copper)
+//   float4 _FrameLook;     tunnel round 4 near frame (palette 0 old / 1 copper bands, glare strength, vignette comp, -)
 //   float  _Exposure;
 #ifndef RAINBOW_GOLD_METAL_INCLUDED
 #define RAINBOW_GOLD_METAL_INCLUDED
@@ -115,8 +117,67 @@ float3 RainbowApplyFarGlow(float3 c, float dist)
 // warm marquee bulbs on the main strand. The mesh (DrumMeshes05.BuildRing) carries per-vertex strand data:
 // vertex colour r = cavity (1 crest .. 0.25 groove), g = crest (1 on the strand top), b = strand (0 main, 0.5 middle,
 // 1 lip). _RingLook = (key highlight strength, highlight sharpness, reflection strength, cavity darkness).
+// Tunnel round 4 (2026-11-24) copper palette, linear and PRE-SOLVED for the scene grade (post exposure 0.86, contrast
+// +15, saturation +36, no tone mapping) so the display matches the approved rings measured on
+// references/05_flow_into_the_current.png (comment = display sRGB): ring A crown (252,145,95) with rose edges
+// (190,80,100), ring sides orange (248,120,40) with a broad yellow-orange line (254,200,92). The round-3 look reached
+// the display as pale cream (254,250,210): broad white highlights + reflections clipped every channel.
+static const float3 RM_SIDE_EDGE = float3(0.487, 0.144, 0.087);   // (200,85,40)
+static const float3 RM_SIDE_BODY = float3(0.748, 0.256, 0.130);   // (248,120,40)
+static const float3 RM_SIDE_HI   = float3(0.845, 0.590, 0.274);   // (254,200,92)
+static const float3 RM_TOP_EDGE  = float3(0.442, 0.132, 0.168);   // (190,80,100)
+static const float3 RM_TOP_BODY  = float3(0.645, 0.219, 0.155);   // (230,110,75)
+static const float3 RM_TOP_CREST = float3(0.787, 0.344, 0.224);   // (252,145,95)
+static const float3 RM_SPEC      = float3(1.15, 0.92, 0.66);      // (255,225,175), blooms a little
+
+float3 RainbowRingCopper(float deep, float3 N, float3 V, float3 P, float4 vc, out float topArcOut)
+{
+    float nv = dot(N, V);
+    float3 Nf = N * sign(nv + 1e-4);
+    float ndv = saturate(abs(nv));
+    float cav = vc.r;
+    float crest = vc.g;
+    float mainStrand = 1.0 - smoothstep(0.2, 0.3, vc.b);
+    float phi = atan2(P.y, P.x);
+    float topArc = (1.0 - smoothstep(0.52, 0.96, abs(phi - 1.5707963))) * (1.0 - deep);
+    topArcOut = topArc;
+    float3 inward = -normalize(float3(P.x, P.y, 0.0) + 1e-5);
+
+    float3 edgeC = lerp(RM_SIDE_EDGE, RM_TOP_EDGE, topArc);
+    float3 bodyC = lerp(RM_SIDE_BODY, RM_TOP_BODY, topArc);
+    float3 hiC = lerp(RM_SIDE_HI, RM_TOP_CREST, topArc);
+    // rounded strand: warm dark edges toward the silhouettes, saturated copper body facing the camera, a broad crest
+    float3 c = lerp(edgeC, bodyC, smoothstep(0.06, 0.5, ndv));
+    c = lerp(c, hiC, saturate(pow(saturate(crest), 0.6) * smoothstep(0.3, 0.75, ndv) * _RingLook2.x));
+    c *= lerp(1.0 - _RingLook.w, 1.0, cav);
+    // faint reflection of the violet walls and strip lights in the metal
+    float3 R = reflect(-V, Nf);
+    float3 env = RainbowSamplePano(R, _EnvBlur);
+    c = lerp(c, c * 0.7 + env * float3(0.85, 0.5, 0.5) * 0.45, saturate(_RingLook.z * _EnvIntensity) * cav);
+    c += RainbowTubeStripRadiance(V, Nf, 0.05) * float3(1.0, 0.62, 0.32) * 0.15 * cav;
+    // key light just above / behind the camera: ONE narrow warm-white line along every strand
+    float3 L = normalize(V + inward * 0.35);
+    float3 H = normalize(L + V);
+    float sp = pow(saturate(dot(Nf, H)), _RingLook.y);
+    c += RM_SPEC * sp * _RingLook.x * cav * (1.0 - 0.5 * deep);
+    c *= _RingLook2.z;
+    // marquee bulbs on the main strand crest (12 o'clock = a bulb): small warm-white dots with a golden halo
+    float t = (phi - 1.5707963) * _BandS.x / RB_TWO_PI;
+    float ft = min(fwidth(t), fwidth(frac(t + 0.5)));
+    float d = frac(t + 0.5) - 0.5;
+    float sw = _BandS.y + ft * 0.7;
+    float hw = _BandS.y * 2.6 + ft * 0.7;
+    float spot = exp(-d * d / (sw * sw)) * lerp(1.0, _BandS.y / sw, 0.6);
+    float halo = exp(-d * d / (hw * hw));
+    float across = mainStrand * smoothstep(0.35, 0.85, crest) * smoothstep(0.2, 0.45, ndv);
+    c = lerp(c, RM_SIDE_HI * 1.1, halo * across * _RingLook2.y);
+    c += float3(1.5, 1.3, 1.0) * spot * across * _BandS.z;
+    return c;
+}
+
 float3 RainbowRingMetal(float deep, float3 N, float3 V, float3 P, float3 axisWS, float4 vc, out float topArcOut)
 {
+    if (_RingLook2.w > 0.5) return RainbowRingCopper(deep, N, V, P, vc, topArcOut);
     float nv = dot(N, V);
     float3 Nf = N * sign(nv + 1e-4);
     float ndv = saturate(abs(nv));
@@ -220,6 +281,41 @@ void RainbowGoldPaddle_float(float3 PositionWS, float3 NormalWS, float3 ViewDirW
 
 // Near frame (materials.ts nearFrameMaterial.frameShade). UV.x along the arc, UV.y across the band (0 = edge toward the
 // stream); Piece 0 = bottom corner, 1 = bottom lip. A soft glint slides along the arcs with the camera's travel (+Z).
+// Tunnel round 4 (2026-11-24): the approved bottom corners are COPPER-ORANGE bevelled brackets, not yellow: measured
+// straight across the band (display sRGB, v = fraction of the 190 px band from the edge toward the stream): pale lip
+// (235,240,225) at the edge, copper (235,120,50) to 0.13, dark groove (175,50,0) at 0.15, copper (222,102,37) brightening
+// to (250,145,45) by 0.37, a yellow line (250,215,90) at 0.41, dark orange (190,62,5) 0.44-0.53, a groove at 0.555, a
+// broad white-gold glare (253,250,190) 0.57-0.74 (strongest two thirds along the arc), then orange (252,140,47) fading
+// to rust (168,67,35) at the outer edge. Linear values pre-solved for the scene grade (no tone curve), x _FrameLook.z
+// against the vignette in the corners. Side: -1 left corner, +1 right corner (UV1.y), 0 unknown.
+float3 RainbowFrameCorner(float u, float v, float side)
+{
+    const float3 LIP    = float3(0.82, 0.85, 0.74);
+    const float3 COPA   = float3(0.677, 0.250, 0.132);   // (235,120,50)
+    const float3 GROOVE = float3(0.311, 0.065, 0.041);   // (160,48,10)
+    const float3 COPB   = float3(0.588, 0.187, 0.104);   // (220,100,40)
+    const float3 COPHI  = float3(0.772, 0.323, 0.150);   // (250,140,45)
+    const float3 HILINE = float3(0.837, 0.664, 0.287);   // (250,215,90)
+    const float3 ODARK  = float3(0.434, 0.096, 0.056);   // (190,62,5)
+    const float3 GLARE  = float3(1.04, 1.02, 0.71);      // (253,250,190)+
+    const float3 RUST   = float3(0.346, 0.097, 0.063);   // (168,67,35)
+    float3 c = lerp(COPA, COPB, smoothstep(0.12, 0.2, v));
+    c = lerp(c, COPHI, smoothstep(0.22, 0.38, v));
+    c = lerp(c, ODARK, smoothstep(0.42, 0.45, v));
+    c = lerp(c, COPHI, smoothstep(0.72, 0.78, v));
+    c = lerp(c, RUST, smoothstep(0.8, 1.0, v));
+    c = lerp(c, GROOVE, exp(-RbSq((v - 0.15) / 0.018)));
+    c = lerp(c, GROOVE * 1.3, exp(-RbSq((v - 0.555) / 0.012)));
+    c = lerp(c, HILINE, exp(-RbSq((v - 0.41) / 0.02)));
+    // view-locked glare: left corner around two thirds of the arc, right corner a little nearer the edge
+    float gu = side > 0.0 ? 0.6 : 0.7;
+    float glare = exp(-RbSq((v - 0.65) / 0.075)) * lerp(0.35, 1.0, exp(-RbSq((u - gu) / 0.22)));
+    c = lerp(c, GLARE, saturate(glare * _FrameLook.y));
+    c = lerp(c, LIP, 1.0 - smoothstep(0.004, 0.016, v));
+    c = lerp(c, RUST * 0.8, smoothstep(0.97, 0.995, u));            // dark cut face at the arc end
+    return c * _FrameLook.z;
+}
+
 void RainbowGoldFrame_float(float3 NormalWS, float3 ViewDirWS, float2 UV, float Piece, out float3 Color)
 {
     float ndv = abs(dot(normalize(NormalWS), normalize(ViewDirWS)));
@@ -251,6 +347,17 @@ void RainbowGoldFrame_float(float3 NormalWS, float3 ViewDirWS, float2 UV, float 
     float gl = frac(u * 2.0 - travel) - 0.5;
     c += BC_SPOT * exp(-gl * gl / 0.0025) * _FrameParams.x * smoothstep(0.05, 0.2, v) * (1.0 - smoothstep(0.6, 0.85, v));
     Color = RainbowGoldToneCurve(c) * lerp(0.78, 1.0, ndv) * _Exposure;
+}
+
+// Hand-written shader entry: Side = UV1.y of the frame meshes (-1 left corner, +1 right corner, 0 bottom lip).
+void RainbowGoldFrameSide(float3 NormalWS, float3 ViewDirWS, float2 UV, float Piece, float Side, out float3 Color)
+{
+    if (_FrameLook.x > 0.5 && Piece < 0.5)
+    {
+        Color = RainbowFrameCorner(UV.x, UV.y, Side) * _Exposure;
+        return;
+    }
+    RainbowGoldFrame_float(NormalWS, ViewDirWS, UV, Piece, Color);
 }
 
 void RainbowGoldMetal_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS, float3 PositionOS, float3 AxisWS,

@@ -352,15 +352,120 @@ namespace Rainbow.Screen05
             return v.sqrMagnitude > 1e-12f ? v.normalized : Vector2.zero;
         }
 
+        /// <summary>
+        /// Tunnel round 4 (2026-11-24): the approved paddles are thick D-shaped copper SHELVES seen FROM BELOW: a smooth
+        /// rose-copper bottom plate facing the rider (lower 2/3 of the tray on screen), a thin bright rounded bevel along its
+        /// edge, and above it the near half of the curved outer wall as a thick orange-gold band (~1/3 of the tray) under a
+        /// rounded polished top rim (references/05_flow_into_the_current.png, 3x crops of all six visible trays). The old
+        /// tray opened toward the camera and showed its plum back on top of an orange log. Same local frame as
+        /// BuildPaddleTray: the straight edge of the D lies on local Z against the wall (x = 0), the half disc runs toward
+        /// local +X; +Y = the open dish (up when posed), -Y = the bottom plate. Profile x = radius fraction, y = height in
+        /// units of <paramref name="size"/>. Vertex colour rgb = linear colour pre-solved for the scene grade (exposure 0.86,
+        /// contrast +15, saturation +36: RainbowGoldMetal.hlsl applies no tone curve to it), alpha = polish.
+        /// </summary>
+        public static Mesh BuildPaddleShelf(float size, float stretch, int segments, string name)
+        {
+            var pl = new List<Vector2>();
+            var pcl = new List<Color>();
+            // display targets measured on the approved trays: bottom plate (240,125,105) rose copper, its edge a little
+            // lighter, bevel line (255,215,170), band (250,140,60) with a bright line, darker (200,85,40) toward the bevel
+            Color face = new Color(0.60f, 0.215f, 0.185f, 0.8f);
+            Color faceEdge = new Color(0.70f, 0.27f, 0.21f, 0.85f);
+            Color lip = new Color(0.98f, 0.66f, 0.42f, 1f);
+            Color bandLow = new Color(0.50f, 0.15f, 0.075f, 0.9f);
+            Color band = new Color(0.78f, 0.32f, 0.15f, 1f);
+            Color bandHi = new Color(0.92f, 0.55f, 0.24f, 1f);
+            Color crest = new Color(0.98f, 0.64f, 0.34f, 1f);
+            Color dish = new Color(0.42f, 0.13f, 0.12f, 0.6f);
+            void P(float x, float y, Color c) { pl.Add(new Vector2(x, y)); pcl.Add(c); }
+            // bottom plate (centre -> edge), normal -Y
+            P(0f, 0f, face); P(0.40f, 0f, face); P(0.70f, 0f, faceEdge);
+            // rounded bottom bevel: quarter circle centre (0.78, 0.06), r 0.06
+            for (int i = 0; i <= 4; i++)
+            {
+                float a = (-90f + 90f * i / 4f) * Mathf.Deg2Rad;
+                Color c = i == 0 ? faceEdge : (i == 4 ? bandLow : lip);
+                P(0.78f + 0.06f * Mathf.Cos(a), 0.06f + 0.06f * Mathf.Sin(a), c);
+            }
+            // outer wall (the visible band), slightly flared, bright line at 60 % of its height
+            P(0.845f, 0.10f, bandLow); P(0.852f, 0.15f, band); P(0.858f, 0.20f, bandHi); P(0.862f, 0.235f, band);
+            // rounded top rim: half circle centre (0.83, 0.25), r 0.035, outside -> over the top -> inside
+            for (int i = 0; i <= 6; i++)
+            {
+                float a = (0f + 180f * i / 6f) * Mathf.Deg2Rad;
+                Color c = Color.Lerp(band, crest, Mathf.Sin(a));
+                P(0.83f + 0.035f * Mathf.Cos(a), 0.25f + 0.035f * Mathf.Sin(a), c);
+            }
+            // inner wall down into the shallow dish, dish floor back to the centre (faces up: rarely seen)
+            P(0.78f, 0.20f, dish); P(0.70f, 0.175f, dish); P(0.35f, 0.16f, dish); P(0f, 0.155f, dish);
+            Vector2[] prof = pl.ToArray();
+            Color[] pc = pcl.ToArray();
+
+            int n = prof.Length;
+            var n2 = new Vector2[n];
+            for (int i = 0; i < n; i++)
+            {
+                Vector2 acc = Vector2.zero;
+                if (i > 0) acc += TrayNormal(prof[i - 1], prof[i]);
+                if (i < n - 1) acc += TrayNormal(prof[i], prof[i + 1]);
+                n2[i] = acc.sqrMagnitude > 1e-12f ? acc.normalized : Vector2.up;
+            }
+            // the flat bottom keeps an exact -Y normal up to the bevel (crisp plate, smooth bevel)
+            n2[0] = Vector2.down; n2[1] = Vector2.down;
+            var md = new MeshData { hasColor = true };
+            float yOff = -0.16f;                       // pivot ~ the middle of the shelf's thickness
+            int ring = segments + 1;
+            for (int i = 0; i < n; i++)
+            {
+                for (int k = 0; k <= segments; k++)
+                {
+                    float phi = Mathf.PI * k / segments;     // half revolution: x >= 0
+                    float sp = Mathf.Sin(phi), cp = Mathf.Cos(phi);
+                    var p = new Vector3(prof[i].x * sp * size, (prof[i].y + yOff) * size, prof[i].x * cp * size * stretch);
+                    var nn = new Vector3(n2[i].x * sp, n2[i].y, n2[i].x * cp / Mathf.Max(1e-3f, stretch)).normalized;
+                    int v = md.Add(p, nn, new Vector2(k / (float)segments, i / (float)(n - 1)));
+                    md.col[v] = pc[i];
+                }
+            }
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int k = 0; k < segments; k++)
+                {
+                    int p0 = i * ring + k, p1 = (i + 1) * ring + k;
+                    md.Quad(p0, p1, p1 + 1, p0 + 1);
+                }
+            }
+            // mounting plate on the cut face (local x = 0, against the wall)
+            Color plate = new Color(0.30f, 0.09f, 0.10f, 0.3f);
+            for (int i = 0; i < n - 1; i++)
+            {
+                Vector3 a0 = new Vector3(0f, (prof[i].y + yOff) * size, prof[i].x * size * stretch);
+                Vector3 a1 = new Vector3(0f, (prof[i + 1].y + yOff) * size, prof[i + 1].x * size * stretch);
+                Vector3 b0 = new Vector3(a0.x, a0.y, -a0.z), b1 = new Vector3(a1.x, a1.y, -a1.z);
+                int ia0 = md.Add(a0, Vector3.left, new Vector2(1f, 1f));
+                int ia1 = md.Add(a1, Vector3.left, new Vector2(1f, 1f));
+                int ib1 = md.Add(b1, Vector3.left, new Vector2(0f, 1f));
+                int ib0 = md.Add(b0, Vector3.left, new Vector2(0f, 1f));
+                md.col[ia0] = plate; md.col[ia1] = plate; md.col[ib1] = plate; md.col[ib0] = plate;
+                md.Quad(ia0, ia1, ib1, ib0);
+            }
+            return md.ToMesh(name);
+        }
+
         // ------------------------------------------------------------------ near gold frame
         /// <summary>
         /// tube.ts nearFrameGeometry, one piece: reference-pixel units of the 864x1536 approved frame, origin at the frame
         /// centre, +x right, +y up, -z toward the viewer (Unity camera space). piece 0 = bottom corner, 1 = bottom lip.
         /// UV0 = (along the arc, across the band 0 = edge toward the stream), UV1.x = piece.
         /// </summary>
-        public static Mesh BuildFrameStrip(int piece, float cx, float cy, float r0, float w, int dir, float th0, float th1, float z0, int nu, int nv, string name)
+        public static Mesh BuildFrameStrip(int piece, float cx, float cy, float r0, float w, int dir, float th0, float th1, float z0, int nu, int nv, string name, float side = 0f)
         {
             var md = new MeshData { hasUv1 = true };
+            // Tunnel round 4 (2026-11-24): NearFrame05 holds the frame plane 1278 reference px in front of the camera
+            // (0.8 m at vFOV 62); a vertex lifted z toward the camera projects (1278 / (1278 - z)) further out, which put
+            // the corners ~90 px LOWER than designed on the screen edges (left corner at x 10 from y 1282, approved 1216).
+            // Pre-shrinking x / y by that factor lands every vertex exactly on its designed screen pixel.
+            const float planePx = 1278.1f;
             for (int i = 0; i <= nu; i++)
             {
                 float th = (th0 + (th1 - th0) * i / nu) * Mathf.Deg2Rad;
@@ -369,9 +474,11 @@ namespace Rainbow.Screen05
                     float t = j / (float)nv;
                     float rr = r0 + dir * t * w;
                     float xs = cx + rr * Mathf.Cos(th), ys = cy - rr * Mathf.Sin(th);   // screen px (y down)
-                    var p = new Vector3(xs - 432f, 768f - ys, -(z0 + w * 0.22f * Mathf.Sin(Mathf.PI * t)));
+                    float zc = z0 + w * 0.22f * Mathf.Sin(Mathf.PI * t);
+                    float k = (planePx - zc) / planePx;
+                    var p = new Vector3((xs - 432f) * k, (768f - ys) * k, -zc);
                     int v = md.Add(p, Vector3.back, new Vector2(i / (float)nu, t));
-                    md.uv1[v] = new Vector2(piece, 0f);
+                    md.uv1[v] = new Vector2(piece, side);
                 }
             }
             for (int i = 0; i < nu; i++)
@@ -386,10 +493,15 @@ namespace Rainbow.Screen05
             return md.ToMesh(name, true);
         }
 
-        /// <summary>Left bottom corner (inner circle centre (432,1060) r 457, band 190 px outward, theta -163..-122).</summary>
-        public static Mesh BuildFrameCornerLeft() => BuildFrameStrip(0, 432f, 1060f, 457f, 190f, 1, -163f, -122f, 40f, 36, 10, "NearFrame05_CornerL");
-        /// <summary>Right bottom corner (mirror, theta -17..-58).</summary>
-        public static Mesh BuildFrameCornerRight() => BuildFrameStrip(0, 432f, 1060f, 457f, 190f, 1, -17f, -58f, 40f, 36, 10, "NearFrame05_CornerR");
+        /// <summary>
+        /// Left bottom corner. Tunnel round 4 (2026-11-24): inner edge fitted to the approved corner (screen edge y 1206,
+        /// (30, 1252), (60, 1294), (156, 1385) where the cut face starts): circle centre (521.5, 928) r 588, band 190 px
+        /// outward, theta -158 .. -128.4 (was centre (432, 1060) r 457, theta -163 .. -122: ~60-90 px too low on screen).
+        /// </summary>
+        public static Mesh BuildFrameCornerLeft() => BuildFrameStrip(0, 521.5f, 928f, 588f, 190f, 1, -158f, -128.4f, 40f, 36, 12, "NearFrame05_CornerL", -1f);
+        /// <summary>Right bottom corner (approved: screen edge y 1194, (840, 1233), (810, 1276), cut face from (690, 1395)):
+        /// centre (342.5, 920) r 588, theta -22 .. -54.</summary>
+        public static Mesh BuildFrameCornerRight() => BuildFrameStrip(0, 342.5f, 920f, 588f, 190f, 1, -22f, -54f, 40f, 36, 12, "NearFrame05_CornerR", 1f);
         /// <summary>Bottom lip (circle centre (432,2121), top edge radius 655, band 130 px inward, theta 122..58).</summary>
         public static Mesh BuildFrameLip() => BuildFrameStrip(1, 432f, 2121f, 655f, 130f, -1, 122f, 58f, 0f, 48, 10, "NearFrame05_Lip");
 

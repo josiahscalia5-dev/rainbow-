@@ -22,6 +22,11 @@
 #include "Assets/Rainbow/Water/Shaders/RainbowWaterCommon.hlsl"
 #include "Assets/Rainbow/Water/Shaders/RainbowFoamBank.hlsl"   // foam bank waterlines + soap ramp (foam area)
 
+// (water4 2026-11-24) live-tuning hook of AgentScripts/screen05_water4_tune.cs (global vector, never set in the game = 0 =
+// the baked look): x = contact shade strength delta, y = contact shade length delta, z = right band width delta (x),
+// w = right band near-field shift delta (m)
+float4 _W4Tune;
+
 // ---- W10/W12 palette (shader-linear values solved through exposure 0.86 -> Neutral -> sRGB -> grade sat 1.36 / con 1.15)
 static const float3 RBW_CDEEP   = float3(0.058, 0.197, 0.379);   // #0068AD
 static const float3 RBW_CDEEP2  = float3(0.062, 0.290, 0.572);   // #0086D8
@@ -126,7 +131,9 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     offL += fL;
     offR += fR;
     // approaching Benny the two S-bands swing out to the banks (behind him only the wake sweeps carry pink)
-    offL += bOn * 2.0 * RBW_SS(7.0, 2.5, db);
+    // (water4 2026-11-24: the left band swings out later - approved left band traced at y 840-940 = 0.3-0.45 m further in
+    //  at 2.6-5 u ahead of him; the full 2.0 swing is kept from 1.5 u ahead on)
+    offL += bOn * (1.65 * RBW_SS(7.0, 2.5, db) + 0.35 * RBW_SS(3.0, 1.5, db));
     offR += bOn * 1.6 * RBW_SS(2.6, 0.4, db);
     float Mb = M + sbend;
     float roomL = Mb + lim.x - offL;
@@ -140,9 +147,18 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     // (which also places the foam waterlines, RBW_BankEdges) drew them 1.6-2x too broad, so the S read as wide pink sheets.
     // The approved right band also runs ~1.2-1.45 m further left at s 15-20 (X 1.1-1.5 just right of Benny's track,
     // Unity hid it under the right bank there); shader only, the bank layout keeps its waterline.
-    float kWL = 1.0 - 0.4 * RBW_SS(136.7, 138.7, sm) * (1.0 - RBW_SS(146.7, 149.7, sm));
-    float kWR = 1.0 - 0.42 * RBW_SS(129.0, 131.5, sm);
+    // (water4 2026-11-24) refit of the VISIBLE bands to the approved pink traced row by row (y 600-1080, step 20; model:
+    //  staging round4 RiverModel + the hold clock 1.5 s): the right band beside / ahead of Benny is ~1.7x broader and
+    //  0.45 m further right at s 15.5-20.5 (approved 569-674 px at y 840, Unity was 538-595), 0.5 m further right at s 29-35
+    //  (y 640-680), and only narrowed at s 21-28; the left band is ~1.3x broader at s 19-22 (y 760-820).
+    //  Mean edge error of the traced pink: right 31.5 -> 8 px, left 20 -> 15 px.
+    float kWL = (1.0 - 0.4 * RBW_SS(139.0, 140.5, sm) * (1.0 - RBW_SS(146.7, 149.7, sm)))
+              * (1.0 + 0.3 * RBW_SS(134.0, 135.5, sm) * (1.0 - RBW_SS(138.5, 140.0, sm)));
+    float kWR = (1.0 - 0.4 * RBW_SS(138.0, 139.5, sm) * (1.0 - RBW_SS(143.0, 145.0, sm)))
+              * (1.0 + 0.4 * bOn * RBW_SS(-1.0, 0.0, db) * (1.0 - RBW_SS(1.3, 2.8, db))) * (1.0 + _W4Tune.z);
     offR -= 1.45 * RBW_SS(128.0, 131.0, sm) * (1.0 - RBW_SS(134.9, 138.4, sm));
+    offR += (0.45 + _W4Tune.w) * RBW_SS(131.0, 133.0, sm) * (1.0 - RBW_SS(136.5, 138.5, sm))
+          + 0.5 * RBW_SS(144.5, 146.5, sm) * (1.0 - RBW_SS(151.0, 154.0, sm));
     float wLv = max(wL * kWL, 0.2);
     float wRv = max(wR * kWR, 0.2);
     float sdL = xb + offL + pert;
@@ -383,12 +399,16 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
         float cc = RBW_Cells(dB * 8.0 + float2(0.0, time * 1.3));
         float cc2 = RBW_Cells(dB * 17.0 + float2(3.1, time * 2.1));
         float bubbly = saturate(1.0 - cc * 1.15) * 0.65 + saturate(1.0 - cc2 * 1.2) * 0.35;
-        // contact shadow behind him (strongest at the fur, gone ~0.55 u out; soft wedge edges)
+        // contact shade behind him (strongest at the fur, soft wedge edges)
+        // (water4 2026-11-24) the approved water under his fur is a soft see-into-the-water deep AZURE (#03'59'B0 at y
+        // 1192-1222 -> #018CE7 at y 1222-1252, measured), not a black-navy patch: shade toward the deep cyan of the
+        // palette, start it under the fur (no bright glossy line between fur and shade), gone ~0.35 u out (was 0.75)
         float latK = 1.0 - smoothstep(0.2 + 0.1 * max(e, 0.0), 0.46 + 0.15 * max(e, 0.0), abs(dlB));
-        float shadeK = latK * smoothstep(-0.1, 0.35, cosB) * smoothstep(-0.06, 0.0, e) * (1.0 - smoothstep(0.1, 0.75, e));
+        float shadeK = latK * smoothstep(-0.1, 0.35, cosB) * smoothstep(-0.4, -0.25, e)
+                     * (1.0 - smoothstep(0.02, max(0.35 + _W4Tune.y, 0.05), e));
         // his body blocks the reflected glare there too (no glossy arcs / flares inside the shadow)
-        col = lerp(col, min(col, float3(0.1, 0.45, 0.85)), saturate(shadeK * wk * 2.0));
-        col = lerp(col, float3(0.006, 0.035, 0.15), shadeK * 0.92 * wk);
+        col = lerp(col, min(col, float3(0.1, 0.45, 0.85)), saturate(shadeK * wk * 1.5));
+        col = lerp(col, RBW_CDEEP * float3(0.6, 0.85, 1.05), saturate(shadeK * (0.8 + _W4Tune.x) * wk));
         // broken bubbly rim hugging the waterline on his flanks only
         float rim = smoothstep(-0.08, -0.01, e) * (1.0 - smoothstep(0.04, 0.13, e)) * flankK;
         float foamW = rim * smoothstep(0.3, 0.65, bubbly + rim * 0.15);
