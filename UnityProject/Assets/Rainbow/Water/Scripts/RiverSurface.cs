@@ -24,7 +24,7 @@ namespace Rainbow.Screen05
         /// <summary>Gentle rise of the foam shelf between the stream edge and the wall.</summary>
         public const float ShelfRise = 0.12f;
         /// <summary>How far the water / foam shelf mesh reaches sideways (hidden inside the wall beyond the chord).</summary>
-        public const float MeshHalfWidth = 6.9f;
+        public const float MeshHalfWidth = 8.9f;   // round 4: the barrel drum is wider at s 40-100 (was 6.9)
 
         /// <summary>Stream centre x (the course centreline = RiverPath.Meander).</summary>
         public static float StreamCentre(float s) => RiverPath.Meander(s);

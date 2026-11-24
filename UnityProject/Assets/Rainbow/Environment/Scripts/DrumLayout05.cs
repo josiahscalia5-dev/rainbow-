@@ -139,7 +139,7 @@ namespace Rainbow.Screen05
         // Round 4 geometry fit 2026-11-24 (tools/diag/fit-rings.ps1): near ring 24.3 -> 25.6, ring A 45.5 -> 41.5, C 106.5 -> 105.8,
         // D 163.6 -> 159.4, together with the fitted drum axis (AxisS / AxisXs / AxisYs): every ring's wall edge + inner crest now
         // projects onto the approved circle within 0.5-2.6 px rms (before: ring A's left side was 45 px too far right).
-        static readonly float[] ApprovedRingS = { 5.6f, 25.6f, 41.5f, 66.4f, 105.8f, 159.4f, 230.1f, 283.0f, 333.0f, 450.4f };
+        static readonly float[] ApprovedRingS = { 5.6f, 25.6f, 46.0f, 82.0f, 105.8f, 159.4f, 230.1f, 283.0f, 333.0f, 450.4f };   // A 41.5 -> 46.0, B 66.4 -> 82.0: barrel radius below
 
         /// <summary>One wall paddle: s of the tray centre, wall side (-1 left, +1 right), height of its wall mount (m).</summary>
         public struct PaddleSlot
@@ -194,9 +194,17 @@ namespace Rainbow.Screen05
         // the approved image: centres (453, 485), (468, 455), (486, 453), (490, 460), (496.5, 469) px, wall radii 492 / 265 /
         // 153.5 / 92 / 59.5 px. The axis runs ~0.8 m left of the course line near the camera and comes back to it in the depth;
         // it is lowest at the near ring (2.79 m above the water) and highest at ring C (4.59 m).
-        static readonly float[] AxisS = { -12f, 8f, 25.6f, 41.5f, 66.4f, 105.8f, 159.4f, 230f, 470f };
-        static readonly float[] AxisXs = { -0.70f, -0.72f, -0.76f, -0.86f, -0.57f, -0.55f, -0.04f, 0f, 0f };
-        static readonly float[] AxisYs = { 3.05f, 2.95f, 2.79f, 3.63f, 4.28f, 4.59f, 4.34f, 4.25f, 4.25f };
+        // BARREL RADIUS (same fit, scale k = R / 6.8 about the camera, so the rings stay on the same pixels): the approved river's
+        // LEFT waterline, unprojected row by row (staging/round4-river/river_targets.csv), runs at x -7.1 .. -8.0 m for s 42-76,
+        // i.e. outside a 6.8 m drum (wall at -6.6 .. -5.7); with 7.7 m at ring A and 8.6 m at ring B the wall stands right behind
+        // the foam rope there (wall at the water: A -7.7 / +5.8 m, B -8.0 / +6.6 m) and back to 6.8 m at ring C.
+        static readonly float[] AxisS = { -12f, 8f, 25.6f, 46.0f, 82.0f, 105.8f, 159.4f, 230f, 470f };
+        static readonly float[] AxisXs = { -0.70f, -0.72f, -0.76f, -0.97f, -0.70f, -0.55f, -0.04f, 0f, 0f };
+        static readonly float[] AxisYs = { 3.05f, 2.95f, 2.79f, 3.66f, 4.51f, 4.59f, 4.34f, 4.25f, 4.25f };
+        static readonly float[] AxisRs = { 6.8f, 6.8f, 6.8f, 7.7f, 8.6f, 6.8f, 6.8f, 6.8f, 6.8f };
+
+        /// <summary>Drum radius at s (round 4 barrel fit; Radius = 6.8 m at the near ring and from ring C on).</summary>
+        public static float RadiusAt(float s) => Table(AxisS, AxisRs, s);
 
         /// <summary>Monotone cubic (Fritsch-Carlson) interpolation of a table: smooth, no overshoot between the knots.</summary>
         static float Table(float[] xs, float[] ys, float x)
@@ -224,7 +232,7 @@ namespace Rainbow.Screen05
         public static float AxisXAt(float s) => AxisX + Table(AxisS, AxisXs, s);
 
         /// <summary>Depth of the tube bottom below the water at s.</summary>
-        public static float Depth(float s) => Radius - (CentreY(s) - RiverPath.WaterY);
+        public static float Depth(float s) => RadiusAt(s) - (CentreY(s) - RiverPath.WaterY);
 
         /// <summary>Height of the tube axis at s (world y).</summary>
         public static float CentreY(float s) => RiverPath.WaterY + Table(AxisS, AxisYs, s);
@@ -241,15 +249,15 @@ namespace Rainbow.Screen05
         /// <summary>Half chord of the tube at the water plane (where the wall meets the water).</summary>
         public static float WaterChord(float s)
         {
-            float h = CentreY(s) - RiverPath.WaterY;
-            return Mathf.Sqrt(Mathf.Max(0f, Radius * Radius - h * h));
+            float h = CentreY(s) - RiverPath.WaterY, r = RadiusAt(s);
+            return Mathf.Sqrt(Mathf.Max(0f, r * r - h * h));
         }
 
         /// <summary>World x of the drum wall at height y on one side (-1 left, +1 right); round 4: the axis is off the course line.</summary>
         public static float WallXAt(float s, int side, float y = RiverPath.WaterY)
         {
-            float h = CentreY(s) - y;
-            return AxisXAt(s) + side * Mathf.Sqrt(Mathf.Max(0f, Radius * Radius - h * h));
+            float h = CentreY(s) - y, r = RadiusAt(s);
+            return AxisXAt(s) + side * Mathf.Sqrt(Mathf.Max(0f, r * r - h * h));
         }
 
         /// <summary>
@@ -325,7 +333,7 @@ namespace Rainbow.Screen05
         public static void PaddlePose(float s, int side, out Vector3 position, out Quaternion rotation, float mountY = -1f)
         {
             float ang = PaddleAngleDeg * Mathf.Deg2Rad;
-            if (mountY > 0f) ang = Mathf.Asin(Mathf.Clamp((mountY - CentreY(s)) / Radius, -0.9f, 0.9f));
+            if (mountY > 0f) ang = Mathf.Asin(Mathf.Clamp((mountY - CentreY(s)) / RadiusAt(s), -0.9f, 0.9f));
             float tilt = ang + PaddleDroopDeg * Mathf.Deg2Rad;
             Vector3 right = Vector3.right, up = Vector3.up;
             Vector3 dir = (right * (Mathf.Cos(ang) * side) + up * Mathf.Sin(ang)).normalized;
@@ -333,7 +341,7 @@ namespace Rainbow.Screen05
             Vector3 Y = (right * (-Mathf.Sin(tilt) * side) + up * Mathf.Cos(tilt)).normalized;
             Vector3 Z = Vector3.Cross(X, Y).normalized;
             float size = PaddleScaledSize;
-            position = Centre(s) + dir * (Radius - size * PaddleSink);
+            position = Centre(s) + dir * (RadiusAt(s) - size * PaddleSink);
             rotation = Quaternion.LookRotation(Z, Y);
         }
 

@@ -96,6 +96,13 @@ try { do {
       $rc.errors | ForEach-Object { Write-Output ('  ' + ($_ | Out-String).Trim()) }
       $exit = 2; break
     }
+    # after a C# recompile the domain reload takes 20-60 s on this laptop and the Pipeline bridge is away meanwhile: wait until the
+    # Editor answers an eval again (2026-11-24; before, the rebuild step failed with "No Pipeline instance found" and cost a whole cycle)
+    for ($i = 0; $i -lt 45; $i++) {
+      $sr = Invoke-Unity @('status', '--project-path', $Proj)
+      if ($sr.Code -eq 0 -and $sr.Text -match 'ready' -and (Get-Status) -match 'playing=') { break }
+      Start-Sleep -Seconds 4
+    }
     Step 'rebuild scene'
     $b = Invoke-Eval 'AgentScripts/screen05_build_scene.cs' 600
     Write-Output $b.Text

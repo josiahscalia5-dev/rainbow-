@@ -117,6 +117,7 @@ namespace Rainbow.Screen05.EditorTools
                 bool nearest = s < DrumLayout05.NearestBandBelowS;
                 GameObject r = MakeRenderer(rings, "Ring_" + F(s), far ? ringFar : (nearest ? ringNearest : ringNear), far ? ringFarMat : ringNearMat);
                 r.transform.localPosition = DrumLayout05.Centre(s);
+                r.transform.localScale = Vector3.one * (DrumLayout05.RadiusAt(s) / DrumLayout05.Radius);   // round 4 barrel fit
             }
 
             Transform paddles = Child(root.transform, "Paddles");

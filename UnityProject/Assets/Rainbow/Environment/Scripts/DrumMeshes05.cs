@@ -123,7 +123,7 @@ namespace Rainbow.Screen05
         /// </summary>
         public static Vector3 WallPoint(float phi, float s)
         {
-            float R = DrumLayout05.Radius;
+            float R = DrumLayout05.RadiusAt(s);
             float x = R * Mathf.Sin(phi);
             float y = DrumLayout05.CentreY(s) + R * Mathf.Cos(phi);
             float dent = Mathf.Min(DrumLayout05.FootDent(s, x > 0f ? 1 : -1, y), 0.5f * Mathf.Abs(x));   // no fold at the bottom
