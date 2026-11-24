@@ -212,7 +212,7 @@ float2 RbRowSplit(float row, float s, float dist)
 {
     float dr = length(float2(ddx(row), ddy(row))), dsx = length(float2(ddx(s), ddy(s)));
     float p = dsx / max(dr, 1e-6);                               // metres between two rows
-    float lv = max(log(max(p / (0.2 * max(dist, 4.0)), 1e-3)) / 1.0986, 0.0);
+    float lv = max(log(max(p / (0.125 * max(dist, 5.0)), 1e-3)) / 1.0986, 0.0);
     float n = min(floor(lv), 3.0);
     return float2(pow(3.0, n), smoothstep(0.2, 0.8, lv - n));
 }

@@ -101,7 +101,7 @@ Shader "Rainbow/Water/RiverGlints"
                     float2 a = pv2.xy / max(-pv2.z, 0.1) - pv.xy / max(-pv.z, 0.1);
                     a *= 1.0 / max(length(a), 1e-6);
                     a = normalize(a + float2(1e-5, 0.0));
-                    float fs = 0.8 + (cls < 0.5 || cls > 2.5 ? _R5Glint.x : _R5Glint.y);
+                    float fs = (cls > 2.5 ? 1.1 : 0.85) + (cls < 0.5 || cls > 2.5 ? _R5Glint.x : _R5Glint.y);
                     pv.xy += (a * (v.uv0.y * len) + float2(-a.y, a.x) * (v.uv0.x * wid)) * fs;
                 }
                 // same pixel, a little nearer (the swell never hides the glints)

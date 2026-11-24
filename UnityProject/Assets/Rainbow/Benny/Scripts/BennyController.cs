@@ -260,6 +260,7 @@ namespace Rainbow.Screen05
                 if (BankBumped != null) BankBumped();
             }
 
+            float rideDt = dt;
             // ---- jump
             if (jumpIn && grounded)
             {
@@ -276,7 +277,7 @@ namespace Rainbow.Screen05
                     // touch-down: the impact carries on into the water spring (he dips and floats up again)
                     float impact = Mathf.Clamp01(-vy / Mathf.Max(0.01f, jumpVelocity));
                     rideV += vy * landingDip;
-                    ride += Mathf.Max(height, -0.3f);
+                    rideDt = Mathf.Clamp(-height / Mathf.Max(0.5f, -vy), 0f, dt);   // the part of this frame after he touched the water
                     height = 0f;
                     vy = 0f;
                     grounded = true;
@@ -289,7 +290,7 @@ namespace Rainbow.Screen05
             const int sub = 4;
             for (int i = 0; i < sub; i++)
             {
-                float h = dt / sub;
+                float h = rideDt / sub;
                 float c = rideV < 0f ? Mathf.Lerp(rideDamping, plungeDrag, Mathf.Clamp01(-rideV * 0.5f)) : rideDamping;
                 rideV += (-rideStiffness * ride - c * rideV) * h;
                 ride += rideV * h;

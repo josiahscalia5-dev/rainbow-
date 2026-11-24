@@ -150,7 +150,7 @@ Shader "Rainbow/Water/River"
                 float2 vd = abs(i.positionCS.xy / _ScaledScreenParams.xy - 0.5) * 0.57;
                 float vf = saturate(1.0 - dot(vd, vd));
                 outCol /= lerp(1.0, max(vf * vf, 0.6), _SheenLook.w);
-                outCol = MixFog(outCol, i.fogFactor);
+                outCol = lerp(outCol, MixFog(outCol, i.fogFactor), 0.4);   // round 8: the far river stays saturated up to the throat
                 return half4(outCol, 1.0);
             }
             ENDHLSL

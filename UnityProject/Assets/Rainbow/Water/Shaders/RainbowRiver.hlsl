@@ -196,6 +196,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float bt = time - 1.5;
     float2 shv = float2((q + 3.0) / 6.0, log2(distV / 3.5) / 5.5) + float2(0.012 * sin(bt * 0.62 + q * 1.7), 0.01 * sin(bt * 0.47 + distV * 0.2));
     float broad = SAMPLE_TEXTURE2D_LOD(_RiverSheen, sampler_RiverSheen, shv, 0).r;
+    broad = clamp(broad, 0.1, 0.5);
     float Y = lerp(0.333, broad, _SheenLook.x) + (row - 0.333) * _SheenLook.y;
 
     // Benny's wake: the standing wake in his frame (broad luminous arcs bowed over his track, two pink sweeps), streaks run through it
@@ -203,12 +204,15 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float2 wuv = float2((dlW + 0.012 * sin(bt * 2.9 + back * 6.0) + 2.2) / 4.4, (bk - 0.2) / 3.6);
     float3 wm = SAMPLE_TEXTURE2D_LOD(_WakeSheen, sampler_WakeSheen, wuv, 0).rgb;
     float wakeA = bOn * wk * smoothstep(0.8, 1.2, back) * (1.0 - smoothstep(3.2, 3.7, back)) * (1.0 - smoothstep(1.75, 2.1, abs(dlW))) * saturate(wm.b * 1.4);
-    // the sweeps run up to his flanks and have streaky satin edges
-    float upK = smoothstep(0.85, 1.25, back) * (1.0 - smoothstep(1.35, 1.75, back)) * (1.0 - smoothstep(0.4, 1.15, abs(tW5)));
-    wm.g = saturate(max(wm.g, upK * 0.9) + (T - 0.5) * 0.55 * smoothstep(0.04, 0.3, wm.g));
-    float qw = wm.g < 0.5 ? lerp(0.12, 1.0, wm.g * 2.0) : lerp(1.0, 1.55, wm.g * 2.0 - 1.0);
+    // the two pink sweeps: soft, streaky, feathered into violet and blue (no hard fins)
+    float gk = saturate(wm.g * (0.5 + 0.95 * T));
+    float qw = lerp(0.15, 1.5, smoothstep(0.12, 0.8, gk));
     qe = lerp(qe, qw + (T - 0.5) * 0.3, wakeA);
-    Y = lerp(Y, 0.3 + (wm.r - 0.3) * 1.2 + (row - 0.333) * _SheenLook.z, wakeA);
+    float arcP = frac((bk - 0.8 * dlW * dlW - 1.42) / 0.52 + 0.5) - 0.5;
+    float arcN = smoothstep(0.1, 0.5, RBW_VNoise(float2(dlW * 3.1 + 9.0, floor((bk - 0.8 * dlW * dlW - 1.42) / 0.52 + 0.5) * 3.7)));
+    float arcLine = exp(-arcP * arcP * 160.0) * (0.25 + 0.75 * arcN) * smoothstep(1.2, 1.55, bk) * (1.0 - wm.g);
+    float Yw = lerp(0.3 + (min(wm.r, 0.62) - 0.3) * 1.15, 0.28, 3.2 * gk * (1.0 - gk) * 0.6) + (row - 0.333) * _SheenLook.z + arcLine * 0.22;
+    Y = lerp(Y, Yw, wakeA);
 
     float3 c5 = RBW_RampY(qe, Y, zone);
     c5 = max(c5 - _GlintLook.w, 0.0);                  // the bloom veil of the bright scene would grey the deep saturated colours

@@ -118,6 +118,13 @@ namespace Rainbow.Screen05
             }
         }
 
+        /// <summary>Coins of the long course (not part of the approved picture) grow in far ahead, where they are a few pixels.</summary>
+        static float FarScale(float s, float bennyS)
+        {
+            if (s < 125f) return 1f;
+            return 1f - Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(72f, 100f, s - bennyS));
+        }
+
         /// <summary>The far approved coins hang higher and higher above the water (the picture's forced perspective); as the rider comes
         /// near they sink gently to a height he can reach, long before they are big on screen.</summary>
         static float PlayHeight(float approved, float s, float bennyS)
@@ -227,6 +234,7 @@ namespace Rainbow.Screen05
                 Transform t = slots[i].coin;
                 if (t == null) continue;
                 float scale = slots[i].scale > 0.01f ? slots[i].scale : CoinScale;
+                scale *= FarScale(slots[i].s, Screen05Events.BennyS);
                 Vector3 pos = basePos[i];
                 if (!collected[i] && slots[i].s < 125f) pos.y = RiverPath.WaterY + PlayHeight(slots[i].height, slots[i].s, Screen05Events.BennyS);
                 if (collected[i])

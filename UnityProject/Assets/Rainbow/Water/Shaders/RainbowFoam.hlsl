@@ -83,6 +83,7 @@ void RBW_FoamVertex(float3 centreWS, float4 uv0, float4 uv1, float sOffset, floa
     // (water round 3v 2026-11-23: 0.62 .. 1.45 -> 0.85 .. 1.0 - the approved suds keep their true size, ~6-15 px far away:
     //  growing them 1.45x turned the far rims into rows of 30-60 px cotton balls)
     float k = lerp(0.85, 1.0, smoothstep(6.0, 25.0, distance(_WorldSpaceCameraPos, c)));
+    k *= 1.0 - smoothstep(104.0, 135.0, distance(_WorldSpaceCameraPos, c));
     k = lerp(k, 1.0, wakePuff);
     c.y = base + (c.y - base) * k;
     r *= k;
