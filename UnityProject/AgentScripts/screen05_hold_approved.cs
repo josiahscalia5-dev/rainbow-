@@ -35,6 +35,9 @@ for (int pass = 0; pass < 5; pass++)
     flow.Restart();
     if (hud != null) hud.ShowHint("", 0f);
     if (pass > 0) startS = targetS - travel;
+    // the paddle / bob clips restart with the run, so Benny's pose at s = 14 is the same in every still (it used to
+    // depend on how long Play mode had been running: e.g. his right arm stuck out in one still and not in the next)
+    if (benny.animator != null) { benny.animator.Rebind(); benny.animator.Update(0f); }
     benny.TeleportTo(startS, Rainbow.Screen05.RiverPath.Meander(startS));
     f0 = Time.frameCount;
     await Wait.Until(() => Time.frameCount >= f0 + settleFrames, timeoutMs: 30000, because: "the Game view is not ticking (run: unity command editor set_auto_tick)");

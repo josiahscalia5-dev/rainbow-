@@ -52,8 +52,8 @@ namespace Rainbow.Screen05
         [Tooltip("x = lateral ease while Benny steers; y / z stay 0 so the approved framing holds at every swim speed")]
         public Vector3 positionDamping = new Vector3(0.6f, 0f, 0f);
         public float nearClip = 0.1f;
-        [Tooltip("far clip (m): the tunnel's far rings / throat reach s ~ 470")]
-        public float farClip = 300f;
+        [Tooltip("far clip (m): the tunnel's far rings / throat reach s 470 (DrumLayout05.ThroatS)")]
+        public float farClip = 520f;
 
         float jumpShare, jumpShareVel;
 

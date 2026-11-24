@@ -156,11 +156,17 @@ namespace Rainbow.Screen05
             return t * t * (3f - 2f * t);
         }
 
-        /// <summary>|x| of the tunnel wall at height y (circle of TunnelRadius about the axis at WaterY + FloorDepth).</summary>
+        /// <summary>
+        /// |x| of the tunnel wall at height y. Frame round 2026-11-23: the real drum (DrumLayout05, radius 6.8, axis 4.25
+        /// above the water, 1 m lower near the camera) instead of the contract circle (6.85 about 3.3); the narrower of
+        /// its near and far cross-sections, so a bubble never sinks into either wall.
+        /// </summary>
         static float WallHalfWidth(float y)
         {
-            float dy = RiverPath.FloorDepth - (y - RiverPath.WaterY);
-            float rr = RiverPath.TunnelRadius;
+            float rr = DrumLayout05.Radius;
+            float dFar = DrumLayout05.CentreY(DrumLayout05.EyeS + 60f) - y;
+            float dNear = DrumLayout05.CentreY(DrumLayout05.EyeS + 15f) - y;
+            float dy = Mathf.Max(Mathf.Abs(dFar), Mathf.Abs(dNear));
             return Mathf.Sqrt(Mathf.Max(rr * rr - dy * dy, 0f));
         }
 

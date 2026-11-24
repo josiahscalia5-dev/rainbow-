@@ -79,7 +79,7 @@ namespace Rainbow.Screen05.EditorTools
             float ringRadius = DrumLayout05.Radius - DrumLayout05.RingInset;
             Mesh ringNear = SaveMesh(DrumMeshes05.BuildRing(DrumLayout05.NearBand, ringRadius, 96, "Ring05_Near"), "Ring05_Near");
             Mesh ringFar = SaveMesh(DrumMeshes05.BuildRing(DrumLayout05.FarBand, ringRadius, 72, "Ring05_Far"), "Ring05_Far");
-            float paddleSize = DrumLayout05.PaddleSize * Mathf.Min(1.4f, DrumLayout05.Radius / 7.6f);
+            float paddleSize = DrumLayout05.PaddleScaledSize;
             Mesh paddle = SaveMesh(DrumMeshes05.BuildPaddleTray(paddleSize, DrumLayout05.PaddleThickness, DrumLayout05.PaddleStretch, 28, "Paddle05_Tray"), "Paddle05_Tray");
             Mesh frameL = SaveMesh(DrumMeshes05.BuildFrameCornerLeft(), "NearFrame05_CornerL");
             Mesh frameR = SaveMesh(DrumMeshes05.BuildFrameCornerRight(), "NearFrame05_CornerR");
@@ -109,15 +109,14 @@ namespace Rainbow.Screen05.EditorTools
 
             Transform paddles = Child(root.transform, "Paddles");
             List<float> padS = DrumLayout05.PaddlePositions();
-            foreach (float s in padS)
+            List<DrumLayout05.PaddleSlot> padSlots = DrumLayout05.PaddleSlots();
+            foreach (DrumLayout05.PaddleSlot ps in padSlots)
             {
-                for (int side = -1; side <= 1; side += 2)
-                {
-                    DrumLayout05.PaddlePose(s, side, out Vector3 p, out Quaternion q);
-                    GameObject pd = MakeRenderer(paddles, (side < 0 ? "Paddle_L_" : "Paddle_R_") + F(s), paddle, paddleMat);
-                    pd.transform.localPosition = p;
-                    pd.transform.localRotation = q;
-                }
+                // frame round 2026-11-23: each tray on its approved place (side and mount height per paddle)
+                DrumLayout05.PaddlePose(ps.s, ps.side, out Vector3 p, out Quaternion q, ps.mountY);
+                GameObject pd = MakeRenderer(paddles, (ps.side < 0 ? "Paddle_L_" : "Paddle_R_") + F(ps.s), paddle, paddleMat);
+                pd.transform.localPosition = p;
+                pd.transform.localRotation = q;
             }
 
             Transform throat = Child(root.transform, "FarThroat");
@@ -141,7 +140,7 @@ namespace Rainbow.Screen05.EditorTools
 
             AssetDatabase.SaveAssets();
             if (root.scene.IsValid()) EditorSceneManager.MarkSceneDirty(root.scene);
-            Debug.Log("[Rainbow] Environment05 built: " + ringS.Count + " rings, " + (padS.Count * 2) + " paddles, throat at s=" + F(DrumLayout05.ThroatS));
+            Debug.Log("[Rainbow] Environment05 built: " + ringS.Count + " rings, " + padSlots.Count + " paddles, throat at s=" + F(DrumLayout05.ThroatS));
             return root;
         }
 
@@ -384,9 +383,9 @@ namespace Rainbow.Screen05.EditorTools
         /// <summary>Edit-mode preview pose: in front of the approved checkpoint camera (cameraRig.ts '05').</summary>
         static void PlaceFrameForPreview(NearFrame05 nf)
         {
-            // STAGE_CAM['05']: back 6.4, up 3.6, ahead 18, lookUp -1.92 -> pitch 12.75 deg down, yaw 2.96 deg left, vFOV 62
-            Vector3 camPos = new Vector3(0f, RiverPath.WaterY + 3.6f, DrumLayout05.EyeS);
-            Quaternion camRot = Quaternion.Euler(12.75f, -2.96f, 0f);
+            // Screen05CameraRig (frame round 2026-11-23): up 3.40, back 6.52, pitch 12.78 deg down, yaw 2.78 deg left, vFOV 62
+            Vector3 camPos = new Vector3(0f, RiverPath.WaterY + 3.40f, DrumLayout05.EyeS);
+            Quaternion camRot = Quaternion.Euler(12.78f, -2.78f, 0f);
             float px = nf.depth * Mathf.Tan(31f * Mathf.Deg2Rad) / 768f;
             nf.transform.SetPositionAndRotation(camPos + camRot * new Vector3(0f, 0f, nf.depth), camRot);
             nf.transform.localScale = Vector3.one * px;

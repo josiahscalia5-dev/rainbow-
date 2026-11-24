@@ -95,11 +95,32 @@ namespace Rainbow.Screen05
         /// <summary>Rings with s above this use FarBand.</summary>
         public const float FarBandFromS = 80f;
 
-        // Light round 2026-11-23: ring tops measured straight up from the approved vanishing point (492,488) sit at
-        // r = 292, 180, 112, 74, 54, 40 px (+ the glow). With the approved camera (ring top 8.56 m above it, f 1278 px)
-        // that is depth ~ 10940 / r: the near ring B (47.6) and the first two far rings already match; the deeper ones were
-        // at 161 / 222 (tops 68 / 49 px) and the 40 px ring was missing. environment.ts ringDv = [59, 97, 161, 222, 322].
-        static readonly float[] FarRingDepths = { 59f, 97f, 150f, 205f, 272f };
+        // Frame round 2026-11-23: real rings at the depths whose crowns (0.94 r) project onto the approved crowns measured
+        // straight up from the approved vanishing point (496, 478): y 210, 308, 378, 415, 434, 448, 456 (r 268 .. 22 px; the
+        // deep ones were missing or hidden in the glow disc), plus the near ring whose left crown runs down the left frame
+        // edge (~(10, 480)) and stands on the foam at ~(90, 700) (in the 1 m near-floor drop, i.e. centred on the
+        // vanishing-point height). 5.6 only shows for camera s < 5. Replaces the light round's eye + [59 .. 272] set.
+        static readonly float[] ApprovedRingS = { 5.6f, 24.3f, 45.5f, 66.4f, 106.5f, 163.6f, 230.1f, 333.0f, 450.4f };
+
+        /// <summary>One wall paddle: s of the tray centre, wall side (-1 left, +1 right), height of its wall mount (m).</summary>
+        public struct PaddleSlot
+        {
+            public float s; public int side; public float mountY;
+            public PaddleSlot(float s, int side, float mountY) { this.s = s; this.side = side; this.mountY = mountY; }
+        }
+
+        // Frame round 2026-11-23: trays placed on the approved ones (screen centres measured on the approved image: big left
+        // (150, 425), big right (790, 460) - nearer on the left -, mid (290, 445) / (665, 425), small (385, 462) / (600, 450),
+        // tiny ones beside the throat), unprojected with the gameplay camera onto the wall; the mount height (not the angle)
+        // is kept, so the trays stay at the approved height where the near floor drops.
+        static readonly PaddleSlot[] ApprovedPaddles =
+        {
+            new PaddleSlot(29.5f, -1, 5.2f), new PaddleSlot(34f, 1, 4.7f),
+            new PaddleSlot(44f, -1, 5.2f), new PaddleSlot(55f, 1, 6.0f),
+            new PaddleSlot(75f, -1, 5.1f), new PaddleSlot(82f, 1, 5.8f),
+            new PaddleSlot(125f, -1, 5.3f), new PaddleSlot(118f, 1, 5.5f),
+            new PaddleSlot(190f, -1, 5.3f), new PaddleSlot(180f, 1, 5.5f),
+        };
 
         static float Smooth(float e0, float e1, float x)
         {
@@ -150,66 +171,55 @@ namespace Rainbow.Screen05
         }
 
         /// <summary>
-        /// All real gold rings, ascending s. Near: the slots minus the anchor slot (replaced by the first far ring), the
-        /// slot 26 u ahead of the eye moved to eye + 20 (ring A). Far: eye + [59, 97, 150, 205, 272].
-        /// Default: 5.6, 19.6, 27.6, 47.6, 66.6, 104.6, 157.6, 212.6, 279.6.
+        /// All real gold rings, ascending s (frame round 2026-11-23, fitted to the approved ring crowns: see
+        /// ApprovedRingS): 5.6, 24.3, 45.5, 66.4, 106.5, 163.6, 230.1, 333.0, 450.4.
         /// </summary>
         public static List<float> RingPositions()
         {
-            float anchor = EyeS + 54f;
             var list = new List<float>();
-            foreach (float slot in RingSlots())
-            {
-                if (Mathf.Abs(slot - anchor) < 0.5f) continue;
-                list.Add(Mathf.Abs(slot - EyeS - 26f) < 3f ? EyeS + 20f : slot);
-            }
-            foreach (float d in FarRingDepths)
-            {
-                float s = EyeS + d;
-                if (s < ThroatS - 1f) list.Add(s);
-            }
+            foreach (float s in ApprovedRingS) if (s < ThroatS - 1f) list.Add(s);
             list.Sort();
             return list;
         }
 
         public static BandProfile BandFor(float s) => s > FarBandFromS ? FarBand : NearBand;
 
-        /// <summary>
-        /// Paddle pair positions (centre s of the half disc): 2.7 u camera-side of every ring slot and of every far ring
-        /// (environment.ts lids05 = slot - band05.width / 2 - lid05.size * 1.05), s > 4, pairs closer than 6 u merged.
-        /// Default: 16.9, 30.9, 44.9, 58.9, 101.9, 165.9, 226.9.
-        /// </summary>
+        /// <summary>Paddle size in metres (frame round: no longer shrunk with the narrower tube - the approved trays are big).</summary>
+        public static float PaddleScaledSize => PaddleSize;
+
+        /// <summary>All wall paddles (frame round 2026-11-23: one by one on the approved trays, see ApprovedPaddles).</summary>
+        public static List<PaddleSlot> PaddleSlots()
+        {
+            var list = new List<PaddleSlot>();
+            foreach (PaddleSlot p in ApprovedPaddles) if (p.s > 4f && p.s < ThroatS - 6f) list.Add(p);
+            list.Sort((a, b) => a.s.CompareTo(b.s));
+            return list;
+        }
+
+        /// <summary>Distinct s of all paddles (kept for the Environment05Root marker).</summary>
         public static List<float> PaddlePositions()
         {
-            float back = FarBand.width * 0.5f + PaddleSize * 1.05f;
-            var cand = new List<float>();
-            foreach (float slot in RingSlots()) cand.Add(slot - back);
-            foreach (float d in FarRingDepths) cand.Add(EyeS + d - back);
-            cand.Sort();
             var list = new List<float>();
-            foreach (float s in cand)
-            {
-                if (s <= 4f || s >= ThroatS - 6f) continue;
-                if (list.Count > 0 && s - list[list.Count - 1] < 6f) continue;
-                list.Add(s);
-            }
+            foreach (PaddleSlot p in PaddleSlots()) if (!list.Contains(p.s)) list.Add(p.s);
             return list;
         }
 
         /// <summary>
         /// Pose of one paddle (tube.ts wallLidBasis / wallLidMatrix): side +1 = right wall, -1 = left wall. Local +X points
         /// inward (drooped), local +Y is the tray's back (toward the wall above), local +Z runs along the tube.
+        /// mountY &lt;= 0: lid05 angle 8 deg above the axis; otherwise the wall mount sits at that world height.
         /// </summary>
-        public static void PaddlePose(float s, int side, out Vector3 position, out Quaternion rotation)
+        public static void PaddlePose(float s, int side, out Vector3 position, out Quaternion rotation, float mountY = -1f)
         {
             float ang = PaddleAngleDeg * Mathf.Deg2Rad;
+            if (mountY > 0f) ang = Mathf.Asin(Mathf.Clamp((mountY - CentreY(s)) / Radius, -0.9f, 0.9f));
             float tilt = ang + PaddleDroopDeg * Mathf.Deg2Rad;
             Vector3 right = Vector3.right, up = Vector3.up;
             Vector3 dir = (right * (Mathf.Cos(ang) * side) + up * Mathf.Sin(ang)).normalized;
             Vector3 X = (right * (-Mathf.Cos(tilt) * side) + up * (-Mathf.Sin(tilt))).normalized;
             Vector3 Y = (right * (-Mathf.Sin(tilt) * side) + up * Mathf.Cos(tilt)).normalized;
             Vector3 Z = Vector3.Cross(X, Y).normalized;
-            float size = PaddleSize * Mathf.Min(1.4f, Radius / 7.6f);
+            float size = PaddleScaledSize;
             position = Centre(s) + dir * (Radius - size * PaddleSink);
             rotation = Quaternion.LookRotation(Z, Y);
         }
