@@ -21,7 +21,7 @@ namespace Rainbow.Screen05
         [Tooltip("Bottom lip piece (child).")] public Transform bottomLip;
         [Tooltip("Distance in front of the camera (m).")] public float depth = 0.8f;
         [Tooltip("Camera z (= s) range over which the frame slides in.")] public Vector2 fadeInCameraS = new Vector2(0f, 6f);
-        [Tooltip("Camera z (= s) range over which the frame slides out again.")] public Vector2 fadeOutCameraS = new Vector2(200f, 210f);
+        [Tooltip("Camera z (= s) range over which the frame slides out again.")] public Vector2 fadeOutCameraS = new Vector2(5000f, 5010f);
         [Tooltip("Hide when the camera is further than this from the tunnel line (m).")] public float maxLateral = DrumLayout05.Radius * 1.2f;
         [Tooltip("Only follow the camera tagged MainCamera.")] public bool onlyMainCamera = true;
 

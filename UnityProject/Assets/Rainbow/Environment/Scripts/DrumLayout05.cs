@@ -229,7 +229,7 @@ namespace Rainbow.Screen05
         }
 
         /// <summary>World x of the drum axis at s (round 4 fit).</summary>
-        public static float AxisXAt(float s) => AxisX + Table(AxisS, AxisXs, s);
+        public static float AxisXAt(float s) => AxisX + Table(AxisS, AxisXs, s) + RiverPath.Bend(s);
 
         /// <summary>Depth of the tube bottom below the water at s.</summary>
         public static float Depth(float s) => RadiusAt(s) - (CentreY(s) - RiverPath.WaterY);

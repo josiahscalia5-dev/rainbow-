@@ -15,7 +15,7 @@ namespace Rainbow.Screen05
     public static class RiverLayout05
     {
         public const int WL = 0, LO = 1, LI = 2, RI = 3, RO = 4, WR = 5;
-        public const float S0 = RiverPath.TunnelStart, S1 = 160f, Step = 0.25f;
+        public const float S0 = RiverPath.TunnelStart, S1 = RiverPath.CourseLength, Step = 0.25f;
 
         const string Data_wl = ""
             + "-12:-5.4 17:-5.35 19.97:-5.00 20.40:-4.89 20.86:-4.84 21.36:-4.82 21.89:-4.77 22.45:-4.71 23.07:-4.63 23.74:-4.36 "
@@ -76,7 +76,12 @@ namespace Rainbow.Screen05
                 }
                 float[] m = Slopes(xs, ys);
                 var raw = new float[count];
-                for (int i = 0; i < count; i++) raw[i] = Hermite(xs, ys, m, S0 + i * Step);
+                for (int i = 0; i < count; i++)
+                {
+                    float si = S0 + i * Step;
+                    raw[i] = Hermite(xs, ys, m, si);
+                    if (si > 136f) raw[i] = Mathf.Lerp(raw[i], FarX(c, si), SS(136f, 168f, si));
+                }
                 // light smoothing of the pixel trace (~ +-2 px at every distance)
                 t[c] = new float[count];
                 for (int i = 0; i < count; i++)
@@ -104,6 +109,27 @@ namespace Rainbow.Screen05
                     for (int c = 0; c < 6; c++) t[c][i] = l1 + (t[c][i] - l0) / (r0 - l0) * (r1 - l1);
             }
             table = t;
+        }
+
+        /// <summary>Layout beyond the traced picture (master direction 2026-11-24: the playable course is ~450 m long): the same kind of S-shaped
+        /// river (cyan core between two pink bands, foam rims at the drum wall), winding round the tunnel axis and its bends.</summary>
+        static float FarX(int c, float s)
+        {
+            const float tau = 2f * Mathf.PI;
+            float mid = RiverPath.Bend(s) + 1.5f * SS(120f, 150f, s) * (1f - SS(185f, 235f, s))
+                      + 1.15f * (1f - 0.35f * SS(300f, 360f, s)) * Mathf.Sin(tau * (s - 150f) / 47f + 0.6f) + 0.3f * Mathf.Sin(tau * s / 29f + 2f);
+            float half = 3.75f + 0.35f * Mathf.Sin(tau * s / 83f + 1f);
+            float bl = 1.4f + 0.25f * Mathf.Sin(s * 0.11f), br = 1.4f + 0.25f * Mathf.Sin(s * 0.093f + 2f);
+            float el = 0.34f + 0.1f * Mathf.Sin(s * 0.17f + 1f), er = 0.34f + 0.1f * Mathf.Sin(s * 0.15f + 4f);
+            switch (c)
+            {
+                case WL: return mid - half;
+                case LO: return mid - half + el;
+                case LI: return mid - half + el + bl;
+                case RI: return mid + half - er - br;
+                case RO: return mid + half - er;
+                default: return mid + half;
+            }
         }
 
         static float[] Slopes(float[] x, float[] y)      // Fritsch-Carlson monotone cubic
@@ -167,6 +193,16 @@ namespace Rainbow.Screen05
 
         public static Vector3 Rope(float s, int side)
         {
+            Vector3 near = RopeNear(s, side);
+            if (s <= 118f) return near;
+            // beyond the traced picture the foam fills the gap between the waterline and the drum wall (no dry floor strip)
+            float gap = side < 0 ? X(WL, s) - DrumLayout05.WallXAt(s, -1) : DrumLayout05.WallXAt(s, 1) - X(WR, s);
+            var far = new Vector3(Mathf.Clamp(gap + 0.25f, 0.6f, 2.6f), 0.42f + 0.06f * Mathf.Clamp01(gap), 0.92f);
+            return Vector3.Lerp(near, far, SS(118f, 136f, s));
+        }
+
+        static Vector3 RopeNear(float s, int side)
+        {
             // shape round 6 (2026-11-24, user guide #5: a NARROW, irregular rim of mixed puffs): the left bar at s 24-28 (approved
             // y 690-740, x 60-290) runs from the waterline right up to the wall (was a dark floor strip behind a 1.75 m lobe); the
             // left rim lower at s 17-23 (approved top edge (90,725)-(0,785)); beyond s ~30 both ropes lower, narrower and finer
@@ -192,7 +228,7 @@ namespace Rainbow.Screen05
         }
 
         /// <summary>LUT for shaders: s (S0 .. S1) along u, row 0 = (WL, LO, LI, RI), row 1 = (RO, WR, 0, 0).</summary>
-        public static Texture2D BuildLut(int width = 1024)
+        public static Texture2D BuildLut(int width = 4096)
         {
             var tex = new Texture2D(width, 2, TextureFormat.RGBAHalf, false, true)
             {

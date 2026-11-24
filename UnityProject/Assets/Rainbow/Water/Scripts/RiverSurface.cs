@@ -32,7 +32,7 @@ namespace Rainbow.Screen05
         /// <summary>Stream half width (course.ts widthAt in 05: extent - smooth |offset|).</summary>
         public static float StreamHalfWidth(float s)
         {
-            float d = RiverPath.Meander(s);
+            float d = RiverPath.Meander(s) - RiverPath.Bend(s);
             return RiverPath.StreamExtent - Mathf.Sqrt(d * d + 0.09f);
         }
 

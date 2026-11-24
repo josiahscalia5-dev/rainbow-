@@ -16,8 +16,12 @@ namespace Rainbow.Screen05
     {
         public static Mesh Build(float rowSpacing = 0.35f, int columns = 46)
         {
-            float s0 = RiverPath.TunnelStart;
-            float s1 = RiverPath.TunnelLength;
+            return Build(rowSpacing, columns, RiverPath.TunnelStart, RiverPath.TunnelLength, "RiverSurface05");
+        }
+
+        /// <summary>The river surface from s0 to s1 (the run-time course beyond TunnelLength uses the same code: no seam).</summary>
+        public static Mesh Build(float rowSpacing, int columns, float s0, float s1, string meshName)
+        {
             float hwMesh = RiverSurface.MeshHalfWidth;
             int rows = Mathf.CeilToInt((s1 - s0) / rowSpacing) + 1;
             int cols = Mathf.Max(4, columns);
@@ -72,7 +76,7 @@ namespace Rainbow.Screen05
                 }
             }
 
-            var mesh = new Mesh { name = "RiverSurface05" };
+            var mesh = new Mesh { name = meshName };
             mesh.indexFormat = n > 65000 ? IndexFormat.UInt32 : IndexFormat.UInt16;
             mesh.vertices = pos;
             mesh.normals = nor;

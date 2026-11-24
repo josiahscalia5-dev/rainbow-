@@ -166,16 +166,28 @@ namespace Rainbow.Screen05
         /// crest, puff size): lace on the waterline, big puffs, medium puffs between them, small suds on the crest. NO lather
         /// between the rope and the wall: the river shader draws the drum's purple floor there.
         /// </summary>
-        static List<Puff> GenerateRopePuffs(uint seed)
+        /// <summary>Puffs of a run-time stretch of the course (Course05Extension).</summary>
+        public static List<Puff> GenerateRange(float s0, float s1, uint seed, float density)
+        {
+            rangeMin = s0; rangeMax = s1;
+            try { return GenerateRopePuffs(seed, s0, s1, density, false); }
+            finally { rangeMin = RiverPath.TunnelStart; rangeMax = RiverPath.TunnelLength; }
+        }
+
+        static float rangeMin = RiverPath.TunnelStart, rangeMax = RiverPath.TunnelLength;
+
+        static List<Puff> GenerateRopePuffs(uint seed) => GenerateRopePuffs(seed, RiverPath.TunnelStart, RiverPath.TunnelLength, 1f, true);
+
+        static List<Puff> GenerateRopePuffs(uint seed, float sFrom, float sTo, float density, bool approvedClumps)
         {
             var list = new List<Puff>(17000);
             var rng = new Rng(seed);
             for (int side = -1; side <= 1; side += 2)
             {
-                float s = RiverPath.TunnelStart + 0.15f;
-                while (s < RiverPath.TunnelLength - 0.15f)
+                float s = sFrom + 0.15f;
+                while (s < sTo - 0.15f)
                 {
-                    float step = rng.Range(0.2f, 0.28f);
+                    float step = rng.Range(0.2f, 0.28f) / density;
                     float edge = WaterlineX(s, side);
                     Vector3 rope = RiverLayout05.Rope(s, side);
                     float cl = ClusterNoise(s, side);
@@ -236,6 +248,7 @@ namespace Rainbow.Screen05
                     s += step;
                 }
             }
+            if (!approvedClumps) return list;
             // separate low clumps drifting on the open water beside the route (approved: px x 0-130 / y 1010-1120)
             Clump(list, rng, -1, 14.2f, -2.85f, 0.7f, 0.42f, 60);
             for (int k = 0; k < 6; k++)
@@ -295,7 +308,7 @@ namespace Rainbow.Screen05
 
         static int Add(List<Puff> list, Rng rng, int side, float x, float z, float r, float sink, float ao)
         {
-            if (z < RiverPath.TunnelStart || z > RiverPath.TunnelLength) return -1;
+            if (z < rangeMin || z > rangeMax) return -1;
             x = ClampToWall(x, z);
             float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + r * (1f - 2f * sink);
             return AddAt(list, rng, side, new Vector3(x, y, z), r, ao);
@@ -303,7 +316,7 @@ namespace Rainbow.Screen05
 
         static int AddAt(List<Puff> list, Rng rng, int side, Vector3 c, float r, float ao)
         {
-            if (c.z < RiverPath.TunnelStart || c.z > RiverPath.TunnelLength) return -1;
+            if (c.z < rangeMin || c.z > rangeMax) return -1;
             list.Add(new Puff { centre = c, radius = r, seed = rng.Next(), ao = ao, tint = rng.Range(-1f, 1f), side = side });
             return list.Count - 1;
         }

@@ -51,7 +51,7 @@ namespace Rainbow.Screen05
                  "drifted at 0.1x (big) / 0.2x (small), so with the camera at 11 u/s every bubble crossed the frame in ~0.5-1 s, " +
                  "still inflating: the frame only ever held a few small, faint ones. Riding at ~0.8x they float beside Benny for " +
                  "seconds, slowly growing and drifting out toward the frame edges (the approved big edge bubbles).")]
-        public Vector2 sideCarry = new Vector2(0.74f, 0.88f);
+        public Vector2 sideCarry = new Vector2(0.52f, 0.8f);
         [Tooltip("Screen rows (px of the 864x1536 frame) where side bubbles are placed / born: top, bottom.")]
         public Vector2 bandPx = new Vector2(515f, 1000f);
         [Tooltip("Share of the side bubbles placed in the upper (far) band, bandPx.x..farBottomPx; the rest go to " +
@@ -233,7 +233,7 @@ namespace Rainbow.Screen05
             coreN = 0;
             for (int k = 0; k < CoreN; k++)
             {
-                float s = Mathf.Min(RiverPath.TunnelLength - 1f, focusS + 1f + k * k * 0.06f + k * 0.5f);
+                float s = Mathf.Min(RiverPath.CourseLength - 1f, focusS + 1f + k * k * 0.06f + k * 0.5f);
                 Vector3 v = worldToCam.MultiplyPoint3x4(new Vector3(CoinLineX(s), RiverPath.WaterY + 0.05f, s));
                 float depth = -v.z;
                 if (depth < 1f) continue;
@@ -325,7 +325,7 @@ namespace Rainbow.Screen05
             float d = Mathf.Clamp(dw * 0.62f, 3.6f, 20f);
             Vector3 p = cp + ray * d;
             b.r = e.z * d / (2f * 1278.2f);
-            b.vel = RiverPath.Forward(Mathf.Clamp(p.z, RiverPath.TunnelStart, RiverPath.TunnelLength))
+            b.vel = RiverPath.Forward(Mathf.Clamp(p.z, RiverPath.TunnelStart, RiverPath.CourseLength))
                   * (stageSpeed * Range(sideCarry.x, Mathf.Max(sideCarry.x, sideCarry.y))) + Vector3.up * Range(0.04f, 0.1f);
             b.pos = p - b.vel * (lead + Mathf.Min(Time.deltaTime, 0.05f));   // this frame is integrated too
             b.age = Range(1.2f, 4f);
@@ -376,19 +376,19 @@ namespace Rainbow.Screen05
                     float depthK = Mathf.Max(2.5f, Vector3.Dot(p - camPos, camFwd));
                     r = px * depthK / (2f * focalRef);
                     r = b.big ? Mathf.Clamp(r, 0.05f, 0.5f) : Mathf.Clamp(r, 0.01f, 0.15f);
-                    float sk = Mathf.Clamp(p.z, RiverPath.TunnelStart + 1f, RiverPath.TunnelLength - 1f);
+                    float sk = Mathf.Clamp(p.z, RiverPath.TunnelStart + 1f, RiverPath.CourseLength - 1f);
                     floorY = RiverSurface.HeightAt(p.x, sk)
                            + (FoamBank.InChannel(p.x, sk, -r) ? 0.15f + 0.5f * r : 0.85f * FoamTop(Vector3.Distance(p, camPos)) + 0.4f * r);
-                    if (Mathf.Abs(p.x) <= WallHalfWidth(p.y) - r - 0.25f && p.y >= floorY) { ok = true; break; }
+                    if (Mathf.Abs(p.x - RiverPath.Bend(p.z)) <= WallHalfWidth(p.y) - r - 0.25f && p.y >= floorY) { ok = true; break; }
                     if (d * 0.88f < 3.2f) break;
                     d *= 0.88f;
                 }
                 // that side of the frame is all near wall (hard left / right): try the other side instead of clamping
                 // every respawn onto the same strip of wall (they piled up in one clump)
-                if (!ok && Mathf.Abs(p.x) > WallHalfWidth(p.y) - 0.45f) { side = -side; continue; }
+                if (!ok && Mathf.Abs(p.x - RiverPath.Bend(p.z)) > WallHalfWidth(p.y) - 0.45f) { side = -side; continue; }
                 if (p.y < floorY) p.y = floorY;
                 float wall = WallHalfWidth(p.y) - r - 0.25f;
-                p.x = Mathf.Clamp(p.x, -wall, wall);
+                p.x = RiverPath.Bend(p.z) + Mathf.Clamp(p.x - RiverPath.Bend(p.z), -wall, wall);
                 if (Allowed(p, b.big ? r : r * 0.5f) > 0) break;
             }
             b.pos = p;
@@ -402,7 +402,7 @@ namespace Rainbow.Screen05
                 b.pos.y -= lift;
                 b.rise = 2.2f * lift;
             }
-            float sv = Mathf.Clamp(p.z, RiverPath.TunnelStart, RiverPath.TunnelLength);
+            float sv = Mathf.Clamp(p.z, RiverPath.TunnelStart, RiverPath.CourseLength);
             // ride the current (see sideCarry), plus the slow float upward of bubbles.ts
             b.vel = RiverPath.Forward(sv) * (stageSpeed * Range(sideCarry.x, Mathf.Max(sideCarry.x, sideCarry.y)))
                   + Vector3.up * Range(0.04f, 0.16f);
@@ -431,17 +431,17 @@ namespace Rainbow.Screen05
                 float d = Mathf.Max(nearRecycle + 1f, bennyDepth - Range(0.4f, 1.4f));
                 Vector3 p = camPos + ray * d;
                 float r = b.big ? Range(0.085f, 0.13f) : 0.018f + 0.03f * Mathf.Pow(Rand(), 1.3f);
-                float s = Mathf.Clamp(p.z, RiverPath.TunnelStart + 1f, RiverPath.TunnelLength - 1f);
+                float s = Mathf.Clamp(p.z, RiverPath.TunnelStart + 1f, RiverPath.CourseLength - 1f);
                 p.y = Mathf.Max(p.y, RiverSurface.HeightAt(p.x, s) + 0.12f + 0.5f * r);
                 float wall = WallHalfWidth(p.y) - r - 0.25f;
-                p.x = Mathf.Clamp(p.x, -wall, wall);
+                p.x = RiverPath.Bend(p.z) + Mathf.Clamp(p.x - RiverPath.Bend(p.z), -wall, wall);
                 if (Allowed(p, b.big ? r : r * 0.5f) <= 0) continue;
                 b.pos = p;
                 b.r = r;
                 b.dead = false;
                 break;
             }
-            float sv = Mathf.Clamp(b.pos.z, RiverPath.TunnelStart, RiverPath.TunnelLength);
+            float sv = Mathf.Clamp(b.pos.z, RiverPath.TunnelStart, RiverPath.CourseLength);
             Vector3 fwd = RiverPath.Forward(sv);
             b.vel = fwd * (speed * Range(wakeCarry.x, wakeCarry.y)) + Vector3.up * Range(0.12f, 0.35f) + camRight * (side * Range(0f, 0.14f));
             if (initial && !b.dead)
@@ -534,7 +534,7 @@ namespace Rainbow.Screen05
                     b.rise *= Mathf.Exp(-2.2f * dt);
                 }
                 int a = b.dead ? -1 : (b.scripted > 0f ? 1 : Allowed(b.pos, b.big ? b.r : 0f));
-                if (a < 0 || b.age > b.life || b.pos.z > RiverPath.TunnelLength - 1f)
+                if (a < 0 || b.age > b.life || b.pos.z > RiverPath.CourseLength - 1f)
                 {
                     if (!b.wake) Spawn(ref b, false);
                     else if (emitWake) SpawnWake(ref b, false, bennyDepth, bennySpeed, (i & 1) == 0 ? -1f : 1f);   // alternate sides

@@ -37,8 +37,20 @@ namespace Rainbow.Screen05
         // ---- playable test section ----------------------------------------------------------------
         /// <summary>Benny's start: the approved Screen 05 view (first crest).</summary>
         public const float StartS = UCrest;
-        /// <summary>End of the short playable test (~10 s at the default swim speed).</summary>
-        public const float FinishS = 68f;
+        /// <summary>End of the playable route. Master direction 2026-11-24: ~41 s of continuous swimming (was 68 = only ~5 s).</summary>
+        public const float FinishS = 466f;
+        /// <summary>Real river / foam / wall geometry runs to here (the part beyond TunnelLength is built at run time by Course05Extension).</summary>
+        public const float CourseLength = 800f;
+
+        // ---- the far course bends (master direction: the current and the camera curve): 0 up to s 262 and at the approved far
+        // rings (283, 333, 450), so the approved view at s = 14 is unchanged; +-1.7 m over 58.5 m beyond, straight again after 700
+        public const float BendAmp = 1.7f, BendLambda = 58.5f, BendZero = 333f;
+        /// <summary>World x of the tunnel bend at s (the drum axis, the river and the route all follow it).</summary>
+        public static float Bend(float s)
+        {
+            if (s <= 262f || s >= 760f) return 0f;
+            return BendAmp * Smooth(262f, 330f, s) * (1f - Smooth(690f, 760f, s)) * Mathf.Sin(2f * Mathf.PI * (s - BendZero) / BendLambda);
+        }
 
         /// <summary>PROVISIONAL tube radius: chord at the water = StreamExtent. Environment specialist verifies against tube.ts.</summary>
         public static readonly float TunnelRadius = Mathf.Sqrt(StreamExtent * StreamExtent + FloorDepth * FloorDepth);
@@ -98,7 +110,7 @@ namespace Rainbow.Screen05
         /// The far river shader (Environment/Shaders/RainbowFarRiver.hlsl) continues it beyond TunnelLength.
         /// </summary>
         public const float FarAmp = 1.0f;
-        public static float FarSwing(float s) => FarAmp * Smooth(StageLength, StageLength + 36f, s);
+        public static float FarSwing(float s) => FarAmp * Smooth(StageLength, StageLength + 36f, s) * (1f - Smooth(165f, 215f, s)) + Bend(s);
 
         /// <summary>Lateral (+X = right) offset of the cyan core / coin line at distance s. 0 before the stage, the far
         /// swing (FarSwing) beyond it.</summary>
