@@ -101,7 +101,7 @@ Shader "Rainbow/Water/RiverGlints"
                     float2 a = pv2.xy / max(-pv2.z, 0.1) - pv.xy / max(-pv.z, 0.1);
                     a *= 1.0 / max(length(a), 1e-6);
                     a = normalize(a + float2(1e-5, 0.0));
-                    float fs = 1.0 + (cls < 0.5 || cls > 2.5 ? _R5Glint.x : _R5Glint.y);
+                    float fs = 0.8 + (cls < 0.5 || cls > 2.5 ? _R5Glint.x : _R5Glint.y);
                     pv.xy += (a * (v.uv0.y * len) + float2(-a.y, a.x) * (v.uv0.x * wid)) * fs;
                 }
                 // same pixel, a little nearer (the swell never hides the glints)
@@ -126,10 +126,11 @@ Shader "Rainbow/Water/RiverGlints"
                 else
                 {
                     float ay = saturate(1.0 - y), ax = saturate(1.0 - x);
-                    float arm1 = saturate(1.25 - x / (0.2 * ay * ay + 0.004)) * step(y, 0.999);
-                    float arm2 = saturate(1.25 - y / (0.1 * ax * ax + 0.004)) * step(x, 0.999);
+                    float arm1 = saturate(1.2 - x / (0.14 * ay * ay + 0.004)) * step(y, 0.999);          // the long sliver along the flow
+                    float ax2 = saturate(1.0 - x / 0.6);
+                    float arm2 = 0.6 * saturate(1.1 - y / (0.05 * ax2 * ax2 + 0.003)) * step(x, 0.6);   // a short faint cross
                     float r2 = x * x * 0.4 + y * y;
-                    a = saturate(max(arm1, arm2) + exp(-r2 * 34.0) + 0.45 * exp(-r2 * 6.0) * ax * ay);
+                    a = saturate(max(arm1, arm2) + exp(-r2 * 46.0) + 0.22 * exp(-r2 * 7.0) * ax * ay);
                 }
                 a = saturate(a * i.col.a);
                 return half4(i.col.rgb * a, a);

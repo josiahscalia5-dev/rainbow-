@@ -302,7 +302,8 @@ namespace Rainbow.Screen05.EditorTools
             if (m.HasProperty("_EdgeCount")) m.SetFloat("_EdgeCount", 44f);
             if (m.HasProperty("_Emission")) m.SetFloat("_Emission", 0.92f);
             if (m.HasProperty("_EnvStrength")) m.SetFloat("_EnvStrength", 0.45f);
-            if (m.HasProperty("_SpecStrength")) m.SetFloat("_SpecStrength", 1.4f);
+            if (m.HasProperty("_SpecStrength")) m.SetFloat("_SpecStrength", 0.45f);
+            if (m.HasProperty("_SpecPower")) m.SetFloat("_SpecPower", 60f);
             EditorUtility.SetDirty(m);
             return m;
         }

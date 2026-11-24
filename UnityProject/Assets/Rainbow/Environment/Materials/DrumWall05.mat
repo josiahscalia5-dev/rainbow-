@@ -29,16 +29,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _EmissionStrength: 0.16
+    - _EmissionStrength: 0.227
     - _EnvBlur: 0.6
-    - _EnvIntensity: 0.75
-    - _Exposure: 1
+    - _EnvIntensity: 0.69379
+    - _Exposure: 1.015
     - _LightInfluence: 0.1
     - _Metallic: 0.92
     - _Roughness: 0.07
-    - _StripIntensity: 2.2
+    - _StripIntensity: 2.2625
     m_Colors:
-    - _BaseColor: {r: 0.7, g: 0.28, b: 0.92, a: 1}
+    - _BaseColor: {r: 0.65548, g: 0.27999994, b: 0.945, a: 1}
     - _EmissionColor: {r: 0.23529412, g: 0.03137255, b: 0.28235295, a: 1}
     - _FarGlowColor: {r: 1, g: 0.6117647, b: 0.3529412, a: 1}
     - _FarGlowRange: {r: 150, g: 330, b: 1.2, a: 0}

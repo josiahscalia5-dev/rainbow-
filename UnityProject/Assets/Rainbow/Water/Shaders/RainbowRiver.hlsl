@@ -168,9 +168,9 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float4 sk2 = RBW_Silk(float2(X * 1.37 + 3.1, v5 * 1.21 - time * 1.3), distV, float2(0.31, 0.17));   // second layer, other speed: ripples cross
     float2 rip = (sk.ba - 0.5) * 1.15 + (sk2.ba - 0.5) * 0.85;                                          // ripple slope (across, along)
     float sheen = RBW_VNoise(float2(X * 0.42 + 3.1, v5 * 0.045 + 0.03 * time)) - 0.5;                     // slow changes of reflection intensity
-    float T = sk.r + (sk2.r - 0.5) * 0.22 + sheen * 0.2;
+    float T = sk.r + (sk2.r - 0.5) * 0.16 + sheen * 0.16 - _GlintLook.z;
     T = saturate(T + dot(rip, float2(0.05, 0.1)));
-    float glint = max(sk.g, sk2.g * 0.55);
+    float glint = sk.g;
 
     // ---- diagonal pink wake sweeps behind Benny ----
     float cW = 0.21 + _R5Tune.x + 0.5 * back;
@@ -207,8 +207,8 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float emboss = dot(rip, float2(0.35, 1.0));
     c5 *= 1.0 + emboss * _SilkLook.w;
     float tw = 0.72 + 0.28 * sin(time * 3.3 + X * 5.0 + v5 * 1.7);
-    float gl = saturate((glint - 0.28) * 1.6) * tw * (1.0 - 0.5 * inW);
-    c5 = lerp(c5, float3(1.25, 1.28, 1.3), gl * _GlintLook.x);
+    float gl = saturate((glint - 0.34) * 1.7) * tw * (1.0 - 0.5 * inW);
+    c5 = lerp(c5, float3(1.0, 1.03, 1.05), gl * _GlintLook.x);
     c5 *= 1.0 + gl * gl * _GlintLook.y;
     float pk5 = smoothstep(0.95, 1.35, abs(qe)) * (1.0 - smoothstep(2.1, 2.6, abs(qe)));   // pink weight (tints the reflections)
     float fr = 1.0 - saturate(dot(N5, V));

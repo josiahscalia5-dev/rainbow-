@@ -30,7 +30,7 @@ mat:Assets/Rainbow/Water/Materials/RainbowFoam05.mat:_Brightness:f|0.86955
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_RiverGrade:v0|1.12754
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_RiverGrade:v1|0.72131
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_RiverGrade:v2|0.95675
-mat:Assets/Rainbow/Water/Materials/RainbowRiverGlints05.mat:_Streak:f|0.866
+mat:Assets/Rainbow/Water/Materials/RainbowRiverGlints05.mat:_Streak:f|0.3
 mat:Assets/Rainbow/Water/Resources/RainbowSplash05.mat:_Intensity:f|0.91325
 mat:Assets/Rainbow/Water/Resources/RainbowSplash05.mat:_RopeAlpha:f|0.85438
 mat:Assets/Rainbow/Water/Resources/RainbowWakeFoam05.mat:_Brightness:f|0.90927

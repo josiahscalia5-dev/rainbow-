@@ -55,7 +55,7 @@ namespace Rainbow.Screen05
         static readonly int[] Copies = { 3, 2, 2 };
 
         static readonly Vector3 Aqua = new Vector3(0.55f, 1.05f, 1.1f), Pale = new Vector3(1.05f, 0.8f, 1.08f),
-            Violet = new Vector3(0.36f, 0.3f, 0.85f), White = new Vector3(1.5f, 1.55f, 1.6f);
+            Violet = new Vector3(0.36f, 0.3f, 0.85f), White = new Vector3(1.2f, 1.24f, 1.28f);
 
         public static Mesh Build()
         {
