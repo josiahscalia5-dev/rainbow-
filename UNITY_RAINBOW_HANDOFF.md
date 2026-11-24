@@ -1,10 +1,50 @@
 # Rainbow Unity — handoff (latest verified state)
 
-Last verified: **2026-11-24 01:25 UTC** (20:25 New York time), Claude session on the user's laptop (after the account switch at ~01:03 UTC).
+Last verified: **2026-11-24 01:45 UTC** (20:45 New York time), Claude session on the user's laptop. Unity was closed for a laptop restart.
 Read this first in any new Claude account or session. **This is an existing project — never start over.**
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
+**UPDATE 2026-11-24 01:45 UTC (READY FOR A LAPTOP RESTART; nothing running; Unity closed):**
+**User request, 20:29 local:**
+- They approved the faster Play Mode ("Reload Scene only"), subject to safety testing. Revert it if gameplay breaks or test results become unreliable.
+- Fix the low disk FIRST: verify everything is saved and nothing is running, then recommend a safe restart. Never delete Unity project files, assets, packages or Claude settings.
+- Restore the official Unity plugin (33 skills) on this account.
+- Keep the Unity CLI. Never connect `unity mcp`, and never rerun its benchmark.
+- Continue the faster methods where they help: approved-image target sheet, automatic geometry fitting, live Editor tuning, Cinemachine framing, Splines and reusable 3D systems.
+- Then resume round 3 stage 2 from the saved lane edits without redoing finished work. No Screen 06.
+
+**Done 20:29-20:45 local:**
+- Verified again: GitHub = laptop, 0 uncommitted, autosave OK, and no other Claude session, cycle or lock holder.
+- Added the 4 Play Mode safety resets. They change nothing while the domain still reloads:
+  - `[InitializeOnEnterPlayMode]` in Screen05Capture (Status/LastOutput).
+  - `[InitializeOnEnterPlayMode]` in Screen05GameplayRecorder (a stale Active gets Cleanup()).
+  - `[InitializeOnEnterPlayMode]` in Screen05SeriesRun (a stale Active gets unsubscribed).
+  - `[RuntimeInitializeOnLoadMethod(SubsystemRegistration)]` in Screen05CaptureFrameHook (LateFrame = null).
+- Recompile completed with 0 C# errors. This also compiled both lanes' saved C# edits; their shader edits have not been seen on screen yet.
+- Unity was closed gracefully with `unity close` at 20:40, so the restart is clean.
+- The Play Mode setting is UNCHANGED (still reload domain + scene).
+
+**Disk:** 2.7 GB free. The page file is 12.3 GB and shrinks on restart. `~\Downloads` holds 16.8 GB in 1,080 items (mostly Meshy/.glb models, zips and `Rainbow_Screen06_Candidate`). Those are the user's files: never delete them; only list exact duplicates if the user asks.
+
+**Unity plugin:** still NOT enabled. The install card was shown; the user must click Install, and the skills appear in the next new session.
+
+**AFTER THE RESTART (next session, in this order):**
+1. Read the status hook. Check free disk (expect ~9-11 GB), GitHub sync and autosave. Check that the 33 `unity:*` skills are loaded; if not, ask the user to install via + → Add plugins → "Unity".
+2. Open Unity: `unity open C:\RainbowUnity\UnityProject --until-ready`.
+3. Play Mode A/B safety test:
+   - Cycle A: `-Tag r3_resume_A -Areas all` with reload ON. This is also the first test of both lanes' saved edits and the honest stage-2 starting score. Send the user its side-by-side + scores.
+   - Switch the setting via script eval: `EditorSettings.enterPlayModeOptionsEnabled = true; EditorSettings.enterPlayModeOptions = EnterPlayModeOptions.DisableDomainReload; AssetDatabase.SaveAssets();`
+   - Cycle B: same tag style with reload OFF (full cycle; compare the step timings).
+   - Cycle C: `-NoRebuild`, a second Play session in the same domain (stale-state check).
+   - Then a steer/jump/coins eval at hold, and a short (3-5 s) gameplay recording twice in a row (checks the LateFrame reset).
+   - KEEP the setting only if the A/B/C scores match within 0.2, the console stays clean, gameplay works and the recordings have the right frame counts. Otherwise set `enterPlayModeOptions = None` again and report.
+4. Build the target sheet + fitter, reusing `staging/round3-recovery`, `AgentScripts/screen05_frame_probe.cs` and the frame result's measured numbers. Output: one JSON of approved targets, plus one projection tool that predicts screen positions from the code-built geometry. Every lane uses it before rendering.
+5. Relaunch round 3:
+   - `skip: ["frame"]`; notes per lane from their transcript tails + cycle A.
+   - At most 3 cycles per lane, numbers first, live tuning at hold, `reviewers: 0`.
+   - The user approved cheaper models for mechanical steps (e.g. integration/recording on Sonnet); keep Opus for the visual lanes.
+
 **UPDATE 2026-11-24 01:25 UTC (new Claude account; transfer verified; NOTHING IS RUNNING):** the previous account hit its 5-hour
 limit at 01:02 UTC (20:02 local), and the account switch ended its session. So round-3 run `wf_9320b9e1-c74` is dead and must be
 relaunched as described below. Verified read-only: Git `unity/screen05-dev` @ `3207178` = GitHub, 0 uncommitted; autosave task
@@ -155,8 +195,8 @@ Original plan below (steps 1–3 are done):
 <!-- NEXT-TASK:END -->
 
 ## ✅ CURRENT STATE (2026-11-23 21:55 UTC) — verified by the new Claude account
-**Newest (2026-11-24 01:25 UTC):** see the first NEXT-TASK entry. Transfer verified; round 3's Shape stage was interrupted with
-untested edits; nothing is running.
+**Newest (2026-11-24 01:45 UTC):** see the first two NEXT-TASK entries. Transfer verified. Round 3's Shape stage was
+interrupted; its edits compile but are untested. Nothing is running, and Unity was closed for a laptop restart.
 **Newer (23:30 UTC, third account):** round 2 is COMPLETE (water, lighting/scenery, splash, foam, bubbles); round 3
 (composition-first) is RUNNING as run `wf_9320b9e1-c74` (see the first NEXT-TASK entry). Newest honest still:
 `evidence/screen05/ROUND3_BASELINE.png` (visual 52.4 / layout 32.7). The bullets below are older where they disagree.
