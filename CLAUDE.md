@@ -84,6 +84,7 @@ The user switches Claude accounts whenever credits run out. Any account must con
 | State + next task | `UNITY_RAINBOW_HANDOFF.md` |
 | Approved reference | `references/05_flow_into_the_current.png` |
 | USER'S CORRECTION GUIDES (binding visual direction, 2026-11-24): rings, paddles, walls, frame, river, foam, bubbles, Benny, HUD | `references/correction-guides-2026-11-24/` (README.md + 3 images) |
+| USER'S REFINEMENT GUIDES 2 + MASTER DIRECTION (BINDING, 2026-11-24 13:28 local: water, natural swimming, camera, wake, foam, 30-60 s recording) | `references/correction-guides-2026-11-24b/` (README.md + 3 full-resolution images; read FIRST) |
 | Unity project (URP 17.3, Input System, Cinemachine, Splines, glTFast, Pipeline bridge) | `UnityProject/` |
 | Scene builder | `UnityProject/Assets/Rainbow/Editor/Screen05SceneBuilder.cs` (menu Rainbow -> Build Screen 05 Scene) |
 | Shared course API + contract | `UnityProject/Assets/Rainbow/Shared/RiverPath.cs`, `staging/shared/CONTRACT.md` |
