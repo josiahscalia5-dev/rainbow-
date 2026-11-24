@@ -58,12 +58,12 @@ Material:
     - _W4Edge: 0.6
     - _WaveAmp: 0.1
     m_Colors:
-    - _GlintLook: {r: 0.48046, g: 0.1, b: 0.0728, a: 0.03607}
-    - _LatherLook: {r: 1.5, g: 0.58369, b: 0.23869, a: 3.59493}
+    - _GlintLook: {r: 0.5405, g: 0.1, b: 0.1, a: 0.04445}
+    - _LatherLook: {r: 1.81035, g: 0.56688, b: 0.24869, a: 2.94318}
     - _RiverGrade: {r: 1.12754, g: 0.72131, b: 0.95675, a: 0}
     - _RiverLightDir: {r: 0.26387972, g: 0.879599, b: -0.39581954, a: 0}
-    - _SheenLook: {r: 1.15, g: 0.68, b: 0.66506, a: 0.53911}
-    - _SilkLook: {r: 0.06, g: 0.12, b: 0.35, a: 0.1875}
+    - _SheenLook: {r: 1.15, g: 0.66, b: 0.66131, a: 0.77411}
+    - _SilkLook: {r: 0.06, g: 0.12, b: 0.35, a: 0.175}
     - _W4Band: {r: 0.95, g: 0.65, b: 0.5, a: 0.35}
     - _W4Look: {r: 0.9, g: 0.5, b: 0.5, a: 0.5}
   m_BuildTextureStacks: []

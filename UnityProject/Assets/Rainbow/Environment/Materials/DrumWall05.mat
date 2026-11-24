@@ -29,10 +29,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _EmissionStrength: 0.16183
+    - _EmissionStrength: 0.23233
     - _EnvBlur: 0.6
     - _EnvIntensity: 0.69379
-    - _Exposure: 1.015
+    - _Exposure: 1.00506
     - _LightInfluence: 0.1
     - _Metallic: 0.92
     - _Roughness: 0.07

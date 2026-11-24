@@ -223,6 +223,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float2 wuv = float2((dlW + 0.012 * sin(bt * 2.9 + backS * 6.0) + 2.2) / 4.4, (backS + (bow - back + 0.8 * dlW * dlW) * 1.2 + 0.7) / 4.5);
     float4 wm = SAMPLE_TEXTURE2D_LOD(_WakeSheen, sampler_WakeSheen, wuv, 0);
     float wakeFoam = wm.a * bOn * wk * smoothstep(-0.7, -0.45, backS) * (1.0 - smoothstep(3.2, 3.7, backS)) * (1.0 - smoothstep(1.8, 2.15, abs(dlW)));
+    wakeFoam *= 1.0 - smoothstep(0.0, 0.3, abs(dlW) - (1.0 + 0.6 * max(backS, 0.0)));
     Yw = lerp(Yw, clamp(wm.r, 0.06, 0.6) + (row - 0.333) * 0.34 + arcL * 0.1, 0.8 * saturate(wm.b * 1.3 - 0.2) * max(mid, smoothstep(0.1, 0.6, gk)));
     Y = lerp(Y, Yw, wakeA);
     float qw = lerp(0.1, 1.5, smoothstep(0.06, 0.85, gk));

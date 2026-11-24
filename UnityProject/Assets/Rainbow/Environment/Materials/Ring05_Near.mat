@@ -32,7 +32,7 @@ Material:
     m_Floats:
     - _EnvBlur: 1
     - _EnvIntensity: 0.66977
-    - _Exposure: 0.95216
+    - _Exposure: 0.95479
     - _Gold: 0
     - _GoldMode: 0
     - _LightInfluence: 0.05

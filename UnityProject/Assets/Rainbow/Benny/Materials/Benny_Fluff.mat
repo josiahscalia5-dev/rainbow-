@@ -41,7 +41,7 @@ Material:
     - _Wrap: 0.58000004
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _FurTint: {r: 0.90191, g: 1.05587, b: 0.73453, a: 1}
+    - _FurTint: {r: 0.87846, g: 1.02062, b: 0.73453, a: 1}
     - _FuzzColor: {r: 1, g: 0.62, b: 0.86, a: 1}
     - _UnderColor: {r: 0.62, g: 0.36, b: 0.78, a: 1}
   m_BuildTextureStacks: []
