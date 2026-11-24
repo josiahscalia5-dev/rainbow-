@@ -190,6 +190,25 @@ namespace Rainbow.Screen05
             return Mathf.Sqrt(Mathf.Max(0f, Radius * Radius - h * h));
         }
 
+        /// <summary>
+        /// Geometry round 2026-11-24: the RIGHT lower wall beside the near bend comes inward. Approved: the purple slotted
+        /// wall stands right behind the narrow right foam rope (wall at x 800-864, y 750-880; rope from (840, 640) to
+        /// (700, 850)); the circular drum put that wall foot ~2 m further out (x 5.97 m = off-screen), so a wide foam heap
+        /// filled the corner. Depth (m) the right wall foot moves toward the axis: full at / below the water, fading out 2.2 m
+        /// above it (the ring crowns, paddles and upper framing are untouched), only for s 16-29. Kept at 1.3 m so Benny's
+        /// widest steer (|x| 4.2 m, body radius 0.8 m) does not enter the wall. 0 = off.
+        /// </summary>
+        public const float RightFootDent = 1.3f;
+
+        /// <summary>Horizontal shift (m, toward the axis) of the wall at s, wall side (-1 / +1) and world height y.</summary>
+        public static float FootDent(float s, int side, float y)
+        {
+            if (side <= 0 || RightFootDent <= 0f) return 0f;
+            float w = Smooth(15.5f, 19.5f, s) * (1f - Smooth(24f, 29f, s));
+            if (w <= 0f) return 0f;
+            return RightFootDent * w * (1f - Smooth(0f, 2.2f, y - RiverPath.WaterY));
+        }
+
         /// <summary>Ring slots every bay, anchored at sF05 = eye + 54 (environment.ts ringSlots05).</summary>
         public static List<float> RingSlots()
         {

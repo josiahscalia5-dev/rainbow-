@@ -86,7 +86,23 @@ namespace Rainbow.Screen05
                     float sx = Mathf.Sin(phi), cz = Mathf.Cos(phi);
                     // implicit wall x^2 + (y - c(s))^2 = R^2: outward gradient (x, y - c, -(y - c) c'), inward = minus
                     Vector3 outward = new Vector3(R * sx, R * cz, -(R * cz) * slope);
-                    md.Add(new Vector3(DrumLayout05.AxisX + R * sx, cy + R * cz, si), -outward.normalized, new Vector2(R * phi, si));
+                    Vector3 inward = -outward.normalized;
+                    Vector3 p = WallPoint(phi, si);
+                    // geometry round 2026-11-24: the dented right wall foot (DrumLayout05.FootDent) gets the normal of the
+                    // deformed surface (central differences; identical to the analytic one outside the dent)
+                    if (sx > 0f && si > 14.5f && si < 30.5f && p.y < 2.8f)
+                    {
+                        const float ep = 0.004f, es = 0.05f;
+                        Vector3 tP = WallPoint(phi + ep, si) - WallPoint(phi - ep, si);
+                        Vector3 tS = WallPoint(phi, si + es) - WallPoint(phi, si - es);
+                        Vector3 n = Vector3.Cross(tP, tS);
+                        if (n.sqrMagnitude > 1e-12f)
+                        {
+                            n.Normalize();
+                            inward = Vector3.Dot(n, inward) < 0f ? -n : n;
+                        }
+                    }
+                    md.Add(p, inward, new Vector2(R * phi, si));
                 }
             }
             for (int i = 0; i < rows.Count - 1; i++)

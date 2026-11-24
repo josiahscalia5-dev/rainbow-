@@ -118,7 +118,8 @@ string Stats(bool rows)
         float dia = 2f * rpx;
         if (dia >= 48f) dBig++; else if (dia >= 20f) dMed++; else dSmall++;
         if (sx < 432f) left++; else right++;
-        list.Add(System.Tuple.Create(sy, string.Format("    {0} ({1,4:0},{2,5:0}) d {3,3:0} a {4:0.00} depth {5,4:0.0}", small ? "s" : (i / 4 >= (int)origF[tBF.GetField("bigCount")] + (int)origF[tBF.GetField("smallCount")] ? "W" : "B"), sx, sy, dia, a, depth)));
+        string kind = (i / 4 >= bf.bigCount + bf.smallCount) ? (small ? "w" : "W") : (small ? "s" : "B");
+        list.Add(System.Tuple.Create(sy, string.Format("    {0} ({1,4:0},{2,5:0}) d {3,3:0} a {4:0.00} depth {5,4:0.0}", kind, sx, sy, dia, a, depth)));
     }
     sb.Append("visible " + vis + " (d>=48: " + dBig + ", 20-48: " + dMed + ", <20: " + dSmall + "; left " + left + ", right " + right + ")");
     if (rows)
