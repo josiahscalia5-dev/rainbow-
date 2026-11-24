@@ -143,8 +143,10 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float stB = smoothstep(0.62, 0.9, n2) * smoothstep(0.3, 0.65, n1) * a2;           // fine glossy streaks
 
     // ---- diagonal pink wake sweeps behind Benny ----
-    float cW = 0.1 + 0.5 * back;
-    float wW = (0.14 + 0.05 * back) * smoothstep(0.75, 1.25, back) * wk * (1.0 - smoothstep(2.1, 2.6, back));
+    // (river5) approved: the sweeps start ~0.11 m further out and splay a little wider (rowclass y 1240-1360: Unity ~25 px
+    // inside on each side, ~15 % narrower)
+    float cW = 0.21 + 0.5 * back;
+    float wW = (0.16 + 0.06 * back) * smoothstep(0.8, 1.3, back) * wk * (1.0 - smoothstep(2.15, 2.7, back));
     float tW5 = (cW - abs(dlW)) / max(wW, 1e-3);
     float sweep = (wW > 0.001 && abs(tW5) < abs(tb)) ? 1.0 : 0.0;
     tb = lerp(tb, tW5, sweep);
@@ -170,10 +172,14 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float glowA = ca > 0.0 ? exp(-ca * 4.2) : exp(ca * 12.0);
     float lineA = exp(-ca * ca * 170.0) * (0.35 + 0.65 * segN);
     float ampA = smoothstep(1.2, 1.55, bk);
-    float3 nb = lerp(lerp(RBW_CDEEP2, RBW_CMID, 0.55), RBW_CBRIGHT, saturate(glowA * 0.9 * ampA + lane * 0.25));
+    // (river5) the approved near water is open luminous azure-cyan (~#05B5F7 between the arcs, measured y 1250-1440), not deep blue
+    float3 nb = lerp(lerp(RBW_CMID, RBW_CBRIGHT, 0.35), RBW_CBRIGHT, saturate(glowA * 0.9 * ampA + lane * 0.25));
     nb = lerp(nb, RBW_CAQUA, saturate(glowA * glowA * 0.75 * ampA));
     nb = lerp(nb, RBW_CAQUAW, saturate(lineA * ampA * 0.9));
     cy = lerp(cy, nb, inW);
+    // (river5) the open water beside the sweeps near Benny is as bright (approved ~#2EA9F2 at y 1340-1440 vs Unity #1D93E5)
+    float nearL = bOn * smoothstep(0.6, 1.4, back) * (1.0 - smoothstep(4.0, 6.0, back)) * (1.0 - inW);
+    cy = lerp(cy, max(cy, lerp(RBW_CMID, RBW_CBRIGHT, 0.3)), 0.6 * nearL);
 
     // between a band and its bank: cyan water a touch bluer than the core
     float3 ow = lerp(cy, float3(0.15, 0.17, 0.8), _W4Band.y);

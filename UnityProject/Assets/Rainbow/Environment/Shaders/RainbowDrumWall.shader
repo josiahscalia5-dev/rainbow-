@@ -36,6 +36,7 @@ Shader "Rainbow/Screen05/DrumWall"
         _SlotShape ("Slot shape (half width / pitch at the waterline, lip px, brushed strength, brushed lines / m)", Vector) = (0, 1.5, 0, 2)
         _WallSpokes ("Round 4 spokes (count round the drum, half width rad, intensity, far kept)", Vector) = (20, 0.025, 0, 0.5)
         _Wall4b ("Round 4b wall (line strength, pink amount, slot strength, hot core)", Vector) = (1, 0.85, 1, 1.0)
+        _Wall5 ("Round 5 wall (groove depth, lathe streaks, near line width scale, line kept on slot rows)", Vector) = (0, 0, 1, 0.55)
     }
 
     SubShader
@@ -77,6 +78,7 @@ Shader "Rainbow/Screen05/DrumWall"
             float4 _SlotShape;
             float4 _WallSpokes;
             float4 _Wall4b;
+            float4 _Wall5;
         CBUFFER_END
 
         // shared animation clock (Rainbow.Screen05.Screen05Clock; game time, reset by the test hold)
@@ -147,7 +149,7 @@ Shader "Rainbow/Screen05/DrumWall"
                 float3 N = normalize(input.normalWS);
                 float3 V = GetWorldSpaceNormalizeViewDir(input.positionWS);
                 float dist = length(_WorldSpaceCameraPos.xyz - input.positionWS);
-                float3 color = RainbowWall4b(input.positionWS, input.uv, input.uv1, dist, _Wall4b);
+                float3 color = RainbowWall5(input.positionWS, input.uv, input.uv1, dist, _Wall4b, _Wall5);
                 // below the water line: glossy magenta flow sheet lining the tube floor (round 1 look, kept)
                 float sheet = (1.0 - smoothstep(_FloorSheet.x - _FloorSheet.y, _FloorSheet.x, input.positionWS.y)) * _FloorSheet.w;
                 float flowZ = input.positionWS.z - _RainbowTime * _FloorSheet.z;

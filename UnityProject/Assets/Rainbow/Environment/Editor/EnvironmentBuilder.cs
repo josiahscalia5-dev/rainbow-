@@ -200,6 +200,7 @@ namespace Rainbow.Screen05.EditorTools
             SetFloat(m, "_Exposure", 1f);
             SetFloat(m, "_LightInfluence", 0.1f);
             SetVec(m, "_Wall4b", Wall4b);
+            SetVec(m, "_Wall5", Wall5);
             // light round 2026-11-23: strips / reflection fade with view distance (strips 8 %, panorama 50 % beyond 80 m)
             // so the deep walls stay violet instead of pink-white radial spokes converging on the throat
             SetVec(m, "_WallFar", new Vector4(25f, 80f, 0.08f, 0.5f));
@@ -238,6 +239,9 @@ namespace Rainbow.Screen05.EditorTools
         static readonly Vector4 WallSpokes = new Vector4(20f, 0.025f, 1.0f, 0.35f);
         /// <summary>Round 4b wall: (light line strength, pink amount of the near bay, slot strength, hot core bloom).</summary>
         static readonly Vector4 Wall4b = new Vector4(1f, 0.85f, 1f, 0.9f);
+        /// <summary>Round 5 wall (user guide #3): (recessed groove depth on every slot row, lit lathe streaks on the groove
+        /// edges, near-bay light-line width scale, light-line strength kept on a slot row). RainbowPolish05.hlsl RainbowWall5.</summary>
+        static readonly Vector4 Wall5 = new Vector4(0.35f, 0.8f, 0.75f, 1.0f);
         /// <summary>Wall exposure (coordinator round 3: 0.85).</summary>
         const float WallExposure = 0.75f;
         /// <summary>Near frame corners: (palette 1 = copper bands, glare, vignette compensation, -).</summary>

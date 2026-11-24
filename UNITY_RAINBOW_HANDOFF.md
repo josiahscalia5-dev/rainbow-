@@ -36,9 +36,11 @@ Updated 2026-11-24 08:55 local (session 018893e6, new account; the previous acco
   |---|---|---|---|---|
   | validated/r4b-final-80.5 | a3f7d54 | 80.5 / 66.6 | Round 4b: data-driven S-river, glints, foam ropes, copper tunnel, half-moon paddles, coins | evidence/screen05/round4/20261124_084215_ROUND4_FINAL* |
   | validated/r4-baseline-58.0 | aa2a2e1 | 58.0 / 36.8 | coordinator look tuning: walls, paddle tilt -15, azure water grade, darker HUD | evidence/screen05/round3/20261124_051325_G_BASELINE* |
-- BLENDER: approved by the user (after Round 4, storage checks); NOT installed yet. C: 6.7 GB free at 08:34 (setup needs >= 6.5 GB, leaves ~5.3 GB). The biggest
-  measured gaps are water / splash / wall-pattern SHADER work where Blender does not help, so it is installed when a mesh job needs it (paddle / ring shape),
-  preferably after the user OKs freeing old regenerable work stills (git-ignored `UnityProject/Recordings/Screen05/work`, ~1.5 GB; ask before deleting).
+- BLENDER: INSTALLED 2026-11-24 09:13 local by `tools/blender/setup-blender.ps1` (user-approved after Round 4; disk check passed at 6.66 GB): portable Blender 5.3.0
+  (official SHA-256 3ac567a6...eabfa8 verified, 0.92 GB) at `C:\Users\josia\Blender\blender-5.3.0-windows-x64\blender.exe`; C: 5.71 GB free afterwards. Use
+  `tools/blender/run-blender.ps1` (headless, one job at a time, NEVER while a round's lanes run Unity cycles). First job after Round 5: whichever of paddles / rings is
+  still furthest from the approved image (FBX -> `Assets/Rainbow/Environment/Models`, kept only if the cycle tool shows it closer). Disk is getting tight: old git-ignored
+  work stills in `UnityProject/Recordings/Screen05/work` are regenerable (ask the user before deleting anything).
 - UNITY NOTES: the previous session's end killed the Editor (no clean exit); on reopen Unity showed "Recovering Scene Backups" and saved
   `Assets/_Recovery/0 (3).unity` (0..3 = harmless recovered copies; ask the user before deleting). Windows Security blocked a Burst DLL in Library (the game does not need Burst).
 - WAITING ON THE USER: (a) permission rules v2 in `tools/claude-permissions/` - the user applies them; (b) the GitHub repo is PUBLIC although the user called it private.

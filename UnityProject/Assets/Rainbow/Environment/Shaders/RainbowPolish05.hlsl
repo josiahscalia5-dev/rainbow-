@@ -196,7 +196,16 @@ float3 RainbowFrameLip4b(float u, float v)
 // ------------------------------------------------------------------ reflective purple drum wall
 // Uv0 = (arc metres from 12 o'clock, s), Uv1 = (light-line coordinate: integer on every line, slot row coordinate, local line
 // pitch rad, line strength). World-fixed. _Wall4b = (line strength, pink amount, slot strength, hot core).
+// Round 5 (2026-11-24, user guide #3): look5 = (recessed groove depth along every slot row, lit lathe-line strength on the
+// groove edges, near-bay light-line width scale, light-line strength kept on a slot row). Approved: DARK elongated recessed
+// slots in neat rows, each row's groove edged by a narrow bright pink-white streak running round the drum; the lengthwise
+// light lines continuous and narrow (no rows of short white dashes); violet metal between the lines.
+float3 RainbowWall5(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 look, float4 look5);
 float3 RainbowWall4b(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 look)
+{
+    return RainbowWall5(posWS, Uv0, Uv1, dist, look, float4(0.0, 0.0, 1.0, 0.55));
+}
+float3 RainbowWall5(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 look, float4 look5)
 {
     float s = Uv0.y;
     float phi = Uv0.x / 6.8;
@@ -222,14 +231,29 @@ float3 RainbowWall4b(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 lo
     st *= lerp(1.0, 0.75, smoothstep(75.0, 120.0, dist));
     float halo = exp(-d / 4.2) * st;
     float halo2 = exp(-d / 1.7) * st;
-    float w0 = lerp(0.72, 1.15, bayNA), w = w0 + fwp * 0.6;
-    float core = exp(-d * d / (w * w)) * st * lerp(1.0, 0.55, pan * pan) * lerp(1.0, w0 / w, 0.7);
+    float w0 = lerp(0.72, 1.15 * look5.z, bayNA), w = w0 + fwp * 0.6;
+    float core = exp(-d * d / (w * w)) * st * lerp(1.0, look5.w, pan * pan) * lerp(1.0, w0 / w, 0.7);
     c = lerp(c, float3(244, 46, 212), saturate(halo * 1.15));
     c = lerp(c, float3(253, 108, 234), saturate(halo2 * 0.85));
     c = lerp(c, float3(255, 226, 252), saturate(core * 1.15));
     // thin seam along every slot row
     float fwy = fwidth(row);
-    c *= 1.0 - 0.28 * exp(-pow(fy / (0.06 + fwy * 0.6), 2.0)) * (1.0 - smoothstep(0.25, 0.6, fwy));
+    float rowFade = 1.0 - smoothstep(0.25, 0.6, fwy);
+    c *= 1.0 - 0.28 * exp(-pow(fy / (0.06 + fwy * 0.6), 2.0)) * rowFade;
+    // round 5: recessed groove along the slot row + narrow lit lathe streaks on its edges (brighter near the light lines)
+    if (look5.x + look5.y > 0.0)
+    {
+        float grooveK = exp(-pow(fy / 0.21, 2.0)) * rowFade;
+        c *= 1.0 - look5.x * grooveK;
+        float rh = frac(sin(floor(row) * 78.233) * 43758.5453);
+        float streak = 0.55 + 0.45 * sin(phi * 9.0 + floor(row) * 2.1 + rh * 6.0);
+        streak *= 0.6 + 0.4 * saturate(halo * 1.5);
+        float lw5 = 0.035 + fwy * 0.5;
+        float eTop = exp(-pow((fy - 0.27) / lw5, 2.0));
+        float eBot = exp(-pow((fy + 0.27) / lw5, 2.0)) * 0.45;
+        float e = saturate((eTop + eBot) * streak * look5.y * rowFade * lerp(0.8, 1.2, rh));
+        c = lerp(c, lerp(float3(242, 96, 228), float3(255, 214, 250), saturate(halo2 + core)), e);
+    }
     // slots: rounded dashes along the arc, 44 round, third-brick offset in the near bay
     float gx0 = phi * 44.0 / RB_TWO_PI;
     float gx = gx0 + floor(row) * 0.33 * bayNA;

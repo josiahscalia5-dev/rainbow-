@@ -44,7 +44,7 @@ namespace Rainbow.Screen05
         [Tooltip("Splash strands per side (riderSplash.ts high = 44 thin ropes; the approved shows fewer, splashier strands)")]
         [Range(0, 64)] public int ropesPerSide = 22;
         [Tooltip("Crown droplet jets per side (water4 2026-11-24: 40 -> 24, the dense crown read as solid white wings on his flanks)")]
-        [Range(0, 64)] public int jetsPerSide = 24;
+        [Range(0, 64)] public int jetsPerSide = 14;   // river5: 24 -> 14, the flanks read as heavy white wings
         [Tooltip("Bubbly suds pads per side on his flanks (riderSplash.ts high = 16 froth pads; fewer, bigger ones read as soap bubbles; water4: 11 -> 8)")]
         [Range(0, 32)] public int frothPerSide = 0;
 

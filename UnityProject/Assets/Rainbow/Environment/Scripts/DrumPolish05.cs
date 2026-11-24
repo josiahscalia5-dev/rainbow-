@@ -40,7 +40,7 @@ namespace Rainbow.Screen05
             {
                 new WallBay(DrumLayout05.TunnelStart, 5.6f, Mathf.Max(3f, Mathf.Round((5.6f - DrumLayout05.TunnelStart) / 1.7f)), NA0, NA0, NAk),
                 new WallBay(5.6f, 25.6f, 18f, NA0, NA0, NAk),
-                new WallBay(25.6f, 46f, 6f, NA0, NA1, NAk),
+                new WallBay(25.6f, 46f, 8f, NA0, NA1, NAk),     // round 5: 8 rows (approved ~25 px apart near the left wall; 6 gave ~32)
                 new WallBay(46f, 82f, 6f, AB0, AB1, ABk),
                 new WallBay(82f, 105.8f, 8f, BC0, BC1, BCk),
                 new WallBay(105.8f, 159.4f, 9f, CD0, CD1, CDk),
