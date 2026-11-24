@@ -90,7 +90,7 @@ namespace Rainbow.Screen05.EditorTools
 
         public const float GlintStreak = 1f, GlintFlare = 1f;
         /// <summary>River lanes (RainbowRiver.hlsl): lane gain, core gain, broad streaks, fine streaks.</summary>
-        public static readonly Vector4 RiverLook = new Vector4(0.9f, 0.3f, 0.6f, 0.6f);
+        public static readonly Vector4 RiverLook = new Vector4(0.9f, 0.5f, 0.5f, 0.5f);
 
         static int BuildRiver(Transform root, Texture2D pano)
         {
@@ -109,7 +109,7 @@ namespace Rainbow.Screen05.EditorTools
             // water only; RainbowRiver.shader). (0.55, 0.70, 0.93) beat (0.70, 0.80, 0.96) and (0.45, 0.62, 0.92):
             // water_near 48.0 -> 56.7, bubbles 48.4 / 39.3 -> 59.0 / 48.2, splash 60.4 -> 67.9.
             mat.SetVector("_RiverGrade", RiverGrade);
-            mat.SetVector("_W4Look", RiverLook); mat.SetFloat("_W4Edge", 0.6f); mat.SetVector("_W4Band", new Vector4(0.87f, 0.5f, 0.8f, 0f));
+            mat.SetVector("_W4Look", RiverLook); mat.SetFloat("_W4Edge", 0.6f); mat.SetVector("_W4Band", new Vector4(0.9f, 0.65f, 0.5f, 0.6f));
             EditorUtility.SetDirty(mat);
 
             var go = new GameObject("River05");
@@ -228,7 +228,7 @@ namespace Rainbow.Screen05.EditorTools
 
         /// <summary>(water4 2026-11-24) splash strand look on Rainbow/Water/Splash: width scale, opacity, extra fan angle (rad),
         /// roots moved round toward his back (rad). Live variants t1: (0.75, 0.8, 0.2) splash 69.7 vs the old (1, 1, 0) 68.8.</summary>
-        public const float SplashRopeWidth = 1.5f, SplashRopeAlpha = 1.1f, SplashSpread = 0.15f, SplashRootBack = 0.3f,
+        public const float SplashRopeWidth = 1.5f, SplashRopeAlpha = 0.85f, SplashSpread = 0.2f, SplashRootBack = 0.3f,
                            SplashLen = 1.5f;   // (t3 variants: 1.55 splash 72.0 > 1.35 71.6 > 1.15 71.2)
 
         static void PrepareSprayMaterial()

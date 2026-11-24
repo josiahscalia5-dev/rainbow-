@@ -251,7 +251,7 @@ namespace Rainbow.Screen05
             for (int k = 0; k < n; k++)
             {
                 float a = rng.Next() * 2f * Mathf.PI, q = Mathf.Sqrt(rng.Next());
-                float x = cx + Mathf.Cos(a) * q * rx, z = cs + Mathf.Sin(a) * q * rz;
+                float x = cx + Mathf.Cos(a) * q * q * rx, z = cs + Mathf.Sin(a) * q * rz;
                 float r = Mathf.Lerp(0.05f, 0.17f, Mathf.Pow(rng.Next(), 1.2f)) * (1.15f - 0.5f * q);
                 float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + 0.2f * (1f - q * q) + r * rng.Range(-0.4f, 0.1f);
                 AddAt(list, rng, side, new Vector3(x, y, z), r, Mathf.Lerp(0.97f, 0.82f, 1f - q));
@@ -302,24 +302,24 @@ namespace Rainbow.Screen05
             {
                 for (float b = 0.8f; b < 2.25f; b += 0.07f)                                    // rope
                 {
-                    float grow = SS(0.7f, 1.2f, b) + 0.35f * SS(1.5f, 2.1f, b);
-                    for (int k = 0; k < 4; k++)
+                    float grow = SS(0.7f, 1.2f, b);
+                    for (int k = 0; k < 6; k++)
                     {
-                        float r = rng.Range(0.03f, 0.085f) * (0.55f + 0.45f * grow);
+                        float r = (k < 2 ? rng.Range(0.055f, 0.1f) : rng.Range(0.014f, 0.04f)) * (0.55f + 0.45f * grow);
                         float dl = 0.58f + 0.45f * b + rng.Range(-0.09f, 0.11f) * (0.6f + 0.6f * grow);
-                        AddWake(list, rng, side, dl, b + rng.Range(-0.05f, 0.05f), rng.Range(0.1f, 0.9f) * r + 0.05f * grow * rng.Next(), r, rng.Range(0.8f, 1f));
+                        AddWake(list, rng, side, dl, b + rng.Range(-0.05f, 0.05f), k < 2 ? rng.Range(-0.35f, 0.25f) * r : 0.02f + 0.1f * grow * rng.Next(), r, rng.Range(0.7f, 0.96f));
                     }
                 }
-                for (int k = 0; k < 150; k++)                                                   // suds beside his flanks
+                for (int k = 0; k < 260; k++)                                                   // suds beside his flanks
                 {
                     float a = rng.Next();
                     float th = Mathf.Lerp(1.5f, 0.55f, a);                                     // angle from straight back
-                    float rad = 0.83f + 0.75f * Mathf.Pow(rng.Next(), 1.6f);
-                    float r = Mathf.Lerp(0.011f, 0.045f, Mathf.Pow(rng.Next(), 1.8f));
+                    float rad = 0.83f + 0.8f * Mathf.Pow(rng.Next(), 2.1f);
+                    float r = Mathf.Lerp(0.009f, 0.036f, Mathf.Pow(rng.Next(), 2.2f));
                     float h = 0.16f * Mathf.Clamp01(1.25f - (rad - 0.83f) / 0.5f) * rng.Next();
                     AddWake(list, rng, side, Mathf.Sin(th) * rad, Mathf.Cos(th) * rad, h, r, rng.Range(0.82f, 1f));
                 }
-                for (int k = 0; k < 34; k++)                                                   // lather at the sweep's lower end
+                for (int k = 0; k < 20; k++)                                                   // lather at the sweep's lower end
                 {
                     float b = rng.Range(2.15f, 2.6f);
                     AddWake(list, rng, side, 0.62f + 0.12f * b + rng.Range(-0.14f, 0.14f), b, 0.01f + 0.03f * rng.Next(), rng.Range(0.01f, 0.03f), rng.Range(0.75f, 1f));
@@ -377,7 +377,7 @@ namespace Rainbow.Screen05
                 maxR = Mathf.Max(maxR, p.radius);
                 float d = RiverPath.Meander(p.centre.z);
                 float hw = RiverSurface.StreamHalfWidth(p.centre.z);
-                for (int k = 0; k < 4; k++)
+                for (int k = 0; k < 6; k++)
                 {
                     float cx = (k == 1 || k == 2) ? 1f : -1f;
                     float cy = k >= 2 ? 1f : -1f;

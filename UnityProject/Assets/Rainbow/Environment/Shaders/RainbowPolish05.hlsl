@@ -35,26 +35,26 @@ float3 RainbowRing4b(float3 P, float T, float2 Lamp, float dist)
     float fwd = min(fwidth(d), 6.0);
     // band colours without lamps
     float3 flange = lerp(float3(182, 60, 100), float3(222, 106, 92), side);
-    float3 body   = lerp(float3(217, 95, 92), float3(234, 119, 70), side);
+    float3 body   = lerp(float3(216, 90, 88), float3(232, 110, 66), side);
     float3 inner  = lerp(float3(176, 66, 104), float3(230, 108, 60), side);
     float3 dark   = lerp(float3(120, 28, 60), float3(196, 70, 20), side);
     float3 edge   = lerp(float3(108, 22, 78), float3(150, 34, 90), side);
     // the near ring is one broad orange band with thin lines (measured: main and inner part equally bright, no dark edge)
     float nearK = 1.0 - smoothstep(22.0, 32.0, dist);
-    flange = lerp(flange, float3(232, 128, 58), nearK);
-    body = lerp(body, float3(243, 140, 60), nearK);
-    inner = lerp(inner, float3(246, 142, 72), nearK);
-    dark = lerp(dark, float3(206, 84, 18), nearK);
-    edge = lerp(edge, float3(228, 104, 70), nearK);
+    flange = lerp(flange, float3(194, 78, 34), nearK);
+    body = lerp(body, float3(234, 110, 46), nearK);
+    inner = lerp(inner, float3(232, 108, 50), nearK);
+    dark = lerp(dark, float3(196, 74, 8), nearK);
+    edge = lerp(edge, float3(204, 74, 84), nearK);
     // far rings are broad and soft (measured B / C / D)
     float farK = smoothstep(55.0, 90.0, dist);
     flange = lerp(flange, float3(205, 84, 92), farK);
-    body = lerp(body, lerp(float3(230, 130, 112), float3(220, 116, 108), smoothstep(80.0, 100.0, dist)), farK);
+    body = lerp(body, lerp(float3(230, 130, 112), float3(212, 104, 106), smoothstep(80.0, 100.0, dist)), farK);
     inner = lerp(inner, float3(216, 116, 116), farK * 0.8);
     dark = lerp(dark, float3(190, 74, 84), farK);
     edge = lerp(edge, float3(172, 62, 120), farK);
     float glow = smoothstep(150.0, 300.0, dist);                        // throat light
-    body = lerp(body, float3(255, 172, 92), glow);
+    body = lerp(body, lerp(float3(255, 166, 88), float3(255, 220, 124), smoothstep(230.0, 440.0, dist)), glow);
     flange = lerp(flange, float3(232, 110, 62), glow);
     inner = lerp(inner, float3(250, 160, 84), glow);
     dark = lerp(dark, float3(214, 84, 48), glow);
@@ -67,9 +67,9 @@ float3 RainbowRing4b(float3 P, float T, float2 Lamp, float dist)
     float g3 = exp(-pow(d / (1.55 + fwd * 0.5), 2.0));
     float wide = exp(-d / 6.0);
     mainC = lerp(mainC, float3(250, 138, 72), saturate(wide * 0.75));
-    mainC = lerp(mainC, float3(252, 172, 84), g1);
-    mainC = lerp(mainC, float3(255, 222, 140), g2);
-    mainC = lerp(mainC, float3(255, 250, 232), g3);
+    mainC = lerp(mainC, float3(253, 164, 64), g1);
+    mainC = lerp(mainC, float3(255, 214, 104), g2);
+    mainC = lerp(mainC, float3(255, 252, 228), g3);
     float3 fl = lerp(flange, float3(252, 190, 148), saturate(g2 * 0.95 + g1 * 0.25));
     float3 inn = lerp(inner, float3(252, 178, 140), saturate(g2 * 0.95 + g1 * 0.25));
     float3 c = fl;
@@ -81,7 +81,7 @@ float3 RainbowRing4b(float3 P, float T, float2 Lamp, float dist)
     c = lerp(c, dark, RbLine(T, 0.70, 0.02 + fwT * 0.5) * 0.35 * (1.0 - g2));
     c = lerp(c, edge, RbStep(T, 0.885, 0.025 + fwT) * (1.0 - 0.6 * g1));
     c = lerp(c, dark * 0.75, RbLine(T, 0.0, 0.03 + fwT) * 0.8 * (1.0 - g1));
-    float hot = g3 * RbStep(T, 0.25, 0.03) * (1.0 - RbStep(T, 0.68, 0.04));
+    float hot = (g3 + 0.35 * g2) * RbStep(T, 0.25, 0.03) * (1.0 - RbStep(T, 0.68, 0.04));
     return RbDisp(c) * (1.0 + 1.2 * hot + 0.35 * glow);
 }
 
@@ -97,17 +97,17 @@ float3 RainbowPaddle4b(float2 UV, float Region, float dist)
     float hot = 0.0;
     if (Region < 0.5)
     {
-        c = lerp(float3(150, 56, 44), float3(206, 92, 48), smoothstep(0.04, 0.3, u));
-        c = lerp(c, float3(246, 136, 62), smoothstep(0.3, 0.5, u));
-        c = lerp(c, float3(244, 150, 112), smoothstep(0.62, 0.78, u));
+        c = lerp(float3(158, 56, 40), float3(214, 92, 42), smoothstep(0.04, 0.3, u));
+        c = lerp(c, float3(252, 136, 56), smoothstep(0.3, 0.5, u));
+        c = lerp(c, float3(246, 140, 100), smoothstep(0.62, 0.78, u));
         c = lerp(c, float3(255, 168, 70), RbLine(u, 0.27, 0.018) * 0.55);
         c = lerp(c, float3(255, 196, 96), RbLine(u, 0.43, 0.016) * 0.85);
-        c = lerp(c, float3(255, 190, 110), RbLine(u, 0.585, 0.085));
+        c = lerp(c, float3(255, 196, 92), RbLine(u, 0.585, 0.085));
         float st = RbLine(u, 0.585, 0.04);
         c = lerp(c, float3(255, 250, 224), st);
         float tip = RbLine(u, 0.93, 0.035);
         c = lerp(c, float3(255, 226, 190), tip * 0.8);
-        c *= lerp(1.0, 0.9, smoothstep(0.55, 0.95, v) * (1.0 - st));
+        c *= lerp(1.0, 0.95, smoothstep(0.55, 0.95, v) * (1.0 - st));
         // rounded top rim: rose, bright outer hair line, dark seam under it
         float3 rim = lerp(float3(206, 92, 78), float3(255, 178, 160), smoothstep(0.25, 0.75, u));
         c = lerp(c, rim, 1.0 - RbStep(v, 0.11, 0.015));
@@ -140,13 +140,13 @@ float3 RainbowFrameCorner4b(float u, float vpx, float side)
     float gu = side > 0.0 ? 0.69 : 0.668;
     float du = (u - gu) / 0.125;
     float g = exp(-du * du);
-    float gw = exp(-abs(u - gu) / 0.24);
-    float3 band1 = lerp(float3(242, 134, 52), float3(226, 128, 84), smoothstep(0.75, 0.95, u));
-    float3 band2 = lerp(float3(222, 100, 28), float3(214, 106, 44), smoothstep(0.6, 0.95, u));
-    float3 outer = lerp(float3(214, 100, 30), float3(172, 68, 34), smoothstep(110.0, 200.0, v));
-    float3 amber = float3(255, 196, 80), white = float3(255, 250, 206);
+    float gw = exp(-abs(u - gu) / 0.17);
+    float3 band1 = lerp(float3(234, 120, 44), float3(220, 112, 70), smoothstep(0.75, 0.95, u));
+    float3 band2 = lerp(float3(210, 86, 22), float3(202, 88, 34), smoothstep(0.6, 0.95, u));
+    float3 outer = lerp(float3(200, 84, 26), float3(160, 60, 30), smoothstep(110.0, 200.0, v));
+    float3 amber = float3(255, 200, 66), white = float3(255, 252, 214);
     float3 c = lerp(band1, amber, saturate(gw * 0.9 - 0.1));
-    float g1 = saturate(g * 1.25) ;
+    float g1 = saturate(g * 1.15);
     c = lerp(c, white, g1 * smoothstep(0.35, 1.0, g));
     c = lerp(c, float3(255, 176, 74), RbLine(v, 19.5, 2.2) * 0.8);
     float3 b2 = lerp(band2, amber, saturate(gw * 0.85 - 0.12) * (0.55 + 0.45 * smoothstep(28.0, 60.0, v)));
@@ -164,8 +164,8 @@ float3 RainbowFrameCorner4b(float u, float vpx, float side)
     c = lerp(c, float3(255, 208, 92), RbLine(v, 100.0, 2.2));
     c = lerp(c, float3(255, 246, 224), 1.0 - smoothstep(1.5, 4.5, v));
     // cut end: bright orange edge, then the grey-violet end face
-    c = lerp(c, float3(255, 178, 80), RbLine(u, 0.925, 0.008) * 0.9);
-    c = lerp(c, lerp(float3(130, 100, 118), float3(86, 62, 92), frac(v / 36.0)), smoothstep(0.932, 0.942, u));
+    c = lerp(c, float3(255, 178, 80), RbLine(u, 0.94, 0.007) * 0.9);
+    c = lerp(c, lerp(float3(138, 104, 118), float3(84, 60, 92), smoothstep(10.0, 110.0, v)), smoothstep(0.945, 0.952, u));
     float hot = g1 * smoothstep(0.45, 1.0, g) * (1.0 - RbStep(v, 71.5, 2.0)) + 0.5 * saturate(g * 1.3 - 0.4) * RbStep(v, 98.0, 2.0) * (1.0 - smoothstep(120.0, 150.0, v));
     return RbDisp(c) * 1.1 * (1.0 + 1.1 * saturate(hot));
 }
@@ -176,8 +176,8 @@ float3 RainbowFrameLip4b(float u, float v)
     float gw = exp(-abs(u - 0.392) / 0.07) + exp(-abs(u - 0.6625) / 0.055);
     g = saturate(g); gw = saturate(gw);
     float ends = smoothstep(0.16, 0.36, abs(u - 0.5));
-    float3 body = lerp(float3(222, 124, 84), float3(236, 130, 60), ends);
-    float3 c = lerp(body, float3(255, 206, 110), gw * 0.85);
+    float3 body = lerp(float3(236, 128, 84), float3(238, 122, 56), ends);
+    float3 c = lerp(body, float3(255, 204, 92), gw * 0.9);
     c = lerp(c, float3(255, 252, 226), smoothstep(0.25, 0.95, g));
     c = lerp(float3(206, 176, 196), c, RbStep(v, 12.5, 1.0));
     c = lerp(c, float3(255, 250, 250), 1.0 - smoothstep(3.0, 6.0, v));
@@ -207,11 +207,11 @@ float3 RainbowWall4b(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 lo
     float fy = frac(row) - 0.5;
     float bayNA = 1.0 - smoothstep(45.0, 47.0, s);
     // base metal: violet, hot magenta on the upper walls of the near bay
-    float3 violet = float3(134, 34, 182);
-    float pink = bayNA * (1.0 - smoothstep(62.0, 104.0, ap)) * look.y;
+    float3 violet = float3(128, 27, 178);
+    float pink = bayNA * max(1.0 - smoothstep(62.0, 104.0, ap), 0.3) * look.y;
     float n = sin(phi * 11.0 + s * 0.35) * sin(phi * 5.0 - s * 0.11 + 1.7);
     float3 c = lerp(violet, float3(112, 30, 170), saturate(n * 0.8));
-    c = lerp(c, float3(224, 44, 180), pink);
+    c = lerp(c, lerp(float3(234, 44, 188), float3(172, 20, 138), 1.0 - smoothstep(24.0, 27.0, s)), pink);
     c = lerp(c, float3(160, 50, 226), saturate(-n) * 0.4 * (1.0 - pink));
     c = lerp(c, float3(154, 46, 160), smoothstep(90.0, 140.0, dist) * 0.8);
     // polished panels between the slot rows
@@ -237,16 +237,16 @@ float3 RainbowWall4b(float3 posWS, float2 Uv0, float4 Uv1, float dist, float4 lo
     float2 q = float2(fx, fy) / h;
     q *= q; q *= q;
     float sd = pow(q.x + q.y, 0.25) - 1.0;
-    float ad = max(fwidth(gx0) / h.x, fwy / h.y) * 0.75;
+    float ad = max(fwidth(gx0) / h.x, fwy / h.y) * 0.55;
     float hole = 1.0 - smoothstep(-ad, ad, sd);
     float lost = smoothstep(0.7, 2.0, ad);
     hole = lerp(hole, 0.13, lost) * look.z;
     float lip = exp(-pow((sd - 0.22 - ad * 0.6) / (0.2 + ad * 0.5), 2.0)) * (1.0 - lost) * look.z;
-    c = lerp(c, float3(240, 110, 222), lip * 0.4);
+    c = lerp(c, float3(236, 92, 220), lip * 0.4);
     c = lerp(c, float3(44, 4, 44), hole * 0.93);
     // throat light on the deep walls
     float glow = smoothstep(165.0, 320.0, dist);
-    c = lerp(c, float3(246, 132, 84), glow * 0.9);
+    c = lerp(c, lerp(float3(240, 118, 78), float3(255, 190, 92), smoothstep(230.0, 440.0, dist)), glow * 0.9);
     float hot = saturate(core - 0.3) * (1.0 - hole);
     return RbDisp(c) * (1.0 + look.w * hot);
 }

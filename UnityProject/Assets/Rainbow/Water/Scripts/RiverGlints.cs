@@ -78,7 +78,7 @@ namespace Rainbow.Screen05
                         float seed = (h >> 8) / 16777216f;
                         Vector3 sc = k == 'P' || k == 'p' ? Pale : k == 'v' ? Violet : Aqua;
                         float st = k == 'v' ? 0.75f : k == 'c' || k == 'p' ? 0.85f : 0.8f;
-                        Strip(u0, u1, u2, u3, tri, 0f, cls, a, s, len * 1.2f, wid * 2.2f, sc, st, c, seed);
+                        Strip(u0, u1, u2, u3, tri, 0f, cls, a, s, len * (cls == 0 ? 2f : cls == 3 ? 1f : 1.4f), wid * (cls == 0 ? 1.4f : cls == 3 ? 1.6f : 2f), sc, cls == 3 ? st * 0.7f : st, c, seed);
                         if (k == 'W' || k == 'P') Strip(u0, u1, u2, u3, tri, 1f, cls, a, s, fl * 1.0f, fl * 0.5f, White, 1f, c, seed);
                     }
                 }

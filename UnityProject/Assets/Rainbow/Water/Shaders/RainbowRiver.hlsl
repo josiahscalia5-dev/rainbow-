@@ -31,7 +31,7 @@ float4 _W4Tune2;
 float4 _W4LookD;   // live deltas on _W4Look (material property, RainbowRiver.shader)
 #ifndef RBW_HAS_LOOK
 #define _W4Edge 1.0
-#define _W4Band float4(0.87, 0.5, 0.0, 0.0)
+#define _W4Band float4(0.9, 0.65, 0.0, 0.6)
 #define _W4Look float4(0.75, 0.3, 0.55, 0.5)
 #endif
 float4 _W4Dbg;   // x = brush / ripple streak cores, y = ripple normal, z = specular glint, w = env reflection (gain deltas)
@@ -134,7 +134,10 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float n2 = RBW_VNoise(float2(X * 5.6 + 1.7 + 0.8 * n0, v5 * 0.14 + 9.0));
     float a3 = 1.0 - smoothstep(0.15, 0.45, fwX * 13.0);
     float n3 = RBW_VNoise(float2(X * 11.5 + 4.3 + 1.1 * n0, v5 * 0.11 + 5.0));
-    float silk = smoothstep(0.55, 0.95, n3) * smoothstep(0.3, 0.75, n1) * a3;          // fine silky hairlines
+    float a4 = 1.0 - smoothstep(0.15, 0.4, fwX * 30.0);
+    float n4 = RBW_VNoise(float2(X * 27.0 + 8.7 + 2.5 * n0, v5 * 0.16 + 1.0));
+    // fine silky hairlines in bundles along the current (approved: the satin is full of them)
+    float silk = (smoothstep(0.55, 0.92, n3) * a3 * 0.7 + smoothstep(0.6, 0.92, n4) * a4) * smoothstep(0.35, 0.7, n2 * 0.5 + n1 * 0.5);
     float lane = (n0 - 0.5) * 0.75 + (n1 - 0.5) * 0.5 * a1 + (n2 - 0.5) * 0.36 * a2 + (n3 - 0.5) * 0.22 * a3;
     float stA = smoothstep(0.52, 0.85, n1 * 0.75 + n2 * 0.35) * a1;                   // broad light streaks
     float stB = smoothstep(0.62, 0.9, n2) * smoothstep(0.3, 0.65, n1) * a2;           // fine glossy streaks
@@ -155,7 +158,7 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float3 cy = lerp(RBW_CDEEP2, RBW_CMID, smoothstep(0.05, 0.42, h5));
     cy = lerp(cy, RBW_CBRIGHT, smoothstep(0.42, 0.75, h5));
     cy = lerp(cy, RBW_CAQUA, saturate(stA * _W4Look.z + smoothstep(0.75, 1.0, h5) * 0.3));
-    cy = lerp(cy, RBW_CAQUAW, saturate(stB * _W4Look.w + silk * 0.4));
+    cy = lerp(cy, RBW_CAQUAW, saturate(stB * _W4Look.w + silk * _W4Band.w));
 
     // Benny's wake water: smooth azure with broad cyan arcs bowed over his track (standing waves in his frame)
     float inW = bOn * wk * smoothstep(0.75, 1.15, back) * (1.0 - smoothstep(-0.12, 0.08, abs(dlW) - (cW - wW)))
@@ -181,8 +184,8 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     pk = lerp(pk, RBW_PLIGHT, saturate(smoothstep(0.5, 0.9, hp) * 0.7 + stA * 0.6));
     float hlq = (tb - 0.35) / 0.22;
     pk = lerp(pk, RBW_PLIGHT, exp(-hlq * hlq) * 0.3);
-    pk = lerp(pk, RBW_PPALE, saturate(stB * 0.8 + silk * 0.5));
-    pk = lerp(pk, RBW_PWHITE, saturate(stA * stB * 0.4));
+    pk = lerp(pk, RBW_PPALE, saturate(stB * 0.7 + silk * _W4Band.w));
+    pk = lerp(pk, RBW_PWHITE, saturate(stA * stB * 0.4)) * float3(1.12, 1.0, 1.05);
 
     // hue ramp across each band edge (pink -> violet -> periwinkle -> blue -> cyan)
     float3 cIn = lerp(pk, RBW_VIN, smoothstep(0.62, 0.95, at));
@@ -221,13 +224,13 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
         float fl = smoothstep(-0.1, 0.12, ox + (0.5 - cc1) * 0.2);
         [branch] if (fl > 0.001)
         {
-            float2 g = float2(ox * 2.1, s * 0.55);
+            float2 g = float2(ox * 2.7, s * 0.65);
             g.y += 0.5 * frac(floor(g.x) * 0.5);
             float2 gf = frac(g) - 0.5;
             float fgw = max(fwidth(g.x), fwidth(g.y));
             float slot = (1.0 - smoothstep(0.75, 1.1, length(gf / float2(0.2, 0.34)))) * (1.0 - smoothstep(0.25, 0.7, fgw));
             float sheen = pow(saturate(0.5 + 0.5 * sin(s * 0.45 + 1.3 + ox * 0.4)), 5.0);
-            float3 pf = lerp(float3(0.25, 0.06, 0.5), float3(0.6, 0.16, 0.75), saturate(sheen * 0.8 + 0.12 * ox));
+            float3 pf = lerp(float3(0.3, 0.06, 0.5), float3(0.68, 0.2, 0.8), saturate(sheen * 0.8 + 0.12 * ox));
             pf = lerp(pf, float3(0.04, 0.008, 0.1), slot * 0.85);
             pf *= lerp(0.55, 1.0, smoothstep(0.0, 0.6, ox));
             fo = lerp(fo, pf, fl);
