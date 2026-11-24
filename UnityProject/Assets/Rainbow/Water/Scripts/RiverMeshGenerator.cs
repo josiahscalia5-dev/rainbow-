@@ -9,7 +9,8 @@ namespace Rainbow.Screen05
     /// RiverPath.TunnelStart to RiverPath.TunnelLength, x in [-MeshHalfWidth, +MeshHalfWidth] (the part beyond the
     /// wall chord stays hidden inside the wall). Static shape = RiverSurface.BaseHeight (raised stream edges + foam
     /// shelf), the swell is animated in the vertex shader.
-    /// Vertex data: UV0 = (world x, s), UV1 = (stream centre, stream half width, core shift, 0) - read by RainbowRiver.
+    /// Vertex data: UV0 = (world x, s), UV1 = (stream centre, stream half width, core shift, drum wall half chord at the
+    /// water = FoamBank.WallChord) - read by RainbowRiver.
     /// </summary>
     public static class RiverMeshGenerator
     {
@@ -36,6 +37,7 @@ namespace Rainbow.Screen05
                 float d = RiverPath.Meander(s);
                 float hw = RiverSurface.StreamHalfWidth(s);
                 float shift = RiverSurface.CoreShift(s);
+                float wall = FoamBank.WallChord(s);       // river round 2026-11-23: drum wall half chord (UV1.w)
                 for (int j = 0; j <= cols; j++)
                 {
                     float x = -hwMesh + 2f * hwMesh * j / cols;
@@ -46,7 +48,7 @@ namespace Rainbow.Screen05
                     float dydz = (RiverSurface.BaseHeight(x, s + e) - RiverSurface.BaseHeight(x, s - e)) / (2f * e);
                     nor[k] = new Vector3(-dydx, 1f, -dydz).normalized;
                     uv0[k] = new Vector2(x, s);
-                    uv1[k] = new Vector4(d, hw, shift, 0f);
+                    uv1[k] = new Vector4(d, hw, shift, wall);
                 }
             }
 

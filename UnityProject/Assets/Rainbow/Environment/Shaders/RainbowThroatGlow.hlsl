@@ -16,7 +16,9 @@
 // (post exposure 0.86, saturation +36): core blooms only a little (bloom threshold 1.2).
 void RainbowThroatGlow_float(float2 UV, float Time, out float3 Color)
 {
-    const float3 CORE = float3(1.75, 1.6, 1.25);
+    // tunnel round 2026-11-23: the bloomed core read as a white disc r ~10 px (approved: white only to r ~6, pale yellow
+    // to ~12, gold to ~18): a softer core blooms less (bloom threshold 1.2)
+    const float3 CORE = float3(1.45, 1.36, 1.05);
     const float3 PALE = float3(1.08, 0.88, 0.5);        // display ~(252,225,150)
     const float3 GOLD = float3(1.0, 0.56, 0.27);        // display ~(252,175,90)
     const float3 WARM = float3(0.97, 0.43, 0.17);       // display ~(250,150,75)
@@ -26,7 +28,7 @@ void RainbowThroatGlow_float(float2 UV, float Time, out float3 Color)
     float3 c = lerp(RIM, WARM, 1.0 - smoothstep(0.76, 0.95, r));
     c = lerp(c, GOLD, 1.0 - smoothstep(0.55, 0.76, r));
     c = lerp(c, PALE, 1.0 - smoothstep(0.36, 0.55, r));
-    c = lerp(c, CORE, 1.0 - smoothstep(0.16, 0.34, r));
+    c = lerp(c, CORE, 1.0 - smoothstep(0.12, 0.3, r));
     float ang = atan2(UV.y, UV.x);
     float rays = pow(saturate(0.5 + 0.5 * sin(ang * _ThroatParams.y + 1.3 * sin(ang * 3.0 + Time * _ThroatParams.z))), 6.0);
     c += PALE * rays * _ThroatParams.x * smoothstep(0.15, 0.35, r) * (1.0 - smoothstep(0.55, 0.95, r));

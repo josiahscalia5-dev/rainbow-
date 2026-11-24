@@ -171,8 +171,17 @@ namespace Rainbow.Screen05.EditorTools
             // slots: arc pitch 0.50 m, row pitch 0.70 m (was 2*PI*R/64 = 0.746 and Bay/10 = 1.4), half sizes 0.19 x 0.08 m,
             // mean coverage 0.158 (= stadium area / cell area), lip glow 1.0 (was 0.5). DrumLayout05 constants stay as they
             // are because the ring placement (RingSlots / SlotRowOffset) depends on them.
-            SetVec(m, "_SlotPitch", new Vector4(0.50f, 0.70f, 0f, 0f));
-            SetVec(m, "_SlotSize", new Vector4(0.19f, 0.08f, 0.158f, 1.0f));
+            // Tunnel round 2026-11-23 (measured on the approved image with the gameplay camera at s = 14): the holes form
+            // NEAT CONCENTRIC brick ROWS, ~44 round the drum (arc pitch ~0.97 m, hole ~0.52 m along the arc), the row pitch
+            // growing with the depth (~1.5 m on the near left wall, ~2.4 m between rings A / B, ~3.4 m between B / C), hole
+            // ~0.36 of the row pitch along the tube. The old metric 0.70 m rows were 4 px apart at ring A and melted into
+            // the mean coverage, so only the lengthwise strip reflections showed (radial spokes).
+            // _SlotWarp = (s0 = approved eye, pitch at s0, growth per m, hole half length along the tube / pitch).
+            SetVec(m, "_SlotPitch", new Vector4(2f * Mathf.PI * DrumLayout05.Radius / 44f, 0.70f, 0f, 0.5f));
+            SetVec(m, "_SlotSize", new Vector4(0.26f, 0.08f, 0.16f, 1.0f));
+            SetVec(m, "_SlotWarp", new Vector4(DrumLayout05.EyeS, 0.8f, 0.033f, 0.18f));
+            // magenta land glow (linear rgb, strength): the approved lands are bright magenta-pink, only the holes dark
+            SetVec(m, "_WallGlow", new Vector4(0.55f, 0.06f, 0.42f, 0.6f));
             SetHex(m, "_RimColor", "#ff8ceb");
             SetVec(m, "_FloorSheet", new Vector4(RiverPath.WaterY + 0.06f, 0.35f, 5.4f, 1f));
             SetHex(m, "_FloorColorA", "#c81f9c");
@@ -251,7 +260,10 @@ namespace Rainbow.Screen05.EditorTools
         static void SetGlow(Material m)
         {
             SetHex(m, "_FarGlowColor", "#ff9c5a");
-            SetVec(m, "_FarGlowRange", new Vector4(95f, 330f, 1.5f, 0f));
+            // tunnel round 2026-11-23: with real rings at s 230 / 333 / 450 (frame round) the 95..330 m range painted every
+            // wall beyond ~250 m pink-white (r 26-46 px round the vanishing point: (254, 150, 160)); the approved keeps
+            // rose-purple walls between golden rings down to r ~34 px (D ~270 m) and is glow-orange only inside r ~32
+            SetVec(m, "_FarGlowRange", new Vector4(200f, 420f, 1.2f, 0f));
         }
 
         static Material MakeMaterial(string name, string shaderName)

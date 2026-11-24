@@ -41,7 +41,7 @@ static const float3 BC_LIPS   = float3(0.7599, 0.2745, 0.1948); // (245,115,80)
 
 // withBandShading.bandShade: P = object-space position of the ring (x,y round the ring, z metres along the tube,
 // lip on the camera side -z), N/V world space (V = surface -> camera), axisWS = ring axis (object +Z) in world space.
-float3 RainbowBandShade(float deep, float3 N, float3 V, float3 P, float3 axisWS)
+float3 RainbowBandShade(float deep, float3 N, float3 V, float3 P, float3 axisWS, out float topArcOut)
 {
     float z = P.z;
     float m = (z - _BandG.x) / _BandG.y;          // main band: -1 camera side ... +1 far side
@@ -55,6 +55,7 @@ float3 RainbowBandShade(float deep, float3 N, float3 V, float3 P, float3 axisWS)
     float nzv = dot(N * sign(nv + 1e-4), ax);     // -1 = flank facing the camera ... 0 = crown
     float phi = atan2(P.y, P.x);
     float topArc = (1.0 - smoothstep(0.52, 0.96, abs(phi - 1.5707963))) * (1.0 - deep);
+    topArcOut = topArc;
     float3 body = lerp(lerp(BC_GOLD, BC_PALE, smoothstep(0.42, 0.62, ndv)), BC_CROWN, topArc);
     body = lerp(body, lerp(BC_ORANGE, BC_GOLD, 0.5), deep * 0.55);
     float3 c = lerp(BC_DARK, lerp(BC_LIPS, BC_ROSE, topArc), smoothstep(0.03, 0.12, ndv));
@@ -112,7 +113,12 @@ void RainbowGoldRing_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float3 V = normalize(ViewDirWS);
     float dist = length(_WorldSpaceCameraPos.xyz - PositionWS);
     float deep = smoothstep(_BandF.x, _BandF.y, dist);
-    float3 bc = RainbowGoldToneCurve(RainbowBandShade(deep, N, V, PositionOS, AxisWS));
+    float topArc;
+    float3 raw = RainbowBandShade(deep, N, V, PositionOS, AxisWS, topArc);
+    // tunnel round 2026-11-23: the approved ring crowns over the top are ROSE-SALMON (~(213, 92, 96) at ring A, measured
+    // straight up from the vanishing point) and only the sides orange-gold (~(250, 150, 75)); the tone curve turned the
+    // crown palette (222, 98, 88) deep red (190, 40, 30) in the scene grade, so the top arc keeps its plain palette
+    float3 bc = lerp(RainbowGoldToneCurve(raw), raw, topArc);
     Color = RainbowApplyFarGlow(bc, dist) * _Exposure;
 }
 

@@ -21,6 +21,9 @@
 //   float4 _FloorColorA, _FloorColorB;                   pink flow sheet colours ('#c81f9c', '#ff4fc0')
 //   float  _Exposure;
 //   float4 _WallFar;        (fade start m, fade end m, strip light kept far away, panorama reflection kept far away)
+//   float4 _SlotWarp;       (s0 m, row pitch at s0 m, pitch growth per m, hole half length along the tube / local pitch);
+//                           y <= 0 = plain metric rows of _SlotPitch.y
+//   float4 _WallGlow;       magenta land glow (rgb colour, a strength)
 #ifndef RAINBOW_DRUM_WALL_INCLUDED
 #define RAINBOW_DRUM_WALL_INCLUDED
 
@@ -40,10 +43,27 @@ void RainbowDrumWall_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     // ---- slot grid (metres) ----
     float2 pitch = max(_SlotPitch.xy, float2(1e-3, 1e-3));
     float2 g = WallUV / pitch;
+    float2 hs = _SlotSize.xy;
+    // Tunnel round 2026-11-23: the approved wall shows NEAT CONCENTRIC ROWS of dark oval holes whose row pitch grows with
+    // the depth like a forced perspective (measured on references/05_flow_into_the_current.png with the gameplay camera:
+    // ~1.5 m on the near left wall, ~2.4 m between rings A / B, ~3.4 m between rings B / C, 6-9 rows per ring bay), 44
+    // holes round the drum in brick rows. _SlotWarp = (s0, pitch at s0 m, pitch growth per m, hole half length along the
+    // tube as a fraction of the local pitch): pitch(s) = p0 + k (s - s0), row coordinate = integral of ds / pitch(s).
+    // World-fixed (s0 is a constant), so the pattern never slides while Benny swims, steers or jumps.
+    float localPitch = pitch.y;
+    if (_SlotWarp.y > 0.0)
+    {
+        float ds = WallUV.y - _SlotWarp.x;
+        float p0 = _SlotWarp.y;
+        float k = max(_SlotWarp.z, 1e-4);
+        float dsp = max(ds, 0.0);
+        g.y = ds >= 0.0 ? log(1.0 + k * dsp / p0) / k : ds / p0;
+        localPitch = p0 + k * dsp;
+        hs.y = _SlotWarp.w * localPitch;
+    }
     g.y += _SlotPitch.z;
     g.x += frac(floor(g.y) * 0.5) * 2.0 * _SlotPitch.w;          // optional stagger of every other row
-    float2 f = (frac(g) - 0.5) * pitch;                          // metres from the cell centre
-    float2 hs = _SlotSize.xy;
+    float2 f = (frac(g) - 0.5) * float2(pitch.x, localPitch);   // metres from the cell centre
     float rr = min(hs.x, hs.y);
     float2 q = abs(f) - hs + rr;
     float d = length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - rr; // capsule SDF in metres (< 0 inside)
@@ -102,6 +122,10 @@ void RainbowDrumWall_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     // light round: with the far reflection dimmed the deep walls went dark plum (~(120,39,100)); the approved deep walls
     // are bright violet (~(150,50,200)): the violet mid tint also glows there (_MidRange.w = strength, deep walls only)
     emission += _MidTint.rgb * mt * _MidRange.w * farK * sol;
+    // tunnel round: the approved metal between the holes is bright magenta-pink (~(200-230, 60-75, 180-205), only the
+    // holes dark: 16-25 % of the wall below L 80; Unity's dark violet lands were 60-78 %): a magenta land glow that fades
+    // into the violet mid tint with the depth (_WallGlow rgb = colour, a = strength)
+    emission += _WallGlow.rgb * _WallGlow.a * sol * (1.0 - sheet) * (1.0 - 0.45 * farK);
     emission += _FarGlowColor.rgb * fg * lerp(0.35, 1.0, sol);
     emission += _RimColor.rgb * lipLight * _SlotSize.w;
     emission += sheetCol * 0.35 * sheet;

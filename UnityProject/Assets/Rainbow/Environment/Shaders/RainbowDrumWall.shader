@@ -30,6 +30,8 @@ Shader "Rainbow/Screen05/DrumWall"
         _Exposure ("Exposure", Float) = 1
         _LightInfluence ("Direct light influence", Float) = 1
         _WallFar ("Far wall (fade start m, fade end m, strips kept, reflection kept)", Vector) = (30, 100, 0.35, 0.8)
+        _SlotWarp ("Slot rows (s0, pitch at s0, pitch growth /m, hole half length / pitch)", Vector) = (0, 0, 0, 0.2)
+        _WallGlow ("Land glow (linear rgb, strength)", Vector) = (0, 0, 0, 0)
     }
 
     SubShader
@@ -65,6 +67,8 @@ Shader "Rainbow/Screen05/DrumWall"
             float _Exposure;
             float _LightInfluence;
             float4 _WallFar;
+            float4 _SlotWarp;
+            float4 _WallGlow;
         CBUFFER_END
 
         TEXTURE2D(_EnvPano);

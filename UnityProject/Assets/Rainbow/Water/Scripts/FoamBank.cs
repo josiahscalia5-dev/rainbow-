@@ -93,29 +93,65 @@ namespace Rainbow.Screen05
             float d = RiverPath.Meander(s);
             float hw = Mathf.Max(RiverSurface.StreamHalfWidth(s), 0.5f);
             float sm = s + RiverSurface.SOffset;
-            float mb = RiverSurface.CoreSwing * d + RiverSurface.CoreShift(s) + RiverSurface.SBend(sm);
-            return BankEdges(d, hw, mb, sm);
+            float mb = RiverSurface.CoreSwing * d + RiverSurface.CoreShift(s) + RiverSurface.SBend(sm) + BandFitM(sm);
+            return BankEdges(d, hw, mb, sm, WallChord(s));
+        }
+
+        /// <summary>
+        /// River round 2026-11-23: half chord of the drum wall at the water at s (DrumLayout05; the river mesh carries it in
+        /// UV1.w for the shader). The foam rims hug this wall.
+        /// </summary>
+        public static float WallChord(float s) => DrumLayout05.WaterChord(s) - Mathf.Abs(DrumLayout05.AxisX);
+
+        /// <summary>RBW_BandFL (Shaders/RainbowFoamBank.hlsl): left band offset fit.</summary>
+        public static float BandFL(float sm)
+        {
+            return -0.5f * SS(143f, 147f, sm) * (1f - SS(151f, 155f, sm))
+                 + 1.0f * SS(154f, 158f, sm) * (1f - SS(168f, 176f, sm))
+                 + 1.5f * SS(147.5f, 151.5f, sm) * (1f - SS(158f, 166f, sm));
+        }
+
+        /// <summary>RBW_BandFR (Shaders/RainbowFoamBank.hlsl): right band offset fit.</summary>
+        public static float BandFR(float sm)
+        {
+            return -0.3f * SS(133f, 136f, sm) * (1f - SS(139.5f, 142f, sm))
+                 + 1.9f * SS(146.5f, 154f, sm) * (1f - SS(160f, 168f, sm))
+                 - 0.9f * SS(165f, 170f, sm) * (1f - SS(174f, 180f, sm))
+                 + 1.4f * SS(152f, 156f, sm) * (1f - SS(161f, 168f, sm));
+        }
+
+        /// <summary>RBW_BandFitM (Shaders/RainbowFoamBank.hlsl): lateral shift of the band pair (added to the band S).</summary>
+        public static float BandFitM(float sm)
+        {
+            return 1.0f * SS(137.2f, 139.7f, sm) * (1f - SS(141.2f, 147.2f, sm))
+                 - 0.35f * SS(147.7f, 150.7f, sm) * (1f - SS(153.7f, 158.7f, sm))
+                 - 1.0f * SS(166.7f, 171.7f, sm) * (1f - SS(176.7f, 182.7f, sm));
+        }
+
+        /// <summary>RBW_BandLimits (Shaders/RainbowFoamBank.hlsl): room of the bands on each side relative to d.</summary>
+        public static Vector2 BandLimits(float d, float hw, float W, float sm)
+        {
+            float k = SS(136.2f, 140.2f, sm) * (W >= 1f ? 1f : 0f);
+            return new Vector2(Mathf.Lerp(hw - 0.5f, W + d - 0.6f, k), Mathf.Lerp(hw - 0.5f, W - d - 0.6f, k));
         }
 
         /// <summary>RBW_BankEdges (Shaders/RainbowFoamBank.hlsl), line by line.</summary>
-        public static Vector2 BankEdges(float d, float hw, float mb, float sm)
+        public static Vector2 BankEdges(float d, float hw, float mb, float sm, float W)
         {
             hw = Mathf.Max(hw, 0.5f);
-            float fR = -0.3f * SS(133f, 136f, sm) * (1f - SS(139.5f, 142f, sm))
-                     + 1.9f * SS(146.5f, 154f, sm) * (1f - SS(160f, 168f, sm))
-                     - 0.9f * SS(165f, 170f, sm) * (1f - SS(174f, 180f, sm));
-            float fL = -0.5f * SS(143f, 147f, sm) * (1f - SS(151f, 155f, sm))
-                     + 1.0f * SS(154f, 158f, sm) * (1f - SS(168f, 176f, sm));
+            float fR = BandFR(sm);
+            float fL = BandFL(sm);
+            Vector2 lim = BandLimits(d, hw, W, sm);
             float offL = hw * (0.62f + 0.03f * Mathf.Sin(sm * 0.13f + 1.7f)) + fL;
             float offR = hw * (0.62f + 0.03f * Mathf.Sin(sm * 0.11f + 4.2f)) + fR;
             float wL = hw * 0.205f * (1f + 0.15f * Mathf.Sin(sm * 0.19f + 0.4f));
             float wR = hw * 0.205f * (1f + 0.15f * Mathf.Sin(sm * 0.17f + 2.9f));
-            float roomL = mb + hw - 0.5f - offL;
-            float roomR = hw - 0.5f - mb - offR;
+            float roomL = mb + lim.x - offL;
+            float roomR = lim.y - mb - offR;
             wL = SMin(wL, Mathf.Max(roomL, 0.6f * wL), 0.5f);
             wR = SMin(wR, Mathf.Max(roomR, 0.6f * wR), 0.5f);
-            offL = SMin(offL, mb + hw - wL - 0.5f, 1.2f);
-            offR = SMin(offR, hw - wR - 0.5f - mb, 1.2f);
+            offL = SMin(offL, mb + lim.x - wL, 1.2f);
+            offR = SMin(offR, lim.y - wR - mb, 1.2f);
             float eL = mb - offL - wL;
             float eR = mb + offR + wR;
             eL -= 0.26f + 0.12f * Mathf.Sin(sm * 0.37f + 1.3f) + 0.07f * Mathf.Sin(sm * 0.91f + 0.4f);
@@ -124,6 +160,21 @@ namespace Rainbow.Screen05
             float pR = 0.6f * Mathf.Sin(sm * 0.191f + 3.7f) + 0.4f * Mathf.Sin(sm * 0.443f + 0.9f);
             eL += 0.8f * SS(0.3f, 0.95f, pL);
             eR -= 0.8f * SS(0.3f, 0.95f, pR);
+            float kW = SS(136.2f, 136.9f, sm) * (W >= 1f ? 1f : 0f);
+            float wallL = -(W + d);
+            float wallR = W - d;
+            float rimL = 0.35f + 0.8f * SS(136.9f, 137.9f, sm) + 0.35f * SS(138.0f, 140.5f, sm)
+                       + 1.25f * SS(140.5f, 143.5f, sm) - 0.7f * SS(145.0f, 148.0f, sm)
+                       - 0.9f * SS(148.0f, 151.0f, sm) - 0.35f * SS(151.5f, 153.5f, sm);
+            float rimLmin = Mathf.Lerp(rimL, 0.35f, SS(152.0f, 154.0f, sm));
+            float rimR = 0.45f + 0.75f * (1f - SS(141.5f, 144.0f, sm)) + 3.0f * (1f - SS(140.0f, 141.5f, sm))
+                       + 1.15f * SS(157.7f, 160.7f, sm) + 0.7f * SS(160.7f, 164.3f, sm)
+                       + 0.5f * SS(164.3f, 168.3f, sm) + 0.7f * SS(168.3f, 173.2f, sm)
+                       + 0.4f * SS(173.2f, 179.3f, sm) - 1.8f * SS(179.3f, 186.7f, sm)
+                       - 1.5f * SS(186.7f, 196.7f, sm);
+            float rimRmin = Mathf.Lerp(0.35f, rimR, SS(156.5f, 158.5f, sm) * (1f - SS(185.0f, 189.0f, sm)));
+            eL = Mathf.Lerp(eL, Mathf.Clamp(eL, wallL + rimLmin, wallL + rimL), kW);
+            eR = Mathf.Lerp(eR, Mathf.Clamp(eR, wallR - rimR, wallR - rimRmin), kW);
             float kL1 = SS(126.6f, 127.6f, sm) * (1f - SS(129.0f, 129.8f, sm));
             float kL2 = SS(129.0f, 130.0f, sm) * (1f - SS(131.6f, 132.6f, sm));
             float kR1 = SS(126.6f, 127.6f, sm) * (1f - SS(128.9f, 129.7f, sm));
@@ -135,7 +186,7 @@ namespace Rainbow.Screen05
             float coin = 0.63f * d;
             eL = Mathf.Min(eL, coin - 1.25f);
             eR = Mathf.Max(eR, coin + 1.25f);
-            return new Vector2(Mathf.Max(eL, -hw), Mathf.Min(eR, hw));
+            return new Vector2(Mathf.Max(eL, Mathf.Lerp(-hw, wallL, kW)), Mathf.Min(eR, Mathf.Lerp(hw, wallR, kW)));
         }
 
         /// <summary>World x of the foam waterline on one side (-1 left, +1 right).</summary>
@@ -180,7 +231,9 @@ namespace Rainbow.Screen05
                 {
                     float step = rng.Range(0.26f, 0.4f);
                     float edge = WaterlineX(s, side);                               // the foam waterline (world x)
-                    float shelfW = Mathf.Max(0f, side * (side * WallX - edge));      // foam from there to the wall
+                    // foam from there to the real drum wall (river round 2026-11-23: was the fixed WallX 6.25, which left
+                    // wide foam fields where the narrower frame-round drum stands at +-5.3 m)
+                    float shelfW = Mathf.Max(0f, side * (side * WallAt(s) - edge));
                     float cl = ClusterNoise(s, side);                               // 0 low stretch .. 1 big mound
 
                     // 1) lace: small bubbles straddling the waterline (the bubbly scalloped edge)
@@ -215,7 +268,7 @@ namespace Rainbow.Screen05
                         float x = edge + side * rng.Range(0.05f, 0.65f);
                         float z = s + rng.Range(-0.5f, 0.5f) * step;
                         float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + rng.Range(0.08f, 0.3f) * (0.6f + 0.8f * cl);
-                        AddAt(list, rng, side, new Vector3(Mathf.Clamp(x, -WallX, WallX), y, z), r, rng.Range(0.92f, 1f));
+                        AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.92f, 1f));
                     }
 
                     // 3) heap body from the rim to the wall: a LOW lather of smaller bubbles (bigger next to the rim mound,
@@ -257,7 +310,7 @@ namespace Rainbow.Screen05
                             float r = Mathf.Lerp(0.06f, 0.2f, Mathf.Pow(u, 1.5f)) * (1.15f - 0.45f * q);
                             float y = RiverPath.WaterY + RiverSurface.BaseHeight(hxk, hzk) + hH * (1f - q * q)
                                     + r * rng.Range(-0.35f, 0.15f);
-                            AddAt(list, rng, side, new Vector3(Mathf.Clamp(hxk, -WallX, WallX), y, hzk), r,
+                            AddAt(list, rng, side, new Vector3(ClampToWall(hxk, hzk), y, hzk), r,
                                   Mathf.Lerp(0.97f, 0.8f, 1f - q));
                         }
                     }
@@ -269,12 +322,21 @@ namespace Rainbow.Screen05
                         float x = edge + side * rng.Range(0.1f, Mathf.Min(0.9f, Mathf.Max(0.15f, shelfW)));
                         float z = s + rng.Range(-0.5f, 0.5f) * step;
                         float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + rng.Range(0.1f, 0.28f) * (0.6f + 0.6f * cl);
-                        AddAt(list, rng, side, new Vector3(Mathf.Clamp(x, -WallX, WallX), y, z), r, 1f);
+                        AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, 1f);
                     }
                     s += step;
                 }
             }
             return list;
+        }
+
+        /// <summary>|x| up to which foam puffs are placed at s: the drum wall at the water plus a little tuck under it.</summary>
+        static float WallAt(float s) => Mathf.Min(WallX, WallChord(s) + 0.2f);
+
+        static float ClampToWall(float x, float s)
+        {
+            float w = WallAt(s);
+            return Mathf.Clamp(x, -w, w);
         }
 
         /// <summary>A smaller bubble piled on top of (and a little outward from) another one.</summary>
@@ -289,7 +351,7 @@ namespace Rainbow.Screen05
         static int Add(List<Puff> list, Rng rng, int side, float x, float z, float r, float sink, float ao)
         {
             if (z < RiverPath.TunnelStart || z > RiverPath.TunnelLength) return -1;
-            x = Mathf.Clamp(x, -WallX, WallX);
+            x = ClampToWall(x, z);
             float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + r * (1f - 2f * sink);
             return AddAt(list, rng, side, new Vector3(x, y, z), r, ao);
         }
