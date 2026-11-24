@@ -261,6 +261,19 @@ namespace Rainbow.Screen05.EditorTools
             wf.SetFloat("_Brightness", 1f);
             EditorUtility.SetDirty(wf);
 
+            // round 8: the lacy splash sheets
+            AssetDatabase.ImportAsset(Dir + "/Shaders/RainbowSplashLace.shader", ImportAssetOptions.ForceSynchronousImport);
+            Material lace = GetOrCreateMaterial(ResDir + "/RainbowSplashLace05.mat", "Rainbow/Water/SplashLace");
+            lace.SetTexture("_LaceTex", AssetDatabase.LoadAssetAtPath<Texture2D>(WaterTextureFactory.LacePath));
+            lace.SetFloat("_Len", 1.25f);
+            lace.SetFloat("_Height", 0.16f);
+            lace.SetFloat("_Alpha", 1f);
+            lace.SetFloat("_Bright", 1f);
+            lace.SetVector("_Shape", new Vector4(0.16f, 1.82f, 0.9f, 0.1f));
+            lace.SetVector("_Web", new Vector4(0.3f, 0.6f, 0.12f, 0.35f));
+            lace.SetVector("_Tile", new Vector4(2.6f, 0.95f, 2.4f, 0.45f));
+            EditorUtility.SetDirty(lace);
+
             // (splash round 2026-11-23) make sure the fan shader is imported before it is looked up by name
             AssetDatabase.ImportAsset(Dir + "/Shaders/RainbowSplash.shader", ImportAssetOptions.ForceSynchronousImport);
             Material fan = GetOrCreateMaterial(ResDir + "/RainbowSplash05.mat", "Rainbow/Water/Splash");

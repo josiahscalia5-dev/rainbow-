@@ -96,7 +96,7 @@ Shader "Rainbow/Water/Foam"
                 float3 col = RBW_FoamColor(Nv, px, i.cornerSeed.z, i.cornerSeed.w, i.tintFog.x, _FoamLightDir.xyz);
                 clip(RBW_FoamKeep(h, Nv.xy, px, i.cornerSeed.z));
                 outDepth = RBW_FoamDepth(P);
-                col *= _Brightness;
+                col *= _Brightness / lerp(1.0, RBW_VignetteAt(i.positionCS.xy), 0.85);
                 col = MixFog(col, i.tintFog.y);
                 return half4(col, 1.0);
             }

@@ -200,11 +200,11 @@ namespace Rainbow.Screen05
                     float slope = Mathf.Abs(WaterlineX(s + 0.25f, side) - WaterlineX(s - 0.25f, side)) / 0.5f;
                     float dens = Mathf.Min(1f + 0.5f * slope, 2f);
 
-                    int nLace = Mathf.RoundToInt((4 + rng.Next() * 2f) * dens);
+                    int nLace = Mathf.RoundToInt((3 + rng.Next() * 2f) * dens);   // round 8: finer, fewer beads
                     for (int k = 0; k < nLace; k++)
                     {
                         float u = rng.Next();
-                        float r = 0.03f + 0.055f * u * u;
+                        float r = 0.016f + 0.05f * u * u * u;
                         float z = s + rng.Range(-0.5f, 0.5f) * step;
                         Add(list, rng, side, WaterlineX(z, side) + side * rng.Range(-0.14f, 0.16f), z, r, rng.Range(0.3f, 0.5f), rng.Range(0.5f, 0.95f));
                     }
@@ -215,10 +215,10 @@ namespace Rainbow.Screen05
                         float z = s + rng.Range(-0.5f, 0.5f) * step;
                         float x = WaterlineX(z, side) + side * t * ropeW;
                         float lump = Lump(x, z, side);
-                        float r = rng.Range(0.13f, 0.23f) * (0.8f + 0.5f * lump) * rs;
+                        float r = rng.Range(0.14f, 0.27f) * (0.8f + 0.5f * lump) * rs;
                         if (rng.Next() < 0.18f && t > 0.35f) r *= 1.3f;   // shape round 6: mixed sizes, an odd big puff behind the rim
                         float surf = RopeSurface(t * tk, crest) * (0.75f + 0.5f * lump);
-                        float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + Mathf.Max(surf - 0.75f * r, -0.3f * r);
+                        float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + Mathf.Max(surf - 0.82f * r, -0.35f * r);
                         AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.82f, 0.98f) * Valley(z, t, side));
                     }
                     int nMed = Mathf.RoundToInt((1.6f + rng.Next()) * dens * Mathf.Max(1f, 1f / Mathf.Max(rs, 0.5f)));   // finer ropes: more puffs
@@ -233,7 +233,7 @@ namespace Rainbow.Screen05
                         float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + surf * 0.8f - 0.6f * r;
                         AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.7f, 0.86f) * Valley(z, t, side));
                     }
-                    int nCrest = Mathf.FloorToInt(0.4f + 0.9f * cl + rng.Next());
+                    int nCrest = rng.Next() < 0.25f ? 1 : 0;
                     for (int k = 0; k < nCrest; k++)
                     {
                         float t = rng.Range(0.1f, 0.8f);
@@ -328,39 +328,30 @@ namespace Rainbow.Screen05
         /// </summary>
         public static Mesh BuildWakeMesh(uint seed = 0x0511u)
         {
-            var list = new List<Puff>(600);
+            // round 8 (2026-11-24, user: "remove the bulky lavender foam balls beside his wake"): only small soft clumps along the outer edge of the
+            // sweeps, tapering backward; the lacy water itself is drawn by the splash sheets (SplashLace)
+            var list = new List<Puff>(300);
             var rng = new Rng(seed);
             for (int side = -1; side <= 1; side += 2)
             {
-                for (float b = 0.8f; b < 2.25f; b += 0.07f)                                    // rope
+                for (float b = 0.75f; b < 2.3f; b += 0.085f)
                 {
-                    float grow = SS(0.7f, 1.2f, b);
-                    for (int k = 0; k < 6; k++)
+                    float grow = SS(0.7f, 1.5f, b), taper = 1f - 0.55f * SS(1.7f, 2.3f, b);
+                    int n = rng.Next() < 0.7f ? 3 : 2;
+                    float cl = ClusterNoise(b * 4f + 3f * side, side);
+                    for (int k = 0; k < n; k++)
                     {
-                        float r = (k < 2 ? rng.Range(0.055f, 0.1f) : rng.Range(0.014f, 0.04f)) * (0.55f + 0.45f * grow);
-                        float dl = 0.58f + 0.45f * b + rng.Range(-0.09f, 0.11f) * (0.6f + 0.6f * grow);
-                        AddWake(list, rng, side, dl, b + rng.Range(-0.05f, 0.05f), k < 2 ? rng.Range(-0.35f, 0.25f) * r : 0.02f + 0.1f * grow * rng.Next(), r, rng.Range(0.7f, 0.96f));
+                        float r = (k == 0 ? rng.Range(0.04f, 0.085f) * (0.6f + 0.7f * cl) : rng.Range(0.012f, 0.03f)) * (0.5f + 0.5f * grow) * taper;
+                        float dl = 0.6f + 0.46f * b + rng.Range(-0.1f, 0.1f) * (0.5f + 0.5f * grow);
+                        AddWake(list, rng, side, dl, b + rng.Range(-0.05f, 0.05f), k == 0 ? -0.25f * r : 0.01f + 0.04f * grow * rng.Next(), r, rng.Range(0.86f, 1f));
                     }
-                }
-                for (int k = 0; k < 260; k++)                                                   // suds beside his flanks
-                {
-                    float a = rng.Next();
-                    float th = Mathf.Lerp(1.5f, 0.55f, a);                                     // angle from straight back
-                    float rad = 0.83f + 0.8f * Mathf.Pow(rng.Next(), 2.1f);
-                    float r = Mathf.Lerp(0.009f, 0.036f, Mathf.Pow(rng.Next(), 2.2f));
-                    float h = 0.16f * Mathf.Clamp01(1.25f - (rad - 0.83f) / 0.5f) * rng.Next();
-                    AddWake(list, rng, side, Mathf.Sin(th) * rad, Mathf.Cos(th) * rad, h, r, rng.Range(0.82f, 1f));
-                }
-                for (int k = 0; k < 20; k++)                                                   // lather at the sweep's lower end
-                {
-                    float b = rng.Range(2.15f, 2.6f);
-                    AddWake(list, rng, side, 0.62f + 0.12f * b + rng.Range(-0.14f, 0.14f), b, 0.01f + 0.03f * rng.Next(), rng.Range(0.01f, 0.03f), rng.Range(0.75f, 1f));
                 }
             }
             return BuildMesh(list, "WakeFoam05");
         }
 
-        static void AddWake(List<Puff> list, Rng rng, int side, float dl, float back, float y, float r, float ao)
+        static void AddWake
+(List<Puff> list, Rng rng, int side, float dl, float back, float y, float r, float ao)
         {
             list.Add(new Puff { centre = new Vector3(side * dl + 0.06f, y, -back), radius = r, seed = 10f + rng.Next(), ao = ao, tint = rng.Range(-1f, 1f), side = side });
         }

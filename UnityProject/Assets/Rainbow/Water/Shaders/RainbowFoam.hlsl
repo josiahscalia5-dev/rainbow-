@@ -158,43 +158,39 @@ float RBW_FoamPx(float2 corner)
 // px = on-screen diameter (reference px), ao = ambient occlusion (inner / lower bubbles of a pile bluer), tint -1..1.
 float3 RBW_FoamColor(float3 Nv, float px, float seed, float ao, float tint, float3 lightDirWS)
 {
+    // round 8 (2026-11-24, user: soft white-blue soap clusters, no lavender balls): the puffs of a heap share one soft light from above (normals
+    // pulled toward world up), so they read as one cauliflower cloud; translucent bright edges; small blue bubble holes toward the lower side
     float2 q = Nv.xy;
     float z = saturate(Nv.z);
     float d = length(q);
-    float big = smoothstep(18.0, 40.0, px);                       // the ref's big near bumps show large white caps
-    // steep key light from the upper left: white caps only on the lit top, lavender middle, blue lower half
-    float tl = dot(Nv, normalize(float3(-0.4, 0.85, 0.35)));
-    // (median of the approved bank foam is a light periwinkle #ABB8FA, only the top 10-30 % is white: a little lower
-    //  than foam.ts, with deeper blue-violet crevices round each bubble)
-    // (water round 3v 2026-11-23: SOFT suds - the upper rim no longer darkens (approved: soft bright silhouettes against
-    //  the wall, lavender-blue only underneath and in the creases), a gentler tone curve, smaller and fainter open
-    //  bubbles (the big dark holes read as faces on the old cotton balls), a pearly rim light on the lit side)
-    float t = 0.5 + 0.55 * tl - pow(1.0 - z, 1.6) * (0.1 + 0.5 * saturate(0.45 - q.y * 0.8)) - (1.0 - ao) * 0.62
-            + 0.04 * big;
-    // fine open bubbles: dense on the lower half and the flanks, sparse on the lit top
-    float2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(px / 5.5, 1.5, 14.0) + seed * 37.0;
-    float dens = clamp(0.2 + 0.8 * RBW_SS(0.35, -0.6, q.y) + 0.3 * (1.0 - z) - 0.2 * big, 0.0, 0.9);
+    float3 upV = normalize(mul((float3x3)UNITY_MATRIX_V, float3(0.0, 1.0, 0.0)));
+    float3 Ns = normalize(Nv + upV * 0.42);
+    float up = dot(Ns, upV);
+    float lit = saturate(0.52 + 0.5 * up - 0.07 * Ns.x);
+    float big = smoothstep(14.0, 34.0, px);
+    float t = 0.16 + 0.96 * smoothstep(0.08, 0.98, lit) - (1.0 - ao) * 0.62;
+    t -= pow(1.0 - z, 2.0) * 0.28 * saturate(0.35 - q.y);                       // soft crease shade under the lump only
+    // fine open bubbles: many small blue holes on the lower half and at the flanks, few on the lit cap
+    float2 mp = q * (1.0 + 0.5 * (1.0 - z)) * clamp(px / 6.5, 1.4, 11.0) + seed * 37.0;
+    float dens = clamp(0.1 + 0.75 * RBW_SS(0.3, -0.65, q.y) + 0.22 * (1.0 - z) - 0.12 * big, 0.0, 0.8);
     float4 mf = RBW_MicroFoam(mp, dens);
-    float kf = 1.0 - smoothstep(0.5, 0.9, fwidth(mp.x) + fwidth(mp.y));
-    // tone curve: a broad white-lavender lit area, soft lavender-blue shading (no hard terminator)
-    t = 0.16 + 0.88 * smoothstep(0.22, 1.05, t - 0.04 * big);
-    t += (mf.z - 0.6) * 0.14 * dens * kf - mf.x * 0.32 * kf + mf.y * 0.2 * kf;
-    float3 col = RBW_Soap05(t + 0.04 * tint);
-    col = lerp(col, float3(1.0, 0.97, 1.07), smoothstep(0.72, 1.0, t) * 0.32);
-    col = lerp(col, float3(0.97, 0.93, 1.05), pow(1.0 - z, 2.0) * saturate(q.y * 1.2 + 0.25) * 0.45);
-    col += mf.w * 0.35 * kf;
-    // glossy highlight of the key light
+    float kf = (1.0 - smoothstep(0.5, 0.9, fwidth(mp.x) + fwidth(mp.y))) * smoothstep(9.0, 18.0, px);
+    t += (mf.z - 0.6) * 0.1 * dens * kf + mf.y * 0.2 * kf;
+    float3 col = RBW_Soap05(t + 0.03 * tint);
+    col = lerp(col, RBW_Disp(float3(74, 132, 238)), mf.x * kf * 0.62 * (1.0 - 0.6 * lit));
+    // thin-film / subsurface: bright soft silhouettes on the lit side, a breath of pink and aqua
+    float fres = pow(1.0 - z, 2.4);
+    col = lerp(col, RBW_Disp(float3(252, 248, 255)), fres * saturate(up * 0.9 + 0.35) * 0.6);
+    col += (RBW_Iridescent(fres * 1.2 + seed * 0.7 + 0.15) - 0.35) * fres * 0.1;
+    col = lerp(col, col * float3(1.03, 0.96, 1.03), 0.5 + 0.5 * tint);
+    // glossy wet highlight
     float3 Lv = TransformWorldToViewDir(lightDirWS, true);
     float rl = max(dot(reflect(float3(0.0, 0.0, -1.0), Nv), Lv), 0.0);
-    col += pow(rl, 24.0) * 0.25 + pow(rl, 6.0) * 0.1;
-    // pearly soap-film sheen toward the rim (faint pink / lilac / aqua)
-    float fres = pow(1.0 - z, 3.0);
-    col += RBW_Iridescent(fres * 1.3 + seed * 0.7 + 0.15) * fres * 0.1;
-    // tiny bubbles: lavender-white glossy body, thin blue rim, white speck (the lace at the waterline)
-    float tiny = 1.0 - smoothstep(9.0, 16.0, px);
-    float2 qs = q - float2(-0.32, 0.34);
-    float3 cb = lerp(RBW_Soap05(0.8 + 0.1 * tint), RBW_Soap05(0.12), smoothstep(0.5, 0.95, d))
-              + exp(-dot(qs, qs) * 14.0) * 0.55;
+    col += pow(rl, 30.0) * 0.22 * big + mf.w * 0.2 * kf;
+    // tiny bubbles: clear white beads with a light-blue rim
+    float tiny = 1.0 - smoothstep(7.0, 13.0, px);
+    float2 qs = q - float2(-0.3, 0.35);
+    float3 cb = lerp(RBW_Soap05(0.95), RBW_Soap05(0.35), smoothstep(0.45, 0.98, d) * 0.8) + exp(-dot(qs, qs) * 12.0) * 0.3;
     return lerp(col, cb, tiny);
 }
 

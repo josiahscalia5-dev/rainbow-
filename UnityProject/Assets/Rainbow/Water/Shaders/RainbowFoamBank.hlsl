@@ -2,6 +2,8 @@
 #ifndef RAINBOW_FOAM_BANK_INCLUDED
 #define RAINBOW_FOAM_BANK_INCLUDED
 
+#include "Assets/Rainbow/Water/Shaders/RainbowWaterCommon.hlsl"
+
 float RBW_FB_SS(float a, float b, float x)
 {
     float t = saturate((x - a) / (b - a));
@@ -22,14 +24,13 @@ static const float3 RBW_SOAP_CREV = float3(0.23, 0.22, 0.66);
 
 float3 RBW_Soap05(float t)
 {
-    t = saturate(t) * 5.0;
-    // (water round 3v: mid tones a little more lavender, less green - approved bank foam p40 #B6C0F9 / p60 #D8D4FA vs
-    //  Unity #A1C1FD / #D4DBFD)
-    float3 c = lerp(RBW_SOAP_CREV, float3(0.30, 0.36, 0.84), saturate(t));
-    c = lerp(c, float3(0.44, 0.50, 0.96), saturate(t - 1.0));
-    c = lerp(c, float3(0.63, 0.61, 0.95), saturate(t - 2.0));
-    c = lerp(c, float3(0.85, 0.80, 0.97), saturate(t - 3.0));
-    return lerp(c, float3(1.05, 1.03, 1.08), saturate(t - 4.0));
+    // round 8 (2026-11-24): approved foam = soft WHITE lumps with light-blue shade (measured: caps (254,251,255), bodies (226,232,254), lower sides
+    // (176,198,251), crevices (112,146,240)), not lavender
+    t = saturate(t) * 4.0;
+    float3 c = lerp(RBW_Disp(float3(96, 128, 234)), RBW_Disp(float3(146, 174, 247)), saturate(t));
+    c = lerp(c, RBW_Disp(float3(192, 208, 252)), saturate(t - 1.0));
+    c = lerp(c, RBW_Disp(float3(230, 234, 254)), saturate(t - 2.0));
+    return lerp(c, RBW_Disp(float3(255, 252, 255)), saturate(t - 3.0));
 }
 
 // the river swell of RainbowRiver.hlsl (RBW_RiverWave) at a foam puff, so puffs on the stream ride the water

@@ -168,6 +168,79 @@ namespace Rainbow.Screen05.EditorTools
             imp.SaveAndReimport();
         }
 
+        // ------------------------------------------------------------------ foam lace
+        public const string LacePath = "Assets/Rainbow/Water/Textures/RainbowLace05.png";
+
+        /// <summary>Tileable soap lace (512 x 512): R = normalised distance to the nearest bubble hole (0 hole centre, 0.5 hole rim, 1 far from holes: the
+        /// web between them) of a coarse bubble raft, G = the same for a fine raft, B = smooth noise (strand breakup).</summary>
+        public static string MakeLace()
+        {
+            const int L = 512;
+            var rnd = new System.Random(7177);
+            float[] Raft(int count, float rMin, float rMax, float pow)
+            {
+                var cx = new float[count]; var cy = new float[count]; var cr = new float[count];
+                int n = 0, tries = 0;
+                // relaxed random packing: big holes first, small ones in the gaps
+                while (n < count && tries < count * 60)
+                {
+                    tries++;
+                    float f = n / (float)count, r = Mathf.Lerp(rMax, rMin, Mathf.Pow(f, pow)) * (0.85f + 0.3f * (float)rnd.NextDouble());
+                    float x = (float)rnd.NextDouble(), y = (float)rnd.NextDouble();
+                    bool ok = true;
+                    for (int k = 0; k < n && ok; k++)
+                    {
+                        float dx = Mathf.Abs(x - cx[k]), dy = Mathf.Abs(y - cy[k]);
+                        dx = Mathf.Min(dx, 1f - dx); dy = Mathf.Min(dy, 1f - dy);
+                        float need = (r + cr[k]) * 0.93f;
+                        if (dx * dx + dy * dy < need * need) ok = false;
+                    }
+                    if (!ok) continue;
+                    cx[n] = x; cy[n] = y; cr[n] = r; n++;
+                }
+                var o = new float[L * L];
+                for (int y = 0; y < L; y++)
+                    for (int x = 0; x < L; x++)
+                    {
+                        float u = (x + 0.5f) / L, v = (y + 0.5f) / L, best = 9f;
+                        for (int k = 0; k < n; k++)
+                        {
+                            float dx = Mathf.Abs(u - cx[k]), dy = Mathf.Abs(v - cy[k]);
+                            if (dx > 0.5f) dx = 1f - dx;
+                            if (dy > 0.5f) dy = 1f - dy;
+                            if (dx > cr[k] * 2.2f || dy > cr[k] * 2.2f) continue;
+                            float d = Mathf.Sqrt(dx * dx + dy * dy) / cr[k];
+                            if (d < best) best = d;
+                        }
+                        o[y * L + x] = Mathf.Clamp01(best * 0.5f);      // 0.5 = the rim of a hole
+                    }
+                return o;
+            }
+            float[] a = Raft(230, 0.012f, 0.062f, 0.55f), b = Raft(760, 0.008f, 0.03f, 0.5f);
+            var px = new Color32[L * L];
+            for (int y = 0; y < L; y++)
+                for (int x = 0; x < L; x++)
+                {
+                    float u = x / (float)L, v = y / (float)L;
+                    float s = 0.55f * PNoise(u * 9f, v * 2f, 9, 2, 71) + 0.3f * PNoise(u * 19f, v * 3f, 19, 3, 72) + 0.15f * PNoise(u * 37f, v * 5f, 37, 5, 73);
+                    s = Mathf.Clamp01((s - 0.5f) * 1.9f + 0.5f);
+                    int k = y * L + x;
+                    px[k] = new Color32((byte)(a[k] * 255f), (byte)(b[k] * 255f), (byte)(s * 255f), 255);
+                }
+            var tex = new Texture2D(L, L, TextureFormat.RGBA32, false, true);
+            tex.SetPixels32(px);
+            File.WriteAllBytes(LacePath, tex.EncodeToPNG());
+            UnityEngine.Object.DestroyImmediate(tex);
+            AssetDatabase.ImportAsset(LacePath, ImportAssetOptions.ForceSynchronousImport);
+            var imp = AssetImporter.GetAtPath(LacePath) as TextureImporter;
+            if (imp != null)
+            {
+                imp.sRGBTexture = false; imp.mipmapEnabled = true; imp.wrapMode = TextureWrapMode.Repeat; imp.filterMode = FilterMode.Trilinear;
+                imp.anisoLevel = 4; imp.maxTextureSize = 512; imp.textureCompression = TextureImporterCompression.CompressedHQ; imp.SaveAndReimport();
+            }
+            return "lace " + new FileInfo(LacePath).Length / 1024 + " KB";
+        }
+
         // ------------------------------------------------------------------ ramp
         const float GradeSat = 1.4184f, GradeCon = 1.2035f, GradeExp = 0.85045f;
 

@@ -53,8 +53,10 @@ namespace Rainbow.Screen05
 
         [Header("Spray droplets (spray.ts / index.ts wake())")]
         [Tooltip("Droplets per second at full strength (150 x (1 + 1.4) inside 05).")]
-        public float sprayRate = 360f;
+        public float sprayRate = 300f;
         [Range(16, 256)] public int maxDroplets = 192;
+        [Tooltip("the old thin white ropes / jets (Rainbow/Water/Splash); replaced by the lace sheets")]
+        public bool drawOldFans = false;
         [Tooltip("How fast the wake follows SetIntensity (1/s; riderSplash.ts update: dt x 6).")]
         public float response = 6f;
 
@@ -145,6 +147,8 @@ namespace Rainbow.Screen05
         {
             Release(mesh);
             Release(fanMesh);
+            Release(laceMesh);
+            laceMesh = null;
             Release(wakeFoamMesh);
             wakeFoamMesh = null;
             Release(ownMaterial);
@@ -208,7 +212,8 @@ namespace Rainbow.Screen05
                 if (emit++ < 26) EmitSprayDrop(rw);
             }
             Simulate(dt);
-            DrawFans(c, rw, wake);
+            if (drawOldFans) DrawFans(c, rw, wake);
+            DrawLace(c, rw, wake, dt);
             DrawWakeFoam(c, wake);
             Draw(c);
         }
@@ -271,7 +276,7 @@ namespace Rainbow.Screen05
             d.v = right * (side * Mathf.Sin(phi) * sp) + back * (Mathf.Cos(phi) * sp) + Vector3.up * Rnd(1.2f, 3.0f);
             d.age = 0f;
             d.life = Rnd(0.3f, 0.6f);
-            d.halfWidth = 0.5f * Rnd(0.012f, 0.04f);
+            d.halfWidth = 0.5f * Rnd(0.009f, 0.028f);
             drops[dropCount++] = d;
         }
 
@@ -287,7 +292,7 @@ namespace Rainbow.Screen05
             d.v = radial * (Rnd(1f, 4f) * k) + Vector3.up * (Rnd(3f, 7f) * k);
             d.age = 0f;
             d.life = Rnd(0.5f, 1.1f);
-            d.halfWidth = 0.5f * Rnd(0.06f, 0.16f);
+            d.halfWidth = 0.5f * Rnd(0.02f, 0.085f);
             drops[dropCount++] = d;
         }
 
@@ -409,7 +414,62 @@ namespace Rainbow.Screen05
             }
         }
 
+        // ---- lacy splash sheets (master direction 2026-11-24): two fans, three layers, shaped on the GPU by Rainbow/Water/SplashLace ----
+        static Mesh BuildLaceMesh()
+        {
+            const int NT = 14, NA = 20, NL = 3;
+            var vt = new System.Collections.Generic.List<Vector3>(); var uv = new System.Collections.Generic.List<Vector4>(); var tr = new System.Collections.Generic.List<int>();
+            for (int layer = NL - 1; layer >= 0; layer--)
+                foreach (float side in new[] { -1f, 1f })
+                {
+                    int b = vt.Count;
+                    for (int j = 0; j <= NA; j++)
+                        for (int i = 0; i <= NT; i++) { vt.Add(Vector3.zero); uv.Add(new Vector4(i / (float)NT, j / (float)NA, side, layer)); }
+                    for (int j = 0; j < NA; j++)
+                        for (int i = 0; i < NT; i++)
+                        {
+                            int p = b + j * (NT + 1) + i, q = p + NT + 1;
+                            tr.Add(p); tr.Add(q); tr.Add(p + 1); tr.Add(p + 1); tr.Add(q); tr.Add(q + 1);
+                        }
+                }
+            var m = new Mesh { name = "SplashLace05" };
+            m.hideFlags = HideFlags.DontSave;
+            m.SetVertices(vt); m.SetUVs(0, uv); m.SetTriangles(tr, 0);
+            m.bounds = new Bounds(Vector3.zero, new Vector3(8f, 4f, 8f));
+            return m;
+        }
+
+        Mesh laceMesh;
+        Material laceMaterial;
+        bool laceTried;
+        MaterialPropertyBlock laceProps;
+        float steerSm, burstSm;
+
+        void DrawLace(Vector3 c, float rw, float strength, float dt)
+        {
+            BennyController bc = BennyController.Instance;
+            float st = bc != null ? bc.SteerVisual : 0f;
+            steerSm += (st - steerSm) * (1f - Mathf.Exp(-dt * 6f));
+            burstSm += ((splashAge < 0.45f ? splashStrength * (1f - splashAge / 0.45f) : 0f) - burstSm) * (1f - Mathf.Exp(-dt * 14f));
+            if (strength < 0.02f) return;
+            if (!laceTried) { laceTried = true; laceMaterial = Resources.Load<Material>("RainbowSplashLace05"); }
+            if (laceMaterial == null) return;
+            if (laceMesh == null) laceMesh = BuildLaceMesh();
+            if (laceProps == null) laceProps = new MaterialPropertyBlock();
+            laceProps.SetVector(StateId, new Vector4(rw, strength, steerSm, burstSm));
+            var rp = new RenderParams(laceMaterial)
+            {
+                layer = gameObject.layer,
+                shadowCastingMode = ShadowCastingMode.Off,
+                receiveShadows = false,
+                worldBounds = new Bounds(c, new Vector3(8f, 4f, 8f)),
+                matProps = laceProps,
+            };
+            Graphics.RenderMesh(rp, laceMesh, 0, Matrix4x4.TRS(c, Quaternion.LookRotation(fwd, Vector3.up), Vector3.one));
+        }
+
         void DrawFans(Vector3 c, float rw, float strength)
+
         {
             if (strength < 0.01f) return;                      // airborne / stopped: no fans (riderSplash: visible > 0.01)
             Material m = ResolveFanMaterial();
@@ -456,7 +516,7 @@ namespace Rainbow.Screen05
                 receiveShadows = false,
                 worldBounds = new Bounds(c, new Vector3(8f, 4f, 8f)),
             };
-            Graphics.RenderMesh(rp, wakeFoamMesh, 0, Matrix4x4.Translate(c));
+            Graphics.RenderMesh(rp, wakeFoamMesh, 0, Matrix4x4.TRS(c, Quaternion.LookRotation(fwd, Vector3.up), Vector3.one));
         }
 
         // (splash6 2026-11-24) the approved flanks show lacy white water with a few soap clumps, not a cloud of lavender

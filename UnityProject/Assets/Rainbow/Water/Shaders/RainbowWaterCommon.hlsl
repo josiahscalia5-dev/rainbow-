@@ -28,6 +28,25 @@ float RBW_VNoise(float2 p)
                 lerp(RBW_Hash12(i + float2(0.0, 1.0)), RBW_Hash12(i + float2(1.0, 1.0)), u.x), u.y);
 }
 
+// scene-linear radiance that the scene grade (exposure -0.2337, contrast 20.35 in LogC, saturation 41.84, no tone mapping) shows as this
+// display sRGB colour (0-255): palettes written as measured picture colours (round 8; same as WaterTextureFactory.SceneFromDisplay)
+float3 RBW_Disp(float3 srgb255)
+{
+    float3 y = pow(saturate(srgb255 / 255.0), 2.2);
+    float l = dot(y, float3(0.2126729, 0.7151522, 0.0721750));
+    float3 x = max(l + (y - l) / 1.4184, 0.0);
+    x = (pow(5.555556 * x + 0.047996, 0.830910) * 1.04491 - 0.047996) / 5.555556;
+    return max(x, 0.0) / 0.85045;
+}
+
+// the scene vignette (intensity 0.19, smoothness 0.4) at a pixel: surfaces whose colours were measured on the picture divide by it
+float RBW_VignetteAt(float2 positionCSxy)
+{
+    float2 vd = abs(positionCSxy / _ScaledScreenParams.xy - 0.5) * 0.57;
+    float vf = saturate(1.0 - dot(vd, vd));
+    return max(vf * vf, 0.6);
+}
+
 // cheap cellular "soap foam" pattern: 0 at cell centres -> ~1 at borders
 float RBW_Cells(float2 p)
 {

@@ -26,14 +26,14 @@ mat:Assets/Rainbow/Environment/Materials/Ring05_Far.mat:_Exposure:f|1.00329
 mat:Assets/Rainbow/Environment/Materials/Ring05_Near.mat:_EnvIntensity:f|0.66977
 mat:Assets/Rainbow/Environment/Materials/Ring05_Near.mat:_Exposure:f|0.97558
 mat:Assets/Rainbow/Water/Materials/RainbowBubble05.mat:_Intensity:f|1.18
-mat:Assets/Rainbow/Water/Materials/RainbowFoam05.mat:_Brightness:f|0.86955
+mat:Assets/Rainbow/Water/Materials/RainbowFoam05.mat:_Brightness:f|1
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_RiverGrade:v0|1.12754
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_RiverGrade:v1|0.72131
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_RiverGrade:v2|0.95675
 mat:Assets/Rainbow/Water/Materials/RainbowRiverGlints05.mat:_Streak:f|0.3
 mat:Assets/Rainbow/Water/Resources/RainbowSplash05.mat:_Intensity:f|0.91325
 mat:Assets/Rainbow/Water/Resources/RainbowSplash05.mat:_RopeAlpha:f|0.85438
-mat:Assets/Rainbow/Water/Resources/RainbowWakeFoam05.mat:_Brightness:f|0.90927
+mat:Assets/Rainbow/Water/Resources/RainbowWakeFoam05.mat:_Brightness:f|1
 
 # 2026-11-24 10:47 local, coordinator (session 018893e6): automatic fitter, ring N (s 25.6) transform only (approved band runs down the right edge; no copper above the HUD); ROUND6_FINAL 83.1 / 68.5 -> R7_ringN 83.3 / 68.9; checked: no ring / wall gaps
 tf:Screen05/Environment05/Rings/Ring_25.6:px|-0.80188
