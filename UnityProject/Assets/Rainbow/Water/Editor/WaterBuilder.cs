@@ -204,6 +204,9 @@ namespace Rainbow.Screen05.EditorTools
             go.AddComponent<BubbleField>();
         }
 
+        /// <summary>(water4 2026-11-24) splash strand look on Rainbow/Water/Splash: width scale, opacity, extra fan angle (rad).</summary>
+        public const float SplashRopeWidth = 0.75f, SplashRopeAlpha = 0.8f, SplashSpread = 0.2f;
+
         static void PrepareSprayMaterial()
         {
             // SplashWake (added to Benny by Agent 4's builder) loads these at runtime: Resources.Load("RainbowSpray05")
@@ -219,7 +222,11 @@ namespace Rainbow.Screen05.EditorTools
             fan.SetFloat("_SoftDepth", 0.05f);      // ropes ride 0.035-0.1 above the water: only their very ends fade
             fan.SetFloat("_Intensity", 1f);
             fan.SetFloat("_Len", 1.55f);            // riderSplash.ts createRiderSplash05 uLen
-            fan.SetFloat("_RopeWidth", 1f);
+            // (water4 2026-11-24) approved spray = see-through streams of droplets fanning toward the bottom corners with the
+            // water showing between them (splash box luminance p50 ~175), not a solid white comb (Unity p50 ~250)
+            fan.SetFloat("_RopeWidth", SplashRopeWidth);
+            fan.SetFloat("_RopeAlpha", SplashRopeAlpha);
+            fan.SetFloat("_Spread", SplashSpread);
             fan.SetFloat("_FootprintBack", 0.14f);  // benny31 footprint ~0.91 u toward the camera vs ~0.8 u beside him
             EditorUtility.SetDirty(fan);
         }

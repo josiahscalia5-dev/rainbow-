@@ -20,6 +20,8 @@ Shader "Rainbow/Water/Splash"
         _Len ("Rope length (riderSplash uLen, units)", Float) = 1.55
         _RopeWidth ("Rope width scale", Float) = 1.0
         _FootprintBack ("Extra root radius toward the camera (his lean bulges the fur back)", Float) = 0.14
+        _RopeAlpha ("Strand opacity (water4: the approved strands are see-through droplet streams)", Range(0, 1.5)) = 1.0
+        _Spread ("Extra outward fan angle of the strands (rad, water4: fanning toward the bottom corners)", Float) = 0.0
     }
 
     SubShader
@@ -51,6 +53,8 @@ Shader "Rainbow/Water/Splash"
                 float _Len;
                 float _RopeWidth;
                 float _FootprintBack;
+                float _RopeAlpha;
+                float _Spread;
             CBUFFER_END
 
             // shared animation clock (Rainbow.Screen05.Screen05Clock; game time, reset by the test hold)
@@ -100,7 +104,8 @@ Shader "Rainbow/Water/Splash"
             {
                 float thR = lerp(1.35, 0.42, a) + (SPL_Hs(seed * 3.1) - 0.5) * 0.16;
                 float phi = lerp(0.3, 0.04, a) + (SPL_Hs(seed * 5.7) - 0.5) * 0.16 + 0.22 * u * u
-                          + (SPL_Hs(seed * 6.1) - 0.5) * 0.4 * u;                  // each strand curls its own way
+                          + (SPL_Hs(seed * 6.1) - 0.5) * 0.4 * u                   // each strand curls its own way
+                          + _Spread * (0.6 + 0.8 * u * u) * (0.7 + 0.6 * SPL_Hs(seed * 8.3));   // (water4) wider fan
                 float2 root = float2(sin(thR), cos(thR)) * SPL_RootR(thR, R) * (1.03 + 0.08 * SPL_Hs(seed * 2.3));
                 float2 q = root + float2(sin(phi), cos(phi)) * u * len
                          + float2(cos(phi), -sin(phi)) * (0.03 * u * sin(u * 8.0 + seed * 40.0));   // and wavers a little
@@ -236,7 +241,7 @@ Shader "Rainbow/Water/Splash"
                     float holes = (1.0 - smoothstep(0.13, 0.23, c2)) * max(streak, lump) * (1.0 - smoothstep(0.1, 0.55, uv.x));
                     float tail = (1.0 - smoothstep(0.8, 1.0, uv.x)) * smoothstep(0.0, 0.04, uv.x);
                     float bodyA = max(streak * lerp(0.95, 0.7, uv.x), lump * lerp(0.9, 0.55, uv.x));
-                    alpha = max(bodyA, drops * 0.85) * tail;
+                    alpha = max(bodyA, drops * 0.85) * tail * _RopeAlpha;
                     col = lerp(cyan, white, saturate(1.35 - uv.x * 0.6 - ac * 0.5));
                     col = lerp(col, float3(0.74, 0.78, 1.0), saturate(edgeN / max(wid + 0.05, 0.05)) * 0.4);   // shaded sides
                     col = lerp(col, white, drops * 0.5);

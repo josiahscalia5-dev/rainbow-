@@ -91,10 +91,21 @@ namespace Rainbow.Screen05
                  + (-2f * t3 + 3f * t2) * p1 + (t3 - t2) * h * Tan(i + 1);
         }
 
-        /// <summary>Lateral (+X = right) offset of the cyan core / coin line at distance s. 0 outside the stage.</summary>
+        /// <summary>
+        /// (water4 2026-11-24) the far S toward the throat: beyond the stage the course bends right (approved image: the
+        /// river and the far coins swing right of the vanishing point before they run into the throat; band pair traced at
+        /// y 520-540 = 20-30 px right of Unity's straight far river). 0 up to the stage end, so nothing playable changes.
+        /// The far river shader (Environment/Shaders/RainbowFarRiver.hlsl) continues it beyond TunnelLength.
+        /// </summary>
+        public const float FarAmp = 1.0f;
+        public static float FarSwing(float s) => FarAmp * Smooth(StageLength, StageLength + 36f, s);
+
+        /// <summary>Lateral (+X = right) offset of the cyan core / coin line at distance s. 0 before the stage, the far
+        /// swing (FarSwing) beyond it.</summary>
         public static float Meander(float s)
         {
-            if (s <= 0f || s >= StageLength) return 0f;
+            if (s <= 0f) return 0f;
+            if (s >= StageLength) return FarSwing(s);
             if (s <= UKeep || s >= UTail) return MeanderSine(s);
             float bend = (s > ExitU0 && s < ExitU1)
                 ? ExitAmp * Mathf.Pow(Mathf.Sin(Mathf.PI * (s - ExitU0) / (ExitU1 - ExitU0)), 2f)
