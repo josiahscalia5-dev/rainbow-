@@ -41,7 +41,7 @@ Material:
     - _BaseColor: {r: 0.7, g: 0.28, b: 0.92, a: 1}
     - _EmissionColor: {r: 0.23529412, g: 0.03137255, b: 0.28235295, a: 1}
     - _FarGlowColor: {r: 1, g: 0.6117647, b: 0.3529412, a: 1}
-    - _FarGlowRange: {r: 250, g: 480, b: 0.85, a: 0}
+    - _FarGlowRange: {r: 150, g: 330, b: 1.2, a: 0}
     - _FloorColorA: {r: 0.78431374, g: 0.12156863, b: 0.6117647, a: 1}
     - _FloorColorB: {r: 1, g: 0.30980393, b: 0.7529412, a: 1}
     - _FloorSheet: {r: 0.06, g: 0.35, b: 5.4, a: 1}
