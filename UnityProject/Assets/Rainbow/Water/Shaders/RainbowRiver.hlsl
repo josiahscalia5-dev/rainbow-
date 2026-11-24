@@ -36,6 +36,7 @@ float4 _W4LookD;   // live deltas on _W4Look (material property, RainbowRiver.sh
 #endif
 float4 _W4Dbg;
 float4 _R5Arc;    // (river5) live deltas: x arc period, y arc glow gain, z arc line gain, w arc phase (m)
+float4 _R5Sw;     // (river5) live deltas: x wake sweep lighten, y every pink band lighten
 float4 _R5Tune;   // (river5) live deltas of AgentScripts/screen05_river_tune.cs (0 in the game): x sweep offset, y sweep width, z near base revert, w near lift   // x = brush / ripple streak cores, y = ripple normal, z = specular glint, w = env reflection (gain deltas)
 
 // ---- W10/W12 palette (shader-linear values solved through exposure 0.86 -> Neutral -> sRGB -> grade sat 1.36 / con 1.15)
@@ -194,6 +195,8 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     pk = lerp(pk, RBW_PLIGHT, exp(-hlq * hlq) * 0.3);
     pk = lerp(pk, RBW_PPALE, saturate(stB * 0.7 + silk * _W4Band.w));
     pk = lerp(pk, RBW_PWHITE, saturate(stA * stB * 0.4)) * float3(1.12, 1.0, 1.05);
+    // (river5) the wake sweeps are lighter glossy pink-lavender in the approved (luma +15..+25 vs the hot pink of the banks)
+    pk = lerp(pk, lerp(RBW_PLIGHT, RBW_PPALE, 0.35), saturate((0.55 + _R5Sw.x) * sweep + 0.25 + _R5Sw.y));   // river5 variants: sweep 0 / 0.4 / 0.7 = 81.9 / 82.2 / 82.2; every band +0.25 = 82.3 / 67.9
 
     // hue ramp across each band edge (pink -> violet -> periwinkle -> blue -> cyan)
     float3 cIn = lerp(pk, RBW_VIN, smoothstep(0.62, 0.95, at));
