@@ -341,7 +341,7 @@ namespace Rainbow.Screen05
                     float cl = ClusterNoise(b * 4f + 3f * side, side);
                     for (int k = 0; k < n; k++)
                     {
-                        float r = (k < 2 ? rng.Range(0.045f, 0.1f) * (0.6f + 0.7f * cl) : rng.Range(0.012f, 0.04f)) * (0.5f + 0.5f * grow) * taper;
+                        float r = (k < 2 ? rng.Range(0.022f, 0.052f) * (0.6f + 0.6f * cl) : rng.Range(0.008f, 0.024f)) * (0.5f + 0.5f * grow) * taper;
                         float dl = 0.6f + 0.48f * b + (rng.Next() + rng.Next() - 1f) * 0.22f * (0.5f + 0.5f * grow);
                         AddWake(list, rng, side, dl, b + rng.Range(-0.05f, 0.05f), k < 2 ? -0.3f * r : 0.0f + 0.04f * grow * rng.Next(), r, rng.Range(0.86f, 1f));
                     }

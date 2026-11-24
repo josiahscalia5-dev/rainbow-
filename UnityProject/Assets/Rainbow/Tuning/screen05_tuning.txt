@@ -26,14 +26,14 @@ mat:Assets/Rainbow/Environment/Materials/Ring05_Far.mat:_Exposure:f|1.07208
 mat:Assets/Rainbow/Environment/Materials/Ring05_Near.mat:_EnvIntensity:f|0.66977
 mat:Assets/Rainbow/Environment/Materials/Ring05_Near.mat:_Exposure:f|0.95216
 mat:Assets/Rainbow/Water/Materials/RainbowBubble05.mat:_Intensity:f|0.97138
-mat:Assets/Rainbow/Water/Materials/RainbowFoam05.mat:_Brightness:f|0.86908
+mat:Assets/Rainbow/Water/Materials/RainbowFoam05.mat:_Brightness:f|0.96
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_RiverGrade:v0|1.12754
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_RiverGrade:v1|0.72131
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_RiverGrade:v2|0.95675
 mat:Assets/Rainbow/Water/Materials/RainbowRiverGlints05.mat:_Streak:f|0.54244
 mat:Assets/Rainbow/Water/Resources/RainbowSplash05.mat:_Intensity:f|0.91325
 mat:Assets/Rainbow/Water/Resources/RainbowSplash05.mat:_RopeAlpha:f|0.85438
-mat:Assets/Rainbow/Water/Resources/RainbowWakeFoam05.mat:_Brightness:f|0.82
+mat:Assets/Rainbow/Water/Resources/RainbowWakeFoam05.mat:_Brightness:f|1
 
 # 2026-11-24 10:47 local, coordinator (session 018893e6): automatic fitter, ring N (s 25.6) transform only (approved band runs down the right edge; no copper above the HUD); ROUND6_FINAL 83.1 / 68.5 -> R7_ringN 83.3 / 68.9; checked: no ring / wall gaps
 tf:Screen05/Environment05/Rings/Ring_25.6:px|-0.80188
@@ -48,21 +48,21 @@ mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_GlintLook:v1|0.1
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_GlintLook:v2|0.0728
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_GlintLook:v3|0.03607
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_SheenLook:v0|1.15
-mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_SheenLook:v1|0.55
+mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_SheenLook:v1|0.68
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_SheenLook:v2|0.66506
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_SheenLook:v3|0.53911
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_SilkLook:v0|0.06
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_SilkLook:v3|0.1875
-mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Alpha:f|0.8
+mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Alpha:f|0.9
 mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Bright:f|1.04156
 mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Height:f|0.11075
-mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Len:f|1.16586
-mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Shape:v0|0.5
+mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Len:f|1.35
+mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Shape:v0|0.3
 mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Shape:v1|1.89363
 mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Shape:v2|0.91633
-mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Web:v0|0.48165
-mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Web:v1|0.71497
-mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Web:v3|0.56146
+mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Web:v0|0.3
+mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Web:v1|0.63
+mat:Assets/Rainbow/Water/Resources/RainbowSplashLace05.mat:_Web:v3|0.5
 
 # 2026-11-24 14:58 local, session da8aeec6: second fitter run of round 8 (83.9 / 70.1 -> 84.5 / 70.9)
 mat:Assets/Rainbow/Benny/Materials/Benny_Fluff.mat:_FurTint:v0|0.90191
@@ -71,7 +71,7 @@ mat:Assets/Rainbow/Benny/Materials/Benny_Fluff.mat:_FurTint:v2|0.73453
 mat:Assets/Rainbow/Gameplay/Materials/Coin05.mat:_FaceTint:v0|1.13345
 mat:Assets/Rainbow/Gameplay/Materials/Coin05.mat:_FaceTint:v1|1.62124
 mat:Assets/Rainbow/Gameplay/Materials/Coin05.mat:_FaceTint:v2|1.6
-mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_LatherLook:v0|1.68224
+mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_LatherLook:v0|1.5
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_LatherLook:v1|0.58369
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_LatherLook:v2|0.23869
 mat:Assets/Rainbow/Water/Materials/RainbowRiver05.mat:_LatherLook:v3|3.59493

@@ -37,7 +37,7 @@ Material:
     m_Colors:
     - _EdgeBright: {r: 0.96, g: 0.6, b: 0.14, a: 1}
     - _EdgeDark: {r: 0.6, g: 0.27, b: 0.02, a: 1}
-    - _FaceTint: {r: 1.1334468, g: 1.6212426, b: 1.6, a: 0}
+    - _FaceTint: {r: 1.13345, g: 1.62124, b: 1.6, a: 0}
     - _MetalColor: {r: 0.47799987, g: 0.32199997, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
