@@ -35,7 +35,7 @@ float4 _W4LookD;   // live deltas on _W4Look (material property, RainbowRiver.sh
 #define _W4Look float4(0.75, 0.3, 0.55, 0.5)
 #endif
 float4 _W4Dbg;
-float4 _S6Arc;    // (splash6) live deltas (0 in the game): x broad-band mix, y band half width (periods)
+float4 _S6Arc;    // (splash6) live deltas (0 in the game): x broad-band mix, y band half width (periods), z satin gain
 float4 _R5Arc;    // (river5) live deltas: x arc period, y arc glow gain, z arc line gain, w arc phase (m)
 float4 _R5Sw;     // (river5) live deltas: x wake sweep lighten, y every pink band lighten
 float4 _R5Tune;   // (river5) live deltas of AgentScripts/screen05_river_tune.cs (0 in the game): x sweep offset, y sweep width, z near base revert, w near lift   // x = brush / ripple streak cores, y = ripple normal, z = specular glint, w = env reflection (gain deltas)
@@ -186,6 +186,16 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float3 nb = lerp(lerp(lerp(RBW_CDEEP2, RBW_CMID, 0.55), lerp(RBW_CMID, RBW_CBRIGHT, 0.35), saturate(_R5Tune.z)), RBW_CBRIGHT, saturate(glowA * (0.9 + _R5Arc.y) * ampA + lane * 0.25));
     nb = lerp(nb, RBW_CAQUA, saturate(glowA * glowA * (0.75 + 0.8 * _R5Arc.y) * ampA));
     nb = lerp(nb, RBW_CAQUAW, saturate(lineA * ampA * (0.9 + _R5Arc.z)));
+    // (splash6) dense vertical satin: fine bright / dark hairlines along the flow (vertical on screen) all over his wake
+    // water, brightest inside the luminous bands (approved near water y 1250-1536 is full of them; Unity was smooth)
+    float fwS = fwidth(dlW) * pxK;
+    float aS = 1.0 - smoothstep(0.004, 0.008, fwS);    // fine hairlines only where they span >= ~3 px
+    float sn1 = RBW_VNoise(float2(dlW * 26.0 + 0.4 * sin(bk * 2.0), bk * 1.6 + 7.0));
+    float sn2 = RBW_VNoise(float2(dlW * 61.0 + 3.3, bk * 2.4 + 1.0));
+    float satS = (sn1 - 0.5) * 0.7 + (sn2 - 0.5) * 0.5 * aS;
+    float gS = saturate(0.55 + _S6Arc.z);
+    nb *= 1.0 + satS * gS * (0.5 + 0.6 * glowA * ampA);
+    nb = lerp(nb, RBW_CAQUAW, saturate(smoothstep(0.62, 0.9, sn1 * 0.6 + sn2 * 0.4) * glowA * ampA * gS * 0.9));
     cy = lerp(cy, nb, inW);
     // (river5) the open water beside the sweeps near Benny is as bright (approved ~#2EA9F2 at y 1340-1440 vs Unity #1D93E5)
     float nearL = bOn * smoothstep(0.6, 1.4, back) * (1.0 - smoothstep(4.0, 6.0, back)) * (1.0 - inW);

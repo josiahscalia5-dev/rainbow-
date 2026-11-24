@@ -167,14 +167,26 @@ namespace Rainbow.Screen05
 
         public static Vector3 Rope(float s, int side)
         {
+            // shape round 6 (2026-11-24, user guide #5: a NARROW, irregular rim of mixed puffs): the left bar at s 24-28 (approved
+            // y 690-740, x 60-290) runs from the waterline right up to the wall (was a dark floor strip behind a 1.75 m lobe); the
+            // left rim lower at s 17-23 (approved top edge (90,725)-(0,785)); beyond s ~30 both ropes lower, narrower and finer
+            // (approved: ~20-30 px tall rims with the wall straight behind, Unity's were ~2x as tall with 20+ px puffs)
             if (side < 0)
             {
                 float lobe = SS(23.5f, 25.5f, s) * (1f - SS(29.5f, 32f, s));
-                return new Vector3(1.0f + 0.75f * lobe, 0.5f + 0.08f * SS(40f, 60f, s), 1.3f - 0.3f * SS(30f, 45f, s));
+                float bar = SS(23.8f, 24.8f, s) * (1f - SS(27.6f, 29.2f, s));
+                float low = SS(16f, 18f, s) * (1f - SS(22.5f, 24.5f, s));
+                float far = SS(30f, 40f, s);
+                return new Vector3((1.0f + 0.75f * lobe + 2.2f * bar) * (1f - 0.2f * low),
+                                   (0.5f + 0.08f * SS(40f, 60f, s)) * (1f - 0.24f * low) * (1f - 0.22f * far) * (1f - 0.5f * bar),
+                                   1.3f - 0.45f * SS(29f, 42f, s));
             }
             float bank = SS(44f, 50f, s) * (1f - SS(74f, 84f, s));
             float near = 1f - SS(19f, 23f, s);
-            return new Vector3(0.85f - 0.38f * near + 0.75f * bank, 0.45f - 0.1f * near + 0.12f * bank, 0.95f - 0.12f * near);
+            float mid = SS(25f, 30f, s) * (1f - SS(66f, 76f, s));
+            return new Vector3((0.85f - 0.38f * near + 0.75f * bank) * (1f - 0.3f * mid),
+                               (0.45f - 0.1f * near + 0.12f * bank) * (1f - 0.25f * mid),
+                               (0.95f - 0.12f * near) * (1f - 0.22f * mid));
         }
 
         /// <summary>LUT for shaders: s (S0 .. S1) along u, row 0 = (WL, LO, LI, RI), row 1 = (RO, WR, 0, 0).</summary>

@@ -29,7 +29,7 @@ Material:
     - _Intensity: 0.91325
     - _JetAlpha: 0.6
     - _Len: 1.5
-    - _Radial: 1
+    - _Radial: 0
     - _RayFan: 0.6
     - _RayLong: 0.35
     - _RayRoot: 0.97

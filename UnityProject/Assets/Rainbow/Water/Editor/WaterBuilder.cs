@@ -230,8 +230,9 @@ namespace Rainbow.Screen05.EditorTools
         /// roots moved round toward his back (rad). Live variants t1: (0.75, 0.8, 0.2) splash 69.7 vs the old (1, 1, 0) 68.8.</summary>
         public const float SplashRopeWidth = 1.5f, SplashRopeAlpha = 0.85f, SplashSpread = 0.2f, SplashRootBack = 0.3f, SplashJetAlpha = 0.6f, SplashStrandBack = 0f,
                            SplashLen = 1.5f;   // (t3 variants: 1.55 splash 72.0 > 1.35 71.6 > 1.15 71.2)
-        /// <summary>(splash6 2026-11-24) starburst strand layout on Rainbow/Water/Splash (_Radial 0 = the old flank V).</summary>
-        public const float SplashRadial = 1f, SplashRayFan = 0.6f, SplashRayLong = 0.35f, SplashRayRoot = 0.97f;
+        /// <summary>(splash6 2026-11-24) starburst strand layout on Rainbow/Water/Splash (_Radial 0 = the old flank V).
+        /// splash6_t1 variants: _Radial 1 = splash 73.9 vs 0 = 77.1 (kept 0 until a better starburst fit wins).</summary>
+        public const float SplashRadial = 0f, SplashRayFan = 0.6f, SplashRayLong = 0.35f, SplashRayRoot = 0.97f;
 
         static void PrepareSprayMaterial()
         {
