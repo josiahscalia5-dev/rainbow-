@@ -1,10 +1,40 @@
 # Rainbow Unity — handoff (latest verified state)
 
-Last verified: **2026-11-24 01:45 UTC** (20:45 New York time), Claude session on the user's laptop. Unity was closed for a laptop restart.
+Last verified: **2026-11-24 02:35 UTC** (21:35 New York time), Claude session on the user's laptop. Unity is OPEN; round-3 visual stage A is running.
 Read this first in any new Claude account or session. **This is an existing project — never start over.**
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
+**UPDATE 2026-11-24 02:35 UTC (21:35 local) - ROUND 3 VISUAL STAGE A IS RUNNING (Workflow run `wf_1d23ecb6-d86`):**
+**User, 21:25 local:** save the working configuration and stop optional setup / optimization. Spend the remaining credits on real
+Screen 05 development: tunnel geometry, realistic metallic gold rings and paddles, deeper purple reflective walls, natural S-shaped
+water flow, softer foam, floating iridescent bubbles, Benny's natural contact with the water. Make substantial visible improvements, not
+tiny score gains. Keep real playable 3D and every existing function. Show a new Unity Game-view side-by-side after meaningful
+improvements. No Screen 06 until the user approves Screen 05.
+**Done 20:50-21:35 local (all saved; GitHub = laptop at `ac9e1c5` when the round started):**
+- After the restart: C: 7.9 GB free (page file 7.4 GB). The safe cleanup candidates are small (~1 GB: browser caches 0.6 GB, Unity
+  download cache 0.26 GB, Temp 0.1 GB), so nothing was deleted. Downloads (16.8 GB, the user's Meshy files) was not touched.
+- Play Mode = "Reload Scene only" (`EditorSettings m_EnterPlayModeOptions: 1`). KEPT after the A/B test: the same stills (54.8 / 36.2
+  vs 54.8 / 36.1 with reload), the same steer / jump / coin numbers, a clean console, and 2 x 120/120-frame recordings in a row. A full
+  cycle takes 69 s instead of 113 s; `-NoRebuild` takes 31 s. Revert: `AgentScripts/screen05_playmode_reload.cs` (fast:
+  `screen05_playmode_fast.cs`). New checks: `AgentScripts/screen05_playtest_check.cs` (steer / jump / coins / hearts),
+  `screen05_record_short.cs` (4 s clip).
+- Repeatable stills: new `Assets/Rainbow/Shared/Screen05Clock.cs` (shared animation clock). Shaders use `_RainbowTime` instead of
+  `_Time.y`; C# uses `Screen05Clock.Time` (CoinTrail, BubbleField, RiverSurface.HeightAt, Benny's wobble). The hold resets it, so two
+  identical cycles now give identical scores (before, the animation phase alone moved the water areas by up to 4 points).
+- Honest starting point of this stage: `evidence/screen05/round3/stage2_start_r3_clock_D*` = visual 54.8 / layout 36.2 (the saved
+  lane edits added +2.0 / +2.4 to the frame stage's 52.8 / 33.8).
+- Target sheet: the measuring agent was stopped at the user's request. The partial `staging/round3-fit/measure-targets.ps1` +
+  `Targets05.cs` are unverified. The frame agent's hand-measured numbers are the target sheet (written into the workflow brief).
+**RUNNING NOW:** `staging/shared/round3-visual.workflow.js` stage A (exact args: `staging/shared/round3-visual-args.json`): lanes
+TUNNEL (walls, gold rings, paddles, throat) | WATER (S flow, softer foam). Session `fe5f24d5-f330-4fca-9c63-b893aefbb03f`; journal
+`%USERPROFILE%\.claude\projects\C--Users-josia--unity\fe5f24d5-f330-4fca-9c63-b893aefbb03f\subagents\workflows\wf_1d23ecb6-d86\journal.jsonl`.
+**NEXT:** (1) when stage A ends: one coordinator cycle `-Tag r3v_stageA -Areas all`; send the user the side-by-side + both scores.
+(2) Launch stage B (`stage: "B"`: BENNY water contact / splash | BUBBLES) with that still as the new baseline and notes from stage A's
+results. (3) Coordinator integration: `-Tag ROUND3_FINAL -Areas all -Series`, `screen05_playtest_check.cs`, a 12 s recording; send the
+user the side-by-side + scores + recording; update this handoff. If a run is interrupted: read its journal, put lanes with a result into
+`skip`, write `notes.<lane>` for the interrupted lane (its newest files + work stills), relaunch the same stage.
+
 **UPDATE 2026-11-24 01:45 UTC (READY FOR A LAPTOP RESTART; nothing running; Unity closed):**
 **User request, 20:29 local:**
 - They approved the faster Play Mode ("Reload Scene only"), subject to safety testing. Revert it if gameplay breaks or test results become unreliable.
