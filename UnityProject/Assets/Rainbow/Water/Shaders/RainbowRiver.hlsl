@@ -35,6 +35,7 @@ float4 _W4LookD;   // live deltas on _W4Look (material property, RainbowRiver.sh
 #define _W4Look float4(0.75, 0.3, 0.55, 0.5)
 #endif
 float4 _W4Dbg;
+float4 _R5Arc;    // (river5) live deltas: x arc period, y arc glow gain, z arc line gain, w arc phase (m)
 float4 _R5Tune;   // (river5) live deltas of AgentScripts/screen05_river_tune.cs (0 in the game): x sweep offset, y sweep width, z near base revert, w near lift   // x = brush / ripple streak cores, y = ripple normal, z = specular glint, w = env reflection (gain deltas)
 
 // ---- W10/W12 palette (shader-linear values solved through exposure 0.86 -> Neutral -> sRGB -> grade sat 1.36 / con 1.15)
@@ -167,16 +168,16 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float inW = bOn * wk * smoothstep(0.75, 1.15, back) * (1.0 - smoothstep(-0.12, 0.08, abs(dlW) - (cW - wW)))
               * (1.0 - smoothstep(3.2, 4.2, back));
     float bk = back - 0.8 * dlW * dlW + 0.012 * sin(time * 2.2 + dlW * 5.0);
-    float pha = (bk - 1.42) / 0.52;
+    float pha = (bk - 1.42 - _R5Arc.w) / (0.52 + _R5Arc.x);
     float ca = frac(pha + 0.5) - 0.5;
     float segN = smoothstep(0.1, 0.5, RBW_VNoise(float2(dlW * 3.1 + 9.0, floor(pha + 0.5) * 3.7)));
     float glowA = ca > 0.0 ? exp(-ca * 4.2) : exp(ca * 12.0);
     float lineA = exp(-ca * ca * 170.0) * (0.35 + 0.65 * segN);
     float ampA = smoothstep(1.2, 1.55, bk);
     // (river5 variants: the brighter azure base CMID..CBRIGHT scored 0.3 lower, kept the deep base; _R5Tune.z = live mix)
-    float3 nb = lerp(lerp(lerp(RBW_CDEEP2, RBW_CMID, 0.55), lerp(RBW_CMID, RBW_CBRIGHT, 0.35), saturate(_R5Tune.z)), RBW_CBRIGHT, saturate(glowA * 0.9 * ampA + lane * 0.25));
-    nb = lerp(nb, RBW_CAQUA, saturate(glowA * glowA * 0.75 * ampA));
-    nb = lerp(nb, RBW_CAQUAW, saturate(lineA * ampA * 0.9));
+    float3 nb = lerp(lerp(lerp(RBW_CDEEP2, RBW_CMID, 0.55), lerp(RBW_CMID, RBW_CBRIGHT, 0.35), saturate(_R5Tune.z)), RBW_CBRIGHT, saturate(glowA * (0.9 + _R5Arc.y) * ampA + lane * 0.25));
+    nb = lerp(nb, RBW_CAQUA, saturate(glowA * glowA * (0.75 + 0.8 * _R5Arc.y) * ampA));
+    nb = lerp(nb, RBW_CAQUAW, saturate(lineA * ampA * (0.9 + _R5Arc.z)));
     cy = lerp(cy, nb, inW);
     // (river5) the open water beside the sweeps near Benny is as bright (approved ~#2EA9F2 at y 1340-1440 vs Unity #1D93E5)
     float nearL = bOn * smoothstep(0.6, 1.4, back) * (1.0 - smoothstep(4.0, 6.0, back)) * (1.0 - inW);

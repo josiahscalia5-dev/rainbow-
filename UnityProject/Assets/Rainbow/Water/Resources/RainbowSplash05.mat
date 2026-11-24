@@ -27,7 +27,7 @@ Material:
     m_Floats:
     - _FootprintBack: 0.14
     - _Intensity: 1
-    - _JetAlpha: 1
+    - _JetAlpha: 0.6
     - _Len: 1.5
     - _RootBack: 0.3
     - _RopeAlpha: 0.85

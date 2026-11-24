@@ -228,7 +228,7 @@ namespace Rainbow.Screen05.EditorTools
 
         /// <summary>(water4 2026-11-24) splash strand look on Rainbow/Water/Splash: width scale, opacity, extra fan angle (rad),
         /// roots moved round toward his back (rad). Live variants t1: (0.75, 0.8, 0.2) splash 69.7 vs the old (1, 1, 0) 68.8.</summary>
-        public const float SplashRopeWidth = 1.5f, SplashRopeAlpha = 0.85f, SplashSpread = 0.2f, SplashRootBack = 0.3f, SplashJetAlpha = 1f, SplashStrandBack = 0f,
+        public const float SplashRopeWidth = 1.5f, SplashRopeAlpha = 0.85f, SplashSpread = 0.2f, SplashRootBack = 0.3f, SplashJetAlpha = 0.6f, SplashStrandBack = 0f,
                            SplashLen = 1.5f;   // (t3 variants: 1.55 splash 72.0 > 1.35 71.6 > 1.15 71.2)
 
         static void PrepareSprayMaterial()

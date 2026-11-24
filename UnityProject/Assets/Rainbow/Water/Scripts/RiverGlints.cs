@@ -79,8 +79,8 @@ namespace Rainbow.Screen05
                         Vector3 sc = k == 'P' || k == 'p' ? Pale : k == 'v' ? Violet : Aqua;
                         float st = k == 'v' ? 0.75f : k == 'c' || k == 'p' ? 0.85f : 0.8f;
                         Strip(u0, u1, u2, u3, tri, 0f, cls, a, s, len * (cls == 0 ? 2f : cls == 3 ? 1f : 1.4f), wid * (cls == 0 ? 1.4f : cls == 3 ? 1.6f : 2f), sc, cls == 3 ? st * 0.7f : st, c, seed);
-                        // (river5, user guide #4) the near / wake stars shrink into subtle glints (they read as ~40-70 px sprites)
-                        float fk = cls == 0 || cls == 3 ? 0.6f : 0.85f;
+                        // (river5 live variants: shrinking the near / wake stars to 0.6x scored -0.5; 1.2x +0.1) original size kept
+                        float fk = 1f;
                         if (k == 'W' || k == 'P') Strip(u0, u1, u2, u3, tri, 1f, cls, a, s, fl * fk, fl * 0.5f * fk, White, 1f, c, seed);
                     }
                 }
