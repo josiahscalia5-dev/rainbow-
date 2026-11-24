@@ -99,10 +99,15 @@ Shader "Rainbow/Gameplay/Coin"
                 float3 art = lerp(edgeArt, faceArt, saturate(i.face));
 
                 float3 N = normalize(i.normalWS);
+                // raised face: a softly domed normal, so the key light is a moving spot (a flat face flashed all white at one angle)
+                float2 rc = (i.uv - 0.5) * 2.0;
+                float3 axX = normalize(float3(UNITY_MATRIX_M._m00, UNITY_MATRIX_M._m10, UNITY_MATRIX_M._m20));
+                float3 axY = normalize(float3(UNITY_MATRIX_M._m01, UNITY_MATRIX_M._m11, UNITY_MATRIX_M._m21));
+                N = normalize(N + saturate(i.face) * 0.3 * (rc.x * axX + rc.y * axY));
                 float3 V = GetWorldSpaceNormalizeViewDir(i.positionWS);
                 Light mainLight = GetMainLight();
                 float3 ambient = SampleSH(N);
-                float3 env = GlossyEnvironmentReflection(reflect(-V, N), i.positionWS, 0.3, 1.0);
+                float3 env = min(GlossyEnvironmentReflection(reflect(-V, N), i.positionWS, 0.3, 1.0), 0.75);
                 float3 col;
                 RainbowCoin_float(art, N, V, mainLight.direction, mainLight.color, ambient, env, _MetalColor.rgb,
                     _Emission, _SpecPower, _SpecStrength, _EnvStrength, col);

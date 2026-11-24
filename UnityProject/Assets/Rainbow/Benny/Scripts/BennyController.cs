@@ -26,7 +26,7 @@ namespace Rainbow.Screen05
         /// where the route centre put him; physics, pickup and steering are unchanged.</summary>
         public const float VisualShiftX = 0.055f;
         /// <summary>Smoothed water height under him at the approved view (so his approved place on screen stays the same).</summary>
-        public const float RideRef = 0.0f;
+        public const float RideRef = -0.0138f;
 
         public static BennyController Instance { get; private set; }
 
@@ -50,7 +50,7 @@ namespace Rainbow.Screen05
         [Header("Heading and lean")]
         public float headingFollow = 0.85f;
         public float maxHeadingDeg = 22f;
-        public float headingResponse = 5f;
+        public float headingResponse = 6f;
 
         [Header("Jump")]
         public float jumpVelocity = 8.6f;
@@ -63,7 +63,9 @@ namespace Rainbow.Screen05
         [Tooltip("share of the swell height his body follows")]
         public float rideFollow = 0.85f;
         [Tooltip("share of the impact speed that pushes him under when he lands")]
-        public float landingDip = 0.42f;
+        public float landingDip = 1.0f;
+        [Tooltip("extra water drag (1/s) while he plunges after a landing")]
+        public float plungeDrag = 24f;
 
         [Header("Ride pose (runtime.ts)")]
         public float rideLift = 0.12f;
@@ -106,7 +108,7 @@ namespace Rainbow.Screen05
         float height, vy;                        // jump
         float ride, rideV, waterSm;              // floating spring (m around the floating height), smoothed water height
         bool grounded = true, swimming, placed;
-        float lift, pitch, heading, lastX;
+        float lift, pitch, heading, lastX, lastRouteX;
         float edgeTime, bumpCooldown, limL, limR;
         // pom-pom spring (runtime.ts)
         float pomAngX, pomVelX, pomAngZ, pomVelZ, lastY, lastVy;
@@ -174,7 +176,7 @@ namespace Rainbow.Screen05
             heading = Mathf.Atan2(rf.x, rf.z) * Mathf.Rad2Deg;
             pomAngX = pomVelX = pomAngZ = pomVelZ = 0f;
             placed = true;
-            lastX = LateralX;
+            lastX = LateralX; lastRouteX = rp.x;
             waterSm = WaterUnder(LateralX, rp.z);
             Place(rp);
             lastY = transform.position.y; lastVy = 0f;
@@ -274,7 +276,7 @@ namespace Rainbow.Screen05
                     // touch-down: the impact carries on into the water spring (he dips and floats up again)
                     float impact = Mathf.Clamp01(-vy / Mathf.Max(0.01f, jumpVelocity));
                     rideV += vy * landingDip;
-                    ride += Mathf.Max(height, -0.1f);
+                    ride += Mathf.Max(height, -0.3f);
                     height = 0f;
                     vy = 0f;
                     grounded = true;
@@ -284,12 +286,20 @@ namespace Rainbow.Screen05
             }
             // ---- floating on the swell
             waterSm += (WaterUnder(x, rp.z) - waterSm) * (1f - Mathf.Exp(-dt * 9f));
-            rideV += (-rideStiffness * ride - rideDamping * rideV) * dt;
-            ride = Mathf.Clamp(ride + rideV * dt, -0.42f, 0.25f);
+            const int sub = 4;
+            for (int i = 0; i < sub; i++)
+            {
+                float h = dt / sub;
+                float c = rideV < 0f ? Mathf.Lerp(rideDamping, plungeDrag, Mathf.Clamp01(-rideV * 0.5f)) : rideDamping;
+                rideV += (-rideStiffness * ride - c * rideV) * h;
+                ride += rideV * h;
+            }
+            ride = Mathf.Clamp(ride, -0.5f, 0.25f);
 
             // ---- heading: toward where he really goes
-            float vx = (x - lastX) / dt;
+            float vx = SwimLine05.SlopeAhead(rp.z, 0.2f, 2.4f) * speed + (x - lastX) / dt - (rp.x - lastRouteX) / dt;
             lastX = x;
+            lastRouteX = rp.x;
             float want = Mathf.Clamp(Mathf.Atan2(vx * headingFollow, Mathf.Max(speed, 4f)) * Mathf.Rad2Deg, -maxHeadingDeg, maxHeadingDeg);
             heading += (want - heading) * (1f - Mathf.Exp(-dt * headingResponse));
 
