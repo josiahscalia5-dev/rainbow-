@@ -34,7 +34,8 @@ float4 _W4LookD;   // live deltas on _W4Look (material property, RainbowRiver.sh
 #define _W4Band float4(0.9, 0.65, 0.0, 0.6)
 #define _W4Look float4(0.75, 0.3, 0.55, 0.5)
 #endif
-float4 _W4Dbg;   // x = brush / ripple streak cores, y = ripple normal, z = specular glint, w = env reflection (gain deltas)
+float4 _W4Dbg;
+float4 _R5Tune;   // (river5) live deltas of AgentScripts/screen05_river_tune.cs (0 in the game): x sweep offset, y sweep width, z near base revert, w near lift   // x = brush / ripple streak cores, y = ripple normal, z = specular glint, w = env reflection (gain deltas)
 
 // ---- W10/W12 palette (shader-linear values solved through exposure 0.86 -> Neutral -> sRGB -> grade sat 1.36 / con 1.15)
 static const float3 RBW_CDEEP   = float3(0.058, 0.197, 0.379);   // #0068AD
@@ -145,8 +146,8 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     // ---- diagonal pink wake sweeps behind Benny ----
     // (river5) approved: the sweeps start ~0.11 m further out and splay a little wider (rowclass y 1240-1360: Unity ~25 px
     // inside on each side, ~15 % narrower)
-    float cW = 0.21 + 0.5 * back;
-    float wW = (0.16 + 0.06 * back) * smoothstep(0.8, 1.3, back) * wk * (1.0 - smoothstep(2.15, 2.7, back));
+    float cW = 0.21 + _R5Tune.x + 0.5 * back;
+    float wW = (0.16 + _R5Tune.y + 0.06 * back) * smoothstep(0.8, 1.3, back) * wk * (1.0 - smoothstep(2.15, 2.7, back));
     float tW5 = (cW - abs(dlW)) / max(wW, 1e-3);
     float sweep = (wW > 0.001 && abs(tW5) < abs(tb)) ? 1.0 : 0.0;
     tb = lerp(tb, tW5, sweep);
@@ -173,13 +174,13 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float lineA = exp(-ca * ca * 170.0) * (0.35 + 0.65 * segN);
     float ampA = smoothstep(1.2, 1.55, bk);
     // (river5) the approved near water is open luminous azure-cyan (~#05B5F7 between the arcs, measured y 1250-1440), not deep blue
-    float3 nb = lerp(lerp(RBW_CMID, RBW_CBRIGHT, 0.35), RBW_CBRIGHT, saturate(glowA * 0.9 * ampA + lane * 0.25));
+    float3 nb = lerp(lerp(lerp(RBW_CMID, RBW_CBRIGHT, 0.35), lerp(RBW_CDEEP2, RBW_CMID, 0.55), saturate(_R5Tune.z)), RBW_CBRIGHT, saturate(glowA * 0.9 * ampA + lane * 0.25));
     nb = lerp(nb, RBW_CAQUA, saturate(glowA * glowA * 0.75 * ampA));
     nb = lerp(nb, RBW_CAQUAW, saturate(lineA * ampA * 0.9));
     cy = lerp(cy, nb, inW);
     // (river5) the open water beside the sweeps near Benny is as bright (approved ~#2EA9F2 at y 1340-1440 vs Unity #1D93E5)
     float nearL = bOn * smoothstep(0.6, 1.4, back) * (1.0 - smoothstep(4.0, 6.0, back)) * (1.0 - inW);
-    cy = lerp(cy, max(cy, lerp(RBW_CMID, RBW_CBRIGHT, 0.3)), 0.6 * nearL);
+    cy = lerp(cy, max(cy, lerp(RBW_CMID, RBW_CBRIGHT, 0.3)), saturate(0.6 + _R5Tune.w) * nearL);
 
     // between a band and its bank: cyan water a touch bluer than the core
     float3 ow = lerp(cy, float3(0.15, 0.17, 0.8), _W4Band.y);
