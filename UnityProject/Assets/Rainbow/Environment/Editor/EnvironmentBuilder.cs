@@ -236,7 +236,7 @@ namespace Rainbow.Screen05.EditorTools
         /// broad white highlight + reflections on every strand: ring A crown displayed (254,250,210), approved (252,145,95).</summary>
         static readonly Vector4 RingLookCopper = new Vector4(0.55f, 90f, 0.35f, 0.45f);
         /// <summary>(crest strength, bulb halo, brightness, palette 1 = copper RM_*): RainbowGoldMetal.hlsl RainbowRingCopper.</summary>
-        static readonly Vector4 RingLook2 = new Vector4(0.8f, 0.5f, 1.0f, 1f);
+        static readonly Vector4 RingLook2 = new Vector4(0.8f, 0.5f, 0.88f, 1f);   // cycle tunnel_t1: 0.88 > 1.0 > 1.15
         /// <summary>Marquee bulbs on the rings (per turn, half width, strength, -).</summary>
         static readonly Vector4 RingBulbs = new Vector4(20f, 0.04f, 0.8f, 0f);
         /// <summary>Near frame corners: (palette 1 = copper bands, glare, vignette compensation, -).</summary>

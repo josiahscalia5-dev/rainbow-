@@ -24,8 +24,10 @@
 
 // (water4 2026-11-24) live-tuning hook of AgentScripts/screen05_water4_tune.cs (global vector, never set in the game = 0 =
 // the baked look): x = contact shade strength delta, y = contact shade length delta, z = right band width delta (x),
-// w = right band near-field shift delta (m)
+// w = right band near-field shift delta (m); _W4Tune2: x = near side-arc fade delta, y = pink sheen scale delta,
+// z = band edge raggedness delta
 float4 _W4Tune;
+float4 _W4Tune2;
 
 // ---- W10/W12 palette (shader-linear values solved through exposure 0.86 -> Neutral -> sRGB -> grade sat 1.36 / con 1.15)
 static const float3 RBW_CDEEP   = float3(0.058, 0.197, 0.379);   // #0068AD
@@ -152,12 +154,12 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     //  0.45 m further right at s 15.5-20.5 (approved 569-674 px at y 840, Unity was 538-595), 0.5 m further right at s 29-35
     //  (y 640-680), and only narrowed at s 21-28; the left band is ~1.3x broader at s 19-22 (y 760-820).
     //  Mean edge error of the traced pink: right 31.5 -> 8 px, left 20 -> 15 px.
-    float kWL = (1.0 - 0.4 * RBW_SS(139.0, 140.5, sm) * (1.0 - RBW_SS(146.7, 149.7, sm)))
-              * (1.0 + 0.3 * RBW_SS(134.0, 135.5, sm) * (1.0 - RBW_SS(138.5, 140.0, sm)));
+    float kWL = (1.0 - 0.4 * RBW_SS(136.5, 140.0, sm) * (1.0 - RBW_SS(146.7, 149.7, sm)))
+              * (1.0 + 0.12 * RBW_SS(134.0, 135.5, sm) * (1.0 - RBW_SS(135.8, 137.0, sm)));
     float kWR = (1.0 - 0.4 * RBW_SS(138.0, 139.5, sm) * (1.0 - RBW_SS(143.0, 145.0, sm)))
               * (1.0 + 0.4 * bOn * RBW_SS(-1.0, 0.0, db) * (1.0 - RBW_SS(1.3, 2.8, db))) * (1.0 + _W4Tune.z);
     offR -= 1.45 * RBW_SS(128.0, 131.0, sm) * (1.0 - RBW_SS(134.9, 138.4, sm));
-    offR += (0.45 + _W4Tune.w) * RBW_SS(131.0, 133.0, sm) * (1.0 - RBW_SS(136.5, 138.5, sm))
+    offR += (0.55 + _W4Tune.w) * RBW_SS(131.0, 133.0, sm) * (1.0 - RBW_SS(136.5, 138.5, sm))
           + 0.5 * RBW_SS(144.5, 146.5, sm) * (1.0 - RBW_SS(151.0, 154.0, sm));
     float wLv = max(wL * kWL, 0.2);
     float wRv = max(wR * kWR, 0.2);
@@ -210,7 +212,9 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float tW5 = (cW - abs(dlB)) / max(wW, 1e-3);
     float sweep = (wW > 0.001 && abs(tW5) < abs(tb)) ? 1.0 : 0.0;
     tb = lerp(tb, tW5, sweep);
-    tb += (br - 0.5) * 0.34 * mid5;
+    // (water4 2026-11-24: 0.34 -> 0.2, smoother band edges - the approved satin bands have clean flowing outlines, the
+    //  brushed-satin wobble of the edge read as ragged, torn pink patches in the mid field)
+    tb += (br - 0.5) * max(0.2 + _W4Tune2.z, 0.0) * mid5;
     float at = abs(tb);
 
     // ---- electric cyan ----
@@ -236,7 +240,11 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     nb = lerp(nb, RBW_CAQUA, saturate(0.7 * pow(sp, 4.0) * (0.4 + 0.6 * segN)));
     nb = lerp(nb, RBW_CAQUAW, saturate(pow(sp, 16.0) * segN) * 0.75);
     nb += float3(0.35, 0.55, 0.6) * pow(sp, 40.0) * segN * 0.4;                          // glossy arc line
-    cy = lerp(cy, nb, near5);
+    // (water4 2026-11-24) beside / ahead of him the approved near water is broad glossy azure with along-flow light
+    // streaks and big star flares; the legs of the ∩ arcs ran into dense parallel 'wood-grain' lines there. The arcs only
+    // roll out behind him; at his sides the brushed satin of the mid field (along-flow lanes) shows instead.
+    float kSide = saturate(0.85 + _W4Tune2.x) * smoothstep(1.3, 2.3, abs(dlB)) * smoothstep(-0.6, 0.4, db) * bOn;
+    cy = lerp(cy, nb, near5 * (1.0 - kSide));
 
     // water between a band and its bank: the approved shows a thin CYAN edge there (a touch bluer than the core,
     // with sparkles), not a deep blue-violet strip
@@ -253,7 +261,10 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     // satin streaks run along each band, the edges stay deep magenta)
     float hlq2 = (tb + 0.25) / 0.3;
     float hl2 = exp(-hlq2 * hlq2) * (0.55 + 0.45 * B5.y);
-    pk = lerp(pk, RBW_PLIGHT, saturate(bglow * 0.7 + hl * 0.45 + hl2 * 0.35));
+    // (water4 2026-11-24: the broad sheens x0.65 - approved bands are deep hot magenta (#D454E1 measured at y 860-940)
+    //  with narrow bright streaks; the broad light-pink sheens made Unity's bands pastel / milky (#A575E7))
+    float shK = max(0.65 + _W4Tune2.y, 0.0);
+    pk = lerp(pk, RBW_PLIGHT, saturate(bglow * 0.7 + (hl * 0.45 + hl2 * 0.35) * shK));
     float pc = saturate(bcore + sweep * B5.z * 0.5);
     pk = lerp(pk, RBW_PPALE, pc * 0.75);
     pk = lerp(pk, RBW_PWHITE, pc * pc * 0.85);
@@ -405,10 +416,10 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
         // palette, start it under the fur (no bright glossy line between fur and shade), gone ~0.35 u out (was 0.75)
         float latK = 1.0 - smoothstep(0.2 + 0.1 * max(e, 0.0), 0.46 + 0.15 * max(e, 0.0), abs(dlB));
         float shadeK = latK * smoothstep(-0.1, 0.35, cosB) * smoothstep(-0.4, -0.25, e)
-                     * (1.0 - smoothstep(0.02, max(0.35 + _W4Tune.y, 0.05), e));
+                     * (1.0 - smoothstep(0.02, max(0.5 + _W4Tune.y, 0.05), e));
         // his body blocks the reflected glare there too (no glossy arcs / flares inside the shadow)
         col = lerp(col, min(col, float3(0.1, 0.45, 0.85)), saturate(shadeK * wk * 1.5));
-        col = lerp(col, RBW_CDEEP * float3(0.6, 0.85, 1.05), saturate(shadeK * (0.8 + _W4Tune.x) * wk));
+        col = lerp(col, RBW_CDEEP * float3(0.6, 0.85, 1.05), saturate(shadeK * (0.95 + _W4Tune.x) * wk));
         // broken bubbly rim hugging the waterline on his flanks only
         float rim = smoothstep(-0.08, -0.01, e) * (1.0 - smoothstep(0.04, 0.13, e)) * flankK;
         float foamW = rim * smoothstep(0.3, 0.65, bubbly + rim * 0.15);

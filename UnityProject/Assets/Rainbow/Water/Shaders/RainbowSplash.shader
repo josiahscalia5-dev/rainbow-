@@ -22,6 +22,7 @@ Shader "Rainbow/Water/Splash"
         _FootprintBack ("Extra root radius toward the camera (his lean bulges the fur back)", Float) = 0.14
         _RopeAlpha ("Strand opacity (water4: the approved strands are see-through droplet streams)", Range(0, 1.5)) = 1.0
         _Spread ("Extra outward fan angle of the strands (rad, water4: fanning toward the bottom corners)", Float) = 0.0
+        _RootBack ("Roots moved round toward straight back (rad, water4: the approved spray pours off his lower back, not his flanks)", Float) = 0.0
     }
 
     SubShader
@@ -55,6 +56,7 @@ Shader "Rainbow/Water/Splash"
                 float _FootprintBack;
                 float _RopeAlpha;
                 float _Spread;
+                float _RootBack;
             CBUFFER_END
 
             // shared animation clock (Rainbow.Screen05.Screen05Clock; game time, reset by the test hold)
@@ -102,7 +104,8 @@ Shader "Rainbow/Water/Splash"
             // lat 0.45 and 1.25 on each side)
             float3 SPL_Rope(float u, float side, float a, float seed, float len, float R)
             {
-                float thR = lerp(1.35, 0.42, a) + (SPL_Hs(seed * 3.1) - 0.5) * 0.16;
+                float thR = lerp(1.35, 0.42, a) * (1.0 - 0.35 * saturate(_RootBack)) - 0.2 * _RootBack
+                          + (SPL_Hs(seed * 3.1) - 0.5) * 0.16;
                 float phi = lerp(0.3, 0.04, a) + (SPL_Hs(seed * 5.7) - 0.5) * 0.16 + 0.22 * u * u
                           + (SPL_Hs(seed * 6.1) - 0.5) * 0.4 * u                   // each strand curls its own way
                           + _Spread * (0.6 + 0.8 * u * u) * (0.7 + 0.6 * SPL_Hs(seed * 8.3));   // (water4) wider fan
@@ -116,7 +119,7 @@ Shader "Rainbow/Water/Splash"
             // type 1: crown droplet jet (low arc thrown up and back-outward beside the body)
             float3 SPL_Jet(float tau, float side, float a, float seed, float R, float str)
             {
-                float thR = lerp(1.6, 0.8, a) + (SPL_Hs(seed * 3.1) - 0.5) * 0.2;
+                float thR = lerp(1.6, 0.8, a) - 0.5 * _RootBack + (SPL_Hs(seed * 3.1) - 0.5) * 0.2;
                 float phi = lerp(1.2, 0.45, a) + (SPL_Hs(seed * 5.7) - 0.5) * 0.35;
                 float2 root = float2(sin(thR), cos(thR)) * SPL_RootR(thR, R) * 1.12;
                 float len = (0.3 + 0.5 * SPL_Hs(seed * 7.3)) * (0.55 + 0.45 * str);
@@ -175,7 +178,7 @@ Shader "Rainbow/Water/Splash"
                     // bubbly suds piled on his FLANKS at the water (approved: soap-bubble masses beside his lower body,
                     // pushed outward-back), from beside him round to ~36 deg from straight back - never a ring behind him
                     // (approved masses: left centred ~(lat 0.9, back 0.6), right from (0.75, 0.3) out to (1.15, 1.0))
-                    float th = lerp(1.32, 0.6, a) + (SPL_Hs(seed * 3.1) - 0.5) * 0.14;
+                    float th = lerp(1.32, 0.6, a) - 0.5 * _RootBack + (SPL_Hs(seed * 3.1) - 0.5) * 0.14;
                     float2 root = float2(sin(th), cos(th)) * SPL_RootR(th, R) * (0.98 + 0.1 * SPL_Hs(seed * 2.9));
                     float dA = th * 0.95 + (SPL_Hs(seed * 4.3) - 0.5) * 0.2;
                     float2 dir = float2(sin(dA), cos(dA));

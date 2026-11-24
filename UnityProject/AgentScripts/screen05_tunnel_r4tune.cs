@@ -60,11 +60,16 @@ if (padsT != null)
         var slot = SlotOf(t);
         if (slot == null || slot.Value.s > 90f) continue;
         Matrix4x4 parent = t.parent.localToWorldMatrix;
-        foreach (float tilt in new float[] { 10f, 18f, 26f })
-            foreach (float dy in new float[] { -0.8f, -0.4f, 0f })
+        string cand = System.IO.File.Exists("Recordings/Screen05/work/tunnel_probe_scale.txt") ? System.IO.File.ReadAllText("Recordings/Screen05/work/tunnel_probe_scale.txt").Trim() : "1,1,1,10";
+        var cs = cand.Split(',');
+        var sc = new Vector3(float.Parse(cs[0], System.Globalization.CultureInfo.InvariantCulture), float.Parse(cs[1], System.Globalization.CultureInfo.InvariantCulture), float.Parse(cs[2], System.Globalization.CultureInfo.InvariantCulture));
+        float ctilt = float.Parse(cs[3], System.Globalization.CultureInfo.InvariantCulture);
+        foreach (float ds in new float[] { 0f, 2f })
+            foreach (float dy in new float[] { -0.9f, -0.6f, -0.3f, 0f })
             {
-                Quaternion q = Rainbow.Screen05.EditorTools.EnvironmentBuilder.PaddleRotation(slot.Value, tilt, dy, out Vector3 p);
-                log.AppendLine("   tilt " + F0(tilt) + " dy " + dy.ToString("0.0") + " : " + BBox(mf.sharedMesh, parent * Matrix4x4.TRS(p, q, Vector3.one)));
+                var sl = new Rainbow.Screen05.DrumLayout05.PaddleSlot(slot.Value.s + ds, slot.Value.side, slot.Value.mountY);
+                Quaternion q = Rainbow.Screen05.EditorTools.EnvironmentBuilder.PaddleRotation(sl, ctilt, dy, out Vector3 p);
+                log.AppendLine("   scale " + cand + " ds " + F0(ds) + " dy " + dy.ToString("0.0") + " : " + BBox(mf.sharedMesh, parent * Matrix4x4.TRS(p, q, sc)));
             }
     }
 }
@@ -116,19 +121,22 @@ if (wall == null || ringN == null || ringF == null || pad == null || frm == null
 var mats = new Material[] { wall, ringN, ringF, pad, frm, thr };
 var orig = new Material[mats.Length];
 for (int i = 0; i < mats.Length; i++) orig[i] = new Material(mats[i]);
+var padS0 = new System.Collections.Generic.List<Vector3>();
+foreach (var t in padT) padS0.Add(t.localScale);
 void Restore()
 {
     for (int i = 0; i < mats.Length; i++) mats[i].CopyPropertiesFromMaterial(orig[i]);
-    for (int i = 0; i < padT.Count; i++) { padT[i].localRotation = padQ[i]; padT[i].localPosition = padP[i]; }
+    for (int i = 0; i < padT.Count; i++) { padT[i].localRotation = padQ[i]; padT[i].localPosition = padP[i]; padT[i].localScale = padS0[i]; }
 }
-void Pose(float tilt, float dy, int sideOnly)
+void Pose(float tilt, float dy, int sideOnly, float ds)
 {
     for (int i = 0; i < padT.Count; i++)
     {
         var slot = SlotOf(padT[i]);
         if (slot == null) continue;
         if (sideOnly != 0 && slot.Value.side != sideOnly) continue;
-        Quaternion q = Rainbow.Screen05.EditorTools.EnvironmentBuilder.PaddleRotation(slot.Value, tilt, dy, out Vector3 p);
+        var sl = new Rainbow.Screen05.DrumLayout05.PaddleSlot(slot.Value.s + ds, slot.Value.side, slot.Value.mountY);
+        Quaternion q = Rainbow.Screen05.EditorTools.EnvironmentBuilder.PaddleRotation(sl, tilt, dy, out Vector3 p);
         padT[i].localPosition = p; padT[i].localRotation = q;
     }
 }
@@ -145,9 +153,10 @@ foreach (var name in order)
         var p = l.Split('|'); if (p.Length < 4 || p[0] != name || l.TrimStart().StartsWith("#")) continue;
         var v = p[3].Split(','); var f = new float[4];
         for (int i = 0; i < 4; i++) f[i] = i < v.Length ? float.Parse(v[i], System.Globalization.CultureInfo.InvariantCulture) : 0f;
-        if (p[1] == "padpose") { Pose(f[0], f[1], 0); continue; }
-        if (p[1] == "padposeL") { Pose(f[0], f[1], -1); continue; }
-        if (p[1] == "padposeR") { Pose(f[0], f[1], 1); continue; }
+        if (p[1] == "padpose") { Pose(f[0], f[1], 0, f[2]); continue; }
+        if (p[1] == "padposeL") { Pose(f[0], f[1], -1, f[2]); continue; }
+        if (p[1] == "padposeR") { Pose(f[0], f[1], 1, f[2]); continue; }
+        if (p[1] == "padscale") { foreach (var t in padT) t.localScale = new Vector3(f[0], f[1], f[2]); continue; }
         System.Action<Material> set = m =>
         {
             if (!m.HasProperty(p[2])) { log.AppendLine("no prop " + p[2] + " on " + m.name); return; }

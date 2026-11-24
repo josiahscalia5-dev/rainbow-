@@ -28,6 +28,7 @@ Material:
     - _FootprintBack: 0.14
     - _Intensity: 1
     - _Len: 1.55
+    - _RootBack: 0.3
     - _RopeAlpha: 0.8
     - _RopeWidth: 0.75
     - _SoftDepth: 0.05

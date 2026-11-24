@@ -204,8 +204,9 @@ namespace Rainbow.Screen05.EditorTools
             go.AddComponent<BubbleField>();
         }
 
-        /// <summary>(water4 2026-11-24) splash strand look on Rainbow/Water/Splash: width scale, opacity, extra fan angle (rad).</summary>
-        public const float SplashRopeWidth = 0.75f, SplashRopeAlpha = 0.8f, SplashSpread = 0.2f;
+        /// <summary>(water4 2026-11-24) splash strand look on Rainbow/Water/Splash: width scale, opacity, extra fan angle (rad),
+        /// roots moved round toward his back (rad). Live variants t1: (0.75, 0.8, 0.2) splash 69.7 vs the old (1, 1, 0) 68.8.</summary>
+        public const float SplashRopeWidth = 0.75f, SplashRopeAlpha = 0.8f, SplashSpread = 0.2f, SplashRootBack = 0.3f;
 
         static void PrepareSprayMaterial()
         {
@@ -227,6 +228,7 @@ namespace Rainbow.Screen05.EditorTools
             fan.SetFloat("_RopeWidth", SplashRopeWidth);
             fan.SetFloat("_RopeAlpha", SplashRopeAlpha);
             fan.SetFloat("_Spread", SplashSpread);
+            fan.SetFloat("_RootBack", SplashRootBack);
             fan.SetFloat("_FootprintBack", 0.14f);  // benny31 footprint ~0.91 u toward the camera vs ~0.8 u beside him
             EditorUtility.SetDirty(fan);
         }
