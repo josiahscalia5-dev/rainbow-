@@ -1,55 +1,58 @@
 # Rainbow Unity — handoff (latest verified state)
 
-Last verified: **2026-11-24 15:42 UTC** (10:42 local), Claude session 018893e6 (new account) on the user's laptop. Unity is OPEN; Round 6 is DONE (83.1 / 68.5, tagged validated/r6-final-83.1); nothing is running; Round 7 waits for the user's go-ahead.
+Last verified: **2026-11-24 15:56 UTC** (10:56 local), Claude session 018893e6 (new account) on the user's laptop. Unity is OPEN; Round 7 (coordinator only) is DONE (83.3 / 68.8, tagged validated/r7-final-83.3); nothing is running.
 Read this first in any new Claude account or session. **This is an existing project — never start over.**
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
 ## NOW - read this first (concise; rewritten after every finished step; the DETAILED LOG below is history)
-Updated 2026-11-24 10:42 local (session 018893e6, new account; the previous account ran out of credits at 08:28 local). Cross-account rules: CLAUDE.md "PERMANENT RULE".
-- **USER (2026-11-24 ~08:33 local, binding):** continue Screen 05 with at most TWO specialists at a time, conserve credits (spend them on development, not
-  preparation), reuse the existing tools (cycle tool, automatic fitter `Screen05AutoFit`, geometry tools, Blender tools); >= 70 now (preferably 75+), final goal
-  90-95 %; preserve the best version; priority: reflective purple walls, copper-gold rings, half-moon paddles, foreground frame, S-river, natural foam, bubbles,
-  realistic water reflections, Benny's water contact. Show the real Game View beside the approved image with honest visual + layout scores after substantial
-  improvements. Keep GitHub + this handoff current so another account can resume. No Screen 06 without approval.
+Updated 2026-11-24 10:56 local (session 018893e6, new account; the previous account ran out of credits at 08:28 local). Cross-account rules: CLAUDE.md "PERMANENT RULE".
+- **USER (2026-11-24, binding):** continue Screen 05 toward 90/100 using the three correction guides; at most TWO specialists at a time; CONSERVE CREDITS (cheap
+  coordinator fixes before specialist rounds; reuse the existing tools: cycle tool, automatic fitter `Screen05AutoFit`, geometry tools, Blender tools); preserve the
+  best version; show the real Game View beside the approved image with honest visual + layout scores after substantial improvements; keep GitHub + this handoff
+  current so another account can resume; do not interrupt development; no Screen 06 without approval.
 - **USER'S CORRECTION GUIDES (binding):** `references/correction-guides-2026-11-24/` (README.md = per-area instructions + 3 images; full-resolution copies in
   `full-resolution/`). Every specialist / Blender / Unity job reads them first. Their Unity side is an OLD mid-edit still (white walls): judge against the newest still.
-- **CURRENT BEST = ROUND6_FINAL (10:37 local, full rebuild) = visual 83.1 / layout 68.5**, gameplay check passed (steer L -4.20 / R -0.15, jump 1.17 + landing,
-  coins 1420 -> 1440, hearts 5/5, Swimming); tag **validated/r6-final-83.1** (dc0221a); evidence `evidence/screen05/round6/` (side-by-side sent to the user).
-  Path this session: Round 4b recovered 80.5 / 66.6 -> fitter global look 81.7 -> Round 5 (`wf_a52c9b0c-d31`) + fitter polish 82.5 / 68.1 -> Round 6
-  (`wf_d3fb1b5f-2fa`: SHAPE = narrower / lower foam rims with mixed puffs + bluer bay valley (RiverLayout05.Rope, FoamBank OuterAt / Valley), far river now WINDS under
-  the coins (RainbowFarRiver.hlsl RainbowFarRiverSwing); SPLASH = thinner wake suds (SplashWake ThinFlankSuds), lighter / shorter splash (WaterBuilder), brighter azure
-  wake water + satin texture (RainbowRiver.hlsl), Benny's underside shade in the water (RainbowFluff _UnderShade etc., off while jumping)) -> 83.1 / 68.5. A Round 6
-  fitter pass gained only +0.02 / +0.09 and was NOT applied (`staging/shared/autofit_round6_polish_result_NOT_APPLIED.txt`). The tuning file holds 31 values.
-- NOTHING IS RUNNING. Unity is open (Play mode paused at the hold after the gameplay check). Each 2-lane round now costs ~410k subagent tokens and gained ~+0.6;
-  the user decides whether to continue (credits). Ask; do not start Round 7 unasked.
-- ROUND 7 candidates, biggest / cheapest first (lane reports + loss map): (1) coordinator, cheap: the left-bay FLOOR colour `pf` in RainbowRiver.hlsl (~line 251,
-  (0.3,0.06,0.5)..(0.68,0.2,0.8) with 0.85-dark slots) is far darker than the approved magenta wall at (80-180, 640-700): est. +0.3-0.5. (2) coordinator: HUD
-  (oracle +2.1: deep glossy violet glass, thin bright rim, raised heart / coin). (3) wake puff rope along the pink sweeps reads as opaque lavender spheres ->
-  whiter lacy soap clumps (FoamBank wake mesh / RainbowFoam) - the splash lane's "biggest open lever". (4) pink bands: approved hot magenta with white gloss streaks,
-  Unity flat pale pink (Round 5's lighter pink scored better - try gloss streaks, not colour). (5) near-water broad cyan arcs + lens-flare streaks. (6) right lower foam
-  curl reaches y 960-980 (approved ends ~890; probably wake / splash foam at s 15.5-16.5). (7) ring N right side = non-circular deformation (~+0.3, risky).
-  (8) starburst splash: 4 radial / wider-fan attempts scored 1-3 points WORSE in the splash box ("less white wins") - needs a different idea. Hooks / variant tools:
-  `AgentScripts/screen05_splash6_tune.cs`, `screen05_river_tune.cs`, `screen05_tunnel_r4tune.cs` (see Round 5 / 6 lane notes in the run journals).
+- **CURRENT BEST = R7_hud3 (10:52 local, full rebuild) = visual 83.3 / layout 68.8**, gameplay check passed (steer L -4.20 / R -0.15, jump 1.17 + landing, coins
+  1420 -> 1440, hearts 5/5, Swimming); tag **validated/r7-final-83.3** (0bf3a2c); evidence `evidence/screen05/round7/` (side-by-side sent to the user).
+  Round 7 = coordinator only, no specialists: (a) fitter on ring N's transform (`Screen05/Environment05/Rings/Ring_25.6`: px -0.80, py 2.89, rx 3.26, ry 1.76, s 1.013
+  -> tuning file; ring now runs down the right edge like the approved, no copper above the HUD; hud area 84.9 -> 86.3, walls 87.4 -> 87.8; checked: no ring / wall
+  gaps); (b) raised glossy heart for guide #7 (UISpriteFactory.Heart: smooth edge-to-centre shading + crisp white specular spot; score-neutral, visibly closer);
+  (c) floor colour beyond the foam rope tested with a new live hook `_R7Floor` in RainbowRiver.hlsl (0 = unchanged): no gain, left at 0.
+  Path this session: Round 4b recovered 80.5 -> fitter global look 81.7 -> Round 5 + polish 82.5 -> Round 6 83.1 -> Round 7 83.3.
+- NOTHING IS RUNNING. Unity is open (Play mode paused at the hold after the gameplay check). A 2-specialist round costs ~410k subagent tokens for ~+0.6; the
+  user asked to conserve credits, so offer cheap coordinator items first and ask before a specialist round.
+- NEXT candidates (lane reports + loss map), cheapest first: (1) fitter on more single transforms / materials the guides name (paddles' tilt `tf:` keys,
+  NearFrame05 / Ring05 values) - near free; (2) HUD bar top rim (approved rim band y 18-24 is brighter magenta (174,47,177) vs Unity (122,33,127)) - UISpriteFactory.Pill
+  / Screen05Hud.BarTexture; (3) wake puff rope along the pink sweeps reads as opaque lavender spheres -> whiter lacy soap clumps (FoamBank wake mesh / RainbowFoam) -
+  the splash lane's "biggest open lever"; (4) pink bands: approved hot magenta with white gloss streaks (try gloss streaks, not colour); (5) near-water broad cyan
+  arcs + lens-flare streaks; (6) right lower foam curl reaches y 960-980 (approved ends ~890); (7) starburst splash: 4 radial / wider-fan attempts scored 1-3 points
+  WORSE in the splash box ("less white wins") - needs a different idea. Variant tools: `AgentScripts/screen05_splash6_tune.cs`, `screen05_river_tune.cs` (globals
+  incl. `_R7Floor`), `screen05_tunnel_r4tune.cs`; fitter params examples in `staging/shared/autofit_round*_params.txt`.
 - LOSS MAP of ROUND5_FINAL (`tools/diag/errormap.ps1 -Oracle`, heat in `evidence/screen05/round5/`): splash + near water +3.9 / +7.8, HUD +2.1, river mid +2.1,
-  Benny box +2.0, upper walls + rings +1.8, water left / right +1.5 / +1.6, left wall + foam +1.5 (Round 6 then raised foam, splash, Benny, w_near, w_mid areas).
+  Benny box +2.0, upper walls + rings +1.8, water left / right +1.5 / +1.6, left wall + foam +1.5 (Rounds 6-7 then raised foam, splash, Benny, w_near, w_mid, HUD).
 - VALIDATED VERSIONS (safe fallbacks; every autosave commit after the newest one may hold EXPERIMENTAL work):
   | git tag | commit | visual / layout | what | evidence |
   |---|---|---|---|---|
+  | validated/r7-final-83.3 | 0bf3a2c | 83.3 / 68.8 | Round 7 (coordinator): ring N fitted, raised glossy heart | evidence/screen05/round7/20261124_105221_R7_hud3* |
   | validated/r6-final-83.1 | dc0221a | 83.1 / 68.5 | Round 6: foam rims, winding far river, thinner wake suds, Benny underside shade | evidence/screen05/round6/20261124_103659_ROUND6_FINAL* |
-  | validated/r5-final-82.5 | a84495d | 82.5 / 68.1 | Round 5 lanes + fitted global look + material polish (31 tuning values) | evidence/screen05/round5/20261124_094935_ROUND5_FINAL* |
+  | validated/r5-final-82.5 | a84495d | 82.5 / 68.1 | Round 5 lanes + fitted global look + material polish | evidence/screen05/round5/20261124_094935_ROUND5_FINAL* |
   | validated/r4b-final-80.5 | a3f7d54 | 80.5 / 66.6 | Round 4b: data-driven S-river, glints, foam ropes, copper tunnel, half-moon paddles, coins | evidence/screen05/round4/20261124_084215_ROUND4_FINAL* |
   | validated/r4-baseline-58.0 | aa2a2e1 | 58.0 / 36.8 | coordinator look tuning: walls, paddle tilt -15, azure water grade, darker HUD | evidence/screen05/round3/20261124_051325_G_BASELINE* |
-- BLENDER: INSTALLED 2026-11-24 09:13 local (`tools/blender/setup-blender.ps1`, user-approved after Round 4, disk check passed at 6.66 GB): portable Blender 5.3.0,
-  official SHA-256 3ac567a6...eabfa8 verified, 0.92 GB, `C:\Users\josia\Blender\blender-5.3.0-windows-x64\blender.exe`. Run jobs only with `tools/blender/run-blender.ps1`
-  (headless, one at a time, never while lanes run Unity cycles). No mesh job was needed yet: the paddles project within ~2 px of the approved outlines.
-- DISK: C: 5.25 GB free at 10:38. Old git-ignored work stills in `UnityProject/Recordings/Screen05/work` are regenerable (ask the user before deleting anything).
+- GIT BASH (user request 2026-11-24 ~10:44 local, done): `~/.claude/settings.json` env now has `CLAUDE_CODE_GIT_BASH_PATH=C:\Users\josia\PortableGit\bin\bash.exe`
+  (reuses PortableGit; nothing installed) and `CLAUDE_CODE_USE_POWERSHELL_TOOL=1` (PowerShell stays the shell). Backup of the old file:
+  `%USERPROFILE%\RainbowUnity-local-backup\claude-config\settings.before-gitbash-20261124.json`. Takes effect in NEW sessions (not verified in-session). The project
+  SessionStart hook was left unchanged: it already calls powershell.exe and was tested to work under PortableGit's bash (exit 0, full status JSON). Do NOT add
+  `"shell": "powershell"` to it (that means pwsh 7, which is not installed). See CLAUDE.md Tools.
+- BLENDER: INSTALLED 2026-11-24 09:13 local (portable 5.3.0, `C:\Users\josia\Blender\blender-5.3.0-windows-x64\blender.exe`, SHA-256 verified). Jobs only via
+  `tools/blender/run-blender.ps1` (headless, one at a time, never while lanes run Unity cycles). No mesh job needed yet (paddles within ~2 px).
+- DISK: C: ~5.2 GB free. Old git-ignored work stills in `UnityProject/Recordings/Screen05/work` are regenerable (ask the user before deleting anything).
   Note: the Round 6 splash lane deleted its OWN temporary variant stills `s6var_t1..t5` (git-ignored, made by itself) against the "never delete" rule; nothing else.
 - UNITY NOTES: `screen05_playtest_check.cs` leaves Play mode PAUSED - unpause before `screen05_record_gameplay.cs` (else it waits at 0 frames). A Claude session's end
   can kill the Editor; on reopen Unity shows "Recovering Scene Backups" and saves `Assets/_Recovery/0 (N).unity` (harmless copies; ask before deleting).
   Windows Security blocked a Burst DLL in Library (the game does not need Burst).
-- WAITING ON THE USER: (a) continue with Round 7 or not (credits); (b) permission rules v2 in `tools/claude-permissions/` - the user applies them; (c) the GitHub repo
-  is PUBLIC although the user called it private.
+- WAITING ON THE USER: (a) next step (cheap coordinator items vs a specialist round); (b) permission rules v2 in `tools/claude-permissions/` - the user applies them;
+  (c) the GitHub repo is PUBLIC although the user called it private.
 <!-- NEXT-TASK:END -->
 
 ## DETAILED LOG (older entries, newest first; the NOW block above wins where they disagree)

@@ -103,6 +103,10 @@ The user switches Claude accounts whenever credits run out. Any account must con
     (Windows PowerShell 5.1 breaks inline quotes).
 - The "Unity" Claude plugin (Anthropic Directory) only adds Unity know-how; the CLI works without it.
 - Shell is Windows PowerShell 5.1: no `&&`, `||`, `?:` or `??`.
+- Git Bash (user request 2026-11-24): Git for Windows is NOT installed and must not be; Claude Code finds PortableGit's bash through
+  `CLAUDE_CODE_GIT_BASH_PATH=C:\Users\josia\PortableGit\bin\bash.exe` in the `env` block of `~/.claude/settings.json`, and
+  `CLAUDE_CODE_USE_POWERSHELL_TOOL=1` keeps PowerShell as the shell. Keep using the PowerShell commands of this file (the permission rules are
+  written for them). The SessionStart hook works under both shells (tested); never add `"shell": "powershell"` to it (that means pwsh 7, not installed).
 - Permission rules (2026-11-24): `tools/claude-permissions/rainbow-permissions.json`, applied BY THE USER with
   `tools/claude-permissions/apply-rainbow-permissions.ps1` into `~/.claude/settings.json` (Claude never applies or widens its own
   permissions). To match them, write commands with literal paths and no variables, e.g.
