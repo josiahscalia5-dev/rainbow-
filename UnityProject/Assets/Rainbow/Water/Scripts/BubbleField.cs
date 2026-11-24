@@ -201,7 +201,8 @@ namespace Rainbow.Screen05
             float dNear = DrumLayout05.CentreY(DrumLayout05.EyeS + 15f) - y;
             float dy = Mathf.Max(Mathf.Abs(dFar), Mathf.Abs(dNear));
             // the drum axis sits AxisX off the course line x = 0: |x| below this is inside the tube on both sides
-            return Mathf.Max(0f, Mathf.Sqrt(Mathf.Max(rr * rr - dy * dy, 0f)) - Mathf.Abs(DrumLayout05.AxisX));
+            // (round 4: the axis runs up to 0.86 m left of it near the camera - the right wall is the narrower side)
+            return Mathf.Max(0f, Mathf.Sqrt(Mathf.Max(rr * rr - dy * dy, 0f)) - 0.6f);
         }
 
         /// <summary>Highest foam-bank top at camera distance dist (RainbowFoam.hlsl grows the heap 0.62..1.45x with distance).</summary>

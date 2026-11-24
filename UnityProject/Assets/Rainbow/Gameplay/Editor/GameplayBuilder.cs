@@ -357,6 +357,8 @@ namespace Rainbow.Screen05.EditorTools
             s.panel = SaveSprite(Screen05Hud.PanelTexture(), "Hud_Panel.png");
             s.button = SaveSprite(Screen05Hud.ButtonTexture(), "Hud_Button.png");
             s.white = SaveSprite(UISpriteFactory.Solid("Hud_White", 8, Color.white), "Hud_White.png");
+            s.pill = SaveSprite(Screen05Hud.PillTexture(), "Hud_Pill.png");
+            s.title = SaveSprite(Screen05Hud.TitleTexture(), "Hud_Title.png");
             return s;
         }
 

@@ -90,7 +90,8 @@ namespace Rainbow.Screen05
                     Vector3 p = WallPoint(phi, si);
                     // geometry round 2026-11-24: the dented right wall foot (DrumLayout05.FootDent) gets the normal of the
                     // deformed surface (central differences; identical to the analytic one outside the dent)
-                    if (sx > 0f && si > 14.5f && si < 30.5f && p.y < 2.8f)
+                    // round 4 geometry fit: the axis bends in x and y up to s ~230, so every normal there comes from the surface
+                    if (si < 232f)
                     {
                         const float ep = 0.004f, es = 0.05f;
                         Vector3 tP = WallPoint(phi + ep, si) - WallPoint(phi - ep, si);
@@ -126,7 +127,7 @@ namespace Rainbow.Screen05
             float x = R * Mathf.Sin(phi);
             float y = DrumLayout05.CentreY(s) + R * Mathf.Cos(phi);
             float dent = Mathf.Min(DrumLayout05.FootDent(s, x > 0f ? 1 : -1, y), 0.5f * Mathf.Abs(x));   // no fold at the bottom
-            return new Vector3(DrumLayout05.AxisX + x - Mathf.Sign(x) * dent, y, s);
+            return new Vector3(DrumLayout05.AxisXAt(s) + x - Mathf.Sign(x) * dent, y, s);
         }
 
         // ------------------------------------------------------------------ gold ring band

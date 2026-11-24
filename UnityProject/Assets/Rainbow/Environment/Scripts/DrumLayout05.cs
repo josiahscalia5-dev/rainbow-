@@ -113,18 +113,19 @@ namespace Rainbow.Screen05
         // Tunnel round 3 (2026-11-23): the approved rings are bundles of rounded polished strands (a fat main strand, a
         // middle strand and a thin lip, narrow dark grooves between them): main 0.135 r / 0.6 m, middle 0.105 r / 0.36 m,
         // lip 0.075 r / 0.26 m, grooves 0.05 m sitting 0.035 r above the wall (was one band 0.13 r / 0.8 m + lip).
-        public static readonly BandProfile NearBand = new BandProfile(0.135f, 0.6f, 0.105f, 0.36f, 0.075f, 0.26f, 0.05f, 0.035f);
+        public static readonly BandProfile NearBand = new BandProfile(0.138f, 0.6f, 0.107f, 0.36f, 0.077f, 0.26f, 0.05f, 0.035f);
         /// <summary>environment.ts band05 (the thinner far rings); tunnel round 3: three strands like the near rings.</summary>
         public static readonly BandProfile FarBand = new BandProfile(0.1f, 0.58f, 0.08f, 0.3f, 0.06f, 0.22f, 0.04f, 0.025f);
         /// <summary>Rings with s above this use FarBand.</summary>
-        public const float FarBandFromS = 80f;
+        public const float FarBandFromS = 170f;   // round 4 fit: rings C / D are 0.133-0.144 r thick like A / B (was 80)
         /// <summary>
         /// Tunnel round 4 (2026-11-24): the NEAR ring (s 24.3; and the start ring 5.6) is a thin copper band hugging the
         /// frame edge in the approved image (left side at y 470: copper only from x 0 to ~20, its inner edge on the
         /// ~(10, 480) crown); with the ring-A profile (0.135 r) the Unity band reached x 58 as a 50-60 px wide bright bar
         /// down the left edge and over the top-left corner. Inner crest at r ~6.28 m = 0.074 r.
         /// </summary>
-        public static readonly BandProfile NearestBand = new BandProfile(0.074f, 0.6f, 0.058f, 0.36f, 0.042f, 0.26f, 0.05f, 0.02f);
+        // (round 4 geometry fit: with the ring on the approved circle its band is 0.134 r - the thin 0.074 band only compensated the wrong place)
+        public static readonly BandProfile NearestBand = new BandProfile(0.136f, 0.6f, 0.106f, 0.36f, 0.076f, 0.26f, 0.05f, 0.035f);
         /// <summary>Rings with s below this use NearestBand.</summary>
         public const float NearestBandBelowS = 30f;
 
@@ -135,7 +136,10 @@ namespace Rainbow.Screen05
         // vanishing-point height). 5.6 only shows for camera s < 5. Replaces the light round's eye + [59 .. 272] set.
         // Tunnel round 3: + a ring at s 283 (r ~37 px): the approved deep throat is a DENSE stack of rings (r 63, 44, 37, 30,
         // 22 px measured on a 4x crop; the two smaller ones at r ~15 / 9 px are painted on the throat cap).
-        static readonly float[] ApprovedRingS = { 5.6f, 24.3f, 45.5f, 66.4f, 106.5f, 163.6f, 230.1f, 283.0f, 333.0f, 450.4f };
+        // Round 4 geometry fit 2026-11-24 (tools/diag/fit-rings.ps1): near ring 24.3 -> 25.6, ring A 45.5 -> 41.5, C 106.5 -> 105.8,
+        // D 163.6 -> 159.4, together with the fitted drum axis (AxisS / AxisXs / AxisYs): every ring's wall edge + inner crest now
+        // projects onto the approved circle within 0.5-2.6 px rms (before: ring A's left side was 45 px too far right).
+        static readonly float[] ApprovedRingS = { 5.6f, 25.6f, 41.5f, 66.4f, 105.8f, 159.4f, 230.1f, 283.0f, 333.0f, 450.4f };
 
         /// <summary>One wall paddle: s of the tray centre, wall side (-1 left, +1 right), height of its wall mount (m).</summary>
         public struct PaddleSlot
@@ -185,11 +189,45 @@ namespace Rainbow.Screen05
             return NearFloorExtra * (1f - Smoother(EyeS + 28f, EyeS + 38f, s)) * Smooth(2f, 10f, s);
         }
 
+        // Round 4 geometry fit 2026-11-24: the drum AXIS as a table (s, world x, height above the water), solved with the real
+        // gameplay camera (tools/diag/fit-rings.ps1, radius 6.8) so the near ring and rings A-D land on the circles measured on
+        // the approved image: centres (453, 485), (468, 455), (486, 453), (490, 460), (496.5, 469) px, wall radii 492 / 265 /
+        // 153.5 / 92 / 59.5 px. The axis runs ~0.8 m left of the course line near the camera and comes back to it in the depth;
+        // it is lowest at the near ring (2.79 m above the water) and highest at ring C (4.59 m).
+        static readonly float[] AxisS = { -12f, 8f, 25.6f, 41.5f, 66.4f, 105.8f, 159.4f, 230f, 470f };
+        static readonly float[] AxisXs = { -0.70f, -0.72f, -0.76f, -0.86f, -0.57f, -0.55f, -0.04f, 0f, 0f };
+        static readonly float[] AxisYs = { 3.05f, 2.95f, 2.79f, 3.63f, 4.28f, 4.59f, 4.34f, 4.25f, 4.25f };
+
+        /// <summary>Monotone cubic (Fritsch-Carlson) interpolation of a table: smooth, no overshoot between the knots.</summary>
+        static float Table(float[] xs, float[] ys, float x)
+        {
+            int n = xs.Length;
+            if (x <= xs[0]) return ys[0];
+            if (x >= xs[n - 1]) return ys[n - 1];
+            int i = 0;
+            while (x > xs[i + 1]) i++;
+            float Slope(int k) => (ys[k + 1] - ys[k]) / (xs[k + 1] - xs[k]);
+            float Tan(int k)
+            {
+                if (k == 0 || k == n - 1) return 0f;
+                float a = Slope(k - 1), b = Slope(k);
+                if (a * b <= 0f) return 0f;
+                float w1 = 2f * (xs[k + 1] - xs[k]) + (xs[k] - xs[k - 1]), w2 = (xs[k + 1] - xs[k]) + 2f * (xs[k] - xs[k - 1]);
+                return (w1 + w2) / (w1 / a + w2 / b);
+            }
+            float h = xs[i + 1] - xs[i], t = (x - xs[i]) / h, t2 = t * t, t3 = t2 * t;
+            return (2f * t3 - 3f * t2 + 1f) * ys[i] + (t3 - 2f * t2 + t) * h * Tan(i)
+                 + (-2f * t3 + 3f * t2) * ys[i + 1] + (t3 - t2) * h * Tan(i + 1);
+        }
+
+        /// <summary>World x of the drum axis at s (round 4 fit).</summary>
+        public static float AxisXAt(float s) => AxisX + Table(AxisS, AxisXs, s);
+
         /// <summary>Depth of the tube bottom below the water at s.</summary>
-        public static float Depth(float s) => FloorDepth + FloorExtra(s);
+        public static float Depth(float s) => Radius - (CentreY(s) - RiverPath.WaterY);
 
         /// <summary>Height of the tube axis at s (world y).</summary>
-        public static float CentreY(float s) => RiverPath.WaterY + Radius - Depth(s);
+        public static float CentreY(float s) => RiverPath.WaterY + Table(AxisS, AxisYs, s);
 
         /// <summary>d CentreY / d s (the near-floor blend tilts the walls slightly).</summary>
         public static float CentreSlope(float s)
@@ -198,13 +236,20 @@ namespace Rainbow.Screen05
             return (CentreY(s + e) - CentreY(s - e)) / (2f * e);
         }
 
-        public static Vector3 Centre(float s) => new Vector3(AxisX, CentreY(s), s);
+        public static Vector3 Centre(float s) => new Vector3(AxisXAt(s), CentreY(s), s);
 
         /// <summary>Half chord of the tube at the water plane (where the wall meets the water).</summary>
         public static float WaterChord(float s)
         {
             float h = CentreY(s) - RiverPath.WaterY;
             return Mathf.Sqrt(Mathf.Max(0f, Radius * Radius - h * h));
+        }
+
+        /// <summary>World x of the drum wall at height y on one side (-1 left, +1 right); round 4: the axis is off the course line.</summary>
+        public static float WallXAt(float s, int side, float y = RiverPath.WaterY)
+        {
+            float h = CentreY(s) - y;
+            return AxisXAt(s) + side * Mathf.Sqrt(Mathf.Max(0f, Radius * Radius - h * h));
         }
 
         /// <summary>

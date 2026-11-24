@@ -17,7 +17,7 @@ namespace Rainbow.Screen05
         [System.Serializable]
         public class Sprites
         {
-            public Sprite bar, banner, heart, coin, pause, panel, button, white;
+            public Sprite bar, banner, heart, coin, pause, panel, button, white, pill, title;
         }
 
         public Sprites sprites = new Sprites();
@@ -27,6 +27,9 @@ namespace Rainbow.Screen05
         public Image barImage, bannerImage, heartImage, coinImage, flashImage, dimImage, panelImage, buttonImage;
         public Button pauseButton, restartButton;
         public Text heartsText, plusText, coinsText, bannerText, hintText, pausedText;
+        [Tooltip("Round 4: rounded numerals (HudGlyphText); the legacy Text fields stay null.")]
+        public HudGlyphText heartsGlyph, coinsGlyph;
+        public Image pillImage, titleImage;
         public Text finishTitle, finishCoins, finishTotal, restartLabel;
         public GameObject finishPanel, pausedOverlay;
 
@@ -56,6 +59,10 @@ namespace Rainbow.Screen05
             if (sprites.panel == null) sprites.panel = UISpriteFactory.ToSprite(PanelTexture());
             if (sprites.button == null) sprites.button = UISpriteFactory.ToSprite(ButtonTexture());
             if (sprites.white == null) sprites.white = UISpriteFactory.ToSprite(UISpriteFactory.Solid("hud_white", 8, Color.white));
+            if (sprites.pill == null) sprites.pill = UISpriteFactory.ToSprite(PillTexture());
+            if (sprites.title == null) sprites.title = UISpriteFactory.ToSprite(TitleTexture());
+            Assign(pillImage, sprites.pill);
+            Assign(titleImage, sprites.title);
             Assign(barImage, sprites.bar);
             Assign(bannerImage, sprites.banner);
             Assign(heartImage, sprites.heart);
@@ -78,16 +85,33 @@ namespace Rainbow.Screen05
             // .bar: linear-gradient(rgba(150,60,200,.72), rgba(92,22,150,.78)), border .22u rgba(255,220,255,.55), radius 2.8u
             // coordinator round 3 (2026-11-23): the approved bar is a DARK magenta-purple glass (pill median luminance ~57,
             // mean ~(160,56,147) with the icons); Unity's 0.80-alpha lavender bar let the walls through (median ~110)
-            return UISpriteFactory.Pill("hud_bar", 992, 106, 53f,
-                new Color(128 / 255f, 34 / 255f, 150 / 255f, 0.90f), new Color(80 / 255f, 14 / 255f, 112 / 255f, 0.93f),
-                4.5f, new Color(1f, 220 / 255f, 1f, 0.6f), 0.9f);
+            // round 4 (2026-11-24), sampled on the approved image: deep purple glass (97,3,131) top .. (92,2,128) bottom, thin lilac
+            // rim (230,172,243) .. (198,91,237); the old 0.9 white gloss washed it out to lavender
+            return UISpriteFactory.Pill("hud_bar", 992, 109, 54f,
+                new Color(101 / 255f, 3 / 255f, 134 / 255f, 0.97f), new Color(91 / 255f, 2 / 255f, 127 / 255f, 0.97f),
+                3.2f, new Color(226 / 255f, 150 / 255f, 240 / 255f, 0.9f), 0.03f);
+        }
+
+        /// <summary>Round 4: the left "hearts" pill inside the bar (outline only).</summary>
+        public static Texture2D PillTexture()
+        {
+            return UISpriteFactory.Pill("hud_pill", 372, 106, 53f, new Color(88 / 255f, 2 / 255f, 124 / 255f, 0.6f),
+                new Color(80 / 255f, 2 / 255f, 120 / 255f, 0.6f), 2.6f, new Color(215 / 255f, 150 / 255f, 240 / 255f, 0.75f), 0.02f);
+        }
+
+        /// <summary>Round 4: the title lettering (rounded italic capitals, cream-gold, dark drop shadow) as one texture.</summary>
+        public static Texture2D TitleTexture()
+        {
+            return HudGlyphs.TextTexture("hud_title", Title, 54f, 0.125f, 0.21f, UISpriteFactory.Hex("#fff0c8"), UISpriteFactory.Hex("#ffd27a"),
+                new Color(0.16f, 0f, 0.22f, 0.85f), 3f, 14);
         }
 
         public static Texture2D BannerTexture()
         {
             // .banner: linear-gradient(#7a2bb0, #4f1489), border .22u #ffd36b, radius 2.1u
-            return UISpriteFactory.Pill("hud_banner", 780, 80, 40f, UISpriteFactory.Hex("#7a2bb0"), UISpriteFactory.Hex("#4f1489"),
-                4.5f, UISpriteFactory.Hex("#ffd36b"), 0.5f);
+            // round 4: sampled on the approved image: fill (97,2,140), pale gold rim (229,170,110)
+            return UISpriteFactory.Pill("hud_banner", 784, 84, 42f, new Color(98 / 255f, 2 / 255f, 142 / 255f, 0.98f),
+                new Color(96 / 255f, 2 / 255f, 140 / 255f, 0.98f), 4.4f, UISpriteFactory.Hex("#f5b964"), 0.02f);
         }
 
         public static Texture2D PanelTexture()
@@ -107,6 +131,7 @@ namespace Rainbow.Screen05
         public void SetHearts(int hearts, int max)
         {
             if (heartsText != null) heartsText.text = hearts + "/" + max;
+            if (heartsGlyph != null) heartsGlyph.Content = hearts + "/" + max;
         }
 
         /// <summary>Show a coin total; animate = count up from the shown value.</summary>
@@ -119,6 +144,7 @@ namespace Rainbow.Screen05
         void WriteCoins()
         {
             if (coinsText != null) coinsText.text = coinsShown.ToString("N0", CultureInfo.InvariantCulture);
+            if (coinsGlyph != null) coinsGlyph.Content = coinsShown.ToString("N0", CultureInfo.InvariantCulture);
         }
 
         public void ShowHint(string text, float seconds)
@@ -241,6 +267,13 @@ namespace Rainbow.Screen05
             sh.effectDistance = dist;
         }
 
+        static void ShadeGraphic(Graphic g, Color col, Vector2 dist)
+        {
+            Shadow sh = g.gameObject.AddComponent<Shadow>();
+            sh.effectColor = col;
+            sh.effectDistance = dist;
+        }
+
         /// <summary>Builds the whole HUD canvas under parent and returns its controller.</summary>
         public static Screen05Hud Create(Transform parent, Sprites spr)
         {
@@ -275,41 +308,51 @@ namespace Rainbow.Screen05
             hud.safeArea = safe;
 
             Vector2 top = new Vector2(0.5f, 1f);
-            // ---- top bar (.bar: top 1.15u, left/right 2.3u, height 5.5u)
-            RectTransform bar = MakeRect("TopBar", safe, top, top, new Vector2(0f, -22f), new Vector2(992f, 106f));
+            // ---- top bar. Round 4 (2026-11-24): every element measured on the approved 864x1536 image (px * 1.25 = reference units)
+            //      bar x 33-826 / y 14-101, hearts pill x 33-330, heart x 67-146 / y 26-88, numerals 35 px capitals (y 36-70),
+            //      plus (281.5, 55.5), dividers x 344 / 707, coin (420, 57) r 40.5, pause ring (773, 55.5) r 45
+            RectTransform bar = MakeRect("TopBar", safe, top, top, new Vector2(-3.1f, -17.5f), new Vector2(992f, 109f));
             hud.barImage = Img(bar, spr.bar, false);
             Vector2 left = new Vector2(0f, 0.5f);
-            RectTransform heart = MakeRect("Heart", bar, left, new Vector2(0.5f, 0.5f), new Vector2(88f, 2f), new Vector2(92f, 84f));
+            RectTransform pill = MakeRect("HeartsPill", bar, left, new Vector2(0f, 0.5f), new Vector2(0.5f, 0f), new Vector2(371f, 106f));
+            hud.pillImage = Img(pill, spr.pill, false);
+            RectTransform heart = MakeRect("Heart", bar, left, new Vector2(0.5f, 0.5f), new Vector2(92f, 4.5f), new Vector2(112f, 91f));
             hud.heartImage = Img(heart, spr.heart, false);
-            RectTransform hearts = MakeRect("HeartsText", bar, left, new Vector2(0.5f, 0.5f), new Vector2(212f, 0f), new Vector2(150f, 90f));
-            hud.heartsText = Txt(hearts, "5/5", 53, white, FontStyle.Bold, TextAnchor.MiddleCenter);
-            Shade(hud.heartsText, textShadow, new Vector2(0f, -3f));
-            RectTransform plus = MakeRect("Plus", bar, left, new Vector2(0.5f, 0.5f), new Vector2(312f, 2f), new Vector2(70f, 90f));
-            hud.plusText = Txt(plus, "+", 66, white, FontStyle.Bold, TextAnchor.MiddleCenter);
-            Shade(hud.plusText, textShadow, new Vector2(0f, -3f));
-            RectTransform div1 = MakeRect("Divider1", bar, left, new Vector2(0.5f, 0.5f), new Vector2(367f, 0f), new Vector2(2.5f, 74f));
-            Img(div1, spr.white, false).color = new Color(1f, 1f, 1f, 0.25f);
-            RectTransform div2 = MakeRect("Divider2", bar, left, new Vector2(0.5f, 0.5f), new Vector2(842f, 0f), new Vector2(2.5f, 74f));
-            Img(div2, spr.white, false).color = new Color(1f, 1f, 1f, 0.25f);
-            RectTransform coin = MakeRect("CoinIcon", bar, left, new Vector2(0.5f, 0.5f), new Vector2(478f, 2f), new Vector2(96f, 96f));
+            RectTransform hearts = MakeRect("HeartsText", bar, left, new Vector2(0.5f, 0.5f), new Vector2(210f, 5.7f), new Vector2(150f, 90f));
+            hud.heartsGlyph = hearts.gameObject.AddComponent<HudGlyphText>();
+            hud.heartsGlyph.Setup("5/5", 43.5f, 0.05f);
+            ShadeGraphic(hud.heartsGlyph, new Color(40 / 255f, 0f, 70 / 255f, 0.7f), new Vector2(1.5f, -3f));
+            RectTransform plus = MakeRect("Plus", bar, left, new Vector2(0.5f, 0.5f), new Vector2(310.6f, 2.6f), new Vector2(70f, 90f));
+            HudGlyphText plusG = plus.gameObject.AddComponent<HudGlyphText>();
+            plusG.Setup("+", 56f, 0f);
+            ShadeGraphic(plusG, new Color(40 / 255f, 0f, 70 / 255f, 0.7f), new Vector2(1.5f, -3f));
+            RectTransform div1 = MakeRect("Divider1", bar, left, new Vector2(0.5f, 0.5f), new Vector2(388.7f, 1.4f), new Vector2(2.2f, 71f));
+            Img(div1, spr.white, false).color = new Color(0.86f, 0.6f, 0.95f, 0.45f);
+            RectTransform div2 = MakeRect("Divider2", bar, left, new Vector2(0.5f, 0.5f), new Vector2(842.5f, 1.4f), new Vector2(2.2f, 71f));
+            Img(div2, spr.white, false).color = new Color(0.86f, 0.6f, 0.95f, 0.45f);
+            RectTransform coin = MakeRect("CoinIcon", bar, left, new Vector2(0.5f, 0.5f), new Vector2(483.7f, 0.7f), new Vector2(102f, 102f));
             hud.coinImage = Img(coin, spr.coin, false);
-            RectTransform coins = MakeRect("CoinsText", bar, left, new Vector2(0.5f, 0.5f), new Vector2(660f, 0f), new Vector2(280f, 90f));
-            hud.coinsText = Txt(coins, "1,420", 53, white, FontStyle.Bold, TextAnchor.MiddleCenter);
-            Shade(hud.coinsText, textShadow, new Vector2(0f, -3f));
-            RectTransform pause = MakeRect("PauseButton", bar, left, new Vector2(0.5f, 0.5f), new Vector2(922f, 0f), new Vector2(88f, 88f));
+            RectTransform coins = MakeRect("CoinsText", bar, left, new Vector2(0.5f, 0.5f), new Vector2(656.5f, 5.7f), new Vector2(280f, 90f));
+            hud.coinsGlyph = coins.gameObject.AddComponent<HudGlyphText>();
+            hud.coinsGlyph.Setup("1,420", 43.5f, 0.07f);
+            ShadeGraphic(hud.coinsGlyph, new Color(40 / 255f, 0f, 70 / 255f, 0.7f), new Vector2(1.5f, -3f));
+            RectTransform pause = MakeRect("PauseButton", bar, left, new Vector2(0.5f, 0.5f), new Vector2(925f, 2.6f), new Vector2(113f, 113f));
             Image pauseImg = Img(pause, spr.pause, true);
             hud.pauseButton = pause.gameObject.AddComponent<Button>();
             hud.pauseButton.targetGraphic = pauseImg;
 
-            // ---- title banner (.banner: height 4.1u, gold border, gold italic capitals 2.45u)
-            RectTransform banner = MakeRect("TitleBanner", safe, top, top, new Vector2(0f, -144f), new Vector2(780f, 80f));
+            // ---- title banner (approved x 119-746 / y 114-181; lettering x 147-722, capitals y 132-160)
+            RectTransform banner = MakeRect("TitleBanner", safe, top, top, new Vector2(0.6f, -142.5f), new Vector2(784f, 84f));
             hud.bannerImage = Img(banner, spr.banner, false);
-            RectTransform bannerTxt = MakeRect("TitleText", banner, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 1f), new Vector2(760f, 80f));
-            hud.bannerText = Txt(bannerTxt, Title, 46, gold, FontStyle.BoldAndItalic, TextAnchor.MiddleCenter);
-            Outline ol = bannerTxt.gameObject.AddComponent<Outline>();
-            ol.effectColor = new Color(0.48f, 0.2f, 0f, 0.55f);
-            ol.effectDistance = new Vector2(1.5f, -1.5f);
-
+            RectTransform titleRt = MakeRect("TitleLettering", banner, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(2.5f, 1.9f), new Vector2(100f, 100f));
+            hud.titleImage = Img(titleRt, spr.title, false);
+            if (spr.title != null && spr.title.texture != null)
+            {
+                // 14 px padding and 54 px capitals in the texture -> 35 reference px capitals, width fitted to 575 px * 1.25
+                float tw = spr.title.texture.width, th = spr.title.texture.height;
+                float kY = 35f / 54f, kX = 719f / Mathf.Max(1f, tw - 28f);
+                titleRt.sizeDelta = new Vector2(tw * kX, th * kY);
+            }
             // ---- hint (bottom, 1.8u)
             RectTransform hint = MakeRect("Hint", safe, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0f, 77f), new Vector2(1000f, 60f));
             hud.hintText = Txt(hint, "", 35, new Color(1f, 1f, 1f, 0.85f), FontStyle.Bold, TextAnchor.MiddleCenter);

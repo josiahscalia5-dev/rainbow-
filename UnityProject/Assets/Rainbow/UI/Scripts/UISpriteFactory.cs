@@ -103,9 +103,9 @@ namespace Rainbow.Screen05
             Texture2D t = NewTex(size, size, name);
             Color[] px = new Color[size * size];
             float c0 = size * 0.5f, r = size * 0.5f - 1.5f;
-            float ring = size * 0.065f;
-            Color fill = Hex("#5a1a8f", 0.55f), white = new Color(1f, 1f, 1f, 0.95f);
-            float barW = size * 0.15f, barH = size * 0.42f, gap = size * 0.12f;
+            float ring = size * 0.048f;
+            Color fill = new Color(74 / 255f, 2 / 255f, 120 / 255f, 0.96f), white = new Color(0.98f, 0.93f, 1f, 0.97f);   // round 4: dark like the approved
+            float barW = size * 0.14f, barH = size * 0.45f, gap = size * 0.12f;
             for (int y = 0; y < size; y++)
                 for (int x = 0; x < size; x++)
                 {
@@ -113,7 +113,7 @@ namespace Rainbow.Screen05
                     float d = Mathf.Sqrt(dx * dx + dy * dy) - r;
                     float shape = Mathf.Clamp01(0.5f - d);
                     if (shape <= 0f) { px[y * size + x] = new Color(0f, 0f, 0f, 0f); continue; }
-                    Color c = Color.Lerp(fill, Hex("#8a3cc8", 0.6f), Mathf.Clamp01(dy / r * 0.5f + 0.5f));
+                    Color c = Color.Lerp(fill, new Color(96 / 255f, 10 / 255f, 138 / 255f, 0.96f), Mathf.Clamp01(dy / r * 0.5f + 0.5f));
                     float rd = Mathf.Abs(d + ring * 0.5f) - ring * 0.5f;
                     c = Over(c, white, Mathf.Clamp01(0.5f - rd));
                     float b1 = RoundedRectSdf(dx + gap * 0.5f + barW * 0.5f, dy, barW * 0.5f, barH * 0.5f, barW * 0.5f);
@@ -132,7 +132,7 @@ namespace Rainbow.Screen05
         {
             Texture2D t = NewTex(size, size, name);
             Color[] px = new Color[size * size];
-            Color top = Hex("#ff7a9a"), bottom = Hex("#d4083a"), rim = Hex("#9a0028");
+            Color top = Hex("#ff5cb0"), bottom = Hex("#f01a74"), rim = Hex("#d01058");   // round 4: approved heart (251,113,200) .. (238,24,120)
             for (int y = 0; y < size; y++)
                 for (int x = 0; x < size; x++)
                 {

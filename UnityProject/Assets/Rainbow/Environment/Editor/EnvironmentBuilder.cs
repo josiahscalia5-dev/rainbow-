@@ -75,13 +75,13 @@ namespace Rainbow.Screen05.EditorTools
 
             // ---------------- meshes ----------------
             const int radial = 128;
-            const float nearUntil = 52f;   // the near-floor blend ends at EyeS + 38 = 45.6
+            const float nearUntil = 180f;  // round 4 geometry fit: the drum axis bends up to s ~160 (DrumLayout05.AxisS)
             var wallMeshes = new List<Mesh>
             {
                 SaveMesh(DrumMeshes05.BuildWall(DrumLayout05.TunnelStart, 20f, radial, 1f, 6f, nearUntil, "DrumWall05_A"), "DrumWall05_A"),
                 SaveMesh(DrumMeshes05.BuildWall(20f, 52f, radial, 1f, 6f, nearUntil, "DrumWall05_B"), "DrumWall05_B"),
-                SaveMesh(DrumMeshes05.BuildWall(52f, 120f, radial, 1f, 6f, nearUntil, "DrumWall05_C"), "DrumWall05_C"),
-                SaveMesh(DrumMeshes05.BuildWall(120f, DrumLayout05.ThroatS, radial, 1f, 6f, nearUntil, "DrumWall05_D"), "DrumWall05_D"),
+                SaveMesh(DrumMeshes05.BuildWall(52f, 120f, radial, 2f, 6f, nearUntil, "DrumWall05_C"), "DrumWall05_C"),
+                SaveMesh(DrumMeshes05.BuildWall(120f, DrumLayout05.ThroatS, radial, 4f, 8f, nearUntil, "DrumWall05_D"), "DrumWall05_D"),
             };
             float ringRadius = DrumLayout05.Radius - DrumLayout05.RingInset;
             Mesh ringNear = SaveMesh(DrumMeshes05.BuildRing(DrumLayout05.NearBand, ringRadius, 96, "Ring05_Near"), "Ring05_Near");

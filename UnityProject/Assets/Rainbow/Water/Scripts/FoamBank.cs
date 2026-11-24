@@ -101,7 +101,7 @@ namespace Rainbow.Screen05
         /// River round 2026-11-23: half chord of the drum wall at the water at s (DrumLayout05; the river mesh carries it in
         /// UV1.w for the shader). The foam rims hug this wall.
         /// </summary>
-        public static float WallChord(float s) => DrumLayout05.WaterChord(s) - Mathf.Abs(DrumLayout05.AxisX);
+        public static float WallChord(float s) => Mathf.Min(DrumLayout05.WallXAt(s, 1), -DrumLayout05.WallXAt(s, -1));
 
         /// <summary>RBW_BandFL (Shaders/RainbowFoamBank.hlsl): left band offset fit.</summary>
         public static float BandFL(float sm)
