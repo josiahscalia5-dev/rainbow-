@@ -35,6 +35,7 @@ Material:
     - _EnvYaw: 5.04
     - _FlowSpeed: 14.3
     - _SOffset: 116.7
+    - _W4Edge: 1
     - _WaveAmp: 0.1
     m_Colors:
     - _RiverGrade: {r: 0.55, g: 0.7, b: 0.93, a: 1}
