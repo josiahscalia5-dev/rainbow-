@@ -22,10 +22,14 @@ export const meta = {
     { title: 'Stage B', detail: "BENNY (natural contact with the water) | BUBBLES (floating iridescent bubbles)" },
     { title: 'Stage G1', detail: 'GEOMETRY (lower walls meet narrow, tall foam banks; ring framing kept) | BUBBLES (floating iridescent bubbles)' },
     { title: 'Stage G2', detail: 'BENNY (natural contact with the water) | WATER (natural S-shaped flow on the new geometry)' },
+    { title: 'Stage R2', detail: 'ROUND 4: TUNNEL (rings, paddles, reflective purple walls) | RIVER (stronger S-curve, river shape)' },
+    { title: 'Stage R3', detail: 'ROUND 4: BENNY (natural contact with the water)' },
   ],
 }
 
-const STAGE = (args && ['A', 'B', 'G1', 'G2'].includes(args.stage)) ? args.stage : 'A'
+// args.stages = ['R2', 'R3'] runs several stages one after the other in ONE run (each stage's lanes in parallel, max 2).
+const STAGES = (args && Array.isArray(args.stages)) ? args.stages.filter(s => ['A', 'B', 'G1', 'G2', 'R2', 'R3'].includes(s)) : null
+const STAGE = (args && ['A', 'B', 'G1', 'G2', 'R2', 'R3'].includes(args.stage)) ? args.stage : 'A'
 const SKIP = (args && Array.isArray(args.skip)) ? args.skip : []
 const NOTES = (args && args.notes && typeof args.notes === 'object') ? args.notes : {}
 const BASE = (args && args.baseline) || {}
@@ -157,6 +161,18 @@ crops, check the numbers, iterate. Budget: about 45-55 minutes and at most ~8 cy
 result honestly: scores before/after, what visibly improved, what still differs, every file you changed.
 ${CONTEXT ? '\nNOTES FROM THE COORDINATOR:\n' + CONTEXT + '\n' : ''}`
 
+// Round 4 (stages R2 / R3 only; kept out of COMMON so the stage-G1 prompts stay identical for resume)
+const ROUND4 = `
+ROUND 4 STRATEGY (user, 2026-11-24 morning - this overrides "small steps" and the 45-55 minute / 8 cycle budget above): ONE strong
+improvement round that moves the OVERALL visual score from ~58 toward 75, instead of many tiny adjustments. Biggest differences first.
+So: SOLVE FIRST - measure the approved target (target sheet + zoomed crops) and project Unity's real geometry with a read-only probe
+(AgentScripts/screen05_frame_probe.cs, AgentScripts/screen05_geometry_probe.cs) BEFORE the first cycle; compute the parameter / mesh
+changes that put your shapes on the approved pixels; apply them boldly in one go; then verify. At most ~6 cycles per lane (use -EvalAtHold
+live variants to test many looks in one cycle). Positions, sizes and shapes of big bright structures (rings, paddles, river S, foam,
+Benny's splash) move the score far more than small colour tweaks. Keep gameplay intact. The 58.0 baseline is safe in git commit aa2a2e1
+(never reset; restore single files from your backups if an idea fails).
+`
+
 const AREAS = {
   geometry: `
 YOUR AREA: LOWER TUNNEL GEOMETRY + NARROW TALL FOAM BANKS (user priorities 1, 2 and 4: tunnel geometry / perspective / depth; narrow,
@@ -185,7 +201,31 @@ toward the water) instead of a flat bead carpet; keep coins on open water (>= 1.
 the bubbles' foam queries (FoamBank.InChannel) and the mobile budget (watch the puff count). Check s = 10 / 20 stills: the walls and
 foam must stay consistent while Benny moves.`,
 
+  river: `
+YOUR AREA: THE RIVER - STRONGER S-CURVE AND BETTER RIVER SHAPE (user, round 4). Tag prefix: river. Cycle areas: water.
+Owns: the visible course and band layout of the open water: Shared/RiverPath.cs (Meander / course - keep steering ClampLateral, coins
+(CoinTrail places them at 0.63 x the meander) and bubbles working), Water/Scripts/RiverSurface.cs (keep HeightAt identical to the shader's
+vertex wave), RiverMeshGenerator.cs, Water/Shaders/RainbowRiver.hlsl band layout / flow lines / sparkles (NOT the "Benny's wake at the
+waterline" section), RainbowWaterCommon.hlsl, RainbowRiver.shader. The FOAM BANKS were just reworked by the GEOMETRY lane (stage G1, see
+the coordinator notes): build on its result; if the S needs the bank waterlines to follow, change FoamBank.BankEdges AND RBW_BankEdges
+(RainbowFoamBank.hlsl) line-by-line identically and keep the geometry lane's foam look. Do NOT touch the camera, walls, rings, paddles,
+Benny, splash, bubbles, HUD.
+What to deliver: approved = the open water is a narrowing ribbon that winds in a clear, strong S from Benny to the vanishing point
+(bends at mid distance swing left and right by roughly a third of the visible floor width), with broad glossy pink / magenta satin bands
+that follow the bends and cross the stream, thin white flow lines and sparkles along the current, the coins sitting on the curve (target
+coin centres in the target sheet). Unity = a wide, fairly straight river whose bands mostly run along the edges. Measure the approved
+river centreline and both waterlines row by row (y 480-1100), project Unity's (RiverPath / BankEdges with the hold camera), and reshape
+the course / bands to land on them. Benny's own position at s = 14 and the camera must not change.`,
+
   tunnel: `
+ROUND 4 FOCUS (user, 2026-11-24): (a) GOLD RINGS - thickness, spacing, size and placement exactly as the approved: chunky polished
+copper-gold rings converging tightly into the throat (ring crowns from the target sheet, ring A band ~40 px, ring B ~22 px; compare
+every ring's screen radius / band width / crown y with a probe); (b) GOLD PADDLES - shape, size, angle and position: big half-moon
+copper shelves with a thick polished rounded rim, seen from below, on the target-sheet tray centres (the dish tilt is now -15 deg; the
+rest of the shape is yours); (c) TUNNEL WALLS - a reflective purple metallic look: the coordinator already made them darker and
+saturated (keep that palette unless you measure better); add the approved's polished reflections - bright pink-white specular streaks
+running round the drum between the slot rows - without going back to pastel. The lower wall / foam junction belongs to the stage-G1
+GEOMETRY result (do not undo it). The "Unity now" lines below are OLD (written before the coordinator's look tuning); trust the baseline.
 YOUR AREA: TUNNEL GEOMETRY + REALISTIC METALLIC GOLD RINGS AND PADDLES + DEEPER PURPLE REFLECTIVE WALLS (user priorities 1-3).
 Tag prefix: tunnel. Cycle areas: light (crops walls + throat) - look at the whole side-by-side too.
 Owns: Environment/Shaders (RainbowDrumWall, RainbowGoldMetal, RainbowThroatGlow, RainbowEnvLighting, RainbowEnvCommon, RainbowFarRiver),
@@ -278,22 +318,32 @@ const IMPL_SCHEMA = {
   required: ['area', 'status', 'scores_before', 'scores_after', 'files_changed', 'changes', 'final_cycle_exit', 'final_still', 'final_sbs', 'gameplay_check', 'improved', 'still_different', 'notes_for_next_agents'],
 }
 
-const PAIRS = { A: ['tunnel', 'water'], B: ['benny', 'bubbles'], G1: ['geometry', 'bubbles'], G2: ['benny', 'water'] }
-const WHAT = { geometry: 'GEOMETRY (lower walls / foam banks / wall chord)', tunnel: 'TUNNEL (walls / gold rings / paddles / throat)', water: 'WATER (river bands / mesh; in stage G2 NOT the foam banks)', benny: "BENNY (water contact / splash)", bubbles: 'BUBBLES (floating iridescent bubbles)' }
+const PAIRS = { A: ['tunnel', 'water'], B: ['benny', 'bubbles'], G1: ['geometry', 'bubbles'], G2: ['benny', 'water'], R2: ['tunnel', 'river'], R3: ['benny'] }
+const WHAT = { geometry: 'GEOMETRY (lower walls / foam banks / wall chord)', tunnel: 'TUNNEL (walls / gold rings / paddles / throat)', water: 'WATER (river bands / mesh; in stage G2 NOT the foam banks)', river: 'RIVER (S-curve course, band layout, coins on the curve)', benny: "BENNY (water contact / splash)", bubbles: 'BUBBLES (floating iridescent bubbles)' }
 
 function lane(key, other, phaseName) {
   if (SKIP.includes(key)) {
     log('skipping ' + key + ' (finished in an earlier run)')
     return Promise.resolve({ area: key, status: 'finished in an earlier run', files_changed: [], changes: [], improved: [], still_different: [], notes_for_next_agents: 'see the handoff' })
   }
-  const prompt = COMMON + '\n' + AREAS[key] + '\nOther active lane: ' + WHAT[other] + ' works in parallel with you (its own files; one Unity cycle at a time).' +
+  const others = other ? '\nOther active lane: ' + WHAT[other] + ' works in parallel with you (its own files; one Unity cycle at a time).'
+    : '\nNo other lane runs during your stage: you have Unity to yourself.'
+  const prompt = COMMON + (/Stage R\d/.test(phaseName) ? ROUND4 : '') + '\n' + AREAS[key] + others + (EARLIER ? '\n\nRESULTS OF THE EARLIER STAGE IN THIS RUN (build on them, do not undo them):\n' + EARLIER : '') +
     (NOTES[key] ? '\n\nNOTES FOR YOUR LANE:\n' + NOTES[key] : '')
   return agent(prompt, { label: 'lane:' + key, phase: phaseName, schema: IMPL_SCHEMA })
 }
 
-const pair = PAIRS[STAGE]
-const ph = 'Stage ' + STAGE
-phase(ph)
-const res = await parallel(pair.map((k, i) => () => lane(k, pair[1 - i], ph)))
-res.forEach((r, i) => log(pair[i] + ' finished: ' + (r ? r.status + ' ' + (r.scores_after || '') : 'no result')))
-return { stage: STAGE, results: res }
+let EARLIER = ''
+const allResults = {}
+for (const st of (STAGES && STAGES.length ? STAGES : [STAGE])) {
+  const pair = PAIRS[st]
+  const ph = 'Stage ' + st
+  phase(ph)
+  const res = await parallel(pair.map((k, i) => () => lane(k, pair.length > 1 ? pair[1 - i] : null, ph)))
+  res.forEach((r, i) => log(pair[i] + ' finished: ' + (r ? r.status + ' ' + (r.scores_after || '') : 'no result')))
+  allResults[st] = res
+  EARLIER += res.filter(Boolean).map(r => '- ' + r.area + ' (' + r.status + ', ' + r.scores_before + ' -> ' + r.scores_after + '): changed ' +
+    (r.files_changed || []).join(', ') + '. Improved: ' + (r.improved || []).join('; ') + '. Still different: ' + (r.still_different || []).join('; ') +
+    '. Final still: ' + r.final_still + '. Notes: ' + (r.notes_for_next_agents || '')).join('\n') + '\n'
+}
+return { stages: STAGES && STAGES.length ? STAGES : [STAGE], results: allResults }

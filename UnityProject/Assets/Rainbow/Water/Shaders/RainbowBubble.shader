@@ -12,6 +12,9 @@ Shader "Rainbow/Water/Bubble"
         _Intensity ("Intensity", Range(0.2, 2)) = 1.0
         _MaxPx ("Max on-screen radius, big bubbles (px of the 864x1536 frame)", Float) = 33
         _MaxPxSmall ("Max on-screen radius, small bubbles (px of the 864x1536 frame)", Float) = 11
+        _Look0 ("Big: rim gain, blob gain, lens alpha, film mix", Vector) = (1, 1, 0.3, 0.5)
+        _Look1 ("Big: cyan spot gain, glint gain, rim half width (ref px), blob ring radius", Vector) = (1, 0.6, 2.2, 0.76)
+        _LookS ("Small: ring gain, dot gain, body alpha, glint gain", Vector) = (1, 1, 0.22, 0.6)
     }
 
     SubShader
@@ -43,6 +46,9 @@ Shader "Rainbow/Water/Bubble"
                 float _Intensity;
                 float _MaxPx;
                 float _MaxPxSmall;
+                float4 _Look0;
+                float4 _Look1;
+                float4 _LookS;
             CBUFFER_END
 
             // shared animation clock (Rainbow.Screen05.Screen05Clock; game time, reset by the test hold)
@@ -109,9 +115,9 @@ Shader "Rainbow/Water/Bubble"
                 float a;
                 float seed = frac(i.quad.z);
                 if (i.quad.z >= 1.0)
-                    RainbowBubbleSmall_float(P, seed, i.quad.w, i.misc.x * soft, col, a);
+                    RainbowBubbleSmall_float(P, seed, i.quad.w, i.misc.x * soft, _LookS, col, a);
                 else
-                    RainbowBubble_float(P, seed, i.quad.w, i.misc.x * soft, _RainbowTime, col, a);
+                    RainbowBubble_float(P, seed, i.quad.w, i.misc.x * soft, _RainbowTime, _Look0, _Look1, col, a);
                 col *= _Intensity;
                 col = MixFog(col, i.misc.w);
                 return half4(col, a);

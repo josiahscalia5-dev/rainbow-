@@ -108,8 +108,10 @@ float2 RBW_BankEdges(float d, float hw, float Mb, float sm, float W)
     // (water round 3v 2026-11-23: rims refitted to the approved foam waterlines traced row by row and mapped onto the
     //  water: left 1.4 -> 3.0 m at s 20-27, down to a 0.4 m rim by s 33 (the old 1.9-2.3 m at s 30-33 was the big left
     //  heap over the left band); right at least 2.0 -> 1.5 m at s 23-25, 0.6 m at s 27-34, widening to 1.5 m by s 41)
-    float rimL = 0.35 + 1.2 * RBW_FB_SS(136.9, 137.9, sm) + 0.5 * RBW_FB_SS(137.9, 140.0, sm)
-               + 0.9 * RBW_FB_SS(139.5, 142.5, sm) - 0.4 * RBW_FB_SS(143.5, 146.5, sm)
+    // (geometry round 2026-11-24: the near-left rim at s 21-26 narrowed 0.6-0.9 m - approved foam waterline traced at
+    //  x 50-175 / y 720-790 = rims 1.0 / 1.1 / 1.2 / 1.7 / 2.1 / 2.7 m at s 21.2 / 22.8 / 24.5 / 25.3 / 26.6 / 27.1)
+    float rimL = 0.35 + 0.6 * RBW_FB_SS(136.9, 137.9, sm) + 0.2 * RBW_FB_SS(137.9, 140.0, sm)
+               + 0.9 * RBW_FB_SS(140.5, 143.0, sm) + 0.9 * RBW_FB_SS(142.5, 144.5, sm) - 0.4 * RBW_FB_SS(143.5, 146.5, sm)
                - 0.6 * RBW_FB_SS(146.0, 148.0, sm) - 1.35 * RBW_FB_SS(148.0, 149.5, sm)
                - 0.25 * RBW_FB_SS(149.5, 151.5, sm);
     float rimLmin = lerp(rimL, 0.35, RBW_FB_SS(152.0, 154.0, sm));

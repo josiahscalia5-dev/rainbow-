@@ -166,9 +166,21 @@ namespace Rainbow.Screen05.EditorTools
         }
 
         // ------------------------------------------------------------------ bubbles + spray
+        /// <summary>Bubble look (RainbowBubble.hlsl), bubbles round 3 vs zoomed crops of the approved 05 bubbles:
+        /// big = (rim gain, blob gain, lens alpha, film mix), (cyan spot gain, glint gain, rim half width px, blob ring radius);
+        /// small = (ring gain, dot gain, body alpha, glint gain).</summary>
+        public static readonly Vector4 BubbleLook0 = new Vector4(1f, 1f, 0.3f, 0.5f);
+        public static readonly Vector4 BubbleLook1 = new Vector4(1f, 0.6f, 2.2f, 0.76f);
+        public static readonly Vector4 BubbleLookS = new Vector4(1f, 1f, 0.22f, 0.6f);
+
         static void BuildBubbles(Transform root)
         {
+            // (bubbles round 3) the look properties must exist before the material is written
+            AssetDatabase.ImportAsset(Dir + "/Shaders/RainbowBubble.shader", ImportAssetOptions.ForceSynchronousImport);
             Material mat = GetOrCreateMaterial(MatDir + "/RainbowBubble05.mat", "Rainbow/Water/Bubble");
+            mat.SetVector("_Look0", BubbleLook0);
+            mat.SetVector("_Look1", BubbleLook1);
+            mat.SetVector("_LookS", BubbleLookS);
             // Coordinator tuning 2026-11-23 (AgentScripts/screen05_bubble_nearfade.cs, commit be4abef): bubbles may come
             // closer to the camera (the approved image has big bubbles near the bottom corners) and read a bit stronger.
             // bubbles.ts uNear was 3.2 / intensity 1.

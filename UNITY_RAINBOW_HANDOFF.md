@@ -14,7 +14,15 @@ on live variants), exact args `staging/shared/round3-visual-G1-args.json`, journ
   almost wall to wall; FoamRimCap / RBW_FOAM_CAP = 99 = off, foam values restored). Baseline `work/20261124_051325_G_BASELINE*` =
   **visual 58.0 / layout 36.8** (exactly the e2_c1 variant, rebuilt from code, console clean) - sent to the user. Diagnostics now in
   `tools/diag/` (colorgrid, cropstack, measure-compact).
-**NEXT:** (1) when G1 ends: coordinator cycle `-Tag G1_done -Areas all`, send the user the side-by-side + both scores. (2) Launch
+**USER, ~05:30 local - STRATEGY CHANGE ("ROUND 4"):** ONE strong improvement round from visual ~58 toward 75 (not many tiny steps),
+biggest differences first: gold rings (thickness, spacing, size, placement), gold paddles (shape, size, angle, position), reflective
+purple metallic walls, stronger river S-curve, narrower natural foam, Benny's water contact, larger iridescent edge bubbles. Keep the
+58.0 baseline safe (= git commit `aa2a2e1`, stills in `evidence/screen05/round3/20261124_051325_G_BASELINE*`), keep gameplay intact,
+no excessive testing; show ONE new Game-view side-by-side after the round.
+**NEXT (replaces the G2 plan below):** (1) when G1 ends: coordinator cycle `-Tag G1_done -Areas all` (no side-by-side to the user yet).
+(2) ONE run `Workflow({scriptPath: round3-visual.workflow.js, args: {stages: ["R2", "R3"], baseline: <G1_done>, context: <G1 results>}})`
+= TUNNEL (rings / paddles / walls) | RIVER (S-curve), then BENNY alone (the script passes R2's results on; ROUND4 brief text only in R
+stages). (3) Coordinator integration below, then the side-by-side to the user. OLD plan: (2) Launch
 G2 (`stage: "G2"` = BENNY water contact | WATER S-flow) with that still as baseline + notes from G1. (3) Integration
 `-Tag ROUND3_FINAL -Areas all -Series`, `AgentScripts/screen05_playtest_check.cs`, a 12 s recording; send all to the user; update
 this handoff. If a run is interrupted: read its journal, put lanes with a result into `skip`, write `notes.<lane>` for the
