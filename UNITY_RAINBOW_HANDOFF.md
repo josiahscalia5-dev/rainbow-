@@ -1,48 +1,51 @@
 # Rainbow Unity — handoff (latest verified state)
 
-Last verified: **2026-11-24 13:55 UTC** (08:55 local), Claude session 018893e6 (new account) on the user's laptop. Unity is OPEN; Round 4b is DONE (80.5 / 66.6, tagged); Round 5 is next.
+Last verified: **2026-11-24 14:58 UTC** (09:58 local), Claude session 018893e6 (new account) on the user's laptop. Unity is OPEN; Round 5 is DONE (82.5 / 68.1, tagged); Round 6 is RUNNING.
 Read this first in any new Claude account or session. **This is an existing project — never start over.**
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
 ## NOW - read this first (concise; rewritten after every finished step; the DETAILED LOG below is history)
-Updated 2026-11-24 08:55 local (session 018893e6, new account; the previous account ran out of credits at 08:28 local). Cross-account rules: CLAUDE.md "PERMANENT RULE".
-- **USER (2026-11-24 ~08:33 local, binding):** resume Round 4 with at most TWO specialists, conserve credits, reuse the existing tools (cycle tool, automatic fitter
-  `Screen05AutoFit`, geometry tools, Blender tools) instead of building new ones; at least 70 now, preferably 75+, final goal 90-95 %; preserve the best version;
-  priority: reflective purple walls, copper-gold rings, half-moon paddles, foreground frame, S-river, natural foam, bubbles, realistic water reflections, Benny's
-  water contact. Show the real Game View beside the approved image with honest visual + layout scores. No Screen 06 without approval.
+Updated 2026-11-24 09:58 local (session 018893e6, new account; the previous account ran out of credits at 08:28 local). Cross-account rules: CLAUDE.md "PERMANENT RULE".
+- **USER (2026-11-24 ~08:33 local, binding):** continue Screen 05 with at most TWO specialists at a time, conserve credits (spend them on development, not
+  preparation), reuse the existing tools (cycle tool, automatic fitter `Screen05AutoFit`, geometry tools, Blender tools); >= 70 now (preferably 75+), final goal
+  90-95 %; preserve the best version; priority: reflective purple walls, copper-gold rings, half-moon paddles, foreground frame, S-river, natural foam, bubbles,
+  realistic water reflections, Benny's water contact. Show the real Game View beside the approved image with honest visual + layout scores after substantial
+  improvements. Keep GitHub + this handoff current so another account can resume. No Screen 06 without approval.
 - **USER'S CORRECTION GUIDES (binding):** `references/correction-guides-2026-11-24/` (README.md = per-area instructions + 3 images; full-resolution copies in
-  `full-resolution/`, added 08:50). Every specialist / Blender / Unity job reads them first. Their Unity side is an OLD mid-edit still (white walls): judge against the newest still.
-- **ROUND 4b RESULT (recovered by this account):** run `wf_54c15c25-7a2` (TUNNEL | RIVER) was cut at 08:28:41 when the credits ran out, AFTER both lanes' edits were
-  saved; the river lane's last cycle `river_final` (08:29) finished on its own. Coordinator integration `ROUND4_FINAL` (08:42, full rebuild from code) =
-  **visual 80.5 / layout 66.6** (from 67.0 / 47.5; measure tool unchanged since 11-23 18:04, the old baseline still re-measures 67.0 / 47.5). Gameplay check passed
-  (steer L -4.20 / R -0.24, jump 1.20 + landing, coins 1420 -> 1440, hearts 5/5, Swimming). Evidence `evidence/screen05/round4/20261124_084215_ROUND4_FINAL*`
-  (+ errormap heat), 12 s recording `UnityProject/Recordings/Screen05/gameplay_20261124_084559.mp4`.
-- ERROR MAP of ROUND4_FINAL (`tools/diag/errormap.ps1 -Oracle`): biggest remaining gap = near water / Benny's splash y 1100-1536 (+4.5 visual / +8.1 layout if
-  perfect), then upper walls + rings (+2.4), HUD (+2.3), mid river (+2.3), Benny box (+2.1), water right / left (+1.8 / +1.6), left wall + foam (+1.4).
-- **RUNNING since 09:10 local: ROUND 5 = run `wf_a52c9b0c-d31`** (exactly two lanes RIVER | TUNNEL+BUBBLES; script `staging/shared/round5-visual.workflow.js`, exact args +
-  journal path + relaunch recipe in `staging/shared/round5-args.json`). Baseline = `work/20261124_090507_R5_prefit` **81.7 / 67.2** (step 1 below DONE: the fitter's
-  11 global values are in `Assets/Rainbow/Tuning/screen05_tuning.txt`, a full rebuild reproduced them; a Benny-fur fitter pass (+0.1, it switched his fur rim off) was NOT
-  applied). The 12 s recording needed an unpause: `screen05_playtest_check.cs` leaves Play mode PAUSED, so unpause before `screen05_record_gameplay.cs`.
-- NEXT (in order; 1 is done): (1) coordinator FITTER, GLOBAL look only (bloom, exposure, contrast, saturation, hue, vignette, light intensities): params
-  `staging/shared/autofit_round5_global_params.txt` (= `Recordings/Screen05/work/autofit_params.txt`, budget `autofit_seconds.txt` 240), run
-  `screen05-cycle.ps1 -Tag R5_prefit -Areas all -NoRebuild -EvalAtHold AgentScripts/screen05_autofit.cs`; winners (`work/autofit_result.txt`) -> append to
-  `Assets/Rainbow/Tuning/screen05_tuning.txt`; confirm with a full cycle; keep only if the score rises. (2) ROUND 5 = `staging/shared/round5-visual.workflow.js`:
-  two lanes RIVER (near water / contact / splash, then mid water, foam rims) | TUNNEL (upper walls, rings, corners, paddles, near frame + BUBBLES); args.baseline =
-  the newest confirmed still. If the run dies: journal -> `skip` + `notes`, relaunch the same script. (3) Integration cycle `-Tag ROUND5_FINAL -Areas all -Series` +
-  `screen05_playtest_check.cs`; tag `validated/r5-final-<visual>` if higher; side-by-side + both scores to the user. (4) Fitter again on the lanes' material values.
+  `full-resolution/`). Every specialist / Blender / Unity job reads them first. Their Unity side is an OLD mid-edit still (white walls): judge against the newest still.
+- **DONE this session:** Round 4b recovered + integrated (ROUND4_FINAL 80.5 / 66.6, tag validated/r4b-final-80.5) -> fitter GLOBAL look (bloom, exposure, contrast,
+  saturation, hue, vignette, light intensities: 81.7 / 67.2) -> ROUND 5 (run `wf_a52c9b0c-d31`, RIVER: wake sweeps outward + wider, lighter glossy pinks, lacier
+  droplets; TUNNEL: wall grooves + 8 slot rows; 82.3 / 67.8) -> fitter POLISH of the lanes' material values -> **ROUND5_FINAL (09:49, full rebuild) = visual 82.5 /
+  layout 68.1**, gameplay check passed, tag **validated/r5-final-82.5** (a84495d), evidence `evidence/screen05/round5/` (sent to the user). The fitter's 31 values live
+  in `Assets/Rainbow/Tuning/screen05_tuning.txt` (applied at the end of every build; params / results in `staging/shared/autofit_round5_*`). A Benny-fur fitter pass
+  (+0.1, it switched his fur rim off) was NOT applied. 12 s recording of Round 4b: `evidence/screen05/round4/gameplay_20261124_084559.mp4` (5 coins, 2 jumps, finish).
+- **RUNNING since 09:57 local: ROUND 6 = run `wf_d3fb1b5f-2fa`** (two lanes; script `staging/shared/round6-visual.workflow.js`; baseline ROUND5_FINAL 82.5 / 68.1;
+  journal `%USERPROFILE%\.claude\projects\C--Users-josia--unity\018893e6-6516-483e-909b-f1a354ffd072\subagents\workflows\wf_d3fb1b5f-2fa\journal.jsonl`):
+  SPLASH = starburst splash rooted along Benny's contact line (RainbowSplash SPL_Rope reshape), near-water arcs, Benny's underside shade (new property, default off) |
+  SHAPE = left / right foam rims (FoamBank), far S-river into the throat (RiverLayout05 s >= 25, RainbowFarRiver), ring N's right side (approved band runs down the
+  right edge x 810-860 to y ~330; Unity leaves the frame at y ~160-190; the coordinator allowed ring-N-only changes keeping its left / top within 2 px).
+  If the run dies: read the journal; a lane with a "result" goes into `skip`; `notes.<lane>` = its newest files (backups `work/backup_round6/<lane>`, stills
+  `work/*_<lane>6_t*`); relaunch the same script with args.baseline = ROUND5_FINAL (`work/20261124_094935_ROUND5_FINAL.png` / `_sbs.jpg`, "visual 82.5 / layout 68.1").
+- NEXT after Round 6: (1) fitter POLISH again on the lanes' material values (params like `staging/shared/autofit_round5_polish_params.txt`; run
+  `screen05-cycle.ps1 -Tag R6_fit -Areas all -EvalAtHold AgentScripts/screen05_autofit.cs`, append `work/autofit_result.txt` lines to the tuning file, LOOK at the sbs
+  before accepting). (2) `-Tag ROUND6_FINAL -Areas all -Series` + `AgentScripts/screen05_playtest_check.cs` (it leaves Play mode PAUSED: unpause before
+  `screen05_record_gameplay.cs`). (3) Tag `validated/r6-final-<visual>` only if higher; send the user the side-by-side + both scores. (4) Coordinator items left: HUD
+  (oracle +2.1), wall slot orientation (approved = tall dark ovals), Blender mesh job only if a mesh is still off (paddles are within ~2 px).
+- LOSS MAP of ROUND5_FINAL (`tools/diag/errormap.ps1 -Oracle`, heat in `evidence/screen05/round5/`): splash + near water +3.9 / +7.8 (biggest), HUD +2.1, river mid +2.1,
+  Benny box +2.0, upper walls + rings +1.8, water left / right +1.5 / +1.6, left wall + foam +1.5, right wall + foam +0.9, bottom corners +0.8.
 - VALIDATED VERSIONS (safe fallbacks; every autosave commit after the newest one may hold EXPERIMENTAL work):
   | git tag | commit | visual / layout | what | evidence |
   |---|---|---|---|---|
+  | validated/r5-final-82.5 | a84495d | 82.5 / 68.1 | Round 5 lanes + fitted global look + material polish (31 tuning values) | evidence/screen05/round5/20261124_094935_ROUND5_FINAL* |
   | validated/r4b-final-80.5 | a3f7d54 | 80.5 / 66.6 | Round 4b: data-driven S-river, glints, foam ropes, copper tunnel, half-moon paddles, coins | evidence/screen05/round4/20261124_084215_ROUND4_FINAL* |
   | validated/r4-baseline-58.0 | aa2a2e1 | 58.0 / 36.8 | coordinator look tuning: walls, paddle tilt -15, azure water grade, darker HUD | evidence/screen05/round3/20261124_051325_G_BASELINE* |
 - BLENDER: INSTALLED 2026-11-24 09:13 local by `tools/blender/setup-blender.ps1` (user-approved after Round 4; disk check passed at 6.66 GB): portable Blender 5.3.0
   (official SHA-256 3ac567a6...eabfa8 verified, 0.92 GB) at `C:\Users\josia\Blender\blender-5.3.0-windows-x64\blender.exe`; C: 5.71 GB free afterwards. Use
-  `tools/blender/run-blender.ps1` (headless, one job at a time, NEVER while a round's lanes run Unity cycles). First job after Round 5: whichever of paddles / rings is
-  still furthest from the approved image (FBX -> `Assets/Rainbow/Environment/Models`, kept only if the cycle tool shows it closer). Disk is getting tight: old git-ignored
-  work stills in `UnityProject/Recordings/Screen05/work` are regenerable (ask the user before deleting anything).
-- UNITY NOTES: the previous session's end killed the Editor (no clean exit); on reopen Unity showed "Recovering Scene Backups" and saved
-  `Assets/_Recovery/0 (3).unity` (0..3 = harmless recovered copies; ask the user before deleting). Windows Security blocked a Burst DLL in Library (the game does not need Burst).
+  `tools/blender/run-blender.ps1` (headless, one job at a time, NEVER while a round's lanes run Unity cycles). Not needed yet: Round 5 measured the paddles within
+  ~2 px of the approved outlines. Disk is getting tight: old git-ignored work stills in `UnityProject/Recordings/Screen05/work` are regenerable (ask before deleting).
+- UNITY NOTES: a Claude session's end can kill the Editor (no clean exit); on reopen Unity shows "Recovering Scene Backups" and saves `Assets/_Recovery/0 (N).unity`
+  (0..3 = harmless recovered copies; ask the user before deleting). Windows Security blocked a Burst DLL in Library (the game does not need Burst).
 - WAITING ON THE USER: (a) permission rules v2 in `tools/claude-permissions/` - the user applies them; (b) the GitHub repo is PUBLIC although the user called it private.
 <!-- NEXT-TASK:END -->
 

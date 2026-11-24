@@ -1,0 +1,12 @@
+{
+  "launched": "2026-11-24 09:57 local, session 018893e6-6516-483e-909b-f1a354ffd072, run wf_d3fb1b5f-2fa",
+  "journal": "%USERPROFILE%\\.claude\\projects\\C--Users-josia--unity\\018893e6-6516-483e-909b-f1a354ffd072\\subagents\\workflows\\wf_d3fb1b5f-2fa\\journal.jsonl",
+  "relaunch": "Workflow({ scriptPath: 'C:\\\\RainbowUnity\\\\staging\\\\shared\\\\round6-visual.workflow.js', args: <this baseline> + skip (lanes with a result) + notes.<lane> (its newest files, work stills splash6_t*/shape6_t*, backups in work/backup_round6/<lane>) })",
+  "args": {
+    "baseline": {
+      "still": "C:\\RainbowUnity\\UnityProject\\Recordings\\Screen05\\work\\20261124_094935_ROUND5_FINAL.png",
+      "sbs": "C:\\RainbowUnity\\UnityProject\\Recordings\\Screen05\\work\\20261124_094935_ROUND5_FINAL_sbs.jpg",
+      "scores": "visual 82.5 / layout 68.1 (ROUND5_FINAL, git tag validated/r5-final-82.5)"
+    }
+  }
+}
