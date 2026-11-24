@@ -1,10 +1,39 @@
 # Rainbow Unity — handoff (latest verified state)
 
-Last verified: **2026-11-23 23:30 UTC** (18:30 New York time), Claude session on the user's laptop (after the third account switch).
+Last verified: **2026-11-24 01:25 UTC** (20:25 New York time), Claude session on the user's laptop (after the account switch at ~01:03 UTC).
 Read this first in any new Claude account or session. **This is an existing project — never start over.**
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
+**UPDATE 2026-11-24 01:25 UTC (new Claude account; transfer verified; NOTHING IS RUNNING):** the previous account hit its 5-hour
+limit at 01:02 UTC (20:02 local), and the account switch ended its session. So round-3 run `wf_9320b9e1-c74` is dead and must be
+relaunched as described below. Verified read-only: Git `unity/screen05-dev` @ `3207178` = GitHub, 0 uncommitted; autosave task
+Ready (last pass OK 20:04); Editor 6000.3.29f1 open, `unity status` ready, CLI 1.0.1, all 16 checked packages at the expected
+versions in PackageCache. The Editor sits in Play mode PAUSED (the cycle tool stops Play mode itself). The lanes' newest edits
+are NOT compiled yet. **Round 3:** FRAME finished (52.8 / 33.8, `evidence/screen05/round3/stage1_frame_final_sbs.jpg`). SHAPE:
+the river lane (agent a48fd...) edited RainbowFoamBank.hlsl, RainbowRiver.hlsl, FoamBank.cs and RiverMeshGenerator.cs. The
+tunnel lane (a041b...) edited EnvironmentBuilder.cs, RainbowDrumWall.hlsl/.shader, RainbowGoldMetal.hlsl and
+RainbowThroatGlow.hlsl. Both sets are in commits `1601007` and `9e132fe`, but NEITHER lane ran a test cycle. From ~19:53 local
+their cycles waited for `Temp\screen05-cycle.lock`, which the coordinator's CLI-vs-MCP test held after its first MCP tool call
+hung (19:35 until it was killed at 20:02). Their temp helper tools are now in `staging/round3-recovery/` (see its README).
+**CLI vs MCP (recovered, not rerun):** CLI: `unity status` median 1.77 s, `script eval` median 0.21 s, 0 failures. MCP: start
+0.25 s, tools/list 0.27 s, but 187 tools (~37,400 tokens of definitions), and its first tool call never answered (>25 min). Result:
+no advantage. The Unity CLI stays the only method, `unity mcp` stays unconnected, and the test is closed. LESSON: every helper
+that takes the cycle lock needs a hard timeout. **Play Mode speed-up audit (read-only):** the game code is ready for "Reload
+Scene only". Screen05Events and SwimInputOverride reset their statics, the singletons clear in OnDisable, and the HUD font is
+null-checked. Four editor test-tool statics need a reset on entering Play mode first: Screen05Capture.Status/LastOutput,
+Screen05GameplayRecorder.Active, Screen05SeriesRun.Active and Screen05CaptureFrameHook.LateFrame. The setting is still "reload
+domain + scene"; change it ONLY with the user's approval. **This account:** the Unity plugin is NOT enabled (install card offered
+to the user). Playwright and TypeScript are not added (they need Node.js, which the user said not to install). The World Labs
+connector is absent (not needed). Connected: Claude Docs, Hugging Face, the Blender extension (Blender not installed) and
+scheduled-tasks (0 tasks). **Laptop:** C: has only 2.8 GB free (8.2 GB at 19:10). The Windows page file is 12.3 GB and RAM has
+0.7 GB free; this morning's restart freed ~8 GB. Suggest a restart between rounds, never while specialists run. **NEXT (after
+the user's go-ahead):** if approved, add the 4 resets and switch Play Mode. Then run ONE coordinator cycle
+`-Tag r3_resume -Areas all` (compile check plus an honest still and scores of the combined untested edits). Then relaunch round 3
+with `skip: ["frame"]`, `notes.river` / `notes.tunnel` (their edits, that cycle's result, `staging/round3-recovery`), and the
+faster rules: offline projection before cycles, at most 3 cycles per lane, numbers first, live tuning while paused. Keep
+`reviewers: 0`.
+
 **UPDATE 2026-11-23 23:30 UTC (third Claude account; ROUND 3 RUNNING):** the second account hit its 5-hour limit at 23:07 UTC
 while the round-2 BUBBLES agent was starting its final check. The new account verified everything (Git = GitHub `f67c5f1`,
 one autosave task, Editor open + ready, nothing running) and finished round 2 itself: `bubbles_final` cycle 18:25 local exit 0,
@@ -126,6 +155,8 @@ Original plan below (steps 1–3 are done):
 <!-- NEXT-TASK:END -->
 
 ## ✅ CURRENT STATE (2026-11-23 21:55 UTC) — verified by the new Claude account
+**Newest (2026-11-24 01:25 UTC):** see the first NEXT-TASK entry. Transfer verified; round 3's Shape stage was interrupted with
+untested edits; nothing is running.
 **Newer (23:30 UTC, third account):** round 2 is COMPLETE (water, lighting/scenery, splash, foam, bubbles); round 3
 (composition-first) is RUNNING as run `wf_9320b9e1-c74` (see the first NEXT-TASK entry). Newest honest still:
 `evidence/screen05/ROUND3_BASELINE.png` (visual 52.4 / layout 32.7). The bullets below are older where they disagree.
