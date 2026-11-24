@@ -27,6 +27,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 0c89658ef94220049bb6de95c5f8bf5a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _LaceTex:
+        m_Texture: {fileID: 2800000, guid: cc3f9988151808744aaf3538a115fa1c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _RiverRamp:
         m_Texture: {fileID: 2800000, guid: abc835ef3b2de1c468c2f1a5642a3b0c, type: 2}
         m_Scale: {x: 1, y: 1}

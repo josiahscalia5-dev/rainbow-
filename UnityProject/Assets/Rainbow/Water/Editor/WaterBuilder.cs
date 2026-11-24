@@ -120,6 +120,7 @@ namespace Rainbow.Screen05.EditorTools
             mat.SetTexture("_RiverSheen", AssetDatabase.LoadAssetAtPath<Texture2D>(WaterSheenFactory.SheenPath));
             mat.SetTexture("_WakeSheen", AssetDatabase.LoadAssetAtPath<Texture2D>(WaterSheenFactory.WakePath));
             mat.SetVector("_SheenLook", SheenLook);
+            mat.SetTexture("_LaceTex", AssetDatabase.LoadAssetAtPath<Texture2D>(WaterTextureFactory.LacePath));
             mat.SetVector("_W4Look", RiverLook); mat.SetFloat("_W4Edge", 0.6f); mat.SetVector("_W4Band", new Vector4(0.95f, 0.65f, 0.5f, 0.35f));
             EditorUtility.SetDirty(mat);
 
@@ -268,9 +269,9 @@ namespace Rainbow.Screen05.EditorTools
             lace.SetFloat("_Len", 1.55f);
             lace.SetFloat("_Height", 0.16f);
             lace.SetFloat("_Alpha", 1f);
-            lace.SetFloat("_Bright", 1f);
+            lace.SetFloat("_Bright", 0.94f);
             lace.SetVector("_Shape", new Vector4(0.16f, 1.82f, 0.9f, 0.1f));
-            lace.SetVector("_Web", new Vector4(0.2f, 0.62f, 0.1f, 0.42f));
+            lace.SetVector("_Web", new Vector4(0.36f, 0.66f, 0.12f, 0.5f));
             lace.SetVector("_Tile", new Vector4(3.4f, 0.5f, 2.2f, 0.6f));
             EditorUtility.SetDirty(lace);
 

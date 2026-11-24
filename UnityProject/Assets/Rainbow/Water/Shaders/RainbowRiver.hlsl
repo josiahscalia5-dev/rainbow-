@@ -67,6 +67,7 @@ TEXTURE2D(_SilkTex); SAMPLER(sampler_SilkTex);
 TEXTURE2D(_RiverRamp); SAMPLER(sampler_RiverRamp);
 TEXTURE2D(_RiverSheen); SAMPLER(sampler_RiverSheen);
 TEXTURE2D(_WakeSheen); SAMPLER(sampler_WakeSheen);
+TEXTURE2D(_LaceTex); SAMPLER(sampler_LaceTex);
 #ifndef RBW_HAS_LOOK
 #define _SilkLook float4(0.3, 0.25, 0.35, 0.3)
 #define _GlintLook float4(0.75, 0.9, 0.0, 0.0)
@@ -204,18 +205,34 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float2 wuv = float2((dlW + 0.012 * sin(bt * 2.9 + back * 6.0) + 2.2) / 4.4, (bk - 0.2) / 3.6);
     float3 wm = SAMPLE_TEXTURE2D_LOD(_WakeSheen, sampler_WakeSheen, wuv, 0).rgb;
     float wakeA = bOn * wk * smoothstep(0.8, 1.2, back) * (1.0 - smoothstep(3.2, 3.7, back)) * (1.0 - smoothstep(1.75, 2.1, abs(dlW))) * saturate(wm.b * 1.4);
-    // the two pink sweeps: soft, streaky, feathered into violet and blue (no hard fins)
-    float gk = saturate(wm.g * (0.5 + 0.95 * T));
-    float qw = lerp(0.15, 1.5, smoothstep(0.12, 0.8, gk));
+    // the two pink sweeps (measured: middle at 0.07 + 0.44 x back from an axis 0.06 m right of him, half width ~0.2 m): soft, streaky, feathered
+    float dlS = dlW - 0.06;
+    float tS = (abs(dlS) - (0.07 + 0.44 * back) - 0.03 * sin(v5 * 1.3 + dlS * 3.0)) / (0.15 + 0.045 * back);
+    float sw = exp(-tS * tS * 1.05) * smoothstep(1.05, 1.5, back) * (1.0 - smoothstep(2.9, 3.5, back));
+    float gk = saturate(sw * (0.62 + 0.75 * T));
+    float qw = lerp(0.1, 1.5, smoothstep(0.1, 0.72, gk));
     qe = lerp(qe, qw + (T - 0.5) * 0.3, wakeA);
     float arcP = frac((bk - 0.8 * dlW * dlW - 1.42) / 0.52 + 0.5) - 0.5;
     float arcN = smoothstep(0.1, 0.5, RBW_VNoise(float2(dlW * 3.1 + 9.0, floor((bk - 0.8 * dlW * dlW - 1.42) / 0.52 + 0.5) * 3.7)));
-    float arcLine = exp(-arcP * arcP * 160.0) * (0.25 + 0.75 * arcN) * smoothstep(1.2, 1.55, bk) * (1.0 - wm.g);
-    float Yw = lerp(0.3 + (min(wm.r, 0.62) - 0.3) * 1.15, 0.28, 3.2 * gk * (1.0 - gk) * 0.6) + (row - 0.333) * _SheenLook.z + arcLine * 0.22;
+    float arcLine = exp(-arcP * arcP * 160.0) * (0.25 + 0.75 * arcN) * smoothstep(1.2, 1.55, bk) * (1.0 - gk);
+    float Yw = 0.3 + (clamp(wm.r, 0.08, 0.62) - 0.3) * 1.15 + (row - 0.333) * _SheenLook.z + arcLine * 0.22;
+    Yw = lerp(Yw, 0.24 + (row - 0.333) * 0.95, smoothstep(0.12, 0.6, gk));
     Y = lerp(Y, Yw, wakeA);
 
     float3 c5 = RBW_RampY(qe, Y, zone);
     c5 = max(c5 - _GlintLook.w, 0.0);                  // the bloom veil of the bright scene would grey the deep saturated colours
+
+    // soap lace lying on the water: a broken rope outside each wake sweep and a thin web along the foam waterlines
+    float latherW = exp(-(tS - 1.75) * (tS - 1.75) * 3.2) * wakeA * smoothstep(0.85, 1.2, back) * (1.0 - smoothstep(2.5, 3.1, back));
+    float latherB = exp(-(max(wl - lat, lat - wr) + 0.1) * (max(wl - lat, lat - wr) + 0.1) * 60.0) * (1.0 - smoothstep(22.0, 40.0, distV));
+    [branch] if (latherW + latherB > 0.02)
+    {
+        float4 lc = SAMPLE_TEXTURE2D_LOD(_LaceTex, sampler_LaceTex, float2(lat * 0.55, (latherW > latherB ? s : v5) * 0.4), clamp(log2(distV / 6.0), 0.0, 5.0));
+        float lh = max(lc.r, lc.g * 0.9);
+        float lk = max(latherW * 0.8, latherB * 0.62) * (0.55 + 0.8 * lc.b);
+        float la = smoothstep(1.02 - lk * 0.75, 1.2 - lk * 0.75, lh + 0.25);
+        c5 = lerp(c5, lerp(float3(0.5, 0.72, 1.0), float3(0.95, 0.96, 1.02), la), saturate(la * saturate(lk * 1.6)));
+    }
 
     // ---- surface: ripples catch the light (emboss), slivers of light burn a little, gloss from the swell normal ----
     float3 N0 = normalize(NormalWS);

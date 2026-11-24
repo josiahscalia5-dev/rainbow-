@@ -86,13 +86,13 @@ Shader "Rainbow/Water/SplashLace"
                 float th = lerp(_Web.x, _Web.y, smoothstep(0.0, 0.95, t));
                 th += (0.5 - strand) * _Web.w * smoothstep(0.08, 0.75, t);
                 float edge = smoothstep(0.0, 0.1, a) * (1.0 - smoothstep(0.93, 1.0, a));       // soft fan borders
-                th += (1.0 - edge) * 0.5;
+                th += (1.0 - edge) * 0.5 + 0.14 * a * a;
                 float web = smoothstep(th, th + _Web.z, H);
                 float fade = (1.0 - smoothstep(0.72, 1.0, t)) * smoothstep(0.0, 0.05, t);
                 float al = web * fade * edge * _Alpha * saturate(i.k.x * 1.5);
                 // colour: bright white threads, blue-lavender where the web is thin, sparkling nodes
                 float body = saturate((H - th) / max(_Web.z * 2.2, 0.05));
-                float3 c = lerp(float3(0.42, 0.66, 1.02), float3(0.98, 1.0, 1.04), smoothstep(0.1, 0.75, body));
+                float3 c = lerp(float3(0.34, 0.60, 1.0), float3(0.93, 0.95, 1.02), smoothstep(0.1, 0.85, body));
                 c = lerp(c, float3(0.80, 0.82, 1.0), 0.25 * (1.0 - l1.r) * (1.0 - t));
                 c += 0.35 * smoothstep(0.8, 1.0, body) * smoothstep(0.55, 0.9, l1.g);
                 al = saturate(al);

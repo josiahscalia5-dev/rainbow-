@@ -26,6 +26,7 @@ Shader "Rainbow/Water/River"
         _GlintLook ("Glint mix, glint glow, -, -", Vector) = (0.75, 0.9, 0, 0)
         [NoScaleOffset] _RiverSheen ("Broad sheen (q, log distance)", 2D) = "gray" {}
         [NoScaleOffset] _WakeSheen ("Standing wake (dl, back)", 2D) = "black" {}
+        [NoScaleOffset] _LaceTex ("Foam lace", 2D) = "black" {}
         _SheenLook ("Sheen strength, streak detail, wake streak detail, vignette compensation", Vector) = (0.85, 0.75, 0.5, 1)
     }
 
