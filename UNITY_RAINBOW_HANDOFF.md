@@ -7,24 +7,26 @@ Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is op
 <!-- NEXT-TASK:START -->
 ## NOW - read this first (concise; rewritten after every finished step; the DETAILED LOG below is history)
 Updated 2026-11-24 05:55 local (session ded4464c). Cross-account rules: CLAUDE.md "PERMANENT RULE: cross-account continuation".
-- RUNNING: ROUND 4 = ONE strong round (user 05:30: visual ~58 -> toward 75, biggest differences first). Stage G1 = Workflow run
-  `wf_625572df-94a` (started 05:16): GEOMETRY (lower tunnel walls meet narrow tall foam) | BUBBLES (large iridescent edge bubbles).
-  Journal: `%USERPROFILE%\.claude\projects\C--Users-josia--unity\ded4464c-608a-4332-9b1b-b33e5222d645\subagents\workflows\wf_625572df-94a\journal.jsonl`
+- RUNNING (since 06:02 local): ROUND 4 = ONE strong round (user 05:30: visual ~58 -> toward 75). Workflow run `wf_3142dea6-d2c`
+  = stage R2 TUNNEL (rings, paddles, near frame, walls) | RIVER (S-curve, bands), then stage R3 BENNY (water contact). Exact args:
+  `staging/shared/round3-visual-R2R3-args.json`. Journal:
+  `%USERPROFILE%\.claude\projects\C--Users-josia--unity\ded4464c-608a-4332-9b1b-b33e5222d645\subagents\workflows\wf_3142dea6-d2c\journal.jsonl`
+- DONE 06:00: stage G1 (run `wf_625572df-94a`): left foam carpet -> narrow rope of big puffs, ~50 iridescent bubbles; combined
+  still `work/20261124_055442_bubbles_final*` = 57.8 / 36.3 (flat vs 58.0, kept for the visibly closer foam + bubbles; experimental).
 - VALIDATED VERSIONS (safe fallbacks; every autosave commit after the newest one may hold EXPERIMENTAL work):
   | git tag | commit | visual / layout | what | evidence |
   |---|---|---|---|---|
   | validated/r4-baseline-58.0 | aa2a2e1 | 58.0 / 36.8 | coordinator look tuning: walls, paddle tilt -15, azure water grade, darker HUD | evidence/screen05/round3/20261124_051325_G_BASELINE* |
   | (reference, no tag) | ac9e1c5 | 54.8 / 36.2 | round-3 frame + lane edits | evidence/screen05/round3/stage2_start_r3_clock_D* |
-- EXPERIMENTAL NOW: the G1 lanes' edits (foam / lower-wall geometry / bubbles files) - not validated until the coordinator cycle after G1.
+- EXPERIMENTAL NOW: G1's kept edits (FoamBank / RainbowFoamBank / DrumLayout05 / DrumMeshes05 / BubbleField / RainbowBubble) and the
+  R2 / R3 lanes' edits in progress - none validated until the ROUND4_FINAL coordinator cycle.
   Lane backups of every file they edited: `UnityProject/Recordings/Screen05/work/backup_round3v/<area>/`.
-- NEXT STEP: (1) when G1 ends: coordinator cycle `-Tag G1_done -Areas all`; keep the lane results only if the picture is closer and
-  visual >= 58.0 (else restore that lane's files from its backup); if kept, tag validated/r4-g1-<visual>. (2) ONE run:
-  `Workflow({scriptPath: "C:\\RainbowUnity\\staging\\shared\\round3-visual.workflow.js", args: {stages: ["R2", "R3"], baseline: <G1_done still +
-  scores>, context: <G1 results>}})` = TUNNEL (rings, paddles, walls) | RIVER (S-curve), then BENNY (water contact). (3) Coordinator
-  integration `-Tag ROUND4_FINAL -Areas all -Series` + `AgentScripts/screen05_playtest_check.cs` + a 12 s recording; tag validated/... if
-  better; send the user ONE side-by-side + both scores. No Screen 06 until the user approves Screen 05.
+- NEXT STEP: when run `wf_3142dea6-d2c` ends: coordinator integration `-Tag ROUND4_FINAL -Areas all -Series` +
+  `AgentScripts/screen05_playtest_check.cs` + a 12 s recording; if visual > 58.0 and the picture is closer, tag validated/r4-final-<visual>;
+  send the user ONE side-by-side + both scores. No Screen 06 until the user approves Screen 05.
 - IF THE RUN DIED (account switch): read its journal; lanes with a "result" go into `skip`; write `notes.<lane>` for the interrupted lane
-  (its newest files + work stills); relaunch the same stage with `staging/shared/round3-visual-G1-args.json` (+ skip / notes).
+  (its newest files + work stills); relaunch with `staging/shared/round3-visual-R2R3-args.json` (+ skip / notes; if R2 finished,
+  `stages: ["R3"]` and paste R2's results into `context`).
 - WAITING ON THE USER: (a) permission rules v2 in `tools/claude-permissions/` - the user applies them (strict, or strict + test runners);
   (b) the GitHub repo is PUBLIC although the user called it private - only the user can change that on GitHub.
 <!-- NEXT-TASK:END -->
