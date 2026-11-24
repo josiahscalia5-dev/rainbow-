@@ -16,7 +16,11 @@ The user (18:15 local) read and APPROVED skipping all three tools in `docs/tool-
 The water-contact test is NOT started yet: it is part of round 3's BENNY stage (the splash agent's contact shadow behind Benny
 already exists - build on it). **Round 3 = Workflow run `wf_9320b9e1-c74`** (launched 23:28 UTC, session
 `df1b2c26-91e9-4240-8bd4-29c06e5960e0`; journal: `%USERPROFILE%\.claude\projects\C--Users-josia--unity\df1b2c26-91e9-4240-8bd4-29c06e5960e0\subagents\workflows\wf_9320b9e1-c74\journal.jsonl`):
-frame -> river | tunnel -> benny -> integrate -> 2 reviewers. **If interrupted:** read that journal, put every area with a
+frame -> river | tunnel -> benny -> integrate -> 2 reviewers. **FRAME finished 19:35 local** (partly improved; OVERALL
+52.4/32.7 -> 52.8/33.8, walls 49.5 -> 54.1, throat 65.6 -> 67.9; still `work/20261123_192653_frame_final.png`): DrumLayout05
+Radius 6.8, axis 4.25 m above water (near drop to 3.25 for s < 35.5), rings at s 5.6/24.3/45.5/66.4/106.5/163.6/230.1/333/450.4,
+throat cap s 470, camera at s 14 (-0.06, 3.40, 7.48) euler (12.78, 357.20, 0) fov 62, vanishing point (496, 478); the hold is now
+deterministic (whole frames, always S = 14.00). River | tunnel lanes started 19:35. **If interrupted:** read that journal, put every area with a
 "result" line into `args.skip`, write `args.notes.<area>` for the interrupted one (its newest files + work stills), and relaunch
 `staging/shared/round3-composition.workflow.js` with the same `baseline` + `context` args, saved exactly in
 `staging/shared/round3-args.json`. After round 3: send the user the ROUND3_FINAL side-by-side + both scores + the recording.
