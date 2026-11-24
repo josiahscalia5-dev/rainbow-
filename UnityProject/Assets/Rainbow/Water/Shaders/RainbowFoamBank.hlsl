@@ -65,6 +65,9 @@ float2 RBW_BandLimits(float d, float hw, float W, float sm)
 // incl. RBW_BandFitM), sm = Three.js master arc length (s + 116.7), W = half chord of the drum wall at the water (river
 // mesh UV1.w / DrumLayout05.WaterChord). Returns the waterlines of the left / right foam bank RELATIVE to d (x < 0 < y):
 // the open water lies between them, the foam from there to the wall.
+// coordinator round 3: maximum foam width in front of the drum wall (m); keep equal to FoamBank.FoamRimCap (C#)
+static const float RBW_FOAM_CAP = 1.3;
+
 float2 RBW_BankEdges(float d, float hw, float Mb, float sm, float W)
 {
     hw = max(hw, 0.5);
@@ -135,7 +138,15 @@ float2 RBW_BankEdges(float d, float hw, float Mb, float sm, float W)
     float coin = 0.63 * d;
     eL = min(eL, coin - 1.25);
     eR = max(eR, coin + 1.25);
-    return float2(max(eL, lerp(-hw, wallL, kW)), min(eR, lerp(hw, wallR, kW)));
+    float2 e = float2(max(eL, lerp(-hw, wallL, kW)), min(eR, lerp(hw, wallR, kW)));
+    // ---- coordinator round 3 (2026-11-23): NARROW foam banks hugging the wall (user: "narrow, taller foam banks"):
+    //      at most RBW_FOAM_CAP m of foam in front of the drum wall; the open water widens to meet it ----
+    if (W >= 1.0)
+    {
+        e.x = min(e.x, wallL + RBW_FOAM_CAP);
+        e.y = max(e.y, wallR - RBW_FOAM_CAP);
+    }
+    return e;
 }
 
 // foam.ts SOAP05_GLSL soap05(): approved soap colour ramp, t = 0 blue-violet crevice -> blue -> periwinkle ->

@@ -191,8 +191,18 @@ namespace Rainbow.Screen05
             float coin = 0.63f * d;
             eL = Mathf.Min(eL, coin - 1.25f);
             eR = Mathf.Max(eR, coin + 1.25f);
-            return new Vector2(Mathf.Max(eL, Mathf.Lerp(-hw, wallL, kW)), Mathf.Min(eR, Mathf.Lerp(hw, wallR, kW)));
+            var e = new Vector2(Mathf.Max(eL, Mathf.Lerp(-hw, wallL, kW)), Mathf.Min(eR, Mathf.Lerp(hw, wallR, kW)));
+            // coordinator round 3 (2026-11-23): narrow foam banks hugging the wall (RBW_FOAM_CAP in RainbowFoamBank.hlsl)
+            if (W >= 1f)
+            {
+                e.x = Mathf.Min(e.x, wallL + FoamRimCap);
+                e.y = Mathf.Max(e.y, wallR - FoamRimCap);
+            }
+            return e;
         }
+
+        /// <summary>Coordinator round 3: maximum foam width in front of the drum wall (m); = RBW_FOAM_CAP (shader).</summary>
+        public const float FoamRimCap = 1.3f;
 
         /// <summary>World x of the foam waterline on one side (-1 left, +1 right).</summary>
         public static float WaterlineX(float s, int side)
@@ -263,7 +273,9 @@ namespace Rainbow.Screen05
                     float cl = ClusterNoise(s, side);                               // 0 low stretch .. 1 big mound
                     // bank profile: LOW lumpy mounds (water_t1: a bank rising to ~1.1 m at the wall hid the purple wall
                     // behind a flat carpet of beads; approved: rounded lumps along the waterline, the wall right behind)
-                    float hW = (0.17f + 0.22f * cl) * Mathf.Clamp(0.55f + shelfW / 2.0f, 0.55f, 1.0f);
+                    // coordinator round 3: with the banks capped at FoamRimCap the bank is a narrow TALL rope against the
+                    // wall (approved: ~1.3 m wide, ~0.5-0.7 m high puffy rims; was 0.17-0.39 m low lumps)
+                    float hW = (0.32f + 0.30f * cl) * Mathf.Clamp(0.7f + shelfW / 2.5f, 0.7f, 1.0f);
 
                     // 1) lace: tiny bubbles straddling the waterline (the bubbly scalloped edge, soft toward the water)
                     int nLace = 4 + (rng.Next() < 0.5f ? 1 : 0);
@@ -286,7 +298,7 @@ namespace Rainbow.Screen05
                         float z = s + rng.Range(-0.5f, 0.5f) * step;
                         float lump = Lump(x, z, side);
                         float u = rng.Next();
-                        float r = Mathf.Lerp(0.05f, 0.1f + 0.08f * lump + 0.04f * cl, Mathf.Pow(u, 1.6f));
+                        float r = Mathf.Lerp(0.06f, 0.13f + 0.10f * lump + 0.05f * cl, Mathf.Pow(u, 1.6f));   // bigger puffs
                         float hs = hW * (0.65f + 0.35f * f) * (0.25f + 1.25f * lump * lump);
                         float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z) + hs * rng.Range(0.75f, 1.05f) - r * 0.45f;
                         float ao = Mathf.Lerp(0.68f, 0.97f, Mathf.Clamp01(hs / (hW * 1.1f)));
@@ -301,7 +313,7 @@ namespace Rainbow.Screen05
                         float x = edge + side * f * shelfW;
                         float z = s + rng.Range(-0.5f, 0.5f) * step;
                         float lump = Lump(x, z, side);
-                        float r = rng.Range(0.1f, 0.15f + 0.04f * cl) * (0.75f + 0.4f * lump);
+                        float r = rng.Range(0.12f, 0.2f + 0.05f * cl) * (0.75f + 0.4f * lump);
                         float y = RiverPath.WaterY + RiverSurface.BaseHeight(x, z)
                                 + hW * (0.65f + 0.35f * f) * (0.25f + 1.25f * lump * lump) * 0.5f - r * 0.5f;
                         AddAt(list, rng, side, new Vector3(ClampToWall(x, z), y, z), r, rng.Range(0.7f, 0.82f));
