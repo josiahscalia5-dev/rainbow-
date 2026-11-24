@@ -34,3 +34,10 @@ mat:Assets/Rainbow/Water/Materials/RainbowRiverGlints05.mat:_Streak:f|0.866
 mat:Assets/Rainbow/Water/Resources/RainbowSplash05.mat:_Intensity:f|0.91325
 mat:Assets/Rainbow/Water/Resources/RainbowSplash05.mat:_RopeAlpha:f|0.85438
 mat:Assets/Rainbow/Water/Resources/RainbowWakeFoam05.mat:_Brightness:f|0.90927
+
+# 2026-11-24 10:47 local, coordinator (session 018893e6): automatic fitter, ring N (s 25.6) transform only (approved band runs down the right edge; no copper above the HUD); ROUND6_FINAL 83.1 / 68.5 -> R7_ringN 83.3 / 68.9; checked: no ring / wall gaps
+tf:Screen05/Environment05/Rings/Ring_25.6:px|-0.80188
+tf:Screen05/Environment05/Rings/Ring_25.6:py|2.89
+tf:Screen05/Environment05/Rings/Ring_25.6:rx|3.25875
+tf:Screen05/Environment05/Rings/Ring_25.6:ry|1.7625
+tf:Screen05/Environment05/Rings/Ring_25.6:s|1.01338

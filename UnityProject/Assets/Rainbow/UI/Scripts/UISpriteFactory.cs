@@ -136,7 +136,7 @@ namespace Rainbow.Screen05
             for (int y = 0; y < size; y++)
                 for (int x = 0; x < size; x++)
                 {
-                    float cover = 0f, coverInner = 0f;
+                    float cover = 0f, coverInner = 0f, coverCore = 0f;
                     for (int sy = 0; sy < 3; sy++)
                         for (int sx = 0; sx < 3; sx++)
                         {
@@ -144,15 +144,20 @@ namespace Rainbow.Screen05
                             float v = ((y + (sy + 0.5f) / 3f) / size - 0.42f) * 2.6f;
                             if (HeartInside(u, v, 1f)) cover += 1f / 9f;
                             if (HeartInside(u, v, 0.94f)) coverInner += 1f / 9f;
+                            if (HeartInside(u, v, 0.80f)) coverCore += 1f / 9f;
                         }
                     if (cover <= 0f) { px[y * size + x] = new Color(0f, 0f, 0f, 0f); continue; }
                     float vy = y / (float)size;
                     // round 4: lit from the upper left like the approved heart (pink (251,113,200) -> hot red-pink (246,23,124))
                     float hk = Mathf.Clamp01(vy * 0.75f - (x / (float)size - 0.5f) * 0.9f + 0.12f);
                     Color c = Color.Lerp(rim, Color.Lerp(bottom, top, hk), coverInner);
-                    // glossy highlight blob, upper left
+                    // round 7 (user guide #7 "raised heart"): the edge band darkens toward the outline so the heart reads as a rounded,
+                    // raised gem (approved heart luminance p10 68 / p90 176, Unity was 86 / 128)
+                    Color edge = new Color(c.r * 0.78f, c.g * 0.7f, c.b * 0.78f, 1f);
+                    c = Color.Lerp(edge, c, Mathf.Lerp(0.35f, 1f, coverCore));
+                    // glossy highlight blob, upper left (round 7: broader, 0.18 -> 0.24)
                     float hx = x / (float)size - 0.33f, hy = y / (float)size - 0.68f;
-                    float hl = Mathf.Clamp01(1f - Mathf.Sqrt(hx * hx * 3.2f + hy * hy * 7f) / 0.18f);
+                    float hl = Mathf.Clamp01(1f - Mathf.Sqrt(hx * hx * 3.2f + hy * hy * 7f) / 0.24f);
                     c = Over(c, Color.white, hl * 0.85f * coverInner);
                     c.a = cover;
                     px[y * size + x] = c;

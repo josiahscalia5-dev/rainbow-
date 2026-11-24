@@ -1,0 +1,6 @@
+# coordinator round 7 (2026-11-24 ~11:00 local): ring N (s 25.6) transform only - approved band runs down the right edge x 810-860 to y ~330 and shows no copper above the HUD bar
+tf:Screen05/Environment05/Rings/Ring_25.6:ry | -12 | 12 | 1.5
+tf:Screen05/Environment05/Rings/Ring_25.6:rx | -10 | 10 | 1.5
+tf:Screen05/Environment05/Rings/Ring_25.6:px | -1.6 | 0.1 | 0.1
+tf:Screen05/Environment05/Rings/Ring_25.6:py | 2.2 | 3.4 | 0.1
+tf:Screen05/Environment05/Rings/Ring_25.6:s | 0.9 | 1.12 | 0.01
