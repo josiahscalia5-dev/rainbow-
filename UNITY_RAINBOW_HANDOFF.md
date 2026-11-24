@@ -1,13 +1,13 @@
 # Rainbow Unity — handoff (latest verified state)
 
-Last verified: **2026-11-24 11:50 UTC** (06:50 local), Claude session d7b2bd77 (new account) on the user's laptop. Unity is OPEN; Round 4 stage R4 is running.
+Last verified: **2026-11-24 11:33 UTC** (06:33 local), Claude session d7b2bd77 (new account) on the user's laptop. Unity is OPEN; Round 4 stage R4 is running.
 Read this first in any new Claude account or session. **This is an existing project — never start over.**
 Project rules for Claude: `CLAUDE.md` (loaded automatically when a session is opened in `C:\RainbowUnity`).
 
 <!-- NEXT-TASK:START -->
 ## NOW - read this first (concise; rewritten after every finished step; the DETAILED LOG below is history)
-Updated 2026-11-24 06:50 local (session d7b2bd77, new account). Cross-account rules: CLAUDE.md "PERMANENT RULE: cross-account continuation".
-- RUNNING (since 06:48 local): ROUND 4 relaunch with exactly TWO specialist agents (user: "at most two specialist agents"; visual
+Updated 2026-11-24 06:33 local (session d7b2bd77, new account). Cross-account rules: CLAUDE.md "PERMANENT RULE: cross-account continuation".
+- RUNNING (since 06:31 local): ROUND 4 relaunch with exactly TWO specialist agents (user: "at most two specialist agents"; visual
   ~58 -> toward 75). Workflow run `wf_ab41a260-945`, stage R4 = TUNNEL (gold rings, paddles as rounded D-trays, near frame, reflective
   purple walls) | WATER4 (S-shaped river incl. the far river, then Benny's water contact / splash). Script
   `staging/shared/round3-visual.workflow.js` (stage R4), exact args `staging/shared/round4-relaunch-args.json`. Journal:
@@ -29,7 +29,7 @@ Updated 2026-11-24 06:50 local (session d7b2bd77, new account). Cross-account ru
 - IF THE RUN DIED (account switch): read its journal; a lane with a "result" goes into `skip`; write `notes.<lane>` for the interrupted
   lane (its newest files, work stills, backups in `work/backup_round3v/<area>/`); relaunch the same script with
   `staging/shared/round4-relaunch-args.json` (+ skip / notes).
-- BLENDER (user question, 06:40 local): NOT installed - only leftover Blender 5.2 settings from October in `%APPDATA%\Blender Foundation`,
+- BLENDER (user question, ~06:28 local): NOT installed - only leftover Blender 5.2 settings from October in `%APPDATA%\Blender Foundation`,
   no blender.exe anywhere. C: 7.1 GB free, RAM ~0.7 GB free with Unity open. Nothing was installed. Recommendation to the user: not now
   (the tunnel lane rebuilds the paddles as rounded D-trays in Unity code this round); reconsider only if the paddle shape is still the
   weak spot after Round 4, and only with the user's approval.
@@ -39,7 +39,7 @@ Updated 2026-11-24 06:50 local (session d7b2bd77, new account). Cross-account ru
 
 ## DETAILED LOG (older entries, newest first; the NOW block above wins where they disagree)
 
-**UPDATE 2026-11-24 06:50 local (moved from NOW):** DONE 06:00: stage G1 (run `wf_625572df-94a`): left foam carpet -> narrow rope of
+**UPDATE 2026-11-24 06:33 local (moved from NOW):** DONE 06:00: stage G1 (run `wf_625572df-94a`): left foam carpet -> narrow rope of
 big puffs, ~50 iridescent bubbles; combined still `work/20261124_055442_bubbles_final*` = 57.8 / 36.3 (flat vs 58.0, kept for the visibly
 closer foam + bubbles; experimental). Then run `wf_3142dea6-d2c` (stages R2 TUNNEL | RIVER -> R3 BENNY, args
 `staging/shared/round3-visual-R2R3-args.json`, session ded4464c) started 06:07 and died 06:16 at the old account's 5-hour limit; both lanes
