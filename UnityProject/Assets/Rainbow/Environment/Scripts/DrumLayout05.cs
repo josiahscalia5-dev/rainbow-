@@ -157,7 +157,7 @@ namespace Rainbow.Screen05
         // R 34 / 4.7, 55 / 6.0, 82 / 5.8, 118 / 5.5, 180 / 5.5.
         static readonly PaddleSlot[] ApprovedPaddles =
         {
-            new PaddleSlot(31.0f, -1, 4.9f), new PaddleSlot(35.5f, 1, 3.9f),
+            new PaddleSlot(30.5f, -1, 5.1f), new PaddleSlot(36.5f, 1, 3.5f),   // cycle tunnel_t3 variants pL1 / pR1
             new PaddleSlot(45.5f, -1, 4.9f), new PaddleSlot(56.5f, 1, 5.2f),
             new PaddleSlot(76.5f, -1, 4.8f), new PaddleSlot(83.5f, 1, 5.0f),
             new PaddleSlot(126.5f, -1, 5.0f), new PaddleSlot(119.5f, 1, 4.7f),

@@ -24,7 +24,7 @@
 
 // (water4 2026-11-24) live-tuning hook of AgentScripts/screen05_water4_tune.cs (global vector, never set in the game = 0 =
 // the baked look): x = contact shade strength delta, y = contact shade length delta, z = right band width delta (x),
-// w = right band near-field shift delta (m); _W4Tune2: x = unused, y = pink sheen scale delta,
+// w = right band near-field shift delta (m); _W4Tune2: x = near arc highlight gain delta, y = pink sheen scale delta,
 // z = band edge raggedness delta, w = near satin hairline fade delta
 float4 _W4Tune;
 float4 _W4Tune2;
@@ -53,7 +53,9 @@ static const float3 RBW_FOAMLAV = float3(0.863, 0.761, 1.0);     // PALETTE.foam
 // the 05 band S on top of the course meander (waterRibbon.ts sbend05), in Three.js master arc length
 float RBW_SBend(float sm)
 {
-    return 1.05 * sin(sm * 0.31 - 0.834) + 0.18 * sin(sm * 0.62 + 0.6);
+    // (water4 2026-11-24) damped beyond the stage (s > ~70): its +-1 m wiggle every 10 m zigzagged the far bands, the
+    // approved far river is one smooth bend right into the throat (RiverPath.FarSwing). KEEP EQUAL to RiverSurface.SBend.
+    return (1.05 * sin(sm * 0.31 - 0.834) + 0.18 * sin(sm * 0.62 + 0.6)) * (1.0 - 0.75 * smoothstep(186.0, 198.0, sm));
 }
 
 // vertex swell (waterRibbon.ts VERT, AMP 05 = 0.1), stream only (no swell on the foam shelf)
@@ -238,8 +240,8 @@ void RainbowRiver_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     float sp = max(sin(ph + 1.0), 1e-4);
     float crestN = (pow(sp, 36.0) + 0.5 * pow(sp, 7.0)) * segN;
     nb = lerp(nb, RBW_CAQUA, saturate(0.7 * pow(sp, 4.0) * (0.4 + 0.6 * segN)));
-    nb = lerp(nb, RBW_CAQUAW, saturate(pow(sp, 16.0) * segN) * 0.75);
-    nb += float3(0.35, 0.55, 0.6) * pow(sp, 40.0) * segN * 0.4;                          // glossy arc line
+    nb = lerp(nb, RBW_CAQUAW, saturate(saturate(pow(sp, 16.0) * segN) * 0.75 * (1.0 + 0.3 * _W4Tune2.x)));
+    nb += float3(0.35, 0.55, 0.6) * pow(sp, 40.0) * segN * 0.4 * (1.0 + _W4Tune2.x);    // glossy arc line
     cy = lerp(cy, nb, near5);
 
     // water between a band and its bank: the approved shows a thin CYAN edge there (a touch bluer than the core,

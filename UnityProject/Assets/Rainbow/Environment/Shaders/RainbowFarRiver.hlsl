@@ -19,7 +19,7 @@
 // keeps bending right just before the throat and then runs back toward the middle into the vanishing point.
 float RainbowFarRiverCoreX(float s)
 {
-    return 1.7 + 0.3 * smoothstep(120.0, 170.0, s) - 1.6 * smoothstep(210.0, 400.0, s);
+    return 1.85 + 0.3 * smoothstep(120.0, 170.0, s) - 1.7 * smoothstep(210.0, 400.0, s);
 }
 
 // RiverUV = (lateral x metres from the tunnel line, s metres along the tunnel).

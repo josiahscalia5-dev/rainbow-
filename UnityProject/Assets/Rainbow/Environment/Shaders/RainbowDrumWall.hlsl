@@ -165,6 +165,22 @@ void RainbowDrumWall_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS,
     emission += _FarGlowColor.rgb * fg * lerp(0.35, 1.0, sol);
     emission += _RimColor.rgb * lipLight * _SlotSize.w;
     emission += sheetCol * 0.35 * sheet;
+    // tunnel round 4 (2026-11-24): the approved drum carries bright pink-white SPOKES, lengthwise light lines at the ring
+    // bulb azimuths (20 round the drum, 12 o'clock = one, like the marquee bulbs of RainbowGoldMetal.hlsl) running from
+    // ring to ring into the vanishing point, ~10-15 px wide between rings A and B. Fixed to the wall (WallUV.x = arc
+    // metres from 12 o'clock), so they never slide while Benny swims or steers; anti-aliased with fwidth and faded with
+    // the view distance (_WallSpokes.w = strength kept far away). _WallSpokes = (count, half width rad, intensity, far).
+    if (_WallSpokes.z > 0.0)
+    {
+        float tsp = WallUV.x / max(_SlotArc.w, 0.1) * _WallSpokes.x / RB_TWO_PI;
+        float dsp = frac(tsp + 0.5) - 0.5;
+        float fws = min(fwidth(tsp), fwidth(frac(tsp + 0.5))) + 1e-4;
+        float w0 = _WallSpokes.y * _WallSpokes.x / RB_TWO_PI;
+        float wsp = w0 + fws * 0.7;
+        float spoke = exp(-dsp * dsp / (wsp * wsp)) * lerp(1.0, w0 / wsp, 0.7);
+        spoke *= (1.0 - sheet) * lerp(1.0, _WallSpokes.w, farK) * (1.0 - 0.85 * hole);
+        emission += _StripColor.rgb * _WallSpokes.z * spoke;
+    }
 
     Color = (diffuse * Ambient + spec + emission) * _Exposure;
     Albedo = base;

@@ -212,6 +212,8 @@ namespace Rainbow.Screen05.EditorTools
             // light round 2026-11-23: strips / reflection fade with view distance (strips 8 %, panorama 50 % beyond 80 m)
             // so the deep walls stay violet instead of pink-white radial spokes converging on the throat
             SetVec(m, "_WallFar", new Vector4(25f, 80f, 0.08f, 0.5f));
+            // tunnel round 4: lengthwise pink-white light spokes at the ring-bulb azimuths (RainbowDrumWall.hlsl)
+            SetVec(m, "_WallSpokes", WallSpokes);
             EditorUtility.SetDirty(m);
         }
 
@@ -238,8 +240,11 @@ namespace Rainbow.Screen05.EditorTools
         static readonly Vector4 RingLookCopper = new Vector4(0.55f, 90f, 0.35f, 0.45f);
         /// <summary>(crest strength, bulb halo, brightness, palette 1 = copper RM_*): RainbowGoldMetal.hlsl RainbowRingCopper.</summary>
         static readonly Vector4 RingLook2 = new Vector4(0.8f, 0.5f, 0.88f, 1f);   // cycle tunnel_t1: 0.88 > 1.0 > 1.15
-        /// <summary>Marquee bulbs on the rings (per turn, half width, strength, -).</summary>
-        static readonly Vector4 RingBulbs = new Vector4(20f, 0.04f, 0.8f, 0f);
+        /// <summary>Marquee bulbs on the rings (per turn, half width, strength, -). Approved ring A: warm-white bulbs
+        /// ~16 px across every ~18 deg (half width ~0.08 of the pitch); round 3 drew 3 px dots.</summary>
+        static readonly Vector4 RingBulbs = new Vector4(20f, 0.075f, 1.5f, 0f);
+        /// <summary>Wall spokes (count round the drum = ring bulbs, half width rad, intensity, kept far away).</summary>
+        static readonly Vector4 WallSpokes = new Vector4(20f, 0.025f, 0.5f, 0.35f);
         /// <summary>Near frame corners: (palette 1 = copper bands, glare, vignette compensation, -).</summary>
         static readonly Vector4 FrameLook = new Vector4(1f, 1f, 1.08f, 0f);
         /// <summary>Exposure of the pre-solved copper rings and shelves (the frame keeps 0.95).</summary>

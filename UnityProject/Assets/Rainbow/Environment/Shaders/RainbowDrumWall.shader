@@ -34,6 +34,7 @@ Shader "Rainbow/Screen05/DrumWall"
         _WallGlow ("Land glow (linear rgb, strength)", Vector) = (0, 0, 0, 0)
         _SlotArc ("Slot arc (holes round, ceiling density boost, hole half length / arc pitch, radius m)", Vector) = (0, 0, 0.3, 6.8)
         _SlotShape ("Slot shape (half width / pitch at the waterline, lip px, brushed strength, brushed lines / m)", Vector) = (0, 1.5, 0, 2)
+        _WallSpokes ("Round 4 spokes (count round the drum, half width rad, intensity, far kept)", Vector) = (20, 0.025, 0, 0.5)
     }
 
     SubShader
@@ -73,6 +74,7 @@ Shader "Rainbow/Screen05/DrumWall"
             float4 _WallGlow;
             float4 _SlotArc;
             float4 _SlotShape;
+            float4 _WallSpokes;
         CBUFFER_END
 
         // shared animation clock (Rainbow.Screen05.Screen05Clock; game time, reset by the test hold)

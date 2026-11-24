@@ -36,9 +36,11 @@ namespace Rainbow.Screen05
             return RiverPath.StreamExtent - Mathf.Sqrt(d * d + 0.09f);
         }
 
-        /// <summary>The band S of the 05 river (waterRibbon.ts sbend05), argument = Three.js master s.</summary>
+        /// <summary>The band S of the 05 river (waterRibbon.ts sbend05), argument = Three.js master s.
+        /// (water4 2026-11-24) damped beyond the stage like RBW_SBend (RainbowRiver.hlsl): keep both identical.</summary>
         public static float SBend(float masterS) =>
-            1.05f * Mathf.Sin(masterS * 0.31f - 0.834f) + 0.18f * Mathf.Sin(masterS * 0.62f + 0.6f);
+            (1.05f * Mathf.Sin(masterS * 0.31f - 0.834f) + 0.18f * Mathf.Sin(masterS * 0.62f + 0.6f))
+            * (1f - 0.75f * Smooth(186f, 198f, masterS));
 
         static float Smooth(float a, float b, float x)
         {
